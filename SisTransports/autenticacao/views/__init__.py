@@ -1,0 +1,1 @@
+from autenticacao.views.entrar import entrar
