@@ -1,13 +1,13 @@
 {% load static %}
 
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-br">
 
 <head>
   <!-- Required meta tags -->
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  <title>SisTransport</title>
+  <title>SisTransport - Gestão de Transportes e Logistíca</title>
   <!-- plugins:css -->
   <link rel="stylesheet" href="{% static 'vendors/feather/feather.css' %}">
   <link rel="stylesheet" href="{% static 'vendors/ti-icons/css/themify-icons.css' %}">
@@ -314,9 +314,9 @@
             </a>
             <div class="collapse" id="ui-basic">
               <ul class="nav flex-column sub-menu">
-                <li class="nav-item"> <a class="nav-link" href="pages/ui-features/buttons.html">Buttons</a></li>
-                <li class="nav-item"> <a class="nav-link" href="pages/ui-features/dropdowns.html">Dropdowns</a></li>
-                <li class="nav-item"> <a class="nav-link" href="pages/ui-features/typography.html">Typography</a></li>
+                <li class="nav-item"> <a class="nav-link" href="pages/ui-features/buttons.html">Vendedores</a></li>
+                <li class="nav-item"> <a class="nav-link" href="pages/ui-features/dropdowns.html">Clientes</a></li>
+                <li class="nav-item"> <a class="nav-link" href="pages/ui-features/typography.html">Pessoas</a></li>
               </ul>
             </div>
           </li>
@@ -328,19 +328,26 @@
             </a>
             <div class="collapse" id="form-elements">
               <ul class="nav flex-column sub-menu">
-                <li class="nav-item"><a class="nav-link" href="pages/forms/basic_elements.html">Basic Elements</a></li>
+                <li class="nav-item"><a class="nav-link" href="pages/forms/basic_elements.html">Despesas</a></li>
+                <li class="nav-item"><a class="nav-link" href="pages/forms/basic_elements.html">Receitas</a></li>
+                <li class="nav-item"><a class="nav-link" href="pages/forms/basic_elements.html">Gerar Faturamento</a></li>
+                <li class="nav-item"><a class="nav-link" href="pages/forms/basic_elements.html">Emitir Duplicatas</a></li>
+
+
               </ul>
             </div>
           </li>
           <li class="nav-item">
             <a class="nav-link" data-toggle="collapse" href="#charts" aria-expanded="false" aria-controls="charts">
               <i class="ti-truck menu-icon"></i>
-              <span class="menu-title">Viagens</span>
+              <span class="menu-title">Operacional</span>
               <i class="menu-arrow"></i>
             </a>
             <div class="collapse" id="charts">
               <ul class="nav flex-column sub-menu">
-                <li class="nav-item"> <a class="nav-link" href="pages/charts/chartjs.html">ChartJs</a></li>
+                <li class="nav-item"> <a class="nav-link" href="pages/charts/chartjs.html">Manifesto</a></li>
+                <li class="nav-item"> <a class="nav-link" href="pages/charts/chartjs.html">Coleta</a></li>
+                <li class="nav-item"> <a class="nav-link" href="pages/charts/chartjs.html">Conhecimento</a></li>
               </ul>
             </div>
           </li>
@@ -352,19 +359,22 @@
             </a>
             <div class="collapse" id="tables">
               <ul class="nav flex-column sub-menu">
-                <li class="nav-item"> <a class="nav-link" href="pages/tables/basic-table.html">Basic table</a></li>
+                <li class="nav-item"> <a class="nav-link" href="pages/tables/basic-table.html">Rel. Coletas</a></li>
+                <li class="nav-item"> <a class="nav-link" href="pages/tables/basic-table.html">Rel. Cte's</a></li>
+                <li class="nav-item"> <a class="nav-link" href="pages/tables/basic-table.html">Rel. Viagens</a></li>                                  
               </ul>
             </div>
           </li>
           <li class="nav-item">
             <a class="nav-link" data-toggle="collapse" href="#icons" aria-expanded="false" aria-controls="icons">
-              <i class="ti-user menu-icon"></i>
+              <i class="ti-briefcase menu-icon"></i>
               <span class="menu-title">SAC</span>
               <i class="menu-arrow"></i>
             </a>
             <div class="collapse" id="icons">
               <ul class="nav flex-column sub-menu">
-                <li class="nav-item"> <a class="nav-link" href="pages/icons/mdi.html">Mdi icons</a></li>
+                <li class="nav-item"> <a class="nav-link" href="pages/icons/mdi.html">Consultas</a></li>
+                <li class="nav-item"> <a class="nav-link" href="pages/icons/mdi.html">Rastreamento</a></li>
               </ul>
             </div>
           </li>
@@ -376,8 +386,20 @@
             </a>
             <div class="collapse" id="auth">
               <ul class="nav flex-column sub-menu">
-                <li class="nav-item"> <a class="nav-link" href="pages/samples/login.html"> Login </a></li>
-                <li class="nav-item"> <a class="nav-link" href="pages/samples/register.html"> Register </a></li>
+                <li class="nav-item"> <a class="nav-link" href="pages/samples/login.html"> Veículos </a></li>
+                <li class="nav-item"> <a class="nav-link" href="pages/samples/register.html"> Motoristas </a></li>
+              </ul>
+            </div>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" data-toggle="collapse" href="#comercial" aria-expanded="false" aria-controls="comercial">
+              <i class="ti-shopping-cart menu-icon"></i>
+              <span class="menu-title">Comercial</span>
+              <i class="menu-arrow"></i>
+            </a>
+            <div class="collapse" id="comercial">
+              <ul class="nav flex-column sub-menu">
+                <li class="nav-item"> <a class="nav-link" href="pages/comercial/mdi.html">Cotações</a></li>
               </ul>
             </div>
           </li>
