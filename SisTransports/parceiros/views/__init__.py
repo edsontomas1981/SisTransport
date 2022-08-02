@@ -1,0 +1,1 @@
+from .salva_parceiro import salva_parceiro

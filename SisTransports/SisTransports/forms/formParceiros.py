@@ -1,22 +1,30 @@
 from django import forms
 from contatos.models import Contatos, Tipo_contatos
 class FormParceiros(forms.Form):
-    cpnj_cpf = forms.CharField(required=True,label='Cnpj/Cpf',max_length=18)
+    cpnj_cpf = forms.CharField(required=True,label='Cnpj/Cpf',max_length=18,
+                               widget=forms.TextInput(attrs={'class':'form-control form-control-sm',
+                                                             'id':'cnpj'}))
     nome_razao = forms.CharField(required=True,label='Nome/Razão',max_length=50,
-                    widget=forms.TextInput(attrs={'class':'form-control'}))
+                    widget=forms.TextInput(attrs={'class':'form-control form-control-sm','id':'razao','name':'razao'}))
     nome_fantasia = forms.CharField(required=False,label='Nome Fantasia',max_length=50,
-                    widget=forms.TextInput(attrs={'class':'form-control'}))
-    insc_est = forms.CharField(required=False,label='Inscrição Estadual',max_length=30)
+                    widget=forms.TextInput(attrs={'class':'form-control form-control-sm','id':'fantasia','name':'fantasia'}))
+    insc_est = forms.CharField(required=False,label='Inscrição Estadual',max_length=30,
+                    widget=forms.TextInput(attrs={'class':'form-control form-control-sm','id':'inscr','name':'inscr'}))
     observacao = forms.CharField(required=False,label='Observação',max_length=100,
-                    widget=forms.Textarea(attrs={'rows':2}))
-    cep=forms.CharField(required=True,
-                    widget=forms.TextInput(attrs={
-                    'onblur':'pesquisacep(this.value);','name': 'cep'}))
+                    widget=forms.Textarea(attrs={'class':'form-control form-control-sm',
+                                                 'rows':2 , 'id':'obs','name':'obs'}))
+    cep=forms.CharField(required=True,widget=forms.TextInput(
+                                attrs={'class':'form-control form-control-sm','onblur':'pesquisacep(this.value);',
+                                       'id':'cep','name': 'cep'}))
     rua = forms.CharField(required=True,
-                    widget=forms.TextInput(attrs={
+                    widget=forms.TextInput(attrs={'class':'form-control form-control-sm',
                     'name':"rua", 'id':"rua"}))
-    numero=forms.CharField(required=False,label='Nº')
-    complemento=forms.CharField(required=False,label='Complemento')
+    numero=forms.CharField(required=False,label='Nº', 
+                           widget=forms.TextInput(attrs={'class':'form-control form-control-sm',
+                            'name':"numero", 'id':"numero"}))
+    complemento=forms.CharField(required=False,label='Complemento',
+                            widget=forms.TextInput(attrs={'class':'form-control form-control-sm',
+                            'name':"complemento", 'id':"complemento"}))
     bairro = forms.CharField(required=False,
                     widget=forms.TextInput(attrs={
                     'name':'bairro','id':"bairro"}))
@@ -29,14 +37,14 @@ class FormParceiros(forms.Form):
     
     tipo=Tipo_contatos.objects.all().order_by('descricao_contato')
     tipo_contato = forms.ModelMultipleChoiceField(tipo,required=True,
-                    widget=forms.Select(attrs={'class':'form-select'}))                    
+                    widget=forms.Select(attrs={'class':'form-select form-control-sm','name':'tipo_contato'}))                    
     
     fone_email_etc = forms.CharField(required=True,label='Contato',max_length=50,
-                    widget=forms.TextInput(attrs={'class':'form-control'}))
+                    widget=forms.TextInput(attrs={'class':'form-control form-control-sm'}))
     nome = forms.CharField(required=True,label='Nome',max_length=50,
-                    widget=forms.TextInput(attrs={'class':'form-control'}))
+                    widget=forms.TextInput(attrs={'class':'form-control form-control-sm'}))
     cargo = forms.CharField(required=True,label='Cargo',max_length=50,
-                    widget=forms.TextInput(attrs={'class':'form-control'}))
+                    widget=forms.TextInput(attrs={'class':'form-control form-control-sm'}))
     envio = forms.BooleanField(required=True,label='Envio',
                     widget=forms.CheckboxInput())
     

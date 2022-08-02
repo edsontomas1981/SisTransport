@@ -9,6 +9,8 @@ urlpatterns = [
          name='home'),
     path('cadParceiros/',
         ViewCadPar.as_view(),name='cadParceiros'),
+    path('salva_parceiro',views.salva_parceiro,
+         name='salva_parceiro'),
 ]
 urlpatterns += static(settings.STATIC_URL, 
                       document_root=settings.STATIC_ROOT)
