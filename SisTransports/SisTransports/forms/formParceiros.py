@@ -1,9 +1,9 @@
 from django import forms
 from contatos.models import Contatos, Tipo_contatos
 class FormParceiros(forms.Form):
-    cpnj_cpf = forms.CharField(required=True,label='Cnpj/Cpf',max_length=18,
+    cnpj_cpf = forms.CharField(required=True,label='Cnpj/Cpf',max_length=18,
                                widget=forms.TextInput(attrs={'class':'form-control form-control-sm',
-                                                             'id':'cnpj'}))
+                                                             'id':'cnpj','name':'cnpj','onblur':'consultaCnpj();'}))
     nome_razao = forms.CharField(required=True,label='Nome/Razão',max_length=50,
                     widget=forms.TextInput(attrs={'class':'form-control form-control-sm','id':'razao','name':'razao'}))
     nome_fantasia = forms.CharField(required=False,label='Nome Fantasia',max_length=50,
@@ -25,7 +25,7 @@ class FormParceiros(forms.Form):
     complemento=forms.CharField(required=False,label='Complemento',
                             widget=forms.TextInput(attrs={'class':'form-control form-control-sm',
                             'name':"complemento", 'id':"complemento"}))
-    bairro = forms.CharField(required=False,
+    bairro = forms.CharField(required=True,
                     widget=forms.TextInput(attrs={
                     'name':'bairro','id':"bairro"}))
     cidade=forms.CharField(required=True,
@@ -36,15 +36,15 @@ class FormParceiros(forms.Form):
                     'name':'uf','id':"uf"}))
     
     tipo=Tipo_contatos.objects.all().order_by('descricao_contato')
-    tipo_contato = forms.ModelMultipleChoiceField(tipo,required=True,
+    tipo_contato = forms.ModelMultipleChoiceField(tipo,required=False,
                     widget=forms.Select(attrs={'class':'form-select form-control-sm','name':'tipo_contato'}))                    
     
-    fone_email_etc = forms.CharField(required=True,label='Contato',max_length=50,
+    fone_email_etc = forms.CharField(required=False,label='Contato',max_length=50,
                     widget=forms.TextInput(attrs={'class':'form-control form-control-sm'}))
-    nome = forms.CharField(required=True,label='Nome',max_length=50,
+    nome = forms.CharField(required=False,label='Nome',max_length=50,
                     widget=forms.TextInput(attrs={'class':'form-control form-control-sm'}))
-    cargo = forms.CharField(required=True,label='Cargo',max_length=50,
+    cargo = forms.CharField(required=False,label='Cargo',max_length=50,
                     widget=forms.TextInput(attrs={'class':'form-control form-control-sm'}))
-    envio = forms.BooleanField(required=True,label='Envio',
+    envio = forms.BooleanField(required=False,label='Envio',
                     widget=forms.CheckboxInput())
     

@@ -4,6 +4,7 @@ class Enderecos (models.Model):
     cep=models.CharField(max_length=8,null=False)
     logradouro=models.CharField(max_length=50,null=False)
     numero=models.CharField(max_length=8)
+    complemento=models.CharField(max_length=50,null=True)
     bairro=models.CharField(max_length=30)
     cidade=models.CharField(max_length=50)
     uf=models.CharField(max_length=2)

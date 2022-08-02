@@ -1,8 +1,8 @@
-$(document).ready(function() {
 
-    // Adicionamos o evento onclick ao botão com o ID "pesquisar"
-    $('#cnpj').on('blur', function(e) {
-        // Aqui recuperamos o cnpj preenchido do campo e usamos uma expressão regular para limpar da string tudo aquilo que for diferente de números
+
+function consultaCnpj(){
+
+        // Aqui recuperamos o   cnpj preenchido do campo e usamos uma expressão regular para limpar da string tudo aquilo que for diferente de números
         var cnpj = $('#cnpj').val().replace(/[^0-9]/g, '');
 
         // Fazemos uma verificação simples do cnpj confirmando se ele tem 14 caracteres
@@ -30,7 +30,7 @@ $(document).ready(function() {
                         $('#rua').val(response.logradouro);
                         $('#numero').val(response.numero);
                         $('#bairro').val(response.bairro);
-                        $('#complemento').val(response.complemento)
+                        $('#complemento').val(response.complemento);
                         $('#cidade').val(response.municipio);
                         $('#uf').val(response.uf);
 
@@ -45,5 +45,5 @@ $(document).ready(function() {
         } else {
             alert('CNPJ inválido');
         }
-    });
-});
+    }  
+

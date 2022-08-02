@@ -1,5 +1,4 @@
 from django.db import models
-from SisTransports.enderecos.models import endereco
 from enderecos.models.endereco import Enderecos
 
 class Parceiros (models.Model):

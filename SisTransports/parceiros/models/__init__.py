@@ -1,0 +1,1 @@
+from parceiros.models.parceiros import Parceiros

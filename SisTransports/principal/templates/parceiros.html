@@ -3,7 +3,8 @@
 {% load static %}
 {% load bootstrap %}
 {% block 'conteudo' %}
-<form method="POST" action="{% url 'salva_parceiro' %}" enctype="multipart/form-data">
+<div>
+<form  method="POST" action="{% url 'salva_parceiro' %}">    
     {% csrf_token %}
     <div class="container">
         <div class="col-sm-5">
@@ -38,7 +39,7 @@
             <div class="tab-pane  show active" id="pills-estabelecimento" role="tabpanel" aria-labelledby="pills-estabelecimento-tab">
                 <div class="form-group row">
                     <div class="col-sm-7 mb-0 form-group">
-                        {{form.cpnj_cpf|bootstrap}}
+                        {{form.cnpj_cpf|bootstrap}}
                     </div>
                     <div class="col-sm-5 mb-0 form-group">
                         {{form.insc_est|bootstrap}}
@@ -132,10 +133,11 @@
                 </div>
           </div>        
     <div class="row form-group">
-        <input type="submit" class="btn btn-primary col-sm-12" value = "Salvar"></input>
+        <input type="submit" class="btn btn-primary col-sm-12" value = "Salvar" ></input>
     </div>
     </div>
 </form>
+</div>
 
 {% endblock %}
 {% block 'js' %}

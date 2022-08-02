@@ -1,1 +1,1 @@
-from .endereco import Enderecos
+from enderecos.models.endereco import Enderecos
