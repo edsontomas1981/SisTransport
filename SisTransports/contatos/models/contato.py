@@ -7,5 +7,12 @@ class Contatos (models.Model):
     nome=models.CharField(max_length=50)# define o nome do contato 
     cargo=models.CharField(max_length=50)# define o cargo do contato 
     envio=models.BooleanField(default=False)# define se o contato receberá será envios de email ou não
+    
+    def to_dict(self):
+        return{
 
-
+            'fone_email_etc':self.fone_email_etc,
+            'nome':self.nome,
+            'cargo':self.cargo,
+            'envio':self.envio
+        }
