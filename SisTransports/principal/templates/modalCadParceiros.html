@@ -1,0 +1,11 @@
+{% extends 'base.html' %}
+
+{%load static %}
+{% load bootstrap %}
+{% block 'conteudo' %}
+
+<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#mdlCadParceiros">
+    Launch demo modal
+</button>
+{% include 'parceiros.html'%}   
+{% endblock %}

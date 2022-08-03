@@ -9,7 +9,7 @@ from contatos.models import Contatos,Tipo_contatos
 
 def cad_contato(request):
     if request.method == 'GET':
-        return render(request, 'cadContato.html')
+        return render(request, 'modalCadParceiros.html')
     elif request.method == 'POST':
         contato=Contatos()
         #tipo=Tipo_contatos.objects.get(descricao_contato=request.POST['tipo'])
