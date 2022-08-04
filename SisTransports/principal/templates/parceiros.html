@@ -1,9 +1,11 @@
 
 {% load static %}
 {% load bootstrap %}
-<form method="POST" action={% url 'cad_contato'%}>{% csrf_token %}
+<form method="POST" action={% url 'salva_parceiro'%}>{% csrf_token %}
 
-<div class="modal" id="mdlCadParceiros" tabindex="-1">
+<div class="modal" id="mdlCadParceiros" tabindex="-1"data-bs-backdrop="static" 
+    data-bs-keyboard="false" aria-labelledby="staticBackdropLabel" 
+    aria-hidden="true">
     <div class="modal-dialog modal-xl" >
       <div class="modal-content">
         <div class="modal-header">
@@ -128,8 +130,8 @@
                             </div>                                                      
                             <div class="col-sm-2 mb-3 form-group" >
                                 <div class="custom-control custom-switch mt-2" align="right">
-                                    <input type="checkbox" class="custom-control-input" id="customSwitch1" checked>
-                                    <label class="custom-control-label" for="customSwitch1">Enviar emails</label>
+                                    <input type="checkbox" class="custom-control-input" id="envio" name="envio">
+                                    <label class="custom-control-label" for="envio">Enviar emails</label>
                                   </div>
                             </div>
                             <div class="col-sm-12 mt-4 mb-2 " align="right">

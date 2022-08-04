@@ -4,21 +4,30 @@ from parceiros.views.salva_parceiro import salva_parceiro as salvar
 from enderecos.views.salva_end import salva_end
 from django.contrib import messages
 from django.contrib.messages import constants
+from contatos.models.contato import Contatos
+from contatos.models.contato import Tipo_contatos
+from django.http import JsonResponse
+
 
 @login_required(login_url='/auth/entrar/')
 def salva_parceiro(request):
-
+    print('**************************************************************')
+    print('salva')    
     if request.method == "GET" :
         return render(request,'./parceiros.html',)
+
     elif request.method == "POST" :
-        endereco=salva_end(request.POST.get('cep'),request.POST.get('rua'),request.POST.get('numero'),
-                           request.POST.get('complemento'),request.POST.get('bairro'),
-                           request.POST.get('cidade'),request.POST.get('uf'))
-
-        parceiro=salvar(request.POST.get('cnpj_cpf'),request.POST.get('nome_razao'),
-                        request.POST.get('nome_fantasia'),request.POST.get('insc_est'),
-                        request.POST.get('observacao'),endereco)
-
-        messages.add_message(request,constants.SUCCESS,'Usuário cadastrado com sucesso !')
-                                
-        return redirect('/cadParceiros/')
+        # tipo=request.POST.get('tipo_contato')
+        contato=Contatos()
+        tipo_contato=Tipo_contatos.objects.filter(id=1).get()
+        contato.tipo=tipo_contato
+        contato.fone_email_etc=request.POST.get('contato')
+        contato.nome=request.POST.get('nome')
+        contato.cargo=request.POST.get('cargo')
+        contato.envio=False
+        contato.save()
+        
+        dados=[contato.to_dict()]
+        print('**************************************************************')
+        print(dados)
+        return JsonResponse({'dados': dados})

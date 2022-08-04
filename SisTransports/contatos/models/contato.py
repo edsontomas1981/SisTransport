@@ -10,7 +10,8 @@ class Contatos (models.Model):
     
     def to_dict(self):
         return{
-
+            'id':self.id,
+            'tipo':self.tipo.descricao_contato,
             'fone_email_etc':self.fone_email_etc,
             'nome':self.nome,
             'cargo':self.cargo,
