@@ -4,21 +4,23 @@
 <form method="POST" action={% url 'cad_contato'%}>{% csrf_token %}
 
 <div class="modal" id="mdlCadParceiros" tabindex="-1">
-    <div class="modal-dialog modal-xl">
+    <div class="modal-dialog modal-xl" >
       <div class="modal-content">
         <div class="modal-header">
           <h5 class="modal-title">Cadastro de Parceiros</h5>
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
         <div class="modal-body ">
-            <div class="accordion  " id="accordionExample">
+            <div class="accordion " id="accordionExample">
                 <div class="accordion-item">
                   <h2 class="accordion-header " id="headingOne">
-                    <button class="col-sm-12 btn btn-primary" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne" textalign="left">
+                    <button class="col-sm-12 btn btn-primary" type="button" 
+                            data-bs-toggle="collapse" data-bs-target="#collapseOne" 
+                            aria-expanded="true" aria-controls="collapseOne">
                       Pessoas Fisícas/Jurídicas
                     </button>
                   </h2>
-                  <div id="collapseOne" class="accordion-collapse collapse show " aria-labelledby="headingOne" data-bs-parent="#accordionExample">
+                  <div id="collapseOne" class="accordion-collapse collapse " aria-labelledby="headingOne" data-bs-parent="#accordionExample">
                     <div class="accordion-body">
                       <!--Trecho Pessoas Fisicas/Juridicas-->
                       <div class="form-group row">
