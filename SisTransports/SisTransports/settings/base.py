@@ -47,6 +47,7 @@ INSTALLED_APPS = [
     'enderecos',
     'contatos',
     'parceiros',
+    'operacional',
 ]
 
 MIDDLEWARE = [
