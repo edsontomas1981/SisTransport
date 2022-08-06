@@ -11,51 +11,6 @@
 {% endblock %}
 
 {%block 'js'%}
-<script>
-  $('form').on('submit', function(e) {
-    let url = '/salva_parceiro/'
-    let postData = $('form').serialize();
-    
-    $.ajax({
-      url: url,
-      type: 'POST',
-      data: postData,
-
-      success: function(response) {
-        // TODO
-        console.log(response);
-        adicionaContatoNaTabela(response)
-        // addItem(response)
-      },
-      error: function(xhr) {
-        console.log('Erro');
-      },
-      complete: function() {
-        // closeModal()
-      }
-    });
-    e.preventDefault();
-  });
-  function adicionaContatoNaTabela(response) {
-    const data = response.dados[0];
-    const template = '<tr>' +
-            '<td>' + data.id + '</td>'+
-            '<td>' + data.nome+ '</td>'+
-            '<td>' + data.cargo + '</td>' +
-            '<td>' + data.tipo + '</td>' +
-            '<td>' + data.fone_email_etc +'</td>' +
-        '</tr>'
-  
-    $('table tbody').append(template)
-  };
-  
-  function closeModal() {
-    $('#myModal').modal('hide');
-    // Limpa os campos
-    $('#id_first_name').val('');
-    $('#id_last_name').val('');
-    $('#id_email').val('');
-  }
-
-</script>
+<script src="{% static 'js/meusJS/botoes.js' %}"></script>
+<script src="{% static 'js/meusJS/contato.js' %}"></script>
 {% endblock 'js' %}
