@@ -1,0 +1,194 @@
+
+{% load static %}
+{% load bootstrap %}
+<div>
+<form method="POST" action={% url 'salva_parceiro'%}>{% csrf_token %}
+
+<div class="modal" id="mdlCadParceiros" tabindex="-1"data-bs-backdrop="static" 
+    data-bs-keyboard="false" aria-labelledby="staticBackdropLabel" 
+    aria-hidden="true">
+    <div class="modal-dialog modal-xl" >
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Cadastro de Parceiros</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body ">
+            <div class="accordion " id="accordionExample">
+                <div class="accordion-item">
+                  <h2 class="accordion-header " id="headingOne">
+                    <button class="col-sm-12 btn btn-primary" type="button" 
+                            data-bs-toggle="collapse" data-bs-target="#collapseOne" 
+                            aria-expanded="true" aria-controls="collapseOne">
+                      Pessoas Fisícas/Jurídicas
+                    </button>
+                  </h2>
+                  <div id="collapseOne" class="accordion-collapse collapse " aria-labelledby="headingOne" data-bs-parent="#accordionExample">
+                    <div class="accordion-body">
+                      <!--Trecho Pessoas Fisicas/Juridicas-->
+                      <div class="form-group row">
+                        <div class="col-sm-7 mb-3 form-group">
+                            <input type="text" class="form-control form-control-sm" 
+                            placeholder="Cnpj/Cpf" name="cnpj_cpf" id="cnpj" onblur="consultaCnpj();">
+                        </div>
+                        <div class="col-sm-5 mb-3 form-group">
+                            <input type="text" class="form-control form-control-sm" 
+                            placeholder="Inscrição Estadual" name="insc_est" id="insc_est">
+                        </div>
+                        <div class="col-sm-6 mb-3 form-group">
+                            <input type="text" class="form-control form-control-sm" 
+                            placeholder="Nome/Razão Social" name="razao" id="razao">
+                        </div>
+                        <div class="col-sm-6 mb-3 form-group">
+                            <input type="text" class="form-control form-control-sm" 
+                            placeholder="Nome Fantasia" name="fantasia" id="fantasia">
+                        </div>
+                        <div class="col-sm-12 mb-3 form-group">
+                            <textarea class="form-control form-control-sm" 
+                            id="obs" name="obs" rows="3" placeholder="Observação" ></textarea>
+                        </div> 
+                    </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="accordion-item">
+                  <h2 class="accordion-header" id="headingTwo">
+                    <button class="col-sm-12 collapsed btn btn-primary" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                        Endereço
+                    </button>
+                  </h2>
+                  <div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo" data-bs-parent="#accordionExample">
+                    <div class="accordion-body">
+                        <div class="form-group row mb-3">
+                            <div class="col-sm-4 mb-3 form-group">
+                                <input type="text" class="form-control form-control-sm" 
+                                placeholder="Cep" name="cep" id="cep">
+                            </div>
+                            <div class="col-sm-8 mb-3 form-group">
+                                <input type="text" class="form-control form-control-sm" 
+                                placeholder="Rua" name="rua" id="rua">
+                            </div>
+                            <div class="col-sm-2 mb-3 form-group">
+                                <input type="text" class="form-control form-control-sm" 
+                                placeholder="Nº" name="numero" id="numero">
+                            </div>
+                            <div class="col-sm-4 mb-3 form-group">
+                                <input type="text" class="form-control form-control-sm" 
+                                placeholder="Complemento" name="complemento" id="complemento">
+                            </div>
+                            <div class="col-sm-6 mb-3 form-group">
+                                <input type="text" class="form-control form-control-sm" 
+                                placeholder="Bairro" name="bairro" id="bairro">
+                            </div>
+                            <div class="col-sm-9 mb-3 form-group">
+                                <input type="text" class="form-control form-control-sm" 
+                                placeholder="Cidade" name="cidade" id="cidade">
+                            </div>
+                            <div class="col-sm-3 mb-3 form-group">
+                                <input type="text" class="form-control form-control-sm" 
+                                placeholder="UF" name="uf" id="uf">
+                                <input type="text" class="form-control form-control-sm" 
+                                placeholder="UF" name="podepah" id="podepah">
+                            </div>
+                        </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="accordion-item">
+                  <h2 class="accordion-header" id="headingThree">
+                    <button class="col-sm-12 collapsed btn btn-primary" type="button" data-bs-toggle="collapse" data-bs-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+                      Contatos
+                    </button>
+                  </h2>
+                  <div id="collapseThree" class="accordion-collapse collapse" aria-labelledby="headingThree" data-bs-parent="#accordionExample">
+                    <div class="accordion-body">
+                        <div class="form-group row">
+                            <div class="col-sm-2 mb-3 form-group">
+                                <select type="text" class="form-select form-control-sm"
+                                name="tipo_contato" id="tipo_contato">
+                                    <option value="1">Telefone</option>
+                                    <option value="2">Celular</option>
+                                    <option value="3">Email</option>
+                                    <option value="4">Site</option>
+                                    <option value="5">Facebook</option>
+                                    <option value="6">Twitter</option>
+                                    <option value="7">Instagram</option>
+                                    <option value="8">Whatsapp</option>
+                                    <option value="9">Skype</option>
+                                    <option value="10">Outro</option>
+                                </select>
+                            </div>
+                            <div class="col-sm-3 mb-3 form-group">
+                                <input type="text" class="form-control form-control-sm" 
+                                placeholder="Cargo" name="cargo" id="cargo">
+                            </div>
+                            <div class="col-sm-3 mb-3 form-group">
+                                <input type="text" class="form-control form-control-sm" 
+                                placeholder="Nome" name="nome" id="nome">
+                            </div>
+                            <div class="col-sm-2 mb-3 form-group">
+                                <input type="text" class="form-control form-control-sm" 
+                                placeholder="Contato" name="contato" id="contato">
+                            </div>                                                      
+                            <div class="col-sm-2 m  b-3 form-group" >
+                                <div class="custom-control custom-switch mt-2" align="right">
+                                    <input type="checkbox" class="custom-control-input" id="envio" name="envio">
+                                    <label class="custom-control-label" for="envio">Enviar emails</label>
+                                  </div>
+                            </div>
+                            <div class="col-sm-12 mt-4 mb-2" align="right">
+                              <div class="form-group">
+                                <input type="hidden" class="form-control form-control-sm" id="metodo" name="metodo">
+                                <input type="submit" class= "btn btn-primary form-control-sm " 
+                                id="incluiContato" name="incluiContato" value="Incluir" onclick="metodoIncluir();">
+                              </div>
+                            </div>
+                            <div class="col-sm-12 mb-3 form-group" >
+                                <h4 class="card-title">Contatos</h4>
+                                <div class="card">  
+                                  <div class="table-responsive">
+                                      <table class="table table-striped">
+                                      <thead>
+                                          <tr>
+                                          <th>
+                                              Id
+                                          </th>
+                                          <th>
+                                              Nome
+                                          </th>
+                                          <th>
+                                              Cargo
+                                          </th>
+                                          <th>
+                                              Tipo
+                                          </th>
+                                          <th>
+                                              Contato
+                                          </th>
+                                          </tr>
+                                      </thead>
+                                      <tbody>
+                                      </tbody>
+                                      </table>
+                                  </div>
+                                </div>
+                            </div>
+                        </div>                        
+                    </div>
+                  </div>
+                </div>
+              </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
+          <input type="submit" class="btn btn-primary" id="salvaParceiro" name="salvaParceiro" value="Salvar"></input>
+        </div>
+      </div>
+    </div>
+  </div>
+</form>
+</div>
+
+
+
+

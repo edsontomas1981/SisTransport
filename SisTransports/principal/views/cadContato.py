@@ -11,6 +11,8 @@ def cad_contato(request):
     if request.method == 'GET':
         return render(request, 'modalCadParceiros.html')
     elif request.method == 'POST':
+        print(request)
+        print('==================================================================')
         contato=Contatos()
         #tipo=Tipo_contatos.objects.get(descricao_contato=request.POST['tipo'])
         contato.nome=request.POST['nome']

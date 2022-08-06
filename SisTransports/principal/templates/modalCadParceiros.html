@@ -7,18 +7,20 @@
         data-bs-target="#mdlCadParceiros">
     Launch demo modal
 </button>
-{% include 'parceiros.html'%}   
+{% include 'cadastroParceiros.html'%}   
 {% endblock %}
+
 {%block 'js'%}
-{% block js %}
 <script>
   $('form').on('submit', function(e) {
     let url = '/salva_parceiro/'
     let postData = $('form').serialize();
+    
     $.ajax({
       url: url,
       type: 'POST',
       data: postData,
+
       success: function(response) {
         // TODO
         console.log(response);
@@ -56,6 +58,4 @@
   }
 
 </script>
-
-{% endblock js %}
-{% endblock %}
+{% endblock 'js' %}

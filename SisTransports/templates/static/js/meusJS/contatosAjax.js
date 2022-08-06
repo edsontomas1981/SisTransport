@@ -26,3 +26,9 @@ var getCookie = function (name) {
       }
     }
   });
+
+  function metodoIncluir(){
+    let metodo = $('#incluiContato').val();
+    metodo.val=""
+    metodo.val="incluiContato";
+  }
