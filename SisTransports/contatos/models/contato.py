@@ -1,5 +1,6 @@
 from django.db import models
 from .tipos import Tipo_contatos
+from parceiros.models import Parceiros
 
 class Contatos (models.Model):
     tipo=models.ForeignKey(Tipo_contatos,on_delete=models.CASCADE)# define qual o tipo de contato pode ser email, telefone, etc
@@ -7,6 +8,7 @@ class Contatos (models.Model):
     nome=models.CharField(max_length=50)# define o nome do contato 
     cargo=models.CharField(max_length=50)# define o cargo do contato 
     envio=models.BooleanField(default=False)# define se o contato receberá será envios de email ou não
+    parceiro_fk=models.ForeignKey(Parceiros,on_delete=models.CASCADE,default=1 )# define qual o parceiro que o contato pertence
     
     def to_dict(self):
         return{
