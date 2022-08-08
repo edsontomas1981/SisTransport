@@ -1,11 +1,40 @@
-// Escutar qual botao foi clicado e chamar a funcao de acordo com o botao clicado
-function limpaTabela() {
-    let td = document.getElementsByTagName("td");
-    for (let i = 0; i < td.length; i++) {
-        td[i].innerHTML = '';
-    }
+
+function msgContato(){
+    $("#btnContato").on("click" ,
+    alert("Antes de adionar um contato, salve o parceiro!"));
 }
 
+function formDesabilitaEdicao() {
+    $('#salvaParceiro').val('Salvar');
+    $("#btnContato").attr("disabled", true);
+
+}
+
+function formHabilitaEdicao() {
+    $('#salvaParceiro').val('Salvar');
+    $("#btnContato").attr("disabled", false);
+}
+
+function adicionaContatoNaTabela(response) {
+    const data = response.contato;
+    let template
+    for (let i = 0; i < data.length; i++) {
+        console.log('adiciona')
+        template = '<tr id="tr" >' +
+            '<td>' + data[i].id + '</td>' +
+            '<td>' + data[i].nome + '</td>' +
+            '<td>' + data[i].cargo + '</td>' +
+            '<td>' + data[i].tipo + '</td>' +
+            '<td>' + data[i].fone_email_etc + '</td>' +
+            '</tr>'
+
+        $('#tabela tbody').append(template)
+    }
+};
+
+function limpaTabelaContatos() {
+    $('#tabela td').remove();
+}
 
 function resetaForm() {
     $('#salvaParceiro').val('Cadastrar');
@@ -22,13 +51,13 @@ function resetaForm() {
     $('#cidade').val('');
     $('#uf').val('');
     //Contatos
-    $("#idTabela tr").remove();
-
+    limpaTabelaContatos();
+    
 }
 
 function preencheCamposCnpjWs(response) {
+    formDesabilitaEdicao();
     $('#razao').val(response.nome);
-    $('#nome').val(response.fantasia);
     $('#logradouro').val(response.logradouro);
     $('#fantasia').val(response.fantasia);
     $('#cep').val(response.cep);
@@ -38,23 +67,6 @@ function preencheCamposCnpjWs(response) {
     $('#complemento').val(response.complemento);
     $('#cidade').val(response.municipio);
     $('#uf').val(response.uf);
-}
-
-function preencheCamposCnpjBd(response) {
-    $('#cnpj').val(response.cnpj_cpf);
-    $('#razao').val(response.raz_soc);
-    $('#fantasia').val(response.nome_fantasia);
-    $('#insc_est').val(response.insc_est);
-    $('#obs').val(response.observacao);
-    //Endereco
-    $('#cep').val(response.endereco_fk.cep);
-    $('#rua').val(response.endereco_fk.logradouro);
-    $('#numero').val(response.endereco_fk.numero);
-    $('#bairro').val(response.endereco_fk.bairro);
-    $('#complemento').val(response.endereco_fk.complemento);
-    $('#cidade').val(response.endereco_fk.cidade);
-    $('#uf').val(response.endereco_fk.uf);
-    //Contatos
 
 }
 
@@ -62,21 +74,18 @@ function consultaCnpjWs() {
     // Aqui recuperamos o cnpj preenchido do campo e usamos uma expressão regular 
     //para limpar da string tudo aquilo que for diferente de números
     var cnpj = $('#cnpj').val().replace(/[^0-9]/g, '');
-    console.log('WS')
-
+    
     // Aqui rodamos o ajax para a url da API concatenando o número do CNPJ na url
     $.ajax({
         url: 'https://www.receitaws.com.br/v1/cnpj/' + cnpj,
         method: 'GET',
         dataType: 'jsonp', // Em requisições AJAX para outro domínio é necessário usar o formato "jsonp" que é o único aceito pelos navegadores por questão de segurança
         complete: function(xhr) {
-
             // Aqui recuperamos o json retornado
             response = xhr.responseJSON;
 
             // Na documentação desta API tem esse campo status que retorna "OK" 
             //caso a consulta tenha sido efetuada com sucesso
-
             // Agora preenchemos os campos com os valores retornados
             if (response.status == 'OK') {
                 preencheCamposCnpjWs(response);
@@ -86,22 +95,41 @@ function consultaCnpjWs() {
             }
         }
     });
-
+    formDesabilitaEdicao();
 }
 
-function verificaCnpjBd(url, dadosForm) {
-    console.log('BD')
+function preencheCamposCnpjBd(response) {
+    formHabilitaEdicao();
+    $('#idParceiro').val(response.dados[0].id)
+    $('#cnpj').val(response.dados[0].cnpj_cpf);
+    $('#razao').val(response.dados[0].raz_soc);
+    $('#fantasia').val(response.dados[0].nome_fantasia);
+    $('#insc_est').val(response.dados[0].insc_est);
+    $('#obs').val(response.dados[0].observacao);
+    //Endereco
+    $('#cep').val(response.dados[0].endereco_fk.cep);
+    $('#rua').val(response.dados[0].endereco_fk.logradouro);
+    $('#numero').val(response.dados[0].endereco_fk.numero);
+    $('#bairro').val(response.dados[0].endereco_fk.bairro);
+    $('#complemento').val(response.dados[0].endereco_fk.complemento);
+    $('#cidade').val(response.dados[0].endereco_fk.cidade);
+    $('#uf').val(response.dados[0].endereco_fk.uf);
+    //Contatos
+    adicionaContatoNaTabela(response)
+
+}
+function verificaCnpjBd() {
+    let url = '/busca_parceiro/'
+    let postData = $('form').serialize();
     $.ajax({
         url: url,
         type: 'POST',
-        data: dadosForm,
+        data: postData,
         success: function(response) {
             // se o cnpj existir ele altera o form para edição e nao cadastro
             console.log(response)
             if (response.dados.length > 0) {
-                $('#salvaParceiro').val('Editar');
-                preencheCamposCnpjBd(response.dados[0]);
-                adicionaContatoNaTabela(response);
+                preencheCamposCnpjBd(response);
             } else {
                 consultaCnpjWs();
             }
@@ -118,10 +146,7 @@ function verificaCnpjBd(url, dadosForm) {
 // verifica se o cnpj ja existe no banco de dados
 $('#cnpj').on('blur', function(e) {
     resetaForm();
-    $('#acaoForm').val('nao');
-    let url = '/busca_parceiro/'
-    let postData = $('form').serialize();
-    verificaCnpjBd(url, postData);
+    verificaCnpjBd();
     e.preventDefault();
 });
 
@@ -135,8 +160,8 @@ $('#incluiContato').on('click', function(e) {
         data: postData,
         success: function(response) {
             // TODO
-            adicionaContatoNaTabela(response)
-                // addItem(response)
+            limpaTabelaContatos();  
+            verificaCnpjBd();
         },
         error: function(xhr) {
             console.log('Erro');
@@ -158,8 +183,9 @@ $('#salvaParceiro').on('click', function(e) {
         data: postData,
         success: function(response) {
             // TODO
-            mensagem(response)
-                // addItem(response)
+            alert(response.message)
+            formHabilitaEdicao();
+            verificaCnpjBd();
         },
         error: function(xhr) {
             console.log('Erro');
@@ -171,23 +197,7 @@ $('#salvaParceiro').on('click', function(e) {
     e.preventDefault();
 });
 
-function adicionaContatoNaTabela(response) {
-    const data = response.contato;
-    let template
-    for (let i = 0; i < data.length; i++) {
-        template = '<tr id="tr" >' +
-            '<td>' + data[i].id + '</td>' +
-            '<td>' + data[i].nome + '</td>' +
-            '<td>' + data[i].cargo + '</td>' +
-            '<td>' + data[i].tipo + '</td>' +
-            '<td>' + data[i].fone_email_etc + '</td>' +
-            '</tr>'
 
-        $('table tbody').append(template)
-    }
-
-
-};
 
 function closeModal() {
     $('#myModal').modal('hide');
@@ -195,10 +205,4 @@ function closeModal() {
     $('#id_first_name').val('');
     $('#id_last_name').val('');
     $('#id_email').val('');
-}
-
-function mensagem(response) {
-    const msg = response;
-    console.log(msg)
-    alert(msg.message);
 }

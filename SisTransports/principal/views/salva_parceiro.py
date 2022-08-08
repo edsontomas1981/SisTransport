@@ -42,7 +42,9 @@ def salva_parceiro(request):
         if request.POST.get('acaoForm')=='incluiContato':
             print(request.POST)
             contato=Contatos()
+            parceiro=Parceiros.objects.filter(id=request.POST.get('idParceiro')).get()
             tipo_contato=Tipo_contatos.objects.filter(id=1).get()
+            contato.parceiro_fk=parceiro
             contato.tipo=tipo_contato
             contato.fone_email_etc=request.POST.get('contato')
             contato.nome=request.POST.get('nome')       
