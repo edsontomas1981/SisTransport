@@ -20,8 +20,31 @@ def salvaParceiro(request,endereco):
     parceiro.endereco_fk=endereco
     parceiro.save()
 
+def alteraParceiro(request,endereco):
+    parceiro=Parceiros.objects.filter(cnpj_cpf=request.POST.get('cnpj_cpf')).get()
+    parceiro.cnpj_cpf=request.POST.get('cnpj_cpf')
+    parceiro.insc_est=request.POST.get('insc_est')
+    parceiro.raz_soc=request.POST.get('razao')
+    parceiro.nome_fantasia=request.POST.get('fantasia')
+    parceiro.observacao=request.POST.get('obs')
+    parceiro.endereco_fk=endereco
+    parceiro.save()
+
+
 def salvaEndereco(request):
     endereco=Enderecos()
+    endereco.cep=request.POST.get('cep')
+    endereco.logradouro=request.POST.get('rua')
+    endereco.numero=request.POST.get('numero')
+    endereco.complemento=request.POST.get('complemento')
+    endereco.bairro=request.POST.get('bairro')
+    endereco.cidade=request.POST.get('cidade')
+    endereco.uf=request.POST.get('uf')
+    endereco.save()
+    return endereco
+
+def alteraEndereco(request):
+    endereco=Enderecos.objects.filter(id=request.POST.get('idEndereco')).get()
     endereco.cep=request.POST.get('cep')
     endereco.logradouro=request.POST.get('rua')
     endereco.numero=request.POST.get('numero')
@@ -68,8 +91,12 @@ def salva_parceiro(request):
                 return JsonResponse({'status': 'error', 'message': 'Preencha todos os campos'})
             else:
                 if Parceiros.objects.filter(cnpj_cpf=request.POST.get('cnpj_cpf')).exists():
-                    return JsonResponse({'status': 'error', 'message': 'CNPJ já cadastrado'})
+                    endereco=alteraEndereco(request)
+                    parceiro=alteraParceiro(request,endereco)
+                    return JsonResponse({'status': 'success', 
+                                         'message': 'Parceiro alterado com sucesso'})
                 else:
                     endereco=salvaEndereco(request)
                     parceiro=salvaParceiro(request,endereco)
-                    return JsonResponse({'status': 'success', 'message': 'Parceiro cadastrado com sucesso'})
+                    return JsonResponse({'status': 'success', 
+                                         'message': 'Parceiro cadastrado com sucesso'})

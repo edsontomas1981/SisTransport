@@ -1,25 +1,23 @@
-
-function msgContato(){
-    $("#btnContato").on("click" ,
-    alert("Antes de adionar um contato, salve o parceiro!"));
-}
+var editaContato 
 
 function formDesabilitaEdicao() {
-    $('#salvaParceiro').val('Salvar');
+    $('#salvaParceiro').val('Cadastrar');
     $("#btnContato").attr("disabled", true);
+    editaContato = false;
+
 
 }
 
 function formHabilitaEdicao() {
-    $('#salvaParceiro').val('Salvar');
+    $('#salvaParceiro').val('Editar');
     $("#btnContato").attr("disabled", false);
+    editaContato = true;
 }
 
 function adicionaContatoNaTabela(response) {
     const data = response.contato;
     let template
     for (let i = 0; i < data.length; i++) {
-        console.log('adiciona')
         template = '<tr id="tr" >' +
             '<td>' + data[i].id + '</td>' +
             '<td>' + data[i].nome + '</td>' +
@@ -27,7 +25,6 @@ function adicionaContatoNaTabela(response) {
             '<td>' + data[i].tipo + '</td>' +
             '<td>' + data[i].fone_email_etc + '</td>' +
             '</tr>'
-
         $('#tabela tbody').append(template)
     }
 };
@@ -35,7 +32,6 @@ function adicionaContatoNaTabela(response) {
 function limpaTabelaContatos() {
     $('#tabela td').remove();
 }
-
 function resetaForm() {
     $('#salvaParceiro').val('Cadastrar');
     $('#razao').val('');
@@ -43,6 +39,7 @@ function resetaForm() {
     $('#insc_est').val('');
     $('#obs').val('');
     //Endereco
+    $('#idEndereco').val('');
     $('#cep').val('');
     $('#rua').val('');
     $('#numero').val('');
@@ -107,6 +104,7 @@ function preencheCamposCnpjBd(response) {
     $('#insc_est').val(response.dados[0].insc_est);
     $('#obs').val(response.dados[0].observacao);
     //Endereco
+    $('#idEndereco').val(response.dados[0].endereco_fk.id);
     $('#cep').val(response.dados[0].endereco_fk.cep);
     $('#rua').val(response.dados[0].endereco_fk.logradouro);
     $('#numero').val(response.dados[0].endereco_fk.numero);
@@ -197,12 +195,22 @@ $('#salvaParceiro').on('click', function(e) {
     e.preventDefault();
 });
 
+$('#btnClose').on('click', function(e) {
+    closeModal();
+    e.preventDefault();
+})  
 
+$('#divContato').on('click',  function(e) {
+    if (!editaContato) {
+        alert("Para adicionar um contato, é necessário primeiro salvar o parceiro.")
+    }
+})
 
 function closeModal() {
-    $('#myModal').modal('hide');
+    $('#mdlCadParceiros').modal('hide');
+    
     // Limpa os campos
-    $('#id_first_name').val('');
-    $('#id_last_name').val('');
-    $('#id_email').val('');
+    $('#cnpj').val('');
+    $('#idParceiro').val('');
+    resetaForm();
 }
