@@ -1,11 +1,9 @@
-var editaContato 
+var editaContato
 
 function formDesabilitaEdicao() {
     $('#salvaParceiro').val('Cadastrar');
     $("#btnContato").attr("disabled", true);
     editaContato = false;
-
-
 }
 
 function formHabilitaEdicao() {
@@ -32,6 +30,7 @@ function adicionaContatoNaTabela(response) {
 function limpaTabelaContatos() {
     $('#tabela td').remove();
 }
+
 function resetaForm() {
     $('#salvaParceiro').val('Cadastrar');
     $('#razao').val('');
@@ -49,7 +48,7 @@ function resetaForm() {
     $('#uf').val('');
     //Contatos
     limpaTabelaContatos();
-    
+
 }
 
 function preencheCamposCnpjWs(response) {
@@ -71,7 +70,7 @@ function consultaCnpjWs() {
     // Aqui recuperamos o cnpj preenchido do campo e usamos uma expressão regular 
     //para limpar da string tudo aquilo que for diferente de números
     var cnpj = $('#cnpj').val().replace(/[^0-9]/g, '');
-    
+
     // Aqui rodamos o ajax para a url da API concatenando o número do CNPJ na url
     $.ajax({
         url: 'https://www.receitaws.com.br/v1/cnpj/' + cnpj,
@@ -116,9 +115,12 @@ function preencheCamposCnpjBd(response) {
     adicionaContatoNaTabela(response)
 
 }
+
 function verificaCnpjBd() {
+    resetaForm();
     let url = '/busca_parceiro/'
     let postData = $('form').serialize();
+
     $.ajax({
         url: url,
         type: 'POST',
@@ -158,7 +160,7 @@ $('#incluiContato').on('click', function(e) {
         data: postData,
         success: function(response) {
             // TODO
-            limpaTabelaContatos();  
+            limpaTabelaContatos();
             verificaCnpjBd();
         },
         error: function(xhr) {
@@ -198,9 +200,9 @@ $('#salvaParceiro').on('click', function(e) {
 $('#btnClose').on('click', function(e) {
     closeModal();
     e.preventDefault();
-})  
+})
 
-$('#divContato').on('click',  function(e) {
+$('#divContato').on('click', function(e) {
     if (!editaContato) {
         alert("Para adicionar um contato, é necessário primeiro salvar o parceiro.")
     }
@@ -208,7 +210,7 @@ $('#divContato').on('click',  function(e) {
 
 function closeModal() {
     $('#mdlCadParceiros').modal('hide');
-    
+
     // Limpa os campos
     $('#cnpj').val('');
     $('#idParceiro').val('');
