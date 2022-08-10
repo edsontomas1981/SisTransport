@@ -1,9 +1,15 @@
 var editaContato
 
+$('form').on('load', function(e){
+    resetaForm();
+    formDesabilitaEdicao();
+
+})
+
 function formDesabilitaEdicao() {
+    editaContato = false;
     $('#salvaParceiro').val('Cadastrar');
     $("#btnContato").attr("disabled", true);
-    editaContato = false;
 }
 
 function formHabilitaEdicao() {
@@ -70,12 +76,12 @@ function consultaCnpjWs() {
     // Aqui recuperamos o cnpj preenchido do campo e usamos uma expressão regular 
     //para limpar da string tudo aquilo que for diferente de números
     var cnpj = $('#cnpj').val().replace(/[^0-9]/g, '');
-
     // Aqui rodamos o ajax para a url da API concatenando o número do CNPJ na url
     $.ajax({
         url: 'https://www.receitaws.com.br/v1/cnpj/' + cnpj,
         method: 'GET',
-        dataType: 'jsonp', // Em requisições AJAX para outro domínio é necessário usar o formato "jsonp" que é o único aceito pelos navegadores por questão de segurança
+        dataType: 'jsonp', // Em requisições AJAX para outro domínio é necessário usar o formato 
+                           //"jsonp" que é o único aceito pelos navegadores por questão de segurança
         complete: function(xhr) {
             // Aqui recuperamos o json retornado
             response = xhr.responseJSON;
@@ -208,11 +214,21 @@ $('#divContato').on('click', function(e) {
     }
 })
 
+$('#btnFechar').on('click', function(e) {
+    closeModal();
+    e.preventDefault();
+})
+
 function closeModal() {
     $('#mdlCadParceiros').modal('hide');
-
     // Limpa os campos
     $('#cnpj').val('');
     $('#idParceiro').val('');
     resetaForm();
+    formDesabilitaEdicao();
+    $('#collapseOne').removeClass('show');
+    $('#collapseTwo').removeClass('show');
+    $('#collapseThree').removeClass('show');
+    editaContato = false
+
 }

@@ -326,9 +326,12 @@
             </a>
             <div class="collapse" id="ui-basic">
               <ul class="nav flex-column sub-menu">
-                <li class="nav-item"> <a class="nav-link" href="pages/ui-features/buttons.html">Vendedores</a></li>
+                <li class="nav-item"> 
+                  <a class="nav-link" data-bs-toggle="modal" 
+                  data-bs-target="#mdlCadParceiros">Parceiros</a>
+                </li>
                 <li class="nav-item"> <a class="nav-link" href="pages/ui-features/dropdowns.html">Clientes</a></li>
-                <li class="nav-item"> <a class="nav-link" href="pages/ui-features/typography.html">Pessoas</a></li>
+                <li class="nav-item"> <a class="nav-link" href="pages/ui-features/typography.html">Vendedores</a></li>
               </ul>
             </div>
           </li>
@@ -428,11 +431,12 @@
                   <div class="row">
                     <div class="col-12">
                       <div class="table-responsive">
-                        {% block 'conteudo' %}{% endblock %}            
+                        {% block 'conteudo' %}{% endblock %}
+                        {% include 'cadastroParceiros.html'%}               
                       </div>
                     </div>
                   </div>
-                  </div>
+                  </div>  
                 </div>
               </div>
             </div>
@@ -479,6 +483,9 @@
   <script src="{% static 'js/Chart.roundedBarCharts.js' %}"></script>
   <!--Meus Js-->
   <script src="{% static 'js/meusJS/cnpj.js' %}"></script>
+  <script src="{% static 'js/meusJS/botoes.js' %}"></script>
+  <script src="{% static 'js/meusJS/contato.js' %}"></script>
+  <script src="{% static 'js/meusJS/parceiros.js' %}"></script>
   <!-- End custom js for this page-->
 </body>
 

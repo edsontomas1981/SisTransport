@@ -4,16 +4,7 @@
 <div>
 
 <form method="POST" id="formParceiros" >
-  {% csrf_token %}
-  
-  {% if messages %}
-    {% for message in messages %}
-        <div class="alert {{message.tags}}">
-            {{message}}
-        </div>
-    {% endfor %}
-  {% endif %}
-  
+{% csrf_token %}
 <div class="modal" id="mdlCadParceiros" tabindex="-1"data-bs-backdrop="static" 
     data-bs-keyboard="false" aria-labelledby="staticBackdropLabel" 
     aria-hidden="true">
@@ -33,7 +24,8 @@
                       Pessoas Fisícas/Jurídicas
                     </button>
                   </h2>
-                  <div id="collapseOne" class="accordion-collapse collapse " aria-labelledby="headingOne" data-bs-parent="#accordionExample">
+                  <div id="collapseOne" class="accordion-collapse collapse " 
+                      aria-labelledby="headingOne" data-bs-parent="#accordionExample" >
                     <div class="accordion-body">
                       <!--Trecho Pessoas Fisicas/Juridicas-->
                       <div class="form-group row">
@@ -113,7 +105,7 @@
                   <h2 class="accordion-header" id="headingThree">
                     <button class="col-sm-12 collapsed btn btn-primary" id="btnContato" type="button" 
                     data-bs-toggle="collapse" data-bs-target="#collapseThree" 
-                    aria-expanded="false" aria-controls="collapseThree">
+                    aria-expanded="false" aria-controls="collapseThree" disabled="true">
                       Contatos
                     </button>
                   </h2>
@@ -197,7 +189,7 @@
               </div>
         </div>
         <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
+          <button type="button" id="btnFechar" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
           <input type="submit" class="btn btn-primary" id="salvaParceiro" name="salvaParceiro" value="Salvar"></input>
         </div>
       </div>
