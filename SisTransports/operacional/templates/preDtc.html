@@ -1,0 +1,84 @@
+{% extends 'base.html'%}
+
+{% load static %}
+
+{% block 'conteudo'%}
+    <ul class="nav nav-pills nav-pills-primary" id="pills-tab" role="tablist">
+        <li class="nav-item">
+            <a class="nav-link active" id="pills-home-tab" 
+            data-bs-toggle="pill" href="#pills-home" 
+            role="tab" aria-controls="pills-home" 
+            aria-selected="true">
+                <i class="ti-write"></i><span> DTC</span>
+            </a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" id="pills-profile-tab" data-bs-toggle="pill" 
+            href="#pills-profile" role="tab" aria-controls="pills-profile" 
+            aria-selected="false"><i class="ti-truck"></i> Coleta </a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" id="pills-profile-tab" data-bs-toggle="pill" 
+            href="#pills-profile" role="tab" aria-controls="pills-profile" 
+            aria-selected="false"><i class="ti-ticket"></i> Dados Nf</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" id="pills-profile-tab" data-bs-toggle="pill" 
+            href="#pills-profile" role="tab" aria-controls="pills-profile" 
+            aria-selected="false"><i class="ti-money"></i> Frete</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" id="pills-profile-tab" data-bs-toggle="pill" 
+            href="#pills-profile" role="tab" aria-controls="pills-profile" 
+            aria-selected="false"><i class="ti-briefcase"></i> Redepacho</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" id="pills-profile-tab" data-bs-toggle="pill" 
+            href="#pills-profile" role="tab" aria-controls="pills-profile" 
+            aria-selected="false"><i class="ti-map"></i> Rastreamento</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" id="pills-profile-tab" data-bs-toggle="pill" 
+            href="#pills-profile" role="tab" aria-controls="pills-profile" 
+            aria-selected="false"><i class="ti-files"></i> Dados Adicionais</a>
+        </li>                    
+    </ul>
+
+    <div class="tab-content">
+        <div class="tab-pane fade show active" 
+        id="home-1" role="tabpanel" aria-labelledby="home-tab">
+          <div class="media">
+            <div class="media-body">
+                {% include 'pedidoDtc.html' %}
+            </div>
+          </div>
+        </div>
+        <div class="tab-pane fade" id="profile-1" role="tabpanel" aria-labelledby="profile-tab">
+          <div class="media">
+            <img class="me-3 w-25 rounded" src="../../../../images/faces/face12.jpg" alt="sample image">
+            <div class="media-body">
+              <h4 class="mt-0">John Doe</h4>
+              <p>
+                  Fail most room even gone her end like. Comparison dissimilar unpleasant six compliment two unpleasing 
+                  any add. Ashamed my company thought wishing colonel it prevent he in. Pretended residence are something 
+                  far engrossed old off.
+              </p>
+            </div>
+          </div>
+        </div>
+        <div class="tab-pane fade" id="contact-1" role="tabpanel" aria-labelledby="contact-tab">
+          <h4>Contact us </h4>
+          <p>
+            Feel free to contact us if you have any questions!
+          </p>
+          <p>
+            <i class="ti-headphone-alt text-info"></i>
+            +123456789
+          </p>
+          <p>
+            <i class="ti-email text-success"></i>
+            contactus@example.com
+          </p>
+        </div>
+      </div>
+{% endblock %}  
