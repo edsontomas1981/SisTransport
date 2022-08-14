@@ -1,10 +1,74 @@
 var editaContato
 
-$('form').on('load', function(e){
+function buscaParceiro(cnpj) {
+    let url = '/busca_parceiro/'
+    let postData = $('#remDest').serialize();
+    postData = postData + '&cnpj_cpf=' + cnpj;
+
+    $.ajax({
+        url: url,
+        type: 'POST',
+        data: postData,
+        success: function(response) {
+            // se o cnpj existir ele altera o form para edição e nao cadastro
+            if (response.dados.length > 0) {
+                return response.dados
+            } else {
+                buscaCnpjWs(cnpj);
+                return response
+            }
+
+        },
+        error: function(xhr) {
+            console.log('Erro');
+        },
+        complete: function() {
+            // closeModal()
+        }
+    });
+}
+
+function buscaCnpjWs(cnpj) {
+    // Aqui recuperamos o cnpj preenchido do campo e usamos uma expressão regular 
+    //para limpar da string tudo aquilo que for diferente de números
+    // var cnpj = $('#cnpj').val().replace(/[^0-9]/g, '');
+    // Aqui rodamos o ajax para a url da API concatenando o número do CNPJ na url
+    console.log("WS")
+    $.ajax({
+        url: 'https://www.receitaws.com.br/v1/cnpj/' + cnpj,
+        method: 'GET',
+        dataType: 'jsonp', // Em requisições AJAX para outro domínio é necessário usar o formato 
+        //"jsonp" que é o único aceito pelos navegadores por questão de segurança
+        complete: function(xhr) {
+            // Aqui recuperamos o json retornado
+            response = xhr.responseJSON;
+
+            // Na documentação desta API tem esse campo status que retorna "OK" 
+            //caso a consulta tenha sido efetuada com sucesso
+            // Agora preenchemos os campos com os valores retornados
+            if (response.status == 'OK') {
+                preencheCamposCnpjWs(response);
+                // Aqui exibimos uma mensagem caso tenha ocorrido algum erro
+            } else {
+                alert(response.message); // Neste caso estamos imprimindo a mensagem que a própria API retorna
+            }
+        }
+    });
+    formDesabilitaEdicao();
+}
+
+$('form').on('load', function(e) {
     resetaForm();
     formDesabilitaEdicao();
 
-})
+});
+
+$('#cnpj').on('blur', function(e) {
+    console.log("Primeiro Teste")
+    resetaForm();
+    verificaCnpjBd();
+    e.preventDefault();
+});
 
 function formDesabilitaEdicao() {
     editaContato = false;
@@ -28,10 +92,10 @@ function adicionaContatoNaTabela(response) {
             '<td>' + data[i].cargo + '</td>' +
             '<td>' + data[i].tipo + '</td>' +
             '<td>' + data[i].fone_email_etc + '</td>' +
-            '<td>' + '<button type="button" class="btn btn-success btn-rounded btn-icon">'+
+            '<td>' + '<button type="button" class="btn btn-success btn-rounded btn-icon">' +
             '<i class="ti-pencil-alt2"></i></button>' + '</td>' +
-            '<td>' + '<button type="button" class="btn btn-danger btn-rounded btn-icon">'+
-            '<i class="ti-eraser "></i>'+ '</button>' + '</td>' +
+            '<td>' + '<button type="button" class="btn btn-danger btn-rounded btn-icon">' +
+            '<i class="ti-eraser "></i>' + '</button>' + '</td>' +
             '</tr>'
         $('#tabela tbody').append(template)
     }
@@ -85,7 +149,7 @@ function consultaCnpjWs() {
         url: 'https://www.receitaws.com.br/v1/cnpj/' + cnpj,
         method: 'GET',
         dataType: 'jsonp', // Em requisições AJAX para outro domínio é necessário usar o formato 
-                           //"jsonp" que é o único aceito pelos navegadores por questão de segurança
+        //"jsonp" que é o único aceito pelos navegadores por questão de segurança
         complete: function(xhr) {
             // Aqui recuperamos o json retornado
             response = xhr.responseJSON;
@@ -138,6 +202,7 @@ function verificaCnpjBd() {
         success: function(response) {
             // se o cnpj existir ele altera o form para edição e nao cadastro
             console.log(response)
+            return response
             if (response.dados.length > 0) {
                 preencheCamposCnpjBd(response);
             } else {
@@ -154,11 +219,7 @@ function verificaCnpjBd() {
     });
 }
 // verifica se o cnpj ja existe no banco de dados
-$('#cnpj').on('blur', function(e) {
-    resetaForm();
-    verificaCnpjBd();
-    e.preventDefault();
-});
+
 
 $('#incluiContato').on('click', function(e) {
     $('#acaoForm').val('incluiContato');

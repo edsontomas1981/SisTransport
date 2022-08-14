@@ -22,4 +22,5 @@ def busca_parceiro(request):
             return JsonResponse({'dados': dados ,'contato': contato})
     else:
         contato=[]
-        return JsonResponse({'dados': []})
+        existeCnpj=False
+        return JsonResponse({'dados': [], 'contato': contato, 'existeCnpj': existeCnpj})
