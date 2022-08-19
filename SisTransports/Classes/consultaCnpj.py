@@ -9,15 +9,14 @@ def validaCnpj(cnpj):
     return cnpj.isValid
 
 def validaCnpjCpf(cnpj_cpf):
-    if cnpj_cpf.length == 14:
+    if len(cnpj_cpf) == 14:
        return validaCnpj(cnpj_cpf)
-    elif cnpj_cpf.length == 11:
+    elif len(cnpj_cpf) == 11:
         return validaCpf(cnpj_cpf)
     else:
         return False
     
         
         
-    
 
 

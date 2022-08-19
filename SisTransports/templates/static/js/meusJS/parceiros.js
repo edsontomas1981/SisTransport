@@ -14,7 +14,7 @@ function buscaParceiro(cnpj) {
             if (response.dados.length > 0) {
                 return response.dados
             } else {
-                buscaCnpjWs(cnpj);
+                console.log(buscaCnpjWs(cnpj));
                 return response
             }
 

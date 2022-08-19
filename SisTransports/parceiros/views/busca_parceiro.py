@@ -5,7 +5,7 @@ from contatos.models.contato import Contatos
 from django.template.loader import render_to_string
 from Classes.consultaCnpj import validaCnpjCpf
 from Classes.buscaCnpjWs import cnpjWs
-
+from enderecos.models.endereco import Enderecos
 def busca_parceiro(request):
     if validaCnpjCpf(request.POST.get('cnpj_cpf')):
         if Parceiros.objects.filter(cnpj_cpf=request.POST.get('cnpj_cpf')).exists():
@@ -23,21 +23,48 @@ def busca_parceiro(request):
                 dados = [parceiro.to_dict()]
                 return JsonResponse({'dados': dados ,'contato': contato})
         else:#Buscar cnpj em um webservice
-            return JsonResponse({'dados': [], 'contato': contato})
+            dados=parceiroWs(request)
+            return JsonResponse({'dados': dados})
     else:
+        print()
         contato=[]  
         return JsonResponse({'dados': [], 'contato': contato ,'message':'Cnpj ou Cpf inválidos' })
     
 def parceiroWs(request):
     dados=cnpjWs(request.POST.get('cnpj_cpf'))
+    
+    endereco=Enderecos()
+    endereco.cep=dados['cep']
+    endereco.logradouro=dados['logradouro']
+    endereco.numero=dados['numero']
+    endereco.complemento=dados['complemento']
+    endereco.bairro=dados['bairro']
+    endereco.cidade=dados['municipio']
+    endereco.uf=dados['uf']
+    
     parceiro=Parceiros()
-    parceiro.cnpj_cpf=models.CharField(max_length=18)
-    parceiro.raz_soc=models.CharField(max_length=50)
-    parceiro.nome_fantasia=models.CharField(max_length=50)
-    parceiro.insc_est=models.CharField(max_length=30)
-    parceiro.observacao=models.TextField()
-    parceiro.ativo=models.BooleanField(default=True)
-    endereco_fk=models.ForeignKey(Enderecos, on_delete=models.CASCADE)
+    parceiro.cnpj_cpf=dados['cnpj']
+    parceiro.raz_soc==dados['nome']
+    parceiro.nome_fantasia==dados['fantasia']
+    
+    return response_to_dict(endereco,parceiro)
+
+def response_to_dict(endereco,parceiro):
+    return {
+        'cnpj_cpf': parceiro.cnpj_cpf,
+        'raz_soc': parceiro.raz_soc,
+        'nome_fantasia': parceiro.nome_fantasia,
+        'observacao': '',
+        'endereco_fk':{
+        'cep': endereco.cep,
+        'logradouro': endereco.logradouro,
+        'numero': endereco.numero,
+        'complemento': endereco.complemento,
+        'bairro': endereco.bairro,
+        'cidade': endereco.cidade,
+        'uf': endereco.uf}
+    }
+    
     
     
     
