@@ -15,39 +15,31 @@ def busca_parceiro(request):
                 dados=[parceiro.to_dict()]
                 contatos=Contatos.objects.filter(parceiro_fk_id=parceiro.id)
                 contato=[]
+                print(dados)
                 for c in contatos:
                     contato.append(c.to_dict())
                 return JsonResponse({'dados': dados,'contato':contato})
             else:
                 contato=[]
                 dados = [parceiro.to_dict()]
+                print(dados)
                 return JsonResponse({'dados': dados ,'contato': contato})
         else:#Buscar cnpj em um webservice
-            dados=parceiroWs(request)
+            dadosBrutos=parceiroWs(request)
+            dados=[{'id':0,'cnpj_cpf':dadosBrutos['cnpj'],'raz_soc':dadosBrutos['nome'],
+                    'nome_fantasia':dadosBrutos['fantasia'],'insc_est':'','observacao': '',
+                    'endereco_fk':{'cep':dadosBrutos['cep'],'logradouro':dadosBrutos['logradouro'],
+                    'numero':dadosBrutos['numero'],'complemento':dadosBrutos['complemento'],
+                    'bairro':dadosBrutos['bairro'],'cidade':dadosBrutos['municipio'],
+                    'uf':dadosBrutos['uf']}}]
             return JsonResponse({'dados': dados})
     else:
-        print()
         contato=[]  
         return JsonResponse({'dados': [], 'contato': contato ,'message':'Cnpj ou Cpf inválidos' })
     
 def parceiroWs(request):
     dados=cnpjWs(request.POST.get('cnpj_cpf'))
-    
-    endereco=Enderecos()
-    endereco.cep=dados['cep']
-    endereco.logradouro=dados['logradouro']
-    endereco.numero=dados['numero']
-    endereco.complemento=dados['complemento']
-    endereco.bairro=dados['bairro']
-    endereco.cidade=dados['municipio']
-    endereco.uf=dados['uf']
-    
-    parceiro=Parceiros()
-    parceiro.cnpj_cpf=dados['cnpj']
-    parceiro.raz_soc==dados['nome']
-    parceiro.nome_fantasia==dados['fantasia']
-    
-    return response_to_dict(endereco,parceiro)
+    return dados
 
 def response_to_dict(endereco,parceiro):
     return {
