@@ -1,8 +1,10 @@
+var quemChamouModal
+
 function modal(response) {
     $('#mdlCadParceiros').modal('show');
     $('#collapseOne').addClass('show');
-    let cnpj = response.dados[0].cnpj_cpf.replace(/[^\d]+/g, '');
-    $('#cnpjMdl').val(cnpj);
+    let cnpjModal = response.dados[0].cnpj_cpf.replace(/[^\d]+/g, '');
+    $('#cnpjMdl').val(cnpjModal);
     $('#razaoMdl').val(response.dados[0].raz_soc);
     $('#fantasiaMdl').val(response.dados[0].nome_fantasia);
     let cep = response.dados[0].endereco_fk.cep.replace(/\D/g, '');
@@ -18,8 +20,7 @@ function modal(response) {
 function completaCnpj(response, cnpj, insc, razao, fantasia, cep,
     endereco, numero, complemento, bairro, cidade, uf) {
     if (response.dados[0].id == 0) {
-        modal(response)
-
+        modal(response, cnpj)
 
     } else {
         $('#' + insc).val(response.dados[0].insc_est);
@@ -40,7 +41,7 @@ $('#cnpjRem').on('blur', function(e) {
     busca_parceiro($('#cnpjRem').val(), 'inscRem', 'razaoRem',
         'fantasiaRem', 'cepRem', 'ruaRem', 'numeroRem',
         'complementoRem', 'bairroRem', 'cidadeRem', 'ufRem');
-    $('#cnpjDest').focus();
+    quemChamouModal='cnpjRem'
     e.preventDefault();
 });
 
@@ -74,10 +75,10 @@ $('#cnpjRedesp').on('blur', function(e) {
     e.preventDefault();
 });
 
-$('#mdlCadParceiros').on('hide', function(cnpj) {
-    $('#' + cnpj).focus()
-
+$('#mdlCadParceiros').on('hide', function(e) {
+    $('#'+ quemChamouModal).focus();
 })
+
 
 
 
