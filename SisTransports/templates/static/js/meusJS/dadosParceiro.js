@@ -75,7 +75,8 @@ $('#cnpjRedesp').on('blur', function(e) {
     e.preventDefault();
 });
 
-$('#mdlCadParceiros').on('hide', function(e) {
+$('#mdlCadParceiros').on('hidden.bs.modal', function(e) {
+    console.log('fechou o modal ')
     $('#'+ quemChamouModal).focus();
 })
 

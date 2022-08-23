@@ -31,7 +31,7 @@ function buscaParceiro(cnpj) {
 function buscaCnpjWs(cnpj) {
     // Aqui recuperamos o cnpj preenchido do campo e usamos uma expressão regular 
     //para limpar da string tudo aquilo que for diferente de números
-    // var cnpj = $('#cnpj').val().replace(/[^0-9]/g, '');
+    var cnpj = $('#cnpj').val().replace(/[^0-9]/g, '');
     // Aqui rodamos o ajax para a url da API concatenando o número do CNPJ na url
     console.log("WS")
     $.ajax({
@@ -142,7 +142,7 @@ function preencheCamposCnpjWs(response) {
 
 function consultaCnpjWs() {
     // Aqui recuperamos o cnpj preenchido do campo e usamos uma expressão regular 
-    //para limpar da string tudo aquilo que for diferente de números
+    // para limpar da string tudo aquilo que for diferente de números
     var cnpj = $('#cnpj').val().replace(/[^0-9]/g, '');
     // Aqui rodamos o ajax para a url da API concatenando o número do CNPJ na url
     $.ajax({
@@ -284,16 +284,15 @@ $('#btnFechar').on('click', function(e) {
     e.preventDefault();
 })
 
-function closeModal() {
-    $('#mdlCadParceiros').modal('hide');
-    // Limpa os campos
-    $('#cnpj').val('');
-    $('#idParceiro').val('');
-    resetaForm();
-    formDesabilitaEdicao();
-    $('#collapseOne').removeClass('show');
-    $('#collapseTwo').removeClass('show');
-    $('#collapseThree').removeClass('show');
-    editaContato = false
-
-}
+// function closeModal() {
+//     $('#mdlCadParceiros').modal('hide');
+//     // Limpa os campos
+//     $('#cnpj').val('');
+//     $('#idParceiro').val('');
+//     resetaForm();
+//     formDesabilitaEdicao();
+//     $('#collapseOne').removeClass('show');
+//     $('#collapseTwo').removeClass('show');
+//     $('#collapseThree').removeClass('show');
+//     editaContato = false
+// }
