@@ -1,40 +1,13 @@
-<div class="col-sm-2 mb-3 form-group pl-1 pr-1">
-    <select type="text" class="form-select form-control-sm"
-    name="tipo_contato" id="tipo_contato">
-        <option value="1">Telefone</option>
-        <option value="2">Celular</option>
-        <option value="3">Email</option>
-        <option value="4">Site</option>
-        <option value="5">Facebook</option>
-        <option value="6">Twitter</option>
-        <option value="7">Instagram</option>
-        <option value="8">Whatsapp</option>
-        <option value="9">Skype</option>
-        <option value="10">Outro</option>
-    </select>
-</div>
-
-<div class="col-sm-2 mb-3 form-group pl-0 pr-1">
-    <input type="text" class="form-control form-control-sm" 
-    placeholder="Cargo" name="cargo" id="cargo">
-</div>
-<div class="col-sm-3 mb-3 form-group pl-0 pr-1">
+<div class="col-sm-5 mb-3 form-group pl-3 pr-1">
     <input type="text" class="form-control form-control-sm" 
     placeholder="Nome" name="nome" id="nome">
 </div>
-<div class="col-sm-2 mb-3 form-group pl-0 pr-1">
+<div class="col-sm-5 mb-3 form-group pl-0 pr-1">
     <input type="text" class="form-control form-control-sm" 
     placeholder="Contato" name="contato" id="contato">
 </div>  
-<div class=" col-sm-2 form-check form-check-primary">
-    <label class="form-check-label">
-      <input type="checkbox" class="form-check-input" value=false>
-      Enviar email ?
-    <i class="input-helper"></i></label>
-</div>
-<div class="col-sm-1 mb-3 form-group pl-0 pr-1" >
+<div class="col-sm-2 mt-1 mb-4 form-group pl-0 pr-1">
     <div class="col-sm-12 mb-3 form-group " >
-        <input type="hidden" class="form-control form-control-sm" id="acaoForm" name="acaoForm">
         <input type="submit" class= "btn btn-primary btn-sm icon-btn ms-2 mb-2" 
         id="incluiContato" name="incluiContato" value="+">
     </div>
@@ -45,10 +18,7 @@
                 <table class="table table-striped" id="tabela">
                 <thead>
                     <tr>
-                        <th>Id</th>
                         <th>Nome</th>
-                        <th>Cargo</th>
-                        <th>Tipo</th>
                         <th>Contato</th>
                     </tr>
                 </thead>

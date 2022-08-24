@@ -2,31 +2,33 @@
     <div class="form-group col-6 mb-0 mt-0">
         <div class="form-group row mb-1">
             <div class="col-sm-6 mb-0 pr-0 pl-1 form-group">
-                <input type="text" class="form-control " 
+                <input type="text" class="form-control form-control-sm " 
                 placeholder="Nº Nota Fiscal" name="nf" id="nf">
             </div>            
-            <div class="col-sm-6 mb-0 pr-1 pl-1 form-group">
-                <input type="text" class="form-control " 
+            <div class="col-sm-6 mb-0 pr-1 pl-1 form-group ">
+                <input type="text" class="form-control form-control-sm" 
                 placeholder="Volumes" name="volumes" id="volumes">
             </div>
-            <div class="input-group col-sm-6  mt-1 mb-1 pr-0 pl-1">
-                <input type="text" class="form-control " placeholder="Peso" 
+            <div class="input-group col-sm-4  mt-1 mb-1 pr-0 pl-1">
+                <input type="text" class="form-control  form-control-sm " placeholder="Peso" 
                 aria-label="peso">
             </div>                       
-            <div class="input-group col-sm-6 mb-1 mt-1 pr-0 pl-1">
-                <input type="text" class="form-control " placeholder="M³" 
-                aria-label="m3" aria-describedby="button-addon2">
-                <a class="btn btn-outline-primary " data-bs-toggle="modal" 
-                data-bs-target="#modalCalcM3" id="btnCalcCubagem">Calculadora M³</a>
+            <div class="input-group col-sm-4 mb-1 mt-1 pr-0 pl-1">
+                <div class="input-group">
+                    <input type="text" class="form-control small  form-control-sm" placeholder="M³"
+                        aria-label="Search" aria-describedby="basic-addon2">
+                    <div class="input-group-append">
+                        <a class="btn btn-primary  form-control-sm" data-bs-toggle="modal" 
+                        data-bs-target="#modalCalcM3">
+                            M³
+                        </a>
+                    </div>
+                </div>
             </div>
-            <div class="col-sm-6 mb-1 form-group pl-1 pr-0">
-                <input type="text" class="form-control " 
+            <div class="col-sm-4 mb-1 mt-1 form-group pl-1 pr-1">
+                <input type="text" class="form-control form-control-sm " 
                 placeholder="Valor R$" name="valor" id="valor">
             </div>
-            <div class="col-sm-6 mb-1 form-group pr-1 pl-1 ">
-                <input type="text" class="form-control " 
-                    placeholder="Tipo mercadoria" name="mercadoria" id="mercadoria">
-            </div>             
             <div class="col-sm-6 mb-1 form-group pl-1 pr-0 " >
                 <select class="form-select " placeholder="Espécie">
                     <option>Espécie</option>
@@ -35,7 +37,6 @@
                     <option value="3">Outros</option>
                 </select>  
             </div>
-            
             <div class="col-sm-6 mb-1 form-group pl-1 pr-1 " >
                 <select class="form-select " placeholder="Espécie">
                     <option>Veículo</option>
@@ -47,52 +48,60 @@
                     <option value="3">Carreta</option>
                 </select>  
             </div>
-            <div class="col-sm-12 mb-1 form-group pl-1 pr-1 ">
-                <input type="text" class="form-control pl-0" 
+            <div class="col-sm-6 mb-1 form-group pr-1 pl-1">
+                <input type="text" class="form-control  form-control-sm  " 
+                    placeholder="Tipo mercadoria" name="mercadoria" id="mercadoria">
+            </div>  
+            <div class="col-sm-6 mb-1 form-group pl-1 pr-1 ">
+                <input type="text" class="form-control pl-0 form-control-sm" 
                 placeholder="Horário" name="horario" id="horario">
             </div>
-          
+            <div class="col-sm-12 form-group mb-0 mt-0 pl-1 pr-1">
+                <textarea class="form-control " id="obs" 
+                name="obs" name="obs" rows="4" placeholder="Observações">
+                </textarea>
+            </div> 
         </div>
     </div>
     <div class="form-group col-6 mb-0 mt-0">
         <div class="form-group row mb-1">
-            <div class="col-sm-4 mb-1 form-group pr-1">
-                <input type="text" class="form-control " 
-                placeholder="Cep" name="cep" id="cep">
+            <div class="col-sm-5 mb-1 form-group pr-1">
+                <div class="input-group">
+                    <input type="text" class="form-control form-control-sm" id="cepColeta" placeholder="Cep"
+                        aria-label="Search" aria-describedby="basic-addon2">
+                    <div class="input-group-append">
+                        <button class="btn btn-primary form-control-sm" type="button">
+                            <i class="ti-search"></i>   
+                        </button>
+                    </div>  
+                </div>
             </div>
-            <div class="col-sm-8 mb-1 form-group pl-0 " >
-                <input type="text" class="form-control " 
-                placeholder="Rua" name="rua" id="rua">
+            <div class="col-sm-7 mb-1 form-group pl-0 " >
+                <input type="text" class="form-control form-control-sm " 
+                placeholder="Rua" name="rua" id="ruaCep">
             </div>
             <div class="col-sm-3 mb-1 form-group pr-1">
-                <input type="text" class="form-control " 
-                    placeholder="Nº" name="numero" id="numero">
+                <input type="text" class="form-control  form-control-sm" 
+                    placeholder="Nº" name="numero" id="numeroCep">
             </div>
             <div class="col-sm-3 mb-1 form-group pl-0 pr-1 ">
-                <input type="text" class="form-control  pl-0 " 
-                placeholder="Complemento" name="complemento" id="complemento">
+                <input type="text" class="form-control  pl-0  form-control-sm" 
+                placeholder="Complemento" name="complemento" id="complementoCep">
             </div>
             <div class="col-sm-6 mb-1 form-group pl-0 ">
-                <input type="text" class="form-control " 
-                placeholder="Bairro" name="bairro" id="bairro">
+                <input type="text" class="form-control form-control-sm " 
+                placeholder="Bairro" name="bairro" id="bairroCep">
             </div>
             <div class="col-sm-9 mb-1 form-group pr-1">
-                <input type="text" class="form-control " 
-                placeholder="Cidade" name="cidade" id="cidade">
+                <input type="text" class="form-control form-control-sm " 
+                placeholder="Cidade" name="cidade" id="cidadeCep">
             </div>
             <div class="col-sm-3 mb-1 form-group pl-0 ">
-                <input type="text" class="form-control " 
-                placeholder="UF" name="uf" id="uf">
+                <input type="text" class="form-control form-control-sm" 
+                placeholder="UF" name="uf" id="ufCep">
             </div>
-            <div class="col-sm-12 form-group mb-0 mt-0">
-                <textarea class="form-control " id="obs" 
-                name="obs" name="obs" rows="4" placeholder="Observações">
-                </textarea>
-            </div>              
+                {% include 'gridContatos.html' %}
         </div>
     </div>
-        <h4 class="card-title">Contatos</h4>
-        {% include 'gridContatos.html' %}
-            
     </div>  
 </div>

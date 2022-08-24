@@ -1,4 +1,14 @@
-var quemChamouModal
+
+function enderecoColeta(){
+    $('#cepColeta').val($('#cepRem').val());
+    $('#ruaColeta').val($('#ruaRem').val());
+    $('#numeroColeta').val($('#numeroRem').val());
+    $('#bairroColeta').val($('#bairroRem').val());
+    $('#complementoColeta').val($('#complementoRem').val());
+    $('#cidadeColeta').val($('#cidadeRem').val());
+    $('#ufColeta').val($('#ufRem').val());
+
+}
 
 function modal(response) {
     $('#mdlCadParceiros').modal('show');
@@ -41,7 +51,7 @@ $('#cnpjRem').on('blur', function(e) {
     busca_parceiro($('#cnpjRem').val(), 'inscRem', 'razaoRem',
         'fantasiaRem', 'cepRem', 'ruaRem', 'numeroRem',
         'complementoRem', 'bairroRem', 'cidadeRem', 'ufRem');
-    quemChamouModal='cnpjRem'
+        quemChamouModal='cnpjRem'
     e.preventDefault();
 });
 
@@ -57,7 +67,15 @@ $('#cnpjDest').on('blur', function(e) {
     busca_parceiro($('#cnpjDest').val(), 'inscDest', 'razaoDest',
         'fantasiaDest', 'cepDest', 'ruaDest', 'numeroDest',
         'complementoDest', 'bairroDest', 'cidadeDest', 'ufDest');
-    $('#pills-coleta-tab').focus();
+        quemChamouModal='cnpjDest'  
+    e.preventDefault();
+});
+
+$('#cnpjDest').on('focus', function(e) {
+    busca_parceiro($('#cnpjDest').val(), 'inscDest', 'razaoDest',
+        'fantasiaDest', 'cepDest', 'ruaDest', 'numeroDest',
+        'complementoDest', 'bairroDest', 'cidadeDest', 'ufDest');
+        quemChamouModal='cnpjDest'
     e.preventDefault();
 });
 
@@ -78,6 +96,7 @@ $('#cnpjRedesp').on('blur', function(e) {
 $('#mdlCadParceiros').on('hidden.bs.modal', function(e) {
     console.log('fechou o modal ')
     $('#'+ quemChamouModal).focus();
+    quemChamouModal='';
 })
 
 
