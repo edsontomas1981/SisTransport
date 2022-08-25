@@ -1,67 +1,70 @@
-        function limpa_formulario_cep() {
-            //Limpa valores do formulário de cep.
-            console.log('limpa')
-            document.getElementById('rua').value=("");
-            document.getElementById('bairro').value=("");
-            document.getElementById('cidade').value=("");
-            document.getElementById('uf').value=("");
-        }
+$('#btnCepColeta').on('click', function(e){
+    busca_cep('cepColeta','ruaColeta','bairroColeta','cidadeColeta','ufColeta')
+    e.preventDefault();
+});
 
-        function meu_callback(conteudo) {
-            if (!("erro" in conteudo)) {
-                console.log('conteudo')
-                //Atualiza os campos com os valores.
-                document.getElementById('rua').value=(conteudo.logradouro);
-                document.getElementById('bairro').value=(conteudo.bairro);
-                document.getElementById('cidade').value=(conteudo.localidade);
-                document.getElementById('uf').value=(conteudo.uf);
-            } //end if.
-            else {
-            //CEP não Encontrado.
-            limpa_formulario_cep();
-            alert("CEP não encontrado.");
-            }
-        }
+function meu_callback(conteudo,rua,bairro, cidade, uf) {
+    if (!("erro" in conteudo)) {
+        console.log('conteudo')
+        //Atualiza os campos com os valores.
+        $('#'+rua).val(conteudo.logradouro);
+        $('#'+bairro).val(conteudo.bairro);
+        $('#'+cidade).val(conteudo.localidade);
+        $('#'+uf).val(conteudo.uf);
+        // document.getElementById('rua').value=(conteudo.logradouro);
+        // document.getElementById('bairro').value=(conteudo.bairro);
+        // document.getElementById('cidade').value=(conteudo.localidade);
+        // document.getElementById('uf').value=(conteudo.uf);
+    } //end if.
+    else {
+    //CEP não Encontrado.
+    alert("CEP não encontrado.");
+    }
+}
+function busca_cep(cep,rua,bairro,cidade,uf) {
 
-    function pesquisacep(valor) {
-       
-        //Nova variável "cep" somente com dígitos.
-        var cep = valor.replace(/\D/g, '');
+    var cep = $('#'+cep).val().replace(/\D/g, '');
 
-        //Verifica se campo cep possui valor informado.
-        if (cep != "") {
+    //Verifica se campo cep possui valor informado.
+    if (cep != "") {
 
-            //Expressão regular para validar o CEP.
-            var validacep = /^[0-9]{8}$/;
+        //Expressão regular para validar o CEP.
+        var validacep = /^[0-9]{8}$/;
 
-            //Valida o formato do CEP.
-            if(validacep.test(cep)) {
+        //Valida o formato do CEP.
+        if(validacep.test(cep)) {
 
-                //Preenche os campos com "..." enquanto consulta webservice.
-                document.getElementById('rua').value="...";
-                document.getElementById('bairro').value="...";
-                document.getElementById('cidade').value="...";
-                document.getElementById('uf').value="...";
+            //Preenche os campos com "..." enquanto consulta webservice.
+            $("#"+rua).val("...");
+            $("#"+bairro).val("...");
+            $("#"+cidade).val("...");
+            $("#"+uf).val("...");
+            
 
+            //Consulta o webservice viacep.com.br/
+            $.getJSON("https://viacep.com.br/ws/"+ cep +"/json/?callback=?", function(dados) {
 
-                //Cria um elemento javascript.
-                var script = document.createElement('script');
-
-                //Sincroniza com o callback.
-                script.src = 'https://viacep.com.br/ws/'+ cep + '/json/?callback=meu_callback';
-
-                //Insere script no documento e carrega o conteúdo.
-                document.body.appendChild(script);
-
-            } //end if.
-            else {
-                //cep é inválido.
-                limpa_formulario_cep();
-                alert("Formato de CEP inválido.");
-            }
+                if (!("erro" in dados)) {
+                    //Atualiza os campos com os valores da consulta.
+                    $("#"+rua).val(dados.logradouro);
+                    $("#"+bairro).val(dados.bairro);
+                    $("#"+cidade).val(dados.localidade);
+                    $("#"+uf).val(dados.uf);
+                    
+                } //end if.
+                else {
+                    //CEP pesquisado não foi encontrado.
+                    alert("CEP não encontrado.");
+                }
+            });
         } //end if.
         else {
-            //cep sem valor, limpa formulário.
-            limpa_formulario_cep();
+            //cep é inválido.
+            alert("Formato de CEP inválido.");
         }
+    } //end if.
+    else {
+        //cep sem valor, limpa formulário.
     }
+
+}     

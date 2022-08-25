@@ -32,7 +32,7 @@ def busca_parceiro(request):
                     'numero':dadosBrutos['numero'],'complemento':dadosBrutos['complemento'],
                     'bairro':dadosBrutos['bairro'],'cidade':dadosBrutos['municipio'],
                     'uf':dadosBrutos['uf']}}]
-            return JsonResponse({'dados': dados})
+            return JsonResponse({'dados': dados,'message':'Parceiro não cadastrado' })
     else:
         contato=[]  
         return JsonResponse({'dados': [], 'contato': contato ,'message':'Cnpj ou Cpf inválidos' })
