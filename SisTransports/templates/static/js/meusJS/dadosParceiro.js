@@ -48,6 +48,185 @@ function completaCnpj(response, cnpj, insc, razao, fantasia, cep,
     }
 }
 
+
+
+function busca_parceiro(cnpj, insc, razao, fantasia, cep,
+    endereco, numero, complemento, bairro, cidade, uf) {
+
+    let url = '/busca_parceiro/'
+    let postData = $('form').serialize();
+    postData += '&cnpj_cpf=' + cnpj;
+
+    $.ajax({
+        url: url,
+        type: 'POST',
+        data: postData,
+        success: function(response) {
+            if (response.length > 0) {
+
+                return false;
+            } else {
+
+                completaCnpj(response, cnpj, insc, razao, fantasia, cep,
+                    endereco, numero, complemento, bairro, cidade, uf);
+                if(quemChamouModal=="cnpjRem"){
+                    enderecoColeta(response)
+
+                }else if(quemChamouModal=="cnpjMdl"){
+                    console.log(quemChamouModal)
+                    console.log(response.dados[0].id)
+                    
+                    if (response.dados[0].id== 0){
+                        formDesabilitaEdicao();
+                    }else{
+                        formHabilitaEdicao();
+                    }
+
+                }
+
+            }
+        },
+        error: function(xhr) {
+            console.log('Erro');
+        }
+    });
+}
+
+$('#salvaParceiro').on('click', function(e) {
+    $('#acaoForm').val('salvaParceiro');
+    let url = '/salva_parceiro/'
+    let postData = $('form').serialize();
+    $.ajax({
+        url: url,
+        type: 'POST',
+        data: postData,
+        success: function(response) {
+            // TODO
+            alert(response.message)
+            formHabilitaEdicao();
+        },
+        error: function(xhr) {
+            console.log('Erro');
+        },
+        complete: function() {
+            // closeModal()
+        }
+    });
+    e.preventDefault();
+});
+
+$('#divContato').on('click', function(e) {
+    if (!editaContato) {
+        alert("Para adicionar um contato, é necessário primeiro salvar o parceiro.")
+    }
+})
+
+function closeModal() {
+    // Limpa os campos
+    $('#cnpj').val('');
+    $('#idParceiro').val('');
+    resetaForm();
+    formDesabilitaEdicao();
+    $('#collapseOne').removeClass('show');
+    $('#collapseTwo').removeClass('show');
+    $('#collapseThree').removeClass('show');
+    editaContato = false
+}
+
+$('#btnFechar').on('click', function(e) {
+    closeModal();
+    e.preventDefault();
+})
+
+$('#btnClose').on('click', function(e) {
+    closeModal();
+    e.preventDefault();
+})
+
+$('#incluiContato').on('click', function(e) {
+    $('#acaoForm').val('incluiContato');
+    let url = '/salva_parceiro/'
+    let postData = $('form').serialize();
+    $.ajax({
+        url: url,
+        type: 'POST',
+        data: postData,
+        success: function(response) {
+            // TODO
+            limpaTabelaContatos();
+        },
+        error: function(xhr) {
+            console.log('Erro');
+        },
+        complete: function() {
+            // closeModal()
+        }
+    });
+    e.preventDefault();
+});
+
+function resetaForm() {
+    $('#salvaParceiro').val('Cadastrar');
+    $('#cnpjMdl').val('');
+    $('#razaoMdl').val('');
+    $('#fantasiaMdl').val('');
+    $('#insc_estMdl').val('');
+    $('#obsMdl').val('');
+    //Endereco
+    $('#idEnderecoMdl').val('');
+    $('#cepMdl').val('');
+    $('#ruaMdl').val('');
+    $('#numeroMdl').val('');
+    $('#bairroMdl').val('');  
+    $('#complementoMdl').val('');
+    $('#cidadeMdl').val('');
+    $('#ufMdl').val('');
+    //Contatos
+    limpaTabelaContatos();
+
+}
+
+function limpaTabelaContatos() {
+    $('#tabela td').remove();
+}
+
+function adicionaContatoNaTabela(response) {
+    const data = response.contato;
+    let template
+    for (let i = 0; i < data.length; i++) {
+        template = '<tr id="tr" >' +
+            '<td>' + data[i].id + '</td>' +
+            '<td>' + data[i].nome + '</td>' +
+            '<td>' + data[i].cargo + '</td>' +
+            '<td>' + data[i].tipo + '</td>' +
+            '<td>' + data[i].fone_email_etc + '</td>' +
+            '<td>' + '<button type="button" class="btn btn-success btn-rounded btn-icon">' +
+            '<i class="ti-pencil-alt2"></i></button>' + '</td>' +
+            '<td>' + '<button type="button" class="btn btn-danger btn-rounded btn-icon">' +
+            '<i class="ti-eraser "></i>' + '</button>' + '</td>' +
+            '</tr>'
+        $('#tabela tbody').append(template)
+    }
+};
+
+function formDesabilitaEdicao() {
+    editaContato = false;
+    $('#salvaParceiro').val('Cadastrar');
+    $("#btnContato").attr("disabled", true);
+}
+
+function formHabilitaEdicao() {
+    $('#salvaParceiro').val('Editar');
+    $("#btnContato").attr("disabled", false);
+    editaContato = true;
+}
+
+$('form').on('load', function(e) {
+    resetaForm();
+    formDesabilitaEdicao();
+
+});
+
 $('#cnpjRem').on('blur', function(e) {
     quemChamouModal = 'cnpjRem'
     busca_parceiro($('#cnpjRem').val(), 'inscRem', 'razaoRem',
@@ -119,6 +298,8 @@ $('#cnpjRedesp').on('focus', function(e) {
 $('#mdlCadParceiros').on('hidden.bs.modal', function(e) {
     $('#' + quemChamouModal).focus();
     quemChamouModal = '';
+    resetaForm();
+    formDesabilitaEdicao();
 })
 
 $('#cnpjMdl').on('blur', function(e){
@@ -127,174 +308,3 @@ $('#cnpjMdl').on('blur', function(e){
     'fantasiaMdl', 'cepMdl', 'ruaMdl', 'numeroMdl',
     'complementoMdl', 'bairroMdl', 'cidadeMdl', 'ufMdl');
 })
-
-function busca_parceiro(cnpj, insc, razao, fantasia, cep,
-    endereco, numero, complemento, bairro, cidade, uf) {
-
-    let url = '/busca_parceiro/'
-    let postData = $('form').serialize();
-    postData += '&cnpj_cpf=' + cnpj;
-
-    $.ajax({
-        url: url,
-        type: 'POST',
-        data: postData,
-        success: function(response) {
-            if (response.length > 0) {
-
-                return false;
-            } else {
-
-                completaCnpj(response, cnpj, insc, razao, fantasia, cep,
-                    endereco, numero, complemento, bairro, cidade, uf);
-                if(quemChamouModal=="cnpjRem"){
-                    enderecoColeta(response)
-
-                }else if(quemChamouModal=="cnpjMdl"){
-
-                }
-
-            }
-        },
-        error: function(xhr) {
-            console.log('Erro');
-        }
-    });
-}
-
-$('#salvaParceiro').on('click', function(e) {
-    $('#acaoForm').val('salvaParceiro');
-    let url = '/salva_parceiro/'
-    let postData = $('form').serialize();
-    $.ajax({
-        url: url,
-        type: 'POST',
-        data: postData,
-        success: function(response) {
-            // TODO
-            alert(response.message)
-            formHabilitaEdicao();
-            verificaCnpjBd();
-        },
-        error: function(xhr) {
-            console.log('Erro');
-        },
-        complete: function() {
-            // closeModal()
-        }
-    });
-    e.preventDefault();
-});
-
-$('#divContato').on('click', function(e) {
-    if (!editaContato) {
-        alert("Para adicionar um contato, é necessário primeiro salvar o parceiro.")
-    }
-})
-
-function closeModal() {
-    $('#mdlCadParceiros').modal('hide');
-    // Limpa os campos
-    $('#cnpj').val('');
-    $('#idParceiro').val('');
-    resetaForm();
-    formDesabilitaEdicao();
-    $('#collapseOne').removeClass('show');
-    $('#collapseTwo').removeClass('show');
-    $('#collapseThree').removeClass('show');
-    editaContato = false
-}
-
-$('#btnFechar').on('click', function(e) {
-    closeModal();
-    e.preventDefault();
-})
-
-$('#btnClose').on('click', function(e) {
-    closeModal();
-    e.preventDefault();
-})
-
-$('#incluiContato').on('click', function(e) {
-    $('#acaoForm').val('incluiContato');
-    let url = '/salva_parceiro/'
-    let postData = $('form').serialize();
-    $.ajax({
-        url: url,
-        type: 'POST',
-        data: postData,
-        success: function(response) {
-            // TODO
-            limpaTabelaContatos();
-            verificaCnpjBd();
-        },
-        error: function(xhr) {
-            console.log('Erro');
-        },
-        complete: function() {
-            // closeModal()
-        }
-    });
-    e.preventDefault();
-});
-
-function resetaForm() {
-    $('#salvaParceiro').val('Cadastrar');
-    $('#razao').val('');
-    $('#fantasia').val('');
-    $('#insc_est').val('');
-    $('#obs').val('');
-    //Endereco
-    $('#idEndereco').val('');
-    $('#cep').val('');
-    $('#rua').val('');
-    $('#numero').val('');
-    $('#bairro').val('');
-    $('#complemento').val('');
-    $('#cidade').val('');
-    $('#uf').val('');
-    //Contatos
-    limpaTabelaContatos();
-
-}
-
-function limpaTabelaContatos() {
-    $('#tabela td').remove();
-}
-
-function adicionaContatoNaTabela(response) {
-    const data = response.contato;
-    let template
-    for (let i = 0; i < data.length; i++) {
-        template = '<tr id="tr" >' +
-            '<td>' + data[i].id + '</td>' +
-            '<td>' + data[i].nome + '</td>' +
-            '<td>' + data[i].cargo + '</td>' +
-            '<td>' + data[i].tipo + '</td>' +
-            '<td>' + data[i].fone_email_etc + '</td>' +
-            '<td>' + '<button type="button" class="btn btn-success btn-rounded btn-icon">' +
-            '<i class="ti-pencil-alt2"></i></button>' + '</td>' +
-            '<td>' + '<button type="button" class="btn btn-danger btn-rounded btn-icon">' +
-            '<i class="ti-eraser "></i>' + '</button>' + '</td>' +
-            '</tr>'
-        $('#tabela tbody').append(template)
-    }
-};
-
-function formDesabilitaEdicao() {
-    editaContato = false;
-    $('#salvaParceiro').val('Cadastrar');
-    $("#btnContato").attr("disabled", true);
-}
-
-function formHabilitaEdicao() {
-    $('#salvaParceiro').val('Editar');
-    $("#btnContato").attr("disabled", false);
-    editaContato = true;
-}
-
-$('form').on('load', function(e) {
-    resetaForm();
-    formDesabilitaEdicao();
-
-});
