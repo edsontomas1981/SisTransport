@@ -15,6 +15,7 @@ function enderecoColeta(response) {
 function modal(response) {
     $('#mdlCadParceiros').modal('show');
     $('#collapseOne').addClass('show');
+    console.log('idParceiro')
     let cnpjModal = response.dados[0].cnpj_cpf.replace(/[^\d]+/g, '');
     $('#cnpjMdl').val(cnpjModal);
     $('#razaoMdl').val(response.dados[0].raz_soc);
@@ -29,26 +30,35 @@ function modal(response) {
     $('#ufMdl').val(response.dados[0].endereco_fk.uf);
 }
 
-function completaCnpj(response, cnpj, insc, razao, fantasia, cep,
+function completaCnpj(response, insc, razao, fantasia, cep,
     endereco, numero, complemento, bairro, cidade, uf) {
-    if (response.dados[0].id == 0) {
-        modal(response, cnpj)
+    if (response.dados.length>0){        
+        if (response.dados[0].id == 0) {
+            resetaForm();
+            modal(response)
+        } else {
 
-    } else {
-        $('#' + insc).val(response.dados[0].insc_est);
-        $('#' + razao).val(response.dados[0].raz_soc);
-        $('#' + fantasia).val(response.dados[0].nome_fantasia);
-        $('#' + cep).val(response.dados[0].endereco_fk.cep);
-        $('#' + endereco).val(response.dados[0].endereco_fk.logradouro);
-        $('#' + numero).val(response.dados[0].endereco_fk.numero);
-        $('#' + complemento).val(response.dados[0].endereco_fk.complemento);
-        $('#' + bairro).val(response.dados[0].endereco_fk.bairro);
-        $('#' + cidade).val(response.dados[0].endereco_fk.cidade);
-        $('#' + uf).val(response.dados[0].endereco_fk.uf);
+            if (quemChamouModal == 'cnpjMdl'){
+                $('#idParceiro').val(response.dados[0].id)
+                $('#idEndereco').val(response.dados[0].endereco_fk.id)                    
+            }
+            $('#' + insc).val(response.dados[0].insc_est);
+            $('#' + razao).val(response.dados[0].raz_soc);
+            $('#' + fantasia).val(response.dados[0].nome_fantasia);
+            $('#' + cep).val(response.dados[0].endereco_fk.cep);
+            $('#' + endereco).val(response.dados[0].endereco_fk.logradouro);
+            $('#' + numero).val(response.dados[0].endereco_fk.numero);
+            $('#' + complemento).val(response.dados[0].endereco_fk.complemento);
+            $('#' + bairro).val(response.dados[0].endereco_fk.bairro);
+            $('#' + cidade).val(response.dados[0].endereco_fk.cidade);
+            $('#' + uf).val(response.dados[0].endereco_fk.uf);
+        }
+
+    }else{
+        alert(response.message)
     }
+    
 }
-
-
 
 function busca_parceiro(cnpj, insc, razao, fantasia, cep,
     endereco, numero, complemento, bairro, cidade, uf) {
@@ -69,17 +79,19 @@ function busca_parceiro(cnpj, insc, razao, fantasia, cep,
 
                 completaCnpj(response, cnpj, insc, razao, fantasia, cep,
                     endereco, numero, complemento, bairro, cidade, uf);
+                    
                 if(quemChamouModal=="cnpjRem"){
                     enderecoColeta(response)
 
                 }else if(quemChamouModal=="cnpjMdl"){
-                    console.log(quemChamouModal)
-                    console.log(response.dados[0].id)
-                    
-                    if (response.dados[0].id== 0){
+                    // cpf ou cnpf sem cadastro no BD
+                  if (response.dados[0].id== 0){
                         formDesabilitaEdicao();
-                    }else{
+                        modal(response,'cnpjMdl')
+                    }
+                    else{
                         formHabilitaEdicao();
+                        adicionaContatoNaTabela(response);   
                     }
 
                 }
@@ -96,13 +108,17 @@ $('#salvaParceiro').on('click', function(e) {
     $('#acaoForm').val('salvaParceiro');
     let url = '/salva_parceiro/'
     let postData = $('form').serialize();
+    console.log('----------------------------')
+    console.log(postData)
+    console.log('----------------------------')
+
     $.ajax({
         url: url,
         type: 'POST',
         data: postData,
         success: function(response) {
             // TODO
-            alert(response.message)
+            
             formHabilitaEdicao();
         },
         error: function(xhr) {
@@ -307,4 +323,5 @@ $('#cnpjMdl').on('blur', function(e){
     busca_parceiro($('#cnpjMdl').val(), 'insc_estMdl', 'razaoMdl',
     'fantasiaMdl', 'cepMdl', 'ruaMdl', 'numeroMdl',
     'complementoMdl', 'bairroMdl', 'cidadeMdl', 'ufMdl');
+    console.log('Chamou Mdl');
 })

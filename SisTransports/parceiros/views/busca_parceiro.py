@@ -23,7 +23,7 @@ def busca_parceiro(request):
                 contato=[]
                 dados = [parceiro.to_dict()]
                 print(dados)
-                return JsonResponse({'dados': dados ,'contato': contato})
+                return JsonResponse({'dados': dados ,'contato': contato,'message':'Cnpj ja castrado'})
         else:#Buscar cnpj em um webservice
             dadosBrutos=parceiroWs(request)
             dados=[{'id':0,'cnpj_cpf':dadosBrutos['cnpj'],'raz_soc':dadosBrutos['nome'],
