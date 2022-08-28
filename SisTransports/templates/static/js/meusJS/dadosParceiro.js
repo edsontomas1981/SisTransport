@@ -32,15 +32,15 @@ function modal(response) {
 
 function completaCnpj(response, insc, razao, fantasia, cep,
     endereco, numero, complemento, bairro, cidade, uf) {
-    if (response.dados.length>0){        
+    if (response.dados.length > 0) {
         if (response.dados[0].id == 0) {
             resetaForm();
             modal(response)
         } else {
 
-            if (quemChamouModal == 'cnpjMdl'){
+            if (quemChamouModal == 'cnpjMdl') {
                 $('#idParceiro').val(response.dados[0].id)
-                $('#idEndereco').val(response.dados[0].endereco_fk.id)                    
+                $('#idEndereco').val(response.dados[0].endereco_fk.id)
             }
             $('#' + insc).val(response.dados[0].insc_est);
             $('#' + razao).val(response.dados[0].raz_soc);
@@ -54,10 +54,10 @@ function completaCnpj(response, insc, razao, fantasia, cep,
             $('#' + uf).val(response.dados[0].endereco_fk.uf);
         }
 
-    }else{
+    } else {
         alert(response.message)
     }
-    
+
 }
 
 function busca_parceiro(cnpj, insc, razao, fantasia, cep,
@@ -66,7 +66,7 @@ function busca_parceiro(cnpj, insc, razao, fantasia, cep,
     let url = '/busca_parceiro/'
     let postData = $('form').serialize();
     postData += '&cnpj_cpf=' + cnpj;
-
+    console.log(postData)
     $.ajax({
         url: url,
         type: 'POST',
@@ -77,21 +77,20 @@ function busca_parceiro(cnpj, insc, razao, fantasia, cep,
                 return false;
             } else {
 
-                completaCnpj(response, cnpj, insc, razao, fantasia, cep,
+                completaCnpj(response, insc, razao, fantasia, cep,
                     endereco, numero, complemento, bairro, cidade, uf);
-                    
-                if(quemChamouModal=="cnpjRem"){
+
+                if (quemChamouModal == "cnpjRem") {
                     enderecoColeta(response)
 
-                }else if(quemChamouModal=="cnpjMdl"){
+                } else if (quemChamouModal == "cnpjMdl") {
                     // cpf ou cnpf sem cadastro no BD
-                  if (response.dados[0].id== 0){
+                    if (response.dados[0].id == 0) {
                         formDesabilitaEdicao();
-                        modal(response,'cnpjMdl')
-                    }
-                    else{
+                        modal(response, 'cnpjMdl')
+                    } else {
                         formHabilitaEdicao();
-                        adicionaContatoNaTabela(response);   
+                        adicionaContatoNaTabela(response);
                     }
 
                 }
@@ -108,17 +107,14 @@ $('#salvaParceiro').on('click', function(e) {
     $('#acaoForm').val('salvaParceiro');
     let url = '/salva_parceiro/'
     let postData = $('form').serialize();
-    console.log('----------------------------')
     console.log(postData)
-    console.log('----------------------------')
 
     $.ajax({
         url: url,
         type: 'POST',
         data: postData,
         success: function(response) {
-            // TODO
-            
+
             formHabilitaEdicao();
         },
         error: function(xhr) {
@@ -193,7 +189,7 @@ function resetaForm() {
     $('#cepMdl').val('');
     $('#ruaMdl').val('');
     $('#numeroMdl').val('');
-    $('#bairroMdl').val('');  
+    $('#bairroMdl').val('');
     $('#complementoMdl').val('');
     $('#cidadeMdl').val('');
     $('#ufMdl').val('');
@@ -318,10 +314,10 @@ $('#mdlCadParceiros').on('hidden.bs.modal', function(e) {
     formDesabilitaEdicao();
 })
 
-$('#cnpjMdl').on('blur', function(e){
+$('#cnpjMdl').on('blur', function(e) {
     quemChamouModal = 'cnpjMdl';
     busca_parceiro($('#cnpjMdl').val(), 'insc_estMdl', 'razaoMdl',
-    'fantasiaMdl', 'cepMdl', 'ruaMdl', 'numeroMdl',
-    'complementoMdl', 'bairroMdl', 'cidadeMdl', 'ufMdl');
+        'fantasiaMdl', 'cepMdl', 'ruaMdl', 'numeroMdl',
+        'complementoMdl', 'bairroMdl', 'cidadeMdl', 'ufMdl');
     console.log('Chamou Mdl');
 })

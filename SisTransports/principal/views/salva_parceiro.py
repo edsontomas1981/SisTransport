@@ -30,7 +30,6 @@ def alteraParceiro(request,endereco):
     parceiro.endereco_fk=endereco
     parceiro.save()
 
-
 def salvaEndereco(request):
     endereco=Enderecos()
     endereco.cep=request.POST.get('cepMdl')
@@ -67,7 +66,9 @@ def salva_parceiro(request):
         return render(request,'./cadastroParceiros.html',)
 
     elif request.method == "POST" :
-        print(request.POST)
+        print('---------------------',request.POST)
+        print('entro salva parceiro')
+
         if request.POST.get('acaoForm') == 'salvaParceiro':
             if request.POST.get('razaoMdl') == '' or request.POST.get('cnpj_cpfMdl') == '' \
                 or request.POST.get('cepMdl') == '' or request.POST.get('ruaMdl') == '' \
