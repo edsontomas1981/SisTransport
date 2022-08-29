@@ -103,29 +103,7 @@ function busca_parceiro(cnpj, insc, razao, fantasia, cep,
     });
 }
 
-$('#salvaParceiro').on('click', function(e) {
-    $('#acaoForm').val('salvaParceiro');
-    let url = '/salva_parceiro/'
-    let postData = $('form').serialize();
-    console.log(postData)
 
-    $.ajax({
-        url: url,
-        type: 'POST',
-        data: postData,
-        success: function(response) {
-
-            formHabilitaEdicao();
-        },
-        error: function(xhr) {
-            console.log('Erro');
-        },
-        complete: function() {
-            // closeModal()
-        }
-    });
-    e.preventDefault();
-});
 
 $('#divContato').on('click', function(e) {
     if (!editaContato) {

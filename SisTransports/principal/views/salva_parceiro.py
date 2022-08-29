@@ -66,23 +66,22 @@ def salva_parceiro(request):
         return render(request,'./cadastroParceiros.html',)
 
     elif request.method == "POST" :
-        print('---------------------',request.POST)
-        print('entro salva parceiro')
-
+        print('Cadastro parceiro',request.POST.get)
         if request.POST.get('acaoForm') == 'salvaParceiro':
             if request.POST.get('razaoMdl') == '' or request.POST.get('cnpj_cpfMdl') == '' \
                 or request.POST.get('cepMdl') == '' or request.POST.get('ruaMdl') == '' \
                 or request.POST.get('bairroMdl') == '' or request.POST.get('cidadeMdl') == ''\
                 or request.POST.get('ufMdl') == '' :
                 return JsonResponse({'status': 'error', 'message': 'Preencha todos os campos'})
-            
             else:
                 if Parceiros.objects.filter(cnpj_cpf=request.POST.get('cnpj_cpfMdl')).exists():
+                    print('Altera parceiro')
                     endereco=alteraEndereco(request)
                     parceiro=alteraParceiro(request,endereco)
                     return JsonResponse({'status': 'success', 
                                          'message': 'Parceiro alterado com sucesso'})
                 else:
+                    print('Cadastro parceiro')
                     endereco=salvaEndereco(request)
                     parceiro=salvaParceiro(request,endereco)
                     return JsonResponse({'status': 'success', 

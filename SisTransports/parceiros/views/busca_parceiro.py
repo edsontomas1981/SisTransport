@@ -26,14 +26,17 @@ def busca_parceiro(request):
                 return JsonResponse({'dados': dados ,'contato': contato,'message':'Cnpj ja castrado'})
         else:#Buscar cnpj em um webservice
             dadosBrutos=parceiroWs(request)
-            print(dadosBrutos['cnpj'])
-            dados=[{'id':0,'cnpj_cpf':dadosBrutos['cnpj'],'raz_soc':dadosBrutos['nome'],
-                    'nome_fantasia':dadosBrutos['fantasia'],'insc_est':'','observacao': '',
-                    'endereco_fk':{'cep':dadosBrutos['cep'],'logradouro':dadosBrutos['logradouro'],
-                    'numero':dadosBrutos['numero'],'complemento':dadosBrutos['complemento'],
-                    'bairro':dadosBrutos['bairro'],'cidade':dadosBrutos['municipio'],
-                    'uf':dadosBrutos['uf']}}]
-            return JsonResponse({'dados': dados,'message':'Parceiro não cadastrado' })
+            if 'message' in dadosBrutos:
+                dados=[]
+                return JsonResponse({'dados': dados,'message':'Requisições por  minutos excedida' })
+            else:    
+                dados=[{'id':0,'cnpj_cpf':dadosBrutos['cnpj'],'raz_soc':dadosBrutos['nome'],
+                        'nome_fantasia':dadosBrutos['fantasia'],'insc_est':'','observacao': '',
+                        'endereco_fk':{'cep':dadosBrutos['cep'],'logradouro':dadosBrutos['logradouro'],
+                        'numero':dadosBrutos['numero'],'complemento':dadosBrutos['complemento'],
+                        'bairro':dadosBrutos['bairro'],'cidade':dadosBrutos['municipio'],
+                        'uf':dadosBrutos['uf']}}]
+                return JsonResponse({'dados': dados,'message':'Parceiro não cadastrado' })
     else:
         contato=[]  
         return JsonResponse({'dados': [], 'contato': contato ,'message':'Cnpj ou Cpf inválidos' })
