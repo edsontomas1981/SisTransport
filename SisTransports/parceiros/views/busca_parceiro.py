@@ -18,17 +18,15 @@ def busca_parceiro(request):
                 print(dados)
                 for c in contatos:
                     contato.append(c.to_dict())
-                return JsonResponse({'dados': dados,'contato':contato})
+                return JsonResponse({'dados': dados,'contato':contato,'status':200})#Parceiro cadastrado e com contato
             else:
                 contato=[]
                 dados = [parceiro.to_dict()]
-                print(dados)
-                return JsonResponse({'dados': dados ,'contato': contato,'message':'Cnpj ja castrado'})
+                return JsonResponse({'dados': dados ,'contato': contato,'status':201})#Parceiro cadastrado sem contatos
         else:#Buscar cnpj em um webservice
             dadosBrutos=parceiroWs(request)
             if 'message' in dadosBrutos:
-                dados=[]
-                return JsonResponse({'dados': dados,'message':'Requisições por  minutos excedida' })
+                return JsonResponse({'status':429})#Falha na consulta webservice
             else:    
                 dados=[{'id':0,'cnpj_cpf':dadosBrutos['cnpj'],'raz_soc':dadosBrutos['nome'],
                         'nome_fantasia':dadosBrutos['fantasia'],'insc_est':'','observacao': '',
@@ -36,10 +34,10 @@ def busca_parceiro(request):
                         'numero':dadosBrutos['numero'],'complemento':dadosBrutos['complemento'],
                         'bairro':dadosBrutos['bairro'],'cidade':dadosBrutos['municipio'],
                         'uf':dadosBrutos['uf']}}]
-                return JsonResponse({'dados': dados,'message':'Parceiro não cadastrado' })
+                return JsonResponse({'dados': dados,'status':202 })#Resposta ok webservice
     else:
         contato=[]  
-        return JsonResponse({'dados': [], 'contato': contato ,'message':'Cnpj ou Cpf inválidos' })
+        return JsonResponse({'status':401})#Cnpj ou cpf invalidos 
     
 def parceiroWs(request):
     dados=cnpjWs(request.POST.get('cnpj_cpf'))

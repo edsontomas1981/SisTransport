@@ -64,9 +64,7 @@ def verificaParceiro(cnpjParc):
 def salva_parceiro(request):
     if request.method == "GET" :
         return render(request,'./cadastroParceiros.html',)
-
     elif request.method == "POST" :
-        print('Cadastro parceiro',request.POST.get)
         if request.POST.get('acaoForm') == 'salvaParceiro':
             if request.POST.get('razaoMdl') == '' or request.POST.get('cnpj_cpfMdl') == '' \
                 or request.POST.get('cepMdl') == '' or request.POST.get('ruaMdl') == '' \

@@ -1,6 +1,7 @@
 from parceiros.models import Parceiros
 
 def salva_parceiro(cnpj,razao,fantasia,inscr,obs,endereco_fk):
+    print("teste")
     parceiro=Parceiros()
     parceiro.cnpj_cpf=cnpj
     parceiro.raz_soc=razao
