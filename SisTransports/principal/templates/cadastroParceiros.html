@@ -69,11 +69,16 @@
                     <div class="accordion-body">
                       <!--Trecho Endereço-->
                         <div class="form-group row mb-3">
-                            <div class="col-sm-4 mb-3 form-group">
-                              <input type="hidden" class="form-control form-control-sm" 
-                               name="idEndereco" id="idEndereco">
-                                <input type="text" class="form-control form-control-sm" 
-                                placeholder="Cep" name="cepMdl" id="cepMdl">
+                            <div class="col-sm-4 mb-1 form-group pr-1">
+                              <div class="input-group">
+                                  <input type="text" class="form-control form-control-sm" id="cepMdl" placeholder="Cep"
+                                      aria-label="Search" aria-describedby="basic-addon2">
+                                  <div class="input-group-append">
+                                      <button class="btn btn-primary form-control-sm"  id="btnCepMdl" type="button">
+                                          <i class="ti-search"></i>   
+                                      </button>
+                                  </div>  
+                              </div>
                             </div>
                             <div class="col-sm-8 mb-3 form-group">
                                 <input type="text" class="form-control form-control-sm" 

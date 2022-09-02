@@ -3,6 +3,11 @@ $('#btnCepColeta').on('click', function(e){
     e.preventDefault();
 });
 
+$('#btnCepMdl').on('click', function(e){
+    busca_cep('cepMdl','ruaMdl','bairroMdl','cidadeMdl','ufMdl')
+    e.preventDefault();
+});
+
 function meu_callback(conteudo,rua,bairro, cidade, uf) {
     if (!("erro" in conteudo)) {
         console.log('conteudo')
@@ -11,11 +16,8 @@ function meu_callback(conteudo,rua,bairro, cidade, uf) {
         $('#'+bairro).val(conteudo.bairro);
         $('#'+cidade).val(conteudo.localidade);
         $('#'+uf).val(conteudo.uf);
-        // document.getElementById('rua').value=(conteudo.logradouro);
-        // document.getElementById('bairro').value=(conteudo.bairro);
-        // document.getElementById('cidade').value=(conteudo.localidade);
-        // document.getElementById('uf').value=(conteudo.uf);
-    } //end if.
+
+    }
     else {
     //CEP não Encontrado.
     alert("CEP não encontrado.");

@@ -6,6 +6,7 @@ from django.template.loader import render_to_string
 from Classes.consultaCnpj import validaCnpjCpf
 from Classes.buscaCnpjWs import cnpjWs
 from enderecos.models.endereco import Enderecos
+
 def busca_parceiro(request):
     if validaCnpjCpf(request.POST.get('cnpj_cpf')):
         if Parceiros.objects.filter(cnpj_cpf=request.POST.get('cnpj_cpf')).exists():
@@ -24,24 +25,29 @@ def busca_parceiro(request):
                 dados = [parceiro.to_dict()]
                 return JsonResponse({'dados': dados ,'contato': contato,'status':201})#Parceiro cadastrado sem contatos
         else:#Buscar cnpj em um webservice
-            dadosBrutos=parceiroWs(request)
-            if 'message' in dadosBrutos:
-                return JsonResponse({'status':429})#Falha na consulta webservice
-            else:    
-                dados=[{'id':0,'cnpj_cpf':dadosBrutos['cnpj'],'raz_soc':dadosBrutos['nome'],
-                        'nome_fantasia':dadosBrutos['fantasia'],'insc_est':'','observacao': '',
-                        'endereco_fk':{'cep':dadosBrutos['cep'],'logradouro':dadosBrutos['logradouro'],
-                        'numero':dadosBrutos['numero'],'complemento':dadosBrutos['complemento'],
-                        'bairro':dadosBrutos['bairro'],'cidade':dadosBrutos['municipio'],
-                        'uf':dadosBrutos['uf']}}]
-                return JsonResponse({'dados': dados,'status':202 })#Resposta ok webservice
+            #verifica se é um cnpj e faz a consulta
+            if len(request.POST.get('cnpj_cpf'))==14:
+                dadosBrutos,status=parceiroWs(request)
+                if status == 429:
+                    return JsonResponse({'status':429})#Falha na consulta webservice limite excedido
+                elif status == 200:    
+                    dados=[{'cnpj_cpf':dadosBrutos['cnpj'],'raz_soc':dadosBrutos['nome'],
+                            'nome_fantasia':dadosBrutos['fantasia'],'insc_est':'','observacao': '',
+                            'endereco_fk':{'cep':dadosBrutos['cep'],'logradouro':dadosBrutos['logradouro'],
+                            'numero':dadosBrutos['numero'],'complemento':dadosBrutos['complemento'],
+                            'bairro':dadosBrutos['bairro'],'cidade':dadosBrutos['municipio'],
+                            'uf':dadosBrutos['uf']}}]
+                    return JsonResponse({'dados': dados,'status':202 })#Resposta ok webservice
+                else:
+                    return JsonResponse({'status':431 })#erro nao especificado
+            else:
+                    return JsonResponse({'status':430 })#cpf nao cadastrado
     else:
-        contato=[]  
         return JsonResponse({'status':401})#Cnpj ou cpf invalidos 
-    
+
 def parceiroWs(request):
-    dados=cnpjWs(request.POST.get('cnpj_cpf'))
-    return dados
+    dados,status=cnpjWs(request.POST.get('cnpj_cpf'))
+    return dados,status
 
 def response_to_dict(endereco,parceiro):
     return {

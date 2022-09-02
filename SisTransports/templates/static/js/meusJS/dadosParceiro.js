@@ -76,24 +76,17 @@ function busca_parceiro(cnpj, insc, razao, fantasia, cep,
                         endereco, numero, complemento, bairro, cidade, uf);
                   break;
                 case 429:
-                   alert('Limite de requisições por minuto excedido,tente novamente mais tarde.')
+                   alert('Limite de requisições por minuto, excedido,tente novamente mais tarde.')
                   break;
                 case 202:
                     console.log(response.status)
-                    completaCnpj(response, insc, razao, fantasia, cep,
-                        endereco, numero, complemento, bairro, cidade, uf);                  
+                    modal(response);                  
                   break;
                 case 401:
                     alert('Cnpj ou Cpf inválido !')
                   break;
 
               }
-
-
-            if (response.status==200 || response.status==202 ){
-
-                    }
-            
             },
                 error: function(xhr) {
                     console.log('Erro');
