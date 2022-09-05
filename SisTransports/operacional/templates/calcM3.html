@@ -3,42 +3,43 @@
       <div class="modal-content" >
         <div class="modal-header">
           <h5 class="modal-title">Calcular M³</h5>
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          <button type="button" class="btn-close" id="fechar" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
-        <div class="row mt-4">
-            <div class="col-sm-2 form-group pl-3 pr-0">
-                <input type="text" class="form-control form-control-sm tamanho pr-0" 
-                placeholder="Altura" name="altura" id="altura">
+        <div class="row mt-3 mx-auto">
+            <div class="col-sm-2 form-group pr-1">
+                <input type="text" class="form-control form-control-sm pr-0 m3" 
+                        placeholder="Altura" name="altura" id="altura" >
             </div>
-            <div class="col-sm-2 mb-1 form-group pl-1 pr-1">
-                <input type="text" class="form-control tamanho form-control-sm" 
-                placeholder="Larg" name="largura" id="largura">
+            <div class="col-sm-2 mb-1 form-group pr-1">
+                <input type="text" class="form-control form-control-sm m3" 
+                        placeholder="Larg" name="largura" id="largura">
             </div>
-            <div class="col-sm-2 form-group pr-0 pl-0 pr-1">
-              <input type="text" class="form-control tamanho form-control-sm" 
-              placeholder="Comp" name="comprimento" id="comprimento">
-          </div>            
-            <div class="input-group col-sm-6 pl-0">
-              <input type="text" class="form-control form-control-sm" id="volumes" placeholder="Volumes"
-                  aria-label="Search" aria-describedby="basic-addon2">
+            <div class="col-sm-2 form-group pr-1">
+              <input type="text" class="form-control form-control-sm m3" 
+                      placeholder="Comp" name="comprimento" id="comprimento">
+            </div> 
+            <div class="input-group col-6 ">
+              <input type="text" class="form-control small  
+                    form-control-sm m3" placeholder="Volumes" id="vol">
               <div class="input-group-append">
-                  <button class="btn btn-primary form-control-sm"  id="btnVolumes" type="button"> 
-                      <i class="ti-plus"></i>   
+                  <button class="btn btn-primary form-control-sm" id="btnVolumes">
+                      M³
                   </button>
               </div>
-            </div> 
+            </div>                                     
             <div class="form-group col-sm-2 pr-1 mt-3" align=>
               <h4 class = "card-title text-primary">Total:<h4>
             </div>
             <div class="col-sm-5 form-group pr-6 ">
               <input type="text" class="form-control tamanho form-control-sm" 
-             name="totalM3" id="totalM3" readOnly>
+             name="totalM3" id="totalM3" value=0 readOnly disabled>
             </div>  
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Descartar</button>
-          <button type="button" class="btn btn-primary">Salvar</button>
+          <button type="button" class="btn btn-primary" id="btnSalvarM3">Salvar</button>
         </div>
+        <p class="text-primary">Pressione S para salvar ou D para descartar<p>
       </div>
     </div>
   </div>
