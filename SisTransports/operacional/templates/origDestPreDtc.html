@@ -1,7 +1,6 @@
 {% comment %} Superior {% endcomment %}
 
-<form method="POST" id="remDest">
-{% csrf_token %}
+<form method="POST">
 <div class="row">
     {% comment %} Esquerda {% endcomment %}
     
@@ -26,13 +25,13 @@
         <h4 class = "card-title text-primary">Remetente</h4>
         <div class="form-group row mb-1">
             <div class="col-sm-6 mb-1 pr-1 input-group">
-                <input type="text" class="form-control form-control-sm" id="cnpjRem" placeholder="Cnpj/Cpf"
-                    aria-label="Search" aria-describedby="basic-addon2">
+                <input type="text" class="form-control form-control-sm" 
+                id="cnpjRem" placeholder="Cnpj/Cpf">
                 <div class="input-group-append">
                     <button class="btn btn-primary form-control-sm"  id="btnCnpjRem" type="button">
                         <i class="ti-search"></i>   
                     </button>   
-                </div>  
+                </div>
             </div>
             <div class="col-sm-6 mb-1 pl-0   form-group">
                 <input type="text" class="form-control form-control-sm" 

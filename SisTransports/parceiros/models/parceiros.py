@@ -23,5 +23,5 @@ class Parceiros (models.Model):
         }
     
     def __str__(self):
-        return self.nome
+        return self.raz_soc
     

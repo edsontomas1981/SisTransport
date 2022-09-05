@@ -6,18 +6,21 @@ from principal import views
 from parceiros import views as viewParceiros
 from operacional import views as viewsOperacional
 urlpatterns = [
-    path('',views.home,
+     path('',views.home,
          name='home'),
-    path('cadParceiros/',
+     path('cadParceiros/',
         ViewCadPar.as_view(),name='cadParceiros'),
-    path('salva_parceiro/',views.salva_parceiro,
+     path('salva_parceiro/',views.salva_parceiro,
          name='salva_parceiro'),
-    path('cad_contato/',views.cad_contato,
+     path('cad_contato/',views.cad_contato,
          name='cad_contato'),
-    path('busca_parceiro/',viewParceiros.busca_parceiro,
+     path('busca_parceiro/',viewParceiros.busca_parceiro,
         name='busca_parceiro'),
-    path('preDtc/',viewsOperacional.preDtc,
+     path('preDtc/',viewsOperacional.preDtc,
          name='preDtc'),           
+     path('saveDtc/',viewsOperacional.saveDtc,
+         name='saveDtc'),           
+
 ]
 urlpatterns += static(settings.STATIC_URL, 
                       document_root=settings.STATIC_ROOT)
