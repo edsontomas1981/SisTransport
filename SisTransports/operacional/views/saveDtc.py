@@ -7,9 +7,6 @@ from parceiros.models.parceiros import Parceiros
 def buscaParceiro(cnpj):
     if Parceiros.objects.filter(cnpj_cpf=cnpj).exists():
         parceiro=Parceiros.objects.filter(cnpj_cpf=cnpj).get()
-        print('*****************************************************')
-        print(parceiro)
-        print('*****************************************************')
         return parceiro 
     
     

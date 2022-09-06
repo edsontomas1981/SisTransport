@@ -3,17 +3,36 @@
 <form method="POST">
 <div class="row">
     {% comment %} Esquerda {% endcomment %}
+    <div class="form-group col-4 mb-0 mt-0">
+        <H7 class="card-title text-primary">DTC</H7>
+        <div class="settings-trigger">
+            <div class="input-group col-12 pl-0" align="left">
+              <input type="text" class="form-control small  
+                    form-control-sm m3" placeholder="Buscar ..." id="numPed">
+              <div class="input-group-append">
+                  <button class="btn btn-primary form-control-sm " id="btnBuscaDtc">
+                    <i class="ti-search"></i>
+                  </button>
+              </div>
+              <button type="button" class="btn btn-success btn-rounded  form-control-sm" id="salvaDtc">
+                <i class="ti-plus"></i>
+              </button>
+              <button type="button" class="btn btn-danger btn-rounded form-control-sm" id="excluiDtc">
+                <i class="ti-minus"></i>
+              </button>    
+            </div>                                     
+          </div>
+    </div>
     
-    <div class="form-group col-6 mb-0 mt-0">
-        <H4>Modalidade do Frete</H4>
+    <div class="form-group col-4 mb-0 mt-0">
+        <H7 class="card-title text-primary">Tipo de frete</H7>
     <select class="form-select form-control-sm">
         <option>CIF</option>
         <option>FOB</option>
         <option>CONSIGNATÁRIO</option>
     </select>
     </div>
-
-    <div class="form-group col-6 mb-0 mt-0 ">
+    <div class="form-group col-4 mb-0 mt-0 ">
         <H7 class="card-title text-primary">Percurso</H7>
         <select class="form-select form-control-sm">
             <option>Selecione o Percurso</option>
@@ -35,43 +54,43 @@
             </div>
             <div class="col-sm-6 mb-1 pl-0   form-group">
                 <input type="text" class="form-control form-control-sm" 
-                placeholder="Inscr. Est." name="inscRem" id="inscRem">
+                placeholder="Inscr. Est." name="inscRem" id="inscRem" readOnly disabled>
             </div>            
             <div class="col-sm-6 mb-1 form-group pr-1">
                 <input type="text" class="form-control form-control-sm" 
-                placeholder="Nome/Razão" name="razaoRem" id="razaoRem" readOnly>
+                placeholder="Nome/Razão" name="razaoRem" id="razaoRem" readOnly disabled>
             </div>
             <div class="col-sm-6 mb-1 form-group pl-0 ">
                 <input type="text" class="form-control form-control-sm" 
-                placeholder="Nome Fantasia" name="fantasiaRem" id="fantasiaRem" readOnly>
+                placeholder="Nome Fantasia" name="fantasiaRem" id="fantasiaRem" readOnly disabled>
             </div>
             <div class="col-sm-4 mb-1 form-group pr-1">
                 <input type="text" class="form-control form-control-sm" 
-                placeholder="Cep" name="cepRem" id="cepRem" readOnly>
+                placeholder="Cep" name="cepRem" id="cepRem" readOnly disabled>
             </div>
             <div class="col-sm-8 mb-1 form-group pl-0 " >
                 <input type="text" class="form-control form-control-sm" 
-                placeholder="Rua" name="ruaRem" id="ruaRem" readOnly>
+                placeholder="Rua" name="ruaRem" id="ruaRem" readOnly disabled>
             </div>
             <div class="col-sm-2 mb-1 form-group pr-1">
                 <input type="text" class="form-control form-control-sm" 
-                    placeholder="Nº" name="numeroRem" id="numeroRem" readOnly>
+                    placeholder="Nº" name="numeroRem" id="numeroRem" readOnly disabled>
             </div>
             <div class="col-sm-4 mb-1 form-group pl-0 pr-1 ">
                 <input type="text" class="form-control form-control-sm pl-0 " 
-                placeholder="Complemento" name="complementoRem" id="complementoRem" readOnly>
+                placeholder="Complemento" name="complementoRem" id="complementoRem" readOnly disabled>
             </div>
             <div class="col-sm-6 mb-1 form-group pl-0 ">
                 <input type="text" class="form-control form-control-sm" 
-                placeholder="Bairro" name="bairroRem" id="bairroRem" readOnly>
+                placeholder="Bairro" name="bairroRem" id="bairroRem" readOnly disabled>
             </div>
             <div class="col-sm-9 mb-1 form-group pr-1">
                 <input type="text" class="form-control form-control-sm" 
-                placeholder="Cidade" name="cidadeRem" id="cidadeRem" readOnly>
+                placeholder="Cidade" name="cidadeRem" id="cidadeRem" readOnly disabled>
             </div>
             <div class="col-sm-3 mb-3 form-group pl-0 ">
                 <input type="text" class="form-control form-control-sm" 
-                placeholder="UF" name="ufRem" id="ufRem" readOnly>
+                placeholder="UF" name="ufRem" id="ufRem" readOnly disabled>
             </div>
         </div>
     </div>
@@ -90,43 +109,43 @@
             </div>
             <div class="col-sm-6 mb-1 pl-0  form-group">
                 <input type="text" class="form-control form-control-sm" 
-                placeholder="Inscr. Est." name="inscDest" id="inscDest">
+                placeholder="Inscr. Est." name="inscDest" id="inscDest" readOnly disabled>
             </div>   
             <div class="col-sm-6 mb-1 form-group pr-1">
                 <input type="text" class="form-control form-control-sm" 
-                placeholder="Nome/Razão" name="razaoDest" id="razaoDest" readOnly>
+                placeholder="Nome/Razão" name="razaoDest" id="razaoDest" readOnly disabled>
             </div>
             <div class="col-sm-6 mb-1 form-group pl-0 ">
                 <input type="text" class="form-control form-control-sm" 
-                placeholder="Nome Fantasia" name="fantasiaDest" id="fantasiaDest" readOnly>
+                placeholder="Nome Fantasia" name="fantasiaDest" id="fantasiaDest" readOnly disabled>
             </div>
             <div class="col-sm-4 mb-1 form-group pr-1">
                 <input type="text" class="form-control form-control-sm" 
-                placeholder="Cep" name="cepDest" id="cepDest" readOnly>
+                placeholder="Cep" name="cepDest" id="cepDest" readOnly disabled>
             </div>
             <div class="col-sm-8 mb-1 form-group pl-0 " >
                 <input type="text" class="form-control form-control-sm" 
-                placeholder="Rua" name="ruaDest" id="ruaDest" readOnly>
+                placeholder="Rua" name="ruaDest" id="ruaDest" readOnly disabled>
             </div>
             <div class="col-sm-2 mb-1 form-group pr-1">
                 <input type="text" class="form-control form-control-sm" 
-                    placeholder="Nº" name="numeroDest" id="numeroDest" readOnly>
+                    placeholder="Nº" name="numeroDest" id="numeroDest" readOnly disabled>
             </div>
             <div class="col-sm-4 mb-1 form-group pl-0 pr-1 ">
                 <input type="text" class="form-control form-control-sm pl-0 " 
-                placeholder="Complemento" name="complementoDest" id="complementoDest" readOnly>
+                placeholder="Complemento" name="complementoDest" id="complementoDest" readOnly disabled>
             </div>
             <div class="col-sm-6 mb-1 form-group pl-0 ">
                 <input type="text" class="form-control form-control-sm" 
-                placeholder="Bairro" name="bairroDest" id="bairroDest" readOnly>
+                placeholder="Bairro" name="bairroDest" id="bairroDest" readOnly disabled>
             </div>
             <div class="col-sm-9 mb-1 form-group pr-1">
                 <input type="text" class="form-control form-control-sm" 
-                placeholder="Cidade" name="cidadeDest"id="cidadeDest" readOnly>
+                placeholder="Cidade" name="cidadeDest"id="cidadeDest" readOnly disabled>
             </div>
             <div class="col-sm-3 mb-3 form-group pl-0 ">
                 <input type="text" class="form-control form-control-sm" 
-                placeholder="UF" name="ufDest" id="ufDest" readOnly>
+                placeholder="UF" name="ufDest" id="ufDest" readOnly disabled>
             </div>
         </div>
     </div>
@@ -148,43 +167,43 @@
             </div>
             <div class="col-sm-6 mb-1 pl-0  form-group">
                 <input type="text" class="form-control form-control-sm" 
-                placeholder="Inscr. Est." name="inscConsig" id="inscConsig">
+                placeholder="Inscr. Est." name="inscConsig" id="inscConsig" readOnly disabled>
             </div>   
             <div class="col-sm-6 mb-1 form-group pr-1">
                 <input type="text" class="form-control form-control-sm" 
-                placeholder="Nome/Razão" name="razaoConsig" id="razaoConsig" readOnly>
+                placeholder="Nome/Razão" name="razaoConsig" id="razaoConsig" readOnly disabled>
             </div>
             <div class="col-sm-6 mb-1 form-group pl-0 ">
                 <input type="text" class="form-control form-control-sm" 
-                placeholder="Nome Fantasia" name="fantasiaConsig" id="fantasiaConsig" readOnly>
+                placeholder="Nome Fantasia" name="fantasiaConsig" id="fantasiaConsig" readOnly disabled>
             </div>
             <div class="col-sm-4 mb-1 form-group pr-1">
                 <input type="text" class="form-control form-control-sm" 
-                placeholder="Cep" name="cepConsig" id="cepConsig" readOnly>
+                placeholder="Cep" name="cepConsig" id="cepConsig" readOnly disabled>
             </div>
             <div class="col-sm-8 mb-1 form-group pl-0 " >
                 <input type="text" class="form-control form-control-sm" 
-                placeholder="Rua" name="ruaConsig" id="ruaConsig" readOnly>
+                placeholder="Rua" name="ruaConsig" id="ruaConsig" readOnly disabled>
             </div>
             <div class="col-sm-2 mb-1 form-group pr-1">
                 <input type="text" class="form-control form-control-sm" 
-                    placeholder="Nº" name="numeroConsig" id="numeroConsig" readOnly>
+                    placeholder="Nº" name="numeroConsig" id="numeroConsig" readOnly disabled>
             </div>
             <div class="col-sm-4 mb-1 form-group pl-0 pr-1 ">
                 <input type="text" class="form-control form-control-sm pl-0 " 
-                placeholder="Complemento" name="complementoConsig" id="complementoConsig" readOnly>
+                placeholder="Complemento" name="complementoConsig" id="complementoConsig" readOnly disabled>
             </div>
             <div class="col-sm-6 mb-1 form-group pl-0 ">
                 <input type="text" class="form-control form-control-sm" 
-                placeholder="Bairro" name="bairroConsig" id="bairroConsig" readOnly>
+                placeholder="Bairro" name="bairroConsig" id="bairroConsig" readOnly disabled>
             </div>
             <div class="col-sm-9 mb-1 form-group pr-1">
                 <input type="text" class="form-control form-control-sm" 
-                placeholder="Cidade" name="cidadeConsig" id="cidadeConsig" readOnly>
+                placeholder="Cidade" name="cidadeConsig" id="cidadeConsig" readOnly disabled>
             </div>
             <div class="col-sm-3 mb-3 form-group pl-0 ">
                 <input type="text" class="form-control form-control-sm" 
-                placeholder="UF" name="ufConsig" id="ufConsig" readOnly>
+                placeholder="UF" name="ufConsig" id="ufConsig" readOnly disabled>
             </div>
         </div>
     </div>
@@ -203,43 +222,43 @@
             </div>
             <div class="col-sm-6 mb-1 pl-0  form-group">
                 <input type="text" class="form-control form-control-sm" 
-                placeholder="Inscr. Est." name="inscRedesp" id="inscRedesp">
+                placeholder="Inscr. Est." name="inscRedesp" id="inscRedesp" readOnly disabled   >
             </div>
             <div class="col-sm-6 mb-1 form-group pr-1">
                 <input type="text" class="form-control form-control-sm" 
-                placeholder="Nome/Razão" name="razaoRedesp" id="razaoRedesp" readOnly>
+                placeholder="Nome/Razão" name="razaoRedesp" id="razaoRedesp" readOnly disabled>
             </div>
             <div class="col-sm-6 mb-1 form-group pl-0 ">
                 <input type="text" class="form-control form-control-sm" 
-                placeholder="Nome Fantasia" name="fantasiaRedesp" id="fantasiaRedesp" readOnly>
+                placeholder="Nome Fantasia" name="fantasiaRedesp" id="fantasiaRedesp" readOnly disabled>
             </div>
             <div class="col-sm-4 mb-1 form-group pr-1">
                 <input type="text" class="form-control form-control-sm" 
-                placeholder="Cep" name="cepRedesp" id="cepRedesp" readOnly>
+                placeholder="Cep" name="cepRedesp" id="cepRedesp" readOnly disabled>
             </div>
             <div class="col-sm-8 mb-1 form-group pl-0 " >
                 <input type="text" class="form-control form-control-sm" 
-                placeholder="Rua" name="ruaRedesp" id="ruaRedesp" readOnly>
+                placeholder="Rua" name="ruaRedesp" id="ruaRedesp" readOnly disabled>
             </div>
             <div class="col-sm-2 mb-1 form-group pr-1">
                 <input type="text" class="form-control form-control-sm" 
-                    placeholder="Nº" name="numeroRedesp" id="numeroRedesp" readOnly>
+                    placeholder="Nº" name="numeroRedesp" id="numeroRedesp" readOnly disabled>
             </div>
             <div class="col-sm-4 mb-1 form-group pl-0 pr-1 ">
                 <input type="text" class="form-control form-control-sm pl-0 " 
-                placeholder="Complemento" name="complementoRedesp" id="complementoRedesp" readOnly>
+                placeholder="Complemento" name="complementoRedesp" id="complementoRedesp" readOnly disabled>
             </div>
             <div class="col-sm-6 mb-1 form-group pl-0 ">
                 <input type="text" class="form-control form-control-sm" 
-                placeholder="Bairro" name="bairroRedesp" id="bairroRedesp" readOnly>
+                placeholder="Bairro" name="bairroRedesp" id="bairroRedesp" readOnly disabled>
             </div>
             <div class="col-sm-9 mb-1 form-group pr-1">
                 <input type="text" class="form-control form-control-sm" 
-                placeholder="Cidade" name="cidadeRedesp" id="cidadeRedesp" readOnly>
+                placeholder="Cidade" name="cidadeRedesp" id="cidadeRedesp" readOnly disabled>
             </div>
             <div class="col-sm-3 mb-3 form-group pl-0 ">
                 <input type="text" class="form-control form-control-sm" 
-                placeholder="UF" name="ufRedesp" id="ufRedesp" readOnly>
+                placeholder="UF" name="ufRedesp" id="ufRedesp" readOnly disabled>
             </div>
         </div>
     </div>
