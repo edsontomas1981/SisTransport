@@ -1,4 +1,3 @@
-from socket import NI_NUMERICHOST
 from django.db import models
 from parceiros.models.parceiros import Parceiros
 from enderecos.models.endereco import Enderecos

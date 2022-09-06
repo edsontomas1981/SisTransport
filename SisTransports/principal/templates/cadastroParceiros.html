@@ -2,7 +2,7 @@
 {% load static %}
 {% load bootstrap %}
 <div>
-<form method="POST" id="formParceiros" >
+<form method="POST">
 {% csrf_token %}
 <div class="modal" id="mdlCadParceiros" tabindex="-1"data-bs-backdrop="static" 
     data-bs-keyboard="false" aria-labelledby="staticBackdropLabel" 
@@ -185,7 +185,7 @@
         </div>
         <div class="modal-footer">
           <button type="button" id="btnFechar" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
-          <input type="submit" class="btn btn-primary" id="salvaParceiro" name="salvaParceiro" value="Salvar"></input>
+          <input type="button" class="btn btn-primary" id="salvaParceiro" name="salvaParceiro" value="Salvar"></input>
         </div>
       </div>
     </div>

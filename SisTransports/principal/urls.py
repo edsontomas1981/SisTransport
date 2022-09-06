@@ -2,17 +2,17 @@ from django.conf import settings
 from django.conf.urls.static import static
 from django.urls import path
 from principal.views.cadParceiros import ViewCadPar
-from principal import views
+from principal import views as viewsPrincipal
 from parceiros import views as viewParceiros
 from operacional import views as viewsOperacional
 urlpatterns = [
-     path('',views.home,
+     path('',viewsPrincipal.home,
          name='home'),
      path('cadParceiros/',
         ViewCadPar.as_view(),name='cadParceiros'),
-     path('salva_parceiro/',views.salva_parceiro,
+     path('salva_parceiro/',viewsPrincipal.salva_parceiro,
          name='salva_parceiro'),
-     path('cad_contato/',views.cad_contato,
+     path('cad_contato/',viewsPrincipal.cad_contato,
          name='cad_contato'),
      path('busca_parceiro/',viewParceiros.busca_parceiro,
         name='busca_parceiro'),

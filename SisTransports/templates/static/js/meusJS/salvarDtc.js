@@ -1,17 +1,14 @@
 function criaDados(cnpjRem, cnpjDest, cnpjRedesp, cnpjConsig) {
-
     return '&cnpjRem=' + cnpjRem + '&cnpjDest=' + cnpjDest + '&cnpjRedesp=' + cnpjRedesp + '&cnpjConsig=' + cnpjConsig
 }
-
-
 $(document).keydown(function(event) {
     if (event.altKey && event.which === 88) {
-        alert('Alt + X pressed!');
+        funSalvaDtc();
         e.preventDefault();
     }
 });
 
-$('#salvaDtc').on('click', function(e) {
+function funSalvaDtc(){
     let url = '/saveDtc/'
     let postData = $('form').serialize();
     postData += criaDados($('#cnpjRem').val(), $('#cnpjDest').val(), $('#cnpjRedesp').val(), $('#cnpjConsig').val())
@@ -29,5 +26,9 @@ $('#salvaDtc').on('click', function(e) {
             console.log('Erro');
         }
     });
+}
+
+$('#salvaDtc').on('click', function(e) {
+    funSalvaDtc()
     e.preventDefault();
 })
