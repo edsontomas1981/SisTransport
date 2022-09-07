@@ -87,21 +87,5 @@ def salva_parceiro(request):
             return render(request,'./cadastroParceiros.html',)
 
                     
-        # elif request.POST.get('acaoForm')=='incluiContato':
-        #     contato=Contatos()
-        #     parceiro=verificaParceiro(request.POST.get('cnpj_cpfMdl'));
-        #     tipo_contato=Tipo_contatos.objects.filter(id=1).get()
-        #     contato.parceiro_fk=parceiro
-        #     contato.tipo=tipo_contato
-        #     contato.fone_email_etc=request.POST.get('contato')
-        #     contato.nome=request.POST.get('nome')       
-        #     contato.cargo=request.POST.get('cargo')
-        #     if request.POST.get('envio') == 'on':
-        #         envio = True
-        #     else:
-        #         envio = False
-        #     contato.envio=envio
-        #     contato.save()
-        #     dados=[contato.to_dict()]
-        #     return JsonResponse({'dados': dados})
+
         
