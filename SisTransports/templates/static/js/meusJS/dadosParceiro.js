@@ -96,7 +96,7 @@ function busca_parceiro(cnpj, insc, razao, fantasia, cep,
         },
         error: function(xhr) {
             console.log('Erro');
-        }
+        } 
 
     });
 }
@@ -214,13 +214,23 @@ function limpaTabelaContatos() {
 
 }
 
+$(document).ready(function(){
+
+ });
+
+$('#tabela').on('click', function(e) {
+    var div = document.getElementById('contato');
+    div.onclick = function() {
+        alert(this.id); // alerta 'seuid'
+    } 
+}); 
 function adicionaContatoNaTabela(response) {
     const data = response.contato;
     console.log(data)
     let template
     for (let i = 0; i < data.length; i++) {
-        template = '<tr id="tr" >' +
-            '<td>' + data[i].id + '</td>' +
+        template = '<tr class="contato" id='+ data[i].id + '>' +
+            '<td id='+ data[i].id +'>' + data[i].id + '</td>' +
             '<td>' + data[i].nome + '</td>' +
             '<td>' + data[i].cargo + '</td>' +
             '<td>' + data[i].tipo + '</td>' +
