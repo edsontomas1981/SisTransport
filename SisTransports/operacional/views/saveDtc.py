@@ -1,8 +1,9 @@
 from django.shortcuts import render
 from django.contrib.auth.decorators import login_required
 from django.http import JsonResponse
-from operacional.models.dtc import Dtc 
+from operacional.models.dtc import Dtc as dctoCarga
 from parceiros.models.parceiros import Parceiros
+from Classes.dtc import Dtc 
 
 def buscaParceiro(cnpj):
     if Parceiros.objects.filter(cnpj_cpf=cnpj).exists():
@@ -24,15 +25,16 @@ def saveDtc (request):
             return JsonResponse({'status': 401}) #Cnpj remetente ou Destinatario vazios
         elif remetente and destinatario :
             dtc=Dtc()
-            dtc.remetente_fk=remetente
-            dtc.destinatario_fk=destinatario
-            if redespacho :
-                dtc.redespacho_fk=redespacho
-            if consignatario :
-                dtc.consignatario_fk=consignatario
-            dtc.save()
-            dadosDtc = [dtc.to_dict()]
-            return JsonResponse({'status': 200 , 'dadosDtc':dadosDtc}) #Cadastro efetuado com sucesso
+            # dtc.remetente_fk=remetente
+            # dtc.destinatario_fk=destinatario
+            # if redespacho :
+            #     dtc.redespacho_fk=redespacho
+            # if consignatario :
+            #     dtc.consignatario_fk=consignatario
+            # dtc.save()
+            dtc.incluiDtc(remetente,destinatario,redespacho,consignatario)
+         
+            return JsonResponse({'status': 200 }) #Cadastro efetuado com sucesso
         else:
             
             return JsonResponse({'status': 402}) #Erro nao especificado 

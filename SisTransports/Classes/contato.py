@@ -22,12 +22,23 @@ class Contato:
 
     def contatos(self):
         if mdlContato.objects.filter(parceiro_fk_id=self.parceiro.id).exists() :
-            dados=[self.parceiro.to_dict()]
             contatos=mdlContato.objects.filter(parceiro_fk_id=self.parceiro.id)
             contato=[]
             for c in contatos:
                 contato.append(c.to_dict())
             return contato
+        
+    def excluiContato(self,id):
+        self.id=id
+        contato=mdlContato.objects.filter(id=self.id)
+        if contato:
+            contato.delete()
+            return{'status':200}
+        else:
+            return{'status':401}
+        
 
+        
+    
 
 

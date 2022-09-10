@@ -1,5 +1,7 @@
 var editaContato
 var quemChamouModal
+var botaoQueFoiAcionado
+
 
 function enderecoColeta(response) {
     let cep = response.dados[0].endereco_fk.cep.replace(/\D/g, '');
@@ -210,28 +212,81 @@ function limpaTabelaContatos() {
     $('#nome').val('');
     $('#contato').val('');
     $('#cargo').val('');
+}
 
+function identificaRowBotaoAcionado(){
+    var tr = document.querySelectorAll('tr');
+        tr.forEach((e) => {
+            e.addEventListener('click', acaoNaRowSelecionada);
+        });
 
 }
- 
-$('#tabela tbody').on('click', function(e) {
-    alert('teste')
-}); 
+function acaoNaRowSelecionada(e){
+    if (botaoQueFoiAcionado == 'excluiContato'){
+        excluiContato(e)
+    }else if(botaoQueFoiAcionado == 'alteraContato'){
+        alert('alterar Contato')
+    }
+}
+
+function excluiContato(e) {
+    let idContato=e.currentTarget.id;
+    let textoMsg = "Deseja realmente apagar o contato selecionado ?"
+    if (confirm(textoMsg)==true){
+        apagaContato(idContato)
+    }
+}
+
+function apagaContato(id) {
+    let url = '/exclui_contato/'
+    let postData = $('form').serialize();
+    postData+='&idContato=' + id;
+    
+    $.ajax({
+        url: url,
+        type: 'POST',
+        data: postData,
+        success: function(response) {
+            alert('Contato deletado com sucesso !')
+            limpaTabelaContatos();
+            adicionaContatoNaTabela(response);
+        },
+        error: function(xhr) {
+            console.log('Erro');
+        },
+        complete: function() {
+            // closeModal()
+        }
+    });
+};
+
+function identificaBotaoClicado(e) {
+    botaoQueFoiAcionado=e.currentTarget.id;
+    identificaRowBotaoAcionado(e)
+}
+$(document).ready(function() {
+    $('#corpoTabela').click(function(e){
+        var botao = document.querySelectorAll('button');
+        botao.forEach((e) => {
+            e.addEventListener('click', identificaBotaoClicado);
+            });
+    });
+})
 
 function adicionaContatoNaTabela(response) {
     const data = response.contato;
     console.log(data)
     let template
     for (let i = 0; i < data.length; i++) {
-        template = '<tr>' +
-            '<td id="tabela1"'+ data[i].id +'>' + data[i].id + '</td>' +
+        template = '<tr class="tr" id="'+ data[i].id +'">' +
+            '<td>' + data[i].id + '</td>' +
             '<td>' + data[i].nome + '</td>' +
             '<td>' + data[i].cargo + '</td>' +
             '<td>' + data[i].tipo + '</td>' +
             '<td>' + data[i].fone_email_etc + '</td>' +
-            '<td>' + '<button type="button" class="btn btn-success btn-rounded btn-icon">' +
+            '<td>' + '<button type="button" id="alteraContato"  class="btn btn-success btn-rounded btn-icon">' +
             '<i class="ti-pencil-alt2"></i></button>' + '</td>' +
-            '<td>' + '<button type="button" class="btn btn-danger btn-rounded btn-icon">' +
+            '<td>' + '<button type="button" id="excluiContato" class="btn btn-danger btn-rounded btn-icon">' +
             '<i class="ti-eraser "></i>' + '</button>' + '</td>' +
             '</tr>'
         $('#tabela tbody').append(template)
