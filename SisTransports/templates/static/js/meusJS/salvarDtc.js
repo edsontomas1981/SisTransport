@@ -8,11 +8,11 @@ $(document).keydown(function(event) {
     }
 });
 
-function funSalvaDtc(){
+function funSalvaDtc() {
     let url = '/saveDtc/'
     let postData = $('form').serialize();
     postData += criaDados($('#cnpjRem').val(), $('#cnpjDest').val(), $('#cnpjRedesp').val(), $('#cnpjConsig').val())
-    console.log(postData)
+    console.table(postData)
 
     $.ajax({
         url: url,
@@ -20,7 +20,7 @@ function funSalvaDtc(){
         data: postData,
         success: function(response) {
             alert('DTC salvo com sucesso')
-            $('#numPed').val(response.dadosDtc[0].id)
+            $('#numPed').val(response.dados.id)
         },
         error: function(xhr) {
             console.log('Erro');

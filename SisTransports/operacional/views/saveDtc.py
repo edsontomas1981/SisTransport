@@ -9,8 +9,6 @@ def buscaParceiro(cnpj):
     if Parceiros.objects.filter(cnpj_cpf=cnpj).exists():
         parceiro=Parceiros.objects.filter(cnpj_cpf=cnpj).get()
         return parceiro 
-    
-    
 
 @login_required(login_url='/auth/entrar/')
 def saveDtc (request):
@@ -25,18 +23,11 @@ def saveDtc (request):
             return JsonResponse({'status': 401}) #Cnpj remetente ou Destinatario vazios
         elif remetente and destinatario :
             dtc=Dtc()
-            # dtc.remetente_fk=remetente
-            # dtc.destinatario_fk=destinatario
-            # if redespacho :
-            #     dtc.redespacho_fk=redespacho
-            # if consignatario :
-            #     dtc.consignatario_fk=consignatario
-            # dtc.save()
             dtc.incluiDtc(remetente,destinatario,redespacho,consignatario)
-         
-            return JsonResponse({'status': 200 }) #Cadastro efetuado com sucesso
+            dados=dtc.to_dict()
+            dictDtc=dtc.alteraDtc(1,remetente,destinatario,redespacho,consignatario)
+            return JsonResponse({'status': 200,'dados':dados}) #Cadastro efetuado com sucesso
         else:
-            
             return JsonResponse({'status': 402}) #Erro nao especificado 
     else:
         return JsonResponse({'status': 402}) #Erro nao especificado

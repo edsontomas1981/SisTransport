@@ -12,7 +12,8 @@ class Dtc (models.Model):
     rota_fk=models.ForeignKey(Rota, on_delete=models.CASCADE, null=True, related_name='rotaDtc')
     
     def to_dict(self):
-        dtc = {'id':self.id,'rota':self.rota_fk.to_dict()}
+        dtc = {'id':self.id}
+        #'rota':self.rota_fk.to_dict()})
         if self.remetente_fk :
             dtc.update({'remetente':self.remetente_fk.to_dict()})
         if self.destinatario_fk :
