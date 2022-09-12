@@ -9,7 +9,7 @@ $(document).keydown(function(event) {
 });
 
 function funSalvaDtc() {
-    let url = '/saveDtc/'
+    let url = '/preDtc/saveDtc/'
     let postData = $('form').serialize();
     postData += criaDados($('#cnpjRem').val(), $('#cnpjDest').val(), $('#cnpjRedesp').val(), $('#cnpjConsig').val())
     console.table(postData)
@@ -27,7 +27,6 @@ function funSalvaDtc() {
         }
     });
 }
-
 $('#salvaDtc').on('click', function(e) {
     funSalvaDtc()
     e.preventDefault();

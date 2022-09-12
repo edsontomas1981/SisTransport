@@ -3,7 +3,7 @@
 {% load static %}
 
 {% block 'conteudo'%}
-  <form method="POST">
+  <form method="POST" class="frm">
     <div class="mb-0">
       <ul class="nav nav-pills nav-pills-primary" id="pills-tab" role="tablist">
         <li class="nav-item pl-0 " role="presentation">
@@ -42,4 +42,7 @@
       </div>
     </div>
   </form>
-{% endblock %}  
+{% endblock %} 
+{% block 'js' %} 
+  <script src="{% static 'js/meusJS/buscaDtc.js' %}"></script>
+{% endblock %} 

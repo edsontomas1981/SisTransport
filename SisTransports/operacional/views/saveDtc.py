@@ -1,7 +1,6 @@
 from django.shortcuts import render
 from django.contrib.auth.decorators import login_required
 from django.http import JsonResponse
-from operacional.models.dtc import Dtc as dctoCarga
 from parceiros.models.parceiros import Parceiros
 from Classes.dtc import Dtc 
 
