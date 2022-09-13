@@ -30,65 +30,33 @@ function completaDtcCnpj(response,cnpj, insc, razao, fantasia, cep,
         $('#' + bairro).val(response.endereco_fk.bairro);
         $('#' + cidade).val(response.endereco_fk.cidade);
         $('#' + uf).val(response.endereco_fk.uf);
-}
-function limpaInputs(){
-
-    $('#numPed').val('');
-
-    $('#cnpjRem').val('');
-    $('#inscRem').val('');
-    $('#razaoRem').val('');
-    $('#fantasiaRem').val('');
-    $('#cepRem').val('');
-    $('#ruaRem').val('');
-    $('#numeroRem').val('');
-    $('#complementoRem').val('');
-    $('#bairroRem').val('');
-    $('#cidadeRem').val('');
-    $('#ufRem').val('');
-
-    $('#cnpjDest').val('');
-    $('#inscDest').val('');
-    $('#razaoDest').val('');
-    $('#fantasiaDest').val('');
-    $('#cepDest').val('');
-    $('#ruaDest').val('');
-    $('#numeroDest').val('');
-    $('#complementoDest').val('');
-    $('#bairroDest').val('');
-    $('#cidadeDest').val('');
-    $('#ufDest').val('');
-
-    $('#cnpjRedesp').val('');
-    $('#inscRedesp').val('');
-    $('#razaoRedesp').val('');
-    $('#fantasiaRedesp').val('');
-    $('#cepRedesp').val('');
-    $('#ruaRedesp').val('');
-    $('#numeroRedesp').val('');
-    $('#complementoRedesp').val('');
-    $('#bairroRedesp').val('');
-    $('#cidadeRedesp').val('');
-    $('#ufRedesp').val('');
-
-    $('#cnpjConsig').val('');
-    $('#inscConsig').val('');
-    $('#razaoConsig').val('');
-    $('#fantasiaConsig').val('');
-    $('#cepConsig').val('');
-    $('#ruaConsig').val('');
-    $('#numeroConsig').val('');
-    $('#complementoConsig').val('');
-    $('#bairroConsig').val('');
-    $('#cidadeConsig').val('');
-    $('#ufConsig').val('');
-
-}
-function limpar(){
-    var buttons = document.querySelectorAll('input');
-    for (var i = 0; i < buttons.length; i++) {
-      buttons[i].value = '';
     }
+
+function limpaCnpj(cnpj, insc, razao, fantasia, cep,
+    endereco, numero, complemento, bairro, cidade, uf) {
+        $('#' + cnpj).val('');
+        $('#' + insc).val('');
+        $('#' + razao).val('');
+        $('#' + fantasia).val('');
+        $('#' + cep).val('');
+        $('#' + endereco).val('');
+        $('#' + numero).val('');
+        $('#' + complemento).val('');
+        $('#' + bairro).val('');
+        $('#' + cidade).val('');
+        $('#' + uf).val('');
+}        
+
+function limpaDtc(){
+    $('#numPed').val('');
+    limpaCnpj('cnpjRem', 'inscRem', 'razaoRem', 'fantasiaRem', 'cepRem','ruaRem','numeroRem','complementoRem',
+            'bairroRem','cidadeRem','ufRem')
+    limpaCnpj('cnpjDest', "inscDest", "razaoDest", "fantasiaDest","cepDest","ruaDest", "numeroDest", "complementoDest",
+            "bairroDest", "cidadeDest", "ufDest")
+    limpaCnpj('cnpjRedesp', "inscRedesp", "razaoRedesp", "fantasiaRedesp","cepRedesp","ruaRedesp", "numeroRedesp", 
+            "complementoRedesp", "bairroRedesp", "cidadeRedesp", "ufRedesp")  
+    limpaCnpj('cnpjConsig', "inscConsig", "razaoConsig", "fantasiaConsig","cepConsig","ruaConsig", "numeroConsig", 
+            "complementoConsig", "bairroConsig", "cidadeConsig", "ufConsig")  
 }
 
 function buscaDtc(idDtc) {
@@ -113,7 +81,6 @@ function buscaDtc(idDtc) {
 function excluiDtc(idDtc) {
     let url = '/preDtc/excluiDtc/'
     let postData = $('form').serialize();
-    // let postData = criaDados($('#cnpjRem').val(), $('#cnpjDest').val(), $('#cnpjRedesp').val(), $('#cnpjConsig').val())
     postData += '&idDtc=' + idDtc
     $.ajax({
         url: url,
@@ -138,12 +105,6 @@ $('#excluiDtc').on('click', function(e) {
 });
 
 $('#btnNovo').on('click', function(e) {
-    limpar()
-    // limpaInputs()
     e.preventDefault();
+    limpaDtc()
 });
-
-// $('form').submit(function(e){
-//     limpaInputs()
-//     e.preventDefault();    
-// });

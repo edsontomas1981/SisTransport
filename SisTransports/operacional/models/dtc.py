@@ -1,7 +1,7 @@
-from ast import operator
 from django.db import models
 from parceiros.models.parceiros import Parceiros
 from operacional.models.rota import Rota
+
 
 class Dtc (models.Model):
     remetente_fk=models.ForeignKey(Parceiros, on_delete=models.CASCADE,related_name='remetDtc')

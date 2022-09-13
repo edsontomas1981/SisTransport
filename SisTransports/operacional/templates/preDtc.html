@@ -29,13 +29,11 @@
       <div class="tab-content" id="pills-tabContent">
         <div class="tab-pane fade  show active  " id="pills-dtc" role="tabpanel" 
             aria-labelledby="pills-dtc-tab">
-
           {% include 'origDestPreDtc.html' %}
         </div>
         <div class="tab-pane fade" id="pills-coleta" 
             role="tabpanel" aria-labelledby="pills-coleta-tab">
-
-          {% include 'dadosPreDtc.html' %}
+          {% include 'dadosColetaPreDtc.html' %}
         </div>
       <div class="tab-pane fade" id="pills-nf" role="tabpanel" aria-labelledby="pills-nf-tab">...</div>
       <div class="tab-pane fade" id="pills-contact" role="tabpanel" aria-labelledby="pills-contact-tab">...</div>
@@ -45,4 +43,5 @@
 {% endblock %} 
 {% block 'js' %} 
   <script src="{% static 'js/meusJS/buscaDtc.js' %}"></script>
+  <script src="{% static 'js/meusJS/coleta.js' %}"></script>
 {% endblock %} 
