@@ -1,6 +1,4 @@
-function criaDados(cnpjRem, cnpjDest, cnpjRedesp, cnpjConsig) {
-    return '&cnpjRem=' + cnpjRem + '&cnpjDest=' + cnpjDest + '&cnpjRedesp=' + cnpjRedesp + '&cnpjConsig=' + cnpjConsig
-}
+
 $(document).keydown(function(event) {
     if (event.altKey && event.which === 88) {
         funSalvaDtc();
@@ -11,9 +9,7 @@ $(document).keydown(function(event) {
 function funSalvaDtc() {
     let url = '/preDtc/saveDtc/'
     let postData = $('form').serialize();
-    postData += criaDados($('#cnpjRem').val(), $('#cnpjDest').val(), $('#cnpjRedesp').val(), $('#cnpjConsig').val())
-    console.table(postData)
-
+   
     $.ajax({
         url: url,
         type: 'POST',
