@@ -29,7 +29,9 @@ urlpatterns = [
     path('preDtc/excluiDtc/',viewsOperacional.excluiDtc,
          name='excluiDtc'),   
     path('preDtc/saveColeta/',viewsOperacional.saveColeta,
-         name='saveColeta'),              
+         name='saveColeta'), 
+    path('preDtc/deletaColeta/',viewsOperacional.deletaColeta,
+         name='deletaColeta'),                  
 ]
 urlpatterns += static(settings.STATIC_URL, 
                       document_root=settings.STATIC_ROOT)

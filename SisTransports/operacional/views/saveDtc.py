@@ -3,12 +3,14 @@ from django.contrib.auth.decorators import login_required
 from django.http import JsonResponse
 from parceiros.models.parceiros import Parceiros
 from Classes.dtc import Dtc 
+from Classes.coleta import Coleta 
 
 def buscaParceiro(cnpj):
     if Parceiros.objects.filter(cnpj_cpf=cnpj).exists():
         parceiro=Parceiros.objects.filter(cnpj_cpf=cnpj).get()
-        return parceiro 
+        return parceiro
 
+        
 @login_required(login_url='/auth/entrar/')
 def saveDtc (request):
     if request.method == 'GET':
@@ -24,7 +26,6 @@ def saveDtc (request):
             dtc=Dtc()
             dtc.incluiDtc(remetente,destinatario,redespacho,consignatario)
             dados=dtc.to_dict()
-            dictDtc=dtc.alteraDtc(1,remetente,destinatario,redespacho,consignatario)
             return JsonResponse({'status': 200,'dados':dados}) #Cadastro efetuado com sucesso
         else:
             return JsonResponse({'status': 402}) #Erro nao especificado 
