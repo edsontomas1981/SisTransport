@@ -9,4 +9,4 @@ def buscaDtc (request):
         return render(request, 'preDtc.html')
     elif request.method == "POST" :
         dtc=Dtc()
-        return JsonResponse({'status': 200, 'dtc':dtc.buscaDtc(request.POST.get('idDtc'))}) #Cadastro efetuado com sucesso
+        return JsonResponse({'status': 200, 'dtc':dtc.buscaDtc(request.POST.get('numPed'))}) #Cadastro efetuado com sucesso

@@ -9,5 +9,7 @@ def excluiDtc (request):
         return render(request, 'preDtc.html')
     elif request.method == "POST" :
         dtc=Dtc()
-        dtc.excluiDtc(request.POST.get('idDtc'))
+        dtc.excluiDtc(request.POST.get('numPed'))
+        print(request.POST.get('numPed'))
+        print("excluiDtc")
         return JsonResponse({'status': 200}) #Cadastro efetuado com sucesso
