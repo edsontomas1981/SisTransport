@@ -81,8 +81,8 @@ $('#btnSalvaColeta').on('click', function(e) {
     e.preventDefault();
 })
 $('#btnExcluiColeta').on('click', function(e) {
-    let msg = 'a coleta de nº' + $('#numPed').val()
-    if (confirmacao()) {
+    let msg = 'a coleta ?'
+    if (confirmacao(msg)) {
         deletaColeta($('#numPed').val())
     }
     e.preventDefault();
