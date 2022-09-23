@@ -1,4 +1,5 @@
 function carregaDtc(response){
+    limpaDtc()
     if (response.dtc.remetente){
         completaDtcCnpj(response.dtc.remetente,'cnpjRem', "inscRem", "razaoRem", "fantasiaRem",
          "cepRem","ruaRem", "numeroRem", "complementoRem", "bairroRem", "cidadeRem", "ufRem")        
@@ -7,17 +8,21 @@ function carregaDtc(response){
         completaDtcCnpj(response.dtc.destinatario,'cnpjDest', "inscDest", "razaoDest", "fantasiaDest",
          "cepDest","ruaDest", "numeroDest", "complementoDest", "bairroDest", "cidadeDest", "ufDest")        
     }
+    
     if (response.dtc.redespacho){
         completaDtcCnpj(response.dtc.redespacho,'cnpjRedesp', "inscRedesp", "razaoRedesp", "fantasiaRedesp",
          "cepRedesp","ruaRedesp", "numeroRedesp", "complementoRedesp", "bairroRedesp", "cidadeRedesp", "ufRedesp")        
     }
+    
     if (response.dtc.consignatario){
         completaDtcCnpj(response.dtc.consignatario,'cnpjConsig', "inscConsig", "razaoConsig", "fantasiaConsig",
          "cepConsig","ruaConsig", "numeroConsig", "complementoConsig", "bairroConsig", "cidadeConsig", "ufConsig")        
     }
+    
     if (response.dtc.coleta){
         completaColeta(response.dtc.coleta)
     }
+    
 }
 function limpaColeta(){
     $('#nf').val('')
@@ -79,9 +84,9 @@ function completaDtcCnpj(response,cnpj, insc, razao, fantasia, cep,
         $('#' + bairro).val(response.endereco_fk.bairro);
         $('#' + cidade).val(response.endereco_fk.cidade);
         $('#' + uf).val(response.endereco_fk.uf);
-    }
+}
 
-function limpaCnpj(cnpj, insc, razao, fantasia, cep,
+function limpaParceiro(cnpj, insc, razao, fantasia, cep,
     endereco, numero, complemento, bairro, cidade, uf) {
         $('#' + cnpj).val('');
         $('#' + insc).val('');
@@ -97,27 +102,27 @@ function limpaCnpj(cnpj, insc, razao, fantasia, cep,
 }        
 
 function limpaDtc(){
-    limpaCnpj('cnpjRem', 'inscRem', 'razaoRem', 'fantasiaRem', 'cepRem','ruaRem','numeroRem','complementoRem',
+    limpaParceiro('cnpjRem', 'inscRem', 'razaoRem', 'fantasiaRem', 'cepRem','ruaRem','numeroRem','complementoRem',
             'bairroRem','cidadeRem','ufRem')
-    limpaCnpj('cnpjDest', "inscDest", "razaoDest", "fantasiaDest","cepDest","ruaDest", "numeroDest", "complementoDest",
+    limpaParceiro('cnpjDest', "inscDest", "razaoDest", "fantasiaDest","cepDest","ruaDest", "numeroDest", "complementoDest",
             "bairroDest", "cidadeDest", "ufDest")
-    limpaCnpj('cnpjRedesp', "inscRedesp", "razaoRedesp", "fantasiaRedesp","cepRedesp","ruaRedesp", "numeroRedesp", 
+    limpaParceiro('cnpjRedesp', "inscRedesp", "razaoRedesp", "fantasiaRedesp","cepRedesp","ruaRedesp", "numeroRedesp", 
             "complementoRedesp", "bairroRedesp", "cidadeRedesp", "ufRedesp")  
-    limpaCnpj('cnpjConsig', "inscConsig", "razaoConsig", "fantasiaConsig","cepConsig","ruaConsig", "numeroConsig", 
+    limpaParceiro('cnpjConsig', "inscConsig", "razaoConsig", "fantasiaConsig","cepConsig","ruaConsig", "numeroConsig", 
             "complementoConsig", "bairroConsig", "cidadeConsig", "ufConsig")  
     limpaColeta()
 }
 
-function buscaDtc(idDtc) {
+function buscaDtc() {
     let url = '/preDtc/buscaDtc/'
     let postData = $('form').serialize();
-    postData += '&idDtc=' + idDtc
     $.ajax({
         url: url,
         type: 'POST',
         data: postData,
         success: function(response) {
-            // limpaDtc()
+
+            limpaDtc()
             carregaDtc(response)
         },
         error: function(xhr) {
@@ -144,7 +149,8 @@ function excluiDtc(idDtc) {
     });
 }
 $('#btnBuscaDtc').on('click', function(e) {
-    buscaDtc($('#numPed').val())
+    limpaDtc()
+    buscaDtc()
     e.preventDefault();
 });
 

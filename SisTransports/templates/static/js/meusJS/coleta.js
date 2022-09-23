@@ -41,7 +41,6 @@ function deletaColeta() {
         success: function(response) {
             switch (response.status) {
                 case 200:
-
                     alert('Coleta Deletada com sucesso !')
                     limpaColeta()
                     break;

@@ -48,6 +48,7 @@ INSTALLED_APPS = [
     'contatos',
     'parceiros',
     'operacional',
+    'comercial',
 ]
 
 MIDDLEWARE = [

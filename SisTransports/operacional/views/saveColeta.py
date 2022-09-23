@@ -14,7 +14,7 @@ def salvaOrAlteraColeta(request):
                                 'camposObrigatorios':listaCamposObrigatorios}) #Faltam campos a ser preenchidos
         else:   
             dtc=Dtc()
-            dtc.obtemDtc(request.POST.get('numPed'))
+            dtc.readDtc(request.POST.get('numPed'))
             if dtc:
                 if dtc.dtc.coleta_fk:
                     valor=toFloat(request.POST.get('valor'))

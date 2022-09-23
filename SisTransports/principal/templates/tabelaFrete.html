@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+
+{%load static %}
+{% load bootstrap %}
+{% block 'conteudo' %}
+        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#mdlTabFrete">
+          Chama Tabela
+        </button>                       
+        {% include 'mdlTabela.html' %}
+{% endblock %}
+
+{%block 'js'%}
+<script src="{% static 'js/meusJS/tabela.js' %}"></script>
+{% endblock 'js' %}

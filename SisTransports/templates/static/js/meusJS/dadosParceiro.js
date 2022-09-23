@@ -55,7 +55,25 @@ function completaCnpj(response, insc, razao, fantasia, cep,
     }
 }
 
-function busca_parceiro(cnpj, insc, razao, fantasia, cep,
+function limpaCnpj(cnpj, insc, razao, fantasia, cep,
+    endereco, numero, complemento, bairro, cidade, uf) {
+
+        $('#idParceiro').val('')
+        $('#idEndereco').val('')
+        $('#' + cnpj).val('');
+        $('#' + insc).val('');
+        $('#' + razao).val('');
+        $('#' + fantasia).val('');
+        $('#' + cep).val('');
+        $('#' + endereco).val('');
+        $('#' + numero).val('');
+        $('#' + complemento).val('');
+        $('#' + bairro).val('');
+        $('#' + cidade).val('');
+        $('#' + uf).val('');
+}
+
+function    busca_parceiro(cnpj, insc, razao, fantasia, cep,
     endereco, numero, complemento, bairro, cidade, uf) {
 
     let url = '/busca_parceiro/'
@@ -63,12 +81,14 @@ function busca_parceiro(cnpj, insc, razao, fantasia, cep,
     postData += '&cnpj_cpf=' + cnpj;
     $.ajax({
         url: url,
+        beforeSend: function () {
+            $('body').append('<div class="loader">Carregando. Aguarde, por favor.</div>');
+        },        
         type: 'POST',
         data: postData,
         success: function(response) {
             switch (response.status) {
                 case 200:
-                    console.log(response.status)
                     completaCnpj(response, insc, razao, fantasia, cep,
                         endereco, numero, complemento, bairro, cidade, uf);
                     formHabilitaEdicao()
@@ -137,6 +157,9 @@ $('#salvaParceiro').on('click', function(e) {
     postData += '&cepMdl=' + $('#cepMdl').val()
     $.ajax({
         url: url,
+        beforeSend: function () {
+            $('body').append('<div class="loader">Carregando. Aguarde, por favor.</div>');
+        },
         type: 'POST',
         data: postData,
         success: function(response) {
@@ -316,17 +339,10 @@ $('#btnCnpjRem').on('click', function(e) {
     busca_parceiro($('#cnpjRem').val(), 'inscRem', 'razaoRem',
         'fantasiaRem', 'cepRem', 'ruaRem', 'numeroRem',
         'complementoRem', 'bairroRem', 'cidadeRem', 'ufRem');
-
     e.preventDefault();
 });
 
-$('#cnpjRem').on('blur', function(e) {
-    quemChamouModal = 'cnpjDest'
-    busca_parceiro($('#cnpjRem').val(), 'inscRem', 'razaoRem',
-        'fantasiaRem', 'cepRem', 'ruaRem', 'numeroRem',
-        'complementoRem', 'bairroRem', 'cidadeRem', 'ufRem');
-    e.preventDefault();
-});
+
 
 function preencheModalClick(cnpj, insc, razao, fantasia, cep,
     endereco, numero, complemento, bairro, cidade, uf) {
@@ -348,39 +364,106 @@ function preencheModalClick(cnpj, insc, razao, fantasia, cep,
 }
 
 $('#btnCnpjRem').on('click', function(e) {
-    quemChamouModal = 'cnpjDest'
-    console.log('debug1')
+    quemChamouModal = 'cnpjRem'
     $('#mdlCadParceiros').modal('show');
-
     preencheModalClick('cnpjRem', 'inscRem', 'razaoRem',
         'fantasiaRem', 'cepRem', 'ruaRem', 'numeroRem',
         'complementoRem', 'bairroRem', 'cidadeRem', 'ufRem');
-
     e.preventDefault();
 });
 
-$('#cnpjDest').on('blur', function(e) {
-    quemChamouModal = 'cnpjDest'
-    busca_parceiro($('#cnpjDest').val(), 'inscDest', 'razaoDest',
+$('#btnLimpaCnpjRem').on('click', function(e) {
+    limpaCnpj('cnpjRem', 'inscRem', 'razaoRem',
+        'fantasiaRem', 'cepRem', 'ruaRem', 'numeroRem',
+        'complementoRem', 'bairroRem', 'cidadeRem', 'ufRem');
+    e.preventDefault();
+});
+
+$('#btnLimpaCnpjDest').on('click', function(e) {
+    limpaCnpj('cnpjDest', 'inscDest', 'razaoDest',
         'fantasiaDest', 'cepDest', 'ruaDest', 'numeroDest',
         'complementoDest', 'bairroDest', 'cidadeDest', 'ufDest');
     e.preventDefault();
 });
 
-$('#cnpjConsig').on('blur', function(e) {
-    quemChamouModal = 'cnpjConsig'
-    busca_parceiro($('#cnpjConsig').val(), 'inscConsig', 'razaoConsig',
+$('#btnLimpaCnpjRedesp').on('click', function(e) {
+    limpaCnpj('cnpjRedesp', 'inscRedesp', 'razaoRedesp',
+        'fantasiaRedesp', 'cepRedesp', 'ruaRedesp', 'numeroRedesp',
+        'complementoRedesp', 'bairroRedesp', 'cidadeRedesp', 'ufRedesp');
+    e.preventDefault();
+});
+
+$('#btnLimpaCnpjConsig').on('click', function(e) {
+    limpaCnpj('cnpjConsig', 'inscConsig', 'razaoConsig',
         'fantasiaConsig', 'cepConsig', 'ruaConsig', 'numeroConsig',
         'complementoConsig', 'bairroConsig', 'cidadeConsig', 'ufConsig');
+    e.preventDefault();
+});
 
+$('#btnCnpjDest').on('click', function(e) {
+    quemChamouModal = 'cnpjDest'
+    $('#mdlCadParceiros').modal('show');
+    preencheModalClick('cnpjDest', 'inscDest', 'razaoDest',
+        'fantasiaDest', 'cepDest', 'ruaDest', 'numeroDest',
+        'complementoDest', 'bairroDest', 'cidadeDest', 'ufDest');
+    e.preventDefault();
+});
+
+$('#btnCnpjConsig').on('click', function(e) {
+    quemChamouModal = 'cnpjConsig'
+    $('#mdlCadParceiros').modal('show');
+    preencheModalClick('cnpjConsig', 'inscConsig', 'razaoConsig',
+        'fantasiaConsig', 'cepConsig', 'ruaConsig', 'numeroConsig',
+        'complementoConsig', 'bairroConsig', 'cidadeConsig', 'ufConsig');
+    e.preventDefault();
+});
+
+$('#btnCnpjRedesp').on('click', function(e) {
+    quemChamouModal = 'cnpjRedesp'
+    $('#mdlCadParceiros').modal('show');
+    preencheModalClick('cnpjRedesp', 'inscRedesp', 'razaoRedesp',
+        'fantasiaRedesp', 'cepRedesp', 'ruaRedesp', 'numeroRedesp',
+        'complementoRedesp', 'bairroRedesp', 'cidadeRedesp', 'ufRedesp');
+    e.preventDefault();
+});
+
+$('#cnpjRem').on('blur', function(e) {
+    if ($('#cnpjRem').val()!=""){
+        quemChamouModal = 'cnpjRem'
+        busca_parceiro($('#cnpjRem').val(), 'inscRem', 'razaoRem',
+        'fantasiaRem', 'cepRem', 'ruaRem', 'numeroRem',
+        'complementoRem', 'bairroRem', 'cidadeRem', 'ufRem');
+    }
+    e.preventDefault();
+});
+
+$('#cnpjDest').on('blur', function(e) {
+    if ($('#cnpjDest').val()!=""){
+        quemChamouModal = 'cnpjDest'
+        busca_parceiro($('#cnpjDest').val(), 'inscDest', 'razaoDest',
+        'fantasiaDest', 'cepDest', 'ruaDest', 'numeroDest',
+        'complementoDest', 'bairroDest', 'cidadeDest', 'ufDest');
+    }
+    e.preventDefault();
+});
+
+$('#cnpjConsig').on('blur', function(e) {
+    if ($('#cnpjConsig').val()!=""){
+        quemChamouModal = 'cnpjConsig'
+        busca_parceiro($('#cnpjConsig').val(), 'inscConsig', 'razaoConsig',
+        'fantasiaConsig', 'cepConsig', 'ruaConsig', 'numeroConsig',
+        'complementoConsig', 'bairroConsig', 'cidadeConsig', 'ufConsig');
+    }
     e.preventDefault();
 });
 
 $('#cnpjRedesp').on('blur', function(e) {
-    quemChamouModal = 'cnpjRedesp'
-    busca_parceiro($('#cnpjRedesp').val(), 'inscRedesp', 'razaoRedesp',
+    if ($('#cnpjRedesp').val()!=""){
+        quemChamouModal = 'cnpjRedesp'
+        busca_parceiro($('#cnpjRedesp').val(), 'inscRedesp', 'razaoRedesp',
         'fantasiaRedesp', 'cepRedesp', 'ruaRedesp', 'numeroRedesp',
         'complementoRedesp', 'bairroRedesp', 'cidadeRedesp', 'ufRedesp');
+    }
     e.preventDefault();
 });
 

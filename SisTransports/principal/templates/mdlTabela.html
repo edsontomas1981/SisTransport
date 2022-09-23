@@ -1,0 +1,135 @@
+{% load static %}
+{% load bootstrap %}
+<form method="POST">
+    {% csrf_token %}
+<!-- Modal -->
+    <div class="modal fade" id="mdlTabFrete" tabindex="-1" data-bs-backdrop="static" data-bs-keyboard="false" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog modal-lg modal-dialog-scrollable modal-dialog-centered mt-2">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel"> Cadastro de tabelas de frete</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+            
+            <div class="row">
+
+
+                <div class="col-3 pl-0 pr-1 mt-0">
+                    <select type="text" name="tipoTabela" id="tipoTabela" class="form-select form-control-sm">
+                      <option value="1">Tabela Geral</option>
+                      <option value="2">Tabela Especifica</option>
+                    </select>
+                </div>                 
+                <div class="col-3 pl-0 pr-1 mt-0">
+                    <input type="text" name="freteMinimo" id="freteMinimo" class="form-control form-control-sm" placeholder="Frete mínimo" onKeyPress="return(MascaraMoeda(this,'.',',',event))">
+                </div>
+                <div class="form-check form-check-primary col-3 pr-0">
+                    <label class="form-check-label">
+                      <input type="checkbox" class="form-check-input" checked="" id="icms" name="icms">
+                      Icms incluso ?
+                    <i class="input-helper"></i></label>
+                </div>    
+                <div class="form-check form-check-primary col-3 pr-0">
+                    <label class="form-check-label">
+                      <input type="checkbox" class="form-check-input"  id="tabelaBloqueada" 
+                      name="tabelaBloqueada">
+                      Bloqueada ?
+                    <i class="input-helper"></i></label>
+                </div>                      
+                <div class="col-6 pl-0 pr-1 mt-1">
+                    <input type="check" name="descTabela" id="descTabela" class="form-control form-control-sm" value="Descrição">
+                </div>                
+                <div class="col-6 pl-0 pr-0 mt-1">
+                    <select type="text" name="rota" id="rota" class="form-control-sm form-select">
+                        <option value="1">SAO X SAO</option>
+                    </select>
+                </div>
+                <div class="col-9 pl-0 pr-1 mt-1">
+                    <input type="text" name="vlrFrete" id="vlrFrete" class="form-control form-control-sm" placeholder="R$" onKeyPress="return(MascaraMoeda(this,'.',',',event))">
+                </div>
+                <div class="col-3 pl-0 pr-0 mt-1">
+                    <select type="text" name="tipoFrete" id="tipoFrete" class="form-control-sm form-select ">
+                        <option value="1">por kg</option>
+                        <option value="2">%</option>
+
+                    </select>                
+                </div> 
+                <div class="col-3 pl-0 pr-1 mt-1">
+                    <input type="text" name="advalor" id="advalor" class="form-control form-control-sm" placeholder="Advalor" onKeyPress="return(MascaraMoeda(this,'.',',',event))">
+                </div>
+                <div class="col-3 pl-0 pr-1 mt-1">
+                    <input type="text" name="gris" id="gris" class="form-control form-control-sm" placeholder="Gris"onKeyPress="return(MascaraMoeda(this,'.',',',event))">
+                </div>
+                <div class="col-3 pl-0 pr-1 mt-1">
+                    <input type="text" name="despacho" id="despacho" class="form-control form-control-sm" placeholder="Despacho"onKeyPress="return(MascaraMoeda(this,'.',',',event))">
+                </div> 
+                <div class="col-3 pl-0 pr-1 mt-1">
+                    <input type="text" name="outros" id="outros" class="form-control form-control-sm" placeholder="Outros"onKeyPress="return(MascaraMoeda(this,'.',',',event))">
+                </div>
+                <div class="col-3 pl-0 pr-1 mt-1">
+                    <input type="text" name="pedagio" id="pedagio" class="form-control form-control-sm" placeholder="Pedágio"onKeyPress="return(MascaraMoeda(this,'.',',',event))">
+                </div>
+                <div class="col-3 pl-0 pr-0 mt-1">
+                    <select type="text" name="tipoCobranPedagio" id="tipoCobranPedagio" class="form-control-sm form-select ">
+                        <option value="1">por Cte</option>
+                        <option value="2">a cada 100 kg</option>
+                    </select>                
+                </div>
+
+                <div class="col-3 pl-1 pr-1 mt-1">
+                    <input type="text" name="cubagem" id="cubagem" class="form-control form-control-sm" placeholder="Fator cubagem" onKeyPress="return(MascaraMoeda(this,'.',',',event))">
+                </div>
+                <div class="form-check form-check-primary col-3 pl-3 pr-0 mt-3">
+                    <label class="form-check-label">
+                      <input type="checkbox" class="form-check-input" checked="" id="icms" name="icms">
+                      Cubagem ?
+                    <i class="input-helper"></i></label>
+                </div>
+                <div class="pl-0">
+                    <h6 class="text-primary">Frete por faixas</h6>       
+                </div> 
+                <div class="col-4 pl-0 pr-1 mt-1">
+                    <input type="text" name="faixaInicial" id="faixaInicial" class="form-control form-control-sm" placeholder="De (kg)">
+                </div>
+                <div class="col-4 pl-0 pr-1 mt-1">
+                    <input type="text" name="faixaFinal" id="faixaFinal" class="form-control form-control-sm" placeholder="Até (kg)">
+                </div>
+                <div class="col-3 pl-0 pr-1 mt-1">
+                    <input type="text" name="faixaValor" id="faixaValor" class="form-control form-control-sm" placeholder="Frete (R$)"onKeyPress="return(MascaraMoeda(this,'.',',',event))">
+                </div> 
+                <div class="col-1 pl-0 pr-1 mt-1">
+                    <input type="submit" name="btnFaixa" id="btnFaixa" class="btn btn-outline-primary form-control-sm" value="Incluir">
+                </div>   
+                <div class="col-12 grid-margin pr-0 pl-0 mt-0">
+                      <div class="card">
+                        <div class="card-body">
+                          <div class="row">
+                            <div class="table-sorter-wrapper col-lg-12 table-responsive">
+                              <table id="sortable-table-2" class="table table-striped">
+                                <thead>
+                                  <tr>
+                                    <th class="sortStyle">Peso inicial</th>
+                                    <th class="sortStyle">Peso final</th>
+                                    <th class="sortStyle">R$</th>
+                                  </tr>
+                                </thead>
+                                <tbody>
+                                </tbody>
+                              </table>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                </div>                                                                                         
+
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Descartar</button>
+            <button type="button" class="btn btn-primary" id="btnIncluiTabela">Salvar</button>
+          </div>
+        </div>
+      </div>
+    </div>
+</form> 

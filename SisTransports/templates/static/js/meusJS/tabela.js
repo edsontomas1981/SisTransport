@@ -1,14 +1,7 @@
-$(document).keydown(function(event) {
-    if (event.altKey && event.which === 88) {
-        funSalvaDtc();
-        e.preventDefault();
-    }
-});
-
-function funSalvaDtc() {
-    let url = '/preDtc/saveDtc/'
+function incluiTabela(){
+    let url = '/comercial/createTabela/'
     let postData = $('form').serialize();
-   
+    
     $.ajax({
         url: url,
         type: 'POST',
@@ -17,15 +10,14 @@ function funSalvaDtc() {
             console.table(response)
             switch (response.status) {
                 case 200:
-                    alert('Dtc de numero ' + response.dados.id + ' salvo com sucesso !')
-                    $('#numPed').val(response.dados.id)
+                    alert('Tabela salva com sucesso !')
                     break;
                 case 210:
                     alert('Dtc '+ $('#numPed').val(response.dados.id)+' alterado com sucesso !')
                     $('#numPed').val(response.dados.id)
                     break;                    
                 case 400:
-                    alert('Erro !')
+                    alert('Erro !' + response.camposObrigatorios)
                     break;
                 default:
                     // code block
@@ -37,7 +29,8 @@ function funSalvaDtc() {
         }
     });
 }
-$('#salvaDtc').on('click', function(e) {
-    funSalvaDtc()
+$('#btnIncluiTabela').on('click', function(e) {
+    alert('teste')
+    incluiTabela()
     e.preventDefault();
 })

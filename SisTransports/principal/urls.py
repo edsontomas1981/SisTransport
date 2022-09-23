@@ -5,6 +5,7 @@ from principal.views.cadParceiros import ViewCadPar
 from principal import views as viewsPrincipal
 from parceiros import views as viewParceiros
 from operacional import views as viewsOperacional
+from comercial import views as viewsComercial
 urlpatterns = [
     path('',viewsPrincipal.home,
          name='home'),
@@ -31,7 +32,11 @@ urlpatterns = [
     path('preDtc/saveColeta/',viewsOperacional.saveColeta,
          name='saveColeta'), 
     path('preDtc/deletaColeta/',viewsOperacional.deletaColeta,
-         name='deletaColeta'),                  
+         name='deletaColeta'), 
+    path('comercial/',viewsComercial.readTabela,
+         name='readTabela'),
+    path('comercial/createTabela/',viewsComercial.createTabela,
+         name='createTabela'),                        
 ]
 urlpatterns += static(settings.STATIC_URL, 
                       document_root=settings.STATIC_ROOT)

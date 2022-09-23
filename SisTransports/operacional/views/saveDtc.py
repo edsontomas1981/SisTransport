@@ -23,10 +23,18 @@ def saveDtc (request):
         if request.POST.get('cnpjRem') == '' or request.POST.get('cnpjDest')=='':
             return JsonResponse({'status': 401}) #Cnpj remetente ou Destinatario vazios
         elif remetente and destinatario :
-            dtc=Dtc()
-            dtc.incluiDtc(remetente,destinatario,redespacho,consignatario)
-            dados=dtc.to_dict()
-            return JsonResponse({'status': 200,'dados':dados}) #Cadastro efetuado com sucesso
+            if request.POST.get('numPed') != '':
+                dtc=Dtc()
+                dtc.readDtc(request.POST.get('numPed'))
+                dtc.updateDtc(remetente,destinatario,redespacho,consignatario)
+                dados=dtc.to_dict()
+                return JsonResponse({'status': 210,'dados':dados})#Atualiza Dtc
+            else:
+                dtc=Dtc()
+                dtc.createDtc(remetente,destinatario,redespacho,consignatario)
+                dados=dtc.to_dict()
+                return JsonResponse({'status': 200,'dados':dados}) #Cadastro efetuado com sucesso
+
         else:
             return JsonResponse({'status': 402}) #Erro nao especificado 
     else:

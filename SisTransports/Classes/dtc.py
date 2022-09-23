@@ -7,11 +7,11 @@ class Dtc():
         pass
     def __str__(self):
         return self.dtc.id
-    def incluiDtc(self,remetente,destinatario,redespacho=False,consignatario=False):
+    def createDtc(self,remetente,destinatario,redespacho=False,consignatario=False):
         self.dtc=dctoCarga()
         self.dtc.remetente_fk=remetente
         self.dtc.destinatario_fk=destinatario
-        if redespacho :
+        if redespacho : 
             self.dtc.redespacho_fk=redespacho
         if consignatario :
             self.dtc.consignatario_fk=consignatario
@@ -19,37 +19,38 @@ class Dtc():
     def incluiOuAlteraColeta(self,coleta):
         self.dtc.coleta_fk=coleta
         self.dtc.save()
-        
-    def buscaDtc(self,idDtc):
+    #Retorna dicionario com dados do dtc    
+    def dtcToDict(self,idDtc):
         if dctoCarga.objects.filter(id=idDtc).exists():
             self.dtc=dctoCarga.objects.filter(id=idDtc).get()
             return self.dtc.to_dict()
-    def excluiDtc(self,idDtc):
+    def deleteDtc(idDtc):
         if dctoCarga.objects.filter(id=idDtc).exists():
-            self.dtc=dctoCarga.objects.filter(id=idDtc).get()
-            return self.dtc.delete()
-    def alteraDtc(self,idDtc,remetente=None,destinatario=None,redespacho=None
-                  ,consignatario=None,tipoFrete=None,rota=None,coleta:object=None):
-        if dctoCarga.objects.filter(id=idDtc).exists():
-            self.dtc=dctoCarga.objects.filter(id=idDtc).get()
-            self.dtc.remetente_fk if remetente else None
-            self.dtc.destinatario_fk if destinatario else None          
-            self.dtc.redespacho_fk if redespacho else None          
-            self.dtc.consignatario_fk if consignatario else None          
-            self.dtc.tipoFrete if tipoFrete else None          
-            self.dtc.rota_fk if rota else None                      
-            self.dtc.save()
+            dtc=dctoCarga.objects.filter(id=idDtc).get()
+            dtc.delete()
+
+    def updateDtc(self,remetente=None,destinatario=None,redespacho=None,
+                  consignatario=None,tipoFrete=None,rota=None,coleta:object=None):
+        self.dtc.remetente_fk = remetente 
+        self.dtc.destinatario_fk=destinatario
+        self.dtc.redespacho_fk =redespacho
+        self.dtc.consignatario_fk = consignatario         
+        self.dtc.tipoFrete = tipoFrete         
+        self.dtc.rota_fk = rota                     
+        self.dtc.save()
+        
     def dtcTemColeta(self):
         if self.coleta:
             return True
         else:
             return False
-    def obtemDtc(self,idDtc):
+
+    def readDtc(self,idDtc):
         if dctoCarga.objects.filter(id=idDtc).exists():
-            self.dtc=dctoCarga.objects.filter(id=idDtc).get()
-            return self.dtc
-        else:
-            return False
+            dtc=dctoCarga.objects.filter(id=idDtc).get()  
+            self.dtc=dtc
+            return self
+            
     def to_dict(self):
         return self.dtc.to_dict()
     
