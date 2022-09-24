@@ -1,23 +1,33 @@
-var editaContato
+// Mudar logica de variaveis globais para que cada botão encaminhe para uma rota  
+var editaContato 
 var quemChamouModal
 var botaoQueFoiAcionado
 
 
-function enderecoColeta(response) {
-    let cep = response.dados[0].endereco_fk.cep.replace(/\D/g, '');
-    $('#cepColeta').val(cep);
-    $('#ruaColeta').val(response.dados[0].endereco_fk.logradouro);
-    $('#numeroColeta').val(response.dados[0].endereco_fk.numero);
-    $('#bairroColeta').val(response.dados[0].endereco_fk.bairro);
-    $('#complementoColeta').val(response.dados[0].endereco_fk.complemento);
-    $('#cidadeColeta').val(response.dados[0].endereco_fk.cidade);
-    $('#ufColeta').val(response.dados[0].endereco_fk.uf);
+
+// Reduzir as duas funçoes abaixo em uma só duas funcoes que basicamente fazem a mesma coisa
+function preencheModalClick(cnpj, insc, razao, fantasia, cep,
+    endereco, numero, complemento, bairro, cidade, uf) {
+    console.log('Click')
+    $('#collapseOne').addClass('show');
+    let cnpjModal = $('#' + cnpj).val().replace(/[^\d]+/g, '');
+    $('#cnpjMdl').val(cnpjModal);
+    $('#insc_estMdl').val($('#' + insc).val());
+    $('#razaoMdl').val($('#' + razao).val());
+    $('#fantasiaMdl').val($('#' + fantasia).val());
+    let cepMdl = $('#' + cep).val().replace(/\D/g, '');
+    $('#cepMdl').val(cepMdl);
+    $('#ruaMdl').val($('#' + endereco).val());
+    $('#numeroMdl').val($('#' + numero).val());
+    $('#bairroMdl').val($('#' + bairro).val());
+    $('#complementoMdl').val($('#' + complemento).val());
+    $('#cidadeMdl').val($('#' + cidade).val());
+    $('#ufMdl').val($('#' + uf).val());
 }
 
-function modal(response) {
+function chamaMdlPopula(response) {
     $('#mdlCadParceiros').modal('show');
     $('#collapseOne').addClass('show');
-    console.log('idParceiro')
     $('#idParceiro').val(response.dados[0].id)
     $('#idEndereco').val(response.dados[0].endereco_fk.id)
     let cnpjModal = response.dados[0].cnpj_cpf.replace(/[^\d]+/g, '');
@@ -73,17 +83,14 @@ function limpaCnpj(cnpj, insc, razao, fantasia, cep,
         $('#' + uf).val('');
 }
 
-function    busca_parceiro(cnpj, insc, razao, fantasia, cep,
-    endereco, numero, complemento, bairro, cidade, uf) {
 
+function busca_parceiro(cnpj, insc, razao, fantasia, cep,
+    endereco, numero, complemento, bairro, cidade, uf) {
     let url = '/busca_parceiro/'
     let postData = $('form').serialize();
     postData += '&cnpj_cpf=' + cnpj;
     $.ajax({
         url: url,
-        beforeSend: function () {
-            $('body').append('<div class="loader">Carregando. Aguarde, por favor.</div>');
-        },        
         type: 'POST',
         data: postData,
         success: function(response) {
@@ -96,7 +103,6 @@ function    busca_parceiro(cnpj, insc, razao, fantasia, cep,
                     adicionaContatoNaTabela(response)
                     break;
                 case 201:
-                    console.log(response.status)
                     completaCnpj(response, insc, razao, fantasia, cep,
                         endereco, numero, complemento, bairro, cidade, uf);
                     limpaTabelaContatos()
@@ -107,7 +113,7 @@ function    busca_parceiro(cnpj, insc, razao, fantasia, cep,
                     break;
                 case 202:
                     console.log(response.status)
-                    modal(response);
+                    chamaMdlPopula(response);
                     formDesabilitaEdicao()
                     break;
                 case 401:
@@ -123,9 +129,9 @@ function    busca_parceiro(cnpj, insc, razao, fantasia, cep,
     });
 }
 
-$('#divContato').on('click', function(e) {
+$('.somenteCadastrado').on('click', function(e) {
     if (!editaContato) {
-        alert("Para adicionar um contato, é necessário primeiro salvar o parceiro.")
+        alert("Para acessar esse módulo, é necessário primeiro salvar o parceiro.")
     }
 })
 
@@ -138,6 +144,7 @@ function closeModal() {
     $('#collapseOne').removeClass('show');
     $('#collapseTwo').removeClass('show');
     $('#collapseThree').removeClass('show');
+    $('#comercial').removeClass('show');
     editaContato = false
 }
 
@@ -173,21 +180,10 @@ $('#salvaParceiro').on('click', function(e) {
     e.preventDefault();
 });
 
-function dadosContatos() {
-    let dados = '&cnpj_cpfMdl=' + $('#cnpjMdl').val();
-    dados += '&contato=' + $('#contato').val();
-    dados += '&nome=' + $('#nome').val();
-    dados += '&cargo' + $('#cargo').val();
-    dados += '&nome=' + $('#nome').val();
-    console.log('teste', dados)
-    return dados
-}
-
 $('#incluiContato').on('click', function(e) {
     $('#acaoForm').val('incluiContato');
     let url = '/inclui_contato/'
     let postData = $('form').serialize();
-    postData += dadosContatos()
     $.ajax({
         url: url,
         type: 'POST',
@@ -264,7 +260,6 @@ function apagaContato(id) {
     let url = '/exclui_contato/'
     let postData = $('form').serialize();
     postData+='&idContato=' + id;
-    
     $.ajax({
         url: url,
         type: 'POST',
@@ -298,7 +293,6 @@ $(document).ready(function() {
 
 function adicionaContatoNaTabela(response) {
     const data = response.contato;
-    console.log(data)
     let template
     for (let i = 0; i < data.length; i++) {
         template = '<tr class="tr" id="'+ data[i].id +'">' +
@@ -320,11 +314,13 @@ function formDesabilitaEdicao() {
     editaContato = false;
     $('#salvaParceiro').val('Cadastrar');
     $("#btnContato").attr("disabled", true);
+    $("#btnComercial").attr("disabled", true);
 }
 
 function formHabilitaEdicao() {
     $('#salvaParceiro').val('Editar');
     $("#btnContato").attr("disabled", false);
+    $("#btnComercial").attr("disabled", false);
     editaContato = true;
 }
 
@@ -332,41 +328,20 @@ $('form').on('load', function(e) {
     resetaForm();
     formDesabilitaEdicao();
 });
+function populaColetaPeloRemetente() {
+    $('#cepColeta').val($('#cepRem').val());
+    $('#ruaColeta').val($('#ruaRem').val());
+    $('#numeroColeta').val($('#numeroRem').val());
+    $('#bairroColeta').val($('#bairroRem').val());
+    $('#complementoColeta').val($('#complementoRem').val());
+    $('#cidadeColeta').val($('#cidadeRem').val());
+    $('#ufColeta').val($('#ufRem').val());
+}
 
 $('#btnCnpjRem').on('click', function(e) {
     quemChamouModal = 'cnpjMdl'
     $('#mdlCadParceiros').modal('show');
     busca_parceiro($('#cnpjRem').val(), 'inscRem', 'razaoRem',
-        'fantasiaRem', 'cepRem', 'ruaRem', 'numeroRem',
-        'complementoRem', 'bairroRem', 'cidadeRem', 'ufRem');
-    e.preventDefault();
-});
-
-
-
-function preencheModalClick(cnpj, insc, razao, fantasia, cep,
-    endereco, numero, complemento, bairro, cidade, uf) {
-    console.log('Click')
-    $('#collapseOne').addClass('show');
-    let cnpjModal = $('#' + cnpj).val().replace(/[^\d]+/g, '');
-    $('#cnpjMdl').val(cnpjModal);
-    $('#insc_estMdl').val($('#' + insc).val());
-    $('#razaoMdl').val($('#' + razao).val());
-    $('#fantasiaMdl').val($('#' + fantasia).val());
-    let cepMdl = $('#' + cep).val().replace(/\D/g, '');
-    $('#cepMdl').val(cepMdl);
-    $('#ruaMdl').val($('#' + endereco).val());
-    $('#numeroMdl').val($('#' + numero).val());
-    $('#bairroMdl').val($('#' + bairro).val());
-    $('#complementoMdl').val($('#' + complemento).val());
-    $('#cidadeMdl').val($('#' + cidade).val());
-    $('#ufMdl').val($('#' + uf).val());
-}
-
-$('#btnCnpjRem').on('click', function(e) {
-    quemChamouModal = 'cnpjRem'
-    $('#mdlCadParceiros').modal('show');
-    preencheModalClick('cnpjRem', 'inscRem', 'razaoRem',
         'fantasiaRem', 'cepRem', 'ruaRem', 'numeroRem',
         'complementoRem', 'bairroRem', 'cidadeRem', 'ufRem');
     e.preventDefault();
@@ -433,6 +408,7 @@ $('#cnpjRem').on('blur', function(e) {
         busca_parceiro($('#cnpjRem').val(), 'inscRem', 'razaoRem',
         'fantasiaRem', 'cepRem', 'ruaRem', 'numeroRem',
         'complementoRem', 'bairroRem', 'cidadeRem', 'ufRem');
+        populaColetaPeloRemetente();
     }
     e.preventDefault();
 });

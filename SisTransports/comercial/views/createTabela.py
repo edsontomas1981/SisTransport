@@ -4,6 +4,12 @@ from django.http import JsonResponse
 from Classes.tabelaFrete import TabelaFrete
 from parceiros.models.parceiros import Parceiros
 
+def buscaParceiro(cnpj):
+    if Parceiros.objects.filter(cnpj_cpf=cnpj).exists():
+        parceiro=Parceiros.objects.filter(cnpj_cpf=cnpj).get()
+        return parceiro
+
+
 def verificaCamposObrigatorios(request):
     camposObrigatorios=[]
     camposObrigatorios if request.POST.get('tipoTabela') else camposObrigatorios.append('Tipo da Tabela')
@@ -32,19 +38,17 @@ def createTabela (request):
     
     elif request.method == "POST" :
         campos=verificaCamposObrigatorios(request)
-        if len(campos)>=0:       
+        if len(campos)>=0:  
+            parceiro=buscaParceiro(request.POST.get('comlCnpj'))
+            print(parceiro)
             tabela=TabelaFrete()
-            tabela.incluiTabela(None,None,request.POST.get('descTabela'),toFloat(request.POST.get('vlrFrete'))
+            tabela.incluiTabela(parceiro,None,request.POST.get('descTabela'),toFloat(request.POST.get('vlrFrete'))
                                 ,request.POST.get('tipoFrete'),toFloat(request.POST.get('advalor')),
                                 toFloat(request.POST.get('gris')),toFloat(request.POST.get('despacho')),
                                 toFloat(request.POST.get('outros')),toFloat(request.POST.get('pedagio')),
                                 request.POST.get('tipoCobranPedagio'),checkBox(request.POST.get('cobraCubagem')),
                                 toFloat(request.POST.get('cubagem')),checkBox(request.POST.get('icms'))
                                 ,checkBox(request.POST.get('tabelaBloqueada')))
-            
-            parceiro=Parceiros.objects.filter(cnpj_cpf='23926683000108').get()
-            print(parceiro)
-            tabela.anexaTabelaAoParceiro(parceiro,4)
             return JsonResponse({'status': 200}) 
         else:
             return JsonResponse({'status': 400,'camposObrigatorios':campos}) 

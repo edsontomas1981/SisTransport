@@ -68,3 +68,6 @@ function mascaraTelefone(event) {
         return false;
     }
 }
+function tresCasasDecimais(){
+ 
+}

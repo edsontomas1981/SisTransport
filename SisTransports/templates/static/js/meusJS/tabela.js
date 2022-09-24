@@ -30,7 +30,41 @@ function incluiTabela(){
     });
 }
 $('#btnIncluiTabela').on('click', function(e) {
-    alert('teste')
     incluiTabela()
     e.preventDefault();
 })
+$('#comlCnpj').on('blur', function(e){
+    getParceiro($('#comlCnpj').val())
+});
+
+function populaRazao(response){
+    $('#comlRazao').val(response.dados[0].raz_soc)
+}
+function getParceiro(cnpj){
+    let url = '/busca_parceiro/'
+    let postData = $('form').serialize();
+    postData += '&cnpj_cpf=' + cnpj;
+    $.ajax({
+        url: url,
+        type: 'POST',
+        data: postData,
+        success: function(response) {
+            switch (response.status) {
+                case 200://retorna parceiro
+                    populaRazao(response)
+                    break;
+                case 201:
+                    populaRazao(response)                    
+                    response
+                    break;
+                default:
+                    alert("Cnpj/Cpf não localizado. ")
+                    break;
+            }
+        },
+        error: function(xhr) {
+            console.log('Erro');
+        } 
+
+    });
+}

@@ -11,7 +11,6 @@ class TabelaFrete():
                      ,cubagem=None,fatorCubagem=None,icmsIncluso=True,bloqueada=False):
 
         self.tabela=TblFrete()
-        # self.tabela.parceiro=parceiro
         # self.tabela.rota=rota
         self.tabela.descricao=descricao
         self.tabela.icmsIncluso=icmsIncluso
@@ -26,6 +25,8 @@ class TabelaFrete():
         self.tabela.tipoPedagio=tipoPedagio
         self.tabela.cubagem=cubagem
         self.tabela.fatorCubagem=fatorCubagem
+        self.tabela.save()
+        self.tabela.parceiro.add(parceiro)            
         self.tabela.save()
         
     def anexaTabelaAoParceiro(self,parceiro:object,idTabela):
