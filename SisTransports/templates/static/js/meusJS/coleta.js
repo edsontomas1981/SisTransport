@@ -80,7 +80,7 @@ $('#btnSalvaColeta').on('click', function(e) {
     e.preventDefault();
 })
 $('#btnExcluiColeta').on('click', function(e) {
-    let msg = 'a coleta ?'
+    let msg = 'Deseja realmente excluir a coleta ?'
     if (confirmacao(msg)) {
         deletaColeta($('#numPed').val())
     }
@@ -88,6 +88,6 @@ $('#btnExcluiColeta').on('click', function(e) {
 })
 
 function confirmacao(msg) {
-    var resposta = confirm("Deseja remover " + msg);
+    var resposta = confirm(msg);
     return resposta
 }

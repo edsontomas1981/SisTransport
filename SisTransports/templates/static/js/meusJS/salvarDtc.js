@@ -8,22 +8,21 @@ $(document).keydown(function(event) {
 function funSalvaDtc() {
     let url = '/preDtc/saveDtc/'
     let postData = $('form').serialize();
-   
+
     $.ajax({
         url: url,
         type: 'POST',
         data: postData,
         success: function(response) {
-            console.table(response)
             switch (response.status) {
                 case 200:
                     alert('Dtc de numero ' + response.dados.id + ' salvo com sucesso !')
                     $('#numPed').val(response.dados.id)
                     break;
                 case 210:
-                    alert('Dtc '+ $('#numPed').val(response.dados.id)+' alterado com sucesso !')
+                    alert('Dtc ' + $('#numPed').val(response.dados.id) + ' alterado com sucesso !')
                     $('#numPed').val(response.dados.id)
-                    break;                    
+                    break;
                 case 400:
                     alert('Erro !')
                     break;
