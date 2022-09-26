@@ -29,6 +29,11 @@ class TabelaFrete(models.Model):
     
     # Criar a Tabela por faixas ainda a serem definidas
     
+    def tabelaToDict(self):
+        pass
+    
+    
+    
     
     
     

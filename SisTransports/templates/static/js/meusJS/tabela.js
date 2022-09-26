@@ -68,3 +68,22 @@ function getParceiro(cnpj){
 
     });
 }
+
+function getTabela(){
+    let url = '/comercial/readTabela/'
+    let postData = $('form').serialize();
+    $.ajax({
+        url: url,
+        type: 'POST',
+        data: postData,
+        success: function(response) {
+        },
+        error: function(xhr) {
+            console.log('Erro');
+        }
+    });
+}
+
+$('#btnBuscaTabela').on('click', function(e){
+   getTabela()
+});

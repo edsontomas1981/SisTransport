@@ -2,13 +2,7 @@ from django.shortcuts import render
 from django.contrib.auth.decorators import login_required
 from django.http import JsonResponse
 from Classes.tabelaFrete import TabelaFrete
-from parceiros.models.parceiros import Parceiros
-
-def buscaParceiro(cnpj):
-    if Parceiros.objects.filter(cnpj_cpf=cnpj).exists():
-        parceiro=Parceiros.objects.filter(cnpj_cpf=cnpj).get()
-        return parceiro
-
+from Classes.parceiros import Parceiros
 
 def verificaCamposObrigatorios(request):
     camposObrigatorios=[]
@@ -39,8 +33,7 @@ def createTabela (request):
     elif request.method == "POST" :
         campos=verificaCamposObrigatorios(request)
         if len(campos)>=0:  
-            parceiro=buscaParceiro(request.POST.get('comlCnpj'))
-            print(parceiro)
+            parceiro=Parceiros.getParceiro(request.POST.get('cnpjMdl'))
             tabela=TabelaFrete()
             tabela.incluiTabela(parceiro,None,request.POST.get('descTabela'),toFloat(request.POST.get('vlrFrete'))
                                 ,request.POST.get('tipoFrete'),toFloat(request.POST.get('advalor')),
