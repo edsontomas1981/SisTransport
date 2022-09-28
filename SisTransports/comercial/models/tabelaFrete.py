@@ -1,3 +1,4 @@
+from email.utils import parsedate
 from django.db import models
 from parceiros.models.parceiros import Parceiros
 from operacional.models.rota import Rota
@@ -29,8 +30,30 @@ class TabelaFrete(models.Model):
     
     # Criar a Tabela por faixas ainda a serem definidas
     
-    def tabelaToDict(self):
-        pass
+    def toDict(self):
+        # parceiros=[]
+        tblFrete= {'id':self.id,
+                'descricao':self.descricao,
+                'icmsIncluso':self.icmsIncluso,
+                'bloqueada':self.bloqueada,
+                'frete':self.frete,
+                'tipoCalculo':self.tipoCalculo,
+                'adValor':self.adValor,
+                'gris':self.gris,
+                'despacho':self.despacho,
+                'outros':self.outros,
+                'pedagio':self.pedagio,
+                'tipoPedagio':self.tipoPedagio,
+                'cubagem':self.cubagem,
+                'fatorCubagem':self.fatorCubagem
+                }
+        # if self.parceiro:
+        #     for i in self.parceiro.all():
+        #         parceiros.append(i)
+        #     tblFrete.update({'parceiros':parceiros})
+        return tblFrete
+        
+
     
     
     

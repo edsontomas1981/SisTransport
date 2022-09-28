@@ -68,6 +68,25 @@ function getParceiro(cnpj){
 
     });
 }
+function populaTabela(response){
+    $('#descTabela').val(response.tabela.descricao)
+    //se sim tabela esta bloqueada
+    if (response.tabela.bloqueada == 1){
+        $('#tabelaBloqueada').prop( "checked", true);
+    }else{
+        $('#tabelaBloqueada').prop( "checked", false);        
+    }
+    if (response.tabela.icmsIncluso == 1){
+        $('#icms').prop( "checked", true);
+    }else{
+        $('#icms').prop( "checked", false);        
+    }
+    if (response.tabela.cubagem == 1){
+        $('#cobraCubagem').prop( "checked", true);
+    }else{
+        $('#cobraCubagem').prop( "checked", false);        
+    }
+}
 
 function getTabela(){
     let url = '/comercial/readTabela/'
@@ -77,6 +96,7 @@ function getTabela(){
         type: 'POST',
         data: postData,
         success: function(response) {
+            populaTabela(response)
         },
         error: function(xhr) {
             console.log('Erro');
@@ -85,5 +105,6 @@ function getTabela(){
 }
 
 $('#btnBuscaTabela').on('click', function(e){
+    alert('clicado')
    getTabela()
 });
