@@ -1,7 +1,7 @@
-function incluiTabela(){
+function incluiTabela() {
     let url = '/comercial/createTabela/'
     let postData = $('form').serialize();
-    
+
     $.ajax({
         url: url,
         type: 'POST',
@@ -13,9 +13,9 @@ function incluiTabela(){
                     alert('Tabela salva com sucesso !')
                     break;
                 case 210:
-                    alert('Dtc '+ $('#numPed').val(response.dados.id)+' alterado com sucesso !')
+                    alert('Dtc ' + $('#numPed').val(response.dados.id) + ' alterado com sucesso !')
                     $('#numPed').val(response.dados.id)
-                    break;                    
+                    break;
                 case 400:
                     alert('Erro !' + response.camposObrigatorios)
                     break;
@@ -33,14 +33,15 @@ $('#btnIncluiTabela').on('click', function(e) {
     incluiTabela()
     e.preventDefault();
 })
-$('#comlCnpj').on('blur', function(e){
+$('#comlCnpj').on('blur', function(e) {
     getParceiro($('#comlCnpj').val())
 });
 
-function populaRazao(response){
+function populaRazao(response) {
     $('#comlRazao').val(response.dados[0].raz_soc)
 }
-function getParceiro(cnpj){
+
+function getParceiro(cnpj) {
     let url = '/busca_parceiro/'
     let postData = $('form').serialize();
     postData += '&cnpj_cpf=' + cnpj;
@@ -50,11 +51,11 @@ function getParceiro(cnpj){
         data: postData,
         success: function(response) {
             switch (response.status) {
-                case 200://retorna parceiro
+                case 200: //retorna parceiro
                     populaRazao(response)
                     break;
                 case 201:
-                    populaRazao(response)                    
+                    populaRazao(response)
                     response
                     break;
                 default:
@@ -64,31 +65,45 @@ function getParceiro(cnpj){
         },
         error: function(xhr) {
             console.log('Erro');
-        } 
+        }
 
     });
 }
-function populaTabela(response){
+
+function populaTabela(response) {
     $('#descTabela').val(response.tabela.descricao)
-    //se sim tabela esta bloqueada
-    if (response.tabela.bloqueada == 1){
-        $('#tabelaBloqueada').prop( "checked", true);
-    }else{
-        $('#tabelaBloqueada').prop( "checked", false);        
+        //se sim tabela esta bloqueada
+    if (response.tabela.bloqueada == 1) {
+        $('#tabelaBloqueada').prop("checked", true);
+    } else {
+        $('#tabelaBloqueada').prop("checked", false);
     }
-    if (response.tabela.icmsIncluso == 1){
-        $('#icms').prop( "checked", true);
-    }else{
-        $('#icms').prop( "checked", false);        
+    if (response.tabela.icmsIncluso == 1) {
+        $('#icms').prop("checked", true);
+    } else {
+        $('#icms').prop("checked", false);
     }
-    if (response.tabela.cubagem == 1){
-        $('#cobraCubagem').prop( "checked", true);
-    }else{
-        $('#cobraCubagem').prop( "checked", false);        
+    if (response.tabela.cubagem == 1) {
+        $('#cobraCubagem').prop("checked", true);
+    } else {
+        $('#cobraCubagem').prop("checked", false);
     }
+    $('#vlrFrete').val(response.tabela.frete);
+    $('#advalor').val(response.tabela.adValor);
+    $('#gris').val(response.tabela.gris);
+    $('#despacho').val(response.tabela.despacho);
+    $('#outros').val(response.tabela.outros);
+    $('#pedagio').val(response.tabela.pedagio);
+    $('#cubagem').val(response.tabela.fatorCubagem);
+
+
+
+
+
+
 }
 
-function getTabela(){
+function getTabela() {
     let url = '/comercial/readTabela/'
     let postData = $('form').serialize();
     $.ajax({
@@ -104,7 +119,7 @@ function getTabela(){
     });
 }
 
-$('#btnBuscaTabela').on('click', function(e){
+$('#btnBuscaTabela').on('click', function(e) {
     alert('clicado')
-   getTabela()
+    getTabela()
 });
