@@ -2,17 +2,20 @@ from email.utils import parsedate
 from django.db import models
 from parceiros.models.parceiros import Parceiros
 from operacional.models.rota import Rota
+from Classes.parceiros import Parceiros as ClsParceiros
 
 class TabelaFrete(models.Model):
-    
+
+    tipoTabela=models.IntegerField(default=1)
     parceiro=models.ManyToManyField(Parceiros,blank=True)
     rota=models.ManyToManyField(Rota,blank=True)
     descricao=models.CharField(max_length=15)
     icmsIncluso=models.BooleanField(default=True)
     bloqueada=models.BooleanField(default=False)
+    freteMinimo=models.DecimalField (max_digits = 7, decimal_places = 2,default=0.00)
     frete=models.DecimalField(max_digits = 9, decimal_places = 2)
     #definir os tipos de calculos atraves de digitos Ex:1-calculo por kg | 2-percentual etc ...
-    tipoCalculo=models.IntegerField()
+    tipoCalculo=models.IntegerField()   
     #campo adValor normalmente e definido pelo produto de n/1000
     adValor=models.DecimalField(max_digits = 5, decimal_places = 2)
     #Gris é um porcentagem do valor da nf.
@@ -27,12 +30,13 @@ class TabelaFrete(models.Model):
     tipoPedagio=models.IntegerField()
     cubagem=models.BooleanField(default=True)
     fatorCubagem=models.IntegerField()
-    
+       
     # Criar a Tabela por faixas ainda a serem definidas
     
     def toDict(self):
-        # parceiros=[]
+        parceiros=[]
         tblFrete= {'id':self.id,
+                'freteMinimo':self.freteMinimo,
                 'descricao':self.descricao,
                 'icmsIncluso':self.icmsIncluso,
                 'bloqueada':self.bloqueada,
@@ -45,14 +49,13 @@ class TabelaFrete(models.Model):
                 'pedagio':self.pedagio,
                 'tipoPedagio':self.tipoPedagio,
                 'cubagem':self.cubagem,
-                'fatorCubagem':self.fatorCubagem
+                'fatorCubagem':self.fatorCubagem,
+                'tipoTabela':self.tipoTabela
                 }
-        # if self.parceiro:
-        #     for i in self.parceiro.all():
-        #         parceiros.append(i)
-        #     tblFrete.update({'parceiros':parceiros})
         return tblFrete
-        
+    
+
+            
 
     
     

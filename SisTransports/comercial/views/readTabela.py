@@ -8,5 +8,10 @@ def readTabela (request):
     if request.method == 'GET':
         return render(request, 'tabelaFrete.html')
     elif request.method == "POST" :
-        tabelaFrete=TabelaFrete.readTabela(request.POST.get('numTabela'))
-        return JsonResponse({'status':200,'tabela':tabelaFrete})
+        tabela=TabelaFrete()
+        tabela.readTabela(request.POST.get('numTabela'))
+        parceiros=tabela.cnpjVinculado()
+        print('**********************************')
+        print(parceiros)
+        return JsonResponse({'status':200,'tabela':tabela.tabela.toDict(),
+                             'parceirosVinculados':parceiros})

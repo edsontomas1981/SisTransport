@@ -21,8 +21,7 @@ def createTabela (request):
                                 toFloat(request.POST.get('outros')),toFloat(request.POST.get('pedagio')),
                                 request.POST.get('tipoCobranPedagio'),checkBox(request.POST.get('cobraCubagem')),
                                 toFloat(request.POST.get('cubagem')),checkBox(request.POST.get('icms'))
-                                ,checkBox(request.POST.get('tabelaBloqueada')))
-           
+                                ,checkBox(request.POST.get('tabelaBloqueada')),toFloat(request.POST.get('freteMinimo')),request.POST.get('tipoTabela'))
             return JsonResponse({'status': 200,'dados':tabela.toDict()})
 
         else:

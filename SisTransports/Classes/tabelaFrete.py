@@ -1,5 +1,5 @@
 from comercial.models.tabelaFrete import TabelaFrete as TblFrete
-
+from Classes.parceiros import Parceiros 
 
 class TabelaFrete:
     def __init__(self):
@@ -7,7 +7,7 @@ class TabelaFrete:
 
     def createTabela(self, parceiro=None, rota=None, descricao=None, frete=None, tipoCalculo=None
                      , adValor=None, gris=None, despacho=None, outros=None, pedagio=None, tipoPedagio=None
-                     , cubagem=None, fatorCubagem=None, icmsIncluso=True, bloqueada=False):
+                     , cubagem=None, fatorCubagem=None, icmsIncluso=True,tipoTabela=None,freteMinimo=None, bloqueada=False):
 
         self.tabela = TblFrete()
         self.tabela.descricao = descricao
@@ -23,6 +23,8 @@ class TabelaFrete:
         self.tabela.tipoPedagio = tipoPedagio
         self.tabela.cubagem = cubagem
         self.tabela.fatorCubagem = fatorCubagem
+        self.tabela.tipoTabela= tipoTabela
+        self.tabela.freteMinimo = freteMinimo
         self.tabela.save()
         # Avaliar a necessidade de salvar um proprietário da tabela juntamente com a criação da tabela.
         if parceiro:
@@ -34,31 +36,6 @@ class TabelaFrete:
             self.tabela.save()
         self.tabela.toDict()
 
-    def anexaTabelaAoParceiro(self, parceiro: object, idTabela):
-        if TblFrete.objects.filter(id=idTabela).exists():
-            self.tabela = TblFrete.objects.filter(id=idTabela).get()
-            self.tabela.parceiro.add(parceiro)
-            self.tabela.save()
-
-    def readTabela(idTabela):
-        if TblFrete.objects.filter(id=idTabela).exists():
-            tabela = TblFrete.objects.filter(id=idTabela).get()
-            print(dir(tabela))
-            return tabela.toDict()
-        else:
-            return False
-
-    def deleteTabela(idTabela):
-        if TblFrete.objects.filter(id=idTabela).exists():
-            tabela = TblFrete.objects.filter(id=idTabela).get()
-            tabela.delete()
-            return True
-        else:
-            return False
-
-    def toDict(self):
-        return self.tabela.toDict()
-    
     def updateTabela(self, idTabela, parceiro=None, rota=None, descricao=None,
                      frete=None, tipoCalculo=None, adValor=None, gris=None, despacho=None,
                      outros=None, pedagio=None, tipoPedagio=None, cubagem=None,
@@ -83,3 +60,35 @@ class TabelaFrete:
             return self.tabela.toDict()
         else:
             return False
+
+    def anexaTabelaAoParceiro(self, parceiro: object, idTabela):
+        if TblFrete.objects.filter(id=idTabela).exists():
+            self.tabela = TblFrete.objects.filter(id=idTabela).get()
+            self.tabela.parceiro.add(parceiro)
+            self.tabela.save()
+  
+    def readTabela(self,idTabela):
+        if TblFrete.objects.filter(id=idTabela).exists():
+            self.tabela = TblFrete.objects.filter(id=idTabela).get()
+        else:
+            return False
+        
+    def cnpjVinculado(self):
+        cnpjs=[]
+        for i in self.tabela.parceiro.all():
+            parceiro=Parceiros.getParceiro(i.cnpj_cpf)
+            cnpjs.append(parceiro.to_dict())
+        return cnpjs
+
+    def deleteTabela(idTabela):
+        if TblFrete.objects.filter(id=idTabela).exists():
+            tabela = TblFrete.objects.filter(id=idTabela).get()
+            tabela.delete()
+            return True
+        else:
+            return False
+
+    def toDict(self):
+        return self.tabela.toDict()
+    
+
