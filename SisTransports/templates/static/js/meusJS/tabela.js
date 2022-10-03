@@ -1,37 +1,16 @@
-
-
-// function incluiTabela() {
-//     let url = '/comercial/createTabela/'
-//     let postData = $('form').serialize();
-
-//     $.ajax({
-//         url: url,
-//         type: 'POST',
-//         data: postData,
-//         success: function(response) {
-
-//         },
-//         error: function(xhr) {
-//             console.log('Erro');
-//         }
-//     });
-// }
-
 $('#comlCnpj').on('blur', function(e) {
-    let dados=['/busca_parceiro/',$('#comlCnpj').val()]
+    let dados = { 'url': '/busca_parceiro/', 'cnpj': $('#comlCnpj').val() }
     alert(dados)
-    ajaxTabela(dados,populaRazao)
-    
+    ajaxTabela(dados, populaRazao)
 });
 
 function populaRazao(response) {
     $('#comlRazao').val(response.dados[0].raz_soc)
 }
 
-function limpaForm(){
-
+function limpaForm() {
+    //se sim tabela esta bloqueada
     $('#descTabela').val('')
-        //se sim tabela esta bloqueada
     $('#tabelaBloqueada').prop("checked", false);
     $('#icms').prop("checked", true);
     $('#cobraCubagem').prop("checked", true);
@@ -46,7 +25,6 @@ function limpaForm(){
     $('#tipoFrete').val('');
     $('#tipoCobranPedagio').val('');
     limpaTabela();
-
 }
 
 function populaTabela(response) {
@@ -81,12 +59,12 @@ function populaTabela(response) {
     $('#tipoCobranPedagio').val(response.tabela.tipoPedagio);
 }
 //enviar um array com a url e caso necessario o cnpj para consulta  
-function ajaxTabela(dados,callback){
-    let url = dados[0]
+function conectaBd(dados, callback) {
+    let url = dados.url
     let postData = $('form').serialize();
-    if (dados.length>1){
-        alert(dados[1])
-        postData += '&cnpj_cpf=' + dados[1];
+    if (dados.cnpj) {
+        alert('tem cnpj')
+        postData += '&cnpj_cpf=' + dados.cnpj;
     }
     $.ajax({
         url: url,
@@ -101,14 +79,19 @@ function ajaxTabela(dados,callback){
     });
 }
 
-$('#btnIncluiTabela').on('click', function(e) {
-    alert('inclui')
-    dados=['/comercial/createTabela/']
-    ajaxTabela(dados,incluiTabela)
+$('#btnNovaTabela').on('click', function(e) {
+    limpaForm();
+    $('#numTabela').val('');
     e.preventDefault();
 })
 
-function incluiTabela(response){
+$('#btnIncluiTabela').on('click', function(e) {
+    dados = { url: '/comercial/createTabela/' }
+    conectaBd(dados, incluiTabela)
+    e.preventDefault();
+})
+
+function incluiTabela(response) {
     switch (response.status) {
         case 200:
             alert('Tabela salva com sucesso !')
@@ -126,8 +109,8 @@ function incluiTabela(response){
 }
 
 $('#btnBuscaTabela').on('click', function(e) {
-    dados=['/comercial/readTabela/']
-    ajaxTabela(dados,populaTabela);
+    dados = ['/comercial/readTabela/']
+    conectaBd(dados, populaTabela);
 });
 
 function limpaTabela() {
@@ -141,7 +124,7 @@ function parceirosVinculados(response) {
     for (let i = 0; i < data.length; i++) {
         template = '<tr class="tr">' +
             '<td>' + data[i].cnpj_cpf + '</td>' +
-            '<td>' + data[i].raz_soc+ '</td>' +
+            '<td>' + data[i].raz_soc + '</td>' +
             '<td>' + '<button type="button" id="alteraContato"  class="btn btn-success btn-rounded btn-icon">' +
             '<i class="ti-pencil-alt2"></i></button>' + '</td>' +
             '<td>' + '<button type="button" id="excluiContato" class="btn btn-danger btn-rounded btn-icon">' +

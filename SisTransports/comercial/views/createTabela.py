@@ -15,13 +15,16 @@ def createTabela (request):
         if len(campos)>=0:  
             parceiro=Parceiros.getParceiro(request.POST.get('comlCnpj'))
             tabela=TabelaFrete()
-            tabela.createTabela(parceiro,None,request.POST.get('descTabela'),toFloat(request.POST.get('vlrFrete'))
-                                ,request.POST.get('tipoFrete'),toFloat(request.POST.get('advalor')),
-                                toFloat(request.POST.get('gris')),toFloat(request.POST.get('despacho')),
-                                toFloat(request.POST.get('outros')),toFloat(request.POST.get('pedagio')),
-                                request.POST.get('tipoCobranPedagio'),checkBox(request.POST.get('cobraCubagem')),
-                                toFloat(request.POST.get('cubagem')),checkBox(request.POST.get('icms'))
-                                ,checkBox(request.POST.get('tabelaBloqueada')),toFloat(request.POST.get('freteMinimo')),request.POST.get('tipoTabela'))
+            #verificar a ordem dos parametros 
+            tabela.createTabela(parceiro,None,request.POST.get('descTabela'),
+                toFloat(request.POST.get('vlrFrete')),toFloat(request.POST.get('advalor')),
+                toFloat(request.POST.get('gris')),toFloat(request.POST.get('despacho')),
+                toFloat(request.POST.get('outros')),toFloat(request.POST.get('pedagio')),
+                request.POST.get('tipoCobranPedagio'),checkBox(request.POST.get('cobraCubagem')),
+                toFloat(request.POST.get('cubagem')),checkBox(request.POST.get('icms')),
+                request.POST.get('tipoTabela'),toFloat(request.POST.get('freteMinimo')),
+                checkBox(request.POST.get('tabelaBloqueada')),request.POST.get('tipoFrete'))
+                
             return JsonResponse({'status': 200,'dados':tabela.toDict()})
 
         else:

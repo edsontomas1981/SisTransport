@@ -5,9 +5,10 @@ class TabelaFrete:
     def __init__(self):
         self.tabela=None
 
-    def createTabela(self, parceiro=None, rota=None, descricao=None, frete=None, tipoCalculo=None
-                     , adValor=None, gris=None, despacho=None, outros=None, pedagio=None, tipoPedagio=None
-                     , cubagem=None, fatorCubagem=None, icmsIncluso=True,tipoTabela=None,freteMinimo=None, bloqueada=False):
+    def createTabela(self,parceiro=None, rota=None, descricao=None,frete=None,
+                      adValor=None, gris=None, despacho=None, outros=None, pedagio=None, 
+                     tipoPedagio=None,cubagem=None, fatorCubagem=None, icmsIncluso=True,
+                     tipoTabela=None,freteMinimo=None, bloqueada=False, tipoCalculo=None):
 
         self.tabela = TblFrete()
         self.tabela.descricao = descricao
