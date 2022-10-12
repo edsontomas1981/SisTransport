@@ -23,3 +23,13 @@ def checkBox(check):
         return True
     else:
         return False
+
+def checaUf(uf):
+    listaUf=['RO','AC','AM','RR','PA','AP','TO',
+            'MA','PI','CE','RN','PB','PE','AL',
+            'SE','BA','MG','ES','RJ','SP','PR',
+            'SC','RS','MS','MT','GO','DF']
+    if uf in listaUf:
+        return True
+    else:
+        return False

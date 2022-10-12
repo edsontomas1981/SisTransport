@@ -6,6 +6,9 @@ from principal import views as viewsPrincipal
 from parceiros import views as viewParceiros
 from operacional import views as viewsOperacional
 from comercial import views as viewsComercial
+from enderecos import views as viewsEnderecos
+
+
 urlpatterns = [
     path('',viewsPrincipal.home,
          name='home'),
@@ -38,7 +41,19 @@ urlpatterns = [
     path('comercial/createTabela/',viewsComercial.createTabela,
          name='createTabela'),
     path('comercial/readTabela/',viewsComercial.readTabela,
-         name='readTabela'),                            
+         name='readTabela'),
+    path('rotas/', viewsOperacional.rotas,
+         name='rotas'),
+    path('rotas/createRota/', viewsOperacional.createRota,
+         name='createRota'),
+    path('rotas/readRota/', viewsOperacional.readRota,
+         name='readRota'),
+    path('rotas/updateRota/', viewsOperacional.updateRota,
+         name='updateRota'),
+    path('rotas/deleteRota/', viewsOperacional.deleteRota,
+         name='deleteRota'),
+    path('endereco/readMunicipio/', viewsEnderecos.readMunicipio,
+         name='readMunicipio'),          
 ]
 urlpatterns += static(settings.STATIC_URL, 
                       document_root=settings.STATIC_ROOT)
