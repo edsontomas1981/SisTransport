@@ -1,0 +1,16 @@
+{% extends 'base.html'%}
+{%load static%}
+
+{%block 'conteudo'%}
+	<div>
+		<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#mdlRotas">
+		Rotas</button>
+	</div>
+	{% include 'mdlRotas.html' %}
+{% endblock %}
+
+{% block 'js' %}
+<script src="{% static 'js/meusJS/municipios.js' %}"></script>
+<script src="{% static 'js/meusJS/rotas.js' %}"></script>
+
+{% endblock %}

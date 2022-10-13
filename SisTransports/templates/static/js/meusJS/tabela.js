@@ -63,7 +63,6 @@ function conectaBd(dados, callback) {
     let url = dados.url
     let postData = $('form').serialize();
     if (dados.cnpj) {
-        alert('tem cnpj')
         postData += '&cnpj_cpf=' + dados.cnpj;
     }
     $.ajax({
@@ -111,7 +110,7 @@ function incluiTabela(response) {
 $('#btnBuscaTabela').on('click',function(e){
   dados={'url':'/comercial/readTabela/','cnpj':$('#numTabela').val()}
   reposta=conectaBd(dados,populaTabela);
-  alert("minha ",resposta)
+  alert("minha",resposta)
   e.preventDefault();
 });
 
