@@ -12,6 +12,8 @@
   <!-- bootstrap 5 -->
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-gH2yIJqKdNHPEq0n4Mqa/HGKIhSkIHeL5AyhkYV8i59U5AR6csBvApHHNl/vI1Bx" crossorigin="anonymous">
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-A3rJD856KowSb7dwlZdYEkO39Gagi7vIsF0jrRAoQmDKKtQBHUuLZ9AsSv4jD4Xa" crossorigin="anonymous"></script>
+  <script src="{% static 'js/meusJS/sidebar.js' %}"></script>
+
   
   <!-- plugins:css -->
   <link rel="stylesheet" href="{% static 'vendors/feather/feather.css' %}">
@@ -49,11 +51,11 @@
     <!-- partial:partials/_navbar.html -->
     <nav class="navbar col-lg-12 col-12 p-0 fixed-top d-flex flex-row">
       <div class="text-center navbar-brand-wrapper d-flex align-items-center justify-content-center">
-        <a class="navbar-brand brand-logo mr-5" href="{% url 'home' %}"><icon class="ti-truck"></icon>  SisTransport</a>
+        <a class="navbar-brand brand-logo mr-5" href="{% url 'home' %}"><i class="ti-truck"></i>  SisTransport</a>
       </div>
       <div class="navbar-menu-wrapper d-flex align-items-center justify-content-end">
-        <button class="navbar-toggler navbar-toggler align-self-center" type="button" data-toggle="minimize">
-          <span class="icon-menu"></span>
+        <!-- botao menu -->
+          <button class="navbar-toggler navbar-toggler align-self-center" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasTop" aria-controls="offcanvasTop"><span class="icon-menu"></span>
         </button>
         <ul class="navbar-nav mr-lg-2">
           <li class="nav-item nav-search d-none d-lg-block">
@@ -91,7 +93,7 @@
               <a class="dropdown-item preview-item">
                 <div class="preview-thumbnail">
                   <div class="preview-icon bg-warning">
-                    <i class="ti-settings mx-0"></i>
+                    <i class="ti-help mx-0"></i>
                   </div>
                 </div>
                 <div class="preview-item-content">
@@ -124,7 +126,7 @@
             </a>
             <div class="dropdown-menu dropdown-menu-right navbar-dropdown" aria-labelledby="profileDropdown">
               <a class="dropdown-item">
-                <i class="ti-settings text-primary"></i>
+                <i class="ti-help text-primary"></i>
                 Settings
               </a>
               <a class="dropdown-item" href="{% url 'sair' %}">
@@ -139,7 +141,7 @@
             </a>
           </li>
         </ul>
-        <button class="navbar-toggler navbar-toggler-right d-lg-none align-self-center" type="button" data-toggle="offcanvas">
+           <button class="navbar-toggler navbar-toggler-right d-lg-none align-self-center" type="button" data-toggle="offcanvas">
           <span class="icon-menu"></span>
         </button>
       </div>
@@ -148,7 +150,7 @@
     <div class="container-fluid page-body-wrapper ">
       <!-- partial:partials/_settings-panel.html -->
       <div class="theme-setting-wrapper">
-        <div id="settings-trigger"><i class="ti-settings"></i></div>
+        <div id="settings-trigger"><i class="ti-help"></i></div>
         <div id="theme-settings" class="settings-panel">
           <i class="settings-close ti-close"></i>
           <p class="settings-heading">SIDEBAR SKINS</p>
@@ -317,125 +319,43 @@
       </div>
       <!-- partial -->
       <!-- partial:partials/_sidebar.html -->
-      <nav class="sidebar sidebar-offcanvas mb-0" id="sidebar">
-        <ul class="nav">
-          <li class="nav-item">
-            <a class="nav-link" href="index.html">
-              <i class="ti-home menu-icon"></i>
-              <span class="menu-title">Home</span>
-            </a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" data-toggle="collapse" href="#ui-basic" aria-expanded="false" aria-controls="ui-basic">
-              <i class="ti-notepad menu-icon"></i>
-              <span class="menu-title">Cadastros</span>
-              <i class="menu-arrow"></i>
-            </a>
-            <div class="collapse" id="ui-basic">
-              <ul class="nav flex-column sub-menu">
-                <li class="nav-item"> 
-                  <a class="nav-link" data-bs-toggle="modal" 
-                  data-bs-target="#mdlCadParceiros">Parceiros</a>
-                </li>
-                <li class="nav-item"> <a class="nav-link" href="pages/ui-features/dropdowns.html">Clientes</a></li>
-                <li class="nav-item"> <a class="nav-link" href="pages/ui-features/typography.html">Vendedores</a></li>
-              </ul>
-            </div>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" data-toggle="collapse" href="#form-elements" aria-expanded="false" aria-controls="form-elements">
-              <i class="ti-money menu-icon"></i>
-              <span class="menu-title">Faturamento</span>
-              <i class="menu-arrow"></i>
-            </a>
-            <div class="collapse" id="form-elements">
-              <ul class="nav flex-column sub-menu">
-                <li class="nav-item"><a class="nav-link" href="pages/forms/basic_elements.html">Despesas</a></li>
-                <li class="nav-item"><a class="nav-link" href="pages/forms/basic_elements.html">Receitas</a></li>
-                <li class="nav-item"><a class="nav-link" href="pages/forms/basic_elements.html">Gerar Faturamento</a></li>
-                <li class="nav-item"><a class="nav-link" href="pages/forms/basic_elements.html">Emitir Duplicatas</a></li>
+      <div class="offcanvas offcanvas-start" data-bs-scroll="true" data-bs-backdrop="false" tabindex="-1" id="offcanvasScrolling" aria-labelledby="offcanvasScrollingLabel">
+          <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="offcanvasScrollingLabel">Colored with scrolling</h5>
+            <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+          </div>
+          <div class="offcanvas-body">
+            <p>Try scrolling the rest of the page to see this option in action.</p>
+          </div>
+        </div>
+        <div class="offcanvas offcanvas-start" tabindex="-1" id="offcanvasWithBackdrop" aria-labelledby="offcanvasWithBackdropLabel">
+          <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="offcanvasWithBackdropLabel">Offcanvas with backdrop</h5>
+            <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+          </div>
+          <div class="offcanvas-body">
+            <p>.....</p>
+          </div>
+        </div>
+        <div class="offcanvas offcanvas-start" data-bs-scroll="true" tabindex="-1" id="offcanvasWithBothOptions" aria-labelledby="offcanvasWithBothOptionsLabel">
+          <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="offcanvasWithBothOptionsLabel">Backdroped with scrolling</h5>
+            <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+          </div>
+          <div class="offcanvas-body">
+            <p>Try scrolling the rest of the page to see this option in action.</p>
+          </div>
+        </div>      
 
-
-              </ul>
-            </div>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" data-toggle="collapse" href="#charts" aria-expanded="false" aria-controls="charts">
-              <i class="ti-truck menu-icon"></i>
-              <span class="menu-title">Operacional</span>
-              <i class="menu-arrow"></i>
-            </a>
-            <div class="collapse" id="charts">
-              <ul class="nav flex-column sub-menu">
-                <li class="nav-item"> <a class="nav-link" href="pages/charts/chartjs.html">Manifesto</a></li>
-                <li class="nav-item"> <a class="nav-link" href="pages/charts/chartjs.html">Coleta</a></li>
-                <li class="nav-item"> <a class="nav-link" href="pages/charts/chartjs.html">Conhecimento</a></li>
-              </ul>
-            </div>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" data-toggle="collapse" href="#tables" aria-expanded="false" aria-controls="tables">
-              <i class="ti-pencil-alt menu-icon"></i>
-              <span class="menu-title">Relatórios</span>
-              <i class="menu-arrow"></i>
-            </a>
-            <div class="collapse" id="tables">
-              <ul class="nav flex-column sub-menu">
-                <li class="nav-item"> <a class="nav-link" href="pages/tables/basic-table.html">Rel. Coletas</a></li>
-                <li class="nav-item"> <a class="nav-link" href="pages/tables/basic-table.html">Rel. Cte's</a></li>
-                <li class="nav-item"> <a class="nav-link" href="pages/tables/basic-table.html">Rel. Viagens</a></li>                                  
-              </ul>
-            </div>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" data-toggle="collapse" href="#icons" aria-expanded="false" aria-controls="icons">
-              <i class="ti-briefcase menu-icon"></i>
-              <span class="menu-title">SAC</span>
-              <i class="menu-arrow"></i>
-            </a>
-            <div class="collapse" id="icons">
-              <ul class="nav flex-column sub-menu">
-                <li class="nav-item"> <a class="nav-link" href="pages/icons/mdi.html">Consultas</a></li>
-                <li class="nav-item"> <a class="nav-link" href="pages/icons/mdi.html">Rastreamento</a></li>
-              </ul>
-            </div>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" data-toggle="collapse" href="#auth" aria-expanded="false" aria-controls="auth">
-              <i class="ti-car menu-icon"></i>
-              <span class="menu-title">Frota</span>
-              <i class="menu-arrow"></i>
-            </a>
-            <div class="collapse" id="auth">
-              <ul class="nav flex-column sub-menu">
-                <li class="nav-item"> <a class="nav-link" href="pages/samples/login.html"> Veículos </a></li>
-                <li class="nav-item"> <a class="nav-link" href="pages/samples/register.html"> Motoristas </a></li>
-              </ul>
-            </div>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" data-toggle="collapse" href="#comercial" aria-expanded="false" aria-controls="comercial">
-              <i class="ti-shopping-cart menu-icon"></i>
-              <span class="menu-title">Comercial</span>
-              <i class="menu-arrow"></i>
-            </a>
-            <div class="collapse" id="comercial">
-              <ul class="nav flex-column sub-menu">
-                <li class="nav-item"> <a class="nav-link" href="pages/comercial/mdi.html">Cotações</a></li>
-              </ul>
-            </div>
-          </li>
-
-        </ul>
-      </nav>
-      <!-- partial -->
+      <!-- partial -->  
       <div>
        </div>
   
-      <div class="main-panel pr-1 pl-1 mt-3 mb-1">
-        <div class="table-responsive mt-0">
+      <div class="main-panel mx-auto mt-3">
+        <div class="table-responsive">
           {% include 'cadastroParceiros.html'%}  
-          {% include 'calcM3.html'%}   
+          {% include 'calcM3.html'%}
+
           {% block 'conteudo' %}{% endblock %}
         </div>
 
@@ -485,7 +405,6 @@
   <script src="{% static 'js/meusJS/formatar.js' %}"></script>
   <script src="{% static 'js/meusJS/cubagem.js' %}"></script>
   <script src="{% static 'js/meusJS/salvarDtc.js' %}"></script>
-
   <!-- End custom js for this page-->
 </body>
 

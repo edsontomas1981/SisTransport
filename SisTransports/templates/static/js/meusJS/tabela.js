@@ -1,7 +1,7 @@
 $('#comlCnpj').on('blur', function(e) {
     let dados = { 'url': '/busca_parceiro/', 'cnpj': $('#comlCnpj').val() }
-    alert(dados)
-    ajaxTabela(dados, populaRazao)
+    conectaBd(dados, populaRazao)
+
 });
 
 function populaRazao(response) {
@@ -58,7 +58,7 @@ function populaTabela(response) {
     $('#tipoFrete').val(response.tabela.tipoCalculo);
     $('#tipoCobranPedagio').val(response.tabela.tipoPedagio);
 }
-//enviar um array com a url e caso necessario o cnpj para consulta  
+//enviar um array com a url e caso necessario o cnpj para consulta
 function conectaBd(dados, callback) {
     let url = dados.url
     let postData = $('form').serialize();
@@ -72,6 +72,7 @@ function conectaBd(dados, callback) {
         data: postData,
         success: function(response) {
             callback(response)
+            return response
         },
         error: function(xhr) {
             console.log('Erro');
@@ -107,11 +108,13 @@ function incluiTabela(response) {
             // code block
     }
 }
-
-$('#btnBuscaTabela').on('click', function(e) {
-    dados = ['/comercial/readTabela/']
-    conectaBd(dados, populaTabela);
+$('#btnBuscaTabela').on('click',function(e){
+  dados={'url':'/comercial/readTabela/','cnpj':$('#numTabela').val()}
+  reposta=conectaBd(dados,populaTabela);
+  alert("minha ",resposta)
+  e.preventDefault();
 });
+
 
 function limpaTabela() {
     $('#cnpjsRelacionados td').remove();
@@ -125,11 +128,40 @@ function parceirosVinculados(response) {
         template = '<tr class="tr">' +
             '<td>' + data[i].cnpj_cpf + '</td>' +
             '<td>' + data[i].raz_soc + '</td>' +
-            '<td>' + '<button type="button" id="alteraContato"  class="btn btn-success btn-rounded btn-icon">' +
+            '<td>' + '<button type="button" id="alteraContato"' +
+            'class="btn btn-success btn-rounded btn-icon">' +
             '<i class="ti-pencil-alt2"></i></button>' + '</td>' +
-            '<td>' + '<button type="button" id="excluiContato" class="btn btn-danger btn-rounded btn-icon">' +
+            '<td>' + '<button type="button" id="excluiContato"'+
+            'class="btn btn-danger btn-rounded btn-icon">' +
             '<i class="ti-eraser "></i>' + '</button>' + '</td>' +
             '</tr>'
         $('#cnpjsRelacionados tbody').append(template)
     }
 };
+
+function relatorioTabela(response) {
+    console.table(response.tabela)
+    const data = response.tabela;
+    let template
+    for (let i = 0; i < data.length; i++) {
+        template ='<tr class="tr">' +
+            '<td>' + data[i].id + '</td>' +
+            '<td>' + data[i].descricao + '</td>' +
+            '<td>' + data[i].freteMinimo + '</td>' +
+            '<td>' + data[i].adValor + '</td>' +
+            '<td>' + data[i].gris + '</td>' +
+            '<td>' + data[i].despacho + '</td>' +
+            '<td>' + data[i].pedagio + '</td>' +
+            '<td>' + data[i].gris + '</td>' +
+            '<td>' + data[i].outros + '</td>' +
+            '<td><i class="ti-trash"></i></td>'+
+            '<td><i class="ti-pencil-alt"></i></td>' +
+          '</tr>'
+        $('#relatorioTabela tbody').append(template)
+    }
+};
+$( window ).load(function() {
+  dados={'url':'/comercial/getTodasTabelas/'}
+  conectaBd(dados,relatorioTabela);
+
+});

@@ -3,12 +3,48 @@
 {%load static %}
 {% load bootstrap %}
 {% block 'conteudo' %}
-        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#mdlTabFrete">
-          Chama Tabela
-        </button>   
-        
-                            
-        {% include 'mdlTabela.html' %}
+
+  <div class="row">
+    <div class="col-12"> 
+      <div class="form-floating col-sm-12 mb-1 pr-1 pl-0 input-group">
+          <input type="text" class="form-control" id="buscarTabelaFrete"
+           placeholder="Buscar" name="buscarTabelaFrete">
+           <label for="buscarTabelaFrete" class="text-primary">Buscar</label>
+          <div class="input-group-append">
+              <button class="btn btn-secondary"  id="btnTabela" type="button">
+                  <i class="ti-search"></i>Buscar
+              </button> 
+              <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#mdlTabFrete">
+                <i class="ti-save"></i>
+                Criar Tabela        
+            </button>               
+          </div>  
+      </div>                
+    </div>
+    <div class="col-12">
+      <table class="table table-dark table-striped" id="relatorioTabela">
+        <thead>
+          <tr>
+            <th scope="col">Id</th>
+            <th scope="col">Descrição</th>
+            <th scope="col">Mínimo</th>
+            <th scope="col">Advalor</th>
+            <th scope="col">Gris</th>
+            <th scope="col">Despacho</th>
+            <th scope="col">Pedágio</th>
+            <th scope="col">Gris</th>
+            <th scope="col">Outros</th>
+            <th scope="col"></th>
+            <th scope="col"></th>            
+          </tr>
+        </thead>
+        <tbody>
+
+        </tbody>
+      </table>
+    </div>
+  </div>        
+  {% include 'mdlTabela.html' %}        
 {% endblock %}
 
 {%block 'js'%}

@@ -74,6 +74,10 @@ class TabelaFrete:
         else:
             return False
         
+    def getTodasTabelas():
+        tabelas = TblFrete.objects.all()
+        return tabelas
+        
     def cnpjVinculado(self):
         cnpjs=[]
         for i in self.tabela.parceiro.all():

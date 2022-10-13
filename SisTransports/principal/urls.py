@@ -38,7 +38,9 @@ urlpatterns = [
     path('comercial/createTabela/',viewsComercial.createTabela,
          name='createTabela'),
     path('comercial/readTabela/',viewsComercial.readTabela,
-         name='readTabela'),                            
+         name='readTabela'),  
+    path('comercial/getTodasTabelas/',viewsComercial.getTodasTabelas,
+         name='todasTabelas'),                           
 ]
 urlpatterns += static(settings.STATIC_URL, 
                       document_root=settings.STATIC_ROOT)

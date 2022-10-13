@@ -11,7 +11,5 @@ def readTabela (request):
         tabela=TabelaFrete()
         tabela.readTabela(request.POST.get('numTabela'))
         parceiros=tabela.cnpjVinculado()
-        print('**********************************')
-        print(parceiros)
         return JsonResponse({'status':200,'tabela':tabela.tabela.toDict(),
                              'parceirosVinculados':parceiros})

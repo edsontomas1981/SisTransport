@@ -30,86 +30,86 @@
                         </button>
                     </div>  
                 </div>                
-                <div class="form-check form-check-primary col-3 pl-3 pr-0 mt-5">
+                <div class="form-check form-check-primary col-3 pl-3 pr-0 mt-4">
                     <label class="form-check-label">
                       <input type="checkbox" class="form-check-input" checked="" id="icms" name="icms">
                       Icms incluso ?
                     <i class="input-helper"></i></label>
                 </div>    
-                <div class="form-check form-check-primary col-3 pr-0 mt-5">
+                <div class="form-check form-check-primary col-3 pr-0 mt-4">
                     <label class="form-check-label">
                       <input type="checkbox" class="form-check-input"  id="tabelaBloqueada" 
                       name="tabelaBloqueada">
                       Bloqueada ?
                     <i class="input-helper"></i></label>
                 </div>                
-                <div class="col-3 pl-1 pr-1 mt-1">
-                   <p class="text-primary">Tipo da tabela:</p>
-                    <select type="text" name="tipoTabela" id="tipoTabela" class="form-select form-control-sm">
+                <div class="form-floating col-3 pl-1 pr-1 mt-1">
+                     <select type="text" name="tipoTabela" id="tipoTabela" class="form-select form-control-sm">
                       <option value="1">Tab. Geral</option>
                       <option value="2">Tab. Especifica</option>
                     </select>
+                    <label for="tipoTabela" class="text-primary">Tipo de Tabela</label>
                 </div>                 
-                <div class="col-3 pl-0 pr-1 mt-1">
-                    <p class="text-primary">Frete mínimo:</p>
+                <div class="form-floating col-3 pl-0 pr-1 mt-1">
                     <input type="text" name="freteMinimo" id="freteMinimo" class="form-control form-control-sm" placeholder="Frete mínimo" onKeyPress="return(MascaraMoeda(this,'.',',',event))">
+                    <label for="freteMinimo" class="text-primary">Frete mínimo:</label>
                 </div>
                       
-                <div class="col-3 pl-0 pr-1 mt-1">
-                   <p class="text-primary">Descrição da tabela:</p>
+                <div class="form-floating col-3 pl-0 pr-1 mt-1">
                     <input type="check" name="descTabela" id="descTabela" class="form-control form-control-sm" placeholder="Descrição">
+                    <label for="descTabela"class="text-primary">Descrição da tabela:</label>
                 </div>                
-                <div class="col-3 pl-0 pr-0 mt-1">
-                   <p class="text-primary">Rota:</p>
+
+                <div class="form-floating col-3 pl-0 pr-0 mt-1">
                     <select type="text" name="rota" id="rota" class="form-control-sm form-select">
                         <option value="1">SAO X SAO</option>
                     </select>
+                    <label for="rota">Rota:</label>
                 </div>
-                <div class="col-3 pl-1 pr-1 mt-1">
-                   <p class="text-primary">Frete:</p>
+                <div class="form-floating col-3 pl-1 pr-1 mt-1">
                     <input type="text" name="vlrFrete" id="vlrFrete" class="form-control form-control-sm" placeholder="R$" onKeyPress="return(MascaraMoeda(this,'.',',',event))">
+                    <label for="vlrFrete" class="text-primary">Valor frete</label>
                 </div>
-                <div class="col-3 pl-0 pr-1 mt-1">
-                   <p class="text-primary">Tipo frete:</p>
+                <div class="form-floating col-3 pl-0 pr-1 mt-1">
                     <select type="text" name="tipoFrete" id="tipoFrete" class="form-control-sm form-select ">
                         <option value="1">por kg</option>
                         <option value="2">%</option>
-
                     </select>                
+                    <label for="tipoFrete" class="text-primary">Tipo de cálculo</label>
                 </div> 
-                <div class="col-3 pl-0 pr-1 mt-1">
-                   <p class="text-primary">Advalor:</p>
+                <div class="form-floating col-3 pl-0 pr-1 mt-1">
                   <input type="text" name="advalor" id="advalor" class="form-control form-control-sm" placeholder="Advalor" onKeyPress="return(MascaraMoeda(this,'.',',',event))">
+                  <label for="advalor" class="text-primary">Advalor</label>
                 </div>
-                <div class="col-3 pl-0 pr-0 mt-1">
-                   <p class="text-primary">Gris:</p>
+                <div class="form-floating col-3 pl-0 pr-0 mt-1">
                     <input type="text" name="gris" id="gris" class="form-control form-control-sm" placeholder="Gris"onKeyPress="return(MascaraMoeda(this,'.',',',event))">
+                    <label for="gris" class="text-primary">Gris:</label>
                 </div>
-                <div class="col-3 pl-1 pr-1 mt-1">
-                   <p class="text-primary">Despacho:</p>                    
+                <div class="form-floating col-3 pl-1 pr-1 mt-1">
                     <input type="text" name="despacho" id="despacho" class="form-control form-control-sm" placeholder="Despacho"onKeyPress="return(MascaraMoeda(this,'.',',',event))">
+                    <label for="despacho" class="text-primary">Despacho:</label>
                 </div> 
-                <div class="col-3 pl-0 pr-1 mt-1">
-                   <p class="text-primary">Outros:</p>                    
+                <div class="form-floating col-3 pl-0 pr-1 mt-1">
                     <input type="text" name="outros" id="outros" class="form-control form-control-sm" placeholder="Outros"onKeyPress="return(MascaraMoeda(this,'.',',',event))">
+                    <label for="outros" class="text-primary">Outros:</label>
                 </div>
-                <div class="col-3 pl-0 pr-1 mt-1">
-                   <p class="text-primary">Pedágio:</p>                    
+                <div class="form-floating col-3 pl-0 pr-1 mt-1">
                     <input type="text" name="pedagio" id="pedagio" class="form-control form-control-sm" placeholder="Pedágio"onKeyPress="return(MascaraMoeda(this,'.',',',event))">
+                    <label for="pedagio" class="text-primary">Pedágio:</label>
                 </div>
-                <div class="col-3 pl-0 pr-0 mt-1">
-                   <p class="text-primary">Tipo cobr. pedágio:</p>                    
+                <div class="form-floating col-3 pl-0 pr-0 mt-1">
                     <select type="text" name="tipoCobranPedagio" id="tipoCobranPedagio" class="form-control-sm form-select ">
                         <option value="1">por Cte</option>
                         <option value="2">a cada 100 kg</option>
-                    </select>                
+                    </select>             
+                    <label for="tipoCobranPedagio" class="text-primary">Tipo Pedágio</label>   
                 </div>
 
-                <div class="col-3 pl-1 pr-1 mt-1">
-                   <p class="text-primary">Fator Cubagem:</p>          
+                <div class="form-floating col-3 pl-1 pr-1 mt-1">
                     <input type="text" name="cubagem" id="cubagem" class="form-control form-control-sm" placeholder="Fator cubagem" onKeyPress="return(MascaraMoeda(this,'.',',',event))">
+                    <label for="cubagem" class="text-primary">Fator cubagem:</label>
                 </div>
-                <div class="form-check form-check-primary col-3 pl-5 pr-0 mt-5">
+                <div class="form-check form-check-primary col-3 pl-5 pr-0 mt-4">
 
                     <label class="form-check-label">
                       <input type="checkbox" class="form-check-input" checked="" id="cobraCubagem" name="cobraCubagem">
