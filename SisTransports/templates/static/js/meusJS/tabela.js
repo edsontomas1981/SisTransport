@@ -15,8 +15,6 @@ $('#buscarTabelaFrete').on('keyup', function(e) {
     }
 });
 
-
-
 function populaRazao(response) {
     $('#comlRazao').val(response.dados[0].raz_soc)
 }
@@ -41,7 +39,6 @@ function limpaForm() {
 }
 
 function populaTabela(response) {
-    limpaTabela()
     parceirosVinculados(response)
     $('#descTabela').val(response.tabela.descricao)
         //se sim tabela esta bloqueada
@@ -163,7 +160,7 @@ function relatorioTabela(response) {
     const data = response.tabela;
     let template
     for (let i = 0; i < data.length; i++) {
-        template ='<tr class="tr">' +
+        template ='<tr class="tr" id="'+ data[i].id +'">' +
             '<td>' + data[i].id + '</td>' +
             '<td>' + data[i].descricao + '</td>' +
             '<td>' + data[i].freteMinimo + '</td>' +
@@ -173,14 +170,28 @@ function relatorioTabela(response) {
             '<td>' + data[i].pedagio + '</td>' +
             '<td>' + data[i].gris + '</td>' +
             '<td>' + data[i].outros + '</td>' +
-            '<td><i class="ti-trash"></i></td>'+
-            '<td><i class="ti-pencil-alt"></i></td>' +
+            '<td><button type="button" class="btn btn-dark '+
+            'btn-rounded btn-icon" id="exclui"><i class="ti-trash"></i></button></td>'+
+            '<td><button type="button" class="btn btn-dark '+
+            'btn-rounded btn-icon" id="exclui"><i class="ti-pencil-alt"></i></button></td>'+
           '</tr>'
         $('#relatorioTabela tbody').append(template)
     }
+    
 };
 $( window ).load(function() {
   dados={'url':'/comercial/getTodasTabelas/'}
   conectaBd(dados,relatorioTabela);
 
 });
+
+$(document).ready(function() {
+    $('#relatorioTabela').click(function(e){
+        var botao = document.querySelectorAll('button');
+        botao.forEach((e) => {
+            e.addEventListener('click',identificaBotao);
+            });
+    });
+})
+
+
