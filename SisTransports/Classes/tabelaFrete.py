@@ -93,6 +93,10 @@ class TabelaFrete:
         else:
             return False
 
+    def filtraTabelas(self,filtro):
+        self.tabela=TblFrete.objects.filter(descricao__contains=filtro)
+        return self.tabela
+
     def toDict(self):
         return self.tabela.toDict()
     

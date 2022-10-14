@@ -1,6 +1,7 @@
 # Identifica campos enviados se estao vazios ou nao 
 # sendo identificacaoCampo e o nome vindo da requisição 
 # e nome campo e uma frase mais agradavel para retorno da requisição 
+
 def checaCampos(request,**kwargs):
     camposVazios=[]
     for identificacaoCampo,nomeCampo in kwargs.items():

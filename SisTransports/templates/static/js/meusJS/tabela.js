@@ -4,6 +4,19 @@ $('#comlCnpj').on('blur', function(e) {
 
 });
 
+$('#buscarTabelaFrete').on('keyup', function(e) {
+    let filtro = $('#buscarTabelaFrete').val()
+    if (filtro.length > 2){
+        let dados = { 'url': '/comercial/filtraTabelas/', 'filtro': filtro}
+        conectaBd(dados, relatorioTabela)
+    }else {
+        dados={'url':'/comercial/getTodasTabelas/'}
+        conectaBd(dados,relatorioTabela);
+    }
+});
+
+
+
 function populaRazao(response) {
     $('#comlRazao').val(response.dados[0].raz_soc)
 }
@@ -58,20 +71,26 @@ function populaTabela(response) {
     $('#tipoFrete').val(response.tabela.tipoCalculo);
     $('#tipoCobranPedagio').val(response.tabela.tipoPedagio);
 }
-//enviar um array com a url e caso necessario o cnpj para consulta
+
+
+//enviar um dicionario com a url e caso necessario o cnpj para consulta
 function conectaBd(dados, callback) {
     let url = dados.url
     let postData = $('form').serialize();
+    // trocar por um dado que vem da funcão
     if (dados.cnpj) {
         postData += '&cnpj_cpf=' + dados.cnpj;
     }
+    if (dados.filtro) {
+        postData += '&filtro=' + dados.filtro;
+    }
+
     $.ajax({
         url: url,
         type: 'POST',
         data: postData,
         success: function(response) {
             callback(response)
-            return response
         },
         error: function(xhr) {
             console.log('Erro');
@@ -90,7 +109,6 @@ $('#btnIncluiTabela').on('click', function(e) {
     conectaBd(dados, incluiTabela)
     e.preventDefault();
 })
-
 function incluiTabela(response) {
     switch (response.status) {
         case 200:
@@ -110,7 +128,6 @@ function incluiTabela(response) {
 $('#btnBuscaTabela').on('click',function(e){
   dados={'url':'/comercial/readTabela/','cnpj':$('#numTabela').val()}
   reposta=conectaBd(dados,populaTabela);
-  alert("minha",resposta)
   e.preventDefault();
 });
 
@@ -119,8 +136,11 @@ function limpaTabela() {
     $('#cnpjsRelacionados td').remove();
 }
 
+function limpaRelatorioTabela() {
+    $('#relatorioTabela td').remove();
+}
+
 function parceirosVinculados(response) {
-    alert(response.parceirosVinculados)
     const data = response.parceirosVinculados;
     let template
     for (let i = 0; i < data.length; i++) {
@@ -139,7 +159,7 @@ function parceirosVinculados(response) {
 };
 
 function relatorioTabela(response) {
-    console.table(response.tabela)
+    limpaRelatorioTabela()
     const data = response.tabela;
     let template
     for (let i = 0; i < data.length; i++) {
