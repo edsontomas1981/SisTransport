@@ -42,6 +42,8 @@ urlpatterns = [
          name='createTabela'),
     path('comercial/readTabela/',viewsComercial.readTabela,
          name='readTabela'),  
+    path('comercial/deleteTabela/',viewsComercial.deleteTabela,
+         name='deleteTabela'),     
     path('comercial/getTodasTabelas/',viewsComercial.getTodasTabelas,
          name='todasTabelas'),
     path('comercial/filtraTabelas/',viewsComercial.filtraTabelas,

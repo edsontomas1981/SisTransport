@@ -177,6 +177,7 @@ function relatorioTabela(response) {
           '</tr>'
         $('#relatorioTabela tbody').append(template)
     }
+    $('#relatorioTabela tbody tr td').focus()
     
 };
 $( window ).load(function() {
@@ -187,11 +188,61 @@ $( window ).load(function() {
 
 $(document).ready(function() {
     $('#relatorioTabela').click(function(e){
-        var botao = document.querySelectorAll('button');
+        var botao = document.querySelectorAll('button')
         botao.forEach((e) => {
-            e.addEventListener('click',identificaBotao);
+            e.addEventListener('click',excluiTabela);
             });
-    });
+        });
 })
+
+function excluiTabela(e){
+    botao=e.currentTarget.id;
+    switch (botao) {
+        case 'exclui':
+            alert ('1'+ botao)        
+            var tr = document.querySelectorAll('tr');
+            tr.forEach((e) => {
+                e.addEventListener('click',excTabela);
+                });
+            break;
+        default:
+            break;
+    }
+};
+
+function excTabela(e){
+    id=e.currentTarget.id;
+    let textoMsg = "Deseja realmente apagar a tabela selecionada ?"
+    if (confirm(textoMsg)==true){
+        let postData = '&idAdd='+id;
+        let dados = { 'url': '/comercial/deleteTabela/', 'id':postData}
+        conectaBdGeral(dados, exclui)
+        alert('Tabela apagada com sucesso !' )
+        dados={'url':'/comercial/getTodasTabelas/'}
+        conectaBd(dados,relatorioTabela);
+    }
+
+}
+
+
+
+//enviar um dicionario com a url e caso necessario o cnpj para consulta
+function conectaBdGeral(dados, callback) {
+    let url = dados.url
+    let postData = $('form').serialize();
+    postData += dados.id;
+    $.ajax({
+        url: url,
+        type: 'POST',
+        data: postData,
+        success: function(response) {
+            callback(response)
+        },
+        error: function(xhr) {
+            console.log('Erro');
+        }
+    });
+}
+
 
 

@@ -55,8 +55,10 @@
       </div>
       <div class="navbar-menu-wrapper d-flex align-items-center justify-content-end">
         <!-- botao menu -->
-          <button class="navbar-toggler navbar-toggler align-self-center" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasTop" aria-controls="offcanvasTop"><span class="icon-menu"></span>
-        </button>
+          <button class="navbar-toggler navbar-toggler align-self-center" type="button" data-bs-toggle="offcanvas" 
+                  data-bs-target="#offcanvasTop" aria-controls="offcanvasTop">
+            <span> <i class="ti-menu" ></i></span>
+          </button>
         <ul class="navbar-nav mr-lg-2">
           <li class="nav-item nav-search d-none d-lg-block">
             <div class="input-group">
@@ -147,14 +149,17 @@
       </div>
     </nav>
     <!-- partial -->
-    <div class="container-fluid page-body-wrapper ">
+    <div class="container-fluid page-body-wrapper">
       <!-- partial:partials/_settings-panel.html -->
       <div class="theme-setting-wrapper">
         <div id="settings-trigger"><i class="ti-help"></i></div>
         <div id="theme-settings" class="settings-panel">
           <i class="settings-close ti-close"></i>
           <p class="settings-heading">SIDEBAR SKINS</p>
-          <div class="sidebar-bg-options selected" id="sidebar-light-theme"><div class="img-ss rounded-circle bg-light border mr-3"></div>Light</div>
+          <div class="sidebar-bg-options selected" 
+            id="sidebar-light-theme"><div class="img-ss rounded-circle bg-light border mr-3">
+
+          </div>Light</div>
           <div class="sidebar-bg-options" id="sidebar-dark-theme"><div class="img-ss rounded-circle bg-dark border mr-3"></div>Dark</div>
           <p class="settings-heading mt-2">HEADER SKINS</p>
           <div class="color-tiles mx-0 px-4">
@@ -355,11 +360,8 @@
         <div class="table-responsive">
           {% include 'cadastroParceiros.html'%}  
           {% include 'calcM3.html'%}
-
           {% block 'conteudo' %}{% endblock %}
         </div>
-
-        <!-- content-wrapper ends -->
         <!-- partial:partials/_footer.html -->
         <footer class="mx-auto">
           <div class="d-sm-flex justify-content-center justify-content-sm-between">
@@ -397,10 +399,7 @@
   <script src="{% static 'js/Chart.roundedBarCharts.js' %}"></script>
   <!--Meus Js-->
   <script src="{% static 'js/meusJS/cnpj.js' %}"></script>
-  <script src="{% static 'js/meusJS/botoes.js' %}"></script>
-  <script src="{% static 'js/meusJS/contato.js' %}"></script>
   <script src="{% static 'js/meusJS/dadosParceiro.js' %}"></script>
-  <script src="{% static 'js/meusJS/parceiros.js' %}"></script>
   <script src="{% static 'js/meusJS/cep.js' %}"></script>
   <script src="{% static 'js/meusJS/formatar.js' %}"></script>
   <script src="{% static 'js/meusJS/cubagem.js' %}"></script>

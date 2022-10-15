@@ -85,10 +85,10 @@ class TabelaFrete:
             cnpjs.append(parceiro.to_dict())
         return cnpjs
 
-    def deleteTabela(idTabela):
+    def deleteTabela(self,idTabela):
         if TblFrete.objects.filter(id=idTabela).exists():
-            tabela = TblFrete.objects.filter(id=idTabela).get()
-            tabela.delete()
+            self.tabela = TblFrete.objects.filter(id=idTabela).get()
+            self.tabela.delete()
             return True
         else:
             return False
