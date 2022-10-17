@@ -247,6 +247,18 @@ function acaoNaRowSelecionada(e){
         alert('alterar Contato')
     }
 }
+function identificaBotaoClicado(e) {
+    botaoQueFoiAcionado=e.currentTarget.id;
+    identificaRowBotaoAcionado(e)
+}
+$(document).ready(function() {
+    $('#corpoTabela').click(function(e){
+        var botao = document.querySelectorAll('button');
+        botao.forEach((e) => {
+            e.addEventListener('click', identificaBotaoClicado);
+            });
+    });
+})
 
 function excluiContato(e) {
     let idContato=e.currentTarget.id;
@@ -278,18 +290,6 @@ function apagaContato(id) {
     });
 };
 
-function identificaBotaoClicado(e) {
-    botaoQueFoiAcionado=e.currentTarget.id;
-    identificaRowBotaoAcionado(e)
-}
-$(document).ready(function() {
-    $('#corpoTabela').click(function(e){
-        var botao = document.querySelectorAll('button');
-        botao.forEach((e) => {
-            e.addEventListener('click', identificaBotaoClicado);
-            });
-    });
-})
 
 function adicionaContatoNaTabela(response) {
     const data = response.contato;

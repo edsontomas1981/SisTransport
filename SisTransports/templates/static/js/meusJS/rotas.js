@@ -1,6 +1,6 @@
 
 $('#inserirRota').on('click', function(e) {
-    dados={'url':'createRota/'}
+    dados={'url':'/rotas/createRota/'}
     bdRota(dados,populaRota)
     e.preventDefault();
 })

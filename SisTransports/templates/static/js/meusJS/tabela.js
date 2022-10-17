@@ -15,8 +15,6 @@ $('#buscarTabelaFrete').on('keyup', function(e) {
     }
 });
 
-
-
 function populaRazao(response) {
     $('#comlRazao').val(response.dados[0].raz_soc)
 }
@@ -41,8 +39,8 @@ function limpaForm() {
 }
 
 function populaTabela(response) {
-    limpaTabela()
     parceirosVinculados(response)
+    $('#numTabela').val(response.tabela.id)
     $('#descTabela').val(response.tabela.descricao)
         //se sim tabela esta bloqueada
     if (response.tabela.bloqueada == 1) {
@@ -163,7 +161,7 @@ function relatorioTabela(response) {
     const data = response.tabela;
     let template
     for (let i = 0; i < data.length; i++) {
-        template ='<tr class="tr">' +
+        template ='<tr class="tr" id="'+ data[i].id +'">' +
             '<td>' + data[i].id + '</td>' +
             '<td>' + data[i].descricao + '</td>' +
             '<td>' + data[i].freteMinimo + '</td>' +
@@ -173,14 +171,92 @@ function relatorioTabela(response) {
             '<td>' + data[i].pedagio + '</td>' +
             '<td>' + data[i].gris + '</td>' +
             '<td>' + data[i].outros + '</td>' +
-            '<td><i class="ti-trash"></i></td>'+
-            '<td><i class="ti-pencil-alt"></i></td>' +
+            '<td><button type="button" class="btn btn-dark '+
+            'btn-rounded btn-icon" id="exclui"><i class="ti-trash"></i></button></td>'+
+            '<td><button type="button" class="btn btn-dark '+
+            'btn-rounded btn-icon" id="altera"><i class="ti-pencil-alt"></i></button></td>'+
           '</tr>'
         $('#relatorioTabela tbody').append(template)
     }
+    $('#relatorioTabela tbody tr td').focus()
+    
 };
 $( window ).load(function() {
   dados={'url':'/comercial/getTodasTabelas/'}
   conectaBd(dados,relatorioTabela);
 
 });
+
+$(document).ready(function() {
+    $('#relatorioTabela').click(function(e){
+        var botao = document.querySelectorAll('button')
+        botao.forEach((e) => {
+            e.addEventListener('click',linhaTabela);
+            });
+        });
+})
+
+function linhaTabela(e){
+    botao=e.currentTarget.id;
+    switch (botao) {
+        case 'exclui':
+            var tr = document.querySelectorAll('tr');
+            tr.forEach((e) => {
+                e.addEventListener('click',excTabela);
+                });
+            break;
+        case 'altera':
+            var tr = document.querySelectorAll('tr');
+            tr.forEach((e) => {
+                e.addEventListener('click',alteraTabela);
+            });
+            $('#mdlTabFrete').modal('show');
+            break;
+    }
+};
+
+function alteraTabela(e){
+    idTabela=e.currentTarget.id
+    let postData = '&numTabela='+idTabela;
+    let dados = { 'url': '/comercial/readTabela/', 'id':postData}
+    conectaBdGeral(dados, populaTabela)
+
+}
+
+
+function excTabela(e){
+    id=e.currentTarget.id;
+    let textoMsg = "Deseja realmente apagar a tabela selecionada ?"
+    if (confirm(textoMsg)==true){
+        let postData = '&idAdd='+id;
+        let dados = { 'url': '/comercial/deleteTabela/', 'id':postData}
+        conectaBdGeral(dados, exclui)
+        alert('Tabela apagada com sucesso !' )
+        dados={'url':'/comercial/getTodasTabelas/'}
+        conectaBd(dados,relatorioTabela);
+    }
+
+}
+
+
+
+//enviar um dicionario com a url e caso necessario o cnpj para consulta
+function conectaBdGeral(dados, callback) {
+    let url = dados.url
+    let postData = $('form').serialize();
+    postData += dados.id;
+    $.ajax({
+        url: url,
+        type: 'POST',
+        data: postData,
+        success: function(response) {
+            callback(response)
+        },
+        error: function(xhr) {
+            console.log('Erro');
+        }
+    });
+}
+
+
+
