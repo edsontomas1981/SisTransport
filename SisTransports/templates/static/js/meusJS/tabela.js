@@ -238,9 +238,7 @@ function excluirTabelas(idTabela){
 }
 
 function excTabela(e){
-    $("#exclui").trigger("click",function(){
-        $("#exclui").blur();
-      });
+
     id=e.currentTarget.id;
     excluirTabelas(id)
 
