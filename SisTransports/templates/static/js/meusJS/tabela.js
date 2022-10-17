@@ -40,6 +40,7 @@ function limpaForm() {
 
 function populaTabela(response) {
     parceirosVinculados(response)
+    $('#numTabela').val(response.tabela.id)
     $('#descTabela').val(response.tabela.descricao)
         //se sim tabela esta bloqueada
     if (response.tabela.bloqueada == 1) {
@@ -173,7 +174,11 @@ function relatorioTabela(response) {
             '<td><button type="button" class="btn btn-dark '+
             'btn-rounded btn-icon" id="exclui"><i class="ti-trash"></i></button></td>'+
             '<td><button type="button" class="btn btn-dark '+
+<<<<<<< HEAD
             'btn-rounded btn-icon" id="exclui"><i class="ti-pencil-alt"></i></button></td>'+
+=======
+            'btn-rounded btn-icon" id="altera"><i class="ti-pencil-alt"></i></button></td>'+
+>>>>>>> a61b9cccea12cc9ce6e88f39a579f484056281a4
           '</tr>'
         $('#relatorioTabela tbody').append(template)
     }
@@ -190,26 +195,58 @@ $(document).ready(function() {
     $('#relatorioTabela').click(function(e){
         var botao = document.querySelectorAll('button')
         botao.forEach((e) => {
+<<<<<<< HEAD
             e.addEventListener('click',excluiTabela);
+=======
+            e.addEventListener('click',linhaTabela);
+>>>>>>> a61b9cccea12cc9ce6e88f39a579f484056281a4
             });
         });
 })
 
+<<<<<<< HEAD
 function excluiTabela(e){
     botao=e.currentTarget.id;
     switch (botao) {
         case 'exclui':
             alert ('1'+ botao)        
+=======
+function linhaTabela(e){
+    botao=e.currentTarget.id;
+    switch (botao) {
+        case 'exclui':
+>>>>>>> a61b9cccea12cc9ce6e88f39a579f484056281a4
             var tr = document.querySelectorAll('tr');
             tr.forEach((e) => {
                 e.addEventListener('click',excTabela);
                 });
             break;
+<<<<<<< HEAD
         default:
+=======
+        case 'altera':
+            var tr = document.querySelectorAll('tr');
+            tr.forEach((e) => {
+                e.addEventListener('click',alteraTabela);
+            });
+            $('#mdlTabFrete').modal('show');
+>>>>>>> a61b9cccea12cc9ce6e88f39a579f484056281a4
             break;
     }
 };
 
+<<<<<<< HEAD
+=======
+function alteraTabela(e){
+    idTabela=e.currentTarget.id
+    let postData = '&numTabela='+idTabela;
+    let dados = { 'url': '/comercial/readTabela/', 'id':postData}
+    conectaBdGeral(dados, populaTabela)
+
+}
+
+
+>>>>>>> a61b9cccea12cc9ce6e88f39a579f484056281a4
 function excTabela(e){
     id=e.currentTarget.id;
     let textoMsg = "Deseja realmente apagar a tabela selecionada ?"

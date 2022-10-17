@@ -10,9 +10,6 @@ def filtraTabelas (request):
         return render(request, 'preDtc.html')
     elif request.method == "POST" :
         tabelas=TabelaFrete()
-        print('****************************************************')
-        print(request.POST.get('filtro'))
         tabelas.filtraTabelas(request.POST.get('filtro'))
         tabela=[x.toDict() for x in tabelas.tabela]
-        print(tabela)
         return JsonResponse({'status': 200,'tabela':tabela}) 
