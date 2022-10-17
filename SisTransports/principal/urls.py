@@ -40,6 +40,8 @@ urlpatterns = [
          name='readTabela'),
     path('comercial/createTabela/',viewsComercial.createTabela,
          name='createTabela'),
+    path('comercial/updateTabela/',viewsComercial.updateTabela,
+         name='updateTabela'),    
     path('comercial/readTabela/',viewsComercial.readTabela,
          name='readTabela'),  
     path('comercial/deleteTabela/',viewsComercial.deleteTabela,
