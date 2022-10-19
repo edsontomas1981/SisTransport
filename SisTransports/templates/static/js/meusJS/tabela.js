@@ -1,17 +1,84 @@
+//recebe um dicionario com as chaves url e id contendo os dados a serem consultados 
+//postData = '&cnpj_cpf='0000000000191;
+// ex {url:/rotaAcessada/,id:postData} 
+function conectaBdGeral(dados, callback) {
+    let url = dados.url
+    let postData = $('form').serialize();
+    postData += dados.id;
+    $.ajax({
+        url: url,
+        type: 'POST',
+        data: postData,
+        success: function(response) {
+            callback(response)
+        },
+        error: function(xhr) {
+            console.log('Erro');
+        }
+    });
+}
+// Eventos
 $('#comlCnpj').on('blur', function(e) {
-    let dados = { 'url': '/busca_parceiro/', 'cnpj': $('#comlCnpj').val() }
-    conectaBd(dados, populaRazao)
+    let postData = '&cnpj_cpf='+$('#comlCnpj').val();
+    let dados = { 'url': '/busca_parceiro/', 'id':postData}
+    conectaBdGeral(dados, populaRazao)
 });
 
 $('#buscarTabelaFrete').on('keyup', function(e) {
     let filtro = $('#buscarTabelaFrete').val()
+    let postData
     if (filtro.length > 2){
-        let dados = { 'url': '/comercial/filtraTabelas/', 'filtro': filtro}
-        conectaBd(dados, relatorioTabela)
+        postData += '&filtro=' + filtro;
+        let dados = { 'url': '/comercial/filtraTabelas/', 'id':postData}
+        conectaBdGeral(dados, relatorioTabela)
     }else {
         populaRelatTabelas()
     }
 });
+
+$('#btnNovaTabela').on('click', function(e) {
+    limpaForm();
+    $('#numTabela').val('');
+    e.preventDefault();
+})
+
+$( window ).load(function() {
+    populaRelatTabelas()
+});
+
+$(document).ready(function() {
+    $('#relatorioTabela').click(function(e){
+        var botao = document.querySelectorAll('button')
+        botao.forEach((e) => {
+            e.addEventListener('click',linhaTabela);
+            });
+        });
+})
+
+$('#btnExcluiTabela').on('click', function(e) {
+    if ($('#numTabela').val()){excluirTabelas($('#numTabela').val())}
+    else{alert('Não existe tabela para excluir.')}
+})
+
+$('#btnIncluiTabela').on('click', function(e) {
+    //se houver tabela com o id atualiza ao inves de criar nova
+    if ($('#numTabela').val()){
+        let postData = '&numTabela='+$('#numTabela').val();
+        let dados = { 'url': '/comercial/updateTabela/', 'id':postData}
+        conectaBdGeral(dados, atualizarTabela)
+    }else{    
+        dados = { url: '/comercial/createTabela/' }
+        conectaBdGeral(dados, incluiTabela)
+    }
+    e.preventDefault();
+})
+
+$('.btn-close').on('click', function(e) {
+    populaRelatTabelas()
+    limpaForm()
+})
+
+//funcoes 
 
 function populaRazao(response) {
     $('#comlRazao').val(response.dados[0].raz_soc)
@@ -69,39 +136,6 @@ function populaTabela(response) {
     $('#tipoCobranPedagio').val(response.tabela.tipoPedagio);
 }
 
-
-//enviar um dicionario com a url e caso necessario o cnpj para consulta
-function conectaBd(dados, callback) {
-    let url = dados.url
-    let postData = $('form').serialize();
-    // trocar por um dado que vem da funcão
-    if (dados.cnpj) {
-        postData += '&cnpj_cpf=' + dados.cnpj;
-    }
-    if (dados.filtro) {
-        postData += '&filtro=' + dados.filtro;
-    }
-
-    $.ajax({
-        url: url,
-        type: 'POST',
-        data: postData,
-        success: function(response) {
-            callback(response)
-        },
-        error: function(xhr) {
-            console.log('Erro');
-        }
-    });
-}
-
-$('#btnNovaTabela').on('click', function(e) {
-    limpaForm();
-    $('#numTabela').val('');
-    e.preventDefault();
-})
-
-
 function incluiTabela(response) {
     switch (response.status) {
         case 200:
@@ -118,12 +152,6 @@ function incluiTabela(response) {
             // code block
     }
 }
-$('#btnBuscaTabela').on('click',function(e){
-  dados={'url':'/comercial/readTabela/','cnpj':$('#numTabela').val()}
-  reposta=conectaBd(dados,populaTabela);
-  e.preventDefault();
-});
-
 
 function limpaTabela() {
     $('#cnpjsRelacionados td').remove();
@@ -174,24 +202,7 @@ function relatorioTabela(response) {
 
         $('#relatorioTabela tbody').append(template)
     }
-    $('#relatorioTabela').show();
-    
 };
-
-
-
-$( window ).load(function() {
-    populaRelatTabelas()
-});
-
-$(document).ready(function() {
-    $('#relatorioTabela').click(function(e){
-        var botao = document.querySelectorAll('button')
-        botao.forEach((e) => {
-            e.addEventListener('click',linhaTabela);
-            });
-        });
-})
 
 function linhaTabela(e){
     botao=e.currentTarget.id;
@@ -205,14 +216,14 @@ function linhaTabela(e){
         case 'altera':
             var tr = document.querySelectorAll('tr');
             tr.forEach((e) => {
-                e.addEventListener('click',viewTabela);
+                e.addEventListener('click',mostrarTabela);
             });
             $('#mdlTabFrete').modal('show');
             break;
     }
 };
 
-function viewTabela(e){
+function mostrarTabela(e){
     idTabela=e.currentTarget.id
     let postData = '&numTabela='+idTabela;
     let dados = { 'url': '/comercial/readTabela/', 'id':postData}
@@ -221,9 +232,8 @@ function viewTabela(e){
 
 function populaRelatTabelas(){
     dados={'url':'/comercial/getTodasTabelas/'}
-    conectaBd(dados,relatorioTabela);
+    conectaBdGeral(dados,relatorioTabela);
     limpaForm()
-
 }
 
 function excluirTabelas(idTabela){
@@ -238,38 +248,16 @@ function excluirTabelas(idTabela){
 }
 
 function excTabela(e){
-
     id=e.currentTarget.id;
     excluirTabelas(id)
-
 }
 
-$('#btnExcluiTabela').on('click', function(e) {
-    if ($('#numTabela').val()){
-        excluirTabelas($('#numTabela').val())
-    }else{alert('Não existe tabela para excluir.')}
-})
-
-$('#btnIncluiTabela').on('click', function(e) {
-    if ($('#numTabela').val()){
-        let postData = '&numTabela='+$('#numTabela').val();
-        let dados = { 'url': '/comercial/updateTabela/', 'id':postData}
-        conectaBdGeral(dados, updateTabela)
-    }else{    
-        dados = { url: '/comercial/createTabela/' }
-        conectaBdGeral(dados, incluiTabela)
-    }
-    e.preventDefault();
-})
-
-function updateTabela(response) {
+function atualizarTabela(response) {
     switch (response.status) {
         case 200:
             alert('Tabela alterada com sucesso !')
-
             break;
         case 210:
-
             break;
         case 400:
             alert('Erro !' + response.camposObrigatorios)
@@ -278,31 +266,3 @@ function updateTabela(response) {
             // code block
     }
 }
-
-//enviar um dicionario com a url e caso necessario o cnpj para consulta
-function conectaBdGeral(dados, callback) {
-    let url = dados.url
-    let postData = $('form').serialize();
-    postData += dados.id;
-    $.ajax({
-        url: url,
-        type: 'POST',
-        data: postData,
-        success: function(response) {
-            callback(response)
-        },
-        error: function(xhr) {
-            console.log('Erro');
-        }
-    });
-}
-
-$('#relatorioTabela').mouseover(function(e){
-    $('#relatorioTabela').trigger("click");
-    e.preventDefault();
-})
-
-$('.btn-close').on('click', function(e) {
-    populaRelatTabelas()
-    limpaForm()
-})

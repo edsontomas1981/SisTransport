@@ -11,20 +11,9 @@ def updateTabela (request):
         print('testando')
         return render(request, 'preDtc.html')
     elif request.method == "POST" :
-        
         parceiro=Parceiros.getParceiro(request.POST.get('23926683000299'))
         tabela=TabelaFrete()
         tabela.readTabela(request.POST.get('numTabela'))
-        print(request.POST)
-        # print(request.POST.get('numTabela'),parceiro,None,request.POST.get('descTabela'),
-        #                 toFloat(request.POST.get('vlrFrete')),request.POST.get('tipoFrete'),
-        #                 toFloat(request.POST.get('advalor')),toFloat(request.POST.get('gris')),
-        #                 toFloat(request.POST.get('despacho')),toFloat(request.POST.get('outros')),
-        #                 toFloat(request.POST.get('pedagio')),request.POST.get('tipoCobranPedagio'),
-        #                 checkBox(request.POST.get('cobraCubagem')),toFloat(request.POST.get('cubagem')),
-        #                 checkBox(request.POST.get('icms')),checkBox(request.POST.get('tabelaBloqueada')),
-        #                 request.POST.get('tipoTabela'),toFloat(request.POST.get('freteMinimo')),
-        #                 )
         tabela.updateTabela(request.POST.get('numTabela'),
                             parceiro,
                             None,
