@@ -85,8 +85,7 @@ class TabelaFrete:
 
     def deleteTabela(self,idTabela):
         if TblFrete.objects.filter(id=idTabela).exists():
-            self.tabela = TblFrete.objects.filter(id=idTabela).get()
-            self.tabela.delete()
+            self.tabela = TblFrete.objects.get(id=idTabela).delete()
             return True
         else:
             return False
