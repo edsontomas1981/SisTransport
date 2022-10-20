@@ -25,13 +25,20 @@ def verificaCamposObrigatorios(request):
     return camposObrigatorios
 
 def toFloat(stringToFloat):
-    stringToFloat=stringToFloat.replace(".","")
-    stringToFloat=stringToFloat.replace(",",".")
-    stringToFloat=float(stringToFloat)
+    
+    if ','in stringToFloat:
+
+        stringToFloat=stringToFloat.replace(".","")
+        stringToFloat=stringToFloat.replace(",",".")
+        stringToFloat=float(stringToFloat)
+    else:
+        stringToFloat=float(stringToFloat)
+
     return stringToFloat
 
 def checkBox(check):
-    if check == 'on':
+    print (check)
+    if check == 'on' or check == 1:
         return True
     else:
         return False

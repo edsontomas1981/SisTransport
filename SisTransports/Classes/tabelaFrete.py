@@ -21,7 +21,7 @@ class TabelaFrete:
         self.tabela.despacho = despacho
         self.tabela.outros = outros
         self.tabela.pedagio = pedagio
-        self.tabela.tipoPedagio = tipoPedagio
+        self.tabela.tipoPedagio = tipoPedagio           
         self.tabela.cubagem = cubagem
         self.tabela.fatorCubagem = fatorCubagem
         self.tabela.tipoTabela= tipoTabela
@@ -37,30 +37,28 @@ class TabelaFrete:
             self.tabela.save()
         self.tabela.toDict()
 
-    def updateTabela(self, idTabela, parceiro=None, rota=None, descricao=None,
-                     frete=None, tipoCalculo=None, adValor=None, gris=None, despacho=None,
-                     outros=None, pedagio=None, tipoPedagio=None, cubagem=None,
-                     fatorCubagem=None, icmsIncluso=True, bloqueada=False):
-
-        if TblFrete.objects.filter(id=idTabela).exists():
-            self.tabela = TblFrete.objects.filter(id=idTabela).get()
-            self.tabela.descricao = descricao
-            self.tabela.icmsIncluso = icmsIncluso
-            self.tabela.bloqueada = bloqueada
-            self.tabela.frete = frete
-            self.tabela.tipoCalculo = tipoCalculo
-            self.tabela.adValor = adValor
-            self.tabela.gris = gris
-            self.tabela.despacho = despacho
-            self.tabela.outros = outros
-            self.tabela.pedagio = pedagio
-            self.tabela.tipoPedagio = tipoPedagio
-            self.tabela.cubagem = cubagem
-            self.tabela.fatorCubagem = fatorCubagem
-            self.tabela.save()
-            return self.tabela.toDict()
-        else:
-            return False
+    def updateTabela(self,idTabela,parceiro=None,rota=None,descricao=None,frete=None,
+                     tipoCalculo=None,adValor=None,gris=None,despacho=None,outros=None, 
+                     pedagio=None,tipoPedagio=None,cubagem=None,fatorCubagem=None, 
+                     icmsIncluso=True,bloqueada=False,tipoTabela=None,freteMinimo=None):
+        self.tabela = TblFrete.objects.filter(id=idTabela).get()
+        self.tabela.descricao = descricao
+        self.tabela.icmsIncluso = icmsIncluso
+        self.tabela.bloqueada = bloqueada
+        self.tabela.frete = frete
+        self.tabela.tipoCalculo = tipoCalculo
+        self.tabela.adValor = adValor
+        self.tabela.gris = gris
+        self.tabela.despacho = despacho
+        self.tabela.outros = outros
+        self.tabela.pedagio = pedagio
+        self.tabela.tipoPedagio = tipoPedagio
+        self.tabela.cubagem = cubagem
+        self.tabela.fatorCubagem = fatorCubagem
+        self.tabela.tipoTabela= tipoTabela
+        self.tabela.freteMinimo = freteMinimo
+        self.tabela.save()
+        return self.tabela.toDict()
 
     def anexaTabelaAoParceiro(self, parceiro: object, idTabela):
         if TblFrete.objects.filter(id=idTabela).exists():
@@ -87,8 +85,7 @@ class TabelaFrete:
 
     def deleteTabela(self,idTabela):
         if TblFrete.objects.filter(id=idTabela).exists():
-            self.tabela = TblFrete.objects.filter(id=idTabela).get()
-            self.tabela.delete()
+            self.tabela = TblFrete.objects.get(id=idTabela).delete()
             return True
         else:
             return False

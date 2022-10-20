@@ -1,19 +1,89 @@
+//recebe um dicionario com as chaves url e id contendo os dados a serem consultados 
+//postData = '&cnpj_cpf='0000000000191;
+// ex {url:/rotaAcessada/,id:postData} 
+function conectaBdGeral(dados, callback) {
+    let url = dados.url
+    let postData = $('form').serialize();
+    postData += dados.id;
+    $.ajax({
+        url: url,
+        type: 'POST',
+        data: postData,
+        success: function(response) {
+            callback(response)
+        },
+        error: function(xhr) {
+            console.log('Erro');
+        }
+    });
+}
+// Eventos
 $('#comlCnpj').on('blur', function(e) {
-    let dados = { 'url': '/busca_parceiro/', 'cnpj': $('#comlCnpj').val() }
-    conectaBd(dados, populaRazao)
-
+    let postData = '&cnpj_cpf=' + $('#comlCnpj').val();
+    let dados = { 'url': '/busca_parceiro/', 'id': postData }
+    conectaBdGeral(dados, populaRazao)
 });
 
 $('#buscarTabelaFrete').on('keyup', function(e) {
     let filtro = $('#buscarTabelaFrete').val()
-    if (filtro.length > 2){
-        let dados = { 'url': '/comercial/filtraTabelas/', 'filtro': filtro}
-        conectaBd(dados, relatorioTabela)
-    }else {
-        dados={'url':'/comercial/getTodasTabelas/'}
-        conectaBd(dados,relatorioTabela);
+    let postData
+    if (filtro.length > 2) {
+        postData += '&filtro=' + filtro;
+        let dados = { 'url': '/comercial/filtraTabelas/', 'id': postData }
+        conectaBdGeral(dados, relatorioTabela)
+    } else {
+        populaRelatTabelas()
     }
 });
+
+$('#btnNovaTabela').on('click', function(e) {
+    limpaForm();
+    $('#numTabela').val('');
+    e.preventDefault();
+})
+
+$(window).load(function() {
+    populaRelatTabelas()
+});
+
+$(document).ready(function() {
+    $('#relatorioTabela').click(function(e) {
+        var botao = document.querySelectorAll('button')
+        botao.forEach((e) => {
+            e.addEventListener('click', linhaTabela);
+        });
+    });
+})
+
+$('#btnExcluiTabela').on('click', function(e) {
+    if ($('#numTabela').val()) { excluirTabelas($('#numTabela').val()) } else { alert('Não existe tabela para excluir.') }
+})
+
+$('#btnIncluiTabela').on('click', function(e) {
+    //se houver tabela com o id atualiza ao inves de criar nova
+    if ($('#numTabela').val()) {
+        let postData = '&numTabela=' + $('#numTabela').val();
+        let dados = { 'url': '/comercial/updateTabela/', 'id': postData }
+        conectaBdGeral(dados, atualizarTabela)
+    } else {
+        dados = { url: '/comercial/createTabela/' }
+        conectaBdGeral(dados, incluiTabela)
+    }
+    e.preventDefault();
+})
+
+$('#btnFaixa').on('click', function(e) {
+    incluiFaixa()
+    e.preventDefault();
+})
+
+$('.btn-close').on('click', function(e) {
+    $('#buscarTabelaFrete').val('');
+    populaRelatTabelas()
+    limpaForm()
+})
+
+//funcoes 
 
 function populaRazao(response) {
     $('#comlRazao').val(response.dados[0].raz_soc)
@@ -21,6 +91,7 @@ function populaRazao(response) {
 
 function limpaForm() {
     //se sim tabela esta bloqueada
+    $('#numTabela').val('')
     $('#descTabela').val('')
     $('#tabelaBloqueada').prop("checked", false);
     $('#icms').prop("checked", true);
@@ -35,7 +106,7 @@ function limpaForm() {
     $('#freteMinimo').val('');
     $('#tipoFrete').val('');
     $('#tipoCobranPedagio').val('');
-    limpaTabela();
+    limpaTabela('#cnpjsRelacionados td');
 }
 
 function populaTabela(response) {
@@ -70,43 +141,6 @@ function populaTabela(response) {
     $('#tipoCobranPedagio').val(response.tabela.tipoPedagio);
 }
 
-
-//enviar um dicionario com a url e caso necessario o cnpj para consulta
-function conectaBd(dados, callback) {
-    let url = dados.url
-    let postData = $('form').serialize();
-    // trocar por um dado que vem da funcão
-    if (dados.cnpj) {
-        postData += '&cnpj_cpf=' + dados.cnpj;
-    }
-    if (dados.filtro) {
-        postData += '&filtro=' + dados.filtro;
-    }
-
-    $.ajax({
-        url: url,
-        type: 'POST',
-        data: postData,
-        success: function(response) {
-            callback(response)
-        },
-        error: function(xhr) {
-            console.log('Erro');
-        }
-    });
-}
-
-$('#btnNovaTabela').on('click', function(e) {
-    limpaForm();
-    $('#numTabela').val('');
-    e.preventDefault();
-})
-
-$('#btnIncluiTabela').on('click', function(e) {
-    dados = { url: '/comercial/createTabela/' }
-    conectaBd(dados, incluiTabela)
-    e.preventDefault();
-})
 function incluiTabela(response) {
     switch (response.status) {
         case 200:
@@ -123,19 +157,9 @@ function incluiTabela(response) {
             // code block
     }
 }
-$('#btnBuscaTabela').on('click',function(e){
-  dados={'url':'/comercial/readTabela/','cnpj':$('#numTabela').val()}
-  reposta=conectaBd(dados,populaTabela);
-  e.preventDefault();
-});
 
-
-function limpaTabela() {
-    $('#cnpjsRelacionados td').remove();
-}
-
-function limpaRelatorioTabela() {
-    $('#relatorioTabela td').remove();
+function limpaTabela(tabela) {
+    $(tabela).remove();
 }
 
 function parceirosVinculados(response) {
@@ -148,7 +172,7 @@ function parceirosVinculados(response) {
             '<td>' + '<button type="button" id="alteraContato"' +
             'class="btn btn-success btn-rounded btn-icon">' +
             '<i class="ti-pencil-alt2"></i></button>' + '</td>' +
-            '<td>' + '<button type="button" id="excluiContato"'+
+            '<td>' + '<button type="button" id="excluiContato"' +
             'class="btn btn-danger btn-rounded btn-icon">' +
             '<i class="ti-eraser "></i>' + '</button>' + '</td>' +
             '</tr>'
@@ -157,11 +181,11 @@ function parceirosVinculados(response) {
 };
 
 function relatorioTabela(response) {
-    limpaRelatorioTabela()
+    limpaTabela('#relatorioTabela td')
     const data = response.tabela;
     let template
     for (let i = 0; i < data.length; i++) {
-        template ='<tr class="tr" id="'+ data[i].id +'">' +
+        template = '<tr class="tr" id="' + data[i].id + '">' +
             '<td>' + data[i].id + '</td>' +
             '<td>' + data[i].descricao + '</td>' +
             '<td>' + data[i].freteMinimo + '</td>' +
@@ -171,92 +195,101 @@ function relatorioTabela(response) {
             '<td>' + data[i].pedagio + '</td>' +
             '<td>' + data[i].gris + '</td>' +
             '<td>' + data[i].outros + '</td>' +
-            '<td><button type="button" class="btn btn-dark '+
-            'btn-rounded btn-icon" id="exclui"><i class="ti-trash"></i></button></td>'+
-            '<td><button type="button" class="btn btn-dark '+
-            'btn-rounded btn-icon" id="altera"><i class="ti-pencil-alt"></i></button></td>'+
-          '</tr>'
+            '<td><button type="button" class="btn btn-dark ' +
+            'btn-rounded btn-icon" id="exclui"><i class="ti-trash"></i></button></td>' +
+            '<td><button type="button" class="btn btn-dark ' +
+            'btn-rounded btn-icon" id="altera"><i class="ti-new-window"></i></button></td>' +
+            '</tr>'
+
         $('#relatorioTabela tbody').append(template)
     }
-    $('#relatorioTabela tbody tr td').focus()
-    
 };
-$( window ).load(function() {
-  dados={'url':'/comercial/getTodasTabelas/'}
-  conectaBd(dados,relatorioTabela);
 
-});
-
-$(document).ready(function() {
-    $('#relatorioTabela').click(function(e){
-        var botao = document.querySelectorAll('button')
-        botao.forEach((e) => {
-            e.addEventListener('click',linhaTabela);
-            });
-        });
-})
-
-function linhaTabela(e){
-    botao=e.currentTarget.id;
+function linhaTabela(e) {
+    botao = e.currentTarget.id;
     switch (botao) {
         case 'exclui':
             var tr = document.querySelectorAll('tr');
             tr.forEach((e) => {
-                e.addEventListener('click',excTabela);
-                });
+                e.addEventListener('click', excTabela);
+            });
             break;
         case 'altera':
             var tr = document.querySelectorAll('tr');
             tr.forEach((e) => {
-                e.addEventListener('click',alteraTabela);
+                e.addEventListener('click', mostrarTabela);
             });
             $('#mdlTabFrete').modal('show');
             break;
     }
 };
 
-function alteraTabela(e){
-    idTabela=e.currentTarget.id
-    let postData = '&numTabela='+idTabela;
-    let dados = { 'url': '/comercial/readTabela/', 'id':postData}
+function mostrarTabela(e) {
+    idTabela = e.currentTarget.id
+    let postData = '&numTabela=' + idTabela;
+    let dados = { 'url': '/comercial/readTabela/', 'id': postData }
     conectaBdGeral(dados, populaTabela)
+}
 
+function populaRelatTabelas() {
+    dados = { 'url': '/comercial/getTodasTabelas/' }
+    conectaBdGeral(dados, relatorioTabela);
+    limpaForm()
+}
+
+function excluirTabelas(idTabela) {
+    let id = idTabela
+    if (confirm("Deseja realmente apagar a tabela selecionada ?") == true) {
+        let postData = '&idAdd=' + id;
+        let dados = { 'url': '/comercial/deleteTabela/', 'id': postData }
+        conectaBdGeral(dados, exclui)
+        alert('Tabela apagada com sucesso !!')
+        populaRelatTabelas()
+    }
+}
+
+function excTabela(e) {
+    id = e.currentTarget.id;
+    excluirTabelas(id)
+}
+
+function atualizarTabela(response) {
+    switch (response.status) {
+        case 200:
+            alert('Tabela alterada com sucesso !')
+            break;
+        case 210:
+            break;
+        case 400:
+            alert('Erro !' + response.camposObrigatorios)
+            break;
+        default:
+            // code block
+    }
 }
 
 
-function excTabela(e){
-    id=e.currentTarget.id;
-    let textoMsg = "Deseja realmente apagar a tabela selecionada ?"
-    if (confirm(textoMsg)==true){
-        let postData = '&idAdd='+id;
-        let dados = { 'url': '/comercial/deleteTabela/', 'id':postData}
-        conectaBdGeral(dados, exclui)
-        alert('Tabela apagada com sucesso !' )
-        dados={'url':'/comercial/getTodasTabelas/'}
-        conectaBd(dados,relatorioTabela);
+
+function incluiFaixa() {
+    let dados = { 'url': 'faixa/createFaixa/' }
+    conectaBdGeral(dados, tabelaFaixas)
+}
+
+function tabelaFaixas(response) {
+    alert('ok')
+    const data = response.tabela;
+    let template
+    for (let i = 0; i < data.length; i++) {
+        template = '<tr class="tr" ">' +
+            '<tdid="' + data[i].id + '>' + data[i].faixaInicial + '</td>' +
+            '<td>' + data[i].faixaFinal + '</td>' +
+            '<td>' + data[i].vlrFaixa + '</td>' +
+            '<td><button type="button" class="btn btn-dark ' +
+            'btn-rounded btn-icon" id="exclui"><i class="ti-trash"></i></button></td>' +
+            '<td><button type="button" class="btn btn-dark ' +
+            'btn-rounded btn-icon" id="altera"><i class="ti-new-window"></i></button></td>' +
+            '</tr>'
+        $('#tabelaFaixas tbody').append(template)
     }
 
-}
-
-
-
-//enviar um dicionario com a url e caso necessario o cnpj para consulta
-function conectaBdGeral(dados, callback) {
-    let url = dados.url
-    let postData = $('form').serialize();
-    postData += dados.id;
-    $.ajax({
-        url: url,
-        type: 'POST',
-        data: postData,
-        success: function(response) {
-            callback(response)
-        },
-        error: function(xhr) {
-            console.log('Erro');
-        }
-    });
-}
-
-
-
+};
