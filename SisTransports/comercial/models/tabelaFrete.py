@@ -5,7 +5,6 @@ from operacional.models.rota import Rota
 from Classes.parceiros import Parceiros as ClsParceiros
 
 class TabelaFrete(models.Model):
-
     tipoTabela=models.IntegerField(default=1)
     parceiro=models.ManyToManyField(Parceiros,blank=True)
     rota=models.ManyToManyField(Rota,blank=True)

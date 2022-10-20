@@ -69,6 +69,7 @@ class TabelaFrete:
     def readTabela(self,idTabela):
         if TblFrete.objects.filter(id=idTabela).exists():
             self.tabela = TblFrete.objects.filter(id=idTabela).get()
+            return self.tabela
         else:
             return False
         

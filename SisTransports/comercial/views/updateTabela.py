@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from django.contrib.auth.decorators import login_required
 from django.http import JsonResponse
-from Classes.tabelaFrete import TabelaFrete
+from comercial.classes.tabelaFrete import TabelaFrete
 from Classes.utils import checaCampos,toFloat,checkBox
 from Classes.parceiros import Parceiros
 

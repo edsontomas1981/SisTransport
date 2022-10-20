@@ -19,19 +19,19 @@ function conectaBdGeral(dados, callback) {
 }
 // Eventos
 $('#comlCnpj').on('blur', function(e) {
-    let postData = '&cnpj_cpf='+$('#comlCnpj').val();
-    let dados = { 'url': '/busca_parceiro/', 'id':postData}
+    let postData = '&cnpj_cpf=' + $('#comlCnpj').val();
+    let dados = { 'url': '/busca_parceiro/', 'id': postData }
     conectaBdGeral(dados, populaRazao)
 });
 
 $('#buscarTabelaFrete').on('keyup', function(e) {
     let filtro = $('#buscarTabelaFrete').val()
     let postData
-    if (filtro.length > 2){
+    if (filtro.length > 2) {
         postData += '&filtro=' + filtro;
-        let dados = { 'url': '/comercial/filtraTabelas/', 'id':postData}
+        let dados = { 'url': '/comercial/filtraTabelas/', 'id': postData }
         conectaBdGeral(dados, relatorioTabela)
-    }else {
+    } else {
         populaRelatTabelas()
     }
 });
@@ -42,38 +42,43 @@ $('#btnNovaTabela').on('click', function(e) {
     e.preventDefault();
 })
 
-$( window ).load(function() {
+$(window).load(function() {
     populaRelatTabelas()
 });
 
 $(document).ready(function() {
-    $('#relatorioTabela').click(function(e){
+    $('#relatorioTabela').click(function(e) {
         var botao = document.querySelectorAll('button')
         botao.forEach((e) => {
-            e.addEventListener('click',linhaTabela);
-            });
+            e.addEventListener('click', linhaTabela);
         });
+    });
 })
 
 $('#btnExcluiTabela').on('click', function(e) {
-    if ($('#numTabela').val()){excluirTabelas($('#numTabela').val())}
-    else{alert('Não existe tabela para excluir.')}
+    if ($('#numTabela').val()) { excluirTabelas($('#numTabela').val()) } else { alert('Não existe tabela para excluir.') }
 })
 
 $('#btnIncluiTabela').on('click', function(e) {
     //se houver tabela com o id atualiza ao inves de criar nova
-    if ($('#numTabela').val()){
-        let postData = '&numTabela='+$('#numTabela').val();
-        let dados = { 'url': '/comercial/updateTabela/', 'id':postData}
+    if ($('#numTabela').val()) {
+        let postData = '&numTabela=' + $('#numTabela').val();
+        let dados = { 'url': '/comercial/updateTabela/', 'id': postData }
         conectaBdGeral(dados, atualizarTabela)
-    }else{    
+    } else {
         dados = { url: '/comercial/createTabela/' }
         conectaBdGeral(dados, incluiTabela)
     }
     e.preventDefault();
 })
 
+$('#btnFaixa').on('click', function(e) {
+    incluiFaixa()
+    e.preventDefault();
+})
+
 $('.btn-close').on('click', function(e) {
+    $('#buscarTabelaFrete').val('');
     populaRelatTabelas()
     limpaForm()
 })
@@ -101,7 +106,7 @@ function limpaForm() {
     $('#freteMinimo').val('');
     $('#tipoFrete').val('');
     $('#tipoCobranPedagio').val('');
-    limpaTabela();
+    limpaTabela('#cnpjsRelacionados td');
 }
 
 function populaTabela(response) {
@@ -153,12 +158,8 @@ function incluiTabela(response) {
     }
 }
 
-function limpaTabela() {
-    $('#cnpjsRelacionados td').remove();
-}
-
-function limpaRelatorioTabela() {
-    $('#relatorioTabela td').remove();
+function limpaTabela(tabela) {
+    $(tabela).remove();
 }
 
 function parceirosVinculados(response) {
@@ -171,20 +172,20 @@ function parceirosVinculados(response) {
             '<td>' + '<button type="button" id="alteraContato"' +
             'class="btn btn-success btn-rounded btn-icon">' +
             '<i class="ti-pencil-alt2"></i></button>' + '</td>' +
-            '<td>' + '<button type="button" id="excluiContato"'+
+            '<td>' + '<button type="button" id="excluiContato"' +
             'class="btn btn-danger btn-rounded btn-icon">' +
             '<i class="ti-eraser "></i>' + '</button>' + '</td>' +
             '</tr>'
         $('#cnpjsRelacionados tbody').append(template)
-    }
+        }
 };
 
 function relatorioTabela(response) {
-    limpaRelatorioTabela()
+    limpaTabela('#relatorioTabela td')
     const data = response.tabela;
     let template
     for (let i = 0; i < data.length; i++) {
-        template ='<tr class="tr" id="'+ data[i].id +'">' +
+        template = '<tr class="tr" id="' + data[i].id + '">' +
             '<td>' + data[i].id + '</td>' +
             '<td>' + data[i].descricao + '</td>' +
             '<td>' + data[i].freteMinimo + '</td>' +
@@ -194,61 +195,61 @@ function relatorioTabela(response) {
             '<td>' + data[i].pedagio + '</td>' +
             '<td>' + data[i].gris + '</td>' +
             '<td>' + data[i].outros + '</td>' +
-            '<td><button type="button" class="btn btn-dark '+
-            'btn-rounded btn-icon" id="exclui"><i class="ti-trash"></i></button></td>'+
-            '<td><button type="button" class="btn btn-dark '+
-            'btn-rounded btn-icon" id="altera"><i class="ti-new-window"></i></button></td>'+
-          '</tr>'
+            '<td><button type="button" class="btn btn-dark ' +
+            'btn-rounded btn-icon" id="exclui"><i class="ti-trash"></i></button></td>' +
+            '<td><button type="button" class="btn btn-dark ' +
+            'btn-rounded btn-icon" id="altera"><i class="ti-new-window"></i></button></td>' +
+            '</tr>'
 
         $('#relatorioTabela tbody').append(template)
     }
 };
 
-function linhaTabela(e){
-    botao=e.currentTarget.id;
+function linhaTabela(e) {
+    botao = e.currentTarget.id;
     switch (botao) {
         case 'exclui':
             var tr = document.querySelectorAll('tr');
             tr.forEach((e) => {
-                e.addEventListener('click',excTabela);
-                });
+                e.addEventListener('click', excTabela);
+            });
             break;
         case 'altera':
             var tr = document.querySelectorAll('tr');
             tr.forEach((e) => {
-                e.addEventListener('click',mostrarTabela);
+                e.addEventListener('click', mostrarTabela);
             });
             $('#mdlTabFrete').modal('show');
             break;
     }
 };
 
-function mostrarTabela(e){
-    idTabela=e.currentTarget.id
-    let postData = '&numTabela='+idTabela;
-    let dados = { 'url': '/comercial/readTabela/', 'id':postData}
+function mostrarTabela(e) {
+    idTabela = e.currentTarget.id
+    let postData = '&numTabela=' + idTabela;
+    let dados = { 'url': '/comercial/readTabela/', 'id': postData }
     conectaBdGeral(dados, populaTabela)
 }
 
-function populaRelatTabelas(){
-    dados={'url':'/comercial/getTodasTabelas/'}
-    conectaBdGeral(dados,relatorioTabela);
+function populaRelatTabelas() {
+    dados = { 'url': '/comercial/getTodasTabelas/' }
+    conectaBdGeral(dados, relatorioTabela);
     limpaForm()
 }
 
-function excluirTabelas(idTabela){
+function excluirTabelas(idTabela) {
     let id = idTabela
-    if (confirm("Deseja realmente apagar a tabela selecionada ?")==true){
-        let postData = '&idAdd='+id;
-        let dados = { 'url': '/comercial/deleteTabela/', 'id':postData}
+    if (confirm("Deseja realmente apagar a tabela selecionada ?") == true) {
+        let postData = '&idAdd=' + id;
+        let dados = { 'url': '/comercial/deleteTabela/', 'id': postData }
         conectaBdGeral(dados, exclui)
-        alert('Tabela apagada com sucesso !!' )
+        alert('Tabela apagada com sucesso !!')
         populaRelatTabelas()
     }
 }
 
-function excTabela(e){
-    id=e.currentTarget.id;
+function excTabela(e) {
+    id = e.currentTarget.id;
     excluirTabelas(id)
 }
 
@@ -266,3 +267,36 @@ function atualizarTabela(response) {
             // code block
     }
 }
+
+function populaRelatTabelas(){
+    dados={'url':'/comercial/getTodasTabelas/'}
+    conectaBdGeral(dados,relatorioTabela);
+    limpaForm()
+}
+
+
+function incluiFaixa() {
+    let postData = '&numTabela=' + $('#numTabela').val();
+    let dados = { 'url': 'faixa/createFaixa/','id': postData }
+    conectaBdGeral(dados, tabelaFaixas)
+}
+
+function tabelaFaixas(response) {
+    const data = response.faixa;
+    console.table(data) 
+    let template
+
+    for (let i = 0; i < data.length; i++) {
+        template = '<tr class="tr" ">' +
+            '<tdid="' + data[i].id + '>' + data[i].faixaInicial + '</td>' +
+            '<td>' + data[i].faixaFinal + '</td>' +
+            '<td>' + data[i].vlrFaixa + '</td>' +
+            '<td><button type="button" class="btn btn-dark ' +
+            'btn-rounded btn-icon" id="exclui"><i class="ti-trash"></i></button></td>' +
+            '<td><button type="button" class="btn btn-dark ' +
+            'btn-rounded btn-icon" id="altera"><i class="ti-new-window"></i></button></td>' +
+            '</tr>'
+        $('#tabelaFaixas tbody').append(template)
+    }
+
+};
