@@ -11,10 +11,9 @@ class TabelaFaixa:
     def createFaixa(self,tblVinculada,inicial,final,vlrFaixa):
         self.faixa=Faixa() 
         self.faixa.tblVinculada=tblVinculada
-        if self.verificaFaixa(inicial,tblVinculada.id) or self.verificaFaixa(inicial,tblVinculada.id):
+        if self.verificaFaixa(inicial,tblVinculada.id) or self.verificaFaixa(final,tblVinculada.id):
             return 400 #Faixa ja coberta 
         else:
-            
             self.faixa.faixaInicial= inicial
             self.faixa.faixaFinal=final
             self.faixa.vlrFaixa=toFloat(vlrFaixa)
@@ -26,7 +25,9 @@ class TabelaFaixa:
     # seleciona todas as faixas referentes a tabela 
     def readFaixas(self,tblVinculada):
         if Faixa.objects.filter(tblVinculada=tblVinculada).exists():
-           faixas=Faixa.objects.filter(tblVinculada=tblVinculada)
+           faixas=Faixa.objects.filter(tblVinculada=tblVinculada).order_by('faixaInicial')
+           for i in faixas:
+               print(i.toDict())
            return faixas 
     
     def readFaixa(self,idFaixa):
@@ -41,6 +42,7 @@ class TabelaFaixa:
                 self.faixa.faixaFinal=final
                 self.faixa.vlrFaixa=toFloat(vlrFaixa)
                 self.faixa.save()
+                return 200
             else:
                 return 400 #Faixa ja coberta
         else:
@@ -54,17 +56,10 @@ class TabelaFaixa:
     
     def verificaFaixa(self,idFaixa,idTabela):
         faixas=self.readFaixas(idTabela)
-        for i in faixas:
-            print(i.toDict()) 
-        for i in faixas:
-            print('*********************************')
-            print (idFaixa,'esta entre',i.faixaInicial,i.faixaFinal )
-            if idFaixa in range (i.faixaInicial,i.faixaFinal):
-                return True
-            else:
-                return False
-            
-    
+        if faixas:
+            for i in faixas:
+                if int(idFaixa) in range (i.faixaInicial,i.faixaFinal+1) :
+                    return True
     def toDict(self):
         return self.faixa.toDict()
     

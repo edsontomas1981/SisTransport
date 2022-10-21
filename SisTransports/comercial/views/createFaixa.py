@@ -11,7 +11,6 @@ def createFaixa (request):
     elif request.method == "POST" :
         tabela=ClasseFrete()
         tabela.readTabela(request.POST.get('numTabela'))
-        # tabela=TabelaFrete.objects.filter(id=request.POST.get('numTabela')).get()
         faixa=TabelaFaixa()
         faixa.createFaixa(tabela.tabela,request.POST.get('faixaInicial'),request.POST.get('faixaFinal'),
                           request.POST.get('faixaValor'))
