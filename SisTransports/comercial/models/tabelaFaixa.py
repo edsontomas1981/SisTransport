@@ -13,7 +13,6 @@ class TabelaFaixa(models.Model):
     
     def toDict(self):
         tblFrete= {'id':self.id,
-                'tblVinculada':self.tblVinculada,
                 'faixaInicial':self.faixaInicial,
                 'faixaFinal':self.faixaFinal,
                 'vlrFaixa':self.vlrFaixa

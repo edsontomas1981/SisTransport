@@ -11,9 +11,6 @@
            placeholder="Buscar" name="buscarTabelaFrete">
            <label for="buscarTabelaFrete" class="text-primary">Buscar</label>
           <div class="input-group-append">
-              <button class="btn btn-secondary"  id="btnTabela" type="button">
-                  <i class="ti-search"></i>Buscar
-              </button> 
               <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#mdlTabFrete">
                 <i class="ti-save"></i>
                 Criar Tabela        
@@ -49,4 +46,8 @@
 
 {%block 'js'%}
 <script src="{% static 'js/meusJS/tabela.js' %}"></script>
+<script src="{% static 'js/meusJS/faixas.js' %}"></script>
+<script src="{% static 'js/meusJS/rotasReact.js' %}"></script>
+
+
 {% endblock 'js' %}

@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from django.contrib.auth.decorators import login_required
 from django.http import JsonResponse
-from Classes.tabelaFrete import TabelaFrete 
+from comercial.classes.tabelaFrete import TabelaFrete 
 
 
 @login_required(login_url='/auth/entrar/')
@@ -10,7 +10,5 @@ def deleteTabela (request):
         return render(request, 'preDtc.html')
     elif request.method == "POST" :
         tabela=TabelaFrete()
-        print('**************************************************')
-        print(request.POST.get('idAdd'))
         tabela.deleteTabela(request.POST.get('idAdd'))
         return JsonResponse({'status': 200}) 

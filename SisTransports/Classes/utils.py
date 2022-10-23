@@ -27,7 +27,6 @@ def verificaCamposObrigatorios(request):
 def toFloat(stringToFloat):
     
     if ','in stringToFloat:
-
         stringToFloat=stringToFloat.replace(".","")
         stringToFloat=stringToFloat.replace(",",".")
         stringToFloat=float(stringToFloat)

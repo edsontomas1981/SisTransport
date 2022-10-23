@@ -1,6 +1,6 @@
 //recebe um dicionario com as chaves url e id contendo os dados a serem consultados 
-//postData = '&cnpj_cpf='0000000000191;
-// ex {url:/rotaAcessada/,id:postData} 
+//Ex: postData = '&cnpj_cpf='0000000000191;
+//Ex {url:/rotaAcessada/,id:postData} 
 function conectaBdGeral(dados, callback) {
     let url = dados.url
     let postData = $('form').serialize();
@@ -46,13 +46,17 @@ $(window).load(function() {
     populaRelatTabelas()
 });
 
-$(document).ready(function() {
-    $('#relatorioTabela').click(function(e) {
-        var botao = document.querySelectorAll('button')
-        botao.forEach((e) => {
-            e.addEventListener('click', linhaTabela);
-        });
+$('#relatorioTabela').click(function(e) {
+    var botao = document.querySelectorAll('button')
+    botao.forEach((e) => {
+        e.addEventListener('click', linhaTabela);
     });
+});
+
+
+
+$(document).ready(function() {
+
 })
 
 $('#btnExcluiTabela').on('click', function(e) {
@@ -73,7 +77,12 @@ $('#btnIncluiTabela').on('click', function(e) {
 })
 
 $('#btnFaixa').on('click', function(e) {
-    incluiFaixa()
+    if (parseInt($('#faixaInicial').val()) < parseInt($('#faixaFinal').val())) {
+        incluiFaixa()
+    } else {
+        alert('O campo faixa inicial deve ser maior do que o campo faixa final.')
+    }
+
     e.preventDefault();
 })
 
@@ -111,7 +120,9 @@ function limpaForm() {
 
 function populaTabela(response) {
     parceirosVinculados(response)
+
     $('#numTabela').val(response.tabela.id)
+    populaFaixas($('#numTabela').val())
     $('#descTabela').val(response.tabela.descricao)
         //se sim tabela esta bloqueada
     if (response.tabela.bloqueada == 1) {
@@ -139,6 +150,14 @@ function populaTabela(response) {
     $('#freteMinimo').val(response.tabela.freteMinimo);
     $('#tipoFrete').val(response.tabela.tipoCalculo);
     $('#tipoCobranPedagio').val(response.tabela.tipoPedagio);
+
+}
+
+function populaFaixas(idTabela) {
+    let postData = '&numTabela=' + idTabela;
+    let dados = { 'url': 'faixa/readFaixas/', 'id': postData }
+    conectaBdGeral(dados, tabelaFaixas)
+
 }
 
 function incluiTabela(response) {
@@ -207,14 +226,14 @@ function relatorioTabela(response) {
 
 function linhaTabela(e) {
     botao = e.currentTarget.id;
-    switch (botao) {
-        case 'exclui':
+    switch (botao[0]) {
+        case 'e':
             var tr = document.querySelectorAll('tr');
             tr.forEach((e) => {
                 e.addEventListener('click', excTabela);
             });
             break;
-        case 'altera':
+        case 'a':
             var tr = document.querySelectorAll('tr');
             tr.forEach((e) => {
                 e.addEventListener('click', mostrarTabela);
@@ -268,28 +287,14 @@ function atualizarTabela(response) {
     }
 }
 
-
-
-function incluiFaixa() {
-    let dados = { 'url': 'faixa/createFaixa/' }
-    conectaBdGeral(dados, tabelaFaixas)
+function populaRelatTabelas() {
+    dados = { 'url': '/comercial/getTodasTabelas/' }
+    conectaBdGeral(dados, relatorioTabela);
+    limpaForm()
 }
 
-function tabelaFaixas(response) {
-    alert('ok')
-    const data = response.tabela;
-    let template
-    for (let i = 0; i < data.length; i++) {
-        template = '<tr class="tr" ">' +
-            '<tdid="' + data[i].id + '>' + data[i].faixaInicial + '</td>' +
-            '<td>' + data[i].faixaFinal + '</td>' +
-            '<td>' + data[i].vlrFaixa + '</td>' +
-            '<td><button type="button" class="btn btn-dark ' +
-            'btn-rounded btn-icon" id="exclui"><i class="ti-trash"></i></button></td>' +
-            '<td><button type="button" class="btn btn-dark ' +
-            'btn-rounded btn-icon" id="altera"><i class="ti-new-window"></i></button></td>' +
-            '</tr>'
-        $('#tabelaFaixas tbody').append(template)
-    }
-
-};
+function incluiFaixa() {
+    let postData = '&numTabela=' + $('#numTabela').val();
+    let dados = { 'url': 'faixa/createFaixa/', 'id': postData }
+    conectaBdGeral(dados, faixa)
+}

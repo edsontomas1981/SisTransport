@@ -13,12 +13,9 @@
           <div class="modal-body">
             <div class="row">
                 <div class="col-sm-12 mb-1 pr-1 pl-0 input-group">
-                    <input type="text" class="col-3 form-control form-control-sm" id="numTabela"
-                     placeholder="Nº Tabela" name="numTabela" aria-label="Search" aria-describedby="basic-addon2" readonly disabled align="right">
+                    <input type="text" class="col-3 form-control form-control-sm" id="numTabela" name="numTabela" 
+                      placeholder="Nº Tabela" aria-label="Search" aria-describedby="basic-addon2" readonly disabled>
                     <div class="input-group-append">
-                        <button class="btn btn-secondary form-control-sm"  id="btnBuscaTabela" type="button">
-                            <i class="ti-search"></i>   
-                        </button> 
                         <button class="btn btn-primary form-control-sm"  id="btnNovaTabela" type="button">
                             <i class="ti-write"></i>   
                         </button>
@@ -58,14 +55,17 @@
                 <div class="form-floating col-3 pl-0 pr-1 mt-1">
                     <input type="check" name="descTabela" id="descTabela" class="form-control form-control-sm" placeholder="Descrição">
                     <label for="descTabela"class="text-primary">Descrição da tabela:</label>
-                </div>                
-
-                <div class="form-floating col-3 pl-0 pr-0 mt-1">
-                    <select type="text" name="rota" id="rota" class="form-control-sm form-select">
-                        <option value="1">SAO X SAO</option>
-                    </select>
-                    <label for="rota">Rota:</label>
+                </div>  
+                <!-- teste react  -->
+                <div id="rotaReact" >
+                    <Welcome name="Sara" /><!--                     <div class="form-floating col-3 pl-0 pr-0 mt-1">
+                        <select type="text" name="rota" id="rota" class="form-control-sm form-select">
+                            <option value="1">SAO X SAO</option>
+                        </select>
+                        <label for="rota">Rota:</label>
+                    </div> -->
                 </div>
+
                 <div class="form-floating col-3 pl-1 pr-1 mt-1">
                     <input type="text" name="vlrFrete" id="vlrFrete" class="form-control form-control-sm" placeholder="R$" onKeyPress="return(MascaraMoeda(this,'.',',',event))">
                     <label for="vlrFrete" class="text-primary">Valor frete</label>
