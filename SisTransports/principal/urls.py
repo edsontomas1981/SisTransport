@@ -25,6 +25,7 @@ urlpatterns = [
     path('rotas/', viewsOperacional.rotas,name='rotas'),
     path('rotas/createRota/', viewsOperacional.createRota,name='createRota'),
     path('rotas/readRota/', viewsOperacional.readRota,name='readRota'),
+    path('rotas/readRotas/', viewsOperacional.readRotas,name='readRotas'),
     path('rotas/updateRota/', viewsOperacional.updateRota,name='updateRota'),
     path('rotas/deleteRota/', viewsOperacional.deleteRota,name='deleteRota'),
     path('endereco/readMunicipio/', viewsEnderecos.readMunicipio,name='readMunicipio'),          

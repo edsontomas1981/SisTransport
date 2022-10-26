@@ -13,6 +13,7 @@ urlpatterns = [
     path('filtraTabelas/',viewsComercial.filtraTabelas,name='filtraTabelas'),  
     path('faixa/createFaixa/',viewsComercial.createFaixa,name='createFaixa'),
     path('faixa/readFaixa/',viewsComercial.readFaixa,name='readFaixa'),
+    path('faixa/readFaixas/',viewsComercial.readFaixas,name='readFaixas'),
     path('faixa/updateFaixa/',viewsComercial.updateFaixa,name='updateFaixa'),
     path('faixa/deleteFaixa/',viewsComercial.deleteFaixa,name='deleteFaixa'),
 

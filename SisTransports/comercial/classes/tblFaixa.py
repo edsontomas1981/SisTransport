@@ -7,31 +7,37 @@ from Classes.utils import toFloat
 class TabelaFaixa:
     def __init__(self):
         self.faixa=None
+    
+    def __str__ (self):
+        return self.faixa.toDict()
 
     def createFaixa(self,tblVinculada,inicial,final,vlrFaixa):
+        faixaInicial = {'valor':inicial,'chave':'Inicial'}
+        faixaFinal = {'valor':final,'chave':'Final'}
         self.faixa=Faixa() 
         self.faixa.tblVinculada=tblVinculada
-        if self.verificaFaixa(inicial,tblVinculada.id) or self.verificaFaixa(final,tblVinculada.id):
-            return 400 #Faixa ja coberta 
+        checaInicial,campo,faixa=self.verificaFaixa(faixaInicial,tblVinculada.id)
+        if not checaInicial:
+            checaFinal,campo,faixa=self.verificaFaixa(faixaFinal,tblVinculada.id)
+        if checaInicial or checaFinal:
+            return 400,campo,faixa #Faixa ja coberta 
         else:
             self.faixa.faixaInicial= inicial
             self.faixa.faixaFinal=final
             self.faixa.vlrFaixa=toFloat(vlrFaixa)
             self.faixa.save()
-            return 200    
-            
+            return 200,None,None
 
-        
     # seleciona todas as faixas referentes a tabela 
     def readFaixas(self,tblVinculada):
         if Faixa.objects.filter(tblVinculada=tblVinculada).exists():
            faixas=Faixa.objects.filter(tblVinculada=tblVinculada).order_by('faixaInicial')
-           for i in faixas:
-               print(i.toDict())
            return faixas 
     
     def readFaixa(self,idFaixa):
-        pass    
+        if Faixa.objects.filter(id=idFaixa).exists():
+           self.faixa=Faixa.objects.filter(id=idFaixa).get()
+           return self.faixa 
 
     def updateFaixa(self,idFaixa,tblVinvulada,inicial,final,vlrFaixa):
         if Faixa.objects.filter(id=idFaixa).exists():
@@ -55,11 +61,14 @@ class TabelaFaixa:
         pass
     
     def verificaFaixa(self,idFaixa,idTabela):
+        valorFaixa=idFaixa['valor']
         faixas=self.readFaixas(idTabela)
         if faixas:
             for i in faixas:
-                if int(idFaixa) in range (i.faixaInicial,i.faixaFinal+1) :
-                    return True
+                if int(valorFaixa) in range (i.faixaInicial,i.faixaFinal+1) :
+                    print(idFaixa)
+                    return True,idFaixa['chave'],i
+            return False,None,None
     def toDict(self):
         return self.faixa.toDict()
     

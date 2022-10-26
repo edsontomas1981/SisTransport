@@ -1,23 +1,21 @@
-
 $('#inserirRota').on('click', function(e) {
-    dados={'url':'/rotas/createRota/'}
-    bdRota(dados,populaRota)
+    dados = { 'url': '/rotas/createRota/' }
+    bdRota(dados, populaRota)
     e.preventDefault();
 })
 
-function populaRota(response){
-    alert(response.rota.id,response.rota.nome)
+function populaRota(response) {
+    alert(response.rota.id, response.rota.nome)
     $('#idRota').val(response.rota.id)
     $('#idNomeRota').val(response.rota.nome)
     limpa()
 }
 
-function limpa(){
+function limpa() {
     $('.limpar').val('')
-
 }
 
-function bdRota(dados,callback) {
+function bdRota(dados, callback) {
     let url = dados.url
     let postData = $('form').serialize();
     $.ajax({

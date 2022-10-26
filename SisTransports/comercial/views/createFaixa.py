@@ -10,8 +10,18 @@ def createFaixa (request):
         return render(request, 'preDtc.html')   
     elif request.method == "POST" :
         tabela=ClasseFrete()
+        # carrega a tabela que a faixa em questão estará ligada 
         tabela.readTabela(request.POST.get('numTabela'))
+        # instancia faixa
         faixa=TabelaFaixa()
-        faixa.createFaixa(tabela.tabela,request.POST.get('faixaInicial'),request.POST.get('faixaFinal'),
+        #cria faixa
+        resposta,campo,intervalo=faixa.createFaixa(tabela.tabela,request.POST.get('faixaInicial'),request.POST.get('faixaFinal'),
                           request.POST.get('faixaValor'))
-        return JsonResponse({'status': 200,'faixa':faixa.faixa.toDict()})    
+        #   cria um dict com todas as faixas da tabela
+        if resposta == 200: # inclusão da faixa efetuado
+            faixas=[x.toDict() for x in faixa.readFaixas(faixa.faixa.tblVinculada) ]
+            return JsonResponse({'status': 200,'faixa':faixas})    
+        elif resposta == 400: # algum doa argumentos já compreendidos na faixa 
+            return JsonResponse({'status': 400,'campo':campo,'intervalo':intervalo.toDict()})    
+        else:
+            return JsonResponse({'status': 430})#Erro nao identificado    

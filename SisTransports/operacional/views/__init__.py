@@ -6,6 +6,7 @@ from operacional.views.saveColeta import saveColeta
 from operacional.views.deletaColeta import deletaColeta
 from operacional.views.createRota import createRota
 from operacional.views.readRota import readRota
+from operacional.views.readRotas import readRotas
 from operacional.views.updateRota import updateRota
 from operacional.views.deleteRota import deleteRota
 from operacional.views.rotas import rotas
