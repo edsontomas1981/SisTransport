@@ -69,6 +69,7 @@ class TabelaFaixa:
                     print(idFaixa)
                     return True,idFaixa['chave'],i
             return False,None,None
+    
     def toDict(self):
         return self.faixa.toDict()
     

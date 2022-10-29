@@ -298,3 +298,10 @@ function incluiFaixa() {
     let dados = { 'url': 'faixa/createFaixa/', 'id': postData }
     conectaBdGeral(dados, faixa)
 }
+
+('#btnRelacionaTabela').on('click', function(e){
+    let postData = '&cnpj_cpf=' + $('#comlCnpj').val();
+    let dados = { 'url': '/comercial/anexaParceiro/', 'id': postData }
+    conectaBdGeral(dados, parceirosVinculados())
+})
+    
