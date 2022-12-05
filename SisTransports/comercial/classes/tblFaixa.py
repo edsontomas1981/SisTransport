@@ -11,6 +11,15 @@ class TabelaFaixa:
     def __str__ (self):
         return self.faixa.toDict()
 
+    def verificaFaixa(self,idFaixa,idTabela):
+        valorFaixa=idFaixa['valor']
+        faixas=self.readFaixas(idTabela)
+        if faixas:
+            for i in faixas:
+                if int(valorFaixa) in range (i.faixaInicial,i.faixaFinal+1) :
+                    return True,idFaixa['chave'],i
+        return False,None,None
+
     def createFaixa(self,tblVinculada,inicial,final,vlrFaixa):
         faixaInicial = {'valor':inicial,'chave':'Inicial'}
         faixaFinal = {'valor':final,'chave':'Final'}
@@ -29,15 +38,18 @@ class TabelaFaixa:
             return 200,None,None
 
     # seleciona todas as faixas referentes a tabela 
-    def readFaixas(self,tblVinculada):
-        if Faixa.objects.filter(tblVinculada=tblVinculada).exists():
-           faixas=Faixa.objects.filter(tblVinculada=tblVinculada).order_by('faixaInicial')
+    def readFaixas(self,idTabela):
+        if Faixa.objects.filter(tblVinculada=idTabela).exists():
+           faixas=Faixa.objects.filter(tblVinculada=idTabela).order_by('faixaInicial')
            return faixas 
-    
+
+        
     def readFaixa(self,idFaixa):
         if Faixa.objects.filter(id=idFaixa).exists():
            self.faixa=Faixa.objects.filter(id=idFaixa).get()
            return self.faixa 
+
+
 
     def updateFaixa(self,idFaixa,tblVinvulada,inicial,final,vlrFaixa):
         if Faixa.objects.filter(id=idFaixa).exists():
@@ -59,16 +71,6 @@ class TabelaFaixa:
     
     def deleteFaixa(self,idFaixa):
         pass
-    
-    def verificaFaixa(self,idFaixa,idTabela):
-        valorFaixa=idFaixa['valor']
-        faixas=self.readFaixas(idTabela)
-        if faixas:
-            for i in faixas:
-                if int(valorFaixa) in range (i.faixaInicial,i.faixaFinal+1) :
-                    print(idFaixa)
-                    return True,idFaixa['chave'],i
-            return False,None,None
     
     def toDict(self):
         return self.faixa.toDict()

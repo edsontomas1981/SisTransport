@@ -4,6 +4,10 @@ from Classes.parceiros import Parceiros
 class TabelaFrete:
     def __init__(self):
         self.tabela=None
+    # def __repr__(self):
+    #     self.tabela.descricao
+
+
 
     def createTabela(self,parceiro=None, rota=None, descricao=None,frete=None,
                       adValor=None, gris=None, despacho=None, outros=None, pedagio=None, 
@@ -79,6 +83,9 @@ class TabelaFrete:
         
     def cnpjVinculado(self):
         cnpjs=[]
+        print('*********************************')
+        print (self)
+        print('*********************************')
         for i in self.tabela.parceiro.all():
             parceiro=Parceiros.getParceiro(i.cnpj_cpf)
             cnpjs.append(parceiro.to_dict())

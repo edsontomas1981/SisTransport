@@ -53,12 +53,6 @@ $('#relatorioTabela').click(function(e) {
     });
 });
 
-
-
-$(document).ready(function() {
-
-})
-
 $('#btnExcluiTabela').on('click', function(e) {
     if ($('#numTabela').val()) { excluirTabelas($('#numTabela').val()) } else { alert('Não existe tabela para excluir.') }
 })
@@ -91,6 +85,13 @@ $('.btn-close').on('click', function(e) {
     populaRelatTabelas()
     limpaForm()
 })
+
+$('#btnRelacionaTabela').on('click', function(e){
+    let postData = '&cnpj_cpf=' + $('#comlCnpj').val();
+    let dados = { 'url': '/comercial/anexaParceiro/', 'id': postData }
+    conectaBdGeral(dados, parceirosVinculados())
+})
+    
 
 //funcoes 
 
@@ -299,9 +300,3 @@ function incluiFaixa() {
     conectaBdGeral(dados, faixa)
 }
 
-('#btnRelacionaTabela').on('click', function(e){
-    let postData = '&cnpj_cpf=' + $('#comlCnpj').val();
-    let dados = { 'url': '/comercial/anexaParceiro/', 'id': postData }
-    conectaBdGeral(dados, parceirosVinculados())
-})
-    
