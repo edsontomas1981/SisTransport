@@ -18,8 +18,6 @@ def createFaixa (request):
         resposta,campo,intervalo=faixa.createFaixa(tabela.tabela,request.POST.get('faixaInicial'),request.POST.get('faixaFinal'),
                           request.POST.get('faixaValor'))
 
-        # print('******************************')
-        # print(tabela.tabela.id)
         #   cria um dict com todas as faixas da tabela
         if resposta == 200: # inclusão da faixa efetuado
             faixas=[x.toDict() for x in faixa.readFaixas(faixa.faixa.tblVinculada) ]

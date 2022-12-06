@@ -34,6 +34,13 @@ class TabelaFrete(models.Model):
     
     def toDict(self):
         parceiros=[]
+        parceiro=TabelaFrete.objects.filter(pk=55)
+        for i in parceiro:
+            print("**********************************************")
+            print (i)            
+            parceiros.append(i)
+
+
         tblFrete= {'id':self.id,
                 'freteMinimo':self.freteMinimo,
                 'descricao':self.descricao,
@@ -50,6 +57,7 @@ class TabelaFrete(models.Model):
                 'cubagem':self.cubagem,
                 'fatorCubagem':self.fatorCubagem,
                 'tipoTabela':self.tipoTabela
+
                 }
         return tblFrete
     

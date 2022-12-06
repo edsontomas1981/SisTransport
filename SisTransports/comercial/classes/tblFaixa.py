@@ -64,7 +64,7 @@ class TabelaFaixa:
             else:
                 return 400 #Faixa ja coberta
         else:
-            return 410 #Tabela nao
+            return 410 #Tabela nao coberta
         
     def deleteFaixa(self,idFaixa):
         pass        
