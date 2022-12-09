@@ -1,5 +1,6 @@
 from comercial.models.tabelaFrete import TabelaFrete as TblFrete
 from Classes.parceiros import Parceiros 
+from Classes.utils import priComDest
 
 class TabelaFrete:
     def __init__(self):
@@ -26,12 +27,9 @@ class TabelaFrete:
         self.tabela.fatorCubagem = fatorCubagem
         self.tabela.tipoTabela= tipoTabela
         self.tabela.freteMinimo = freteMinimo
+        self.tabela.parceiro.add(parceiro)        
         self.tabela.save()
         # Avaliar a necessidade de salvar um proprietário da tabela juntamente com a criação da tabela.
-        if parceiro:
-            self.tabela.parceiro.add(parceiro)
-            self.tabela.save()
-            print("salvou o parceiro")
         if rota:
             self.tabela.rota=rota
             self.tabela.save()
@@ -57,12 +55,13 @@ class TabelaFrete:
         self.tabela.fatorCubagem = fatorCubagem
         self.tabela.tipoTabela= tipoTabela
         self.tabela.freteMinimo = freteMinimo
+        self.tabela.parceiro.add(parceiro)
+        self.tabela.rota.add(rota)
         self.tabela.save()
         return self.tabela.toDict()
 
     def anexaTabelaAoParceiro(self, parceiro: object, idTabela):
-        print('----------------------------------------------------')
-        print(parceiro,idTabela)
+        priComDest("chegou no anexaTabelaAoParceiro")
         if TblFrete.objects.filter(id=idTabela).exists():
             self.tabela = TblFrete.objects.filter(id=idTabela).get()
             self.tabela.parceiro.add(parceiro)
@@ -80,13 +79,13 @@ class TabelaFrete:
         return tabelas
         
     def cnpjVinculado(self):
+        priComDest("entrando e buscando cnpjs vinculados")
         cnpjs=[]
-        print ("----------------Parceiro existe------------------")
-        print(self.tabela.toDict())
-
-        for i in self.tabela.parceiro.all():
-            parceiro=Parceiros.getParceiro(i.cnpj_cpf)
-            cnpjs.append(parceiro.to_dict())
+        if self.tabela.parceiro:
+            priComDest("Encontrou o parceiro")
+            for i in self.tabela.parceiro.all():
+                parceiro = Parceiros.getParceiro(i.cnpj_cpf)
+                cnpjs.append(parceiro.to_dict())
         return cnpjs
 
     def deleteTabela(self,idTabela):

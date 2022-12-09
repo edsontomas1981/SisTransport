@@ -51,3 +51,8 @@ def checaUf(uf):
         return True
     else:
         return False
+
+def priComDest(*args):
+    for i in args:
+        print("--------------------------------------------")       
+        print(i)

@@ -3,6 +3,8 @@ from django.db import models
 from parceiros.models.parceiros import Parceiros
 from operacional.models.rota import Rota
 from Classes.parceiros import Parceiros as ClsParceiros
+from Classes.utils import priComDest
+
 
 class TabelaFrete(models.Model):
     tipoTabela=models.IntegerField(default=1)
@@ -29,18 +31,11 @@ class TabelaFrete(models.Model):
     tipoPedagio=models.IntegerField()
     cubagem=models.BooleanField(default=True)
     fatorCubagem=models.IntegerField()
-       
     # Criar a Tabela por faixas ainda a serem definidas
-    
+
     def toDict(self):
         parceiros=[]
         parceiro=TabelaFrete.objects.filter(pk=55)
-        for i in parceiro:
-            print("**********************************************")
-            print (i)            
-            parceiros.append(i)
-
-
         tblFrete= {'id':self.id,
                 'freteMinimo':self.freteMinimo,
                 'descricao':self.descricao,
