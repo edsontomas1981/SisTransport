@@ -11,7 +11,7 @@ urlpatterns = [
     path('deleteTabela/',viewsComercial.deleteTabela,name='deleteTabela'),
     path('getTodasTabelas/',viewsComercial.getTodasTabelas,name='todasTabelas'),
     path('anexaParceiro/',viewsComercial.anexaParceiro,name='anexaParceiro'),
-
+    path('cnpjTabela/',viewsComercial.cnpjTabela,name='cnpjTabela'),
     path('filtraTabelas/',viewsComercial.filtraTabelas,name='filtraTabelas'),  
     path('faixa/createFaixa/',viewsComercial.createFaixa,name='createFaixa'),
     path('faixa/readFaixa/',viewsComercial.readFaixa,name='readFaixa'),

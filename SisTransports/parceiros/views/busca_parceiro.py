@@ -7,12 +7,14 @@ from Classes.consultaCnpj import validaCnpjCpf
 from Classes.buscaCnpjWs import cnpjWs
 from enderecos.models.endereco import Enderecos
 from Classes.contato import Contato as ClasseContato
-
+from Classes.utils import dprint
 @login_required(login_url='/auth/entrar/')
 def busca_parceiro(request):
     if validaCnpjCpf(request.POST.get('cnpj_cpf')):
         if Parceiros.objects.filter(cnpj_cpf=request.POST.get('cnpj_cpf')).exists():
+            
             parceiro = Parceiros.objects.filter(cnpj_cpf=request.POST.get('cnpj_cpf')).get()
+            dprint(parceiro)
             dados=[parceiro.to_dict()]
             contatos=ClasseContato(parceiro)
             contato=contatos.contatos()
@@ -27,6 +29,8 @@ def busca_parceiro(request):
             if len(request.POST.get('cnpj_cpf'))==14:
                 dadosBrutos,status=parceiroWs(request)
                 if status == 429:
+                    dprint('#Falha na consulta webservice limite excedido')
+
                     return JsonResponse({'status':429})#Falha na consulta webservice limite excedido
                 elif status == 200:    
                     dados=[{'cnpj_cpf':dadosBrutos['cnpj'],'raz_soc':dadosBrutos['nome'],
@@ -35,8 +39,10 @@ def busca_parceiro(request):
                             'numero':dadosBrutos['numero'],'complemento':dadosBrutos['complemento'],
                             'bairro':dadosBrutos['bairro'],'cidade':dadosBrutos['municipio'],
                             'uf':dadosBrutos['uf']}}]
-                    return JsonResponse({'dados': dados,'status':202 })#Resposta ok webservice
+                    dprint('#Resposta ok webservice')
+                    return JsonResponse({'dados': dados,'status':202})#Resposta ok webservice
                 else:
+                    dprint('#erro nao especificado')
                     return JsonResponse({'status':431 })#erro nao especificado
             else:
                     return JsonResponse({'status':430 })#cpf nao cadastrado

@@ -16,6 +16,7 @@ urlpatterns = [
     path('exclui_contato/',viewsPrincipal.excluiContato,name='exluiContato'),
     path('cad_contato/',viewsPrincipal.cad_contato,name='cad_contato'),
     path('busca_parceiro/',viewParceiros.busca_parceiro,name='busca_parceiro'),
+    path('readParceiro/',viewParceiros.readParceiro,name='readParceiro'),
     path('preDtc/',viewsOperacional.preDtc,name='preDtc'),
     path('preDtc/buscaDtc/',viewsOperacional.buscaDtc,name='buscaDtc'),           
     path('preDtc/saveDtc/',viewsOperacional.saveDtc,name='saveDtc'),

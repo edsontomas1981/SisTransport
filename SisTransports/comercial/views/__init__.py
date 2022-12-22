@@ -10,6 +10,9 @@ from comercial.views.readFaixa import readFaixa
 from comercial.views.readFaixas import readFaixas
 from comercial.views.updateFaixa import updateFaixa
 from comercial.views.deleteFaixa import deleteFaixa
+from comercial.views.cnpjTabela import cnpjTabela
+
+
 
 
 

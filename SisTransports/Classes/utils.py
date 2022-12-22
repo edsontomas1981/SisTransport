@@ -1,6 +1,8 @@
 # Identifica campos enviados se estao vazios ou nao 
 # sendo identificacaoCampo e o nome vindo da requisição 
-# e nome campo e uma frase mais agradavel para retorno da requisição 
+# e nome campo e uma frase mais agradavel para retorno da requisição
+
+from termcolor import colored
 
 def checaCampos(request,**kwargs):
     camposVazios=[]
@@ -52,7 +54,7 @@ def checaUf(uf):
     else:
         return False
 
-def priComDest(*args):
+def dprint(*args):
     for i in args:
-        print("--------------------------------------------")       
-        print(i)
+        print(colored('********************************************', 'red'))       
+        print(colored(i, 'cyan'))

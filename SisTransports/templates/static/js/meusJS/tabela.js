@@ -1,6 +1,6 @@
-//recebe um dicionario com as chaves url e id contendo os dados a serem consultados 
+//recebe uma tabela hash com as chaves url e id contendo os dados a serem consultados 
 //Ex: postData = '&cnpj_cpf='0000000000191;
-//Ex {url:/rotaAcessada/,id:postData} 
+//Ex {url:'/rotaAcessada/',id:postData} 
 function conectaBdGeral(dados, callback) {
     let url = dados.url
     let postData = $('form').serialize();
@@ -18,6 +18,35 @@ function conectaBdGeral(dados, callback) {
     });
 }
 // Eventos
+
+function clienteEstaNaTabela(){
+    let postData = '&cnpj_cpf=' + $('#comlCnpj').val();
+    let dados = { 'url': '/readParceiro/', 'id': postData }
+    conectaBdGeral(dados,anexaTabela)
+}
+
+function anexaTabela(response){
+    switch (response.status) {
+        case 200:
+            let postData = '&cnpj_cpf=' + $('#comlCnpj').val();
+            postData=postData + '&numTabela=' + $('#numTabela').val();
+            let dados = { 'url': '/comercial/cnpjTabela/', 'id': postData }   
+            conectaBdGeral(dados)
+            alert('Cliente anexado com sucesso !')
+            break;
+        case 400:
+            alert('Parceiro não encontrado')
+            break;
+        default:
+            alert(response.status)
+    }
+}
+
+$('#btnRelacionaTabela').on('click', function(e){
+    clienteEstaNaTabela()
+    e.preventDefault()
+})
+
 $('#comlCnpj').on('blur', function(e) {
     let postData = '&cnpj_cpf=' + $('#comlCnpj').val();
     let dados = { 'url': '/busca_parceiro/', 'id': postData }
@@ -86,11 +115,7 @@ $('.btn-close').on('click', function(e) {
     limpaForm()
 })
 
-$('#btnRelacionaTabela').on('click', function(e){
-    let postData = '&cnpj_cpf=' + $('#comlCnpj').val();
-    let dados = { 'url': '/comercial/anexaParceiro/', 'id': postData }
-    conectaBdGeral(dados, parceirosVinculados())
-})
+
     
 
 //funcoes 
@@ -117,11 +142,12 @@ function limpaForm() {
     $('#tipoFrete').val('');
     $('#tipoCobranPedagio').val('');
     limpaTabela('#cnpjsRelacionados td');
+    limpaTabela('#tabelaFaixas td');
+
 }
 
 function populaTabela(response) {
     parceirosVinculados(response)
-
     $('#numTabela').val(response.tabela.id)
     populaFaixas($('#numTabela').val())
     $('#descTabela').val(response.tabela.descricao)

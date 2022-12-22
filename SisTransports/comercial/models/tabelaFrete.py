@@ -3,7 +3,7 @@ from django.db import models
 from parceiros.models.parceiros import Parceiros
 from operacional.models.rota import Rota
 from Classes.parceiros import Parceiros as ClsParceiros
-from Classes.utils import priComDest
+from Classes.utils import dprint
 
 
 class TabelaFrete(models.Model):
@@ -35,7 +35,6 @@ class TabelaFrete(models.Model):
 
     def toDict(self):
         parceiros=[]
-        parceiro=TabelaFrete.objects.filter(pk=55)
         tblFrete= {'id':self.id,
                 'freteMinimo':self.freteMinimo,
                 'descricao':self.descricao,

@@ -1,6 +1,7 @@
 from comercial.models.tabelaFrete import TabelaFrete as TblFrete
 from Classes.parceiros import Parceiros 
-from Classes.utils import priComDest
+from parceiros.models.parceiros import Parceiros as MdlParceiros
+
 
 class TabelaFrete:
     def __init__(self):
@@ -10,7 +11,6 @@ class TabelaFrete:
                       adValor=None, gris=None, despacho=None, outros=None, pedagio=None, 
                      tipoPedagio=None,cubagem=None, fatorCubagem=None, icmsIncluso=True,
                      tipoTabela=None,freteMinimo=None, bloqueada=False, tipoCalculo=None):
-
         self.tabela = TblFrete()
         self.tabela.descricao = descricao
         self.tabela.icmsIncluso = icmsIncluso
@@ -27,13 +27,12 @@ class TabelaFrete:
         self.tabela.fatorCubagem = fatorCubagem
         self.tabela.tipoTabela= tipoTabela
         self.tabela.freteMinimo = freteMinimo
-        self.tabela.parceiro.add(parceiro)        
-        self.tabela.save()
-        # Avaliar a necessidade de salvar um proprietário da tabela juntamente com a criação da tabela.
         if rota:
             self.tabela.rota=rota
-            self.tabela.save()
-        self.tabela.toDict()
+        
+        self.tabela.save()
+
+        return 200
 
     def updateTabela(self,idTabela,parceiro=None,rota=None,descricao=None,frete=None,
                      tipoCalculo=None,adValor=None,gris=None,despacho=None,outros=None, 
@@ -55,22 +54,29 @@ class TabelaFrete:
         self.tabela.fatorCubagem = fatorCubagem
         self.tabela.tipoTabela= tipoTabela
         self.tabela.freteMinimo = freteMinimo
-        self.tabela.parceiro.add(parceiro)
-        self.tabela.rota.add(rota)
-        self.tabela.save()
-        return self.tabela.toDict()
 
-    def anexaTabelaAoParceiro(self, parceiro: object, idTabela):
-        priComDest("chegou no anexaTabelaAoParceiro")
-        if TblFrete.objects.filter(id=idTabela).exists():
-            self.tabela = TblFrete.objects.filter(id=idTabela).get()
+        # if rota:
+        #     self.tabela.rota.add(rota)
+        # else:
+        #     self.tabela.rota=None
+        
+        self.tabela.save()
+
+        return self.tabela.toDict(),200
+
+    def anexaTabelaAoParceiro(self,cnpjParc):
+        if MdlParceiros.objects.filter(cnpj_cpf=cnpjParc).exists():
+            parceiro=MdlParceiros.objects.filter(cnpj_cpf=cnpjParc).get()
             self.tabela.parceiro.add(parceiro)
             self.tabela.save()
+            return 200
+        else :
+            return 400
   
     def readTabela(self,idTabela):
         if TblFrete.objects.filter(id=idTabela).exists():
             self.tabela = TblFrete.objects.filter(id=idTabela).get()
-            return self.tabela
+            return self.tabela,200
         else:
             return False
         
@@ -78,16 +84,6 @@ class TabelaFrete:
         tabelas = TblFrete.objects.all()
         return tabelas
         
-    def cnpjVinculado(self):
-        priComDest("entrando e buscando cnpjs vinculados")
-        cnpjs=[]
-        if self.tabela.parceiro:
-            priComDest("Encontrou o parceiro")
-            for i in self.tabela.parceiro.all():
-                parceiro = Parceiros.getParceiro(i.cnpj_cpf)
-                cnpjs.append(parceiro.to_dict())
-        return cnpjs
-
     def deleteTabela(self,idTabela):
         if TblFrete.objects.filter(id=idTabela).exists():
             self.tabela = TblFrete.objects.get(id=idTabela).delete()
@@ -98,6 +94,16 @@ class TabelaFrete:
     def filtraTabelas(self,filtro):
         self.tabela=TblFrete.objects.filter(descricao__contains=filtro)
         return self.tabela
+
+    def selecionaTabCnpj(self):
+        tabCnpj=[]
+        if MdlParceiros.objects.filter(tabelafrete__id=self.tabela.id):
+            parceiros=MdlParceiros.objects.filter(tabelafrete__id=self.tabela.id)
+            for parceiro in parceiros:
+                tabCnpj.append(parceiro.to_dict())
+            return tabCnpj
+        else:
+            return False
 
     def toDict(self):
         return self.tabela.toDict()

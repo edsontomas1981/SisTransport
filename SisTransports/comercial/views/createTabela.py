@@ -16,7 +16,7 @@ def createTabela (request):
             parceiro=Parceiros.getParceiro(request.POST.get('comlCnpj'))
             tabela=TabelaFrete()
             #verificar a ordem dos parametros 
-            tabela.createTabela(parceiro,None,request.POST.get('descTabela'),
+            tabela.createTabela(None,request.POST.get('descTabela'),
                 toFloat(request.POST.get('vlrFrete')),toFloat(request.POST.get('advalor')),
                 toFloat(request.POST.get('gris')),toFloat(request.POST.get('despacho')),
                 toFloat(request.POST.get('outros')),toFloat(request.POST.get('pedagio')),
