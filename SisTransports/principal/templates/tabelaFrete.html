@@ -3,7 +3,6 @@
 {%load static %}
 {% load bootstrap %}
 {% block 'conteudo' %}
-
   <div class="row">
     <div class="col-12"> 
       <div class="form-floating col-sm-12 mb-1 pr-1 pl-0 input-group">
@@ -19,7 +18,7 @@
       </div>                
     </div>
     <div class="col-12">
-      <table class="table table-dark table-striped" id="relatorioTabela">
+      <table class="table table-dark table-striped table-sm" id="relatorioTabela">
         <thead>
           <tr>
             <th scope="col">Id</th>
@@ -46,6 +45,9 @@
 
 {%block 'js'%}
   <script src="{% static 'js/meusJS/tabela.js' %}"></script>
+  <script src="{% static 'js/meusJS/components/tabela/anexaParceiro/anexaParceiro.js' %}"></script>
+  <script src="{% static 'js/meusJS/components/tabela/Tabela.js' %}"></script>
+  <script src="{% static 'js/meusJS/components/tabela/salvaTabela.js' %}"></script>
   <script src="{% static 'js/meusJS/faixas.js' %}"></script>
   <script src="{% static 'js/meusJS/cmbRota.js' %}"></script>
 {% endblock 'js' %}

@@ -11,8 +11,6 @@ def readTabela (request):
     elif request.method == "POST" :
         tabela=TabelaFrete()
         tabela.readTabela(request.POST.get('numTabela'))
-        dprint(request.POST.get('numTabela'))
-        dprint(request.POST)
         parceiro=tabela.selecionaTabCnpj()
         return JsonResponse({'status':200,'tabela':tabela.tabela.toDict(),
                             'parceirosVinculados':parceiro})

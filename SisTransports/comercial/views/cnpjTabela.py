@@ -12,10 +12,9 @@ def cnpjTabela (request):
     elif request.method == "POST" :
         tabela=TabelaFrete()
         tabela.readTabela(request.POST.get('numTabela'))
-        parceiro=Parceiros()
-        if parceiro:
-            tabela.anexaTabelaAoParceiro(request.POST.get('comlCnpj'))
-            return JsonResponse({'status': 200}) 
-        else:
-            return JsonResponse({'status': 400}) 
+        dprint(request.POST)
+        tabela.anexaTabelaAoParceiro(request.POST.get('cnpj_cpf'))
+        parceiro=tabela.selecionaTabCnpj()
+        return JsonResponse({'status': 200,'tabela':tabela.toDict(),
+                             'parceirosVinculados':parceiro}) 
         

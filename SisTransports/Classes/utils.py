@@ -1,7 +1,6 @@
 # Identifica campos enviados se estao vazios ou nao 
 # sendo identificacaoCampo e o nome vindo da requisição 
 # e nome campo e uma frase mais agradavel para retorno da requisição
-
 from termcolor import colored
 
 def checaCampos(request,**kwargs):
@@ -10,7 +9,6 @@ def checaCampos(request,**kwargs):
         if request.POST.get(identificacaoCampo) == '': 
             camposVazios.append(nomeCampo)
     return camposVazios
-
 
 def verificaCamposObrigatorios(request):
     camposObrigatorios=[]
@@ -38,7 +36,6 @@ def toFloat(stringToFloat):
     return stringToFloat
 
 def checkBox(check):
-    print (check)
     if check == 'on' or check == 1:
         return True
     else:
@@ -58,3 +55,8 @@ def dprint(*args):
     for i in args:
         print(colored('********************************************', 'red'))       
         print(colored(i, 'cyan'))
+
+def dpprint(titulo,*args):
+    for i in args:
+        print(colored('******************'+titulo+'*************', 'yellow'))       
+        print(colored(i, 'red'))

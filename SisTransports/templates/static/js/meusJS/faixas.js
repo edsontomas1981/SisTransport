@@ -30,6 +30,8 @@ function tabelaFaixas(response) {
             '<td>' + data[i].faixaInicial + '</td>' +
             '<td>' + data[i].faixaFinal + '</td>' +
             '<td>' + data[i].vlrFaixa + '</td>' +
+            '<td>' + '<i class="ti-pencil-alt2"></i>' + '</td>' +
+            '<td>' + '<i class="ti-eraser "></i>' + '</td>' +
             '</tr>'
         $('#tabelaFaixas tbody').append(template)
     }

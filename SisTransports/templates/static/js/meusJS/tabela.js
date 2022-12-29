@@ -19,34 +19,6 @@ function conectaBdGeral(dados, callback) {
 }
 // Eventos
 
-function clienteEstaNaTabela(){
-    let postData = '&cnpj_cpf=' + $('#comlCnpj').val();
-    let dados = { 'url': '/readParceiro/', 'id': postData }
-    conectaBdGeral(dados,anexaTabela)
-}
-
-function anexaTabela(response){
-    switch (response.status) {
-        case 200:
-            let postData = '&cnpj_cpf=' + $('#comlCnpj').val();
-            postData=postData + '&numTabela=' + $('#numTabela').val();
-            let dados = { 'url': '/comercial/cnpjTabela/', 'id': postData }   
-            conectaBdGeral(dados)
-            alert('Cliente anexado com sucesso !')
-            break;
-        case 400:
-            alert('Parceiro não encontrado')
-            break;
-        default:
-            alert(response.status)
-    }
-}
-
-$('#btnRelacionaTabela').on('click', function(e){
-    clienteEstaNaTabela()
-    e.preventDefault()
-})
-
 $('#comlCnpj').on('blur', function(e) {
     let postData = '&cnpj_cpf=' + $('#comlCnpj').val();
     let dados = { 'url': '/busca_parceiro/', 'id': postData }
@@ -86,18 +58,7 @@ $('#btnExcluiTabela').on('click', function(e) {
     if ($('#numTabela').val()) { excluirTabelas($('#numTabela').val()) } else { alert('Não existe tabela para excluir.') }
 })
 
-$('#btnIncluiTabela').on('click', function(e) {
-    //se houver tabela com o id atualiza ao inves de criar nova
-    if ($('#numTabela').val()) {
-        let postData = '&numTabela=' + $('#numTabela').val();
-        let dados = { 'url': '/comercial/updateTabela/', 'id': postData }
-        conectaBdGeral(dados, atualizarTabela)
-    } else {
-        dados = { url: '/comercial/createTabela/' }
-        conectaBdGeral(dados, incluiTabela)
-    }
-    e.preventDefault();
-})
+
 
 $('#btnFaixa').on('click', function(e) {
     if (parseInt($('#faixaInicial').val()) < parseInt($('#faixaFinal').val())) {
@@ -115,13 +76,15 @@ $('.btn-close').on('click', function(e) {
     limpaForm()
 })
 
-
-    
-
 //funcoes 
 
 function populaRazao(response) {
     $('#comlRazao').val(response.dados[0].raz_soc)
+}
+
+function limpaCnpj(){
+    $('#comlCnpj').val('')
+    $('#comlRazao').val('')
 }
 
 function limpaForm() {
@@ -141,6 +104,7 @@ function limpaForm() {
     $('#freteMinimo').val('');
     $('#tipoFrete').val('');
     $('#tipoCobranPedagio').val('');
+    limpaCnpj()
     limpaTabela('#cnpjsRelacionados td');
     limpaTabela('#tabelaFaixas td');
 
@@ -187,44 +151,13 @@ function populaFaixas(idTabela) {
 
 }
 
-function incluiTabela(response) {
-    switch (response.status) {
-        case 200:
-            alert('Tabela salva com sucesso !')
-            break;
-        case 210:
-            alert('Dtc ' + $('#numPed').val(response.dados.id) + ' alterado com sucesso !')
-            $('#numPed').val(response.dados.id)
-            break;
-        case 400:
-            alert('Erro !' + response.camposObrigatorios)
-            break;
-        default:
-            // code block
-    }
-}
+
 
 function limpaTabela(tabela) {
     $(tabela).remove();
 }
 
-function parceirosVinculados(response) {
-    const data = response.parceirosVinculados;
-    let template
-    for (let i = 0; i < data.length; i++) {
-        template = '<tr class="tr">' +
-            '<td>' + data[i].cnpj_cpf + '</td>' +
-            '<td>' + data[i].raz_soc + '</td>' +
-            '<td>' + '<button type="button" id="alteraContato"' +
-            'class="btn btn-success btn-rounded btn-icon">' +
-            '<i class="ti-pencil-alt2"></i></button>' + '</td>' +
-            '<td>' + '<button type="button" id="excluiContato"' +
-            'class="btn btn-danger btn-rounded btn-icon">' +
-            '<i class="ti-eraser "></i>' + '</button>' + '</td>' +
-            '</tr>'
-        $('#cnpjsRelacionados tbody').append(template)
-        }
-};
+
 
 function relatorioTabela(response) {
     limpaTabela('#relatorioTabela td')
@@ -299,20 +232,7 @@ function excTabela(e) {
     excluirTabelas(id)
 }
 
-function atualizarTabela(response) {
-    switch (response.status) {
-        case 200:
-            alert('Tabela alterada com sucesso !')
-            break;
-        case 210:
-            break;
-        case 400:
-            alert('Erro !' + response.camposObrigatorios)
-            break;
-        default:
-            // code block
-    }
-}
+
 
 function populaRelatTabelas() {
     dados = { 'url': '/comercial/getTodasTabelas/' }

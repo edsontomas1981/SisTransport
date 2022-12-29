@@ -73,6 +73,5 @@ def saveColeta (request):
         if request.POST.get('numPed') != '':
             return salvaOrAlteraColeta(request)
         else:
-
             return JsonResponse({'status': 410}) #Numero do pedido nao informado            
             

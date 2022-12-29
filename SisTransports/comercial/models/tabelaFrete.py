@@ -8,8 +8,9 @@ from Classes.utils import dprint
 
 class TabelaFrete(models.Model):
     tipoTabela=models.IntegerField(default=1)
+    rota_fk=models.ForeignKey(Rota,null=True, on_delete=models.CASCADE,default=None)
     parceiro=models.ManyToManyField(Parceiros,blank=True)
-    rota=models.ManyToManyField(Rota,blank=True)
+    # rota=models.ManyToManyField(Rota,blank=True)
     descricao=models.CharField(max_length=15)
     icmsIncluso=models.BooleanField(default=True)
     bloqueada=models.BooleanField(default=False)

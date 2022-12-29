@@ -8,7 +8,6 @@ from Classes.utils import dprint
 @login_required(login_url='/auth/entrar/')
 def anexaParceiro (request):
     if request.method == 'GET':
-        dprint("Parceiro Criado")
         return render(request, 'base.html')
     elif request.method == "POST" :
         tabela=TabelaFrete()
@@ -17,4 +16,6 @@ def anexaParceiro (request):
         parceiro=Parceiros()
         parceiro.getParceiro(request.POST.get('cnpj_cpf'))
         tabela.anexaTabelaAoParceiro(parceiro)
-        return JsonResponse({'status': 200,'tabela':tabela.toDict()}) 
+        parceiro=tabela.selecionaTabCnpj()
+        return JsonResponse({'status': 200,'tabela':tabela.toDict(),
+                             'parceirosVinculados':parceiro}) 

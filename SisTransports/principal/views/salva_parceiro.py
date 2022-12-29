@@ -56,13 +56,11 @@ def alteraEndereco(request):
    
 def verificaParceiro(cnpjParc):
     if Parceiros.objects.filter(cnpj_cpfMdl=cnpjParc).exists():
-        print('VerifContato')
         parceiro=Parceiros.objects.filter(cnpj_cpfMdl=cnpjParc).get()
         return parceiro
 
 @login_required(login_url='/auth/entrar/')
 def salva_parceiro(request):
-    print('cadastro Parceiro')
     if request.method == "GET" :
         return render(request,'./cadastroParceiros.html',)
     elif request.method == "POST" :
@@ -74,12 +72,10 @@ def salva_parceiro(request):
                 return JsonResponse({'status':400})#Campos Invalidos
             else:
                 if Parceiros.objects.filter(cnpj_cpf=request.POST.get('cnpj_cpfMdl')).exists():
-                    print('Altera parceiro')
                     endereco=alteraEndereco(request)
                     parceiro=alteraParceiro(request,endereco)
                     return JsonResponse({'status': 201})#alteração efetuada
                 else:
-                    print('Cadastro parceiro')
                     endereco=salvaEndereco(request)
                     parceiro=salvaParceiro(request,endereco)
                     return JsonResponse({'status': 200})#Cadastro Efetuado
