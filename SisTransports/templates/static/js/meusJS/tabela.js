@@ -17,12 +17,11 @@ function conectaBdGeral(dados, callback) {
         }
     });
 }
+
 // Eventos
 
-$('#comlCnpj').on('blur', function(e) {
-    let postData = '&cnpj_cpf=' + $('#comlCnpj').val();
-    let dados = { 'url': '/busca_parceiro/', 'id': postData }
-    conectaBdGeral(dados, populaRazao)
+$(window).load(function() {
+    populaRelatTabelas()
 });
 
 $('#buscarTabelaFrete').on('keyup', function(e) {
@@ -37,15 +36,7 @@ $('#buscarTabelaFrete').on('keyup', function(e) {
     }
 });
 
-$('#btnNovaTabela').on('click', function(e) {
-    limpaForm();
-    $('#numTabela').val('');
-    e.preventDefault();
-})
 
-$(window).load(function() {
-    populaRelatTabelas()
-});
 
 $('#relatorioTabela').click(function(e) {
     var botao = document.querySelectorAll('button')
@@ -58,17 +49,12 @@ $('#btnExcluiTabela').on('click', function(e) {
     if ($('#numTabela').val()) { excluirTabelas($('#numTabela').val()) } else { alert('Não existe tabela para excluir.') }
 })
 
-
-
-$('#btnFaixa').on('click', function(e) {
-    if (parseInt($('#faixaInicial').val()) < parseInt($('#faixaFinal').val())) {
-        incluiFaixa()
-    } else {
-        alert('O campo faixa inicial deve ser maior do que o campo faixa final.')
-    }
-
+$('#btnNovaTabela').on('click', function(e) {
+    limpaForm();
+    $('#numTabela').val('');
     e.preventDefault();
 })
+
 
 $('.btn-close').on('click', function(e) {
     $('#buscarTabelaFrete').val('');
@@ -107,7 +93,6 @@ function limpaForm() {
     limpaCnpj()
     limpaTabela('#cnpjsRelacionados td');
     limpaTabela('#tabelaFaixas td');
-
 }
 
 function populaTabela(response) {
@@ -141,23 +126,11 @@ function populaTabela(response) {
     $('#freteMinimo').val(response.tabela.freteMinimo);
     $('#tipoFrete').val(response.tabela.tipoCalculo);
     $('#tipoCobranPedagio').val(response.tabela.tipoPedagio);
-
 }
-
-function populaFaixas(idTabela) {
-    let postData = '&numTabela=' + idTabela;
-    let dados = { 'url': 'faixa/readFaixas/', 'id': postData }
-    conectaBdGeral(dados, tabelaFaixas)
-
-}
-
-
 
 function limpaTabela(tabela) {
     $(tabela).remove();
 }
-
-
 
 function relatorioTabela(response) {
     limpaTabela('#relatorioTabela td')
@@ -231,8 +204,6 @@ function excTabela(e) {
     id = e.currentTarget.id;
     excluirTabelas(id)
 }
-
-
 
 function populaRelatTabelas() {
     dados = { 'url': '/comercial/getTodasTabelas/' }

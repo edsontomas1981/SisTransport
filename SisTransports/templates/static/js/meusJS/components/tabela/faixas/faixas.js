@@ -7,13 +7,20 @@ function populaFaixa(e) {
         $('#faixaFinal').val(response.faixa.faixaFinal)
         $('#faixaValor').val(response.faixa.vlrFaixa)
     })
-
 }
 
+// $('#tabelaFaixas').dblclick(function(e) {
+//     tr = document.querySelectorAll('tr')
+//     tr.forEach((e) => {
+//         e.addEventListener('dblclick', populaFaixa);
+//     });
+// });
+
 $('#tabelaFaixas').dblclick(function(e) {
+    teste("testandpo")
     tr = document.querySelectorAll('tr')
     tr.forEach((e) => {
-        e.addEventListener('dblclick', populaFaixa);
+        e.addEventListener('dblclick', pegaIconeFaixaClicado);
     });
 });
 
@@ -35,7 +42,6 @@ function tabelaFaixas(response) {
             '</tr>'
         $('#tabelaFaixas tbody').append(template)
     }
-
 };
 
 function faixa(response) {
@@ -52,3 +58,49 @@ function faixa(response) {
             // code block
     }
 }
+
+$('#btnFaixa').on('click', function(e) {
+    if (parseInt($('#faixaInicial').val()) < parseInt($('#faixaFinal').val())) {
+        incluiFaixa()
+    } else {
+        alert('O campo faixa inicial deve ser maior do que o campo faixa final.')
+    }
+    e.preventDefault();
+})
+
+function populaFaixas(idTabela) {
+    let postData = '&numTabela=' + idTabela;
+    let dados = { 'url': 'faixa/readFaixas/', 'id': postData }
+    conectaBdGeral(dados, tabelaFaixas)
+}
+
+function pegaIconeFaixaClicado(e) {
+    icone = e.currentTarget.id;
+    switch (icone[0]) {
+        case 'e':
+            var tr = document.querySelectorAll('i');
+            tr.forEach((e) => {
+                e.addEventListener('click', excTabela);
+            });
+            break;
+        case 'a':
+            var tr = document.querySelectorAll('i');
+            tr.forEach((e) => {
+                e.addEventListener('click', mostrarTabela);
+            });
+            break;
+    }
+};
+
+const teste = (e) =>{
+
+    alert(e)
+
+}
+
+$('#tabelaFaixas').click(function(e) {
+    var icone = document.querySelectorAll('button')
+    icone.forEach((e) => {
+        e.addEventListener('click', pegaIconeFaixaClicado);
+    });
+});

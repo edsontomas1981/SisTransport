@@ -43,9 +43,15 @@ function parceirosVinculados(response) {
             '<td>' + data[i].cnpj_cpf + '</td>' +
             '<td>' + data[i].raz_soc + '</td>' +
             '<td>' +'<i class="ti-pencil-alt2"></i>' + '</td>' +
-            '<td>' +     + '</td>' +
+            '<td>'+'<i class="ti-eraser "></i>' + '</td>' +
             '</tr>'
         $('#cnpjsRelacionados tbody').append(template)
         }
 };
+
+$('#comlCnpj').on('blur', function(e) {
+    let postData = '&cnpj_cpf=' + $('#comlCnpj').val();
+    let dados = { 'url': '/busca_parceiro/', 'id': postData }
+    conectaBdGeral(dados, populaRazao)
+});
 
