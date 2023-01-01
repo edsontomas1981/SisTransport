@@ -7,11 +7,12 @@ from Classes.consultaCnpj import validaCnpjCpf
 from Classes.buscaCnpjWs import cnpjWs
 from enderecos.models.endereco import Enderecos
 from Classes.contato import Contato as ClasseContato
-
+from Classes.utils import dprint
 @login_required(login_url='/auth/entrar/')
 def busca_parceiro(request):
     if validaCnpjCpf(request.POST.get('cnpj_cpf')):
         if Parceiros.objects.filter(cnpj_cpf=request.POST.get('cnpj_cpf')).exists():
+            
             parceiro = Parceiros.objects.filter(cnpj_cpf=request.POST.get('cnpj_cpf')).get()
             dados=[parceiro.to_dict()]
             contatos=ClasseContato(parceiro)
@@ -35,7 +36,7 @@ def busca_parceiro(request):
                             'numero':dadosBrutos['numero'],'complemento':dadosBrutos['complemento'],
                             'bairro':dadosBrutos['bairro'],'cidade':dadosBrutos['municipio'],
                             'uf':dadosBrutos['uf']}}]
-                    return JsonResponse({'dados': dados,'status':202 })#Resposta ok webservice
+                    return JsonResponse({'dados': dados,'status':202})#Resposta ok webservice
                 else:
                     return JsonResponse({'status':431 })#erro nao especificado
             else:

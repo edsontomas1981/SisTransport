@@ -3,11 +3,14 @@ from django.db import models
 from parceiros.models.parceiros import Parceiros
 from operacional.models.rota import Rota
 from Classes.parceiros import Parceiros as ClsParceiros
+from Classes.utils import dprint
+
 
 class TabelaFrete(models.Model):
     tipoTabela=models.IntegerField(default=1)
+    rota_fk=models.ForeignKey(Rota,null=True, on_delete=models.CASCADE,default=None)
     parceiro=models.ManyToManyField(Parceiros,blank=True)
-    rota=models.ManyToManyField(Rota,blank=True)
+    # rota=models.ManyToManyField(Rota,blank=True)
     descricao=models.CharField(max_length=15)
     icmsIncluso=models.BooleanField(default=True)
     bloqueada=models.BooleanField(default=False)
@@ -29,9 +32,8 @@ class TabelaFrete(models.Model):
     tipoPedagio=models.IntegerField()
     cubagem=models.BooleanField(default=True)
     fatorCubagem=models.IntegerField()
-       
     # Criar a Tabela por faixas ainda a serem definidas
-    
+
     def toDict(self):
         parceiros=[]
         tblFrete= {'id':self.id,
@@ -50,6 +52,7 @@ class TabelaFrete(models.Model):
                 'cubagem':self.cubagem,
                 'fatorCubagem':self.fatorCubagem,
                 'tipoTabela':self.tipoTabela
+
                 }
         return tblFrete
     

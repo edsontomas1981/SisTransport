@@ -9,4 +9,4 @@ def salva_parceiro(cnpj,razao,fantasia,inscr,obs,endereco_fk):
     parceiro.observacao=obs
     parceiro.endereco_fk=endereco_fk
     parceiro.save()
-    
+    return parceiro

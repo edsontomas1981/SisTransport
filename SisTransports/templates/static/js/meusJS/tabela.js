@@ -1,6 +1,6 @@
-//recebe um dicionario com as chaves url e id contendo os dados a serem consultados 
+//recebe uma tabela hash com as chaves url e id contendo os dados a serem consultados 
 //Ex: postData = '&cnpj_cpf='0000000000191;
-//Ex {url:/rotaAcessada/,id:postData} 
+//Ex {url:'/rotaAcessada/',id:postData} 
 function conectaBdGeral(dados, callback) {
     let url = dados.url
     let postData = $('form').serialize();
@@ -17,11 +17,11 @@ function conectaBdGeral(dados, callback) {
         }
     });
 }
+
 // Eventos
-$('#comlCnpj').on('blur', function(e) {
-    let postData = '&cnpj_cpf=' + $('#comlCnpj').val();
-    let dados = { 'url': '/busca_parceiro/', 'id': postData }
-    conectaBdGeral(dados, populaRazao)
+
+$(window).load(function() {
+    populaRelatTabelas()
 });
 
 $('#buscarTabelaFrete').on('keyup', function(e) {
@@ -36,15 +36,7 @@ $('#buscarTabelaFrete').on('keyup', function(e) {
     }
 });
 
-$('#btnNovaTabela').on('click', function(e) {
-    limpaForm();
-    $('#numTabela').val('');
-    e.preventDefault();
-})
 
-$(window).load(function() {
-    populaRelatTabelas()
-});
 
 $('#relatorioTabela').click(function(e) {
     var botao = document.querySelectorAll('button')
@@ -53,38 +45,16 @@ $('#relatorioTabela').click(function(e) {
     });
 });
 
-
-
-$(document).ready(function() {
-
-})
-
 $('#btnExcluiTabela').on('click', function(e) {
     if ($('#numTabela').val()) { excluirTabelas($('#numTabela').val()) } else { alert('Não existe tabela para excluir.') }
 })
 
-$('#btnIncluiTabela').on('click', function(e) {
-    //se houver tabela com o id atualiza ao inves de criar nova
-    if ($('#numTabela').val()) {
-        let postData = '&numTabela=' + $('#numTabela').val();
-        let dados = { 'url': '/comercial/updateTabela/', 'id': postData }
-        conectaBdGeral(dados, atualizarTabela)
-    } else {
-        dados = { url: '/comercial/createTabela/' }
-        conectaBdGeral(dados, incluiTabela)
-    }
+$('#btnNovaTabela').on('click', function(e) {
+    limpaForm();
+    $('#numTabela').val('');
     e.preventDefault();
 })
 
-$('#btnFaixa').on('click', function(e) {
-    if (parseInt($('#faixaInicial').val()) < parseInt($('#faixaFinal').val())) {
-        incluiFaixa()
-    } else {
-        alert('O campo faixa inicial deve ser maior do que o campo faixa final.')
-    }
-
-    e.preventDefault();
-})
 
 $('.btn-close').on('click', function(e) {
     $('#buscarTabelaFrete').val('');
@@ -96,6 +66,11 @@ $('.btn-close').on('click', function(e) {
 
 function populaRazao(response) {
     $('#comlRazao').val(response.dados[0].raz_soc)
+}
+
+function limpaCnpj(){
+    $('#comlCnpj').val('')
+    $('#comlRazao').val('')
 }
 
 function limpaForm() {
@@ -115,12 +90,13 @@ function limpaForm() {
     $('#freteMinimo').val('');
     $('#tipoFrete').val('');
     $('#tipoCobranPedagio').val('');
+    limpaCnpj()
     limpaTabela('#cnpjsRelacionados td');
+    limpaTabela('#tabelaFaixas td');
 }
 
 function populaTabela(response) {
     parceirosVinculados(response)
-
     $('#numTabela').val(response.tabela.id)
     populaFaixas($('#numTabela').val())
     $('#descTabela').val(response.tabela.descricao)
@@ -150,54 +126,11 @@ function populaTabela(response) {
     $('#freteMinimo').val(response.tabela.freteMinimo);
     $('#tipoFrete').val(response.tabela.tipoCalculo);
     $('#tipoCobranPedagio').val(response.tabela.tipoPedagio);
-
-}
-
-function populaFaixas(idTabela) {
-    let postData = '&numTabela=' + idTabela;
-    let dados = { 'url': 'faixa/readFaixas/', 'id': postData }
-    conectaBdGeral(dados, tabelaFaixas)
-
-}
-
-function incluiTabela(response) {
-    switch (response.status) {
-        case 200:
-            alert('Tabela salva com sucesso !')
-            break;
-        case 210:
-            alert('Dtc ' + $('#numPed').val(response.dados.id) + ' alterado com sucesso !')
-            $('#numPed').val(response.dados.id)
-            break;
-        case 400:
-            alert('Erro !' + response.camposObrigatorios)
-            break;
-        default:
-            // code block
-    }
 }
 
 function limpaTabela(tabela) {
     $(tabela).remove();
 }
-
-function parceirosVinculados(response) {
-    const data = response.parceirosVinculados;
-    let template
-    for (let i = 0; i < data.length; i++) {
-        template = '<tr class="tr">' +
-            '<td>' + data[i].cnpj_cpf + '</td>' +
-            '<td>' + data[i].raz_soc + '</td>' +
-            '<td>' + '<button type="button" id="alteraContato"' +
-            'class="btn btn-success btn-rounded btn-icon">' +
-            '<i class="ti-pencil-alt2"></i></button>' + '</td>' +
-            '<td>' + '<button type="button" id="excluiContato"' +
-            'class="btn btn-danger btn-rounded btn-icon">' +
-            '<i class="ti-eraser "></i>' + '</button>' + '</td>' +
-            '</tr>'
-        $('#cnpjsRelacionados tbody').append(template)
-    }
-};
 
 function relatorioTabela(response) {
     limpaTabela('#relatorioTabela td')
@@ -272,21 +205,6 @@ function excTabela(e) {
     excluirTabelas(id)
 }
 
-function atualizarTabela(response) {
-    switch (response.status) {
-        case 200:
-            alert('Tabela alterada com sucesso !')
-            break;
-        case 210:
-            break;
-        case 400:
-            alert('Erro !' + response.camposObrigatorios)
-            break;
-        default:
-            // code block
-    }
-}
-
 function populaRelatTabelas() {
     dados = { 'url': '/comercial/getTodasTabelas/' }
     conectaBdGeral(dados, relatorioTabela);
@@ -298,3 +216,4 @@ function incluiFaixa() {
     let dados = { 'url': 'faixa/createFaixa/', 'id': postData }
     conectaBdGeral(dados, faixa)
 }
+

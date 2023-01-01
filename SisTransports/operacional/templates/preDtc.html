@@ -3,30 +3,32 @@
 {% load static %}
 
 {% block 'conteudo'%}
-  <form method="POST" class="frm">
-    <div class="mb-0">
-      <ul class="nav nav-pills nav-pills-primary" id="pills-tab" role="tablist">
-        <li class="nav-item pl-0 " role="presentation">
-          <button class="nav-link  active" id="pills-dtc-tab" data-bs-toggle="pill" data-bs-target="#pills-dtc" type="button" role="tab" aria-controls="pills-dtc" aria-selected="true">
-            <i class="ti-layers-alt" ></i> DTC
-          </button>
-        </li>
-        <li class="nav-item pl-0 " role="presentation">
-          <button class="nav-link" id="pills-coleta-tab" data-bs-toggle="pill" data-bs-target="#pills-coleta" type="button" role="tab" aria-controls="pills-coleta" aria-selected="true">
-            <i class="ti-truck"></i> Coleta
-          </button>
-        </li>
-        <li class="nav-item pl-0" role="presentation">
-          <button class="nav-link" id="pills-nf-tab" data-bs-toggle="pill" 
-                  data-bs-target="#pills-nf" type="button" role="tab" 
-                  aria-controls="pills-nf" aria-selected="false">Nota Fiscal</button>
-        </li>
-        <li class="nav-item pl-0" role="presentation">
-          <button class="nav-link" id="pills-contact-tab" data-bs-toggle="pill" data-bs-target="#pills-contact" type="button" role="tab" aria-controls="pills-contact" aria-selected="false">Contact</button>
-        </li>
-
-      </ul>
-      <div class="tab-content" id="pills-tabContent">
+  <form method="POST">
+    <div class="row">
+      <div class="col-sm-12" >
+        <ul class="nav nav-pills nav-pills-primary" id="pills-tab" role="tablist">
+          <li class="nav-item pl-0 " role="presentation">
+            <button class="nav-link  active" id="pills-dtc-tab" data-bs-toggle="pill" data-bs-target="#pills-dtc" type="button" role="tab" aria-controls="pills-dtc" aria-selected="true">
+              <i class="ti-layers-alt" ></i> DTC
+            </button>
+          </li>
+          <li class="nav-item pl-0 " role="presentation">
+            <button class="nav-link" id="pills-coleta-tab" data-bs-toggle="pill" data-bs-target="#pills-coleta" type="button" role="tab" aria-controls="pills-coleta" aria-selected="true">
+              <i class="ti-truck"></i> Coleta
+            </button>
+          </li>
+          <li class="nav-item pl-0" role="presentation">
+            <button class="nav-link" id="pills-nf-tab" data-bs-toggle="pill" 
+                    data-bs-target="#pills-nf" type="button" role="tab" 
+                    aria-controls="pills-nf" aria-selected="false">Nota Fiscal</button>
+          </li>
+          <li class="nav-item pl-0" role="presentation">
+            <button class="nav-link" id="pills-contact-tab" data-bs-toggle="pill" data-bs-target="#pills-contact" type="button" role="tab" aria-controls="pills-contact" aria-selected="false">Dados Nf</button>
+          </li>
+        </ul>
+      </div>
+    </div>
+    <div class="tab-content  pl-5" id="pills-tabContent">
         <div class="tab-pane fade  show active  " id="pills-dtc" role="tabpanel" 
             aria-labelledby="pills-dtc-tab">
           {% include 'origDestPreDtc.html' %}
@@ -40,10 +42,12 @@
       </div>
     </div>
   </form>
+
+{% include 'mdlPreDtc.html' %}
+
 {% endblock %} 
 {% block 'js' %} 
   <script src="{% static 'js/meusJS/buscaDtc.js' %}"></script>
   <script src="{% static 'js/meusJS/coleta.js' %}"></script>
   <script src="{% static 'js/meusJS/formatar.js' %}"></script>
-
 {% endblock %} 

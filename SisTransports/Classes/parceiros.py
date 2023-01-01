@@ -1,18 +1,18 @@
-from parceiros.models.parceiros import Parceiros as mdlParceiros
+from parceiros.models.parceiros import Parceiros as MdlParceiros
+from Classes.utils import dprint
 
 class Parceiros():
     def __init__(self):
-        pass
+        self.parceiro=MdlParceiros()
     
-    def getParceiro(cnpj):
-        if mdlParceiros.objects.filter(cnpj_cpf=cnpj).exists():
-            parceiro=mdlParceiros.objects.filter(cnpj_cpf=cnpj).get()
-            return parceiro
+    def getParceiro(self,cnpj):
+        if MdlParceiros.objects.filter(cnpj_cpf=cnpj).exists():
+            self.parceiro=MdlParceiros.objects.filter(cnpj_cpf=cnpj).get()
+            return self.parceiro
         else:
             return False
 
     def createParceiro(self,cnpj,razao,fantasia,inscr,obs,endereco_fk):
-        self.parceiro=Parceiros()
         self.parceiro.cnpj_cpf=cnpj
         self.parceiro.raz_soc=razao
         self.parceiro.nome_fantasia=fantasia
@@ -20,6 +20,9 @@ class Parceiros():
         self.parceiro.observacao=obs
         self.parceiro.endereco_fk=endereco_fk
         self.parceiro.save()
+
+
+
             
         
 

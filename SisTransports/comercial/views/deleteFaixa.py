@@ -10,5 +10,4 @@ def deleteFaixa (request):
         return render(request, 'preDtc.html')
     elif request.method == "POST" :
         tabela=TabelaFrete()
-        print(tabela.deleteTabela(request.POST.get('idAdd')))
         return JsonResponse({'status': 200}) 

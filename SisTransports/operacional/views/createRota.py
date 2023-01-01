@@ -11,7 +11,6 @@ def createRota (request):
     elif request.method == "POST" :
         dados=checaCampos(request,nomeRota='Nome',ufOrigem='UF Origem',cidadeOrigem='Cidade Origem',
                         ufDestino='Uf Destino',cidadeDestino='Cidade Destino')
-        print(dados)
         if dados :
             return JsonResponse({'status': 400,'dados':dados}) #Cadastro efetuado com sucesso
         else :
