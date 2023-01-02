@@ -19,7 +19,6 @@ function conectaBdGeral(dados, callback) {
 }
 
 // Eventos
-
 $(window).load(function() {
     populaRelatTabelas()
 });
@@ -35,8 +34,6 @@ $('#buscarTabelaFrete').on('keyup', function(e) {
         populaRelatTabelas()
     }
 });
-
-
 
 $('#relatorioTabela').click(function(e) {
     var botao = document.querySelectorAll('button')
@@ -54,7 +51,6 @@ $('#btnNovaTabela').on('click', function(e) {
     $('#numTabela').val('');
     e.preventDefault();
 })
-
 
 $('.btn-close').on('click', function(e) {
     $('#buscarTabelaFrete').val('');
@@ -190,7 +186,7 @@ function populaRelatTabelas() {
 }
 
 function excluirTabelas(idTabela) {
-    let id = idTabela
+    let id = idTabela 
     if (confirm("Deseja realmente apagar a tabela selecionada ?") == true) {
         let postData = '&idAdd=' + id;
         let dados = { 'url': '/comercial/deleteTabela/', 'id': postData }

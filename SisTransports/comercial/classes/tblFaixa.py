@@ -1,6 +1,6 @@
 from comercial.models.tabelaFrete import TabelaFrete as TblFrete
 from comercial.models.tabelaFaixa import TabelaFaixa as Faixa
-from Classes.utils import toFloat
+from Classes.utils import toFloat,dprint
 
 
 
@@ -36,20 +36,16 @@ class TabelaFaixa:
             self.faixa.vlrFaixa=toFloat(vlrFaixa)
             self.faixa.save()
             return 200,None,None
-
     # seleciona todas as faixas referentes a tabela 
     def readFaixas(self,idTabela):
         if Faixa.objects.filter(tblVinculada=idTabela).exists():
            faixas=Faixa.objects.filter(tblVinculada=idTabela).order_by('faixaInicial')
            return faixas 
-
         
     def readFaixa(self,idFaixa):
         if Faixa.objects.filter(id=idFaixa).exists():
            self.faixa=Faixa.objects.filter(id=idFaixa).get()
            return self.faixa 
-
-
 
     def updateFaixa(self,idFaixa,tblVinvulada,inicial,final,vlrFaixa):
         if Faixa.objects.filter(id=idFaixa).exists():
@@ -67,11 +63,12 @@ class TabelaFaixa:
             return 410 #Tabela nao coberta
         
     def deleteFaixa(self,idFaixa):
-        pass        
-    
-    def deleteFaixa(self,idFaixa):
-        pass
-    
+        if Faixa.objects.filter(id=idFaixa).exists():
+            self.faixa = Faixa.objects.get(id=idFaixa).delete()
+            return True
+        else:
+            return False   
+
     def toDict(self):
         return self.faixa.toDict()
     

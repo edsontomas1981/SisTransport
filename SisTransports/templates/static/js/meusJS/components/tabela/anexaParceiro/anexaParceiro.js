@@ -33,17 +33,13 @@ function anexaTabela(response){
 }
 
 function parceirosVinculados(response) {
-
     limpaTabela('#cnpjsRelacionados td');
-
     const data = response.parceirosVinculados;
     let template
     for (let i = 0; i < data.length; i++) {
-        template = '<tr class="tr">' +
-            '<td>' + data[i].cnpj_cpf + '</td>' +
-            '<td>' + data[i].raz_soc + '</td>' +
-            '<td>' +'<i class="ti-pencil-alt2"></i>' + '</td>' +
-            '<td>'+'<i class="ti-eraser "></i>' + '</td>' +
+        template = '<tr class="tr" id="'+data[i].id +'">' +
+            '<td id="cnpj">' + data[i].cnpj_cpf + '</td>' +
+            '<td id="razSoc">' + data[i].raz_soc + '</td>' +
             '</tr>'
         $('#cnpjsRelacionados tbody').append(template)
         }
@@ -54,4 +50,20 @@ $('#comlCnpj').on('blur', function(e) {
     let dados = { 'url': '/busca_parceiro/', 'id': postData }
     conectaBdGeral(dados, populaRazao)
 });
+
+$('#cnpjsRelacionados').dblclick(function(e) {
+    tr = document.querySelectorAll('tr')
+    tr.forEach((e) => {
+        e.addEventListener('dblclick', populaCnpjsCpfs);
+    });
+});
+
+function populaCnpjsCpfs(e) {
+    id = e.currentTarget.id
+    alert(e.currentTarget.id)
+    let postData = '&idFaixa=' + id;
+    // dados = { 'url': 'faixa/readFaixa/', 'id': postData }
+    // conectaBdGeral(dados)
+}
+
 

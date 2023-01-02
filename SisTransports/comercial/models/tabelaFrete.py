@@ -5,7 +5,6 @@ from operacional.models.rota import Rota
 from Classes.parceiros import Parceiros as ClsParceiros
 from Classes.utils import dprint
 
-
 class TabelaFrete(models.Model):
     tipoTabela=models.IntegerField(default=1)
     rota_fk=models.ForeignKey(Rota,null=True, on_delete=models.CASCADE,default=None)

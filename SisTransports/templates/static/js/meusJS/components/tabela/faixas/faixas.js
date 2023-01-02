@@ -1,5 +1,6 @@
 function populaFaixa(e) {
     id = e.currentTarget.id
+    $('#idFaixa').val(id);
     let postData = '&idFaixa=' + id;
     dados = { 'url': 'faixa/readFaixa/', 'id': postData }
     conectaBdGeral(dados, function(response) {
@@ -9,24 +10,47 @@ function populaFaixa(e) {
     })
 }
 
-// $('#tabelaFaixas').dblclick(function(e) {
-//     tr = document.querySelectorAll('tr')
-//     tr.forEach((e) => {
-//         e.addEventListener('dblclick', populaFaixa);
-//     });
-// });
+$('#btnDeletaFaixa').on('click', function(e) {
+    if (confirm("Deseja realmente apagar a faixa selecionada ?") == true) {
+        deletaFaixa();
+    }
+        e.preventDefault();
+})
+
+function atualizaTabelaFaixas(response) {
+    switch (response.status) {
+        case 200:
+            alert('Faixa apagada com sucesso !')
+            break;
+        default:
+        alert ('Não foi possível apagar a faixa selecionada !')
+    }
+    populaFaixas($('#numTabela').val())
+}
+
+function deletaFaixa() {
+    if ($('#idFaixa').val(id)){
+        let postData = '&idFaixa=' + id;
+        dados = { 'url': 'faixa/deleteFaixa/', 'id': postData }
+        conectaBdGeral(dados,atualizaTabelaFaixas)
+    }else{
+        alert("Tabela nao foi selecionada")
+    }
+}
 
 $('#tabelaFaixas').dblclick(function(e) {
-    teste("testandpo")
     tr = document.querySelectorAll('tr')
     tr.forEach((e) => {
-        e.addEventListener('dblclick', pegaIconeFaixaClicado);
+        e.addEventListener('dblclick', populaFaixa);
     });
 });
 
-$('#tabelaFaixas tbody').on('mouseover', function() {
-    $('#tabelaFaixas tbody').trigger('click')
-});
+function limpaCamposFaixa(){
+    $('#faixaInicial').val('');
+    $('#faixaFinal').val('');
+    $('#faixaValor').val('');
+    $('#idFaixa').val('');
+}
 
 function tabelaFaixas(response) {
     limpaTabela('#tabelaFaixas td')
@@ -37,8 +61,6 @@ function tabelaFaixas(response) {
             '<td>' + data[i].faixaInicial + '</td>' +
             '<td>' + data[i].faixaFinal + '</td>' +
             '<td>' + data[i].vlrFaixa + '</td>' +
-            '<td>' + '<i class="ti-pencil-alt2"></i>' + '</td>' +
-            '<td>' + '<i class="ti-eraser "></i>' + '</td>' +
             '</tr>'
         $('#tabelaFaixas tbody').append(template)
     }
@@ -49,6 +71,7 @@ function faixa(response) {
         case 200:
             alert('Faixa salva com sucesso !')
             tabelaFaixas(response)
+            limpaCamposFaixa()
             break;
         case 400:
             alert('O campo Faixa ' + response.campo + ' já esta coberto no intervalo ' +
@@ -59,6 +82,8 @@ function faixa(response) {
     }
 }
 
+
+
 $('#btnFaixa').on('click', function(e) {
     if (parseInt($('#faixaInicial').val()) < parseInt($('#faixaFinal').val())) {
         incluiFaixa()
@@ -68,39 +93,14 @@ $('#btnFaixa').on('click', function(e) {
     e.preventDefault();
 })
 
+$('#btnNovaFaixa').on('click', function(e) {
+    limpaCamposFaixa()
+    e.preventDefault();
+})
+
 function populaFaixas(idTabela) {
+    limpaCamposFaixa();
     let postData = '&numTabela=' + idTabela;
     let dados = { 'url': 'faixa/readFaixas/', 'id': postData }
     conectaBdGeral(dados, tabelaFaixas)
 }
-
-function pegaIconeFaixaClicado(e) {
-    icone = e.currentTarget.id;
-    switch (icone[0]) {
-        case 'e':
-            var tr = document.querySelectorAll('i');
-            tr.forEach((e) => {
-                e.addEventListener('click', excTabela);
-            });
-            break;
-        case 'a':
-            var tr = document.querySelectorAll('i');
-            tr.forEach((e) => {
-                e.addEventListener('click', mostrarTabela);
-            });
-            break;
-    }
-};
-
-const teste = (e) =>{
-
-    alert(e)
-
-}
-
-$('#tabelaFaixas').click(function(e) {
-    var icone = document.querySelectorAll('button')
-    icone.forEach((e) => {
-        e.addEventListener('click', pegaIconeFaixaClicado);
-    });
-});
