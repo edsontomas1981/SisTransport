@@ -14,7 +14,7 @@
             <div class="row">
                 <div class="col-sm-12 mb-1 pr-1 pl-0 input-group">
                     <input type="text" class="col-3 form-control form-control-sm" id="numTabela" name="numTabela" 
-                      placeholder="Nº Tabela" aria-label="Search" aria-describedby="basic-addon2" readonly disabled>
+                      placeholder="Nº Tabela" aria-label="Search" aria-describedby="basic-addon2" readonly>
                     <div class="input-group-append">
     
                         <button class="btn btn-success form-control-sm"  id="btnIncluiTabela" type="button">
@@ -112,21 +112,21 @@
                       Cubagem ?
                     <i class="input-helper"></i></label>
                 </div>
-                <div class="col-6 grid-margin pl-0 pr-2 mb-1 border mt-2 rounded">
+                <div class="col-6 grid-margin pl-1 pr-1 mt-1 border mt-2 rounded">
                       <div class="card">
                         <div class="card-body">
                           <div class="row">
                             <div class="">
                                 <h6 class="text-primary">Inserir faixas de peso</h6>       
                             </div> 
-                            <input type="hidden" name="idFaixa" id="idFaixa">
-                            <div class="col-3 pl-0 pr-1 mt-1">
+                            <input type="text" name="idFaixa" id="idFaixa">
+                            <div class="col-2 pl-0 pr-1 mt-1">
                                 <input type="text" name="faixaInicial" id="faixaInicial" class="form-control form-control-sm" placeholder="De (kg)">
                             </div>
-                            <div class="col-3 pl-0 pr-1 mt-1">
+                            <div class="col-2 pl-0 pr-1 mt-1">
                                 <input type="text" name="faixaFinal" id="faixaFinal" class="form-control form-control-sm" placeholder="Até (kg)">
                             </div>
-                              <div class="col-sm-6 pl-0 pr-1 mt-1 input-group">
+                              <div class="col-sm-8 pl-0 pr-1 mt-1 input-group">
                                 <input type="text" class="col-12 form-control form-control-sm" id="faixaValor" name="faixaValor" placeholder="Frete (R$)" aria-label="Search" aria-describedby="basic-addon2" onKeyPress="return(MascaraMoeda(this,'.',',',event))">
                                 <div class="input-group-append">
                                     <button class="btn btn-success form-control-sm" id="btnFaixa" name="btnFaixa" type="button">
@@ -140,11 +140,8 @@
                                     </button>
                                 </div>
                               </div>
-                            {% comment %} <div class="col-3 pl-0 pr-1 mt-1">
-                                <input type="submit" name="btnFaixa" id="btnFaixa" class="btn btn-outline-primary form-control-sm" value="Incluir">
-                            </div> {% endcomment %}
-                        <div class="table-sorter-wrapper col-lg-12 table-responsive  table-sm">
-                              <table id="tabelaFaixas" class="table table-striped">
+                        <div class="table-sorter-wrapper col-lg-12 table-responsive  table-sm pl-1 pr-1 mt-1 ">
+                              <table id="tabelaFaixas" name="tabelaFaixas" class="table table-striped">
                                 <thead>
                                   <tr>
                                     <th class="sortStyle">Peso inicial</th>
@@ -160,24 +157,14 @@
                         </div>
                       </div>
                 </div>                    
-                <div class="col-6 grid-margin pr-0 pl-2 border mt-2 pl-1 mb-1 rounded ">
+                <div class="col-6 grid-margin pr-0 pl-1 border mt-2 pl-1 rounded ">
                       <div class="card">
                         <div class="card-body">
                           <div class="row">
                             <h6 class="text-primary pl-2 mt-2">Cnpj/Cpf relacionados</h6>  
-                            <input type="text" name="idFaixa" id="idFaixa">
-     
                             <div class="col-4 pl-0 pr-1 mt-0">
                                 <input type="text" name="comlCnpj" id="comlCnpj" class="form-control form-control-sm" placeholder="Cnpj/Cpf">
                             </div>                 
-                            {% comment %} <div class="col-3 pl-0 pr-1 mt-0">
-                                <input type="text" name="comlRazao" id="comlRazao" class="form-control form-control-sm" placeholder="Nome/Razão Social" disabled readonly>
-                            </div> {% endcomment %}
-
-                            {% comment %} <div class="col-4 pl-0 pr-1 mt-0">
-                                <input type="submit" name="btnRelacionaTabela" id="btnRelacionaTabela" class="btn btn-outline-primary form-control-sm" value="Incluir">
-                            </div>  {% endcomment %}
-
                             <div class="col-sm-8 pl-0 pr-1 mt-0 input-group">
                               <input type="text" class="col-12 form-control form-control-sm" name="comlRazao" id="comlRazao" placeholder="Nome/Razão Social" disabled readonly>
                               <div class="input-group-append">
@@ -187,14 +174,12 @@
                                   <button class="btn btn-primary form-control-sm" id="btnNovoCnpj" type="button">
                                       <i class="ti-write"></i>   
                                   </button>
-                                  <button class="btn btn-danger form-control-sm" id="btnDeletaFaixa" name="btnDeletaFaixa" type="button">
-                                      <i class="ti-trash"></i>   
-                                  </button>
+
                               </div>
                             </div>                            
 
                             <div class="table-sorter-wrapper col-lg-12 table-responsive table-sm">
-                              <table class="table table-striped sortable-table-2 pl-1 mt-0" id="cnpjsRelacionados">
+                              <table class="table table-striped sortable-table-2 pl-1 mt-0" id="cnpjsRelacionados" name="cnpjsRelacionados">
                                 <thead>
                                   <tr>
                                     <th class="sortStyle">Cnpj/Cpf</th>

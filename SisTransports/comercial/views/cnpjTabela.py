@@ -12,7 +12,6 @@ def cnpjTabela (request):
     elif request.method == "POST" :
         tabela=TabelaFrete()
         tabela.readTabela(request.POST.get('numTabela'))
-        dprint(request.POST)
         tabela.anexaTabelaAoParceiro(request.POST.get('cnpj_cpf'))
         parceiro=tabela.selecionaTabCnpj()
         return JsonResponse({'status': 200,'tabela':tabela.toDict(),

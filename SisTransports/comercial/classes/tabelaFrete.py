@@ -1,7 +1,7 @@
 from comercial.models.tabelaFrete import TabelaFrete as TblFrete
-from Classes.parceiros import Parceiros 
 from operacional.classes.rotas import Rota
 from parceiros.models.parceiros import Parceiros as MdlParceiros
+from parceiros.classes.parceiros import Parceiros
 from Classes.utils import toFloat,checkBox,dprint
 
 class TabelaFrete:
@@ -14,10 +14,10 @@ class TabelaFrete:
             self.tabela.rota_fk=rota.rota 
 
     def salvaOuAtualiza(self,dados):
-
         tabelaBloqueada=False
         icms=False
         cobraCubagem=False
+
         if 'tabBloq' in dados:
             tabelaBloqueada=checkBox(dados['tabBloq'][0])
         if 'icms' in dados:
@@ -55,7 +55,6 @@ class TabelaFrete:
         return 200
 
     def anexaTabelaAoParceiro(self,cnpjParc):
-        dprint(cnpjParc)
         if MdlParceiros.objects.filter(cnpj_cpf=cnpjParc).exists():
             parceiro=MdlParceiros.objects.filter(cnpj_cpf=cnpjParc).get()
             self.tabela.parceiro.add(parceiro)
@@ -95,6 +94,13 @@ class TabelaFrete:
             return tabCnpj
         else:
             return False
+
+    def desvincularCnpjTabela(self,idParceiro):
+        if TblFrete.objects.filter(parceiro__id=idParceiro).exists:
+            self.tabela.parceiro.remove(idParceiro)
+            return True
+        else:
+            return False        
 
     def toDict(self):
         return self.tabela.toDict()

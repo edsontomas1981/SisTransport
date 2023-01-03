@@ -2,8 +2,6 @@ from comercial.models.tabelaFrete import TabelaFrete as TblFrete
 from comercial.models.tabelaFaixa import TabelaFaixa as Faixa
 from Classes.utils import toFloat,dprint
 
-
-
 class TabelaFaixa:
     def __init__(self):
         self.faixa=None
@@ -47,20 +45,11 @@ class TabelaFaixa:
            self.faixa=Faixa.objects.filter(id=idFaixa).get()
            return self.faixa 
 
-    def updateFaixa(self,idFaixa,tblVinvulada,inicial,final,vlrFaixa):
-        if Faixa.objects.filter(id=idFaixa).exists():
-            self.faixa=Faixa.objects.filter(id=idFaixa).get()
-            self.faixa.tblVinculada=tblVinvulada
-            if not self.verificaFaixa(inicial) or not self.verificaFaixa(inicial):
-                self.faixa.faixaInicial= inicial
-                self.faixa.faixaFinal=final
-                self.faixa.vlrFaixa=toFloat(vlrFaixa)
-                self.faixa.save()
-                return 200
-            else:
-                return 400 #Faixa ja coberta
-        else:
-            return 410 #Tabela nao coberta
+    def updateFaixa(self,vlrFaixa):
+        self.faixa.vlrFaixa=vlrFaixa
+        self.faixa.save()
+        return 200
+        
         
     def deleteFaixa(self,idFaixa):
         if Faixa.objects.filter(id=idFaixa).exists():

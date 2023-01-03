@@ -21,6 +21,13 @@ class Parceiros():
         else:
             return False
         
+    def readParceiroId(self,idParceiro):
+        if MdlParceiros.objects.filter(id=idParceiro).exists():
+            self.parceiro=MdlParceiros.objects.filter(id=idParceiro).get()
+            return self.parceiro
+        else:
+            return False    
+        
     def updateParceiro(self,cnpj,razao,fantasia,inscr,obs,endereco_fk):
         self.parceiro.cnpj_cpf=cnpj
         self.parceiro.raz_soc=razao

@@ -3,6 +3,7 @@ from django.contrib.auth.decorators import login_required
 from django.http import JsonResponse
 from comercial.classes.tabelaFrete import TabelaFrete 
 from comercial.classes.tblFaixa import TabelaFaixa
+from Classes.utils import dprint
 
 
 @login_required(login_url='/auth/entrar/')
@@ -11,5 +12,8 @@ def readFaixa (request):
         return render(request, 'preDtc.html')
     elif request.method == "POST" :
         faixa=TabelaFaixa()
-        faixa.readFaixa(request.POST.get('idFaixa'))
-        return JsonResponse({'status': 200,'faixa':faixa.toDict()}) 
+        if faixa.readFaixa(request.POST.get('idFaixa')):
+            return JsonResponse({'status': 200,'faixa':faixa.toDict()}) 
+        else:
+            return JsonResponse({'status': 500}) 
+            

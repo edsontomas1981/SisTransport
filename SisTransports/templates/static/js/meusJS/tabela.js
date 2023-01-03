@@ -64,11 +64,6 @@ function populaRazao(response) {
     $('#comlRazao').val(response.dados[0].raz_soc)
 }
 
-function limpaCnpj(){
-    $('#comlCnpj').val('')
-    $('#comlRazao').val('')
-}
-
 function limpaForm() {
     //se sim tabela esta bloqueada
     $('#numTabela').val('')
@@ -207,9 +202,5 @@ function populaRelatTabelas() {
     limpaForm()
 }
 
-function incluiFaixa() {
-    let postData = '&numTabela=' + $('#numTabela').val();
-    let dados = { 'url': 'faixa/createFaixa/', 'id': postData }
-    conectaBdGeral(dados, faixa)
-}
+
 

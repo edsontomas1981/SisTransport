@@ -1,6 +1,9 @@
+
+
 function populaFaixa(e) {
     id = e.currentTarget.id
     $('#idFaixa').val(id);
+    bloqueiaCamposFaixa()
     let postData = '&idFaixa=' + id;
     dados = { 'url': 'faixa/readFaixa/', 'id': postData }
     conectaBdGeral(dados, function(response) {
@@ -16,6 +19,13 @@ $('#btnDeletaFaixa').on('click', function(e) {
     }
         e.preventDefault();
 })
+
+
+function bloqueiaCamposFaixa(){
+    $('#faixaInicial').attr('disabled', true)
+    $('#faixaFinal').attr('disabled', true)
+
+}
 
 function atualizaTabelaFaixas(response) {
     switch (response.status) {
@@ -38,10 +48,10 @@ function deletaFaixa() {
     }
 }
 
-$('#tabelaFaixas').dblclick(function(e) {
-    tr = document.querySelectorAll('tr')
+$('#tabelaFaixas').click(function(e) {
+    tr = document.querySelectorAll('.tr')
     tr.forEach((e) => {
-        e.addEventListener('dblclick', populaFaixa);
+        e.addEventListener('click', populaFaixa);
     });
 });
 
@@ -50,6 +60,8 @@ function limpaCamposFaixa(){
     $('#faixaFinal').val('');
     $('#faixaValor').val('');
     $('#idFaixa').val('');
+    $('#faixaInicial').attr('disabled', false)
+    $('#faixaFinal').attr('disabled', false)
 }
 
 function tabelaFaixas(response) {
@@ -61,6 +73,11 @@ function tabelaFaixas(response) {
             '<td>' + data[i].faixaInicial + '</td>' +
             '<td>' + data[i].faixaFinal + '</td>' +
             '<td>' + data[i].vlrFaixa + '</td>' +
+            '<td>' + 
+                '<button type="button"class="btn btn-outline-primary btn-sm">'+
+                    '<i class="fa fa-eye" aria-hidden="true"></i>'+
+                '</button>' + 
+            '</td>' +            
             '</tr>'
         $('#tabelaFaixas tbody').append(template)
     }
@@ -82,11 +99,32 @@ function faixa(response) {
     }
 }
 
-
+function alteraFaixa(response) {
+    switch (response.status) {
+        case 200:
+            alert('Faixa alterada com sucesso !')
+            tabelaFaixas(response)
+            limpaCamposFaixa()
+            break;
+        case 400:
+            alert('O campo Faixa ' + response.campo + ' já esta coberto no intervalo ' +
+                response.intervalo.faixaInicial + ' à ' + response.intervalo.faixaFinal)
+            break;
+        default:
+            // code block
+    }
+}
 
 $('#btnFaixa').on('click', function(e) {
+    let idFaixa=$('#idFaixa').val()
     if (parseInt($('#faixaInicial').val()) < parseInt($('#faixaFinal').val())) {
-        incluiFaixa()
+        if (idFaixa){
+            alteraFaixa(idFaixa)          
+        }else{
+            incluiFaixa()
+        }
+
+        
     } else {
         alert('O campo faixa inicial deve ser maior do que o campo faixa final.')
     }
@@ -103,4 +141,17 @@ function populaFaixas(idTabela) {
     let postData = '&numTabela=' + idTabela;
     let dados = { 'url': 'faixa/readFaixas/', 'id': postData }
     conectaBdGeral(dados, tabelaFaixas)
+}
+
+function alteraFaixa(idFaixa) {
+    let postData = '&numTabela=' + $('#numTabela').val();
+    postData += '&idFaixa=' + $('#idFaixa').val();
+    let dados = { 'url': 'faixa/updateFaixa/', 'id': postData }
+    conectaBdGeral(dados, faixa)
+}
+
+function incluiFaixa() {
+    let postData = '&numTabela=' + $('#numTabela').val();
+    let dados = { 'url': 'faixa/createFaixa/', 'id': postData }
+    conectaBdGeral(dados, faixa)
 }
