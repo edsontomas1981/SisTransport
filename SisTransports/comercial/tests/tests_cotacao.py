@@ -44,5 +44,6 @@ class CotacaoTest(TestCase):
     def test_cotacao(self):
         # Cria cotação
         self.cotacao = ClsCotacao()
+        dprint(dir(self.cotacao))
         self.assertEqual(self.cotacao.createCotacao(self.dadosCotacao),200)
         
