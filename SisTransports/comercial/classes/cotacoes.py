@@ -18,6 +18,6 @@ class Cotacao:
 
     def createCotacao(self,dados):
         self.createOrUpdate(dados)
-        return 200
         
+        return 200
         
