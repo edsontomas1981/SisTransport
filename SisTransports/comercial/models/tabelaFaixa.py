@@ -1,7 +1,4 @@
 from django.db import models
-from parceiros.models.parceiros import Parceiros
-from operacional.models.rota import Rota
-from Classes.parceiros import Parceiros as ClsParceiros
 from comercial.models.tabelaFrete import TabelaFrete
 
 class TabelaFaixa(models.Model):

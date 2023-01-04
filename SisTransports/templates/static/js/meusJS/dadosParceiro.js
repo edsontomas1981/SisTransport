@@ -8,7 +8,6 @@ var botaoQueFoiAcionado
 // Reduzir as duas funçoes abaixo em uma só duas funcoes que basicamente fazem a mesma coisa
 function preencheModalClick(cnpj, insc, razao, fantasia, cep,
     endereco, numero, complemento, bairro, cidade, uf) {
-    console.log('Click')
     $('#collapseOne').addClass('show');
     let cnpjModal = $('#' + cnpj).val().replace(/[^\d]+/g, '');
     $('#cnpjMdl').val(cnpjModal);
