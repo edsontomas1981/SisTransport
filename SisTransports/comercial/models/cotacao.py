@@ -11,7 +11,7 @@ class Cotacao(models.Model):
     m3=models.DecimalField (max_digits = 7, decimal_places = 2,default=0.00)
     #Valores de Frete
     totalFrete=models.DecimalField(max_digits = 5, decimal_places = 2,default=0.00)
-    freteValor=models.DecimalField(max_digits = 5, decimal_places = 2,default=0.00)    
+    fretePeso=models.DecimalField(max_digits = 5, decimal_places = 2,default=0.00)    
     adValor=models.DecimalField(max_digits = 5, decimal_places = 2,default=0.00)
     gris=models.DecimalField (max_digits =5, decimal_places = 2,default=0.00)
     despacho=models.DecimalField (max_digits = 5, decimal_places = 2,default=0.00)

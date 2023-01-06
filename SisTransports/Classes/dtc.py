@@ -1,10 +1,12 @@
-from operacional.models.dtc import Dtc  as DctoCarga
+from operacional.models.dtc import Dtc as DctoCarga
 
 class Dtc():
     def __init__(self):
         pass
+    
     def __str__(self):
-        return self.dtc.id
+        return str(self.dtc.to_dict())
+    
     def createDtc(self,remetente,destinatario,redespacho=False,consignatario=False):
         self.dtc=DctoCarga()
         self.dtc.remetente_fk=remetente
@@ -14,6 +16,7 @@ class Dtc():
         if consignatario :
             self.dtc.consignatario_fk=consignatario
         self.dtc.save()
+        return 200
         
     def incluiOuAlteraColeta(self,coleta):
         self.dtc.coleta_fk=coleta
