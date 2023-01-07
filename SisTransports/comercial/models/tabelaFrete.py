@@ -12,6 +12,7 @@ class TabelaFrete(models.Model):
     # rota=models.ManyToManyField(Rota,blank=True)
     descricao=models.CharField(max_length=15)
     icmsIncluso=models.BooleanField(default=True)
+    aliquotaIcms=models.IntegerField(default=0)   
     bloqueada=models.BooleanField(default=False)
     freteMinimo=models.DecimalField (max_digits = 7, decimal_places = 2,default=0.00)
     frete=models.DecimalField(max_digits = 9, decimal_places = 2)
