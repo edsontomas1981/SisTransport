@@ -1,6 +1,5 @@
 from math import ceil
-
-# dados da nf devem ser
+from Classes.utils import dprint, dpprint
 
 
 def pesoACalcular(pesoReal, pesoCubado):
@@ -84,9 +83,10 @@ def calculaFretePeso(fretePorKg, peso):
 
 
 def aplicaIcms(subtotal, aliquotaIcms):
+
     if subtotal > 0:
         if aliquotaIcms > 0:
-            return round(subtotal/aliquotaIcms, 2)
+            return round(float(subtotal)/float(aliquotaIcms), 2)
         else:
             return 411
     else:
@@ -96,5 +96,14 @@ def aplicaIcms(subtotal, aliquotaIcms):
 def calculaFreteValor(vlrNf, percentual):
     return vlrNf*(percentual/100)
 
-def calculaFreteVolume(volumes,vlrFreteVolume):
+
+def calculaFreteVolume(volumes, vlrFreteVolume):
     return volumes*vlrFreteVolume
+
+
+def freteFaixa(faixas, peso):
+    for i in faixas:
+        if round(peso) in range(i.faixaInicial, (i.faixaFinal+1)):
+            return i.vlrFaixa
+    else:
+        return None

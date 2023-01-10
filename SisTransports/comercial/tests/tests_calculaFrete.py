@@ -1,12 +1,16 @@
 from comercial.classes.calculaFrete import calculaAdvalor, calculaGris, pesoACalcular, calculaCubagem, calculaPedagio
-from comercial.classes.calculaFrete import somaSubtotais, geraPercentualAliquota
+from comercial.classes.calculaFrete import somaSubtotais, geraPercentualAliquota,freteFaixa
 from django.test import TestCase, Client
 
 
 class CalculaFreteTest(TestCase):
 
     def setUp(self):
-        pass
+        self.geraFaixas=[{'id': 1, 'faixaInicial': 1, 'faixaFinal': 30, 'vlrFaixa': '10.00'},
+                    {'id': 2, 'faixaInicial': 31, 'faixaFinal': 50, 'vlrFaixa': '20.00'},
+                    {'id': 3, 'faixaInicial': 51, 'faixaFinal': 70, 'vlrFaixa': '30.00'},
+                    {'id': 4, 'faixaInicial': 71, 'faixaFinal': 80, 'vlrFaixa': '40.00'}]
+                    
 
     def test_calculaFrete(self):
 
@@ -47,3 +51,5 @@ class CalculaFreteTest(TestCase):
         self.assertEqual(calculaPedagio(1, 0, 300), 0)  # Vlr Pedagio invalido
         # Peso de calculo Pedagio invalido
         self.assertEqual(calculaPedagio(1, 5, 0), 0)
+        
+            

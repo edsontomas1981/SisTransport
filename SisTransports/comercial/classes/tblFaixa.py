@@ -31,7 +31,7 @@ class TabelaFaixa:
         else:
             self.faixa.faixaInicial= inicial
             self.faixa.faixaFinal=final
-            self.faixa.vlrFaixa=toFloat(vlrFaixa)
+            self.faixa.vlrFaixa=vlrFaixa
             self.faixa.save()
             return 200,None,None
     # seleciona todas as faixas referentes a tabela 
@@ -49,7 +49,6 @@ class TabelaFaixa:
         self.faixa.vlrFaixa=vlrFaixa
         self.faixa.save()
         return 200
-        
         
     def deleteFaixa(self,idFaixa):
         if Faixa.objects.filter(id=idFaixa).exists():
