@@ -1,0 +1,1 @@
+from operacional.test.tests_gerafrete import GeraFreteTest

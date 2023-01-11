@@ -36,7 +36,6 @@ class CotacaoPorPercentualTest(TestCase):
         self.assertEquals(self.objCotacao.cotacao.aliquotaIcms, 0.93) 
         self.assertEquals(self.objCotacao.cotacao.subtotal, 150.00) 
         self.assertEquals(self.objCotacao.cotacao.totalFrete, 161.29)        
-        
     
     def criaTabela(self, dados):
         self.tabela = TabelaFrete()

@@ -34,7 +34,7 @@ class CotacaoPorFaixaTest(TestCase):
         self.objCotacao.calculaFrete(faixas=self.faixas)
         self.assertEquals(self.objCotacao.cotacao.totalFrete,60.00)
         
-        ''' Testa 1º Faixa na cubagem      '''
+        ''' Testa 1º Faixa na cubagem '''
         self.dadosCorretosCotacao = self.objGeraDados.geraDadosCotacao(0,5,1500.30,0.1)
         self.assertEquals(self.objCotacao.createCotacao(self.dadosCorretosCotacao), 200)
         self.objCotacao.calculaFrete(faixas=self.faixas)
@@ -52,7 +52,7 @@ class CotacaoPorFaixaTest(TestCase):
         self.objCotacao.calculaFrete(faixas=self.faixas)
         self.assertEquals(self.objCotacao.cotacao.totalFrete,70.00)   
         
-        ''' Testa escape da faixa para calculo para o frete peso'''
+        ''' Testa escape da faixa para calculo conforme tabela'''
         self.tabela = self.objGeraDados.criaTabela(self.objGeraDados.geraDadosTabela(
                                     1.5, 1, 0, 0, 0, 0, 0, 1, 300, 150, 1, 'off', 'on', 'off', 7))
         

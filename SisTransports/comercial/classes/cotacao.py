@@ -2,15 +2,13 @@ from comercial.models.cotacao import Cotacao as ClsCotacao
 from comercial.classes.calculaFrete import calculaAdvalor, calculaGris, pesoACalcular, calculaCubagem
 from comercial.classes.calculaFrete import somaSubtotais, calculaPedagio, calculaFretePeso, freteFaixa
 from comercial.classes.calculaFrete import aplicaIcms, geraPercentualAliquota, calculaFreteValor, calculaFreteVolume
-from parceiros.models.parceiros import Parceiros
+from comercial.classes.geraFrete import CalculaFrete
 from Classes.utils import dpprint, dprint
-from Classes.dtc import Dtc
-
 
 class Cotacao:
     def __init__(self):
         self.cotacao = ClsCotacao()
-
+        self.geraFrete=CalculaFrete()
     def createCotacao(self, dados):
         return self.criaOuAtualizaCotacao(dados)
 
@@ -30,22 +28,21 @@ class Cotacao:
             return 400
 
     def calculaFrete(self, **faixa):
-
         if faixa:
             self.calculaFreteFaixa(faixa['faixas'])
-            calculoFaixas=self.cotacao.totalFrete
-            if self.cotacao.totalFrete:
-                self.cotacao.totalFrete = calculoFaixas
-            else:
+            if not self.cotacao.totalFrete:
                 self.tipoDeCalculo()
         else:
             self.tipoDeCalculo()
 
     def calculaFreteFaixa(self, faixas):
-        self.cotacao.pesoCubado = calculaCubagem(self.cotacao.m3, self.tabela.fatorCubagem)
-        self.cotacao.pesoCalcular = pesoACalcular(self.cotacao.peso, self.cotacao.pesoCubado)
+        self.cotacao.pesoCubado = calculaCubagem(
+            self.cotacao.m3, self.tabela.fatorCubagem)
+        self.cotacao.pesoCalcular = pesoACalcular(
+            self.cotacao.peso, self.cotacao.pesoCubado)
 
-        self.cotacao.fretePeso = freteFaixa(faixas, int(self.cotacao.pesoCalcular))
+        self.cotacao.fretePeso = freteFaixa(
+            faixas, int(self.cotacao.pesoCalcular))
         if self.cotacao.fretePeso:
             self.adicionaDespacho()
             self.adicionaOutros()
@@ -53,12 +50,13 @@ class Cotacao:
                 self.tabela.aliquotaIcms)
             self.cotacao.adValor = calculaAdvalor(
                 self.tabela.adValor, self.cotacao.vlrNf)
-            self.cotacao.gris = calculaGris(self.tabela.gris, self.cotacao.vlrNf)
+            self.cotacao.gris = calculaGris(
+                self.tabela.gris, self.cotacao.vlrNf)
             self.cotacao.pedagio = calculaPedagio(
                 self.tabela.tipoPedagio, self.tabela.pedagio, self.cotacao.pesoCalcular)
             self.cotacao.subtotal = somaSubtotais(self.cotacao.adValor, self.cotacao.gris,
-                                                self.cotacao.fretePeso, self.cotacao.pedagio,
-                                                self.cotacao.despacho, self.cotacao.outros)
+                                                  self.cotacao.fretePeso, self.cotacao.pedagio,
+                                                  self.cotacao.despacho, self.cotacao.outros)
 
             self.cotacao.aliquotaIcms = geraPercentualAliquota(
                 self.tabela.aliquotaIcms)
