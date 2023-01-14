@@ -71,7 +71,8 @@
                 <div class="form-floating col-3 pl-0 pr-1 mt-1">
                     <select type="text" name="tipoFrete" id="tipoFrete" class="form-control-sm form-select ">
                         <option value="1">por kg</option>
-                        <option value="2">%</option>
+                        <option value="2">percentual</option>
+                        <option value="3">por unidade</option>
                     </select>                
                     <label for="tipoFrete" class="text-primary">Tipo de cálculo</label>
                 </div> 
@@ -119,7 +120,7 @@
                             <div class="">
                                 <h6 class="text-primary">Inserir faixas de peso</h6>       
                             </div> 
-                            <input type="text" name="idFaixa" id="idFaixa">
+                            <input type="hidden" name="idFaixa" id="idFaixa">
                             <div class="col-2 pl-0 pr-1 mt-1">
                                 <input type="text" name="faixaInicial" id="faixaInicial" class="form-control form-control-sm" placeholder="De (kg)">
                             </div>

@@ -3,15 +3,9 @@
 {% load static %}
 
 {% block 'conteudo'%}
-
-<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
-  Launch demo modal
-</button>
-
-
   <form method="POST">
     <div class="row">
-      <div class="col-sm-12">
+      <div class="col-sm-12 col-12">
         <ul class="nav nav-pills nav-pills-primary" id="pills-tab" role="tablist">
           <li class="nav-item pl-0 " role="presentation">
             <button class="nav-link  active" id="pills-dtc-tab" data-bs-toggle="pill" data-bs-target="#pills-dtc" type="button" role="tab" aria-controls="pills-dtc" aria-selected="true">
@@ -23,6 +17,14 @@
               <i class="ti-truck"></i> Coleta
             </button>
           </li>
+          <li class="nav-item pl-0 " role="presentation">
+            <button class="nav-link" id="pills-cotacao-tab" data-bs-toggle="pill" 
+                    data-bs-target="#pills-cotacao" type="button" role="tab" 
+                    aria-controls="pills-cotacao" aria-selected="true">
+
+              <i class="ti-clipboard"></i> Cotação
+            </button>
+          </li>         
           <li class="nav-item pl-0" role="presentation">
             <button class="nav-link" id="pills-nf-tab" data-bs-toggle="pill" 
                     data-bs-target="#pills-nf" type="button" role="tab" 
@@ -35,16 +37,26 @@
       </div>
     </div>
     <div class="tab-content" id="pills-tabContent">
-        <div class="tab-pane fade  show active  " id="pills-dtc" role="tabpanel" 
+        
+      <div class="tab-pane fade  show active  " id="pills-dtc" role="tabpanel" 
             aria-labelledby="pills-dtc-tab">
           {% include 'origDestPreDtc.html' %}
         </div>
+        
         <div class="tab-pane fade" id="pills-coleta" 
             role="tabpanel" aria-labelledby="pills-coleta-tab">
           {% include 'dadosColetaPreDtc.html' %}
         </div>
+
+        <div class="tab-pane fade" id="pills-cotacao" 
+              role="tabpanel" aria-labelledby="pills-cotacao-tab">
+          {% include 'dadosCotacao.html' %}
+        </div>
+
         <div class="tab-pane fade" id="pills-nf" role="tabpanel" aria-labelledby="pills-nf-tab">...</div>
         <div class="tab-pane fade" id="pills-contact" role="tabpanel" aria-labelledby="pills-contact-tab">...</div>
+        <div class="tab-pane fade" id="pills-cotacao" role="tabpanel" aria-labelledby="pills-cotacao-tab">cotacao</div>
+
       </div>
     </div>
   </form>
