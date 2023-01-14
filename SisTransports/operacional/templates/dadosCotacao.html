@@ -1,0 +1,57 @@
+<form method="POST">
+    <div class="row">
+        <div class="input-group col-12 mb-3 mt-0" align="right">
+        
+            <button class="btn btn-secondary btn-rounded form-control-sm " 
+            data-toggle="tooltip" data-placement="top" title="Novo" id="btnNovoColeta">
+            <i class="ti-write"></i>
+            </button>
+        
+            <button type="button" class="btn btn-success btn-rounded  form-control-sm"
+            data-toggle="tooltip" data-placement="top" title="Salvar" id="btnSalvaColeta">
+            <i class="ti-save"></i>
+            </button>
+        
+            <button type="button" class="btn btn-danger btn-rounded form-control-sm" 
+                data-toggle="tooltip" data-placement="top" title="Excluir" 
+                id="btnExcluiColeta">
+                <i class="ti-trash"></i>
+            </button>    
+
+        </div> 
+
+        <div class="row">
+
+            <div class="form-floating mb-3 col-2">
+              <input type="text" class="form-control" id="qtdeCotacao">
+              <label for="qtdeCotacao" class="pl-4">Quantidade</label>
+            </div>
+            <div class="input-group col-2 form-floating mb-3 col-2">
+                <input type="text" class="form-control small  form-control-sm" id="cotacaoM3" name="cotacaoM3" placeholder="M³" aria-label="Search" aria-describedby="basic-addon2">
+                <label for="cotacaoM3" class="pl-4">M³</label>
+                <div class="input-group-append">
+                    <a class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalCalcM3">
+                        M³
+                    </a>
+                </div>
+            </div>              
+
+            <div class="form-floating mb-3 col-2">
+              <input type="text" class="form-control" id="pesoCotacao">
+              <label for="pesoCotacao" class="pl-4">Peso</label>
+            </div>
+
+            <div class="form-floating mb-3 col-2">
+              <input type="text" class="form-control" id="pesoFaturado">
+              <label for="pesoFaturado" class="pl-4">Peso Faturado</label>
+            </div>                          
+
+            <div class="form-floating mb-3 col-2">
+              <input type="text" class="form-control" id="pesoFaturado">
+              <label for="pesoFaturado" class="pl-4">Vlr Nf's</label>
+            </div>                          
+        </div> 
+
+    </div>
+</form>
+    

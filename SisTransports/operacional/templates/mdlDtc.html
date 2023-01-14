@@ -1,63 +1,81 @@
 {% load static %}
 {% load bootstrap %}
+
+
 <form method="POST" >{% csrf_token %}
   <div class="modal" id="mdlRotas" data-bs-backdrop="static" 
       data-bs-keyboard="false" aria-labelledby="staticBackdropLabel" 
       aria-hidden="true">
     <div class="modal-dialog modal-xl" >
       <div class="modal-content">
-         <div class="modal-body">
-                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-          <!-- Tab Nav -->
-          <div class="nav-wrapper position-relative mb-2">
-              <ul class="nav nav-pills nav-fill flex-column flex-md-row" id="tabs-text" role="tablist">
-                  <li class="nav-item">
-                      <a class="nav-link mb-sm-3 mb-md-0 active" id="tabs-text-1-tab" data-bs-toggle="tab" href="#tabs-text-1" role="tab" aria-controls="tabs-text-1" aria-selected="true">Dados Dtc</a>
-                  </li>
-                  <li class="nav-item">
-                      <a class="nav-link mb-sm-3 mb-md-0" id="tabs-text-2-tab" data-bs-toggle="tab" href="#tabs-text-2" role="tab" aria-controls="tabs-text-2" aria-selected="false">Coleta</a>
-                  </li>
-                  <li class="nav-item">
-                      <a class="nav-link mb-sm-3 mb-md-0" id="tabs-text-3-tab" data-bs-toggle="tab" href="#tabs-text-3" role="tab" aria-controls="tabs-text-3" aria-selected="false">Cotação</a>
-                  </li>
-                  <li class="nav-item">
-                      <a class="nav-link mb-sm-3 mb-md-0" id="tabs-text-4-tab" data-bs-toggle="tab" href="#tabs-text-4" role="tab" aria-controls="tabs-text-3" aria-selected="false">Dados Nf</a>
-                  </li>
-                  <li class="nav-item">
-                      <a class="nav-link mb-sm-3 mb-md-0" id="tabs-text-5-tab" data-bs-toggle="tab" href="#tabs-text-5" role="tab" aria-controls="tabs-text-5" aria-selected="false">Messages</a>
-                  </li>
-                  <li class="nav-item">
-                      <a class="nav-link mb-sm-3 mb-md-0" id="tabs-text-6-tab" data-bs-toggle="tab" href="#tabs-text-6" role="tab" aria-controls="tabs-text-6" aria-selected="false">Messages</a>
-                  </li>                                                      
-              </ul>
-          </div>
-          <!-- End of Tab Nav -->
-          <!-- Tab Content -->
-          <div class="card border-0">
-              <div class="card-body p-0">
-                  <div class="tab-content  border-0" id="tabcontent1">
-                      <div class="tab-pane fade show active" id="tabs-text-1" role="tabpanel" aria-labelledby="tabs-text-1-tab">
-                          {% include 'origDestPreDtc.html' %}                        
-                      </div>
-                      <div class="tab-pane fade" id="tabs-text-2" role="tabpanel" aria-labelledby="tabs-text-2-tab">
-                          {% include 'dadosColetaPreDtc.html' %}  
-                      </div>
-                      <div class="tab-pane fade" id="tabs-text-3" role="tabpanel" aria-labelledby="tabs-text-3-tab">
-                          <p>3</p>
-                      </div>
-                      <div class="tab-pane fade" id="tabs-text-4" role="tabpanel" aria-labelledby="tabs-text-4-tab">
-                          <p>4</p>
-                      </div>
-                      <div class="tab-pane fade" id="tabs-text-5" role="tabpanel" aria-labelledby="tabs-text-5-tab">
-                          <p>5</p>
-                      </div>                                                                  
-                      <div class="tab-pane fade" id="tabs-text-6" role="tabpanel" aria-labelledby="tabs-text-6-tab">
-                          <p>6</p>
-                      </div>                      
-                  </div>
-              </div>
-          </div>
-          <!-- End of Tab Content -->
+        <div class="modal-body ">
+        <!-- inicio -->
+            <div class="container ">
+                    <div class="row ">
+                            <div id="tab" class="btn-group " data-toggle="buttons-radio">
+                            <a href="#prices2" class="btn btn-outline-info" data-toggle="tab">Dtc</a>
+                            <a href="#features2" class="btn btn-outline-info" data-toggle="tab">Features</a>
+                            <a href="#requests2" class="btn btn-outline-info" data-toggle="tab">Requests</a>
+                            <a href="#contact2" class="btn btn-outline-info"  data-toggle="tab">Contact</a>
+                            </div>
+                            
+                            <div class="tab-content border-0">
+                            <div class="tab-pane active" id="prices2">
+                                {% include 'origDestPreDtc.html' %}
+                            </div>
+                            <div class="tab-pane" id="features2">
+                                {% include 'dadosColetaPreDtc.html' %}
+                            </div>
+                            <div class="tab-pane" id="requests2">
+                                    <br>
+                                <p class="lead">Requests content</p>
+                                <div class="row">
+                                    <div class="span3">
+                                    <img src="http://placehold.it/200x200">  
+                                    </div>
+                                    <div class="span5">
+                                    <p>There are now two rates of Capital Gains Tax (CGT) for individuals. A standard rate of 18% and a higher rate of 28%. The annual exempt amount is still £10,100 for ’10-’11. For more information on CGT please see the factsheet we have put together, which is available to download below.</p> 
+                                    </div>
+                                    <div class="span4">
+                                    <img src="http://placehold.it/400x200">  
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="tab-pane" id="contact2">
+                                    <br>
+                                <p class="lead">Contact Us</p>
+                                <form class="well span8">
+                                <div class="row">
+                                        <div class="span3">
+                                            <label>First Name</label>
+                                            <input type="text" class="span3" placeholder="Your First Name">
+                                            <label>Last Name</label>
+                                            <input type="text" class="span3" placeholder="Your Last Name">
+                                            <label>Email Address</label>
+                                            <input type="text" class="span3" placeholder="Your email address">
+                                            <label>Subject
+                                            <select id="subject" name="subject" class="span3">
+                                                <option value="na" selected="">Choose One:</option>
+                                                <option value="service">General Customer Service</option>
+                                                <option value="suggestions">Suggestions</option>
+                                                <option value="product">Product Support</option>
+                                            </select>
+                                            </label>
+                                        </div>
+                                        <div class="span5">
+                                            <label>Message</label>
+                                            <textarea name="message" id="message" class="input-xlarge span5" rows="10"></textarea>
+                                        </div>
+                                    
+                                        <button type="submit" class="btn btn-primary pull-right">Send</button>
+                                    </div>
+                                </form>
+                            </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         <!-- Fim -->        
         </div>
       </div>
