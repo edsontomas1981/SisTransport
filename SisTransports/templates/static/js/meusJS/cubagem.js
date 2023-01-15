@@ -1,3 +1,5 @@
+var textResultadoM3
+
 $('#btnVolumes').on('click', function(e) {
     let altura = parseFloat($('#altura').val().replace(",", "."));
     let largura = parseFloat($('#largura').val().replace(",", "."));
@@ -20,14 +22,23 @@ $('#btnSalvarM3').on('click', function(e) {
     salvarM3();
 });
 
+$('#btnM3Cotacao').on('click', function(e) {
+    textResultadoM3 = '#resultM3Cotacao'
+});
+
+$('#btnM3Coleta').on('click', function(e) {
+    textResultadoM3 = '#resultM3'
+});
+
+
 $('#totalM3').on('blur', function(e) {
-    console.log('- focus')
     e.preventDefault();
 });
 
 $('#fechar').on('click', function(e) {
     descartar();
     $('#totalM3').val(0)
+    textResultadoM3 = ''
 
 });
 
@@ -41,19 +52,18 @@ $('#modalCalcM3').on('keypress', function(e) {
 
 
 function salvarM3() {
-    $('#resultM3').val($('#totalM3').val())
+    $(textResultadoM3).val($('#totalM3').val())
     limpaM3()
     $('#totalM3').val(0)
+    textResultadoM3 = ''
     $('#modalCalcM3').modal('hide')
-
 }
 
 function descartar() {
     limpaM3()
     $('#totalM3').val(0)
+    textResultadoM3 = ''
     $('#modalCalcM3').modal('hide')
-
-
 }
 
 

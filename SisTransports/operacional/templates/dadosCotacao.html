@@ -1,7 +1,5 @@
-<form method="POST">
-
+<form method="POST" class="mt-0">
 <input type="hidden" name="idCotacao" id="idCotacao">
-
     <div class="row">
         <div class="form-floating col-2 pl-2 pr-0 mt-1">
             <select type="text" name="rota" id="rota" class="form-control-sm form-select">
@@ -38,13 +36,10 @@
                 <i class="ti-trash"></i>
             </button>    
         </div> 
-                <hr>
-
 <div class="row mt-3 pl-3" >
     <div class="form-group col-6 mb-0 mt-0">
         <div class="form-group row mb-1">
             <p class="text-primary">Dados Gerais</p>
-            <hr>
             <div class="col-sm-7 mb-1 form-group form-floating pl-1 pr-1">
                 <input type="text" class="form-control form-control-sm " 
                     placeholder="Nome" name="nomeCotacao" id="nomeCotacao">
@@ -99,7 +94,7 @@
                     name='resultM3Cotacao' placeholder="M³" aria-label="Search" aria-describedby="basic-addon2">
                     <label class="text-secondary" for="resultM3Cotacao">M³:</label>
                     <div class="input-group-append">
-                        <a class="btn btn-primary" data-bs-toggle="modal" 
+                        <a class="btn btn-primary" data-bs-toggle="modal" id="btnM3Cotacao"
                         data-bs-target="#modalCalcM3">
                             M³
                         </a>
@@ -118,7 +113,6 @@
     <div class="form-group col-6 mb-0 mt-0">
         <div class="form-group row mb-1">
             <p class="text-primary">Cálculo do Frete</p>
-            <hr>
             <div class="col-sm-4 mb-1 form-group pr-1 pl-1 form-floating">
                 <input type="text" class="form-control form-control-sm " 
                     placeholder="Frete Peso" name="fretePesoCotacao" id="fretePesoCotacao">

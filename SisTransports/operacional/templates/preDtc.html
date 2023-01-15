@@ -4,21 +4,26 @@
 
 {% block 'conteudo'%}
   <form method="POST">
-    <div class="row">
+    <div class="row p-0">
       <div class="col-sm-12 col-12">
         <ul class="nav nav-pills nav-pills-primary" id="pills-tab" role="tablist">
           <li class="nav-item pl-0 " role="presentation">
-            <button class="nav-link  active" id="pills-dtc-tab" data-bs-toggle="pill" data-bs-target="#pills-dtc" type="button" role="tab" aria-controls="pills-dtc" aria-selected="true">
+            <button class="nav-link active btn-sm" id="pills-dtc-tab" 
+                    data-bs-toggle="pill" data-bs-target="#pills-dtc" type="button" 
+                    role="tab" aria-controls="pills-dtc" aria-selected="true">
               <i class="ti-layers-alt" ></i> DTC
             </button>
           </li>
-          <li class="nav-item pl-0 " role="presentation">
-            <button class="nav-link" id="pills-coleta-tab" data-bs-toggle="pill" data-bs-target="#pills-coleta" type="button" role="tab" aria-controls="pills-coleta" aria-selected="true">
+          <li class="nav-item pl-0" role="presentation">
+            <button class="nav-link btn-sm" id="pills-coleta-tab" data-bs-toggle="pill" 
+                    data-bs-target="#pills-coleta" type="button" role="tab" 
+                    aria-controls="pills-coleta" aria-selected="true">
+
               <i class="ti-truck"></i> Coleta
             </button>
           </li>
           <li class="nav-item pl-0 " role="presentation">
-            <button class="nav-link" id="pills-cotacao-tab" data-bs-toggle="pill" 
+            <button class="nav-link btn-sm" id="pills-cotacao-tab" data-bs-toggle="pill" 
                     data-bs-target="#pills-cotacao" type="button" role="tab" 
                     aria-controls="pills-cotacao" aria-selected="true">
 
@@ -26,28 +31,25 @@
             </button>
           </li>         
           <li class="nav-item pl-0" role="presentation">
-            <button class="nav-link" id="pills-nf-tab" data-bs-toggle="pill" 
+            <button class="nav-link btn-sm" id="pills-nf-tab" data-bs-toggle="pill" 
                     data-bs-target="#pills-nf" type="button" role="tab" 
                     aria-controls="pills-nf" aria-selected="false">Nota Fiscal</button>
           </li>
           <li class="nav-item pl-0" role="presentation">
-            <button class="nav-link" id="pills-contact-tab" data-bs-toggle="pill" data-bs-target="#pills-contact" type="button" role="tab" aria-controls="pills-contact" aria-selected="false">Contact</button>
+            <button class="nav-link btn-sm" id="pills-contact-tab" data-bs-toggle="pill" data-bs-target="#pills-contact" type="button" role="tab" aria-controls="pills-contact" aria-selected="false">Contact</button>
           </li>
         </ul>
       </div>
     </div>
     <div class="tab-content" id="pills-tabContent">
-        
       <div class="tab-pane fade  show active  " id="pills-dtc" role="tabpanel" 
             aria-labelledby="pills-dtc-tab">
           {% include 'origDestPreDtc.html' %}
         </div>
-        
         <div class="tab-pane fade" id="pills-coleta" 
             role="tabpanel" aria-labelledby="pills-coleta-tab">
           {% include 'dadosColetaPreDtc.html' %}
         </div>
-
         <div class="tab-pane fade" id="pills-cotacao" 
               role="tabpanel" aria-labelledby="pills-cotacao-tab">
           {% include 'dadosCotacao.html' %}
