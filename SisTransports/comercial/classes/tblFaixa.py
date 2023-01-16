@@ -7,7 +7,7 @@ class TabelaFaixa:
         self.faixa=None
     
     def __str__ (self):
-        return self.faixa.toDict()
+        return 'faixa'
 
     def verificaFaixa(self,idFaixa,idTabela):
         valorFaixa=idFaixa['valor']
@@ -57,6 +57,5 @@ class TabelaFaixa:
         else:
             return False   
 
-    def toDict(self):
-        return self.faixa.toDict()
+
     

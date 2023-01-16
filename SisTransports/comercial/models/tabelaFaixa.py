@@ -9,10 +9,10 @@ class TabelaFaixa(models.Model):
     vlrFaixa=models.DecimalField (max_digits = 7, decimal_places = 2,default=0.00)
     
     def toDict(self):
-        tblFrete= {'id':self.id,
+        faixa= {'id':self.id,
                 'faixaInicial':self.faixaInicial,
                 'faixaFinal':self.faixaFinal,
                 'vlrFaixa':self.vlrFaixa
                 }
-        return tblFrete
+        return faixa
     

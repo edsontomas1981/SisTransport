@@ -57,7 +57,7 @@ class GeraDados:
                 'freteMinimo': [freteMinimo], 'tipoTabela': [tipTab],
                 'aliquotaIcms': [aliquotaIcms], 'rota': [self.rota.rota.id]}
 
-    def geraDadosCotacao(self,peso,qtde,vlrNf,m3):
+    def geraDadosCotacao(self, peso, qtde, vlrNf, m3):
         return {'peso': [peso], 'qtde': [qtde], 'vlrNf': [vlrNf], 'm3': [m3],
                 'dtc_fk': [self.dtc.dtc], 'tabela': [self.tabela.tabela]}
 
@@ -74,3 +74,7 @@ class GeraDados:
         faixas = TabelaFaixa()
         return faixas
 
+    def geraRota(self):
+        self.rota = Rota()
+        self.rota.salvaRota('RotaTeste', 'TE', 'ST', 'TE', 'ST')
+        return self.rota

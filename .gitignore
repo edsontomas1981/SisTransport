@@ -1,0 +1,10 @@
+# Ignore as pastas
+/skydash
+/.git
+/.idea
+/.vscode
+/venv
+
+
+# Ignore os arquivos
+descricao pontos e trajetos.html
