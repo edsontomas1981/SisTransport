@@ -1,17 +1,25 @@
 from math import ceil
 from Classes.utils import dprint, dpprint
 
+
 def pesoACalcular(pesoReal, pesoCubado):
-    if pesoReal >= pesoCubado:
-        if pesoReal > 0:
-            return pesoReal
+    if pesoReal and pesoCubado:
+        if pesoReal >= pesoCubado:
+            if pesoReal > 0:
+                return pesoReal
+            else:
+                return pesoReal
         else:
-            return pesoReal
+            if pesoCubado > 0:
+                return pesoCubado
+            else:
+                return pesoCubado
+    elif pesoReal:
+        return pesoReal
+    elif pesoCubado:
+        return pesoCubado
     else:
-        if pesoCubado > 0:
-            return pesoCubado
-        else:
-            return pesoCubado
+        return 0
 
 def calculaAdvalor(percentualAdvalor, vlrNf):
     if vlrNf > 0:
@@ -23,6 +31,7 @@ def calculaAdvalor(percentualAdvalor, vlrNf):
     else:
         return 0
 
+
 def calculaGris(percentualGris, vlrNf):
     if vlrNf > 0:
         if percentualGris > 0:
@@ -33,12 +42,14 @@ def calculaGris(percentualGris, vlrNf):
     else:
         return 0
 
+
 def geraPercentualAliquota(aliquotaIcms):
     if aliquotaIcms <= 0:
         aliquotaIcms = 0
     else:
         icms = 1-(aliquotaIcms/100)
         return round(icms, 2)
+
 
 def calculaCubagem(m3, fatorCubagem):
     if m3 > 0:
@@ -49,6 +60,7 @@ def calculaCubagem(m3, fatorCubagem):
     else:
         return None
 
+
 def calculaPedagio(tipoPedagio, pedagio, pesoFaturado):
     if tipoPedagio == 1:
         pedagioKg = ceil(pesoFaturado/100)
@@ -58,11 +70,10 @@ def calculaPedagio(tipoPedagio, pedagio, pesoFaturado):
     else:
         return None
 
+
 def somaSubtotais(*args):
-    total = 0
-    for subtotal in args:
-        total += subtotal
-    return total
+    total=[subtotal for subtotal in args if subtotal != None]
+    return sum(total)
 
 def calculaFretePeso(fretePorKg, peso):
     if fretePorKg > 0:
@@ -72,6 +83,7 @@ def calculaFretePeso(fretePorKg, peso):
             return None
     else:
         return None
+
 
 def aplicaIcms(subtotal, aliquotaIcms):
 
@@ -83,11 +95,14 @@ def aplicaIcms(subtotal, aliquotaIcms):
     else:
         return 410  # subtotal invalido
 
+
 def calculaFreteValor(vlrNf, percentual):
     return vlrNf*(percentual/100)
 
+
 def calculaFreteVolume(volumes, vlrFreteVolume):
     return volumes*vlrFreteVolume
+
 
 def freteFaixa(faixas, peso):
     for i in faixas:

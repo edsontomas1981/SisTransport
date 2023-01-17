@@ -1,61 +1,66 @@
 from comercial.models.tabelaFrete import TabelaFrete as TblFrete
 from comercial.models.tabelaFaixa import TabelaFaixa as Faixa
-from Classes.utils import toFloat,dprint
+from Classes.utils import toFloat, dprint
+
 
 class TabelaFaixa:
     def __init__(self):
-        self.faixa=None
-    
-    def __str__ (self):
+        self.faixa = None
+
+    def __str__(self):
         return 'faixa'
 
-    def verificaFaixa(self,idFaixa,idTabela):
-        valorFaixa=idFaixa['valor']
-        faixas=self.readFaixas(idTabela)
+    def verificaFaixa(self, idFaixa, idTabela):
+        valorFaixa = idFaixa['valor']
+        faixas = self.readFaixas(idTabela)
         if faixas:
             for i in faixas:
-                if int(valorFaixa) in range (i.faixaInicial,i.faixaFinal+1) :
-                    return True,idFaixa['chave'],i
-        return False,None,None
+                if int(valorFaixa) in range(i.faixaInicial, i.faixaFinal+1):
+                    return True, idFaixa['chave'], i
+        return False, None, None
 
-    def createFaixa(self,tblVinculada,inicial,final,vlrFaixa):
-        faixaInicial = {'valor':inicial,'chave':'Inicial'}
-        faixaFinal = {'valor':final,'chave':'Final'}
-        self.faixa=Faixa() 
-        self.faixa.tblVinculada=tblVinculada
-        checaInicial,campo,faixa=self.verificaFaixa(faixaInicial,tblVinculada.id)
+    def createFaixa(self, tblVinculada, inicial, final, vlrFaixa):
+        faixaInicial = {'valor': inicial, 'chave': 'Inicial'}
+        faixaFinal = {'valor': final, 'chave': 'Final'}
+        self.faixa = Faixa()
+        self.faixa.tblVinculada = tblVinculada
+        checaInicial, campo, faixa = self.verificaFaixa(
+            faixaInicial, tblVinculada.id)
         if not checaInicial:
-            checaFinal,campo,faixa=self.verificaFaixa(faixaFinal,tblVinculada.id)
+            checaFinal, campo, faixa = self.verificaFaixa(
+                faixaFinal, tblVinculada.id)
         if checaInicial or checaFinal:
-            return 400,campo,faixa #Faixa ja coberta 
+            return 400, campo, faixa  # Faixa ja coberta
         else:
-            self.faixa.faixaInicial= inicial
-            self.faixa.faixaFinal=final
-            self.faixa.vlrFaixa=vlrFaixa
+            self.faixa.faixaInicial = inicial
+            self.faixa.faixaFinal = final
+            self.faixa.vlrFaixa = vlrFaixa
             self.faixa.save()
-            return 200,None,None
-    # seleciona todas as faixas referentes a tabela 
-    def readFaixas(self,idTabela):
-        if Faixa.objects.filter(tblVinculada=idTabela).exists():
-           faixas=Faixa.objects.filter(tblVinculada=idTabela).order_by('faixaInicial')
-           return faixas 
-        
-    def readFaixa(self,idFaixa):
-        if Faixa.objects.filter(id=idFaixa).exists():
-           self.faixa=Faixa.objects.filter(id=idFaixa).get()
-           return self.faixa 
+            return 200, None, None
+    # seleciona todas as faixas referentes a tabela
 
-    def updateFaixa(self,vlrFaixa):
-        self.faixa.vlrFaixa=vlrFaixa
+    def readFaixas(self, idTabela):
+        if Faixa.objects.filter(tblVinculada=idTabela).exists():
+           faixas = Faixa.objects.filter(
+               tblVinculada=idTabela).order_by('faixaInicial')
+           return faixas
+
+    def readFaixa(self, idFaixa):
+        if Faixa.objects.filter(id=idFaixa).exists():
+           self.faixa = Faixa.objects.filter(id=idFaixa).get()
+           return self.faixa
+
+    def updateFaixa(self, vlrFaixa):
+        self.faixa.vlrFaixa = vlrFaixa
         self.faixa.save()
         return 200
-        
-    def deleteFaixa(self,idFaixa):
+
+    def deleteFaixa(self, idFaixa):
         if Faixa.objects.filter(id=idFaixa).exists():
             self.faixa = Faixa.objects.get(id=idFaixa).delete()
             return True
         else:
-            return False   
+            return False
 
 
-    
+

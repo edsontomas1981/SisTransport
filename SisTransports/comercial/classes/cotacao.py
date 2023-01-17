@@ -55,17 +55,22 @@ class Cotacao:
         except:
             return 400
 
-    def calculaFrete(self, **faixa):
-        faixas = TabelaFaixa()
-        faix=faixas.readFaixas(self.cotacao.tabela_fk.id)
-        dprint(faix)
+    def calculaFrete(self):
+        faixa = self.buscafaixas()
         if faixa:
             self.calculaFreteFaixa(faixa)
             if not self.cotacao.totalFrete:
                 self.tipoDeCalculo()
         else:
             self.tipoDeCalculo()
-
+            
+    def buscafaixas(self):
+        tblFaixa = TabelaFaixa()
+        faixas=tblFaixa.readFaixas(self.cotacao.tabela_fk.id)
+        if faixas:
+            listaFaixas = [i for i in faixas]
+            return listaFaixas
+        
     # opcao 1
     def calculaFreteValor(self):
         self.adicionaDespacho()
@@ -88,8 +93,7 @@ class Cotacao:
     # opcao 2
 
     def calcularFretePeso(self):
-        self.adicionaDespacho()
-        self.adicionaOutros()
+
         self.cotacao.adValor=calculaAdvalor(
             self.cotacao.tabela_fk.adValor, self.cotacao.vlrNf)
         self.cotacao.gris=calculaGris(
@@ -104,9 +108,12 @@ class Cotacao:
             self.cotacao.tabela_fk.tipoPedagio, self.cotacao.tabela_fk.pedagio, self.cotacao.pesoCalcular)
         self.cotacao.aliquotaIcms=geraPercentualAliquota(
             self.cotacao.tabela_fk.aliquotaIcms)
+        self.adicionaDespacho()
+        self.adicionaOutros()        
         self.cotacao.subtotal=somaSubtotais(self.cotacao.adValor, self.cotacao.gris,
                                               self.cotacao.fretePeso, self.cotacao.pedagio,
                                               self.cotacao.despacho, self.cotacao.outros)
+
         self.calculaIcms()
 
         self.calculaFreteMinimo()
@@ -136,6 +143,7 @@ class Cotacao:
         self.cotacao.pesoCubado=calculaCubagem(
             self.cotacao.m3, self.cotacao.tabela_fk.fatorCubagem)
         self.cotacao.pesoCalcular=pesoACalcular(
+
             self.cotacao.peso, self.cotacao.pesoCubado)
 
         self.cotacao.fretePeso=freteFaixa(
@@ -143,17 +151,14 @@ class Cotacao:
         if self.cotacao.fretePeso:
             self.adicionaDespacho()
             self.adicionaOutros()
-            self.cotacao.aliquotaIcms=geraPercentualAliquota(
-                self.cotacao.tabela_fk.aliquotaIcms)
-            self.cotacao.adValor=calculaAdvalor(
-                self.cotacao.tabela_fk.adValor, self.cotacao.vlrNf)
-            self.cotacao.gris=calculaGris(
-                self.cotacao.tabela_fk.gris, self.cotacao.vlrNf)
-            self.cotacao.pedagio=calculaPedagio(
-                self.cotacao.tabela_fk.tipoPedagio, self.cotacao.tabela_fk.pedagio, self.cotacao.pesoCalcular)
-            self.cotacao.subtotal=somaSubtotais(self.cotacao.adValor, self.cotacao.gris,
-                                                  self.cotacao.fretePeso, self.cotacao.pedagio,
-                                                  self.cotacao.despacho, self.cotacao.outros)
+
+            self.calculaAdvalor()
+            
+            self.calculaGris()
+            
+            self.calculaPedagio()
+            
+            self.calculaSubTotais()
 
             self.calculaIcms()
 
@@ -187,3 +192,26 @@ class Cotacao:
     def calculaFreteMinimo(self):
         if float(self.cotacao.totalFrete) < float(self.cotacao.tabela_fk.freteMinimo):
             self.cotacao.totalFrete=self.cotacao.tabela_fk.freteMinimo
+
+    def calculaSubTotais(self):
+        self.cotacao.subtotal=somaSubtotais(self.cotacao.adValor, self.cotacao.gris,
+                                                  self.cotacao.fretePeso, self.cotacao.pedagio,
+                                                  self.cotacao.despacho, self.cotacao.outros)
+        
+    def calculaPedagio(self):
+        self.cotacao.pedagio=calculaPedagio(
+                self.cotacao.tabela_fk.tipoPedagio, 
+                self.cotacao.tabela_fk.pedagio, self.cotacao.pesoCalcular)
+    
+    def calculaAdvalor(self):
+            self.cotacao.adValor=calculaAdvalor(
+                self.cotacao.tabela_fk.adValor, self.cotacao.vlrNf)
+    
+    def calculaAliquota(self):
+            self.cotacao.aliquotaIcms=geraPercentualAliquota(
+                self.cotacao.tabela_fk.aliquotaIcms)                
+
+    def calculaGris(self):
+            self.cotacao.gris=calculaGris(
+                self.cotacao.tabela_fk.gris, self.cotacao.vlrNf)        
+        

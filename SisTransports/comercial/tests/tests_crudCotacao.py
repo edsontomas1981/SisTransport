@@ -125,26 +125,109 @@ class CrudCotacaoTestCase(TestCase):
         self.assertEquals(self.objCotacao.cotacao.subtotal, 110) 
         self.assertEquals(self.objCotacao.cotacao.totalFrete, 150) 
 
-    def test_calculaFretePorFaixa(self):
+    def test_calculaFretePorFaixaZerado(self):
         
         self.objTabFrete = self.geraDados.criaTabela(
-                self.geraDados.geraDadosTabela(10,2,0,0,0,0,0,1,300,150, 1,'on','on','off',7))
-        
-        self.dadosCotacao = {'peso': [250], 'qtde': [5], 'vlrNf': [1500.00],'m3': [1],
+                self.geraDados.geraDadosTabela(10,1,0,0,0,0,0,1,300,50, 1,'off','on','off',7))
+
+        '''Peso e cubagem zerados usando frete minimo'''
+        self.dadosCotacao = {'peso': [0], 'qtde': [5], 'vlrNf': [1500.00],'m3': [0.00],
                              'dtc_fk': [self.objDtc.dtc], 'tabela': [self.objTabFrete.tabela],
                              'rota': [self.objRota.rota], 'formaDeCalculo': [1], 'numNf': [1]}
         self.assertEquals(self.objCotacao.createCotacao(
-                                        self.dadosCotacao), 200) 
-        dpprint('Cotacao',self.objCotacao.cotacao)
-        dpprint('Tabela',self.objCotacao.cotacao.tabela_fk)        
-
+                                        self.dadosCotacao), 200)                 
         self.geraFaixas()
-        
         self.objCotacao.calculaFrete()
+        self.assertEquals(self.objCotacao.cotacao.totalFrete,50.00) 
+        
+    def test_limiteInicialFaixaPeso(self):
+        
+        self.objTabFrete = self.geraDados.criaTabela(
+                self.geraDados.geraDadosTabela(10,1,0,0,0,0,0,1,300,50, 1,'off','on','off',7))
+
+        '''Peso e cubagem zerados usando frete minimo'''
+        self.dadosCotacao = {'peso': [1], 'qtde': [5], 'vlrNf': [1500.00],'m3': [0.00],
+                             'dtc_fk': [self.objDtc.dtc], 'tabela': [self.objTabFrete.tabela],
+                             'rota': [self.objRota.rota], 'formaDeCalculo': [1], 'numNf': [1]}
+        self.assertEquals(self.objCotacao.createCotacao(
+                                        self.dadosCotacao), 200)                 
+        self.geraFaixas()
+        self.objCotacao.calculaFrete()
+        self.assertEquals(self.objCotacao.cotacao.totalFrete,60.00) 
+        
+    def test_limiteInicialFaixaCubagem(self):
+        self.objTabFrete = self.geraDados.criaTabela(
+                self.geraDados.geraDadosTabela(10,1,0,0,0,0,0,1,300,50, 1,'off','on','off',7))
+        self.dadosCotacao = {'peso': [0], 'qtde': [5], 'vlrNf': [1500.00],'m3': [0.01],
+                             'dtc_fk': [self.objDtc.dtc], 'tabela': [self.objTabFrete.tabela],
+                             'rota': [self.objRota.rota], 'formaDeCalculo': [1], 'numNf': [1]}
+        self.assertEquals(self.objCotacao.createCotacao(
+                                        self.dadosCotacao), 200)                 
+        self.geraFaixas()
+        self.objCotacao.calculaFrete()
+        self.assertEquals(self.objCotacao.cotacao.totalFrete,60.00)   
+
+    def test_meioFaixaPeso(self):
+        self.objTabFrete = self.geraDados.criaTabela(
+                self.geraDados.geraDadosTabela(10,1,0,0,0,0,0,1,300,50, 1,'off','on','off',7))
+        self.dadosCotacao = {'peso': [15.5], 'qtde': [5], 'vlrNf': [1500.00],'m3': [0.00],
+                             'dtc_fk': [self.objDtc.dtc], 'tabela': [self.objTabFrete.tabela],
+                             'rota': [self.objRota.rota], 'formaDeCalculo': [1], 'numNf': [1]}
+        self.assertEquals(self.objCotacao.createCotacao(
+                                        self.dadosCotacao), 200)                 
+        self.geraFaixas()
+        self.objCotacao.calculaFrete()
+        self.assertEquals(self.objCotacao.cotacao.totalFrete,60.00)         
+
+    def test_finalFaixaPeso(self):
+        self.objTabFrete = self.geraDados.criaTabela(
+                self.geraDados.geraDadosTabela(10,1,0,0,0,0,0,1,300,50, 1,'off','on','off',7))
+        self.dadosCotacao = {'peso': [30], 'qtde': [5], 'vlrNf': [1500.00],'m3': [0.00],
+                             'dtc_fk': [self.objDtc.dtc], 'tabela': [self.objTabFrete.tabela],
+                             'rota': [self.objRota.rota], 'formaDeCalculo': [1], 'numNf': [1]}
+        self.assertEquals(self.objCotacao.createCotacao(
+                                        self.dadosCotacao), 200)                 
+        self.geraFaixas()
+        self.objCotacao.calculaFrete()
+        self.assertEquals(self.objCotacao.cotacao.totalFrete,60.00)   
+
+    def test_escapeFreteFaixaPesoFreteMinimo(self):
+        self.objTabFrete = self.geraDados.criaTabela(
+                    self.geraDados.geraDadosTabela(1.5,1,0,0,0,0,0,1,300,150, 1,'off','on','off',7))
+        self.dadosCotacao = {'peso': [71], 'qtde': [5], 'vlrNf': [1500.00],'m3': [0.00],
+                             'dtc_fk': [self.objDtc.dtc], 'tabela': [self.objTabFrete.tabela],
+                             'rota': [self.objRota.rota], 'formaDeCalculo': [1], 'numNf': [1]}
+        self.assertEquals(self.objCotacao.createCotacao(
+                                        self.dadosCotacao), 200)                 
+        self.geraFaixas()
+        self.objCotacao.calculaFrete()
+        self.assertEquals(self.objCotacao.cotacao.totalFrete,150.00)                        
+
+    def test_escapeFreteFaixaPesoFretePeso(self):
+        self.objTabFrete = self.geraDados.criaTabela(
+                    self.geraDados.geraDadosTabela(1.5,1,0,0,0,0,0,1,300,150, 1,'off','on','off',7))
+        self.dadosCotacao = {'peso': [31], 'qtde': [5], 'vlrNf': [1500.00],'m3': [1],
+                             'dtc_fk': [self.objDtc.dtc], 'tabela': [self.objTabFrete.tabela],
+                             'rota': [self.objRota.rota], 'formaDeCalculo': [1], 'numNf': [1]}
+        self.assertEquals(self.objCotacao.createCotacao(
+                                        self.dadosCotacao), 200)                 
+        self.geraFaixas()
+        self.objCotacao.calculaFrete()
+        self.assertEquals(self.objCotacao.cotacao.totalFrete,450.00)
+
+    def test_ultimoLimiteFaixas(self):
+        self.objTabFrete = self.geraDados.criaTabela(
+                    self.geraDados.geraDadosTabela(1.5,1,0,0,0,0,0,1,300,50, 1,'off','on','off',7))
+        self.dadosCotacao = {'peso': [70], 'qtde': [5], 'vlrNf': [1500.00],'m3': [0],
+                             'dtc_fk': [self.objDtc.dtc], 'tabela': [self.objTabFrete.tabela],
+                             'rota': [self.objRota.rota], 'formaDeCalculo': [1], 'numNf': [1]}
+        self.assertEquals(self.objCotacao.createCotacao(
+                                        self.dadosCotacao), 200)                 
+        self.geraFaixas()
+        self.objCotacao.calculaFrete()
+        self.assertEquals(self.objCotacao.cotacao.totalFrete,90.00)                                             
     
     def geraFaixas(self):
-        dpprint('Cotacao',self.objCotacao.cotacao)
-        dpprint('Tabela',self.objCotacao.cotacao.tabela_fk)
         self.geraDados.criaFaixa(1, 30, 60, self.objCotacao.cotacao.tabela_fk)
         self.geraDados.criaFaixa(31, 50,70, self.objCotacao.cotacao.tabela_fk)
         self.geraDados.criaFaixa(51, 60, 80, self.objCotacao.cotacao.tabela_fk)
