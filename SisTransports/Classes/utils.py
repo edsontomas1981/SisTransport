@@ -10,6 +10,12 @@ def checaCampos(request,**kwargs):
             camposVazios.append(nomeCampo)
     return camposVazios
 
+def checaCamposGeral(dados,**kwargs):
+    for key, value in dados.items():
+        campo={key:value}
+        for key1, value1 in campo.items():
+            dprint(key1,value1)
+    
 def verificaCamposObrigatorios(request):
     camposObrigatorios=[]
     if request.POST.get('tipoTabela'):
