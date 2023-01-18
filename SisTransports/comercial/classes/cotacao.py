@@ -71,7 +71,6 @@ class Cotacao:
             listaFaixas = [i for i in faixas]
             return listaFaixas
         
-    # opcao 1
     def calculaFreteValor(self):
         self.adicionaDespacho()
         self.adicionaOutros()
@@ -90,8 +89,7 @@ class Cotacao:
         self.calculaIcms()
 
         self.calculaFreteMinimo()
-    # opcao 2
-
+    
     def calcularFretePeso(self):
 
         self.cotacao.adValor=calculaAdvalor(
@@ -118,7 +116,6 @@ class Cotacao:
 
         self.calculaFreteMinimo()
 
-    # opcao 3
     def calcularFreteVolume(self):
         self.adicionaDespacho()
         self.adicionaOutros()
