@@ -81,6 +81,7 @@ function limpaForm() {
     $('#freteMinimo').val('');
     $('#tipoFrete').val('');
     $('#tipoCobranPedagio').val('');
+    $('#aliquotaIcms').val('');    
     limpaCnpj()
     limpaTabela('#cnpjsRelacionados td');
     limpaTabela('#tabelaFaixas td');
@@ -117,6 +118,8 @@ function populaTabela(response) {
     $('#freteMinimo').val(response.tabela.freteMinimo);
     $('#tipoFrete').val(response.tabela.tipoCalculo);
     $('#tipoCobranPedagio').val(response.tabela.tipoPedagio);
+    $('#aliquotaIcms').val(response.tabela.aliquotaIcms); 
+
 }
 
 function limpaTabela(tabela) {

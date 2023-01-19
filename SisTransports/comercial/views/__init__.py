@@ -11,6 +11,11 @@ from comercial.views.updateFaixa import updateFaixa
 from comercial.views.deleteFaixa import deleteFaixa
 from comercial.views.cnpjTabela import cnpjTabela
 from comercial.views.excluiParceiroTabela import excluiParceiroTabela
+from comercial.views.createCotacao import createCotacao
+from comercial.views.readCotacao import readCotacao
+from comercial.views.deleteCotacao import deleteCotacao
+from comercial.views.updateCotacao import updateCotacao
+
 
 
 

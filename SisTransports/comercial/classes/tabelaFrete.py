@@ -33,15 +33,15 @@ class TabelaFrete:
         self.tabela.tipoCalculo = dados['tipoFrete'][0]
         self.tabela.tipoPedagio = dados['tipoCobranPedagio'][0]
         self.tabela.cubagem = cobraCubagem
-        self.tabela.fatorCubagem = dados['cubagem'][0]
-        self.tabela.gris = dados['gris'][0]
-        self.tabela.freteMinimo = dados['freteMinimo'][0]
-        self.tabela.frete = dados['vlrFrete'][0]
-        self.tabela.adValor = dados['advalor'][0]
-        self.tabela.despacho = dados['despacho'][0]
-        self.tabela.outros = dados['outros'][0]
-        self.tabela.pedagio = dados['pedagio'][0]
-        self.tabela.aliquotaIcms = dados['aliquotaIcms'][0]
+        self.tabela.fatorCubagem = toFloat(dados['cubagem'][0])
+        self.tabela.gris = toFloat(dados['gris'][0])
+        self.tabela.freteMinimo = toFloat(dados['freteMinimo'][0])
+        self.tabela.frete = toFloat(dados['vlrFrete'][0])
+        self.tabela.adValor = toFloat(dados['advalor'][0])
+        self.tabela.despacho = toFloat(dados['despacho'][0])
+        self.tabela.outros = toFloat(dados['outros'][0])
+        self.tabela.pedagio = toFloat(dados['pedagio'][0])
+        self.tabela.aliquotaIcms = toFloat(dados['aliquotaIcms'][0])
         self.anexaRota(dados['rota'][0])
         self.tabela.save()
 

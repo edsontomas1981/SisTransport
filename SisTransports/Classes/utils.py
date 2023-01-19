@@ -48,20 +48,6 @@ def testaCampos(valor, nomeCampo, regrasValidacao):
         if regrasValidacao[nomeCampo]['zero'][0] == False:
             if valor == 0:
                 return True                           
-    # if valor == str:
-    #     if 'tamanhoMinimo' in regrasValidacao[nomeCampo]:
-    #         if regrasValidacao[nomeCampo]['tamanhoMinimo'][0] < len(valor):
-    #             return False
-    #     if 'tamanhoMaximo' in regrasValidacao[nomeCampo]:
-    #         if regrasValidacao[nomeCampo]['tamanhoMaximo'][0] > len(valor):
-    #             return False
-    # if regrasValidacao[nomeCampo]['negativo']:
-    #     if regrasValidacao[nomeCampo]['negativo'][0]:
-    #         return False
-    # if regrasValidacao[nomeCampo]['zero']:
-    #     if regrasValidacao[nomeCampo]['zero'][0] < valor:
-    #         return False
-
 
 def verificaCamposObrigatorios(request):
     camposObrigatorios = []

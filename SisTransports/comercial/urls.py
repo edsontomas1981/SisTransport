@@ -18,4 +18,9 @@ urlpatterns = [
     path('faixa/readFaixas/',viewsComercial.readFaixas,name='readFaixas'),
     path('faixa/updateFaixa/',viewsComercial.updateFaixa,name='updateFaixa'),
     path('faixa/deleteFaixa/',viewsComercial.deleteFaixa,name='deleteFaixa'),
+    path('cotacao/createCotacao/',viewsComercial.createCotacao,name='createCotacao'),
+    path('cotacao/readCotacao/',viewsComercial.readCotacao,name='readCotacao'),
+    path('cotacao/updateCotacao/',viewsComercial.updateCotacao,name='updateCotacao'),
+    path('cotacao/deleteCotacao/',viewsComercial.deleteCotacao,name='deleteCotacao'),
+    
 ]
