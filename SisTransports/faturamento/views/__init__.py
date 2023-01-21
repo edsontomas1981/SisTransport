@@ -1,0 +1,2 @@
+from faturamento.views.faturamento import faturamento
+from faturamento.views.calculaFrete import calculaFrete

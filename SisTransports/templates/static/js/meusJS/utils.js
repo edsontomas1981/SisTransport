@@ -1,14 +1,16 @@
-function GetLinhasClicadas(callback){
-
-    GetLinhasClicadas.prototype.getLinha = function (){
-        var tr = document.querySelectorAll('tr');
-        tr.forEach((e) => {
-            e.addEventListener('click',this.acaoNaRow);
-            });
-    }
-
-    GetLinhasClicadas.prototype.acaoNaRow(e) = function(e){
-        callback(e.currentTarget.id)
-        
-    }
+function conectaBackEnd(dados, callback) {
+    let url = dados.url
+    let postData = $('form').serialize();
+    postData += dados.id;
+    $.ajax({
+        url: url,
+        type: 'POST',
+        data: postData,
+        success: function(response) {
+            callback(response)
+        },
+        error: function(xhr) {
+            console.log('Erro');
+        }
+    });
 }

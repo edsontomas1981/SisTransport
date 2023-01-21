@@ -1,6 +1,6 @@
-from comercial.classes.calculaFrete import calculaAdvalor, calculaGris, pesoACalcular, calculaCubagem
-from comercial.classes.calculaFrete import somaSubtotais, calculaPedagio, calculaFretePeso, freteFaixa
-from comercial.classes.calculaFrete import aplicaIcms, geraPercentualAliquota, calculaFreteValor, calculaFreteVolume
+from faturamento.components.calculaFrete import calculaAdvalor, calculaGris, pesoACalcular, calculaCubagem
+from faturamento.components.calculaFrete import somaSubtotais, calculaPedagio, calculaFretePeso, freteFaixa
+from faturamento.components.calculaFrete import aplicaIcms, geraPercentualAliquota, calculaFreteValor, calculaFreteVolume
 from Classes.utils import dprint
 from comercial.classes.tabelaFrete import TabelaFrete
 

@@ -1,7 +1,7 @@
 from comercial.models.cotacao import Cotacao as ClsCotacao
-from comercial.classes.calculaFrete import calculaAdvalor, calculaGris, pesoACalcular, calculaCubagem
-from comercial.classes.calculaFrete import somaSubtotais, calculaPedagio, calculaFretePeso, freteFaixa
-from comercial.classes.calculaFrete import aplicaIcms, geraPercentualAliquota, calculaFreteValor, calculaFreteVolume
+from faturamento.components.calculaFrete import calculaAdvalor, calculaGris, pesoACalcular, calculaCubagem
+from faturamento.components.calculaFrete import somaSubtotais, calculaPedagio, calculaFretePeso, freteFaixa
+from faturamento.components.calculaFrete import aplicaIcms, geraPercentualAliquota, calculaFreteValor, calculaFreteVolume
 from comercial.classes.geraFrete import CalculaFrete
 from Classes.utils import dpprint, dprint
 from comercial.classes.tblFaixa import TabelaFaixa

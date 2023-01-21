@@ -22,5 +22,5 @@ urlpatterns = [
     path('cotacao/readCotacao/',viewsComercial.readCotacao,name='readCotacao'),
     path('cotacao/updateCotacao/',viewsComercial.updateCotacao,name='updateCotacao'),
     path('cotacao/deleteCotacao/',viewsComercial.deleteCotacao,name='deleteCotacao'),
-    
+
 ]

@@ -163,9 +163,6 @@ $('#salvaParceiro').on('click', function(e) {
     postData += '&cepMdl=' + $('#cepMdl').val()
     $.ajax({
         url: url,
-        beforeSend: function () {
-            $('body').append('<div class="loader">Carregando. Aguarde, por favor.</div>');
-        },
         type: 'POST',
         data: postData,
         success: function(response) {

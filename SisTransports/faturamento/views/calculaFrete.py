@@ -10,4 +10,5 @@ def calculaFrete (request):
     if request.method == 'GET':
         return render(request, 'base.html')
     elif request.method == "POST" :
+        dprint(request.POST)
         return JsonResponse({'status': 200}) 

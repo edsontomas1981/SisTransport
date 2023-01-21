@@ -1,4 +1,5 @@
 from operacional.models.dtc import Dtc as DctoCarga
+from Classes.utils import dprint
 
 class Dtc():
     def __init__(self):
@@ -7,14 +8,14 @@ class Dtc():
     def __str__(self):
         return str(self.dtc.to_dict())
     
-    def createDtc(self,remetente,destinatario,redespacho=False,consignatario=False):
+    def createDtc(self,dados):
         self.dtc=DctoCarga()
-        self.dtc.remetente_fk=remetente
-        self.dtc.destinatario_fk=destinatario
-        if redespacho : 
-            self.dtc.redespacho_fk=redespacho
-        if consignatario :
-            self.dtc.consignatario_fk=consignatario
+        self.dtc.remetente_fk=dados['remetente']
+        self.dtc.destinatario_fk=dados['destinatario']
+        self.dtc.tipoFrete=dados['modalidadeFrete']
+        self.dtc.tomador_fk=dados['tomador']
+        if dados['consignatario'] :
+            self.dtc.consignatario_fk=dados['consignatario']
         self.dtc.save()
         return 200
         
@@ -33,14 +34,13 @@ class Dtc():
             dtc=DctoCarga.objects.filter(id=idDtc).get()
             dtc.delete()
 
-    def updateDtc(self,remetente=None,destinatario=None,redespacho=None,
-                  consignatario=None,tipoFrete=None,rota=None,coleta:object=None):
-        self.dtc.remetente_fk = remetente 
-        self.dtc.destinatario_fk=destinatario
-        self.dtc.redespacho_fk =redespacho
-        self.dtc.consignatario_fk = consignatario         
-        self.dtc.tipoFrete = tipoFrete         
-        self.dtc.rota_fk = rota                     
+    def updateDtc(self,dados,coleta:object=None):
+        self.dtc.remetente_fk=dados['remetente']
+        self.dtc.destinatario_fk=dados['destinatario']
+        self.dtc.tipoFrete=dados['modalidadeFrete']
+        self.dtc.tomadorFrete=dados['tomador']
+        if dados['consignatario'] :
+            self.dtc.consignatario_fk=dados['consignatario']
         self.dtc.save()
         
     def dtcTemColeta(self):

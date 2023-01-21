@@ -10,11 +10,15 @@ class Dtc (models.Model):
     destinatario_fk=models.ForeignKey(Parceiros, on_delete=models.CASCADE, related_name='destDtc')
     redespacho_fk=models.ForeignKey(Parceiros, on_delete=models.CASCADE,null=True, related_name='redespDtc')
     consignatario_fk=models.ForeignKey(Parceiros, on_delete=models.CASCADE,null=True, related_name='consigDtc')
-    tipoFrete=models.CharField(max_length=15, null=True)
+    tomador_fk=models.ForeignKey(Parceiros, on_delete=models.CASCADE,null=True,related_name='tomadoDtc')
+    tipoFrete=models.IntegerField(default=2)
     rota_fk=models.ForeignKey(Rota, on_delete=models.CASCADE, null=True, related_name='rotaDtc')
     
     def to_dict(self):
-        dtc = {'id':self.id}
+        dtc = {'id':self.id,
+               'tipoFrete':self.tipoFrete}
+        if self.tomador_fk :
+            dtc.update({'tomador':self.tomador_fk.to_dict()})
         if self.remetente_fk :
             dtc.update({'remetente':self.remetente_fk.to_dict()})
         if self.destinatario_fk :

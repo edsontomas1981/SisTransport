@@ -9,6 +9,17 @@ class TabelaFrete:
     def __init__(self):
         self.tabela = TblFrete()
 
+    def readTabelas(self,parceiro:object):
+        tabCnpj = []
+        if TblFrete.objects.filter(parceiro__id=parceiro.id):
+            tabelas = TblFrete.objects.filter(
+                parceiro__id=parceiro.id)
+            for tabela in tabelas:
+                tabCnpj.append(tabela.toDict())
+            return tabCnpj
+        else:
+            return False             
+
     def anexaRota(self, idRota):
         rota = Rota()
         rota.readRota(idRota)
@@ -44,6 +55,7 @@ class TabelaFrete:
         self.tabela.aliquotaIcms = toFloat(dados['aliquotaIcms'][0])
         self.anexaRota(dados['rota'][0])
         self.tabela.save()
+
 
     def createTabela(self, dados):
         self.salvaOuAtualiza(dados)
@@ -96,6 +108,8 @@ class TabelaFrete:
             return tabCnpj
         else:
             return False
+        
+   
 
     def desvincularCnpjTabela(self, idParceiro):
         if TblFrete.objects.filter(parceiro__id=idParceiro).exists:
