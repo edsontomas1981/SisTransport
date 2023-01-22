@@ -1,5 +1,5 @@
-from comercial.classes.calculaFrete import calculaAdvalor, calculaGris, pesoACalcular, calculaCubagem, calculaPedagio
-from comercial.classes.calculaFrete import somaSubtotais, geraPercentualAliquota,freteFaixa
+from faturamento.components.calculaFrete import calculaAdvalor, calculaGris, pesoACalcular, calculaCubagem, calculaPedagio
+from faturamento.components.calculaFrete import somaSubtotais, geraPercentualAliquota,freteFaixa
 from django.test import TestCase, Client
 
 

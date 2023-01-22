@@ -6,6 +6,7 @@ $(document).keydown(function(event) {
 });
 
 function funSalvaDtc() {
+
     let url = '/preDtc/saveDtc/'
     let postData = $('form').serialize();
 
@@ -36,7 +37,3 @@ function funSalvaDtc() {
         }
     });
 }
-$('#salvaDtc').on('click', function(e) {
-    funSalvaDtc()
-    e.preventDefault();
-})

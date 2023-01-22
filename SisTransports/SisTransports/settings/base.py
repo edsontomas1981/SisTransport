@@ -49,6 +49,7 @@ INSTALLED_APPS = [
     'parceiros',
     'operacional',
     'comercial',
+    'faturamento',
 ]
 
 MIDDLEWARE = [

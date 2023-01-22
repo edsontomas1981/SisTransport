@@ -1,4 +1,5 @@
 function carregaDtc(response){
+    console.table(response)
     limpaDtc()
     if (response.dtc.remetente){
         completaDtcCnpj(response.dtc.remetente,'cnpjRem', "inscRem", "razaoRem", "fantasiaRem",
@@ -18,12 +19,70 @@ function carregaDtc(response){
         completaDtcCnpj(response.dtc.consignatario,'cnpjConsig', "inscConsig", "razaoConsig", "fantasiaConsig",
          "cepConsig","ruaConsig", "numeroConsig", "complementoConsig", "bairroConsig", "cidadeConsig", "ufConsig")        
     }
+
+    if (response.dtc.tipoFrete){
+     $('#modalidadeFrete').val(response.dtc.tipoFrete)
+    }
     
     if (response.dtc.coleta){
         completaColeta(response.dtc.coleta)
     }
-    
+
+    $('#cnpjTomador').val(response.dtc.tomador.cnpj_cpf)
+    $('#razaoTomador').val(response.dtc.tomador.raz_soc)
 }
+
+$('#modalidadeFrete').on('change', function () {
+    defineTomador($('#modalidadeFrete').val())
+});
+
+$('#cnpjTomador').on('change', function () {
+    defineTomador($('#modalidadeFrete').val())
+});
+
+$('#salvaDtc').on('click', function(e) {
+    defineTomador($('#modalidadeFrete').val())
+    funSalvaDtc()
+    e.preventDefault();
+})
+
+
+function defineTomador(seletor){
+    switch (parseInt(seletor)) {
+        case 1 :
+            $('#cnpjTomador').val($('#cnpjRem').val())
+            $('#razaoTomador').val($('#razaoRem').val())
+            break;
+        case 2 :
+            $('#cnpjTomador').val($('#cnpjDest').val())
+            $('#razaoTomador').val($('#razaoDest').val())
+            break;            
+        case 3 :
+            $('#cnpjTomador').val($('#cnpjConsig').val())
+            $('#razaoTomador').val($('#razaoConsig').val())
+            break;            
+        default:
+            break;
+    }
+}
+
+function carregaTabelaFrete(response){
+    switch (response.dtc.tipoFrete) {
+        case 1 :
+
+            break;
+        case 2 :
+            
+            break;            
+        case 3 :
+            
+            break;            
+
+        default:
+            break;
+    }
+}
+
 function limpaColeta(){
     $('#nf').val('')
     $('#volumes').val('')
@@ -44,6 +103,8 @@ function limpaColeta(){
     $('#obs').val('')
     $('#mercadoria').val('')
     $('#horario').val('')
+    $('#cnpjTomador').val('')
+    $('#razaoTomador').val('')
 
 }
 
@@ -109,7 +170,10 @@ function limpaDtc(){
     limpaParceiro('cnpjRedesp', "inscRedesp", "razaoRedesp", "fantasiaRedesp","cepRedesp","ruaRedesp", "numeroRedesp", 
             "complementoRedesp", "bairroRedesp", "cidadeRedesp", "ufRedesp")  
     limpaParceiro('cnpjConsig', "inscConsig", "razaoConsig", "fantasiaConsig","cepConsig","ruaConsig", "numeroConsig", 
-            "complementoConsig", "bairroConsig", "cidadeConsig", "ufConsig")  
+            "complementoConsig", "bairroConsig", "cidadeConsig", "ufConsig") 
+
+    $('#modalidadeFrete').val(0);
+             
     limpaColeta()
 }
 
@@ -167,3 +231,4 @@ $('#btnNovo').on('click', function(e) {
     $('#numPed').val("")
     limpaDtc()
 });
+

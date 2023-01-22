@@ -51,8 +51,8 @@ class TabelaFrete(models.Model):
                 'tipoPedagio':self.tipoPedagio,
                 'cubagem':self.cubagem,
                 'fatorCubagem':self.fatorCubagem,
-                'tipoTabela':self.tipoTabela
-
+                'tipoTabela':self.tipoTabela,
+                'aliquotaIcms':self.aliquotaIcms
                 }
         return tblFrete
     

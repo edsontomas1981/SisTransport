@@ -77,9 +77,13 @@
                     <label for="tipoFrete" class="text-primary">Tipo de cálculo</label>
                 </div> 
                 <div class="form-floating col-3 pl-0 pr-1 mt-1">
+                  <input type="text" name="aliquotaIcms" id="aliquotaIcms" class="form-control form-control-sm" placeholder="Advalor" onKeyPress="return(MascaraMoeda(this,'.',',',event))">
+                  <label for="advalor" class="text-primary">Aliquota Icms</label>
+                </div>
+                <div class="form-floating col-3 pl-0 pr-1 mt-1">
                   <input type="text" name="advalor" id="advalor" class="form-control form-control-sm" placeholder="Advalor" onKeyPress="return(MascaraMoeda(this,'.',',',event))">
                   <label for="advalor" class="text-primary">Advalor</label>
-                </div>
+                </div>                
                 <div class="form-floating col-3 pl-0 pr-0 mt-1">
                     <input type="text" name="gris" id="gris" class="form-control form-control-sm" placeholder="Gris"onKeyPress="return(MascaraMoeda(this,'.',',',event))">
                     <label for="gris" class="text-primary">Gris:</label>
@@ -96,18 +100,18 @@
                     <input type="text" name="pedagio" id="pedagio" class="form-control form-control-sm" placeholder="Pedágio"onKeyPress="return(MascaraMoeda(this,'.',',',event))">
                     <label for="pedagio" class="text-primary">Pedágio:</label>
                 </div>
-                <div class="form-floating col-3 pl-0 pr-0 mt-1">
+                <div class="form-floating col-2 pl-0 pr-0 mt-1">
                     <select type="text" name="tipoCobranPedagio" id="tipoCobranPedagio" class="form-control-sm form-select ">
                         <option value="1">por Cte</option>
                         <option value="2">a cada 100 kg</option>
                     </select>             
                     <label for="tipoCobranPedagio" class="text-primary">Tipo Pedágio</label>   
                 </div>
-                <div class="form-floating col-3 pl-1 pr-1 mt-1">
+                <div class="form-floating col-2 pl-1 pr-1 mt-1">
                     <input type="text" name="cubagem" id="cubagem" class="form-control form-control-sm" placeholder="Fator cubagem" onKeyPress="return(MascaraMoeda(this,'.',',',event))">
                     <label for="cubagem" class="text-primary">Fator cubagem:</label>
                 </div>
-                <div class="form-check form-check-primary col-3 pl-5 pr-0 mt-4">
+                <div class="form-check form-check-primary col-2 pl-5 pr-0 mt-4">
                     <label class="form-check-label">
                       <input type="checkbox" class="form-check-input" checked="" id="cobraCubagem" name="cobraCubagem">
                       Cubagem ?

@@ -13,7 +13,7 @@ def readFaixa (request):
     elif request.method == "POST" :
         faixa=TabelaFaixa()
         if faixa.readFaixa(request.POST.get('idFaixa')):
-            return JsonResponse({'status': 200,'faixa':faixa.toDict()}) 
+            return JsonResponse({'status': 200,'faixa':faixa.faixa.toDict()}) 
         else:
             return JsonResponse({'status': 500}) 
             

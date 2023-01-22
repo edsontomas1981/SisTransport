@@ -8,7 +8,7 @@ class TabelaFaixa:
         self.faixa = None
 
     def __str__(self):
-        return 'faixa'
+        return self.faixa.toDict()
 
     def verificaFaixa(self, idFaixa, idTabela):
         valorFaixa = idFaixa['valor']
@@ -32,9 +32,9 @@ class TabelaFaixa:
         if checaInicial or checaFinal:
             return 400, campo, faixa  # Faixa ja coberta
         else:
-            self.faixa.faixaInicial = inicial
-            self.faixa.faixaFinal = final
-            self.faixa.vlrFaixa = vlrFaixa
+            self.faixa.faixaInicial = toFloat(inicial)
+            self.faixa.faixaFinal = toFloat(final)
+            self.faixa.vlrFaixa = toFloat(vlrFaixa)
             self.faixa.save()
             return 200, None, None
     # seleciona todas as faixas referentes a tabela
