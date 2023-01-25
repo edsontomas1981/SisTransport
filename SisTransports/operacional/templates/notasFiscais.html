@@ -1,0 +1,125 @@
+<div class="row">
+    <div class="col-12">
+        <div class="row pl-0">
+            <div class="form-floating mb-3 col-sm-4 pl-1" >
+                <input type="text" class="form-control" id="chaveAcessoNf" placeholder="Data de emissão">
+                <label for="chaveAcessoNf" >Chave de  acesso</label>
+            </div>
+
+            <div class="col-2">
+                <div class="form-floating mb-3">
+                    <input type="text" class="form-control" id="numNf" placeholder="Data de emissão">
+                    <label for="numNf">Nº Nota Fiscal</label>
+                </div>
+            </div>
+            <div class="col-2">
+                <div class="form-floating mb-3">
+                    <input type="date" class="form-control" id="dataEmissaoNf" placeholder="Data de emissão">
+                    <label for="dataEmissaoNf">Data de emissão</label>
+                </div>
+            </div>
+            <div class="col-2">
+                <div class="form-floating mb-3">
+                    <input type="text" class="form-control" id="naturezNf" placeholder="Natureza">
+                    <label for="naturezNf">Natureza</label>
+                </div>
+            </div>
+            <div class="col-2">
+                <div class="form-floating mb-3">
+                    <select class="form-select" id="especieNf" aria-label="especie nf">
+                      <option selected>Espécie</option>
+                      <option value="1">One</option>
+                      <option value="2">Two</option>
+                      <option value="3">Three</option>
+                    </select>
+                    <label for="especieNf">Espécie</label>
+                  </div>
+            </div>            
+        </div> 
+    </div>
+    <div class="col-2">
+        <div class="form-floating mb-3">
+            <select class="form-select" id="Tipo Documento" aria-label="especie nf">
+              <option selected>Tipo de Documento</option>
+              <option value="1">NF-e</option>
+              <option value="2">Outros</option>
+            </select>
+            <label for="Tipo Documento">Espécie</label>
+          </div>
+    </div> 
+    <div class="col-2">
+        <div class="form-floating mb-3">
+            <input type="text" class="form-control" id="volumeNf" placeholder="Data de emissão">
+            <label for="volumeNf">Vols</label>
+        </div>
+    </div>
+    <div class="col-2">
+        <div class="form-floating mb-3">
+            <input type="text" class="form-control" id="pesoNf" placeholder="Data de emissão">
+            <label for="pesoNf">Peso</label>
+        </div>
+    </div>   
+    <div class="col-sm-2 mb-3 pr-1 pl-1 form-group form-floating">
+        <div class="input-group form-group form-floating">
+            <input type="text" class="form-control small  form-control-sm" id='resultM3Peso' 
+            name='resultM3Peso' placeholder="M³" aria-label="Search" aria-describedby="basic-addon2">
+            <label class="text-secondary" for="resultM3Peso">M³:</label>
+            <div class="input-group-append">
+                <a class="btn btn-primary" data-bs-toggle="modal" id="btnM3Peso"
+                data-bs-target="#modalCalcM3">
+                    M³
+                </a>
+            </div>
+        </div>
+    </div>
+    <div class="col-2">
+        <div class="form-floating mb-3">
+            <input type="text" class="form-control" id="Valor Nf" placeholder="Data de emissão">
+            <label for="Valor Nf">R$</label>
+        </div>
+    </div>    
+    <div class="col-2 pl-0"  align="right"> 
+        <div class="input-group col- mb-3 mt-1 ">
+            <button type="button" class="btn btn-success"
+            data-toggle="tooltip" data-placement="top" title="Salvar" id="btnSalvaColeta">
+            <i class="ti-save"></i>
+            </button>
+            <button type="button" class="btn btn-danger" 
+                data-toggle="tooltip" data-placement="top" title="Excluir" 
+                id="btnExcluiColeta">
+                <i class="ti-trash"></i>
+            </button>    
+        </div>   
+    </div>
+    
+    <div class="col-12">
+        <table class="table table-sm">
+            <thead>
+              <tr>
+                <th scope="col">Nota Fiscal</th>                
+                <th scope="col">Volumes</th>
+                <th scope="col">Peso</th>
+                <th scope="col">M³</th>  
+                <th scope="col">Valor Nf</th>                
+                <th scope="col">Natureza</th>
+                <th scope="col">Tipo de Documento</th>
+                <th scope="col"></th>
+                <th scope="col"></th>                
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>83694</td>
+                <td>79</td>
+                <td>145</td>
+                <td>3,45</td>
+                <td>R$ 887.71</td>
+                <td>Diversos</td>
+                <td>NF-e</td>
+                <td><label class="badge badge-danger btn btn-danger">Excluir</label></td>
+                <td><label class="badge badge-primary btn btn-primary">Alterar</label></td>
+              </tr>
+            </tbody>
+          </table>        
+    </div>
+</div>

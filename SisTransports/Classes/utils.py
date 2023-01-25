@@ -2,6 +2,7 @@
 # sendo identificacaoCampo e o nome vindo da requisição
 # e nome campo e uma frase mais agradavel para retorno da requisição
 from termcolor import colored
+import re
 
 
 def checaCampos(request, **kwargs):
@@ -20,34 +21,18 @@ def checaCamposGeral(request, **kwargs):
 
     return camposInvalidos
 
-def testaCampos(valor, nomeCampo, regrasValidacao):
-        
-    if 'tipoDado' in regrasValidacao[nomeCampo]:
-        if regrasValidacao[nomeCampo]['tipoDado'][0] != type(valor):
-            return True
-        
-    if not str(valor).isnumeric():
-        if 'tamanhoMinimo' in regrasValidacao[nomeCampo]:
-            if len(valor) < regrasValidacao[nomeCampo]['tamanhoMinimo'][0] :
-                return True   
-        if 'tamanhoMaximo' in regrasValidacao[nomeCampo]:
-            if len(valor)> regrasValidacao[nomeCampo]['tamanhoMaximo'][0]:
-                return True                  
-        
-    if 'obrigatorio' in regrasValidacao[nomeCampo]:   
-        if regrasValidacao[nomeCampo]['obrigatorio'][0] == True:
-            if valor == '':
-                return True
-            
-    if 'negativo' in regrasValidacao[nomeCampo]: 
-        if regrasValidacao[nomeCampo]['negativo'][0] == False:
-            if valor < 0:
-                return True 
-
-    if 'zero' in regrasValidacao[nomeCampo]: 
-        if regrasValidacao[nomeCampo]['zero'][0] == False:
-            if valor == 0:
-                return True                           
+def testaCampos(dado, tipo_dado):
+    if isinstance(dado, tipo_dado):
+        if tipo_dado == str:
+            if not dado.strip():
+                return "Campo não pode ser vazio"
+        elif tipo_dado == int or tipo_dado == float:
+            if dado <= 0:
+                return "Valor não pode ser negativo ou zero"
+        return True
+    else:
+        return "Tipo de dado inválido"
+                   
 
 def verificaCamposObrigatorios(request):
     camposObrigatorios = []
@@ -65,12 +50,17 @@ def verificaCamposObrigatorios(request):
 
 
 def toFloat(stringToFloat):
-    if ',' in stringToFloat:
-        stringToFloat = stringToFloat.replace(".", "")
-        stringToFloat = stringToFloat.replace(",", ".")
-        stringToFloat = float(stringToFloat)
+    if isinstance(stringToFloat,str ):
+        dprint(list(stringToFloat))
+        if ',' in list(stringToFloat):
+            stringToFloat = stringToFloat.replace(".", "")
+            stringToFloat = stringToFloat.replace(",", ".")
+            stringToFloat = float(stringToFloat)
 
-    return stringToFloat
+    if stringToFloat:
+        return stringToFloat
+    else:
+        return 0
 
 
 def checkBox(check):
@@ -94,7 +84,7 @@ def checaUf(uf):
 def dprint(*args):
     for i in args:
         print(colored('********************************************', 'red'))
-        print(colored(i, 'cyan'))
+        print(colored(i, 'purple'))
 
 
 def dpprint(titulo, *args):

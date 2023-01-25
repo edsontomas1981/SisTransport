@@ -1,0 +1,141 @@
+<div class="row mt-1 text-primary">
+        <div class="col-6">
+            <div class="row">
+                <div class="col-2 pl-1 pr-1">
+                    <div class="form-floating mb-1">
+                        <input type="text" class="form-control" id="ufOrigRastreamento" placeholder="Uf Origem" readOnly>
+                        <label for="ufOrigRastreamento" >Uf Origem</label>
+
+                    </div>
+                </div>
+                <div class="col-4 pl-1 pr-1">
+                    <div class="form-floating mb-1 pl-0 pr-0">
+                        <input type="text" class="form-control" id="cidadeOrigRastreamento" placeholder="Cidade Origem" readOnly>
+                        <label for="cidadeOrigRastreamento" >Cidade Origem</label>
+                    </div>
+                </div>
+                <div class="col-2  pl-1 pr-1">
+                    <div class="form-floating mb-1">
+                        <input type="text" class="form-control" id="ufAtualRastreamento" placeholder="Uf atual" readOnly>
+                        <label for="ufAtualRastreamento" >Uf Atual</label>                        
+                    </div>
+                </div>
+                <div class="col-4  pl-1 pr-0">
+                    <div class="form-floating mb-1">
+                        <input type="text" class="form-control" id="cidadeAtualRastreamento" placeholder="Cidade atual" readOnly>
+                        <label for="cidadeAtualRastreamento" >Cidade atual</label>                        
+                    </div>
+                </div>                
+                <div class="col-12  pl-1 pr-0">
+                    <div class="embed-responsive embed-responsive-16by9">
+                        <iframe class="embed-responsive-item" 
+                        src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d14031.907936344301!2d-46.659898!3d-23.5505213!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x28f1d33eb30a08d9!2sAv.+Paulista%2C+S%C3%A3o+Paulo+-+SP!5e0!3m2!1spt-BR!2sbr!4v1587836111637!5m2!1spt-BR!2sbr&zoom=7"></iframe>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-6">
+            <div class="row">
+                <div class="col-3 pl-1 pr-1">
+                    <div class="form-floating mb-1">
+                        <input type="date" class="form-control" id="prevChegadaRastreamento" placeholder="Uf Origem" readOnly>
+                        <label for="prevChegadaRastreamento" >Previsao de chegada</label>                        
+                    </div>
+                </div>
+                <div class="col-2 pl-0 pr-1">
+                    <div class="form-floating mb-1 pl-0 pr-0">
+                        <input type="text" class="form-control" id="ufDestRastreamento" placeholder="Cidade Origem" readOnly>
+                        <label for="ufDestRastreamento">Uf Destino</label>                        
+                    </div>
+                </div>
+                <div class="col-7  pl-0 pr-1">
+                    <div class="form-floating mb-1">
+                        <input type="text" class="form-control" id="cidadeDestRastreamento" placeholder="Uf atual" readOnly>
+                        <label for="cidadeAtualRastreamento" >Cidade destino</label>                        
+                    </div>
+                </div>   
+
+                <div class="col-3 pl-1 pr-1">
+                    <div class="form-floating mb-1">
+                        <input type="date" class="form-control" id="dataOcorrencia" placeholder="Uf Origem">
+                        <label for="dataOcorrencia" >Dt. Ocorrência</label>                        
+                    </div>
+                </div>
+                <div class="col-2 pl-0 pr-1">
+                    <div class="form-floating mb-1 pl-0 pr-0">
+                        <input type="time" class="form-control" id="horaOcorrencia" placeholder="Cidade Origem">
+                        <label for="horaOcorrencia">Hr. Ocorrência</label>                        
+                    </div>
+                </div>
+                <div class="form-floating col-7 pl-0 pr-1 mt-0">
+                    <select type="text" name="tabelaCotacao" id="ocorrencia" class="form-control-sm form-select">
+                        <option value="1">Selecione Ocorrência</option>
+                    </select>
+                    <label for="ocorrencia">Ocorrência:</label>
+                </div>          
+                <div class="col-6 pl-1   pr-1">
+                    <div class="form-floating mb-1 pl-0 pr-0">
+                        <input type="text" class="form-control" id="obsOcorrencia" placeholder="Cidade Origem">
+                        <label for="obsOcorrencia">Observação</label>                        
+                    </div>
+                </div> 
+                <div class="col-3 pl-0 pr-1">
+                    <div class="form-floating mb-0 pl-0 pr-0">
+                       <button class="btn btn-outline-primary btn-lg" id="btnGeraOcorrencia">Gerar</button>
+                    </div>
+                </div>  
+                <div class="col-3 pl-0 pr-1">
+                    <div class="form-floating mb-0 pl-0 pr-0">
+                       <button class="btn btn-outline-danger btn-lg" id="btnGeraOcorrencia">Excluir</button>
+                    </div>
+                </div>  
+
+                <div class="col-12 pl-1 pr-1">
+                    <div class="table-responsive table-sm" id="tabelaRastreamento">
+                        <table class="table table-hover" >
+                          <thead>
+                            <tr>
+                              <th>Data</th>
+                              <th>Ocorrência</th>
+                              <th>Sale</th>
+                              <th>Status</th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            <tr>
+                              <td>Jacob</td>
+                              <td>Photoshop</td>
+                              <td class="text-danger"> 28.76% <i class="ti-arrow-down"></i></td>
+                              <td><label class="badge badge-danger">Pending</label></td>
+                            </tr>
+                            <tr>
+                              <td>Messsy</td>
+                              <td>Flash</td>
+                              <td class="text-danger"> 21.06% <i class="ti-arrow-down"></i></td>
+                              <td><label class="badge badge-warning">In progress</label></td>
+                            </tr>
+                            <tr>
+                              <td>John</td>
+                              <td>Premier</td>
+                              <td class="text-danger"> 35.00% <i class="ti-arrow-down"></i></td>
+                              <td><label class="badge badge-info">Fixed</label></td>
+                            </tr>
+                            <tr>
+                              <td>Peter</td>
+                              <td>After effects</td>
+                              <td class="text-success"> 82.00% <i class="ti-arrow-up"></i></td>
+                              <td><label class="badge badge-success">Completed</label></td>
+                            </tr>
+                            <tr>
+                              <td>Dave</td>
+                              <td>53275535</td>
+                              <td class="text-success"> 98.05% <i class="ti-arrow-up"></i></td>
+                              <td><label class="badge badge-warning">In progress</label></td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>                    
+                </div>               
+        </div>
+    </div>                   
+</div>

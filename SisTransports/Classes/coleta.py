@@ -1,6 +1,6 @@
 from operacional.models.coleta import Coleta  as mdlColeta
 from operacional.models.dtc import Dtc
-
+from Classes.utils import dprint,toFloat
 
 class Coleta(): 
     def __init__(self):
@@ -15,7 +15,7 @@ class Coleta():
         self.coleta.volume=volume
         self.coleta.peso=peso
         self.coleta.valor=float(valor)
-        self.coleta.cubM3 if m3 else 0
+        self.coleta.cubM3 =toFloat(m3)
         self.coleta.veiculo=veiculo
         self.coleta.tipo=tipo
         self.coleta.horario=horario
@@ -44,12 +44,11 @@ class Coleta():
                  comp=None,bairro=None,cidade=None,uf=None,nome=None,contato=None,
                  mercadoria=None):
         
-        # self.coleta=mdlColeta.objects.filter(id=self.id).get()
         self.coleta.notaFiscal=notaFiscal
         self.coleta.volume=volume
         self.coleta.peso=peso
-        self.coleta.valor=float(valor)
-        self.coleta.cubM3 if m3 else 0
+        self.coleta.valor=toFloat(valor)
+        self.coleta.cubM3 =toFloat(m3)
         self.coleta.veiculo=veiculo
         self.coleta.tipo=tipo
         self.coleta.horario=horario

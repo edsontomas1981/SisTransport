@@ -1,6 +1,8 @@
 function carregaDtc(response){
     console.table(response)
     limpaDtc()
+    $('#numDtc').val(response.dtc.id)
+
     if (response.dtc.remetente){
         completaDtcCnpj(response.dtc.remetente,'cnpjRem', "inscRem", "razaoRem", "fantasiaRem",
          "cepRem","ruaRem", "numeroRem", "complementoRem", "bairroRem", "cidadeRem", "ufRem")        

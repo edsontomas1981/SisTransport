@@ -14,3 +14,20 @@ function conectaBackEnd(dados, callback) {
         }
     });
 }
+
+function capturaDadosNaRowClicada() {
+    // Adiciona um evento de clique a cada linha da tabela
+    $("table tr").click(function() {
+        // Captura os dados das células
+        var data = $(this).find("td").map(function() {
+          return $(this).text();
+        }).get();
+    
+        // Exibe os dados capturados no console
+        console.log(data);
+      });
+}
+
+$(document).ready(function() {
+    capturaDadosNaRowClicada()
+});

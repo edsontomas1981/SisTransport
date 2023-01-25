@@ -9,14 +9,14 @@
       <div class="col-sm-12 col-12">
         <ul class="nav nav-pills nav-pills-primary" id="pills-tab" role="tablist">
           <li class="nav-item pl-0 " role="presentation">
-            <button class="nav-link active btn-sm" id="pills-dtc-tab" 
+            <button class="nav-link active" id="pills-dtc-tab" 
                     data-bs-toggle="pill" data-bs-target="#pills-dtc" type="button" 
                     role="tab" aria-controls="pills-dtc" aria-selected="true">
               <i class="ti-layers-alt" ></i> DTC
             </button>
           </li>
           <li class="nav-item pl-0" role="presentation">
-            <button class="nav-link btn-sm" id="pills-coleta-tab" data-bs-toggle="pill" 
+            <button class="nav-link" id="pills-coleta-tab" data-bs-toggle="pill" 
                     data-bs-target="#pills-coleta" type="button" role="tab" 
                     aria-controls="pills-coleta" aria-selected="true">
 
@@ -24,7 +24,7 @@
             </button>
           </li>
           <li class="nav-item pl-0 " role="presentation">
-            <button class="nav-link btn-sm" id="pills-cotacao-tab" data-bs-toggle="pill" 
+            <button class="nav-link" id="pills-cotacao-tab" data-bs-toggle="pill" 
                     data-bs-target="#pills-cotacao" type="button" role="tab" 
                     aria-controls="pills-cotacao" aria-selected="true">
 
@@ -32,43 +32,31 @@
             </button>
           </li>         
           <li class="nav-item pl-0" role="presentation">
-            <button class="nav-link btn-sm" id="pills-nf-tab" data-bs-toggle="pill" 
+            <button class="nav-link" id="pills-nf-tab" data-bs-toggle="pill" 
                     data-bs-target="#pills-nf" type="button" role="tab" 
                     aria-controls="pills-nf" aria-selected="false">Nota Fiscal</button>
           </li>
           <li class="nav-item pl-0" role="presentation">
-            <button class="nav-link btn-sm" id="pills-contact-tab" data-bs-toggle="pill" data-bs-target="#pills-contact" type="button" role="tab" aria-controls="pills-contact" aria-selected="false">Contact</button>
+            <button class="nav-link" id="pills-calculoFrete-tab" data-bs-toggle="pill" 
+            data-bs-target="#pills-calculoFrete" type="button" role="tab" aria-controls="pills-calculoFrete" 
+            aria-selected="false">Cálculo</button>
           </li>
+          <li class="nav-item pl-0" role="presentation">
+            <button class="nav-link" id="pills-rastreamento-tab" data-bs-toggle="pill" data-bs-target="#pills-rastreamento" 
+            type="button" role="tab" aria-controls="pills-rastreamento" 
+            aria-selected="false">Rastreamento</button>
+          </li>          
+          <li class="nav-item pl-0" role="presentation">
+            <button class="nav-link" id="pills-contact-tab" data-bs-toggle="pill" 
+            data-bs-target="#pills-contact" type="button" role="tab" 
+            aria-controls="pills-contact" aria-selected="false">Outros</button>
+          </li>          
           <li>
-            <!-- Barra de Buscar e botoes de acões -->
-            <div class=" form-group col-12 mt-3 pl-1" align="right">
-              <div class="settings-trigger">
-                  <div class="input-group col-12 pl-1 ">
-                    <input type="text" class="form-control small  
-                          form-control-sm m3" placeholder="Buscar ..." id="numPed" name="numPed">
-                    <div class="input-group-append">
-                        <button class="btn btn-primary form-control-sm"
-                        data-toggle="tooltip" data-placement="top" title="Buscar" id="btnBuscaDtc">
-                          <i class="ti-search"></i>
-                        </button>
-                    </div>
-                    <div class="input-group-append">
-                      <button class="btn btn-secondary form-control-sm" 
-                      data-toggle="tooltip" data-placement="top" title="Novo" id="btnNovo">
-                        <i class="ti-write"></i>
-                      </button>
-                    </div>              
-                    <button type="button" class="btn btn-success btn-rounded  form-control-sm"
-                    data-toggle="tooltip" data-placement="top" title="Salvar" id="salvaDtc">
-                      <i class="ti-save"></i>
-                    </button>
-                    <button type="button" class="btn btn-danger btn-rounded form-control-sm" 
-                    data-toggle="tooltip" data-placement="top" title="Excluir" id="excluiDtc">
-                      <i class="ti-trash"></i>
-                    </button>    
-                  </div>                                     
-              </div>
-            </div>
+            <div class="form-floating mt-3">
+              <input type="text" class="form-control text-primary" id="numDtc" name="numDtc"
+              placeholder="Nº" readOnly>
+              <label for="numDtc" class="text-primary">Nº</label>
+            </div>  
           </li>  
         </ul>
       </div>
@@ -88,8 +76,17 @@
           {% include 'dadosCotacao.html' %}
         </div>
 
-        <div class="tab-pane fade" id="pills-nf" role="tabpanel" aria-labelledby="pills-nf-tab">...</div>
-        <div class="tab-pane fade" id="pills-contact" role="tabpanel" aria-labelledby="pills-contact-tab">...</div>
+        <div class="tab-pane fade" id="pills-nf" role="tabpanel" aria-labelledby="pills-nf-tab">
+          {% include 'notasFiscais.html' %}
+        </div>
+        <div class="tab-pane fade" id="pills-rastreamento" role="tabpanel" 
+        aria-labelledby="pills-rastreamento-tab">
+        {% include 'rastreamento.html' %}
+        </div>
+        <div class="tab-pane fade" id="pills-calculoFrete" role="tabpanel" aria-labelledby="pills-calculoFrete-tab">
+          {% include 'calculoFrete.html' %}
+
+        </div>
         <div class="tab-pane fade" id="pills-cotacao" role="tabpanel" aria-labelledby="pills-cotacao-tab">cotacao</div>
       </div>
       

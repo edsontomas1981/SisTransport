@@ -10,5 +10,4 @@ def buscaDtc (request):
     elif request.method == "POST" :
         dtc=Dtc()
         dtc.readDtc(request.POST.get('numPed'))
-        print(dtc.to_dict())
         return JsonResponse({'status': 200, 'dtc':dtc.to_dict()}) #Cadastro efetuado com sucesso

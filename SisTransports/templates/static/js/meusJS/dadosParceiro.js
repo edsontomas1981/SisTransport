@@ -1,5 +1,5 @@
 // Mudar logica de variaveis globais para que cada botão encaminhe para uma rota  
-var editaContato 
+var editaContato
 var quemChamouModal
 var botaoQueFoiAcionado
 
@@ -67,21 +67,20 @@ function completaCnpj(response, insc, razao, fantasia, cep,
 function limpaCnpj(cnpj, insc, razao, fantasia, cep,
     endereco, numero, complemento, bairro, cidade, uf) {
 
-        $('#idParceiro').val('')
-        $('#idEndereco').val('')
-        $('#' + cnpj).val('');
-        $('#' + insc).val('');
-        $('#' + razao).val('');
-        $('#' + fantasia).val('');
-        $('#' + cep).val('');
-        $('#' + endereco).val('');
-        $('#' + numero).val('');
-        $('#' + complemento).val('');
-        $('#' + bairro).val('');
-        $('#' + cidade).val('');
-        $('#' + uf).val('');
+    $('#idParceiro').val('')
+    $('#idEndereco').val('')
+    $('#' + cnpj).val('');
+    $('#' + insc).val('');
+    $('#' + razao).val('');
+    $('#' + fantasia).val('');
+    $('#' + cep).val('');
+    $('#' + endereco).val('');
+    $('#' + numero).val('');
+    $('#' + complemento).val('');
+    $('#' + bairro).val('');
+    $('#' + cidade).val('');
+    $('#' + uf).val('');
 }
-
 
 function busca_parceiro(cnpj, insc, razao, fantasia, cep,
     endereco, numero, complemento, bairro, cidade, uf) {
@@ -123,7 +122,7 @@ function busca_parceiro(cnpj, insc, razao, fantasia, cep,
         },
         error: function(xhr) {
             console.log('Erro');
-        } 
+        }
 
     });
 }
@@ -156,6 +155,7 @@ $('#btnClose').on('click', function(e) {
     closeModal();
     e.preventDefault();
 })
+
 $('#salvaParceiro').on('click', function(e) {
     $('#acaoForm').val('salvaParceiro')
     let url = '/salva_parceiro/'
@@ -229,37 +229,40 @@ function limpaTabelaContatos() {
     $('#cargo').val('');
 }
 
-function identificaRowBotaoAcionado(){
+function identificaRowBotaoAcionado() {
     var tr = document.querySelectorAll('tr');
-        tr.forEach((e) => {
-            e.addEventListener('click', acaoNaRowSelecionada);
-        });
+    tr.forEach((e) => {
+        e.addEventListener('click', acaoNaRowSelecionada);
+    });
 
 }
-function acaoNaRowSelecionada(e){
-    if (botaoQueFoiAcionado == 'excluiContato'){
+
+function acaoNaRowSelecionada(e) {
+    if (botaoQueFoiAcionado == 'excluiContato') {
         excluiContato(e)
-    }else if(botaoQueFoiAcionado == 'alteraContato'){
+    } else if (botaoQueFoiAcionado == 'alteraContato') {
         alert('alterar Contato')
     }
 }
+
 function identificaBotaoClicado(e) {
-    botaoQueFoiAcionado=e.currentTarget.id;
+    botaoQueFoiAcionado = e.currentTarget.id;
     identificaRowBotaoAcionado(e)
 }
+
 $(document).ready(function() {
-    $('#corpoTabela').click(function(e){
+    $('#corpoTabela').click(function(e) {
         var botao = document.querySelectorAll('button');
         botao.forEach((e) => {
             e.addEventListener('click', identificaBotaoClicado);
-            });
+        });
     });
 })
 
 function excluiContato(e) {
-    let idContato=e.currentTarget.id;
+    let idContato = e.currentTarget.id;
     let textoMsg = "Deseja realmente apagar o contato selecionado ?"
-    if (confirm(textoMsg)==true){
+    if (confirm(textoMsg) == true) {
         apagaContato(idContato)
     }
 }
@@ -267,7 +270,7 @@ function excluiContato(e) {
 function apagaContato(id) {
     let url = '/exclui_contato/'
     let postData = $('form').serialize();
-    postData+='&idContato=' + id;
+    postData += '&idContato=' + id;
     $.ajax({
         url: url,
         type: 'POST',
@@ -286,12 +289,11 @@ function apagaContato(id) {
     });
 };
 
-
 function adicionaContatoNaTabela(response) {
     const data = response.contato;
     let template
     for (let i = 0; i < data.length; i++) {
-        template = '<tr class="tr" id="'+ data[i].id +'">' +
+        template = '<tr class="tr" id="' + data[i].id + '">' +
             '<td>' + data[i].id + '</td>' +
             '<td>' + data[i].nome + '</td>' +
             '<td>' + data[i].cargo + '</td>' +
@@ -324,6 +326,7 @@ $('form').on('load', function(e) {
     resetaForm();
     formDesabilitaEdicao();
 });
+
 function populaColetaPeloRemetente() {
     $('#cepColeta').val($('#cepRem').val());
     $('#ruaColeta').val($('#ruaRem').val());
@@ -335,9 +338,9 @@ function populaColetaPeloRemetente() {
 }
 
 $('#btnCnpjRem').on('click', function(e) {
-    quemChamouModal = 'cnpjMdl'
+    quemChamouModal = 'cnpjRem'
     $('#mdlCadParceiros').modal('show');
-    busca_parceiro($('#cnpjRem').val(), 'inscRem', 'razaoRem',
+    preencheModalClick('cnpjRem', 'inscRem', 'razaoRem',
         'fantasiaRem', 'cepRem', 'ruaRem', 'numeroRem',
         'complementoRem', 'bairroRem', 'cidadeRem', 'ufRem');
     e.preventDefault();
@@ -389,52 +392,44 @@ $('#btnCnpjConsig').on('click', function(e) {
     e.preventDefault();
 });
 
-$('#btnCnpjRedesp').on('click', function(e) {
-    quemChamouModal = 'cnpjRedesp'
-    $('#mdlCadParceiros').modal('show');
-    preencheModalClick('cnpjRedesp', 'inscRedesp', 'razaoRedesp',
-        'fantasiaRedesp', 'cepRedesp', 'ruaRedesp', 'numeroRedesp',
-        'complementoRedesp', 'bairroRedesp', 'cidadeRedesp', 'ufRedesp');
-    e.preventDefault();
-});
 
 $('#cnpjRem').on('blur', function(e) {
-    if ($('#cnpjRem').val()!=""){
+    if ($('#cnpjRem').val() != "") {
         quemChamouModal = 'cnpjRem'
         busca_parceiro($('#cnpjRem').val(), 'inscRem', 'razaoRem',
-        'fantasiaRem', 'cepRem', 'ruaRem', 'numeroRem',
-        'complementoRem', 'bairroRem', 'cidadeRem', 'ufRem');
+            'fantasiaRem', 'cepRem', 'ruaRem', 'numeroRem',
+            'complementoRem', 'bairroRem', 'cidadeRem', 'ufRem');
         populaColetaPeloRemetente();
     }
     e.preventDefault();
 });
 
 $('#cnpjDest').on('blur', function(e) {
-    if ($('#cnpjDest').val()!=""){
+    if ($('#cnpjDest').val() != "") {
         quemChamouModal = 'cnpjDest'
         busca_parceiro($('#cnpjDest').val(), 'inscDest', 'razaoDest',
-        'fantasiaDest', 'cepDest', 'ruaDest', 'numeroDest',
-        'complementoDest', 'bairroDest', 'cidadeDest', 'ufDest');
+            'fantasiaDest', 'cepDest', 'ruaDest', 'numeroDest',
+            'complementoDest', 'bairroDest', 'cidadeDest', 'ufDest');
     }
     e.preventDefault();
 });
 
 $('#cnpjConsig').on('blur', function(e) {
-    if ($('#cnpjConsig').val()!=""){
+    if ($('#cnpjConsig').val() != "") {
         quemChamouModal = 'cnpjConsig'
         busca_parceiro($('#cnpjConsig').val(), 'inscConsig', 'razaoConsig',
-        'fantasiaConsig', 'cepConsig', 'ruaConsig', 'numeroConsig',
-        'complementoConsig', 'bairroConsig', 'cidadeConsig', 'ufConsig');
+            'fantasiaConsig', 'cepConsig', 'ruaConsig', 'numeroConsig',
+            'complementoConsig', 'bairroConsig', 'cidadeConsig', 'ufConsig');
     }
     e.preventDefault();
 });
 
 $('#cnpjRedesp').on('blur', function(e) {
-    if ($('#cnpjRedesp').val()!=""){
+    if ($('#cnpjRedesp').val() != "") {
         quemChamouModal = 'cnpjRedesp'
         busca_parceiro($('#cnpjRedesp').val(), 'inscRedesp', 'razaoRedesp',
-        'fantasiaRedesp', 'cepRedesp', 'ruaRedesp', 'numeroRedesp',
-        'complementoRedesp', 'bairroRedesp', 'cidadeRedesp', 'ufRedesp');
+            'fantasiaRedesp', 'cepRedesp', 'ruaRedesp', 'numeroRedesp',
+            'complementoRedesp', 'bairroRedesp', 'cidadeRedesp', 'ufRedesp');
     }
     e.preventDefault();
 });

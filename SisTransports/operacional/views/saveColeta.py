@@ -5,6 +5,7 @@ from parceiros.models.parceiros import Parceiros
 from Classes.dtc import Dtc 
 from Classes.coleta import Coleta 
 from operacional.models.dtc import Dtc  as MdlDtc
+from Classes.utils import dprint
 
 def salvaOrAlteraColeta(request):
     if MdlDtc.objects.filter(id=request.POST.get('numPed')).exists():
