@@ -10,7 +10,6 @@ def createDtc (request):
         return render(request, 'preDtc.html')
     elif request.method == "POST" :
         dados=carregaDadosParaCadastro(request)
-        print("ok")
         dtc=Dtc()
         dtc.readDtc(request.POST.get('numPed'))
         return JsonResponse({'status': 200, 'dtc':dtc.to_dict()}) 
