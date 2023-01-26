@@ -205,5 +205,11 @@ function populaRelatTabelas() {
     limpaForm()
 }
 
+var readTabelasEspecificas = (response,idSelect) =>{
+    options = response.tabelas
+    $.each(options, function(value, text) {
+        $('#'+idSelect).append($("<option></option>").attr("value", text['id']).text(text['descricao']));
+    });
+}
 
 

@@ -1,5 +1,4 @@
 function carregaDtc(response){
-    console.table(response)
     limpaDtc()
     $('#numDtc').val(response.dtc.id)
 
@@ -44,7 +43,8 @@ $('#cnpjTomador').on('change', function () {
 
 $('#salvaDtc').on('click', function(e) {
     defineTomador($('#modalidadeFrete').val())
-    funSalvaDtc()
+    dados = {'url':'/preDtc/createDtc/','id':cnpjTomador}
+    conectaBackEnd(dados,carregaDtc)
     e.preventDefault();
 })
 

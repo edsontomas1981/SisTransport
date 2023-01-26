@@ -5,7 +5,6 @@ $('#inserirRota').on('click', function(e) {
 })
 
 function populaRota(response) {
-    alert(response.rota.id, response.rota.nome)
     $('#idRota').val(response.rota.id)
     $('#idNomeRota').val(response.rota.nome)
     limpa()
@@ -25,7 +24,6 @@ function bdRota(dados, callback) {
         success: function(response) {
             switch (response.status) {
                 case 200:
-                    console.table(response)
                     callback(response)
                     break;
                 case 400:
@@ -40,3 +38,16 @@ function bdRota(dados, callback) {
         }
     });
 }
+
+var readRotas=(idSelect) =>{
+    dados = { 'url': '/rotas/readRotas/' }
+    conectaBackEnd(dados,carregaSelectRotas,idSelect)
+}
+
+var carregaSelectRotas = (response,idSelect) =>{
+    options = response.rotas
+    $.each(options, function(value, text) {
+        $('#'+idSelect).append($("<option></option>").attr("value", text['id']).text(text['nome']));
+      });
+}
+

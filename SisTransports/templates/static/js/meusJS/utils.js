@@ -1,13 +1,18 @@
-function conectaBackEnd(dados, callback) {
+function conectaBackEnd(dados, callback,...idComponente) {
     let url = dados.url
     let postData = $('form').serialize();
-    postData += dados.id;
+    postData +='&id='+dados.id;
+    console.log(postData)
     $.ajax({
         url: url,
         type: 'POST',
         data: postData,
         success: function(response) {
-            callback(response)
+            if (idComponente){
+                callback(response,idComponente)
+            }else{
+                callback(response)
+            }
         },
         error: function(xhr) {
             console.log('Erro');
@@ -28,6 +33,3 @@ function capturaDadosNaRowClicada() {
       });
 }
 
-$(document).ready(function() {
-    capturaDadosNaRowClicada()
-});

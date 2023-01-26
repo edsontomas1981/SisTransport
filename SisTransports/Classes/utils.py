@@ -84,7 +84,7 @@ def checaUf(uf):
 def dprint(*args):
     for i in args:
         print(colored('********************************************', 'red'))
-        print(colored(i, 'purple'))
+        print(colored(i, 'cyan'))
 
 
 def dpprint(titulo, *args):

@@ -38,6 +38,7 @@ class Dtc():
         self.dtc.remetente_fk=dados['remetente']
         self.dtc.destinatario_fk=dados['destinatario']
         self.dtc.tipoFrete=dados['modalidadeFrete']
+        dprint(dados['modalidadeFrete'])
         self.dtc.tomadorFrete=dados['tomador']
         if dados['consignatario'] :
             self.dtc.consignatario_fk=dados['consignatario']

@@ -10,6 +10,9 @@ from operacional.views.readRotas import readRotas
 from operacional.views.updateRota import updateRota
 from operacional.views.deleteRota import deleteRota
 from operacional.views.rotas import rotas
+from operacional.views.createDtc import createDtc
+
+
 
 
 

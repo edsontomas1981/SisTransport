@@ -4,15 +4,22 @@ $('#btnNovaCotacao').on('click', function(e) {
 })
 
 $('#btnSalvaCotacao').on('click', function(e) {
-    dados = { 'url':'/faturamento/calculaFrete/'}
-    conectaBackEnd(dados,calResponse)
+    cnpjTomador=$('#cnpjTomador').val()
+    dados = {'url':'/comercial/cotacao/createCotacao/','id':cnpjTomador}
+    conectaBackEnd(dados,readTabelasEspecificas,'tabelaCotacao')
     e.preventDefault();
 })
 
-var calResponse = (response)=>{
-    alert(response.status)
+var populaSelectTabelas = (dados,idSelect)=>{
+    var select = $(idSelect);
+    select.empty(); // limpa a select box antes de preencher
+    for (var dado in dados) {
+        select.append($('<option>', {
+            value: dados[dado],
+            text: dado
+        }));
+    }
 }
-
 function limpaCotacao(){
     $('#nomeCotacao').val('')
     $('#contatoCotacao').val('')
@@ -35,3 +42,4 @@ function limpaCotacao(){
     $('#aliquotaCotacao').val('')
     $('#icmsCotacao').val('')
 }
+

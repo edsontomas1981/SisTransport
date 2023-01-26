@@ -8,11 +8,11 @@ from Classes.utils import dprint
 @login_required(login_url='/auth/entrar/')
 def createCotacao (request):
     if request.method == 'GET':
-        cnpj='23926683000108'
+        return JsonResponse({'status': 200})     
+    elif request.method == "POST" :
         tabelas=TabelaFrete()
         parceiro=Parceiros()
-        parceiro.readParceiro(cnpj)
-        
-        return JsonResponse({'status': 200,'tabelas':tabelas.readTabelas(parceiro.parceiro)})     
-    elif request.method == "POST" :
-        return JsonResponse({'status': 200}) 
+        parceiro.readParceiro(request.POST.get('id'))
+        dprint(tabelas.readTabelas(parceiro.parceiro))
+        return JsonResponse({'status': 200,
+                             'tabelas':tabelas.readTabelas(parceiro.parceiro)})         

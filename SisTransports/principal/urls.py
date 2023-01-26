@@ -20,6 +20,8 @@ urlpatterns = [
     path('preDtc/',viewsOperacional.preDtc,name='preDtc'),
     path('preDtc/buscaDtc/',viewsOperacional.buscaDtc,name='buscaDtc'),           
     path('preDtc/saveDtc/',viewsOperacional.saveDtc,name='saveDtc'),
+    path('preDtc/createDtc/',viewsOperacional.createDtc,name='createDtc'),
+    
     path('preDtc/excluiDtc/',viewsOperacional.excluiDtc,name='excluiDtc'),   
     path('preDtc/saveColeta/',viewsOperacional.saveColeta,name='saveColeta'), 
     path('preDtc/deletaColeta/',viewsOperacional.deletaColeta,name='deletaColeta'), 
