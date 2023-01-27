@@ -20,7 +20,11 @@ urlpatterns = [
     path('preDtc/',viewsOperacional.preDtc,name='preDtc'),
     path('preDtc/buscaDtc/',viewsOperacional.buscaDtc,name='buscaDtc'),           
     path('preDtc/saveDtc/',viewsOperacional.saveDtc,name='saveDtc'),
+
     path('preDtc/createDtc/',viewsOperacional.createDtc,name='createDtc'),
+    path('preDtc/readDtc/',viewsOperacional.readDtc,name='readDtc'),
+    path('preDtc/updateDtc/',viewsOperacional.updateDtc,name='updateDtc'),
+    path('preDtc/deleteDtc/',viewsOperacional.deleteDtc,name='deleteDtc'),
     
     path('preDtc/excluiDtc/',viewsOperacional.excluiDtc,name='excluiDtc'),   
     path('preDtc/saveColeta/',viewsOperacional.saveColeta,name='saveColeta'), 

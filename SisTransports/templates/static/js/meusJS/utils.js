@@ -33,3 +33,29 @@ function capturaDadosNaRowClicada() {
       });
 }
 
+$(document).ready(function() {
+
+});
+
+var abaSemSalvar=(idAbas)=>{
+    var conteudoAlterado = false;
+  
+    // Detectar alterações no conteúdo
+    $(idAbas).on("input", function() {
+      conteudoAlterado = true;
+    });
+  
+    // Verificar alterações não salvas antes de mudar de aba
+    $(".link-aba").on("click", function() {
+      if (conteudoAlterado) {
+        if (!confirm("Você tem alterações não salvas. Tem certeza de que deseja sair dessa página?")) {
+          return false;
+        }else{
+            alert('Salvar o Conteudo')
+        }
+      }
+    });
+}
+
+
+  

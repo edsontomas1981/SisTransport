@@ -2,8 +2,6 @@
 # sendo identificacaoCampo e o nome vindo da requisição
 # e nome campo e uma frase mais agradavel para retorno da requisição
 from termcolor import colored
-import re
-
 
 def checaCampos(request, **kwargs):
     camposVazios = []

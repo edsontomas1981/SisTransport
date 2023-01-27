@@ -42,11 +42,31 @@ $('#cnpjTomador').on('change', function () {
 });
 
 $('#salvaDtc').on('click', function(e) {
-    defineTomador($('#modalidadeFrete').val())
-    dados = {'url':'/preDtc/createDtc/','id':cnpjTomador}
-    conectaBackEnd(dados,carregaDtc)
+    if ($('modalidadeFrete').val()!=0){
+        if ($('#numDtc').val()==''){
+            defineTomador($('#modalidadeFrete').val())
+            dados = {'url':'/preDtc/createDtc/','id':cnpjTomador}
+            conectaBackEnd(dados,salvouDtc)
+        }else{
+            defineTomador($('#modalidadeFrete').val())
+            dados = {'url':'/preDtc/updateDtc/','id':cnpjTomador}
+            conectaBackEnd(dados,atualizouDtc)
+        }
+    }else{
+        alert ('Selecione a modalidade e o responsável pelo frete')
+    }
     e.preventDefault();
 })
+
+var salvouDtc = (response) =>{
+    alert ('Dtc salvo com sucesso !')
+    carregaDtc(response)
+}
+
+var atualizouDtc = (response) =>{
+    alert ('Dtc atualizado com sucesso !')
+    carregaDtc(response)
+}
 
 
 function defineTomador(seletor){
@@ -131,7 +151,6 @@ function completaColeta(response){
     $('#mercadoria').val(response.mercadoria)
     $('#horario').val(response.horario)
     $('#idColeta').val(response.id)
-
 }
 
 function completaDtcCnpj(response,cnpj, insc, razao, fantasia, cep,
@@ -175,6 +194,7 @@ function limpaDtc(){
             "complementoConsig", "bairroConsig", "cidadeConsig", "ufConsig") 
 
     $('#modalidadeFrete').val(0);
+    $('#numDtc').val('')
              
     limpaColeta()
 }

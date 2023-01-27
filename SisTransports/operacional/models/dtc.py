@@ -5,14 +5,14 @@ from operacional.models.coleta import Coleta
 
 
 class Dtc (models.Model):
-    coleta_fk=models.ForeignKey(Coleta, on_delete=models.CASCADE, null=True, related_name='coletaDtc')
-    remetente_fk=models.ForeignKey(Parceiros, on_delete=models.CASCADE,related_name='remetDtc')
-    destinatario_fk=models.ForeignKey(Parceiros, on_delete=models.CASCADE, related_name='destDtc')
-    redespacho_fk=models.ForeignKey(Parceiros, on_delete=models.CASCADE,null=True, related_name='redespDtc')
-    consignatario_fk=models.ForeignKey(Parceiros, on_delete=models.CASCADE,null=True, related_name='consigDtc')
-    tomador_fk=models.ForeignKey(Parceiros, on_delete=models.CASCADE,null=True,related_name='tomadoDtc')
+    coleta_fk=models.ForeignKey(Coleta, on_delete=models.CASCADE,related_name='coletaDtc', null=True)
+    remetente_fk=models.ForeignKey(Parceiros, on_delete=models.CASCADE,related_name='remetDtc', null=True)
+    destinatario_fk=models.ForeignKey(Parceiros, on_delete=models.CASCADE, related_name='destDtc', null=True)
+    redespacho_fk=models.ForeignKey(Parceiros, on_delete=models.CASCADE, related_name='redespDtc', null=True)
+    consignatario_fk=models.ForeignKey(Parceiros, on_delete=models.CASCADE,related_name='consigDtc',null=True)
+    tomador_fk=models.ForeignKey(Parceiros, on_delete=models.CASCADE,related_name='tomadoDtc', null=True)
     tipoFrete=models.IntegerField(default=2)
-    rota_fk=models.ForeignKey(Rota, on_delete=models.CASCADE, null=True, related_name='rotaDtc')
+    rota_fk=models.ForeignKey(Rota, on_delete=models.CASCADE,related_name='rotaDtc',null=True)
     
     def to_dict(self):
         dtc = {'id':self.id,

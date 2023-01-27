@@ -1,39 +1,43 @@
 from operacional.models.dtc import Dtc as ClsDtc
-from Classes.utils import verificaCamposObrigatorios,toFloat,checkBox,dprint,dpprint
-
+from Classes.utils import verificaCamposObrigatorios,toFloat
+from Classes.utils import checkBox,dprint,dpprint
 
 class Dtc:
     def __init__(self):
         self.dtc=ClsDtc()
     
     def salvaOuAlteraDtc(self,dados):
-        self.dtc.remetente_fk=dados['remetente']
+        self.dtc.remetente_fk=dados['remetente'] if dados['remetente'] else None
         self.dtc.destinatario_fk=dados['destinatario']
         self.dtc.tipoFrete=dados['modalidadeFrete']
-        dprint(dados['modalidadeFrete'])
-        self.dtc.tomadorFrete=dados['tomador']
+        self.dtc.tomador_fk=dados['tomador']
         if dados['consignatario'] :
             self.dtc.consignatario_fk=dados['consignatario']
         self.dtc.save()
     
     def createDtc(self,dados):
-        self.salvaOuAlteraDtc(dados)
-        pass
+        try:
+            self.salvaOuAlteraDtc(dados)
+        except:
+            return 300
+        
     
-    def readRotas(self):
-        rotas=[]
-        self.rota=ClsDtc.objects.all().order_by('nome')
-        for i in self.rota:
-            rotas.append(i.to_dict())    
-        return rotas 
-      
-    def readRota(self,idRota):
-        if ClsDtc.objects.filter(id=idRota).exists():
-            self.rota=ClsDtc.objects.filter(id=idRota).get()
-            return self.rota
+    def readDtc(self,idDtc):
+        if ClsDtc.objects.filter(id=idDtc).exists():
+            dtc=ClsDtc.objects.filter(id=idDtc).get()  
+            self.dtc=dtc
+            return self
+    
+    def updateDtc (self,dados,idDtc):
+        if ClsDtc.objects.filter(id=idDtc).exists():
+            self.dtc=ClsDtc.objects.filter(id=idDtc).get() 
+            self.salvaOuAlteraDtc(dados)
+            return 200
         else:
-            return False        
+            return 400
    
     def deleteRota(self,idRota):
         pass
     
+    def to_dict(self):
+        return self.dtc.to_dict()
