@@ -2,9 +2,6 @@
 var editaContato
 var quemChamouModal
 var botaoQueFoiAcionado
-
-
-
 // Reduzir as duas funçoes abaixo em uma só duas funcoes que basicamente fazem a mesma coisa
 function preencheModalClick(cnpj, insc, razao, fantasia, cep,
     endereco, numero, complemento, bairro, cidade, uf) {
@@ -380,47 +377,6 @@ $('#btnCnpjDest').on('click', function(e) {
     preencheModalClick('cnpjDest', 'inscDest', 'razaoDest',
         'fantasiaDest', 'cepDest', 'ruaDest', 'numeroDest',
         'complementoDest', 'bairroDest', 'cidadeDest', 'ufDest');
-    e.preventDefault();
-});
-
-$('#btnCnpjConsig').on('click', function(e) {
-    quemChamouModal = 'cnpjConsig'
-    $('#mdlCadParceiros').modal('show');
-    preencheModalClick('cnpjConsig', 'inscConsig', 'razaoConsig',
-        'fantasiaConsig', 'cepConsig', 'ruaConsig', 'numeroConsig',
-        'complementoConsig', 'bairroConsig', 'cidadeConsig', 'ufConsig');
-    e.preventDefault();
-});
-
-
-$('#cnpjRem').on('blur', function(e) {
-    if ($('#cnpjRem').val() != "") {
-        quemChamouModal = 'cnpjRem'
-        busca_parceiro($('#cnpjRem').val(), 'inscRem', 'razaoRem',
-            'fantasiaRem', 'cepRem', 'ruaRem', 'numeroRem',
-            'complementoRem', 'bairroRem', 'cidadeRem', 'ufRem');
-        populaColetaPeloRemetente();
-    }
-    e.preventDefault();
-});
-
-$('#cnpjDest').on('blur', function(e) {
-    if ($('#cnpjDest').val() != "") {
-        quemChamouModal = 'cnpjDest'
-        busca_parceiro($('#cnpjDest').val(), 'inscDest', 'razaoDest',
-            'fantasiaDest', 'cepDest', 'ruaDest', 'numeroDest',
-            'complementoDest', 'bairroDest', 'cidadeDest', 'ufDest');
-    }
-    e.preventDefault();
-});
-
-$('#cnpjConsig').on('blur', function(e) {
-    if ($('#cnpjConsig').val() != "") {
-        quemChamouModal = 'cnpjConsig'
-        busca_parceiro($('#cnpjConsig').val(), 'inscConsig', 'razaoConsig',
-            'fantasiaConsig', 'cepConsig', 'ruaConsig', 'numeroConsig',
-            'complementoConsig', 'bairroConsig', 'cidadeConsig', 'ufConsig');
-    }
     e.preventDefault();
 });
 

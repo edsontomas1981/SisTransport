@@ -2,7 +2,6 @@ function conectaBackEnd(dados, callback,...idComponente) {
     let url = dados.url
     let postData = $('form').serialize();
     postData +='&id='+dados.id;
-    console.log(postData)
     $.ajax({
         url: url,
         type: 'POST',

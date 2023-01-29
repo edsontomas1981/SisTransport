@@ -41,7 +41,13 @@ $('#cnpjTomador').on('change', function () {
     defineTomador($('#modalidadeFrete').val())
 });
 
+var validaDtc=()=>{
+
+
+}
+
 $('#salvaDtc').on('click', function(e) {
+
     if ($('modalidadeFrete').val()!=0){
         if ($('#numDtc').val()==''){
             defineTomador($('#modalidadeFrete').val())
