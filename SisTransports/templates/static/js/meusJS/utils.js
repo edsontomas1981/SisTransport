@@ -9,8 +9,10 @@ function conectaBackEnd(dados, callback,...idComponente) {
         success: function(response) {
             if (idComponente){
                 callback(response,idComponente)
+                return response
             }else{
                 callback(response)
+                return response
             }
         },
         error: function(xhr) {
