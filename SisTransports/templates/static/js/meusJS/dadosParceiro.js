@@ -334,14 +334,14 @@ function populaColetaPeloRemetente() {
     $('#ufColeta').val($('#ufRem').val());
 }
 
-$('#btnCnpjRem').on('click', function(e) {
+/* $('#btnCnpjRem').on('click', function(e) {
     quemChamouModal = 'cnpjRem'
     $('#mdlCadParceiros').modal('show');
     preencheModalClick('cnpjRem', 'inscRem', 'razaoRem',
         'fantasiaRem', 'cepRem', 'ruaRem', 'numeroRem',
         'complementoRem', 'bairroRem', 'cidadeRem', 'ufRem');
     e.preventDefault();
-});
+});*/
 
 $('#btnLimpaCnpjRem').on('click', function(e) {
     limpaCnpj('cnpjRem', 'inscRem', 'razaoRem',
