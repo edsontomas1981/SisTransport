@@ -29,31 +29,31 @@ class CrudCotacaoTestCase(TestCase):
         self.assertEquals(self.objCotacao.createCotacao(
             self.dadosCotacao), 200)
         self.assertDictEqual(self.objCotacao.readCotacao(1),
-                             {'resposta': 200, 'cotacao': self.objCotacao.cotacao.toDict()})
+                            {'resposta': 200, 'cotacao': self.objCotacao.cotacao.toDict()})
 
     def test_updateCotacao(self):
         self.dadosCotacao = {'peso': [300], 'qtde': [1], 'vlrNf': [1500.00], 'm3': [1],
-                             'dtc_fk': [self.objDtc.dtc], 'tabela': [self.objTabFrete.tabela],
-                             'rota': [self.objRota.rota], 'formaDeCalculo': [1], 'numNf': [1]}
+                            'dtc_fk': [self.objDtc.dtc], 'tabela': [self.objTabFrete.tabela],
+                            'rota': [self.objRota.rota], 'formaDeCalculo': [1], 'numNf': [1]}
         self.assertEquals(self.objCotacao.createCotacao(
             self.dadosCotacao), 200)
         self.assertDictEqual(self.objCotacao.updateCotacao(self.dadosCotacao, 1),
-                             {'resposta': 200, 'cotacao': self.objCotacao.cotacao.toDict()})
+                            {'resposta': 200, 'cotacao': self.objCotacao.cotacao.toDict()})
         self.assertEqual(self.objCotacao.cotacao.peso,
-                         300, 'Erro ao atualizar cotacao')
+                        300, 'Erro ao atualizar cotacao')
 
     def test_deleteCotacao(self):
         self.dadosCotacao = {'peso': [300], 'qtde': [1], 'vlrNf': [1500.00], 'm3': [1],
-                             'dtc_fk': [self.objDtc.dtc], 'tabela': [self.objTabFrete.tabela],
-                             'rota': [self.objRota.rota], 'formaDeCalculo': [1], 'numNf': [1]}
+                            'dtc_fk': [self.objDtc.dtc], 'tabela': [self.objTabFrete.tabela],
+                            'rota': [self.objRota.rota], 'formaDeCalculo': [1], 'numNf': [1]}
         self.assertEquals(self.objCotacao.createCotacao(
             self.dadosCotacao), 200)
 
         self.assertDictEqual(self.objCotacao.deleteCotacao(1),
-                             {'resposta': 200})   
-             
+                            {'resposta': 200})   
+            
         self.assertDictEqual(self.objCotacao.readCotacao(1),
-                             {'resposta': 400,'mensagem': 'Cotação nao encontrada'})
+                            {'resposta': 400,'mensagem': 'Cotação nao encontrada'})
     
     def test_calculaFretePorPeso(self):
         
@@ -61,8 +61,8 @@ class CrudCotacaoTestCase(TestCase):
                                     1.50,1,5,15,35,25,3.5,1,300,150,1,'on','on','off',7))
         
         self.dadosCotacao = {'peso': [5], 'qtde': [5], 'vlrNf': [15.00],'m3': [0.001],
-                             'dtc_fk': [self.objDtc.dtc], 'tabela': [self.objTabFrete.tabela],
-                             'rota': [self.objRota.rota], 'formaDeCalculo': [1], 'numNf': [1]}
+                            'dtc_fk': [self.objDtc.dtc], 'tabela': [self.objTabFrete.tabela],
+                            'rota': [self.objRota.rota], 'formaDeCalculo': [1], 'numNf': [1]}
         self.assertEquals(self.objCotacao.createCotacao(
                                         self.dadosCotacao), 200)   
         
@@ -87,8 +87,8 @@ class CrudCotacaoTestCase(TestCase):
                 self.geraDados.geraDadosTabela(10,2,0,0,0,0,0,1,300,150, 1,'on','on','off',7))
         
         self.dadosCotacao = {'peso': [250], 'qtde': [5], 'vlrNf': [1500.00],'m3': [1],
-                             'dtc_fk': [self.objDtc.dtc], 'tabela': [self.objTabFrete.tabela],
-                             'rota': [self.objRota.rota], 'formaDeCalculo': [1], 'numNf': [1]}
+                            'dtc_fk': [self.objDtc.dtc], 'tabela': [self.objTabFrete.tabela],
+                            'rota': [self.objRota.rota], 'formaDeCalculo': [1], 'numNf': [1]}
         self.assertEquals(self.objCotacao.createCotacao(
                                         self.dadosCotacao), 200)   
         
@@ -109,8 +109,8 @@ class CrudCotacaoTestCase(TestCase):
                 self.geraDados.geraDadosTabela(110,3,0,0,0,0,0,1,300,150,1,'on','on','off',7))
         
         self.dadosCotacao = {'peso': [250], 'qtde': [1], 'vlrNf': [1500.00],'m3': [1],
-                             'dtc_fk': [self.objDtc.dtc], 'tabela': [self.objTabFrete.tabela],
-                             'rota': [self.objRota.rota], 'formaDeCalculo': [1], 'numNf': [1]}
+                            'dtc_fk': [self.objDtc.dtc], 'tabela': [self.objTabFrete.tabela],
+                            'rota': [self.objRota.rota], 'formaDeCalculo': [1], 'numNf': [1]}
         self.assertEquals(self.objCotacao.createCotacao(
                                         self.dadosCotacao), 200)          
         
@@ -132,8 +132,8 @@ class CrudCotacaoTestCase(TestCase):
 
         '''Peso e cubagem zerados usando frete minimo'''
         self.dadosCotacao = {'peso': [0], 'qtde': [5], 'vlrNf': [1500.00],'m3': [0.00],
-                             'dtc_fk': [self.objDtc.dtc], 'tabela': [self.objTabFrete.tabela],
-                             'rota': [self.objRota.rota], 'formaDeCalculo': [1], 'numNf': [1]}
+                            'dtc_fk': [self.objDtc.dtc], 'tabela': [self.objTabFrete.tabela],
+                            'rota': [self.objRota.rota], 'formaDeCalculo': [1], 'numNf': [1]}
         self.assertEquals(self.objCotacao.createCotacao(
                                         self.dadosCotacao), 200)                 
         self.geraFaixas()
@@ -147,8 +147,8 @@ class CrudCotacaoTestCase(TestCase):
 
         '''Peso e cubagem zerados usando frete minimo'''
         self.dadosCotacao = {'peso': [1], 'qtde': [5], 'vlrNf': [1500.00],'m3': [0.00],
-                             'dtc_fk': [self.objDtc.dtc], 'tabela': [self.objTabFrete.tabela],
-                             'rota': [self.objRota.rota], 'formaDeCalculo': [1], 'numNf': [1]}
+                            'dtc_fk': [self.objDtc.dtc], 'tabela': [self.objTabFrete.tabela],
+                            'rota': [self.objRota.rota], 'formaDeCalculo': [1], 'numNf': [1]}
         self.assertEquals(self.objCotacao.createCotacao(
                                         self.dadosCotacao), 200)                 
         self.geraFaixas()
@@ -159,8 +159,8 @@ class CrudCotacaoTestCase(TestCase):
         self.objTabFrete = self.geraDados.criaTabela(
                 self.geraDados.geraDadosTabela(10,1,0,0,0,0,0,1,300,50, 1,'off','on','off',7))
         self.dadosCotacao = {'peso': [0], 'qtde': [5], 'vlrNf': [1500.00],'m3': [0.01],
-                             'dtc_fk': [self.objDtc.dtc], 'tabela': [self.objTabFrete.tabela],
-                             'rota': [self.objRota.rota], 'formaDeCalculo': [1], 'numNf': [1]}
+                            'dtc_fk': [self.objDtc.dtc], 'tabela': [self.objTabFrete.tabela],
+                            'rota': [self.objRota.rota], 'formaDeCalculo': [1], 'numNf': [1]}
         self.assertEquals(self.objCotacao.createCotacao(
                                         self.dadosCotacao), 200)                 
         self.geraFaixas()
@@ -171,8 +171,8 @@ class CrudCotacaoTestCase(TestCase):
         self.objTabFrete = self.geraDados.criaTabela(
                 self.geraDados.geraDadosTabela(10,1,0,0,0,0,0,1,300,50, 1,'off','on','off',7))
         self.dadosCotacao = {'peso': [15.5], 'qtde': [5], 'vlrNf': [1500.00],'m3': [0.00],
-                             'dtc_fk': [self.objDtc.dtc], 'tabela': [self.objTabFrete.tabela],
-                             'rota': [self.objRota.rota], 'formaDeCalculo': [1], 'numNf': [1]}
+                            'dtc_fk': [self.objDtc.dtc], 'tabela': [self.objTabFrete.tabela],
+                            'rota': [self.objRota.rota], 'formaDeCalculo': [1], 'numNf': [1]}
         self.assertEquals(self.objCotacao.createCotacao(
                                         self.dadosCotacao), 200)                 
         self.geraFaixas()
@@ -183,8 +183,8 @@ class CrudCotacaoTestCase(TestCase):
         self.objTabFrete = self.geraDados.criaTabela(
                 self.geraDados.geraDadosTabela(10,1,0,0,0,0,0,1,300,50, 1,'off','on','off',7))
         self.dadosCotacao = {'peso': [30], 'qtde': [5], 'vlrNf': [1500.00],'m3': [0.00],
-                             'dtc_fk': [self.objDtc.dtc], 'tabela': [self.objTabFrete.tabela],
-                             'rota': [self.objRota.rota], 'formaDeCalculo': [1], 'numNf': [1]}
+                            'dtc_fk': [self.objDtc.dtc], 'tabela': [self.objTabFrete.tabela],
+                            'rota': [self.objRota.rota], 'formaDeCalculo': [1], 'numNf': [1]}
         self.assertEquals(self.objCotacao.createCotacao(
                                         self.dadosCotacao), 200)                 
         self.geraFaixas()
@@ -195,8 +195,8 @@ class CrudCotacaoTestCase(TestCase):
         self.objTabFrete = self.geraDados.criaTabela(
                     self.geraDados.geraDadosTabela(1.5,1,0,0,0,0,0,1,300,150, 1,'off','on','off',7))
         self.dadosCotacao = {'peso': [71], 'qtde': [5], 'vlrNf': [1500.00],'m3': [0.00],
-                             'dtc_fk': [self.objDtc.dtc], 'tabela': [self.objTabFrete.tabela],
-                             'rota': [self.objRota.rota], 'formaDeCalculo': [1], 'numNf': [1]}
+                            'dtc_fk': [self.objDtc.dtc], 'tabela': [self.objTabFrete.tabela],
+                            'rota': [self.objRota.rota], 'formaDeCalculo': [1], 'numNf': [1]}
         self.assertEquals(self.objCotacao.createCotacao(
                                         self.dadosCotacao), 200)                 
         self.geraFaixas()
@@ -207,8 +207,8 @@ class CrudCotacaoTestCase(TestCase):
         self.objTabFrete = self.geraDados.criaTabela(
                     self.geraDados.geraDadosTabela(1.5,1,0,0,0,0,0,1,300,150, 1,'off','on','off',7))
         self.dadosCotacao = {'peso': [31], 'qtde': [5], 'vlrNf': [1500.00],'m3': [1],
-                             'dtc_fk': [self.objDtc.dtc], 'tabela': [self.objTabFrete.tabela],
-                             'rota': [self.objRota.rota], 'formaDeCalculo': [1], 'numNf': [1]}
+                            'dtc_fk': [self.objDtc.dtc], 'tabela': [self.objTabFrete.tabela],
+                            'rota': [self.objRota.rota], 'formaDeCalculo': [1], 'numNf': [1]}
         self.assertEquals(self.objCotacao.createCotacao(
                                         self.dadosCotacao), 200)                 
         self.geraFaixas()
@@ -219,8 +219,8 @@ class CrudCotacaoTestCase(TestCase):
         self.objTabFrete = self.geraDados.criaTabela(
                     self.geraDados.geraDadosTabela(1.5,1,0,0,0,0,0,1,300,50, 1,'off','on','off',7))
         self.dadosCotacao = {'peso': [70], 'qtde': [5], 'vlrNf': [1500.00],'m3': [0],
-                             'dtc_fk': [self.objDtc.dtc], 'tabela': [self.objTabFrete.tabela],
-                             'rota': [self.objRota.rota], 'formaDeCalculo': [1], 'numNf': [1]}
+                            'dtc_fk': [self.objDtc.dtc], 'tabela': [self.objTabFrete.tabela],
+                            'rota': [self.objRota.rota], 'formaDeCalculo': [1], 'numNf': [1]}
         self.assertEquals(self.objCotacao.createCotacao(
                                         self.dadosCotacao), 200)                 
         self.geraFaixas()

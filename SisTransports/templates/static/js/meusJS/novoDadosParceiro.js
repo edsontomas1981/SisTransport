@@ -1,21 +1,29 @@
 const remetente = new Parceiro()
 const destinatario = new Parceiro()
-const redespacho = new Parceiro()
+const consignatario = new Parceiro()
 
 
 $('#cnpjRem').on('blur', function(e) {
     remetente.constroeParceiro($('#cnpjRem').val(),'Rem')
     remetente.populaCampos()
-    alert(destinatario.id)
+});
 
-});
 $('#btnCnpjRem').on('click', function(e) {
-    remetente.createParceiro();
+    if (remetente.id){
+        remetente.alteraParceiro()
+    }else{
+        remetente.createParceiro()
+    }
 });
+
 
 $('#cnpjDest').on('blur', function(e) {
     destinatario.constroeParceiro($('#cnpjDest').val(),'Dest')
     destinatario.populaCampos()
-    alert(destinatario.id)
+});
+
+$('#cnpjConsig').on('blur', function(e) {
+    consignatario.constroeParceiro($('#cnpjConsig').val(),'Consig')
+    consignatario.populaCampos()
 });
 
