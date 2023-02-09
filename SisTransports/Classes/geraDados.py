@@ -27,11 +27,16 @@ class GeraDados:
         self.remetente = self.geraParceiro('remetente')
         self.destinatario = self.geraParceiro('destinatario')
         self.consig = self.geraParceiro('consig')
-        self.redesp = self.geraParceiro('redesp')
+        
+
+        dados={'remetente':self.remetente,
+                'destinatario':self.destinatario,
+                'consignatario':self.consig,
+                'modalidadeFrete':1,
+                'tomador':self.remetente}
 
         self.dtc = Dtc()
-        self.dtc.createDtc(self.remetente, self.destinatario,
-                           self.consig, self.redesp)
+        self.dtc.createDtc(dados)
         return self.dtc
 
     def geraRota(self):

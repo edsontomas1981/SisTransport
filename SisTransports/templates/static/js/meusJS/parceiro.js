@@ -22,8 +22,7 @@
         this.sufixo=sufixo;
       }
 
-
-      async createParceiro(){
+      async alteraParceiro(){
         await this.loadData();
           $('#mdlCadParceiros').show();
           $('#cnpjMdl').val(this.cnpj)
@@ -33,7 +32,6 @@
           $('#obsMdl').val(this.cnpj)
           $('#insc_estMdl').val(this.cnpj)
 
-          
           $('#cepMdl').val(this.endereco.cep)
           $('#ruaMdl').val(this.endereco.logradouro)
           $('#numeroMdl').val(this.endereco.numero)
@@ -42,11 +40,10 @@
           $('#cidadeMdl').val(this.endereco.cidade)     
           $('#ufMdl').val(this.endereco.uf)        
         }
-      
-      async carregaParceiro() {
-        await this.loadData();
 
-      }
+      createParceiro(){
+        $('#mdlCadParceiros').show();
+      }  
 
       async dadosParceiro(){
         
@@ -74,6 +71,5 @@
         $('#cidade' + this.sufixo).val(this.endereco.cidade);
         $('#uf' + this.sufixo).val(this.endereco.uf);
       }
-
 
     }

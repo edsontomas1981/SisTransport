@@ -28,7 +28,7 @@
                     <div class="accordion-body">
                       <!--Trecho Pessoas Fisicas/Juridicas-->
                       <div class="form-group row">
-                        <div class="col-sm-7 mb-3 form-group">
+                        <div class="col-sm-7 mb-1 form-group">
                           <input type="hidden" class="form-control form-control-sm" 
                           placeholder="
                           " name="idParceiro" id="idParceiro">
@@ -36,25 +36,39 @@
                                  id="acaoForm" name="acaoForm">
                           <input type="hidden" class="form-control form-control-sm" 
                                  id="idEndereco" name="idEndereco">                                 
-
-                          <input type="text" class="form-control form-control-sm" 
-                          placeholder="Cnpj/Cpf" name="cnpj_cpfMdl" id="cnpjMdl" required="required">
+                          <div class="input-group form-group form-floating">
+                            <input type="text" class="form-control small  form-control-sm" id="cnpjMdl" name="cnpjMdl" placeholder="Cpf/Cnpj" aria-label="Search" aria-describedby="basic-addon2">
+                            <label class="text-secondary" for="cnpjMdl">CPF/CNPJ:</label>
+                            <div class="input-group-append">
+                                <a class="btn btn-primary" id="btnBuscaCnpj">
+                                  <i class="ti-search"></i>   
+                                </a>
+                            </div>
+                          </div>
                         </div>
-                        <div class="col-sm-5 mb-3 form-group">
-                            <input type="text" class="form-control form-control-sm" 
-                            placeholder="Inscrição Estadual" name="insc_estMdl" id="insc_estMdl" required="required">
+                        <div class="col-sm-5 mb-1 form-group">
+                          <div class="form-floating mb-3  text-primary">
+                            <input type="text" class="form-control" id="insc_estMdl" placeholder="Inscrição Estadual">
+                            <label for="insc_estMdl">Insc. Est:</label>
+                          </div>
                         </div>
-                        <div class="col-sm-6 mb-3 form-group">
-                            <input type="text" class="form-control form-control-sm" 
-                            placeholder="Nome/Razão Social" name="razaoMdl" id="razaoMdl">
+                        <div class="col-sm-6 mb-1 form-group">
+                            <div class="form-floating mb-3  text-primary">
+                              <input type="text" class="form-control" id="razaoMdl" placeholder="Nome/Razão Social">
+                              <label for="razaoMdl">Nome/Razão Social</label>
+                            </div>
                         </div>
-                        <div class="col-sm-6 mb-3 form-group">
-                            <input type="text" class="form-control form-control-sm" 
-                            placeholder="Nome Fantasia" name="fantasiaMdl" id="fantasiaMdl">
+                        <div class="col-sm-6 mb-1 form-group">
+                          <div class="form-floating mb-3  text-primary">
+                            <input type="text" class="form-control" id="fantasiaMdl" placeholder="Nome/Razão Social">
+                            <label for="fantasiaMdl">Nome Fantasia</label>
+                          </div>
                         </div>
-                        <div class="col-sm-12 mb-3 form-group">
-                            <textarea class="form-control form-control-sm" 
-                            id="obsMdl" name="obsMdl" rows="3" placeholder="Observação" ></textarea>
+                        <div class="col-sm-12 mb-1 form-group">
+                          <div class="form-floating mb-3  text-primary">
+                            <input type="text" class="form-control" id="obsMdl" placeholder="Nome/Razão Social">
+                            <label for="obsMdl">Observação</label>
+                          </div>
                         </div> 
                     </div>
                     </div>
@@ -69,94 +83,119 @@
                   <div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo" data-bs-parent="#accordionExample">
                     <div class="accordion-body">
                       <!--Trecho Endereço-->
-                        <div class="form-group row mb-3">
-                            <div class="col-sm-4 mb-1 form-group pr-1">
-                              <div class="input-group">
-                                  <input type="text" class="form-control form-control-sm" id="cepMdl" placeholder="Cep"
-                                      aria-label="Search" aria-describedby="basic-addon2">
-                                  <div class="input-group-append">
-                                      <button class="btn btn-primary form-control-sm"  id="btnCepMdl" type="button">
-                                          <i class="ti-search"></i>   
-                                      </button>
-                                  </div>  
+                        <div class="form-group row">
+                            <div class="col-sm-4 form-group pr-1">
+                              <div class="input-group form-group form-floating">
+                                <input type="text" class="form-control small  form-control-sm text-primary" id="cepMdl" name="cepMdl" placeholder="M³" aria-label="Search" aria-describedby="basic-addon2">
+                                <label class="text-secondary" for="cepMdl">Cep</label>
+                                <div class="input-group-append">
+                                    <a class="btn btn-primary" id="btnBuscaCep">
+                                      <i class="ti-search"></i>   
+                                    </a>
+                                </div>
                               </div>
                             </div>
                             <div class="col-sm-8 mb-3 form-group">
-                                <input type="text" class="form-control form-control-sm" 
-                                placeholder="Rua" name="ruaMdl" id="ruaMdl">
+                              <div class="form-floating mb-3  text-primary">
+                                <input type="text" class="form-control" id="ruaMdl" placeholder="Nome/Razão Social">
+                                <label for="ruaMdl">Rua</label>
+                              </div>
                             </div>
                             <div class="col-sm-2 mb-3 form-group">
-                                <input type="text" class="form-control form-control-sm" 
-                                placeholder="Nº" name="numeroMdl" id="numeroMdl">
+                              <div class="form-floating mb-3  text-primary">
+                                <input type="text" class="form-control" id="numeroMdl" placeholder="Nome/Razão Social">
+                                <label for="numeroMdl">Número</label>
+                              </div>
                             </div>
                             <div class="col-sm-3 mb-3 form-group">
-                                <input type="text" class="form-control form-control-sm" 
-                                placeholder="Complemento" name="complementoMdl" id="complementoMdl">
+
+                              <div class="form-floating mb-3  text-primary">
+                                <input type="text" class="form-control" id="complementoMdl" placeholder="Nome/Razão Social">
+                                <label for="complementoMdl">Complemento</label>
+                              </div>
                             </div>
                             <div class="col-sm-7 mb-3 form-group">
-                                <input type="text" class="form-control form-control-sm" 
-                                placeholder="Bairro" name="bairroMdl" id="bairroMdl">
+
+                              <div class="form-floating mb-3  text-primary">
+                                <input type="text" class="form-control" id="bairroMdl" placeholder="Nome/Razão Social">
+                                <label for="bairroMdl">Bairro</label>
+                              </div>
                             </div>
                             <div class="col-sm-9 mb-3 form-group">
-                                <input type="text" class="form-control form-control-sm" 
-                                placeholder="Cidade" name="cidadeMdl" id="cidadeMdl">
+
+                              <div class="form-floating mb-3  text-primary">
+                                <input type="text" class="form-control" id="cidadeMdl" placeholder="Nome/Razão Social">
+                                <label for="cidadeMdl">Cidade</label>
+                              </div>
                             </div>
                             <div class="col-sm-3 mb-3 form-group">
-                                <input type="text" class="form-control form-control-sm" 
-                                placeholder="UF" name="ufMdl" id="ufMdl">
+                              <div class="form-floating mb-3  text-primary">
+                                <input type="text" class="form-control" id="ufMdl" placeholder="Nome/Razão Social">
+                                <label for="ufMdl">Uf</label>
+                              </div>
                             </div>
                         </div>
                     </div>
                   </div>
                 </div>
-                <div class="accordion-item somenteCadastrado" >
+                <div class="accordion-item" >
                   <h2 class="accordion-header" id="headingThree">
                     <button class="col-sm-12 collapsed btn btn-primary" id="btnContato" type="button" 
                     data-bs-toggle="collapse" data-bs-target="#collapseThree" 
-                    aria-expanded="false" aria-controls="collapseThree" disabled="true">
+                    aria-expanded="false" aria-controls="collapseThree">
                       Contatos
                     </button>
                   </h2>
                   <div id="collapseThree" class="accordion-collapse collapse" aria-labelledby="headingThree" data-bs-parent="#accordionExample">
                     <div class="accordion-body">
                         <div class="form-group row">
-                            <div class="col-sm-2 mb-3 form-group">
+                            <div class="col-sm-2 mb-3 pr-1 form-group">
+                              <div class="form-floating mb-3 text-primary">
                                 <select type="text" class="form-select form-control-sm"
-                                name="tipo_contato" id="tipo_contato">
-                                    <option value="1">Telefone</option>
-                                    <option value="2">Celular</option>
-                                    <option value="3">Email</option>
-                                    <option value="4">Site</option>
-                                    <option value="5">Facebook</option>
-                                    <option value="6">Twitter</option>
-                                    <option value="7">Instagram</option>
-                                    <option value="8">Whatsapp</option>
-                                    <option value="9">Skype</option>
-                                    <option value="10">Outro</option>
+                                name="tipo_contato" id="tipo_contato" placeholder="Tipo contato">
+                                  <option value="0"></option>
+                                  <option value="1">Telefone</option>
+                                  <option value="2">Celular</option>
+                                  <option value="3">Email</option>
+                                  <option value="4">Site</option>
+                                  <option value="5">Facebook</option>
+                                  <option value="6">Twitter</option>
+                                  <option value="7">Instagram</option>
+                                  <option value="8">Whatsapp</option>
+                                  <option value="9">Skype</option>
+                                  <option value="10">Outro</option>
                                 </select>
+                                <label for="tipo_contato">Tipo Contato</label>
+                              </div>
                             </div>
-                            <div class="col-sm-3 mb-3 form-group">
-                                <input type="text" class="form-control form-control-sm" 
-                                placeholder="Cargo" name="cargo" id="cargo">
+                            <div class="col-sm-2 mb-3 pr-1 pl-1 form-group">
+                              <div class="form-floating mb-3  text-primary">
+                                <input type="text" class="form-control" id="cargo" placeholder="Cargo">
+                                <label for="cargo">Cargo</label>
+                              </div>
                             </div>
-                            <div class="col-sm-3 mb-3 form-group">
-                                <input type="text" class="form-control form-control-sm" 
-                                placeholder="Nome" name="nome" id="nome">
+                            <div class="col-sm-2 mb-3 pr-1 pl-1 form-group">
+                              <div class="form-floating mb-3  text-primary">
+                                <input type="text" class="form-control" id="nome" placeholder="Nome contato">
+                                <label for="nome">Nome contato</label>
+                              </div>
                             </div>
-                            <div class="col-sm-2 mb-3 form-group">
-                                <input type="text" class="form-control form-control-sm" 
-                                placeholder="Contato" name="contato" id="contato">
+                            <div class="col-sm-3 mb-3 pl-1 form-group">
+                              <div class="form-floating mb-3  text-primary">
+                                <input type="text" class="form-control" id="contato" placeholder="Contato">
+                                <label for="contato">Contato</label>
+                              </div>
                             </div>                                                      
-                            <div class="col-sm-2 m  b-3 form-group" >
-                                <div class="custom-control custom-switch mt-2" align="right">
+                            <div class="col-sm-1 pl-0 form-group mx-auto">
+                                <div class="custom-control custom-switch mt-3 mx-auto">
                                     <input type="checkbox" class="custom-control-input" id="envio" name="envio">
-                                    <label class="custom-control-label" for="envio">Enviar emails</label>
+                                    <label class="custom-control-label" for="envio">Emails</label>
                                   </div>
                             </div>
-                            <div class="col-sm-12 mt-4 mb-2" align="right">
-                              <div class="form-group">
+                            <div class="col-sm-2 mt-2">
+                              <div class="form-group" align="right">
                                 <input type="submit" class= "btn btn-primary form-control-sm " 
-                                id="incluiContato" name="incluiContato" value="Incluir">
+                                id="incluiContato" name="incluiContato" value="Incluir" >
                               </div>
                             </div>
                             <div class="col-sm-12 mb-3 form-group" >
