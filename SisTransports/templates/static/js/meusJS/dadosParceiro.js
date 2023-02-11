@@ -23,6 +23,23 @@ $('#btnClose').on('click', function(e) {
     e.preventDefault();
 })
 
+$('#salvaParceiro').on('click',function (e){
+    let dados={'url':'/createParceiro/'}
+    conectaBackEnd(dados,createParceiro)
+})
+
+var createParceiro = (response) =>{
+    switch (response.status) {
+        case 200:
+            alert('Parceiro cadastrado com sucesso !')
+            break;
+        default:
+            break;
+    }
+}
+
+
+
 // Mudar logica de variaveis globais para que cada botão encaminhe para uma rota  
 // var editaContato
 // var quemChamouModal

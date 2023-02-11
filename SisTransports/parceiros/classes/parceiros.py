@@ -13,14 +13,13 @@ class Parceiros():
         except:
             return 400
         
-    
     def createOrUpdate(self,dados):
-        self.parceiro.cnpj_cpf=dados['cnpj'][0]
-        self.parceiro.raz_soc=dados['razao'][0]
-        self.parceiro.nome_fantasia=dados['fantasia'][0]
-        self.parceiro.insc_est=dados['inscr'][0]
-        self.parceiro.observacao=dados['obs'][0]
-        self.parceiro.endereco_fk=dados['endereco_fk'][0]
+        self.parceiro.cnpj_cpf=dados['cnpj']
+        self.parceiro.raz_soc=dados['razao']
+        self.parceiro.nome_fantasia=dados['fantasia']
+        self.parceiro.insc_est=dados['inscr']
+        self.parceiro.observacao=dados['obs']
+        self.parceiro.endereco_fk=dados['endereco_fk']
         
 
     def readParceiro(self,cnpj):
@@ -49,8 +48,15 @@ class Parceiros():
         else:
             return 404               
             
-    def deleteParceiro(self):
-        pass
-
+    def deleteParceiro(self,idParceiro):
+        if MdlParceiros.objects.filter(id=idParceiro).exists():
+            try:
+                self.parceiro=MdlParceiros.objects.filter(id=idParceiro).get()
+                self.parceiro.delete()
+                return 200
+            except:
+                return 400 
+        else:
+            return 404    
 
     
