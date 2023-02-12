@@ -9,11 +9,9 @@ from parceiros.classes.parceiros import Parceiros
 @login_required(login_url='/auth/entrar/')
 def readParceiro(request):
     if request.method == 'GET':
-        return render(request, 'preDtc.html')
+        return JsonResponse({'status': 200}) 
     elif request.method == "POST" :
         parceiro=Parceiros()
-        parceiro.readParceiro(request.POST.get('comlCnpj'))
-        if parceiro.parceiro.id:
-            return JsonResponse({'status': 200}) 
-        else:
-            return JsonResponse({'status': 400}) 
+        parceiro.readParceiro(request.POST.get('cnpjMdl'))
+        dprint(parceiro.parceiro.to_dict())
+        return JsonResponse({'status': 200,'parceiro':parceiro.parceiro.to_dict()}) 

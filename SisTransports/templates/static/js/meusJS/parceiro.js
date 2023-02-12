@@ -6,9 +6,15 @@
         postData += '&cnpj_cpf=' + this.cnpj;
         const result = await $.ajax({
           url: url,
+          beforeSend: function() {
+            $('#loader').show();
+          },
           type: 'POST',
           data: postData,
-          dataType: 'json'
+          dataType: 'json',
+          complete: function() {
+            $('#loader').hide();
+          }
         });
         this.id = result.dados[0].id;
         this.raz_soc = result.dados[0].raz_soc;
@@ -45,9 +51,6 @@
         $('#mdlCadParceiros').show();
       }  
 
-
-
-      
       async dadosParceiro(){
         
         await this.loadData();

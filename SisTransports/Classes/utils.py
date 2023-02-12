@@ -64,6 +64,8 @@ def toFloat(stringToFloat):
 def checkBox(check):
     if check == 'on' or check == 1:
         return True
+    elif check:
+        return False
     else:
         return False
 

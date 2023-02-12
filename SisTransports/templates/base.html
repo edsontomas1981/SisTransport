@@ -39,21 +39,37 @@
 </head>
 
 <body>
+
+
     <!-- Inicio novo Template -->
     <div class="container-scroller">
         <!-- Navbar -->
         {% include 'navBar.html'%}
+
+        <!--SideBar-->
         <!-- Configurações -->
         {% include 'configuracoes.html'%}
         <!-- partial -->
         <div class="container-fluid page-body-wrapper">
+            {% include 'sidebar.html'%}
+
             <div class="">
                 <div class="container-fluid d-flex flex-row p-3">
                     <div class="row">
                         <div class="col-md-12 grid-margin p-2">
                             <div class="row">
+
+                                <div id="loader" style="display:none;">
+                                    <div class="col-md-12 col-sm-6 grid-margin stretch-card">
+                                      <div class="spinner-grow text-success" role="status">
+                                        <span class="visually-hidden">Loading...</span>
+                                      </div>
+                                    </div>
+                                  </div>
+                          
                                 <!-- Conteudo -->
-                                {% block 'conteudo' %}{% endblock %} {% include 'menu.html'%} {% include 'cadastroParceiros.html'%} {% include 'calcM3.html'%}
+                                {% block 'conteudo' %}{% endblock %}     {% include 'cadastroParceiros.html'%}
+                                {% include 'menu.html'%}  {% include 'calcM3.html'%}
                             </div>
                         </div>
                     </div>
@@ -86,8 +102,9 @@
     <script src="{% static 'js/Chart.roundedBarCharts.js' %}"></script>
     <!--Meus Js-->
     <script src="{% static 'js/meusJS/cnpj.js' %}"></script>
-    <script src="{% static 'js/meusJS/dadosParceiro.js' %}"></script>
+    <script src="{% static 'js/meusJS/cadastroParceiros.js' %}"></script>
     <script src="{% static 'js/meusJS/cep.js' %}"></script>
+    <script src="{% static 'js/meusJS/contato.js' %}"></script>
     <script src="{% static 'js/meusJS/formatar.js' %}"></script>
     <script src="{% static 'js/meusJS/cubagem.js' %}"></script>
     <script src="{% static 'js/meusJS/salvarDtc.js' %}"></script>

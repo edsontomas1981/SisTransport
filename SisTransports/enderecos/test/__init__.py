@@ -1,0 +1,1 @@
+from enderecos.test.tests_endereco import EnderecoTest
