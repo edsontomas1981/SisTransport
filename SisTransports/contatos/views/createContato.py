@@ -14,18 +14,18 @@ def createContato(request):
         return JsonResponse({'status': 200}) 
     elif request.method == "POST" :
         dprint(request.POST.get('envio'))
-        parceiro=Parceiros()
-        parceiro.readParceiro(request.POST.get('cnpjMdl'))
-        dprint(parceiro)
+        # parceiro=Parceiros()
+        # parceiro.readParceiro(request.POST.get('cnpjMdl'))
+        # dprint(parceiro)
 
-        tipoContato=TipoContato()
-        tipoContato.readTipo(request.POST.get('tipo_contato'))
-        dprint(tipoContato)
+        # tipoContato=TipoContato()
+        # tipoContato.readTipo(request.POST.get('tipo_contato'))
+        # dprint(tipoContato)
         
         
         dados=standartData(dict(request.POST.items()))
-        dados['tipo']=tipoContato.tipoContato
-        dados['parceiro']=parceiro.parceiro
+        # dados['tipo']=tipoContato.tipoContato
+        # dados['parceiro']=parceiro.parceiro
         
 
 
