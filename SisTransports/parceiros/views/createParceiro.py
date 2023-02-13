@@ -10,17 +10,18 @@ from enderecos.classes.enderecos import Enderecos
 def createParceiro(request):
     if request.method == 'GET':
         return render(request, 'preDtc.html')
-
     elif request.method == "POST" :
         dadosBrutos=dict(request.POST.items())
         dados=standartData(dadosBrutos)
         endereco=Enderecos()
         endereco.createEndereco(dados)
         dados['endereco_fk']=endereco.endereco
-                
         parceiro=Parceiros()
-        parceiro.createParceiro(dados)
-        return JsonResponse({'status': 200, 'parceiro':parceiro.parceiro.to_dict()}) 
+        status=parceiro.createParceiro(dados)
+        if status == 200:
+            return JsonResponse({'status': status, 'parceiro':parceiro.parceiro.to_dict()}) 
+        else:
+            return JsonResponse({'status': status}) 
     
 def standartData(dados):
     return {'cnpj':dados['cnpjMdl'],

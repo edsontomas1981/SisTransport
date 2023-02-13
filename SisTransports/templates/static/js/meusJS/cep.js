@@ -8,6 +8,12 @@ $('#btnCepMdl').on('click', function(e){
     e.preventDefault();
 });
 
+$('#btnBuscaCep').on('click', function(e){
+    busca_cep('cepMdl','ruaMdl','bairroMdl','cidadeMdl','ufMdl')
+    e.preventDefault();
+});
+
+
 function meu_callback(conteudo,rua,bairro, cidade, uf) {
     if (!("erro" in conteudo)) {
         console.log('conteudo')

@@ -7,9 +7,16 @@ class Parceiros():
         
     def createParceiro(self,dados):
         try:
-            self.createOrUpdate(dados)
-            self.parceiro.save()
-            return 200
+            if MdlParceiros.objects.filter(cnpj_cpf=dados['cnpj']).exists():
+                #caso o cnpj ja exista ele altera o cnpj
+                self.parceiro=MdlParceiros.objects.filter(cnpj_cpf=dados['cnpj']).get()
+                self.createOrUpdate(dados)
+                self.parceiro.save()                
+                return 500
+            else:
+                self.createOrUpdate(dados)
+                self.parceiro.save()
+                return 200
         except:
             return 400
         

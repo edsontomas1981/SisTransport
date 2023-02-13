@@ -7,7 +7,7 @@
 <div class="modal" id="mdlCadParceiros" tabindex="-1"data-bs-backdrop="static" 
     data-bs-keyboard="false" aria-labelledby="staticBackdropLabel" 
     aria-hidden="true">
-    <div class="modal-dialog modal-xl" >
+    <div class="modal-dialog modal-xl modal-dialog-scrollable" >
       <div class="modal-content">
         <div class="modal-header">
           <h5 class="modal-title">Cadastro de Parceiros</h5>
@@ -40,12 +40,15 @@
                             <input type="text" class="form-control small  form-control-sm" id="cnpjMdl" name="cnpjMdl" placeholder="Cpf/Cnpj" aria-label="Search" aria-describedby="basic-addon2">
                             <label class="text-secondary" for="cnpjMdl">CPF/CNPJ:</label>
                             <div class="input-group-append">
-                                <a class="btn btn-primary" id="btnBuscaCnpj">
-                                  <i class="ti-search"></i>   
-                                </a>
+                              <a class="btn btn-success" id="btnBuscaCnpj">
+                                <i class="ti-rss-alt"></i>   
+                              </a>
                             </div>
+
                           </div>
                         </div>
+
+
                         <div class="col-sm-5 mb-1 form-group">
                           <div class="form-floating mb-3  text-primary">
                             <input type="text" class="form-control" id="insc_estMdl" name="insc_estMdl" placeholder="Inscrição Estadual">
@@ -74,6 +77,15 @@
                     </div>
                   </div>
                 </div>
+
+                <div id="loader-parceiro" style="display:none;">
+                  <div class="col-md-12 col-sm-6 grid-margin stretch-card">
+                    <div class="spinner-grow text-success" role="status">
+                      <span class="visually-hidden">Loading...</span>
+                    </div>
+                  </div>
+                </div>
+
                 <div class="accordion-item">
                   <h2 class="accordion-header" id="headingTwo">
                     <button class="col-sm-12 collapsed btn btn-primary" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
@@ -263,10 +275,8 @@
                                     </table>
                                 </div>                                
                             </div>
-
                         </div>
                     </div>
-
                   </div>
                 </div>                
               </div>
@@ -280,7 +290,3 @@
   </div>
 </form>
 </div>
-
-
-
-

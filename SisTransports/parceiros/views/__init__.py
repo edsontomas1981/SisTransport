@@ -4,3 +4,5 @@ from .createParceiro import createParceiro
 from .readParceiro import readParceiro
 from .updateParceiro import updateParceiro
 from .deleteParceiro import deleteParceiro
+from .searchPartnerWs import searchPartnerWs
+

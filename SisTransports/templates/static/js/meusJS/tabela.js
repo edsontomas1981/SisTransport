@@ -65,9 +65,9 @@ function populaRazao(response) {
 }
 
 function limpaForm() {
-    //se sim tabela esta bloqueada
     $('#numTabela').val('')
     $('#descTabela').val('')
+    //se true tabela esta bloqueada
     $('#tabelaBloqueada').prop("checked", false);
     $('#icms').prop("checked", true);
     $('#cobraCubagem').prop("checked", true);
@@ -81,8 +81,11 @@ function limpaForm() {
     $('#freteMinimo').val('');
     $('#tipoFrete').val('');
     $('#tipoCobranPedagio').val('');
-    $('#aliquotaIcms').val('');    
-    limpaCnpj()
+    $('#aliquotaIcms').val('');  
+    $('#comlCnpj').val(''); 
+    $('#comlRazao').val(''); 
+
+    
     limpaTabela('#cnpjsRelacionados td');
     limpaTabela('#tabelaFaixas td');
 }

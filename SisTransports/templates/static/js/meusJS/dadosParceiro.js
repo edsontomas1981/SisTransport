@@ -1,6 +1,21 @@
+function limpaModalParceiroCnpj() {
+    $('#idParceiro').val('')
+    $('#idEndereco').val('')
+    $('#cnpjMdl').val('');
+    $('#insc_estMdl').val('');
+    $('#razaoMdl').val('');
+    $('#fantasiaMdl').val('');
+    $('#obsMdl').val('');
+    $('#cepMdl').val('');
+    $('#ruaMdl').val('');
+    $('#numeroMdl').val('');
+    $('#complementoMdl').val('');
+    $('#bairroMdl').val('');
+    $('#cidadeMdl').val('');
+    $('#ufMdl').val('');
+}
 
 function closeModal() {
-
     // Limpa os campos
     $('#cnpj').val('');
     $('#idParceiro').val('');
@@ -8,8 +23,9 @@ function closeModal() {
     $('#collapseTwo').removeClass('show');
     $('#collapseThree').removeClass('show');
     $('#comercial').removeClass('show');
-
     $('#mdlCadParceiros').modal('hide'); 
+    limpaModalParceiroCnpj();
+
 }
 
 $('#btnFechar').on('click', function(e) {
@@ -18,10 +34,13 @@ $('#btnFechar').on('click', function(e) {
     e.preventDefault();
 })
 
-$('#btnClose').on('click', function(e) {
-    closeModal();
+
+$('#btnBuscaCnpj').on('click', function(e) {
+    let dados={'url':'/searchPartnerWs/'}
+    conectaBackEnd(dados,populaParceiroWs)
     e.preventDefault();
 })
+
 
 $('#salvaParceiro').on('click',function (e){
     let dados={'url':'/createParceiro/'}
@@ -29,14 +48,69 @@ $('#salvaParceiro').on('click',function (e){
 })
 
 var createParceiro = (response) =>{
+    alert(response.status)
     switch (response.status) {
         case 200:
             alert('Parceiro cadastrado com sucesso !')
             break;
+        case 500:
+            alert('Parceiro já cadastrado, o registro foi alterado !')
+            break;
+        case 400:
+            alert('Ocorreu um erro interno,não foi possível salvar o registro !')
+            break;            
         default:
             break;
     }
 }
+
+var populaParceiroWs = (response) =>{
+    switch (response.status) {
+        case 200:
+            limpaModalParceiroCnpj();
+            $('#cnpjMdl').val(response.parceiro[0].cnpj.replace(/[^\d]/g, ''));
+            $('#razaoMdl').val(response.parceiro[0].nome);
+            $('#fantasiaMdl').val(response.parceiro[0].fantasia);
+            $('#cepMdl').val(response.parceiro[0].cep.replace(/[^\d]/g, ''));
+            $('#ruaMdl').val(response.parceiro[0].logradouro);
+            $('#numeroMdl').val(response.parceiro[0].numero);
+            $('#bairroMdl').val(response.parceiro[0].bairro);
+            $('#complementoMdl').val(response.parceiro[0].complemento);
+            $('#cidadeMdl').val(response.parceiro[0].municipio);
+            $('#ufMdl').val(response.parceiro[0].uf);
+            break;
+        default:
+            let cnpj= $('#cnpjMdl').val();
+            limpaModalParceiroCnpj();
+            $('#cnpjMdl').val(cnpj)
+            break;
+    }
+}
+
+var populaMdlCnpj = (response) => {
+    limpaModalParceiroCnpj();
+    $('#cnpjMdl').val(response.parceiro.cnpj_cpf);
+    $('#insc_estMdl').val(response.parceiro.insc_est);
+    $('#razaoMdl').val(response.parceiro.raz_soc);
+    $('#fantasiaMdl').val(response.parceiro.nome_fantasia);
+    $('#cepMdl').val(response.parceiro.endereco_fk.cep);
+    $('#ruaMdl').val(response.parceiro.endereco_fk.logradouro);
+    $('#numeroMdl').val(response.parceiro.endereco_fk.numero);
+    $('#bairroMdl').val(response.parceiro.endereco_fk.bairro);
+    $('#complementoMdl').val(response.parceiro.endereco_fk.complemento);
+    $('#cidadeMdl').val(response.parceiro.endereco_fk.cidade);
+    $('#ufMdl').val(response.parceiro.endereco_fk.uf);
+}
+
+$('#cnpjMdl').on('blur', function(e) {
+    if (validateDocumentNumber($('#cnpjMdl').val()))
+    {
+        let dados={'url':'/readParceiro/'}
+        conectaBackEnd(dados,populaMdlCnpj)
+        } else {
+        alert("CNPJ inválido");
+    }
+});
 
 
 
@@ -103,23 +177,7 @@ var createParceiro = (response) =>{
 //     }
 // }
 
-function limpaCnpj(cnpj, insc, razao, fantasia, cep,
-    endereco, numero, complemento, bairro, cidade, uf) {
 
-    $('#idParceiro').val('')
-    $('#idEndereco').val('')
-    $('#' + cnpj).val('');
-    $('#' + insc).val('');
-    $('#' + razao).val('');
-    $('#' + fantasia).val('');
-    $('#' + cep).val('');
-    $('#' + endereco).val('');
-    $('#' + numero).val('');
-    $('#' + complemento).val('');
-    $('#' + bairro).val('');
-    $('#' + cidade).val('');
-    $('#' + uf).val('');
-}
 
 // function busca_parceiro(cnpj, insc, razao, fantasia, cep,
 //     endereco, numero, complemento, bairro, cidade, uf) {
@@ -406,9 +464,3 @@ function limpaCnpj(cnpj, insc, razao, fantasia, cep,
 //     formDesabilitaEdicao();
 // })
 
-// $('#cnpjMdl').on('blur', function(e) {
-//     quemChamouModal = 'cnpjMdl';
-//     busca_parceiro($('#cnpjMdl').val(), 'insc_estMdl', 'razaoMdl',
-//         'fantasiaMdl', 'cepMdl', 'ruaMdl', 'numeroMdl',
-//         'complementoMdl', 'bairroMdl', 'cidadeMdl', 'ufMdl');
-// });

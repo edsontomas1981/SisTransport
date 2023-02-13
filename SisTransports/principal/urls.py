@@ -20,6 +20,8 @@ urlpatterns = [
     path('createParceiro/',viewParceiros.createParceiro,name='createParceiro'),
     path('readParceiro/',viewParceiros.readParceiro,name='readParceiro'),
     path('updateParceiro/',viewParceiros.updateParceiro,name='updateteParceiro'),
+    path('searchPartnerWs/',viewParceiros.searchPartnerWs,name='searchPartnerWs'),
+
     path('deleteParceiro/',viewParceiros.deleteParceiro,name='deleteParceiro'),
 
     path('preDtc/',viewsOperacional.preDtc,name='preDtc'),
