@@ -89,6 +89,7 @@ var populaParceiroWs = (response) =>{
 
 var populaMdlCnpj = (response) => {
     limpaModalParceiroCnpj();
+    console.log(response)
     $('#cnpjMdl').val(response.parceiro.cnpj_cpf);
     $('#insc_estMdl').val(response.parceiro.insc_est);
     $('#razaoMdl').val(response.parceiro.raz_soc);

@@ -49,7 +49,6 @@ def verificaCamposObrigatorios(request):
 
 def toFloat(stringToFloat):
     if isinstance(stringToFloat,str ):
-        dprint(list(stringToFloat))
         if ',' in list(stringToFloat):
             stringToFloat = stringToFloat.replace(".", "")
             stringToFloat = stringToFloat.replace(",", ".")

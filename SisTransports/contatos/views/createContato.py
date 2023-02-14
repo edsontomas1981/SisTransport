@@ -13,29 +13,33 @@ def createContato(request):
     if request.method == 'GET':
         return JsonResponse({'status': 200}) 
     elif request.method == "POST" :
-        dprint(request.POST.get('envio'))
-        # parceiro=Parceiros()
-        # parceiro.readParceiro(request.POST.get('cnpjMdl'))
-        # dprint(parceiro)
+        parceiro=Parceiros()
+        parceiro.readParceiro(request.POST.get('cnpjMdl'))
 
-        # tipoContato=TipoContato()
-        # tipoContato.readTipo(request.POST.get('tipo_contato'))
-        # dprint(tipoContato)
+        tipoContato=TipoContato()
+        tipoContato.readTipo(request.POST.get('tipo_contato'))
         
         
         dados=standartData(dict(request.POST.items()))
-        # dados['tipo']=tipoContato.tipoContato
-        # dados['parceiro']=parceiro.parceiro
+        dados['tipo']=tipoContato.tipoContato
+        dados['parceiro']=parceiro.parceiro
         
-
 
         contato=Contato()
         contato.createContato(dados)
         return JsonResponse({'status': 200}) 
 
 def standartData(response):
+     
+    envio=''
+    
+    if 'envio' in response:
+        envio=checkBox(response['envio'])
+    else:
+        envio=False
+
     return{'cargo':response['cargo'],
             'nome':response['nome'],
             'descContato':response['contato'],
-            'envio':checkBox(response['envio']) if response['envio'] else False
+            'envio':envio
             }

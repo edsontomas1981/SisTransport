@@ -13,5 +13,6 @@ def readParceiro(request):
     elif request.method == "POST" :
         parceiro=Parceiros()
         parceiro.readParceiro(request.POST.get('cnpjMdl'))
-        dprint(parceiro.parceiro.to_dict())
-        return JsonResponse({'status': 200,'parceiro':parceiro.parceiro.to_dict()}) 
+        dprint(parceiro.parceiro.listaContatos)
+        return JsonResponse({'status': 200,'parceiro':parceiro.parceiro.to_dict(),'contatos':parceiro.parceiro.listaContatos}) 
+    

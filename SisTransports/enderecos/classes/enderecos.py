@@ -20,7 +20,6 @@ class Enderecos:
             self.endereco.save()
             return 200
         except:
-            print('deu erro ')
             return 400
             
     def readEndereco(self,idEndereco):

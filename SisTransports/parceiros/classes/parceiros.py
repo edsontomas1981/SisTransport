@@ -1,4 +1,5 @@
 from parceiros.models.parceiros import Parceiros as MdlParceiros
+from contatos.classes.contato import Contato
 from Classes.utils import dprint
 
 class Parceiros():
@@ -32,6 +33,8 @@ class Parceiros():
     def readParceiro(self,cnpj):
         if MdlParceiros.objects.filter(cnpj_cpf=cnpj).exists():
             self.parceiro=MdlParceiros.objects.filter(cnpj_cpf=cnpj).get()
+            contatos=Contato()
+            self.parceiro.listaContatos=contatos.readContatos(self.parceiro.id)
             return self.parceiro
         else:
             return False
