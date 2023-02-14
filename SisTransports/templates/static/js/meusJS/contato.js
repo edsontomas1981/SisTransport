@@ -1,9 +1,14 @@
 $('#incluiContato').on('click', function(e){
     var contato = new Contato();
-    contato.loadData()
+    contato.loadData();
+    populaContatos(contato.result.listaContatos)
     e.preventDefault();
 
 })
+
+var populaContatos=(contatos)=>{
+
+}
 
 
 class Contato {
@@ -24,6 +29,8 @@ class Contato {
           $('#loader').hide();
         }
       });
+
+      console.table(result)
     }
 
     async dadosContato(){

@@ -31,13 +31,16 @@ class Parceiros():
         
 
     def readParceiro(self,cnpj):
-        if MdlParceiros.objects.filter(cnpj_cpf=cnpj).exists():
-            self.parceiro=MdlParceiros.objects.filter(cnpj_cpf=cnpj).get()
-            contatos=Contato()
-            self.parceiro.listaContatos=contatos.readContatos(self.parceiro.id)
-            return self.parceiro
-        else:
-            return False
+        try:
+            if MdlParceiros.objects.filter(cnpj_cpf=cnpj).exists():
+                self.parceiro=MdlParceiros.objects.filter(cnpj_cpf=cnpj).get()
+                contatos=Contato()
+                self.parceiro.listaContatos=contatos.readContatos(self.parceiro.id)
+                return 200
+            else:
+                return 404
+        except:
+            return 500 #
         
     def readParceiroId(self,idParceiro):
         if MdlParceiros.objects.filter(id=idParceiro).exists():

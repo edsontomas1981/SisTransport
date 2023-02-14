@@ -36,8 +36,10 @@ class CrudParceiroTestCase(TestCase):
         dadosParceiro={'cnpj':'00000000000000','razao':'Teste Razao','fantasia':'Teste Fantasia',
                        'inscr':'000000000000','obs':'Teste Observacao','endereco_fk':self.objEndereco.endereco}
         self.parceiro.createParceiro(dadosParceiro)        
-        self.parceiro=self.parceiro.readParceiro('00000000000000')
-        self.assertEqual(self.parceiro.id,1)
+        
+        self.assertEqual(self.parceiro.readParceiro('00000000000000'),200)
+        self.assertEqual(self.parceiro.parceiro.id,1)
+
         
     def test_readParceiroId(self):
         dadosParceiro={'cnpj':'00000000000000','razao':'Teste Razao','fantasia':'Teste Fantasia',

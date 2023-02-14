@@ -14,20 +14,24 @@ def createContato(request):
         return JsonResponse({'status': 200}) 
     elif request.method == "POST" :
         parceiro=Parceiros()
-        parceiro.readParceiro(request.POST.get('cnpjMdl'))
-
+        statusParceiro=parceiro.readParceiro(request.POST.get('cnpjMdl'))
+        
+        
         tipoContato=TipoContato()
-        tipoContato.readTipo(request.POST.get('tipo_contato'))
+        statusContato=tipoContato.readTipo(request.POST.get('tipo_contato'))
         
-        
-        dados=standartData(dict(request.POST.items()))
-        dados['tipo']=tipoContato.tipoContato
-        dados['parceiro']=parceiro.parceiro
-        
+        if statusParceiro==200 and statusContato==200:
+            dados=standartData(dict(request.POST.items()))
+            dados['tipo']=tipoContato.tipoContato
+            dados['parceiro']=parceiro.parceiro
 
-        contato=Contato()
-        contato.createContato(dados)
-        return JsonResponse({'status': 200}) 
+            contato=Contato()
+            contato.createContato(dados)
+            listaContatos=contato.readContatos(parceiro.parceiro.id)
+            return JsonResponse({'status': 200,'listaContatos':listaContatos}) 
+        else:
+            return JsonResponse({'status': 200}) 
+
 
 def standartData(response):
      
