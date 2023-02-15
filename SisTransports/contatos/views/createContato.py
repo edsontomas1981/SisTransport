@@ -14,7 +14,7 @@ def createContato(request):
         return JsonResponse({'status': 200}) 
     elif request.method == "POST" :
         parceiro=Parceiros()
-        statusParceiro=parceiro.readParceiro(request.POST.get('cnpjMdl'))
+        statusParceiro=parceiro.readParceiro(request.POST.get('cnpj_cpf'))
         
         
         tipoContato=TipoContato()

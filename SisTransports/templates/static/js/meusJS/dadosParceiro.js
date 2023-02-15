@@ -15,6 +15,26 @@ function limpaModalParceiroCnpj() {
     $('#ufMdl').val('');
 }
 
+$('#tabela').on("click", ".btn", function() {
+    var contato = new Contato()
+    // Obtém o ID do botão clicado
+    var button_id = $(this).attr('id');
+    // Obtém o ID da linha pai do botão clicado
+    var row_id = $(this).closest('tr').attr('id');
+    // Imprime os IDs obtidos no console para verificação
+    // alert("Botão clicado: " + button_id + ", Linha clicada: " + row_id);
+    if (button_id=='alteraContato'){
+        alert('vc clicou em altera')
+    }else if (button_id=='excluiContato'){
+        if (confirm('Deseja excluir o contato ?')){
+        contato.deleteContato(row_id)
+        alert ('Contato apagado !');
+        }
+    }
+
+});
+
+
 function closeModal() {
     // Limpa os campos
     $('#cnpj').val('');
@@ -25,10 +45,17 @@ function closeModal() {
     $('#comercial').removeClass('show');
     $('#mdlCadParceiros').modal('hide'); 
     limpaModalParceiroCnpj();
+    limpaTabelaContatos();  
 
 }
 
 $('#btnFechar').on('click', function(e) {
+    $('#mdlCadParceiros').modal('hide'); 
+    closeModal();
+    e.preventDefault();
+})
+
+$('#btnClose').on('click', function(e) {
     $('#mdlCadParceiros').modal('hide'); 
     closeModal();
     e.preventDefault();
@@ -89,7 +116,6 @@ var populaParceiroWs = (response) =>{
 
 var populaMdlCnpj = (response) => {
     limpaModalParceiroCnpj();
-    console.log(response)
     $('#cnpjMdl').val(response.parceiro.cnpj_cpf);
     $('#insc_estMdl').val(response.parceiro.insc_est);
     $('#razaoMdl').val(response.parceiro.raz_soc);
@@ -101,6 +127,7 @@ var populaMdlCnpj = (response) => {
     $('#complementoMdl').val(response.parceiro.endereco_fk.complemento);
     $('#cidadeMdl').val(response.parceiro.endereco_fk.cidade);
     $('#ufMdl').val(response.parceiro.endereco_fk.uf);
+    populaContatos(response.contatos,$('#tabela tbody'))
 }
 
 $('#cnpjMdl').on('blur', function(e) {
@@ -108,7 +135,7 @@ $('#cnpjMdl').on('blur', function(e) {
     {
         let dados={'url':'/readParceiro/'}
         conectaBackEnd(dados,populaMdlCnpj)
-        } else {
+    }else{
         alert("CNPJ inválido");
     }
 });
