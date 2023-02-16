@@ -127,7 +127,7 @@ var populaMdlCnpj = (response) => {
     $('#complementoMdl').val(response.parceiro.endereco_fk.complemento);
     $('#cidadeMdl').val(response.parceiro.endereco_fk.cidade);
     $('#ufMdl').val(response.parceiro.endereco_fk.uf);
-    populaContatos(response.contatos,$('#tabela tbody'))
+    populaContatos(response.contatos)
 }
 
 $('#cnpjMdl').on('blur', function(e) {

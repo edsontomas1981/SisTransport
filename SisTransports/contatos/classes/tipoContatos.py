@@ -14,7 +14,7 @@ class TipoContato:
     def readTipo(self,idContato):
         if MdlTipoContatos.objects.filter(id=idContato).exists() :
             self.tipoContato=MdlTipoContatos.objects.filter(id=idContato).get()
-            return self.tipoContato
+            return 200
     def updateTipo(self):
         pass
 
