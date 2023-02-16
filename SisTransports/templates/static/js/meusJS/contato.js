@@ -1,8 +1,8 @@
 $('#incluiContato').on('click', function(e){
+    e.preventDefault();
     var contato = new Contato($('#cnpjMdl').val());
     contato.sendPostRequest('/contato/createContato/');
-    populaContatos(contato.result.listaContatos)
-    e.preventDefault();
+    contato.populaContatos();
 })
 
 var populaContatos=(listaContatos)=>{
@@ -40,9 +40,12 @@ class Contato {
       this.cnpj=cnpj
     }
 
-    async sendPostRequest(url) {
+    async sendPostRequest(url,...idContato) {
       let postData = $('form').serialize();
       postData += '&cnpj_cpf=' + this.cnpj;
+      if(idContato){
+        postData += '&idContato=' + idContato;
+      }
       const result = await $.ajax({
         url: url,
         beforeSend: function() {
@@ -55,9 +58,7 @@ class Contato {
           $('#loader').hide();
         }
       });
-
-      console.log(result)
-
+      populaContatos(result.listaContatos)
     }
 
     async deleteContato(idContato){
@@ -76,6 +77,6 @@ class Contato {
             $('#loader').hide();
           }
         });
-        console.table(result)
+        populaContatos(result.listaContatos)
       }
   }

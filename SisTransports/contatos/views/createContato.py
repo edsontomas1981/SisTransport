@@ -26,7 +26,6 @@ def createContato(request):
             contato=Contato()
             contato.createContato(dados)
             listaContatos=contato.readContatos(parceiro.parceiro.id)
-            dprint(listaContatos)
             return JsonResponse({'status': 200,'listaContatos':listaContatos}) 
         else:
             return JsonResponse({'status': 200}) 

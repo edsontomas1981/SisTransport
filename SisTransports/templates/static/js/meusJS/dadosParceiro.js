@@ -22,16 +22,15 @@ $('#tabela').on("click", ".btn", function() {
     // Obtém o ID da linha pai do botão clicado
     var row_id = $(this).closest('tr').attr('id');
     // Imprime os IDs obtidos no console para verificação
-    // alert("Botão clicado: " + button_id + ", Linha clicada: " + row_id);
     if (button_id=='alteraContato'){
         alert('vc clicou em altera')
     }else if (button_id=='excluiContato'){
+        alert('dele')
         if (confirm('Deseja excluir o contato ?')){
-        contato.deleteContato(row_id)
+        contato.sendPostRequest('/contato/deleteContato/',row_id)
         alert ('Contato apagado !');
         }
     }
-
 });
 
 

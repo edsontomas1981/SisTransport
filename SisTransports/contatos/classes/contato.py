@@ -25,6 +25,7 @@ class Contato:
                 listaContatos.append(contato.to_dict())
             return listaContatos
         
+        
     def excluiContato(self,id):
         self.id=id
         contato=MdlContato.objects.filter(id=self.id)
