@@ -15,23 +15,62 @@ function limpaModalParceiroCnpj() {
     $('#ufMdl').val('');
 }
 
-$('#tabela').on("click", ".btn", function() {
+$('#tabela').on("click", "#alteraContato", function(event) {
+    var row = $(event.target).closest('tr');
+    var contato = {};
+    contato.id = row.attr("id");
+    contato.nome = row.find("#nome").text();
+    contato.cargo = row.find("#cargo").text();
+    contato.tipo = row.find("#tipo").text();
+    contato.fone = row.find("#fone").text();
+
+    $('#tipo_contato').val(contato.tipo);
+    $('#cargo').val(contato.cargo);
+    $('#nome').val(contato.nome);
+    $('#contato').val(contato.fone);
+
+    // Obter o texto a ser buscado
+    var textoBuscado =contato.tipo;
+    // Buscar o elemento option correspondente
+    var optionEncontrado = $("#tipo_contato").find('option').filter(function() {
+        return $(this).text() === textoBuscado;
+      });
+    // Verificar se o elemento option foi encontrado
+    if (optionEncontrado.length) {
+    // Definir o atributo selected na opção correspondente
+    optionEncontrado.prop("selected", true);
+    }
+  });
+
+  $('#tabela').on("click", "#excluiContato", function(event) {
+    var row = $(event.target).closest('tr');
+    var row_id = row.attr("id")
     var contato = new Contato()
-    // Obtém o ID do botão clicado
-    var button_id = $(this).attr('id');
-    // Obtém o ID da linha pai do botão clicado
-    var row_id = $(this).closest('tr').attr('id');
-    // Imprime os IDs obtidos no console para verificação
-    if (button_id=='alteraContato'){
-        alert('vc clicou em altera')
-    }else if (button_id=='excluiContato'){
-        alert('dele')
-        if (confirm('Deseja excluir o contato ?')){
+    if (confirm('Deseja excluir o contato ?')){
         contato.sendPostRequest('/contato/deleteContato/',row_id)
         alert ('Contato apagado !');
         }
-    }
-});
+  });
+  
+
+// $('#tabela').on("click", ".btn", function() {
+//     var contato = new Contato()
+//     // Obtém o ID do botão clicado
+//     var button_id = $(this).attr('id');
+//     // Obtém o ID da linha pai do botão clicado
+//     var row_id = $(this).closest('tr').attr('id');
+
+//     // Imprime os IDs obtidos no console para verificação
+//     if (button_id=='alteraContato'){
+//         alert('vc clicou em altera')
+//     }else if (button_id=='excluiContato'){
+//         alert('dele')
+//         if (confirm('Deseja excluir o contato ?')){
+//         contato.sendPostRequest('/contato/deleteContato/',row_id)
+//         alert ('Contato apagado !');
+//         }
+//     }
+// });
 
 
 function closeModal() {
@@ -74,7 +113,6 @@ $('#salvaParceiro').on('click',function (e){
 })
 
 var createParceiro = (response) =>{
-    alert(response.status)
     switch (response.status) {
         case 200:
             alert('Parceiro cadastrado com sucesso !')
