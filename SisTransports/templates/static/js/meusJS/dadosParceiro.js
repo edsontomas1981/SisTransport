@@ -13,65 +13,8 @@ function limpaModalParceiroCnpj() {
     $('#bairroMdl').val('');
     $('#cidadeMdl').val('');
     $('#ufMdl').val('');
+    limpaContatos()
 }
-
-$('#tabela').on("click", "#alteraContato", function(event) {
-    var row = $(event.target).closest('tr');
-    var contato = {};
-    contato.id = row.attr("id");
-    contato.nome = row.find("#nome").text();
-    contato.cargo = row.find("#cargo").text();
-    contato.tipo = row.find("#tipo").text();
-    contato.fone = row.find("#fone").text();
-
-    $('#tipo_contato').val(contato.tipo);
-    $('#cargo').val(contato.cargo);
-    $('#nome').val(contato.nome);
-    $('#contato').val(contato.fone);
-
-    // Obter o texto a ser buscado
-    var textoBuscado =contato.tipo;
-    // Buscar o elemento option correspondente
-    var optionEncontrado = $("#tipo_contato").find('option').filter(function() {
-        return $(this).text() === textoBuscado;
-      });
-    // Verificar se o elemento option foi encontrado
-    if (optionEncontrado.length) {
-    // Definir o atributo selected na opção correspondente
-    optionEncontrado.prop("selected", true);
-    }
-  });
-
-  $('#tabela').on("click", "#excluiContato", function(event) {
-    var row = $(event.target).closest('tr');
-    var row_id = row.attr("id")
-    var contato = new Contato()
-    if (confirm('Deseja excluir o contato ?')){
-        contato.sendPostRequest('/contato/deleteContato/',row_id)
-        alert ('Contato apagado !');
-        }
-  });
-  
-
-// $('#tabela').on("click", ".btn", function() {
-//     var contato = new Contato()
-//     // Obtém o ID do botão clicado
-//     var button_id = $(this).attr('id');
-//     // Obtém o ID da linha pai do botão clicado
-//     var row_id = $(this).closest('tr').attr('id');
-
-//     // Imprime os IDs obtidos no console para verificação
-//     if (button_id=='alteraContato'){
-//         alert('vc clicou em altera')
-//     }else if (button_id=='excluiContato'){
-//         alert('dele')
-//         if (confirm('Deseja excluir o contato ?')){
-//         contato.sendPostRequest('/contato/deleteContato/',row_id)
-//         alert ('Contato apagado !');
-//         }
-//     }
-// });
-
 
 function closeModal() {
     // Limpa os campos
@@ -84,7 +27,6 @@ function closeModal() {
     $('#mdlCadParceiros').modal('hide'); 
     limpaModalParceiroCnpj();
     limpaTabelaContatos();  
-
 }
 
 $('#btnFechar').on('click', function(e) {
@@ -99,18 +41,6 @@ $('#btnClose').on('click', function(e) {
     e.preventDefault();
 })
 
-
-$('#btnBuscaCnpj').on('click', function(e) {
-    let dados={'url':'/searchPartnerWs/'}
-    conectaBackEnd(dados,populaParceiroWs)
-    e.preventDefault();
-})
-
-
-$('#salvaParceiro').on('click',function (e){
-    let dados={'url':'/createParceiro/'}
-    conectaBackEnd(dados,createParceiro)
-})
 
 var createParceiro = (response) =>{
     switch (response.status) {
@@ -166,19 +96,6 @@ var populaMdlCnpj = (response) => {
     $('#ufMdl').val(response.parceiro.endereco_fk.uf);
     populaContatos(response.contatos)
 }
-
-$('#cnpjMdl').on('blur', function(e) {
-    if (validateDocumentNumber($('#cnpjMdl').val()))
-    {
-        let dados={'url':'/readParceiro/'}
-        conectaBackEnd(dados,populaMdlCnpj)
-    }else{
-        alert("CNPJ inválido");
-    }
-});
-
-
-
 // Mudar logica de variaveis globais para que cada botão encaminhe para uma rota  
 // var editaContato
 // var quemChamouModal
@@ -479,19 +396,22 @@ $('#cnpjMdl').on('blur', function(e) {
 //     $('#ufColeta').val($('#ufRem').val());
 // }
 
-// /* $('#btnCnpjRem').on('click', function(e) {
-//     quemChamouModal = 'cnpjRem'
-//     $('#mdlCadParceiros').modal('show');
-//     preencheModalClick('cnpjRem', 'inscRem', 'razaoRem',
-//         'fantasiaRem', 'cepRem', 'ruaRem', 'numeroRem',
-//         'complementoRem', 'bairroRem', 'cidadeRem', 'ufRem');
-//     e.preventDefault();
-// });*/
 
-// $('#btnLimpaCnpjRem').on('click', function(e) {
-//     alert(123654)
-//     e.preventDefault();
-// });
+
+
+    // Em jQuery, o seletor $('[id$=valor]') seleciona todos 
+    // os elementos cujo atributo "id" termina com o valor especificado.
+
+    // Ou seja, se tivermos uma lista de elementos com ids como 
+    // "nome_1", "nome_2", "email_1", "email_2", "telefone_1", "telefone_2", etc., 
+    // e quisermos selecionar apenas os campos relacionados a "nome", 
+    // poderíamos usar o seletor $('[id$=_nome]'). 
+    // Isso selecionaria todos os elementos que têm o atributo 
+    // "id" terminando com "_nome", que seriam "nome_1" e "nome_2" neste caso.
+    // O símbolo "$" representa "termina com" no seletor. 
+    // Outros símbolos que podem ser usados incluem "^" (começa com) e "*" (contém).
+
+  
 
 // $('#btnLimpaCnpjDest').on('click', function(e) {
 //     limpaCnpj('cnpjDest', 'inscDest', 'razaoDest',

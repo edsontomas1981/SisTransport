@@ -13,6 +13,5 @@ def createCotacao (request):
         tabelas=TabelaFrete()
         parceiro=Parceiros()
         parceiro.readParceiro(request.POST.get('id'))
-        dprint(tabelas.readTabelas(parceiro.parceiro))
         return JsonResponse({'status': 200,
                              'tabelas':tabelas.readTabelas(parceiro.parceiro)})         

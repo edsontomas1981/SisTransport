@@ -13,12 +13,12 @@ class Parceiros():
                 self.parceiro=MdlParceiros.objects.filter(cnpj_cpf=dados['cnpj']).get()
                 self.createOrUpdate(dados)
                 self.parceiro.save()                
-                return 500
+                return 201
             else:
                 self.createOrUpdate(dados)
                 self.parceiro.save()
                 return 200
-        except:
+        except: 
             return 400
         
     def createOrUpdate(self,dados):

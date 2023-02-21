@@ -56,11 +56,8 @@
                                 <i class="ti-rss-alt"></i>   
                               </a>
                             </div>
-
                           </div>
                         </div>
-
-
                         <div class="col-sm-5 mb-1 form-group">
                           <div class="form-floating mb-3  text-primary">
                             <input type="text" class="form-control" id="insc_estMdl" name="insc_estMdl" placeholder="Inscrição Estadual">
@@ -173,7 +170,7 @@
                   <div id="collapseThree" class="accordion-collapse collapse" aria-labelledby="headingThree" data-bs-parent="#accordionExample">
                     <div class="accordion-body">
                         <div class="form-group row">
-                          <input type="text" class="form-control form-control-sm" 
+                          <input type="hidden" class="form-control form-control-sm" 
                           name="idContato" id="idContato">
                             <div class="col-sm-2 mb-3 pr-1 form-group">
 
@@ -222,7 +219,7 @@
                             <div class="col-sm-2 mt-2">
                               <div class="form-group" align="right">
                                 <div class="input-group" align="right">
-                                  <button type="button" class="btn btn-secondary btn-rounded btn-icon" align=right>            
+                                  <button type="button" class="btn btn-secondary btn-rounded btn-icon" id="btnLimpaContatos" align=right>            
                                     <i class="ti-write"></i>
                                   </button>
                                   <button type="button" class="btn btn-success btn-rounded btn-icon" id="incluiContato" align=right>            
@@ -268,7 +265,7 @@
                     <div id="accordionComercial" class="accordion-collapse collapse" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
                       <div class="accordion-body">
                         <div class="col-12">
-                          <table class="table table-striped table-sm" id="relatorioTabela">
+                          <table class="table table-striped table-sm" id="relatorioTabelaParceiro">
                             <thead>
                               <tr>
                                 <th scope="col">Id</th>
@@ -280,8 +277,6 @@
                                 <th scope="col">Pedágio</th>
                                 <th scope="col">Gris</th>
                                 <th scope="col">Outros</th>
-                                <th scope="col">Excluir</th>
-                                <th scope="col">Visualizar</th> 
                               </tr>
                             </thead>
                             <tbody>

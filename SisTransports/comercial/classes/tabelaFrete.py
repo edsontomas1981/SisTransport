@@ -9,11 +9,14 @@ class TabelaFrete:
     def __init__(self):
         self.tabela = TblFrete()
 
+    def get_tabelas_por_parceiro(self,parceiro):
+        tabelas = TblFrete.objects.filter(parceiro=parceiro)
+        return [tabela.toDict() for tabela in tabelas]
+
     def readTabelas(self,parceiro:object):
         tabCnpj = []
         if TblFrete.objects.filter(parceiro__id=parceiro.id):
-            tabelas = TblFrete.objects.filter(
-                parceiro__id=parceiro.id)
+            tabelas = TblFrete.objects.filter(parceiro__id=parceiro.id)
             for tabela in tabelas:
                 tabCnpj.append(tabela.toDict())
             return tabCnpj

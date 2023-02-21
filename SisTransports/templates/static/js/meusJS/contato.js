@@ -1,14 +1,63 @@
 $('#incluiContato').on('click', function(e){
-  alert(123)
-    if(contato.id){    
-      alert('altera')
-    }else{
-    e.preventDefault();
     var contato = new Contato($('#cnpjMdl').val());
-    contato.sendPostRequest('/contato/createContato/');
-    contato.populaContatos();
+ 
+    if($('#idContato').val()!=''){    
+      contato.updateContato($('#idContato').val())
+      limpaContatos()
+    }else{
+      contato.createContato();
+      contato.populaContatos();
     }
+    e.preventDefault();
 })
+
+$('#btnLimpaContatos').on('click',function(e){
+  limpaContatos();
+  e.preventDefault();
+})
+
+var limpaContatos=()=>{
+  $('#tipo_contato').val('');
+  $('#cargo').val('');
+  $('#nome').val('');
+  $('#contato').val('');
+  $('#idContato').val('');
+}
+
+$('#tabela').on("click", "#alteraContato", function(event) {
+  var row = $(event.target).closest('tr');
+  var contato = {};
+  contato.id = row.attr("id");
+  contato.nome = row.find("#nome").text();
+  contato.cargo = row.find("#cargo").text();
+  contato.tipo = row.find("#tipo").text();
+  contato.fone = row.find("#fone").text();
+  $('#tipo_contato').val(contato.tipo);
+  $('#cargo').val(contato.cargo);
+  $('#nome').val(contato.nome);
+  $('#contato').val(contato.fone);
+  $('#idContato').val(contato.id);
+  // Obter o texto a ser buscado
+  var textoBuscado =contato.tipo;
+  // Buscar o elemento option correspondente
+  var optionEncontrado = $("#tipo_contato").find('option').filter(function() {
+      return $(this).text() === textoBuscado;
+    });
+  // Verificar se o elemento option foi encontrado
+  if (optionEncontrado.length) {
+  // Definir o atributo selected na opção correspondente
+  optionEncontrado.prop("selected", true);
+  }
+});
+
+$('#tabela').on("click", "#excluiContato", function(event) {
+  var row = $(event.target).closest('tr');
+  var row_id = row.attr("id")
+  var contato = new Contato()
+  if (confirm('Deseja excluir o contato ?')){
+      contato.deleteContato(row_id)
+      }
+});
 
 var populaContatos=(listaContatos)=>{
   limpaTabelaContatos()
@@ -53,16 +102,24 @@ class Contato {
       }
       const result = await $.ajax({
         url: url,
-        beforeSend: function() {
-          $('#loader').show();
-        },
         type: 'POST',
         data: postData,
         dataType: 'json',
-        complete: function() {
-          $('#loader').hide();
-        }
       }); 
       populaContatos(result.listaContatos)
     }
+
+    createContato(){
+      this.sendPostRequest('/contato/createContato/');
+    }
+    deleteContato(idContato){
+      this.sendPostRequest('/contato/deleteContato/',idContato);
+    }
+    updateContato(idContato){
+      this.sendPostRequest('/contato/updateContato/',idContato);
+    }
+
+
+
+
   }

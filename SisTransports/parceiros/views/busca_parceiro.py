@@ -6,8 +6,8 @@ from django.template.loader import render_to_string
 from Classes.consultaCnpj import validaCnpjCpf
 from Classes.buscaCnpjWs import cnpjWs
 from enderecos.models.endereco import Enderecos
-from Classes.contato import Contato as ClasseContato
 from Classes.utils import dprint
+from contatos.classes.contato import Contato
 @login_required(login_url='/auth/entrar/')
 def busca_parceiro(request):
     if validaCnpjCpf(request.POST.get('cnpj_cpf')):
@@ -15,8 +15,9 @@ def busca_parceiro(request):
             
             parceiro = Parceiros.objects.filter(cnpj_cpf=request.POST.get('cnpj_cpf')).get()
             dados=[parceiro.to_dict()]
-            contatos=ClasseContato(parceiro)
-            contato=contatos.contatos()
+            contato=Contato()
+            listaContatos=contato.readContatos(parceiro.id)
+            dprint(listaContatos)
             if contato:
                 return JsonResponse({'dados': dados,'contato':contato,'status':200})#Parceiro cadastrado e com contato
             else:

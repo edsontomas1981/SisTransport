@@ -1,4 +1,4 @@
-<form method="POST">
+<form method="POST"> {% csrf_token %}
     <!-- barra buscar-->
     <div class="row"> 
         <div class="col-4">
@@ -96,7 +96,7 @@
                 id="cnpjRem" name="cnpjRem" placeholder="Cnpj/Cpf">
                 <div class="input-group-append">
                     <button class="btn btn-danger form-control-sm"  id="btnLimpaCnpjRem" type="button">
-                        <i class="ti-trash"></i>   
+                        <i class="ti-eraser"></i>   
                     </button> 
                     <button class="btn btn-primary form-control-sm"  id="btnCnpjRem" type="button">
                         <i class="ti-search"></i>   
@@ -154,7 +154,7 @@
                 name="cnpjDest" placeholder="Cnpj/Cpf" aria-label="Search" aria-describedby="basic-addon2">
                 <div class="input-group-append">
                     <button class="btn btn-danger form-control-sm"  id="btnLimpaCnpjDest" type="button">
-                        <i class="ti-trash"></i>   
+                        <i class="ti-eraser"></i>   
                     </button> 
                     <button class="btn btn-primary form-control-sm"  id="btnCnpjDest" type="button">
                         <i class="ti-search"></i>   
@@ -211,7 +211,7 @@
                  placeholder="Cnpj/Cpf" name="cnpjConsig" aria-label="Search" aria-describedby="basic-addon2">
                 <div class="input-group-append">
                     <button class="btn btn-danger form-control-sm"  id="btnLimpaCnpjConsig" type="button">
-                        <i class="ti-trash"></i>   
+                        <i class="ti-eraser"></i>   
                     </button>                     
                     <button class="btn btn-primary form-control-sm"  id="btnCnpjConsig" type="button">
                         <i class="ti-search"></i>   

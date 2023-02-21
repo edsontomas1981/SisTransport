@@ -1,29 +1,97 @@
-const remetente = new Parceiro()
-const destinatario = new Parceiro()
-const consignatario = new Parceiro()
-
-
+const consignatario = new Parceiro($('#cnpjConsig').val(),'Consig');
+const remetente = new Parceiro($('#cnpjRem').val(),'Rem');
+const destinatario = new Parceiro($('#cnpjDest').val(),'Dest');
+const parceiroMdl = new Parceiro ($('#cnpjMdl').val(),'Mdl')
+// Remetente
 $('#cnpjRem').on('blur', function(e) {
-    remetente.constroeParceiro($('#cnpjRem').val(),'Rem')
-    remetente.populaCampos()
+    remetente.cnpj=$('#cnpjRem').val()
+    remetente.readParceiro()
+});
+
+$('#btnLimpaCnpjRem').on('click', function(e) {
+    remetente.limparCamposDtc()
+    remetente.limpaDados()
+    e.preventDefault();
 });
 
 $('#btnCnpjRem').on('click', function(e) {
-    if (remetente.id){
-        remetente.alteraParceiro()
+    remetente.openModalParceiro();
+    remetente.openModalParceiro()
+
+});
+
+// Destinatario
+$('#cnpjDest').on('blur', function(e) {
+    destinatario.cnpj=$('#cnpjDest').val()
+    destinatario.readParceiro()
+});
+
+$('#btnLimpaCnpjDest').on('click', function(e) {
+    destinatario.limparCamposDtc()
+    destinatario.limpaDados()
+    e.preventDefault();
+});
+
+$('#btnCnpjDest').on('click', function(e) {
+    destinatario.openModalParceiro()
+    destinatario.populaContatos()
+});
+
+
+// Consignatario
+$('#cnpjConsig').on('blur', function(e) {
+    consignatario.cnpj=$('#cnpjConsig').val()
+    consignatario.readParceiro()
+});
+
+$('#btnLimpaCnpjConsig').on('click', function(e) {
+    consignatario.limparCamposDtc()
+    consignatario.limpaDados()
+    e.preventDefault();
+});
+
+$('#btnCnpjConsig').on('click', function(e) {
+    consignatario.openModalParceiro()
+    consignatario.populaContatos()
+});
+
+
+// Modal
+
+$('#btnBuscaCnpj').on('click', function(e) {
+    parceiroMdl.aguardaMdl()
+    parceiroMdl.getWsParceiro()
+    e.preventDefault();
+})
+
+$('#salvaParceiro').on('click',function (e){
+    if (validateDocumentNumber($('#cnpjMdl').val()))
+    {
+        // let parceiro = new Parceiro($('#cnpjMdl').val(),'Mdl');
+        alert('novo')
+        parceiroMdl.createParceiro();
     }else{
-        remetente.createParceiro()
+        alert("CNPJ inválido");
+    }
+
+    
+})
+
+$('#cnpjMdl').on('blur',function(e){
+    if (validateDocumentNumber($('#cnpjMdl').val()))
+    {
+        parceiroMdl.cnpj=$('#cnpjMdl').val()
+        parceiroMdl.carregaParceiroMdl()
+    }else{
+        alert("CNPJ inválido");
     }
 });
 
 
-$('#cnpjDest').on('blur', function(e) {
-    destinatario.constroeParceiro($('#cnpjDest').val(),'Dest')
-    destinatario.populaCampos()
-});
 
-$('#cnpjConsig').on('blur', function(e) {
-    consignatario.constroeParceiro($('#cnpjConsig').val(),'Consig')
-    consignatario.populaCampos()
-});
 
+// var limparCamposDtc=(sufixo)=> {
+//     $('[id$=' + sufixo + ']').each(function() {
+//       $(this).val('');
+//     });
+// }

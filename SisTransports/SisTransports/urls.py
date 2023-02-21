@@ -26,6 +26,8 @@ urlpatterns = [
     path('faturamento/' , include('faturamento.urls')),
     path('financeiro/' , include('financeiro.urls')),
     path('contato/' , include('contatos.urls')),
+    path('parceiros/' , include('parceiros.urls')),
+
 
 ]
 urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

@@ -2,6 +2,7 @@
 # sendo identificacaoCampo e o nome vindo da requisição
 # e nome campo e uma frase mais agradavel para retorno da requisição
 from termcolor import colored
+import re
 
 def checaCampos(request, **kwargs):
     camposVazios = []
@@ -78,6 +79,16 @@ def checaUf(uf):
         return True
     else:
         return False
+
+def remove_caracteres_cep(cep):
+    """Remove caracteres especiais de um CEP e retorna apenas os dígitos."""
+    return re.sub(r'\D', '', cep)
+
+
+def remove_caracteres_cnpj_cpf(cnpj_cpf):
+    """Remove caracteres especiais de um CNPJ/CPF e retorna apenas os dígitos."""
+    return re.sub(r'\D', '', cnpj_cpf)
+
 
 
 def dprint(*args):

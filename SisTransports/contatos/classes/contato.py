@@ -5,17 +5,34 @@ class Contato:
         self.contato=MdlContato()
 
     def createOrUpdate(self,dados):
-        self.contato.cargo=dados['cargo']
-        self.contato.nome=dados['nome']
-        self.contato.fone_email_etc=dados['descContato']
-        self.contato.tipo=dados['tipo']
-        self.contato.envio=dados['envio']
-        self.contato.parceiro_fk=dados['parceiro']
+        try:
+            self.contato.cargo=dados['cargo']
+            self.contato.nome=dados['nome']
+            self.contato.fone_email_etc=dados['descContato']
+            self.contato.tipo=dados['tipo']
+            self.contato.envio=dados['envio']
+            self.contato.parceiro_fk=dados['parceiro']
+        except:
+            return 501
 
     def createContato(self,dados):
-        self.createOrUpdate(dados)
-        self.contato.save()
-        return 200
+        try:
+            self.createOrUpdate(dados)
+            self.contato.save()
+            return 200
+        except:
+            return 500
+
+    def updateContato(self,dados,idContato):
+        if MdlContato.objects.filter(id=idContato).exists():
+            self.contato=MdlContato.objects.filter(id=idContato).get()
+            self.createOrUpdate(dados)
+            self.contato.save() 
+            return 200
+        else:
+            return 400
+
+
 
     def readContatos(self,idParceiro):
         if MdlContato.objects.filter(parceiro_fk_id=idParceiro).exists() :
