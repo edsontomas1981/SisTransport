@@ -47,7 +47,7 @@ var validaDtc=()=>{
 }
 
 $('#salvaDtc').on('click', function(e) {
-
+    alert($('modalidadeFrete').val())
     if ($('modalidadeFrete').val()!=0){
         if ($('#numDtc').val()==''){
             defineTomador($('#modalidadeFrete').val())

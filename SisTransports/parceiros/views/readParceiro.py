@@ -18,7 +18,6 @@ def readParceiro(request):
         else:
             parceiro=Parceiros()
             status=parceiro.readParceiro(request.POST.get('cnpj_cpf'))
-            dprint(parceiro.parceiro.id)
             tabelas=TabelaFrete()
             if status==200:
                 return JsonResponse({'status': 200,

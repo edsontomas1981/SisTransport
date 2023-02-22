@@ -17,7 +17,6 @@ $('#btnLimpaCnpjRem').on('click', function(e) {
 $('#btnCnpjRem').on('click', function(e) {
     remetente.openModalParceiro();
     remetente.openModalParceiro()
-
 });
 
 // Destinatario
@@ -57,25 +56,21 @@ $('#btnCnpjConsig').on('click', function(e) {
 
 
 // Modal
-
 $('#btnBuscaCnpj').on('click', function(e) {
-    parceiroMdl.aguardaMdl()
-    parceiroMdl.getWsParceiro()
+    parceiroMdl.getWsParceiro();
+    parceiroMdl.aguardaMdl();
     e.preventDefault();
 })
 
 $('#salvaParceiro').on('click',function (e){
     if (validateDocumentNumber($('#cnpjMdl').val()))
     {
-        // let parceiro = new Parceiro($('#cnpjMdl').val(),'Mdl');
-        alert('novo')
         parceiroMdl.createParceiro();
     }else{
         alert("CNPJ inválido");
     }
-
-    
 })
+
 
 $('#cnpjMdl').on('blur',function(e){
     if (validateDocumentNumber($('#cnpjMdl').val()))
@@ -88,10 +83,48 @@ $('#cnpjMdl').on('blur',function(e){
 });
 
 
+// Botoes fechar
+$('#btnFechar').on('click', function(e) {
+    $('#mdlCadParceiros').modal('hide'); 
+    closeModal();
+    e.preventDefault();
+})
 
+$('#btnClose').on('click', function(e) {
+    $('#mdlCadParceiros').modal('hide'); 
+    closeModal();
+    e.preventDefault();
+})
 
-// var limparCamposDtc=(sufixo)=> {
-//     $('[id$=' + sufixo + ']').each(function() {
-//       $(this).val('');
-//     });
-// }
+// funcoes diversas
+
+function limpaModalParceiroCnpj() {
+    $('#idParceiro').val('')
+    $('#idEndereco').val('')
+    $('#cnpjMdl').val('');
+    $('#insc_estMdl').val('');
+    $('#razaoMdl').val('');
+    $('#fantasiaMdl').val('');
+    $('#obsMdl').val('');
+    $('#cepMdl').val('');
+    $('#ruaMdl').val('');
+    $('#numeroMdl').val('');
+    $('#complementoMdl').val('');
+    $('#bairroMdl').val('');
+    $('#cidadeMdl').val('');
+    $('#ufMdl').val('');
+    limpaContatos()
+}
+
+function closeModal() {
+    // Limpa os campos
+    $('#cnpj').val('');
+    $('#idParceiro').val('');
+    $('#collapseOne').removeClass('show');
+    $('#collapseTwo').removeClass('show');
+    $('#collapseThree').removeClass('show');
+    $('#comercial').removeClass('show');
+    $('#mdlCadParceiros').modal('hide'); 
+    limpaModalParceiroCnpj();
+    limpaTabelaContatos();  
+}

@@ -2,6 +2,8 @@ from django.http import JsonResponse
 from django.shortcuts import render
 from django.contrib.auth.decorators import login_required
 from Classes.utils import dprint,remove_caracteres_cnpj_cpf,remove_caracteres_cep
+from Classes.consultaCnpj import validaCnpjCpf
+
 from Classes.buscaCnpjWs import cnpjWs
 
 
@@ -10,9 +12,11 @@ def searchPartnerWs(request):
     if request.method == 'GET':
         return render(request, 'preDtc.html')
     elif request.method == "POST" :
-        parceiro,status=cnpjWs(request.POST.get('cnpj_cpf'))
-        return JsonResponse({'status': status,'parceiro':standartData(parceiro)}) 
-
+        if validaCnpjCpf(request.POST.get('cnpj_cpf')):
+            parceiro,status=cnpjWs(request.POST.get('cnpj_cpf'))
+            return JsonResponse({'status': status,'parceiro':standartData(parceiro),'tabelas':{}}) 
+        else:
+            return JsonResponse({'status': 300,'msg':'Cnpj inválido'}) 
 
 def standartData(parceiro):
     return {

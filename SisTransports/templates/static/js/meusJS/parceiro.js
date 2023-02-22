@@ -1,4 +1,3 @@
-
   class Parceiro {
     constructor(cnpj,sufixo) {
       this.cnpj=cnpj
@@ -24,12 +23,15 @@
             onSuccess(result);
           } catch (error) {
             console.error(error);
-            alert("Erro interno");
+            alert("Erro interno !");
           }
         } else {
           alert("CPF/CNPJ Inválido !");
         }
       }
+    }
+    getWsParceiro=async()=>{
+      this.sendPostRequest('/parceiros/searchPartnerWs/',this.populaAPartirMdl);
     }
 
     readParceiro= async ()=>{
@@ -59,7 +61,6 @@
     }
     
     carregaDados= async (response)=>{
-      console.log(response)
       this.status=response.status
       switch (this.status) {
         case 200:
@@ -78,7 +79,6 @@
           this.uf=response.parceiro.endereco_fk.uf
           this.contatos=response.contatos
           this.tabelas=response.tabelas
-
           this.populaCampos()
           break;
         case 404 :
@@ -117,7 +117,7 @@
       $('#uf' + this.sufixo).val('');
     }
 
-    populaAPartirMdl=(result)=>{
+    populaAPartirMdl= (result)=>{
       this.status=result.status
       switch (this.status) {
         case 200:
@@ -147,6 +147,7 @@
       }
 
       populaTabelas=(response)=>{
+        if(response != 'undefined'){
           limpaTabela('#relatorioTabelaParceiro td')
           const data = response;
           let template
@@ -167,7 +168,8 @@
                   'btn-rounded btn-icon" id="altera"><i class="ti-new-window"></i></button></td>' +
                   '</tr>'
               $('#relatorioTabelaParceiro tbody').append(template)
-          }
+            }  
+        }
        }
 
     populaMdl=()=>{
@@ -210,10 +212,8 @@
     }
 
     carregaParceiroMdl=()=>{
-      alert('Mdl')
       this.sendPostRequest('/parceiros/readParceiro/',this.populaAPartirMdl);
     } 
-  
 
     deleteParceiro=()=>{
       this.sendPostRequest('/parceiros/deleteParceiro/');
@@ -221,10 +221,6 @@
     updateParceiro=()=>{
       this.sendPostRequest('/parceiros/updateParceiro/');
     }
-    getWsParceiro=()=>{
-      this.sendPostRequest('/parceiros/searchPartnerWs/',this.populaAPartirMdl);
-    }
-
     limpaDados=()=>{
       this.id = ''
       this.raz_soc = ''
