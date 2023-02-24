@@ -47,18 +47,33 @@ var validaDtc=()=>{
 }
 
 $('#salvaDtc').on('click', function(e) {
-    alert($('modalidadeFrete').val())
-    if ($('modalidadeFrete').val()!=0){
-        if ($('#numDtc').val()==''){
-            defineTomador($('#modalidadeFrete').val())
-            dados = {'url':'/preDtc/createDtc/','id':cnpjTomador}
-            conectaBackEnd(dados,salvouDtc)
-        }else{
-            defineTomador($('#modalidadeFrete').val())
-            dados = {'url':'/preDtc/updateDtc/','id':cnpjTomador}
-            conectaBackEnd(dados,atualizouDtc)
-        }
+    camposInvalidos=validarDtc()
+    if (camposInvalidos.length!=0){
+
+            if ($('#numDtc').val()==''){
+                defineTomador($('#modalidadeFrete').val())
+                dados = {'url':'/preDtc/createDtc/','id':cnpjTomador}
+                conectaBackEnd(dados,salvouDtc)
+            }else{
+                defineTomador($('#modalidadeFrete').val())
+                dados = {'url':'/preDtc/updateDtc/','id':cnpjTomador}
+                conectaBackEnd(dados,atualizouDtc)
+            }
+            
     }else{
+        switch (camposInvalidos[0]) {
+            case 1:
+                alert("Por favor, selecione o pagador do frete e a rota!");
+                break;
+            case 2:
+                alert("Por favor, selecione a rota!");
+                break;
+            case 3:
+                alert("Por favor, selecione o pagador do frete!");
+                break;            
+            default:
+                break;
+        }
         alert ('Selecione a modalidade e o responsável pelo frete')
     }
     e.preventDefault();
