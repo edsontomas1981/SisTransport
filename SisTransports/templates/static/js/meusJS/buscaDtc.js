@@ -1,24 +1,22 @@
 function carregaDtc(response){
     limpaDtc()
+   console.log(response)
     $('#numDtc').val(response.dtc.id)
-
     if (response.dtc.remetente){
-        completaDtcCnpj(response.dtc.remetente,'cnpjRem', "inscRem", "razaoRem", "fantasiaRem",
-         "cepRem","ruaRem", "numeroRem", "complementoRem", "bairroRem", "cidadeRem", "ufRem")        
-    }
+        const remetenteDtc = new Parceiro(response.dtc.remetente.cnpj_cpf,'Rem');
+        remetenteDtc.readParceiro();
+        remetenteDtc.populaCampos();
+     }
     if (response.dtc.destinatario){
-        completaDtcCnpj(response.dtc.destinatario,'cnpjDest', "inscDest", "razaoDest", "fantasiaDest",
-         "cepDest","ruaDest", "numeroDest", "complementoDest", "bairroDest", "cidadeDest", "ufDest")        
-    }
-    
-    if (response.dtc.redespacho){
-        completaDtcCnpj(response.dtc.redespacho,'cnpjRedesp', "inscRedesp", "razaoRedesp", "fantasiaRedesp",
-         "cepRedesp","ruaRedesp", "numeroRedesp", "complementoRedesp", "bairroRedesp", "cidadeRedesp", "ufRedesp")        
-    }
-    
+        const destinatarioDtc= new Parceiro(response.dtc.destinatario.cnpj_cpf,'Dest');
+        destinatarioDtc.readParceiro();
+        destinatarioDtc.populaCampos();
+     }
+
     if (response.dtc.consignatario){
-        completaDtcCnpj(response.dtc.consignatario,'cnpjConsig', "inscConsig", "razaoConsig", "fantasiaConsig",
-         "cepConsig","ruaConsig", "numeroConsig", "complementoConsig", "bairroConsig", "cidadeConsig", "ufConsig")        
+        const consignatarioDtc = new Parceiro(response.dtc.consignatario.cnpj_cpf,'Consig');
+        consignatarioDtc.readParceiro();
+        consignatarioDtc.populaCampos();
     }
 
     if (response.dtc.tipoFrete){
@@ -28,10 +26,14 @@ function carregaDtc(response){
     if (response.dtc.coleta){
         completaColeta(response.dtc.coleta)
     }
-
-    $('#cnpjTomador').val(response.dtc.tomador.cnpj_cpf)
-    $('#razaoTomador').val(response.dtc.tomador.raz_soc)
+    if(response.dtc.tomador && response.dtc.tomador.cnpj_cpf){
+        $('#cnpjTomador').val(response.dtc.tomador.cnpj_cpf);
+        $('#razaoTomador').val(response.dtc.tomador.raz_soc);
+    }
 }
+
+
+
 
 $('#modalidadeFrete').on('change', function () {
     defineTomador($('#modalidadeFrete').val())
@@ -42,9 +44,9 @@ $('#cnpjTomador').on('change', function () {
 });
 
 $('#salvaDtc').on('click', function(e) {
-    camposInvalidos=validarDtc()
-    if (camposInvalidos.length!=0){
+    let camposInvalidos=validarDtc()
 
+    if (camposInvalidos.length==0){
             if ($('#numDtc').val()==''){
                 defineTomador($('#modalidadeFrete').val())
                 dados = {'url':'/preDtc/createDtc/','id':cnpjTomador}
@@ -56,20 +58,9 @@ $('#salvaDtc').on('click', function(e) {
             }
             
     }else{
-        switch (camposInvalidos[0]) {
-            case 1:
-                alert("Por favor, selecione o pagador do frete e a rota!");
-                break;
-            case 2:
-                alert("Por favor, selecione a rota!");
-                break;
-            case 3:
-                alert("Por favor, selecione o pagador do frete!");
-                break;            
-            default:
-                break;
-        }
-        alert ('Selecione a modalidade e o responsável pelo frete')
+        camposInvalidos.forEach(element => {
+            alert(element)
+        });
     }
     e.preventDefault();
 })
@@ -86,18 +77,42 @@ var atualizouDtc = (response) =>{
 
 
 function defineTomador(seletor){
+    const selectbox = document.getElementById('modalidadeFrete');
     switch (parseInt(seletor)) {
         case 1 :
+            if ($('#cnpjRem').val()==''){
+                alert('Para selecionar o frete cif, certifique-se de que o campo remetente não esteja vazio.')
+                selectbox.value=0
+                $('#cnpjTomador').val('')
+                $('#razaoTomador').val('')
+
+            }else{
             $('#cnpjTomador').val($('#cnpjRem').val())
             $('#razaoTomador').val($('#razaoRem').val())
+            }
             break;
         case 2 :
+            if ($('#cnpjDest').val()==''){
+                alert('Para selecionar o frete fob, certifique-se de que o campo destinatário não esteja vazio.')
+                selectbox.value=0
+                $('#cnpjTomador').val('')
+                $('#razaoTomador').val('')
+            }else{
             $('#cnpjTomador').val($('#cnpjDest').val())
             $('#razaoTomador').val($('#razaoDest').val())
+            }
             break;            
         case 3 :
+            if ($('#cnpjConsig').val()==''){
+                alert('Para selecionar o frete consignado, certifique-se de que o campo consignatário não esteja vazio.')
+                selectbox.value=0
+                $('#cnpjTomador').val('')
+                $('#razaoTomador').val('')
+
+            }else{                
             $('#cnpjTomador').val($('#cnpjConsig').val())
             $('#razaoTomador').val($('#razaoConsig').val())
+            }
             break;            
         default:
             break;

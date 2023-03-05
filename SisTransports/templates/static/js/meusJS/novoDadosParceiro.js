@@ -98,6 +98,13 @@ $('#btnClose').on('click', function(e) {
 
 // funcoes diversas
 
+
+
+$('#btnLimpaParceiros').on('click',function(e){
+    limpaModalParceiroCnpj()
+    e.preventDefault()
+})
+
 function limpaModalParceiroCnpj() {
     $('#idParceiro').val('')
     $('#idEndereco').val('')
@@ -113,7 +120,8 @@ function limpaModalParceiroCnpj() {
     $('#bairroMdl').val('');
     $('#cidadeMdl').val('');
     $('#ufMdl').val('');
-    limpaContatos()
+    $('#relatorioTabelaParceiro tbody tr').remove();
+    limpaTabelaContatos();  
 }
 
 function closeModal() {
@@ -127,4 +135,48 @@ function closeModal() {
     $('#mdlCadParceiros').modal('hide'); 
     limpaModalParceiroCnpj();
     limpaTabelaContatos();  
+}
+
+
+
+const validarDtc = () => {
+    let rotas=document.getElementById('rotasDtc')
+    let modalidade=document.getElementById('modalidadeFrete')
+    let verificaCampos = []
+
+    //Verifica se exite Parceiro selecionado para salvar o Dtc
+    if (remetente.id || destinatario.id || consignatario.id){
+        switch (true) {
+            case remetente.id:
+                alert('modalidade.selectedIndex=1')
+                break;
+            case destinatario.id:
+                alert('modalidade.selectedIndex=2')
+                break;
+            case consignatario.id:
+                alert('modalidade.selectedIndex=3')
+                break;
+        
+            default:
+                break;
+        }
+    }else{
+        const msgFaltaParceiro = 'Por favor, informe ao menos um parceiro comercial. É importante preencher essa informação para prosseguir com a operação desejada. Obrigado!'
+        verificaCampos.push(msgFaltaParceiro)
+        }
+
+        if (rotas.selectedIndex === 0 && modalidade.selectedIndex === 0){
+          const msgPagRota='Por favor, escolha a rota e o pagador do frete antes de prosseguir.'
+          verificaCampos.push(msgPagRota)
+        }else{
+            if(rotas.selectedIndex === 0){
+                const msgRota='Por favor, escolha a rota antes de prosseguir.'
+                verificaCampos.push(msgRota);
+            }else if(modalidade.selectedIndex === 0){
+                const msgPag='Por favor, escolha o pagador do frete antes de prosseguir.'
+                verificaCampos.push(msgPag);
+            }
+        }
+    return verificaCampos
+
 }

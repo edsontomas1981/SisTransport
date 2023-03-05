@@ -91,6 +91,7 @@
     }
   
     populaCampos= async () => {
+      $('#cnpj' + this.sufixo).val(this.cnpj);
       $('#insc' + this.sufixo).val(this.inscr);
       $('#fantasia' + this.sufixo).val(this.fantasia);
       $('#razao' + this.sufixo).val(this.raz_soc);
