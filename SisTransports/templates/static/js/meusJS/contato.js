@@ -1,15 +1,24 @@
 $('#incluiContato').on('click', function(e){
-    var contato = new Contato($('#cnpjMdl').val());
- 
+
+    const contato = new Contato($('#cnpjMdl').val());
+    const tipoContato = document.getElementById('tipo_contato')
     if($('#idContato').val()!=''){    
       contato.updateContato($('#idContato').val())
       limpaContatos()
     }else{
-      contato.createContato();
-      contato.populaContatos();
+      
+      if(tipoContato.value != 0){
+        contato.createContato();
+        contato.populaContatos();
+      }else{
+        alert('Por favor, escolha o tipo de contato.')
+      }
+
     }
     e.preventDefault();
 })
+
+
 
 $('#btnLimpaContatos').on('click',function(e){
   limpaContatos();
@@ -17,7 +26,7 @@ $('#btnLimpaContatos').on('click',function(e){
 })
 
 var limpaContatos=()=>{
-  $('#tipo_contato').val('');
+  $('#tipo_contato').val(0);
   $('#cargo').val('');
   $('#nome').val('');
   $('#contato').val('');
@@ -83,11 +92,14 @@ var populaContatos=(listaContatos)=>{
 
 var limpaTabelaContatos=()=> {
     $('#tabela td').remove();
+    $('#tipo_contato').val(0)
     $('#contato').val('');
     $('#nome').val('');
     $('#contato').val('');
     $('#cargo').val('');
 }
+
+
 
 class Contato {
     constructor(cnpj){

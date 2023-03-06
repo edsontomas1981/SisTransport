@@ -11,7 +11,15 @@ def checaCampos(request, **kwargs):
             camposVazios.append(nomeCampo)
     return camposVazios
 
-
+def checaCamposJson(json,**kwargs):
+    listaDeCamposVazios=[]
+    # key == nome do campo,value == nome amigavel para retorno e informação
+    # para usuário de que oi campo esta vazio
+    for key,value in kwargs.items():
+        if json[key]=='':
+            listaDeCamposVazios.append(value)
+    return listaDeCamposVazios
+    
 def checaCamposGeral(request, **kwargs):
     camposInvalidos = []
     for nomeCampo, value in kwargs.items():

@@ -1,4 +1,4 @@
-from operacional.models.coleta import Coleta  as mdlColeta
+from operacional.models.coleta import Coleta  as MdlColeta
 from operacional.models.dtc import Dtc
 from Classes.utils import dprint,toFloat
 
@@ -10,7 +10,7 @@ class Coleta():
                  veiculo=None,tipo=None,horario=None,obs=None,cep=None,rua=None,num=None,
                  comp=None,bairro=None,cidade=None,uf=None,nome=None,contato=None,
                  mercadoria=None):
-        self.coleta=mdlColeta()
+        self.coleta=MdlColeta()
         self.coleta.notaFiscal=notaFiscal
         self.coleta.volume=volume
         self.coleta.peso=peso
@@ -32,13 +32,16 @@ class Coleta():
         self.coleta.uf=uf
         self.coleta.save()
    
-    def obtemColeta(self,*args):
-        if args :
-            self.coleta=mdlColeta.objects.filter(id=args[0]).get()  
-            return self.coleta
-        else:
-            return self.coleta
+    def readColeta(self,idParceiro):
+        print(idParceiro)
+        if Coleta.objects.filter(coleta_fk=idParceiro).exists():
+            self.coleta=Dtc.objects.filter(coleta_fk=idParceiro).get()
+            
 
+    def obtemColeta(self,idColeta):
+        if MdlColeta.objects.filter(id=idColeta).exists():
+            self.coleta=MdlColeta.objects.filter(id=idColeta).get()  
+            
     def alteraColeta(self,notaFiscal=None,volume=None,peso=None,m3=0,valor=None,especie=None,
                  veiculo=None,tipo=None,horario=None,obs=None,cep=None,rua=None,num=None,
                  comp=None,bairro=None,cidade=None,uf=None,nome=None,contato=None,
@@ -66,14 +69,14 @@ class Coleta():
         self.coleta.mercadoria=mercadoria
         self.coleta.save()
     
-    def deletaColeta(idColeta):
-        if mdlColeta.objects.filter(id=idColeta).exists():
-            coleta=mdlColeta.objects.filter(id=idColeta).get()
+    def deletaColeta(self,idColeta):
+        if MdlColeta.objects.filter(id=idColeta).exists():
+            self.coleta=MdlColeta.objects.filter(id=idColeta).get()
             if Dtc.objects.filter(coleta_fk=idColeta).exists():
                 dtc=Dtc.objects.filter(coleta_fk=idColeta).get()
                 dtc.coleta_fk=None
                 dtc.save()
-                coleta.delete()
+                self.coleta.delete()
     
     def to_dict(self):
         return self.coleta.to_dict()

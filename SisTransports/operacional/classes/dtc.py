@@ -26,7 +26,6 @@ class Dtc:
         if ClsDtc.objects.filter(id=idDtc).exists():
             dtc=ClsDtc.objects.filter(id=idDtc).get()  
             self.dtc=dtc
-            return self
     
     def updateDtc (self,dados,idDtc):
         if ClsDtc.objects.filter(id=idDtc).exists():
@@ -35,6 +34,17 @@ class Dtc:
             return 200
         else:
             return 400
+        
+    def anexaColeta(self,idDtc,coleta):
+        try:
+            if ClsDtc.objects.filter(id=idDtc).exists():
+                self.dtc=ClsDtc.objects.filter(id=idDtc).get() 
+                self.dtc.coleta_fk=coleta
+                self.dtc.save()
+                return 200
+        except:
+            return 300
+            
    
     def deleteRota(self,idRota):
         pass
