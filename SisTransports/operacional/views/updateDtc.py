@@ -3,6 +3,7 @@ from django.contrib.auth.decorators import login_required
 from django.http import JsonResponse
 from operacional.classes.dtc import Dtc 
 from parceiros.models.parceiros import Parceiros
+from operacional.classes.rotas import Rota
 
 @login_required(login_url='/auth/entrar/')
 def updateDtc (request):
@@ -25,5 +26,7 @@ def carregaDadosParaCadastro(request):
         consignatario=buscaParceiro(request.POST.get('cnpjConsig'))
         tomador=buscaParceiro(request.POST.get('cnpjTomador'))
         modalidadeFrete=request.POST.get('modalidadeFrete')
-        return {'remetente':remetente,'destinatario':destinatario,'consignatario':consignatario,
-                'tomador':tomador,'modalidadeFrete':modalidadeFrete}        
+        rota=Rota()
+        rota.readRota(request.POST.get('rotasDtc'))        
+        return {'remetente':remetente,'rota':rota.rota,'destinatario':destinatario,'consignatario':consignatario,
+                'tomador':tomador,'modalidadeFrete':modalidadeFrete}         

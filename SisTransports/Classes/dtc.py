@@ -50,11 +50,16 @@ class Dtc():
             return False
 
     def readDtc(self,idDtc):
-        if DctoCarga.objects.filter(id=idDtc).exists():
-            dtc=DctoCarga.objects.filter(id=idDtc).get()  
-            self.dtc=dtc
-            return self
-            
+        try:
+            if DctoCarga.objects.filter(id=idDtc).exists():
+                dtc=DctoCarga.objects.filter(id=idDtc).get()  
+                self.dtc=dtc
+                return 200
+            else:
+                return 300
+        except:
+            return 500
+           
     def to_dict(self):
         return self.dtc.to_dict()
     

@@ -142,8 +142,8 @@ function limpaColeta(){
     $('#peso').val('')
     $('#resultM3').val('')
     $('#valor').val('')
-    $('#especie').val('')
-    // $('#veiculo').attr(veiculo)
+    $('#especie').val(0)
+    $('#veiculo').val(0)
     $('#cepColeta').val('')
     $('#ruaColeta').val('')
     $('#numeroColeta').val('')
@@ -238,7 +238,6 @@ function buscaDtc() {
         type: 'POST',
         data: postData,
         success: function(response) {
-
             limpaDtc()
             carregaDtc(response)
         },
