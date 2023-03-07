@@ -1,9 +1,7 @@
 from comercial.models.tabelaFrete import TabelaFrete as TblFrete
 from operacional.classes.rotas import Rota
 from parceiros.models.parceiros import Parceiros as MdlParceiros
-from parceiros.classes.parceiros import Parceiros
 from Classes.utils import toFloat, checkBox, dprint
-
 
 class TabelaFrete:
     def __init__(self):

@@ -22,6 +22,10 @@ function carregaDtc(response){
     if (response.dtc.tipoFrete){
      $('#modalidadeFrete').val(response.dtc.tipoFrete)
     }
+
+    if (response.dtc.rota){
+        $('#rotasDtc').val(response.dtc.rota.id)
+       }
     
     if (response.dtc.coleta){
         completaColeta(response.dtc.coleta)
@@ -136,53 +140,7 @@ function carregaTabelaFrete(response){
     }
 }
 
-function limpaColeta(){
-    $('#nf').val('')
-    $('#volumes').val('')
-    $('#peso').val('')
-    $('#resultM3').val('')
-    $('#valor').val('')
-    $('#especie').val('')
-    // $('#veiculo').attr(veiculo)
-    $('#cepColeta').val('')
-    $('#ruaColeta').val('')
-    $('#numeroColeta').val('')
-    $('#complementoColeta').val('')
-    $('#bairroColeta').val('')
-    $('#cidadeColeta').val('')
-    $('#ufColeta').val('')
-    $('#nomeColeta').val('')
-    $('#contatoColeta').val('')
-    $('#obs').val('')
-    $('#mercadoria').val('')
-    $('#horario').val('')
-    $('#cnpjTomador').val('')
-    $('#razaoTomador').val('')
 
-}
-
-function completaColeta(response){
-    $('#nf').val(response.notaFiscal)
-    $('#volumes').val(response.volume)
-    $('#peso').val(response.peso)
-    $('#resultM3').val(response.cubM3)
-    $('#valor').val(response.valor)
-    $('#especie').val(response.especie)
-    // $('#veiculo').attr(response.veiculo)
-    $('#cepColeta').val(response.cep)
-    $('#ruaColeta').val(response.rua)
-    $('#numeroColeta').val(response.numero)
-    $('#complementoColeta').val(response.complemento)
-    $('#bairroColeta').val(response.bairro)
-    $('#cidadeColeta').val(response.cidade)
-    $('#ufColeta').val(response.uf)
-    $('#nomeColeta').val(response.nome)
-    $('#contatoColeta').val(response.contato)
-    $('#obs').val(response.observacao)
-    $('#mercadoria').val(response.mercadoria)
-    $('#horario').val(response.horario)
-    $('#idColeta').val(response.id)
-}
 
 function completaDtcCnpj(response,cnpj, insc, razao, fantasia, cep,
     endereco, numero, complemento, bairro, cidade, uf) {
@@ -223,10 +181,9 @@ function limpaDtc(){
             "complementoRedesp", "bairroRedesp", "cidadeRedesp", "ufRedesp")  
     limpaParceiro('cnpjConsig', "inscConsig", "razaoConsig", "fantasiaConsig","cepConsig","ruaConsig", "numeroConsig", 
             "complementoConsig", "bairroConsig", "cidadeConsig", "ufConsig") 
-
     $('#modalidadeFrete').val(0);
     $('#numDtc').val('')
-             
+    $('#rotasDtc').val(0)
     limpaColeta()
 }
 
@@ -238,7 +195,6 @@ function buscaDtc() {
         type: 'POST',
         data: postData,
         success: function(response) {
-
             limpaDtc()
             carregaDtc(response)
         },

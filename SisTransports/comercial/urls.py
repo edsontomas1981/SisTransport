@@ -8,6 +8,8 @@ urlpatterns = [
     path('createTabela/',viewsComercial.createTabela,name='createTabela'),
     path('updateTabela/',viewsComercial.updateTabela,name='updateTabela'),    
     path('readTabela/',viewsComercial.readTabela,name='readTabela'),  
+    path('readTabelasPorParceiro/',viewsComercial.readTabelasPorParceiro,
+         name='readTabelaPorParceiro'),  
     path('deleteTabela/',viewsComercial.deleteTabela,name='deleteTabela'),
     path('getTodasTabelas/',viewsComercial.getTodasTabelas,name='todasTabelas'),
     path('excluiParceiroTabela/',viewsComercial.excluiParceiroTabela,name='excluiParceiroTabela'),

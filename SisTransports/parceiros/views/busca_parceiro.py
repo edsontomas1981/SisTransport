@@ -17,7 +17,6 @@ def busca_parceiro(request):
             dados=[parceiro.to_dict()]
             contato=Contato()
             listaContatos=contato.readContatos(parceiro.id)
-            dprint(listaContatos)
             if contato:
                 return JsonResponse({'dados': dados,'contato':contato,'status':200})#Parceiro cadastrado e com contato
             else:

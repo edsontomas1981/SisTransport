@@ -15,6 +15,7 @@ from comercial.views.createCotacao import createCotacao
 from comercial.views.readCotacao import readCotacao
 from comercial.views.deleteCotacao import deleteCotacao
 from comercial.views.updateCotacao import updateCotacao
+from comercial.views.readTabelasPorParceiro import readTabelasPorParceiro
 
 
 

@@ -1,6 +1,7 @@
 from operacional.models.dtc import Dtc as ClsDtc
 from Classes.utils import verificaCamposObrigatorios,toFloat
 from Classes.utils import checkBox,dprint,dpprint
+from operacional.classes.rotas import Rota
 
 class Dtc:
     def __init__(self):
@@ -13,6 +14,10 @@ class Dtc:
         self.dtc.tomador_fk=dados['tomador']
         if dados['consignatario'] :
             self.dtc.consignatario_fk=dados['consignatario']
+
+        dpprint('ROTAS',dados)    
+        if dados['rota'] :
+            self.dtc.rota_fk=dados['rota']            
         self.dtc.save()
     
     def createDtc(self,dados):

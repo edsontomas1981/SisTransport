@@ -24,7 +24,6 @@ class Rota:
     def readRota(self,idRota):
         if MdlRota.objects.filter(id=idRota).exists():
             self.rota=MdlRota.objects.filter(id=idRota).get()
-            return self.rota
         else:
             return False        
    

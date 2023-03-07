@@ -23,10 +23,10 @@ class Dtc (models.Model):
             dtc.update({'remetente':self.remetente_fk.to_dict()})
         if self.destinatario_fk :
             dtc.update({'destinatario':self.destinatario_fk.to_dict() })
-        if self.redespacho_fk :
-            dtc.update({'redespacho':self.redespacho_fk.to_dict()})                
         if self.consignatario_fk :
             dtc.update({'consignatario':self.consignatario_fk.to_dict()}) 
         if self.coleta_fk :
             dtc.update({'coleta':self.coleta_fk.to_dict()})          
+        if self.rota_fk :
+            dtc.update({'rota':self.rota_fk.to_dict()})          
         return dtc

@@ -1,5 +1,6 @@
 from parceiros.models.parceiros import Parceiros as MdlParceiros
 from contatos.classes.contato import Contato
+from comercial.classes.tabelaFrete import TabelaFrete
 from Classes.utils import dprint
 
 class Parceiros():
@@ -35,6 +36,8 @@ class Parceiros():
             if MdlParceiros.objects.filter(cnpj_cpf=cnpj).exists():
                 self.parceiro=MdlParceiros.objects.filter(cnpj_cpf=cnpj).get()
                 contatos=Contato()
+                tabelas=TabelaFrete()
+                self.parceiro.tabelasFrete=tabelas.get_tabelas_por_parceiro(self.parceiro)
                 self.parceiro.listaContatos=contatos.readContatos(self.parceiro.id)
                 return 200
             else:
