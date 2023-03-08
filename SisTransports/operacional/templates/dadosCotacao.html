@@ -1,38 +1,34 @@
 <form method="POST" class="mt-0">{% csrf_token %}
 <input type="hidden" name="idCotacao" id="idCotacao">
     <div class="row">
-        <div class="form-floating col-2 pl-2 pr-0 mt-1">
-            <select type="text" name="rotaCotacao" id="rotaCotacao" class="form-control-sm form-select">
-            </select>
-            <label for="rota">Rota:</label>
-        </div>
-        <div class="form-floating col-2 pl-2 pr-0 mt-1">
-            <select type="text" name="formaCalculoCotacao" id="formaCalculoCotacao" class="form-control-sm form-select">
+        <div class="form-floating col-3 pl-2 pr-0 mt-1">
+            <select type="text" name="tipoTabelaCotacao" id="tipoTabelaCotacao" class="form-control-sm form-select">
+                <option value="0">Selecione o tipo de tabela</option>
                 <option value="1">Tabela geral</option>
                 <option value="2">Tabela cliente</option>
-            </select>
-            <label for="formaCalculoCotacao">Forma de Calculo</label>
+            </select>   
+            <label for="tipoTabelaCotacao">Tipo Tabela</label>
         </div>        
-        <div class="form-floating col-3 pl-2 pr-0 mt-1">
+        <div class="form-floating col-6 pl-2 pr-0 mt-1">
             <select type="text" name="tabelaCotacao" id="tabelaCotacao" class="form-control-sm form-select">
-                <option value="1">Selecione</option>
+                <option value="0">Selecione a tabela</option>
             </select>
             <label for="tabelaCotacao">Tabela:</label>
         </div>        
-        <div class="input-group col-5 pr-0">
-            <button class="btn btn-secondary btn-rounded btn-lg" 
+        <div class="input-group col-3 pr-4 pt-2 justify-content-end">
+            <button class="btn btn-secondary btn-rounded form-control-sm" 
             data-toggle="tooltip" data-placement="top" title="Novo" id="btnNovaCotacao">
             <i class="ti-write"></i>
             </button>
         
-            <button type="button" class="btn btn-success btn-rounded btn-lg"
+            <button type="button" class="btn btn-success btn-rounded form-control-sm"
             data-toggle="tooltip" data-placement="top" title="Salvar" id="btnSalvaCotacao">
             <i class="ti-save"></i>
             </button>
         
-            <button type="button" class="btn btn-danger btn-rounded btn-lg" 
+            <button type="button" class="btn btn-danger btn-rounded form-control-sm" 
                 data-toggle="tooltip" data-placement="top" title="Excluir" 
-                id="btnExcluiColeta">
+                id="btnExcluiCotacao">
                 <i class="ti-trash"></i>
             </button>    
         </div> 
@@ -173,7 +169,7 @@
             </div>                                
             <div class="col-sm-12 mb-1 pl-0 pr-1 form-group form-floating ">
                 <input type="text" class="form-control form-control-sm bg-primary text-capitalize text-danger h1" 
-                placeholder="Outros" id="freteTotalCotacao" name="freteTotalCotacao" value="R$ 0.00"disabled>
+                placeholder="Outros" id="freteTotalCotacao" name="freteTotalCotacao" value=0.0 disabled>
                 <label class="text-secondary"for="freteTotalCotacao">Total Frete :</label>
             </div>  
 

@@ -16,7 +16,7 @@ $('#btnLimpaCnpjRem').on('click', function(e) {
 
 $('#btnCnpjRem').on('click', function(e) {
     remetente.openModalParceiro();
-    remetente.openModalParceiro()
+    remetente.carregaParceiroMdl()
 });
 
 // Destinatario
