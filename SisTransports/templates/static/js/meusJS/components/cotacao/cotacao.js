@@ -56,8 +56,7 @@ $('#btnSalvaCotacao').on('click', function(e) {
         let calculafrete = confirm('ATENÇÃO! Antes de salvar, calcule o frete para obter o valor correto.\
 Clique em "OK" para calcular o frete.')
         if (calculafrete){
-            $('#freteTotalCotacao').val(1)
-            alert('calcula')
+            desejaExluir()
         }else{
             alert('não calcula')
         }
@@ -85,10 +84,25 @@ $('#tipoTabelaCotacao').on('change', function() {
     }
 });
 
-$('#btnExluiCotacao').on('click', function(e) {
-    alert('Exclui !!!!!!')
+$('#btnExcluiCotacao').on('click', function(e) {
+    desejaExluir()
     e.preventDefault();
-})  
+})
+
+const desejaExluir=()=>{
+    Swal.fire({
+        title: 'Tem certeza de que deseja apagar a cotação? Essa ação não pode ser desfeita e todos os dados relacionados serão perdidos.\n' +
+            'Por favor, confirme abaixo para continuar ou clique em \'Cancelar\' para manter o item.',
+        showDenyButton: true,
+        confirmButtonText: 'Confirmar',
+        denyButtonText: `Cancelar`,
+    }).then((result) => {
+        /* Read more about isConfirmed, isDenied below */
+        if (result.isConfirmed) {
+            Swal.fire('Apagado!', '', 'error')
+        }
+    })
+}
 
 var populaSelectTabelas = (dados,idSelect)=>{
     var select = $(idSelect);

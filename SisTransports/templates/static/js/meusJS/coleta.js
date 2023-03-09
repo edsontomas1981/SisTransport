@@ -38,26 +38,34 @@ class Coleta {
     this.resposta=result;
     switch (this.resposta.status) {
       case 200:
-        alert('A coleta foi salva com sucesso! \
-Se precisar editar ou revisar as informações que foram salvas, \
-você pode fazer aqui mesmo ou encontrá-las na sua lista de coletas. \
-Se tiver alguma dúvida ou precisar de ajuda adicional, \
-entre em contato conosco.')
+        Swal.fire({
+          position: 'top-end',
+          icon: 'success',
+          title: 'A coleta foi salva com sucesso!',
+          showConfirmButton: false,
+          timer: 1500
+        })
+
         break;
-        case 201:
-          alert('A coleta foi alterada com sucesso! \
-Se precisar editar ou revisar as informações que foram salvas, \
-você pode fazer aqui mesmo ou encontrá-las na sua lista de coletas. \
-Se tiver alguma dúvida ou precisar de ajuda adicional, \
-entre em contato conosco.')
+      case 201:
+        Swal.fire({
+          position: 'top-end',
+          icon: 'success',
+          title: 'A coleta foi alterada com sucesso!',
+          showConfirmButton: false,
+          timer: 1500
+        })
           break;        
       case 300:
-        this.alertCamposFaltando(this.resposta.camposVazios)
+          Swal.fire({
+          icon: 'error',
+          title: this.alertCamposFaltando(this.resposta.camposVazios),
+          showConfirmButton: true,
+        })
         break;        
       default:
         break;
     }
-    
   }
 
   async deleteColeta() {
@@ -85,8 +93,8 @@ entre em contato conosco.')
           campos.length == i + 1 ? '' : ', ';
       camposFaltando += campos[i] + eOuVirgula
     }
-    msgInicial += camposFaltando + ' precisam ser preenchidos.'
-    alert(msgInicial)
+   msgInicial += camposFaltando + ' precisam ser preenchidos.'
+   return msgInicial
   }
  
   loadDados=()=>{
@@ -141,7 +149,7 @@ entre em contato conosco.')
 
 
 $('#btnSalvaColeta').on('click', function(e) {
-  if ($('#numPed').val()!=''){
+  if ($('#numDtc').val()!=''){
     const coleta=new Coleta('/operacional/createColeta/')
     coleta.createColeta();
     e.preventDefault();
