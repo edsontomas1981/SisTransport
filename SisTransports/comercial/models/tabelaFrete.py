@@ -9,7 +9,7 @@ class TabelaFrete(models.Model):
     tipoTabela=models.IntegerField(default=1)
     rota_fk=models.ForeignKey(Rota,null=True, on_delete=models.CASCADE,default=None)
     parceiro=models.ManyToManyField(Parceiros,blank=True)
-    # rota=models.ManyToManyField(Rota,blank=True)
+    rota=models.ManyToManyField(Rota,blank=True,related_name='tabelaRota')
     descricao=models.CharField(max_length=15)
     icmsIncluso=models.BooleanField(default=True)
     aliquotaIcms=models.IntegerField(default=0)   

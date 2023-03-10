@@ -19,13 +19,21 @@ class TabelaFrete:
                 tabCnpj.append(tabela.toDict())
             return tabCnpj
         else:
-            return False             
+            return False   
+        
+    def readTabelasGeraisPorRota(self):
+        pass
 
-    def anexaRota(self, idRota):
-        rota = Rota()
-        rota.readRota(idRota)
-        self.tabela.rota_fk = rota.rota
-
+    def anexaRotasTabela(self,rota):
+        try:
+            self.tabela.rota.add(rota)
+            self.tabela.save()
+            return 200
+        except :
+            return 400
+        
+        
+   
     def salvaOuAtualiza(self, dados):
         tabelaBloqueada = False
         icms = False
@@ -54,7 +62,6 @@ class TabelaFrete:
         self.tabela.outros = toFloat(dados['outros'][0])
         self.tabela.pedagio = toFloat(dados['pedagio'][0])
         self.tabela.aliquotaIcms = toFloat(dados['aliquotaIcms'][0])
-        self.anexaRota(dados['rota'][0])
         self.tabela.save()
 
 
@@ -80,7 +87,7 @@ class TabelaFrete:
     def readTabela(self, idTabela):
         if TblFrete.objects.filter(id=idTabela).exists():
             self.tabela = TblFrete.objects.filter(id=idTabela).get()
-            return self.tabela, 200
+            return 200
         else:
             return False
 
@@ -109,9 +116,7 @@ class TabelaFrete:
             return tabCnpj
         else:
             return False
-        
-   
-
+    
     def desvincularCnpjTabela(self, idParceiro):
         if TblFrete.objects.filter(parceiro__id=idParceiro).exists:
             self.tabela.parceiro.remove(idParceiro)

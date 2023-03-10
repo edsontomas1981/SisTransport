@@ -88,6 +88,7 @@ function limpaForm() {
     
     limpaTabela('#cnpjsRelacionados td');
     limpaTabela('#tabelaFaixas td');
+    limpaTabela('#rotasAnexadasTabela td')
 }
 
 function populaTabela(response) {

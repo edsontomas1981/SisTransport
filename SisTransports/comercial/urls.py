@@ -10,9 +10,13 @@ urlpatterns = [
     path('readTabela/',viewsComercial.readTabela,name='readTabela'),  
     path('readTabelasPorParceiro/',viewsComercial.readTabelasPorParceiro,
          name='readTabelaPorParceiro'),
+    
     path('readTabelasGeraisPorRota/',viewsComercial.readTabelasGeraisPorRota,
          name='readTabelasGeraisPorRota'),
-    path('deleteTabela/',viewsComercial.deleteTabela,name='deleteTabela'),
+    
+     path('anexaTabelaRota/',viewsComercial.anexaTabelaRota,
+         name='anexaTabelaRota'),
+        path('deleteTabela/',viewsComercial.deleteTabela,name='deleteTabela'),
     path('getTodasTabelas/',viewsComercial.getTodasTabelas,name='todasTabelas'),
     path('excluiParceiroTabela/',viewsComercial.excluiParceiroTabela,name='excluiParceiroTabela'),
     path('cnpjTabela/',viewsComercial.cnpjTabela,name='cnpjTabela'),

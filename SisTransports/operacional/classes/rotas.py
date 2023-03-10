@@ -22,10 +22,15 @@ class Rota:
         return rotas 
       
     def readRota(self,idRota):
-        if MdlRota.objects.filter(id=idRota).exists():
+        try:
             self.rota=MdlRota.objects.filter(id=idRota).get()
-        else:
-            return False        
+            return 200
+        except MdlRota.DoesNotExist:
+            return 400
+        except MdlRota.MultipleObjectsReturned:
+            return 300
+        except ValueError:
+            return 500
    
     def deleteRota(self,idRota):
         pass

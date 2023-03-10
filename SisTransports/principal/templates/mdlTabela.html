@@ -58,12 +58,7 @@
                     <input type="check" name="descTabela" id="descTabela" class="form-control form-control-sm" placeholder="Descrição">
                     <label for="descTabela"class="text-primary">Descrição da tabela:</label>
                 </div>  
-                <div class="form-floating col-3 pl-0 pr-0 mt-1">
-                        <select type="text" name="rota" id="rota" class="form-control-sm form-select">
-                            <option value="1">SAO X SAO</option>
-                        </select>
-                        <label for="rota">Rota:</label>
-                </div>
+
                 <div class="form-floating col-3 pl-1 pr-1 mt-1">
                     <input type="text" name="vlrFrete" id="vlrFrete" class="form-control form-control-sm" placeholder="R$" onKeyPress="return(MascaraMoeda(this,'.',',',event))">
                     <label for="vlrFrete" class="text-primary">Valor frete</label>
@@ -117,52 +112,93 @@
                       Cubagem ?
                     <i class="input-helper"></i></label>
                 </div>
-                <div class="col-6 grid-margin pl-1 pr-1 mt-1 border mt-2 rounded">
+                  <div class="col-4 grid-margin pl-1 pr-1 mt-1 border mt-2 rounded">
+                    <div class="card">
+                      <div class="card-body">
+                        <div class="row">
+                          <div class="">
+                              <h6 class="text-primary">Inserir faixas de peso</h6>       
+                          </div> 
+                          <input type="hidden" name="idFaixa" id="idFaixa">
+                          <div class="col-2 pl-0 pr-1 mt-1">
+                              <input type="text" name="faixaInicial" id="faixaInicial" class="form-control form-control-sm" placeholder="De (kg)">
+                          </div>
+                          <div class="col-2 pl-0 pr-1 mt-1">
+                              <input type="text" name="faixaFinal" id="faixaFinal" class="form-control form-control-sm" placeholder="Até (kg)">
+                          </div>
+                            <div class="col-sm-8 pl-0 pr-1 mt-1 input-group">
+                              <input type="text" class="col-12 form-control form-control-sm" id="faixaValor" name="faixaValor" placeholder="Frete (R$)" aria-label="Search" aria-describedby="basic-addon2" onKeyPress="return(MascaraMoeda(this,'.',',',event))">
+                              <div class="input-group-append">
+                                  <button class="btn btn-success form-control-sm" id="btnFaixa" name="btnFaixa" type="button">
+                                    <i class="ti-save"></i>   
+                                  </button>   
+                                  <button class="btn btn-primary form-control-sm" id="btnNovaFaixa" type="button">
+                                      <i class="ti-write"></i>   
+                                  </button>
+                                  <button class="btn btn-danger form-control-sm" id="btnDeletaFaixa" name="btnDeletaFaixa" type="button">
+                                      <i class="ti-trash"></i>   
+                                  </button>
+                              </div>
+                            </div>
+                      <div class="table-sorter-wrapper col-lg-12 table-responsive  table-sm pl-2 pr-2 mt-1 ">
+                            <table id="tabelaFaixas" name="tabelaFaixas" class="table table-striped">
+                              <thead>
+                                <tr>
+                                  <th class="sortStyle">Peso inicial</th>
+                                  <th class="sortStyle">Peso final</th>
+                                  <th class="sortStyle">R$</th>
+                                </tr>
+                              </thead>
+                              <tbody>
+                              </tbody>
+                            </table>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+              </div>
+                <div class="col-4 grid-margin pl-1 pr-1 mt-1 border mt-2 rounded">
                       <div class="card">
                         <div class="card-body">
                           <div class="row">
                             <div class="">
-                                <h6 class="text-primary">Inserir faixas de peso</h6>       
+                                <h6 class="text-primary">Inserir rotas a tabela</h6>       
                             </div> 
-                            <input type="hidden" name="idFaixa" id="idFaixa">
-                            <div class="col-2 pl-0 pr-1 mt-1">
-                                <input type="text" name="faixaInicial" id="faixaInicial" class="form-control form-control-sm" placeholder="De (kg)">
-                            </div>
-                            <div class="col-2 pl-0 pr-1 mt-1">
-                                <input type="text" name="faixaFinal" id="faixaFinal" class="form-control form-control-sm" placeholder="Até (kg)">
-                            </div>
-                              <div class="col-sm-8 pl-0 pr-1 mt-1 input-group">
-                                <input type="text" class="col-12 form-control form-control-sm" id="faixaValor" name="faixaValor" placeholder="Frete (R$)" aria-label="Search" aria-describedby="basic-addon2" onKeyPress="return(MascaraMoeda(this,'.',',',event))">
+                              <div class="col-sm-12 pl-0 pr-1 mt-0 input-group form-control-sm">
+                                  <select type="text" name="rota" id="rota" class="form-control-sm form-select">
+                                      <option value="1">SAO X SAO</option>
+                                  </select>
                                 <div class="input-group-append">
-                                    <button class="btn btn-success form-control-sm" id="btnFaixa" name="btnFaixa" type="button">
+                                    <button class="btn btn-success form-control-sm" id="btnSaveRotaTabela" type="button">
                                       <i class="ti-save"></i>   
                                     </button>   
-                                    <button class="btn btn-primary form-control-sm" id="btnNovaFaixa" type="button">
+                                    <button class="btn btn-primary form-control-sm" id="btnLimpaRotaTabela" type="button">
                                         <i class="ti-write"></i>   
                                     </button>
-                                    <button class="btn btn-danger form-control-sm" id="btnDeletaFaixa" name="btnDeletaFaixa" type="button">
+                                    <button class="btn btn-danger form-control-sm" id="btnDeletaRotaTabela" type="button">
                                         <i class="ti-trash"></i>   
                                     </button>
                                 </div>
                               </div>
-                        <div class="table-sorter-wrapper col-lg-12 table-responsive  table-sm pl-1 pr-1 mt-1 ">
-                              <table id="tabelaFaixas" name="tabelaFaixas" class="table table-striped">
-                                <thead>
-                                  <tr>
-                                    <th class="sortStyle">Peso inicial</th>
-                                    <th class="sortStyle">Peso final</th>
-                                    <th class="sortStyle">R$</th>
-                                  </tr>
-                                </thead>
-                                <tbody>
-                                </tbody>
-                              </table>
-                            </div>
-                          </div>
+                                <div class="table-sorter-wrapper col-lg-12 table-responsive  table-sm pl-1 pr-1 mt-3 ">
+                                      <table id="rotasAnexadasTabela" class="table table-striped">
+                                        <thead>
+                                          <tr>                                    
+                                            <th class="sortStyle">Id</th>
+                                            <th class="sortStyle">Nome</th>
+                                            <th class="sortStyle">Origem</th>
+                                            <th class="sortStyle">Destino</th>
+                                          </tr>
+                                        </thead>
+                                        <tbody>
+                                        </tbody>
+                                      </table>
+                                </div>
+                              </div>
                         </div>
                       </div>
                 </div>                    
-                <div class="col-6 grid-margin pr-0 pl-1 border mt-2 pl-1 rounded ">
+                <div class="col-4 grid-margin pr-0 pl-1 border mt-2 pl-1 rounded ">
                       <div class="card">
                         <div class="card-body">
                           <div class="row">
