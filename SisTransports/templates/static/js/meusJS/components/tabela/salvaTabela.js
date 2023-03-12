@@ -46,54 +46,27 @@ function incluiTabela(response) {
     }
 }
 
-$('#btnSaveRotaTabela').on('click',function(e){
-    if($('#tipoTabela').val()!=1){
-            Swal.fire({
-                title: 'Por favor, observe que apenas é possível anexar uma rota à tabela geral. Se você tentar anexar uma rota a uma tabela especifica, o sistema não irá permitir e seus dados podem ser perdidos. Certifique-se de revisar suas informações antes de anexar uma rota à tabela geral. Obrigado pela compreensão.',
-                showDenyButton: true,
-                confirmButtonText: 'Confirmar',
-                denyButtonText: `Cancelar`,
-            }).then((result) => {
-                /* Read more about isConfirmed, isDenied below */
-                if (result.isConfirmed) {
-                    Swal.fire('Apagado!', '', 'error')
-                }
-            })
-    }else{}
-})
 
 
-async function anexaRotaTabela() {
-    dados=carregaDadosForm()
-    const conexao = new Conexao('/comercial/anexaTabelaRota/',dados);
-    try {
-        const result = await conexao.sendPostRequest();
-        console.log(result); // Imprime a resposta JSON da solicitação POST
-    } catch (error) {
-        console.error(error); // Imprime a mensagem de erro
-    }
+
+
+
+const tableRotasAnexadas =()=>{
+    // Seleciona todas as linhas da tabela
+    const linhas = document.querySelectorAll('rotasAnexadasTabela tr');
+
+    // Adiciona um listener de evento de clique em cada linha da tabela
+    linhas.forEach((linha) => {
+    linha.addEventListener('click', (event) => {
+        // Obtém os dados da linha clicada
+        const nome = linha.cells[0].textContent;
+        const email = linha.cells[1].textContent;
+        const telefone = linha.cells[2].textContent;
+
+        // Faz algo com os dados obtidos, como exibi-los em um alerta ou console
+        console.log(`Nome: ${nome}, Email: ${email}, Telefone: ${telefone}`);
+    });
+    });
 }
 
-carregaDadosForm=()=>{
-   return{'idTabela':$('#numTabela').val(),
-       'nomeTabela':$('#descTabela').val(),
-       'bloqueada':$('#tabelaBloqueada').val(),
-       'icms':$('#icms').val(),
-       'cobraCubagem':$('#cobraCubagem').val(),
-       'vlrFrete':$('#vlrFrete').val(),
-       'advalor':$('#advalor').val(),
-       'gris':$('#gris').val(),
-       'despacho':$('#despacho').val(),
-       'outros':$('#outros').val(),
-       'pedagio':$('#pedagio').val(),
-       'fatorCubagem':$('#cubagem').val(),
-       'freteminimo':$('#freteMinimo').val(),
-       'tipoFrete':$('#tipoFrete').val(),
-       'tipoCobPedagio':$('#tipoCobranPedagio').val(),
-       'aliquota':$('#aliquotaIcms').val(),  
-       'cnpj':$('#comlCnpj').val(), 
-       'razao':$('#comlRazao').val(),
-       'idRota':$('#rota').val(),
 
-   }
-}

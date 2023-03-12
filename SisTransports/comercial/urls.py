@@ -10,22 +10,24 @@ urlpatterns = [
     path('readTabela/',viewsComercial.readTabela,name='readTabela'),  
     path('readTabelasPorParceiro/',viewsComercial.readTabelasPorParceiro,
          name='readTabelaPorParceiro'),
-    
     path('readTabelasGeraisPorRota/',viewsComercial.readTabelasGeraisPorRota,
          name='readTabelasGeraisPorRota'),
-    
-     path('anexaTabelaRota/',viewsComercial.anexaTabelaRota,
+    path('anexaTabelaRota/',viewsComercial.anexaTabelaRota,
          name='anexaTabelaRota'),
-        path('deleteTabela/',viewsComercial.deleteTabela,name='deleteTabela'),
+    path('desanexaTabelaRota/',viewsComercial.desanexaTabelaRota,
+         name='desanexaTabelaRota'),   
+    path('deleteTabela/',viewsComercial.deleteTabela,name='deleteTabela'),
     path('getTodasTabelas/',viewsComercial.getTodasTabelas,name='todasTabelas'),
     path('excluiParceiroTabela/',viewsComercial.excluiParceiroTabela,name='excluiParceiroTabela'),
     path('cnpjTabela/',viewsComercial.cnpjTabela,name='cnpjTabela'),
     path('filtraTabelas/',viewsComercial.filtraTabelas,name='filtraTabelas'),  
+
     path('faixa/createFaixa/',viewsComercial.createFaixa,name='createFaixa'),
     path('faixa/readFaixa/',viewsComercial.readFaixa,name='readFaixa'),
     path('faixa/readFaixas/',viewsComercial.readFaixas,name='readFaixas'),
     path('faixa/updateFaixa/',viewsComercial.updateFaixa,name='updateFaixa'),
     path('faixa/deleteFaixa/',viewsComercial.deleteFaixa,name='deleteFaixa'),
+    
     path('cotacao/createCotacao/',viewsComercial.createCotacao,name='createCotacao'),
     path('cotacao/readCotacao/',viewsComercial.readCotacao,name='readCotacao'),
     path('cotacao/updateCotacao/',viewsComercial.updateCotacao,name='updateCotacao'),

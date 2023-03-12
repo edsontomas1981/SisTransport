@@ -6,7 +6,6 @@ from Classes.utils import toFloat, checkBox, dprint
 class TabelaFrete:
     def __init__(self):
         self.tabela = TblFrete()
-
     def get_tabelas_por_parceiro(self,parceiro):
         tabelas = TblFrete.objects.filter(parceiro=parceiro)
         return [tabela.toDict() for tabela in tabelas]
@@ -22,7 +21,8 @@ class TabelaFrete:
             return False   
         
     def readTabelasGeraisPorRota(self):
-        pass
+        rotas=self.tabela.rota.all()
+        return [rota.to_dict() for rota in rotas]
 
     def anexaRotasTabela(self,rota):
         try:
@@ -32,6 +32,12 @@ class TabelaFrete:
         except :
             return 400
         
+    def desanexaTabelaRota(self,idRota):
+        if TblFrete.objects.filter(rota__id=idRota).exists:
+            self.tabela.rota.remove(idRota)
+            return 200
+        else:
+            return 400
         
    
     def salvaOuAtualiza(self, dados):

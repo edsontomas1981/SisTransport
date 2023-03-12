@@ -22,7 +22,7 @@ def busca_parceiro(request):
             else:
                 contato=[]
                 dados = [parceiro.to_dict()]
-                return JsonResponse({'dados': dados ,'contato': contato,'status':201})#Parceiro cadastrado sem contatos
+                return JsonResponse({'dados': dados ,'status':201})#Parceiro cadastrado sem contatos
         else:#Buscar cnpj em um webservice
             #verifica se é um cnpj e faz a consulta
             if len(request.POST.get('cnpj_cpf'))==14:

@@ -79,7 +79,7 @@ function capturaDadosNaRowClicada() {
 }
 
 $(document).ready(function() {
-
+  capturaDadosNaRowClicada()
 });
 
 var abaSemSalvar=(idAbas)=>{

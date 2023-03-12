@@ -16,4 +16,5 @@ def anexaTabelaRota (request):
         rota.readRota(data['idRota'])
         tabela.readTabela(data['idTabela'])
         status=tabela.anexaRotasTabela(rota.rota)
-        return JsonResponse({'status':status})
+        rotas=tabela.readTabelasGeraisPorRota()
+        return JsonResponse({'status':status,'rotas':rotas})

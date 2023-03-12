@@ -11,9 +11,9 @@ class Rota (models.Model):
         return{'id':self.id,
                'nome':self.nome,
                'origemCidade': self.origemCidade,
-               'origemUF':self.origemCidade,
+               'origemUf':self.origemUf,
                'destinoCidade': self.destinoCidade,
-               'destinoUF':self.destinoUf               
+               'destinoUf':self.destinoUf
                }
         
     

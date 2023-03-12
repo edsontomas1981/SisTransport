@@ -4,7 +4,7 @@ $('#btnNovaCotacao').on('click', function(e) {
 })
 
 async function createCotacao() {
-    const conexao = new Conexao('/comercial/cotacao/createCotacao/', {dados: 'meus dados'});
+    let conexao = new Conexao('/comercial/cotacao/createCotacao/', {dados: 'meus dados'});
     try {
         const result = await conexao.sendPostRequest();
         console.log(result); // Imprime a resposta JSON da solicitação POST

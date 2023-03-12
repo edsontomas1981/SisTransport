@@ -11,4 +11,6 @@ def readTabelasGeraisPorRota (request):
     elif request.method == "POST" :
         data = json.loads(request.body.decode('utf-8'))
         tabela=TabelaFrete()
+        rotas=tabela.readTabelasGeraisPorRota(tabela.tabela)
+        dprint(rotas)
         return JsonResponse({'status':200})

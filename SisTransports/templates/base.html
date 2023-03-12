@@ -45,7 +45,7 @@
 
 <body>
     <!-- Inicio novo Template -->
-    <div class="" >
+    <div>
         <!-- Navbar -->
         {% include 'navBar.html'%}
         <!--SideBar-->
@@ -56,19 +56,14 @@
             <div class="container-fluid page-body-wrapper d-block">
                 {% include 'sidebar.html'%}
                 <div>
-                    <div class="container-fluid d-flex flex-row p-3">
+                    <div class="container-fluid d-flex flex-row ">
                         <div class="row">
                             <div class="col-md-12 grid-margin pt-1 pl-4 pr-4">
                                 <div class="row">
-                                    <div id="loader" style="display:none;">
-                                        <div class="col-md-12 col-sm-6 grid-margin stretch-card">
-                                          <div class="spinner-grow text-success" role="status">
-                                            <span class="visually-hidden">Loading...</span>
-                                          </div>
-                                        </div>
-                                    </div>
                                     <!-- Conteudo -->
-                                    {% block 'conteudo' %}{% endblock %}     
+                                    <section class="mx-auto">
+                                        {% block 'conteudo' %}{% endblock %}     
+                                    </section>
                                     {% include 'cadastroParceiros.html'%}
                                     {% include 'menu.html'%}  {% include 'calcM3.html'%}
                                 </div>
@@ -77,6 +72,13 @@
                     </div>
                 </div>
             </div>
+            <div id="loader" style="display:none;">
+                                        <div class="col-md-12 col-sm-6 grid-margin stretch-card">
+                                          <div class="spinner-grow text-success" role="status">
+                                            <span class="visually-hidden">Loading...</span>
+                                          </div>
+                                        </div>
+                                    </div>
         </div>
         {% include 'rodape.html'%}
     <!-- Js de outras Paginas -->
