@@ -5,7 +5,7 @@ $('#btnRelacionaTabela').on('click', function(e){
 
 function carregaParceiro(){
     let postData = '&cnpj_cpf=' + $('#comlCnpj').val();
-    let dados = { 'url': '/readParceiro/', 'id': postData }
+    let dados = { 'url': '/comercial/cnpjTabela/', 'id': postData }
     conectaBdGeral(dados,anexaTabela)
 }
 
@@ -57,7 +57,7 @@ function parceirosVinculados(response) {
 
 $('#comlCnpj').on('blur', function(e) {
     let postData = '&cnpj_cpf=' + $('#comlCnpj').val();
-    let dados = { 'url': '/busca_parceiro/', 'id': postData }
+    let dados = { 'url': '/parceiros/readParceiro/', 'id': postData }
     conectaBdGeral(dados, populaRazao)
 });
 

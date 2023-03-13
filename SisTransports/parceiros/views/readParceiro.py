@@ -19,10 +19,14 @@ def readParceiro(request):
             parceiro=Parceiros()
             status=parceiro.readParceiro(request.POST.get('cnpj_cpf'))
             tabelas=TabelaFrete()
+            parceirosVinculados=tabelas.selecionaTabCnpj()
+
             if status==200:
                 return JsonResponse({'status': 200,
-                'parceiro':parceiro.parceiro.to_dict(),'contatos':parceiro.parceiro.listaContatos,
-                'tabelas':tabelas.get_tabelas_por_parceiro(parceiro.parceiro)}) 
+                'parceiro':parceiro.parceiro.to_dict(),
+                'contatos':parceiro.parceiro.listaContatos,
+                'tabelas':tabelas.get_tabelas_por_parceiro(parceiro.parceiro),
+                'parceirosViculados':parceirosVinculados}) 
             elif status==404:
                 return JsonResponse({'status': 404,'msg':'Parceiro não localizado'})
             else:

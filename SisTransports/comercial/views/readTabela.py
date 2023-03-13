@@ -12,5 +12,7 @@ def readTabela (request):
         tabela=TabelaFrete()
         tabela.readTabela(request.POST.get('numTabela'))
         parceiro=tabela.selecionaTabCnpj()
+        rotas=tabela.readTabelasGeraisPorRota()
+        print(rotas)
         return JsonResponse({'status':200,'tabela':tabela.tabela.toDict(),
-                            'parceirosVinculados':parceiro})
+                            'parceirosVinculados':parceiro,'rotas':rotas})

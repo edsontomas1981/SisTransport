@@ -20,16 +20,16 @@
   <link rel="shortcut icon" href="{% static 'images/favicon.png'%}"/>
 </head>
 <body>
-  <div class="container-scroller">
+  <div class="container-scroller rounded">
     <div class="container-fluid page-body-wrapper full-page-wrapper">
       <div class="content-wrapper d-flex align-items-center auth px-0">
-        <div class="row w-100 mx-0">
+        <div class="row w-100">
           <div class="col-lg-4 mx-auto">
-            <div class="auth-form-light text-left py-5 px-4 px-sm-5">
-              <div class="brand-logo">
-                <img src="{% static 'images/logo.svg' %}" alt="logo">
+            <div class="auth-form-light text-left py-1 px-4 px-sm-5">
+              <div>
+                <img src="{% static 'images/logo.png' %}" class="img-fluid rounded float-start" alt="logo">
               </div>
-              <h4>Olá! vamos começar ?</h4>
+              <h4 class="text-center">Olá! vamos começar ?</h4>
               {% if messages %}
                 {% for message in messages %}
                     <div class="alert {{message.tags}}">
@@ -37,7 +37,7 @@
                     </div>
                 {% endfor %}
               {% endif %}
-              <h6 class="font-weight-light">Faça login para continuar.</h6>
+              <h6 class="font-weight-light text-center">Faça login para continuar.</h6>
               <form class="pt-3" method="POST" action="">
                 {% csrf_token %}
                 <div class="form-group">

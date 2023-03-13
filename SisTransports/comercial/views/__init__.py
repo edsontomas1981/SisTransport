@@ -18,6 +18,8 @@ from comercial.views.updateCotacao import updateCotacao
 from comercial.views.readTabelasPorParceiro import readTabelasPorParceiro
 from comercial.views.readTabelasGeraisPorRota import readTabelasGeraisPorRota
 from comercial.views.anexaTabelaRota import anexaTabelaRota
+from comercial.views.desanexaTabelaRota import desanexaTabelaRota
+
 
 
 
