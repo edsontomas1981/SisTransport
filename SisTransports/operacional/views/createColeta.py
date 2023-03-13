@@ -21,7 +21,6 @@ def createColeta (request):
         if len(camposVazios)==0:
             coleta=Coleta()
             status=coleta.createColeta(data)
-            dprint(status)    
             return JsonResponse({'status':status}) #Cadastro efetuado com sucesso
         else:
             return JsonResponse({'status':300,'camposVazios':camposVazios}) #Cadastro efetuado com sucesso

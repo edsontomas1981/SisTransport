@@ -316,4 +316,20 @@ carregaDadosForm=()=>{
     }
  }
 
+const populaSelectTabelas = (idSelect,dados) => {
+    let select = $('#' + idSelect);
+    select.empty(); // limpa a select box antes de preencher
+    select.append($('<option>', {
+            value: 0,
+            text: 'Selecione a tabela'
+    }));
+    for (let i = 0; i < dados.length; i++) {
+        select.append($('<option>', {
+            value: dados[i].id,
+            text: dados[i].descricao
+        }));
+    }
+}
+
+
 

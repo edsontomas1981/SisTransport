@@ -14,8 +14,6 @@ class Dtc:
         self.dtc.tomador_fk=dados['tomador']
         if dados['consignatario'] :
             self.dtc.consignatario_fk=dados['consignatario']
-
-        dpprint('ROTAS',dados)    
         if dados['rota'] :
             self.dtc.rota_fk=dados['rota']            
         self.dtc.save()

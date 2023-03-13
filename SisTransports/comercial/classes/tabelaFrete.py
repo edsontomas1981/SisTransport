@@ -23,6 +23,21 @@ class TabelaFrete:
     def readTabelasGeraisPorRota(self):
         rotas=self.tabela.rota.all()
         return [rota.to_dict() for rota in rotas]
+    
+    def selecionaTabelasPelaRota(self,rota):
+        try:
+            tabelas=TblFrete.objects.filter(rota__id=rota.id)
+            
+            return 200,tabelas
+        # except:
+        #     return 301,[] #objeto nao encontrado
+        # except TblFrete.DatabaseError:
+        #     return 302,[] #Erro de Banco de Dados
+        except:
+            return 303,[] #Erro nao identificado    
+        
+        
+        
 
     def anexaRotasTabela(self,rota):
         try:

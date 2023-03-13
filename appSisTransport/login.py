@@ -37,6 +37,5 @@ class MainApp(MDApp):
         return Builder.load_string(KV)
 
     def callback(self, button):
-        print(button)
-
+        pass
 MainApp().run()
