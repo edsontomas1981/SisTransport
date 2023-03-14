@@ -146,28 +146,30 @@ class CalculaFrete:
             self.calcularFreteVolume()
 
     def geraTabela(self):
-        self.tabela.freteMinimo = self.dadosTabela['freteMinimo'][0]
-        self.tabela.fatorCubagem = self.dadosTabela['cubagem'][0]
-        self.tabela.outros = self.dadosTabela['outros'][0]
-        self.tabela.despacho = self.dadosTabela['despacho'][0]
-        self.tabela.tipoFrete = self.dadosTabela['tipoFrete'][0]
-        self.tabela.vlrFrete = self.dadosTabela['vlrFrete'][0]
-        self.tabela.descricao = self.dadosTabela['descTabela'][0]
-        self.tabela.icmsIncluso = self.dadosTabela['icms'][0]
-        self.tabela.tabBloq = ['tabBloq'][0]
-        self.tabela.aliquotaIcms = self.dadosTabela['aliquotaIcms'][0]
-        self.tabela.advalor = self.dadosTabela['advalor'][0]
-        self.tabela.gris = self.dadosTabela['gris'][0]
-        self.tabela.pedagio = self.dadosTabela['pedagio'][0]
-        self.tabela.tipoPedagio = self.dadosTabela['tipoCobranPedagio'][0]
-        self.tabela.cobraCubagem = self.dadosTabela['cobraCubagem'][0]
-        self.tabela.tipoCalculo = self.dadosTabela['tipoFrete'][0]
+        
+
+        self.tabela.freteMinimo = self.dadosTabela.freteMinimo
+        self.tabela.fatorCubagem = self.dadosTabela.cubagem
+        self.tabela.outros = self.dadosTabela.outros
+        self.tabela.despacho = self.dadosTabela.despacho
+        self.tabela.tipoFrete = self.dadosTabela.tipoFrete
+        self.tabela.vlrFrete = self.dadosTabela.vlrFrete
+        self.tabela.descricao = self.dadosTabela.descTabela
+        self.tabela.icmsIncluso = self.dadosTabela.icms
+        self.tabela.tabBloq = self.dadosTabela.tabBloq
+        self.tabela.aliquotaIcms = self.dadosTabela.aliquotaIcms
+        self.tabela.advalor = self.dadosTabela.advalor
+        self.tabela.gris = self.dadosTabela.gris
+        self.tabela.pedagio = self.dadosTabela.pedagio
+        self.tabela.tipoPedagio = self.dadosTabela.tipoCobranPedagio
+        self.tabela.cobraCubagem = self.dadosTabela.cobraCubagem
+        self.tabela.tipoCalculo = self.dadosTabela.tipoCalculo
 
     def dadosCalculo(self, dados):
-        self.peso = dados['peso'][0]
-        self.qtde = dados['qtde'][0]
-        self.vlrNf = dados['vlrNf'][0]
-        self.m3 = dados['m3'][0]
+        self.peso = dados['peso']
+        self.qtde = dados['qtde']
+        self.vlrNf = dados['vlrNf']
+        self.m3 = dados['m3']
         
     def toDict(self):
         return {

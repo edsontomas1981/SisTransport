@@ -10,7 +10,7 @@ class GeraFreteTest(TestCase):
 
     def setUp(self):
         self.tabela = self.geraTabela(10,2,0,0,0,0,0,1,300,150, 1,'on','on','off',7)
-        self.dados = {'peso': [250], 'qtde': [5], 'vlrNf': [1500.00], 'm3': [1]}
+        self.dados = {'peso': 250, 'qtde': 5, 'vlrNf': 1500.00, 'm3': 1}
         self.faixas=self.geraFaixas()
 
     def test_calculaFrete(self):

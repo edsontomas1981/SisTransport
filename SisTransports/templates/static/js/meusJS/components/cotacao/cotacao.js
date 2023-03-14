@@ -116,38 +116,39 @@ function limpaCotacao(){
     $('#baseCalculoCotacao').val('')
     $('#aliquotaCotacao').val('')
     $('#icmsCotacao').val('')
+    resetaSelectCotacao();
 }
-
 $('#rotasDtc').on('change',function(e){
     resetaSelectCotacao()
 })
+const resetaSelectCotacao = () => {
 
-$('#pills-cotacao').on('blur',function(e){
+    const tipoTabelaCotacao = $('#tipoTabelaCotacao')[0];
+    tipoTabelaCotacao.innerHTML = '<option value="0">Selecione o tipo de tabela</option><option value="1">Tabela geral</option><option value="2">Tabela cliente</option><option value="3">Frete informado</option>';
 
-})
+    const tabelaCotacao = $('#tabelaCotacao')[0];
+    tabelaCotacao.innerHTML =''
+    tabelaCotacao.innerHTML = '<option value="0">Selecione a tabela</option>';
+};
 
+$('#pills-cotacao-tab').on('focus', function(e) {
+    resetaSelectCotacao()
+});
 
-const resetaSelectCotacao=()=>{
-    alert('limpa')
-    $('#tipoTabelaCotacao').empty()
-    $('#tipoTabelaCotacao').append($('<option>', {
-            value: 0,
-            text: 'Selecione o tipo de tabela'
-    }));
+const btnCalculaCotacao = document.getElementById('btnCalculaCotacao');
+btnCalculaCotacao.addEventListener('click',function(e){
+    let dados = geraDadosCotacao()
+    let conexao = new Conexao('/faturamento/calculaFrete/',dados)
+    conexao.sendPostRequest()
+});
 
-    $('#tipoTabelaCotacao').append($('<option>', {
-            value: 1,
-            text: 'Tabela geral'
-    }));
+const geraDadosCotacao=()=>{
+return{
+        'qtde':$('#volumeCotacao').val(),
+        'vlrNf':$('#valorNfCotacao').val(),
+        'peso':$('#pesoCotacao').val(),
+        'm3':$('#resultM3Cotacao').val(),
+        'tabela':$('#tabelaCotacao').val()
+    }
+};
 
-    $('#tipoTabelaCotacao').append($('<option>', {
-            value: 1,
-            text: 'Tabela cliente'
-    }));
-
-    $('#tabelaCotacao').empty()
-    $('#tabelaCotacao').append($('<option>', {
-            value: 0,
-            text: 'Selecione a tabela'
-    }));
-}
