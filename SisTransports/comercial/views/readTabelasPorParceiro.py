@@ -13,7 +13,8 @@ def readTabelasPorParceiro (request):
     elif request.method == "POST" :
         data = json.loads(request.body.decode('utf-8'))
         parceiro=Parceiros()
+        dprint(data['tomador'])
         parceiro.readParceiro(data['tomador'])
         tabelas=TabelaFrete()
-        tabelas.get_tabelas_por_parceiro()
-        return JsonResponse({'status': 200}) 
+        status,listTabelas=tabelas.get_tabelas_por_parceiro(parceiro.parceiro)
+        return JsonResponse({'status': status,'tabelas':listTabelas}) 

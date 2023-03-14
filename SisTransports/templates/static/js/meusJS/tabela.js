@@ -138,7 +138,6 @@ function relatorioTabela(response) {
             '<td><button type="button" class="btn btn-dark ' +
             'btn-rounded btn-icon" id="altera"><i class="ti-new-window"></i></button></td>' +
             '</tr>'
-
         $('#relatorioTabela tbody').append(template)
     }
 };
@@ -318,17 +317,41 @@ carregaDadosForm=()=>{
 
 const populaSelectTabelas = (idSelect,dados) => {
     let select = $('#' + idSelect);
-    select.empty(); // limpa a select box antes de preencher
-    select.append($('<option>', {
-            value: 0,
-            text: 'Selecione a tabela'
-    }));
-    for (let i = 0; i < dados.length; i++) {
-        select.append($('<option>', {
-            value: dados[i].id,
-            text: dados[i].descricao
-        }));
+    switch (dados.status) {
+        case 200:
+            select.empty(); // limpa a select box antes de preencher
+            select.append($('<option>', {
+                    value: 0,
+                    text: 'Selecione a tabela'
+            }));
+            for (let i = 0; i < dados.tabelas.length; i++) {
+                select.append($('<option>', {
+                    value: dados.tabelas[i].id,
+                    text: dados.tabelas[i].descricao
+                }));
+            }            
+            break;
+        case 300:
+            const Toast = Swal.mixin({
+                toast: true,
+                position: 'top-end',
+                showConfirmButton: false,
+                timer: 3000,
+                timerProgressBar: true,
+                didOpen: (toast) => {
+                  toast.addEventListener('mouseenter', Swal.stopTimer)
+                  toast.addEventListener('mouseleave', Swal.resumeTimer)
+                }
+              })
+              
+              Toast.fire({
+                icon: 'error',
+                title: 'Tabela não encontrada'
+              })
+        default:
+            break;
     }
+
 }
 
 

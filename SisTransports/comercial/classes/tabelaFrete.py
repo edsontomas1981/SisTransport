@@ -2,13 +2,29 @@ from comercial.models.tabelaFrete import TabelaFrete as TblFrete
 from operacional.classes.rotas import Rota
 from parceiros.models.parceiros import Parceiros as MdlParceiros
 from Classes.utils import toFloat, checkBox, dprint
+from django.core.exceptions import ObjectDoesNotExist
+from django.db.utils import DatabaseError
+
+
 
 class TabelaFrete:
     def __init__(self):
         self.tabela = TblFrete()
     def get_tabelas_por_parceiro(self,parceiro):
-        tabelas = TblFrete.objects.filter(parceiro=parceiro)
-        return [tabela.toDict() for tabela in tabelas]
+        dprint(parceiro)
+        try:
+            tabelas = TblFrete.objects.filter(parceiro=parceiro)
+            return 200,[tabela.toDict() for tabela in tabelas]
+        except ObjectDoesNotExist:
+            # Lidar com a exceção aqui, como retornar um erro 404 ou um objeto vazio
+            return 300, {'message': 'Não há tabelas de frete para este parceiro.'}
+        except DatabaseError:
+            # Lidar com a exceção aqui, como registrar em um log ou retornar um erro 500
+            return 301, {'message': 'Erro ao buscar tabelas de frete.'}
+        except:
+            return 302, {'message': 'Erro não identificado.'}
+
+
 
     def readTabelas(self,parceiro:object):
         tabCnpj = []

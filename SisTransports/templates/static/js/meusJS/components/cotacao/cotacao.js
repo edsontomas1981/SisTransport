@@ -40,10 +40,8 @@ $('#tipoTabelaCotacao').on('change', function() {
    
     // Executa ação com base no valor selecionado
     if (selectedValue === '1') {
-        alert('Carrega Tabelas gerais')
         carregaTabelasGerais()
     } else if (selectedValue === '2') {
-        alert('Carrega Tabelas especificas')
         carregaTabelasEspecificas()
       // Executa ação quando a opção "Tabela cliente" é selecionada
     } else {
@@ -53,10 +51,11 @@ $('#tipoTabelaCotacao').on('change', function() {
 });
 
 const carregaTabelasEspecificas=async()=>{
-    let conexao = new Conexao('/comercial/readTabelasPorParceiro/', {dados: 'meus dados'});
+    let conexao = new Conexao('/comercial/readTabelasPorParceiro/', {tomador:$('#cnpjTomador').val()});
     try {
         const result = await conexao.sendPostRequest();
-        console.log(result); // Imprime a resposta JSON da solicitação POST
+        populaSelectTabelas('tabelaCotacao',result)
+        // console.log(result); // Imprime a resposta JSON da solicitação POST
     } catch (error) {
         console.error(error); // Imprime a mensagem de erro
     }
@@ -67,7 +66,7 @@ const carregaTabelasGerais=async()=>{
     let conexao = new Conexao('/comercial/readTabelasGeraisPorRota/', dados);
     try {
         const result = await conexao.sendPostRequest();
-        populaSelectTabelas('tabelaCotacao',result.tabelas)
+        populaSelectTabelas('tabelaCotacao',result)
         console.log(result); // Imprime a resposta JSON da solicitação POST
     } catch (error) {
         console.error(error); // Imprime a mensagem de erro
@@ -120,6 +119,16 @@ function limpaCotacao(){
 }
 
 $('#rotasDtc').on('change',function(e){
+    resetaSelectCotacao()
+})
+
+$('#pills-cotacao').on('blur',function(e){
+
+})
+
+
+const resetaSelectCotacao=()=>{
+    alert('limpa')
     $('#tipoTabelaCotacao').empty()
     $('#tipoTabelaCotacao').append($('<option>', {
             value: 0,
@@ -141,5 +150,4 @@ $('#rotasDtc').on('change',function(e){
             value: 0,
             text: 'Selecione a tabela'
     }));
-})
-
+}
