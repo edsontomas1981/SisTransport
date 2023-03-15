@@ -64,7 +64,7 @@ def toFloat(stringToFloat):
             stringToFloat = float(stringToFloat)
 
     if stringToFloat:
-        return stringToFloat
+        return float(stringToFloat)
     else:
         return 0
 

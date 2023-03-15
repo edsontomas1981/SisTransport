@@ -3,9 +3,7 @@ from operacional.models.dtc import Dtc as DctoCarga
 from operacional.models.rota import Rota
 from comercial.models.tabelaFrete import TabelaFrete
 
-
 class Cotacao(models.Model):
-
     dtc_fk = models.ForeignKey(DctoCarga, on_delete=models.CASCADE, blank=False)
     tabela_fk = models.ForeignKey(TabelaFrete, on_delete=models.CASCADE, blank=False,
                                   related_name='tabelaCotacao', null=True)
@@ -32,14 +30,13 @@ class Cotacao(models.Model):
         max_digits=5, decimal_places=2, default=0.00)
     outros = models.DecimalField(max_digits=5, decimal_places=2, default=0.00)
     pedagio = models.DecimalField(max_digits=5, decimal_places=2, default=0.00)
-
+    vlrColeta = models.DecimalField(max_digits=5, decimal_places=2, default=0.00)
     baseDeCalculo = models.DecimalField(
         max_digits=5, decimal_places=2, default=0.00)
     aliquota = models.DecimalField(
         max_digits=5, decimal_places=2, default=0.00)
     icmsRS = models.DecimalField(max_digits=5, decimal_places=2, default=0.00)
     icmsIncluso = models.BooleanField(default=True)
-
     nome = models.CharField(max_length=30, null=True)
     contato = models.CharField(max_length=50, null=True)
 
@@ -50,6 +47,7 @@ class Cotacao(models.Model):
                    'qtde': self.qtde,
                    'pesoFaturado': self.pesoFaturado,
                    'vlrNf': self.vlrNf,
+                   'vlrColeta': self.vlrColeta,
                    'm3': self.m3,
                    'tipoMercadoria': self.tipoMercadoria,
                    'formaDeCalculo': self.formaDeCalculo,

@@ -3,7 +3,7 @@ from faturamento.components.calculaFrete import calculaAdvalor, calculaGris, pes
 from faturamento.components.calculaFrete import somaSubtotais, calculaPedagio, calculaFretePeso, freteFaixa
 from faturamento.components.calculaFrete import aplicaIcms, geraPercentualAliquota, calculaFreteValor, calculaFreteVolume
 from comercial.classes.geraFrete import CalculaFrete
-from Classes.utils import dpprint, dprint
+from Classes.utils import dpprint, dprint,toFloat
 from comercial.classes.tblFaixa import TabelaFaixa
 
 
@@ -99,7 +99,7 @@ class Cotacao:
         self.cotacao.pesoCubado=calculaCubagem(
             self.cotacao.m3, self.cotacao.tabela_fk.fatorCubagem)
         self.cotacao.pesoCalcular=pesoACalcular(
-            self.cotacao.peso, self.cotacao.pesoCubado)
+            toFloat(self.cotacao.peso), toFloat(self.cotacao.pesoCubado))
         self.cotacao.fretePeso=calculaFretePeso(
             self.cotacao.tabela_fk.frete, self.cotacao.pesoCalcular)
         self.cotacao.pedagio=calculaPedagio(
@@ -140,8 +140,7 @@ class Cotacao:
         self.cotacao.pesoCubado=calculaCubagem(
             self.cotacao.m3, self.cotacao.tabela_fk.fatorCubagem)
         self.cotacao.pesoCalcular=pesoACalcular(
-
-            self.cotacao.peso, self.cotacao.pesoCubado)
+            toFloat(self.cotacao.peso), toFloat(self.cotacao.pesoCubado))
 
         self.cotacao.fretePeso=freteFaixa(
             faixas, int(self.cotacao.pesoCalcular))

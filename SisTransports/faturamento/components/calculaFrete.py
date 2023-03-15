@@ -1,8 +1,12 @@
 from math import ceil
-from Classes.utils import dprint, dpprint
+from Classes.utils import dprint, dpprint,toFloat
+import decimal
+
 
 
 def pesoACalcular(pesoReal, pesoCubado):
+    pesoReal=toFloat(pesoReal)
+    pesoCubado=toFloat(pesoCubado)
     if pesoReal and pesoCubado:
         if pesoReal >= pesoCubado:
             if pesoReal > 0:
@@ -22,9 +26,10 @@ def pesoACalcular(pesoReal, pesoCubado):
         return 0
 
 def calculaAdvalor(percentualAdvalor, vlrNf):
+    vlrNf=toFloat(vlrNf)
     if vlrNf > 0:
         if percentualAdvalor > 0:
-            advalor = percentualAdvalor/100
+            advalor = float(percentualAdvalor/100)
             return round(advalor*vlrNf, 2)
         else:
             return 0
@@ -33,9 +38,10 @@ def calculaAdvalor(percentualAdvalor, vlrNf):
 
 
 def calculaGris(percentualGris, vlrNf):
+    vlrNf=float(toFloat(vlrNf))
     if vlrNf > 0:
         if percentualGris > 0:
-            gris = percentualGris/100
+            gris = float(percentualGris/100)
             return round(gris*vlrNf, 2)
         else:
             return 0
@@ -52,7 +58,8 @@ def geraPercentualAliquota(aliquotaIcms):
 
 
 def calculaCubagem(m3, fatorCubagem):
-    if m3 > 0:
+    
+    if toFloat(m3) > 0:
         if fatorCubagem > 0:
             return fatorCubagem*m3
         else:
@@ -72,10 +79,12 @@ def calculaPedagio(tipoPedagio, pedagio, pesoFaturado):
 
 
 def somaSubtotais(*args):
-    total=[subtotal for subtotal in args if subtotal != None]
+    total=[float(subtotal) for subtotal in args if subtotal != None]
     return sum(total)
 
 def calculaFretePeso(fretePorKg, peso):
+    fretePorKg=toFloat(fretePorKg)
+    peso=toFloat(peso)
     if fretePorKg > 0:
         if peso > 0:
             return fretePorKg*peso
@@ -97,7 +106,7 @@ def aplicaIcms(subtotal, aliquotaIcms):
 
 
 def calculaFreteValor(vlrNf, percentual):
-    return vlrNf*(percentual/100)
+    return toFloat(vlrNf)*float((percentual/100))
 
 
 def calculaFreteVolume(volumes, vlrFreteVolume):

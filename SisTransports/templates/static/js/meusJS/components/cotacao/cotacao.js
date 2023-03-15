@@ -13,8 +13,6 @@ async function createCotacao() {
     }
 }
 
-
-
 $('#btnSalvaCotacao').on('click', function(e) {
     if ($('#freteTotalCotacao').val()!=0){
         createCotacao();
@@ -30,9 +28,7 @@ Clique em "OK" para calcular o frete.')
     e.preventDefault();
 })
 
-calculafrete=()=>{
-    alert('calculou o frete')
-}
+
 
 $('#tipoTabelaCotacao').on('change', function() {
     // Verifica o valor da opção selecionada
@@ -122,7 +118,6 @@ $('#rotasDtc').on('change',function(e){
     resetaSelectCotacao()
 })
 const resetaSelectCotacao = () => {
-
     const tipoTabelaCotacao = $('#tipoTabelaCotacao')[0];
     tipoTabelaCotacao.innerHTML = '<option value="0">Selecione o tipo de tabela</option><option value="1">Tabela geral</option><option value="2">Tabela cliente</option><option value="3">Frete informado</option>';
 
@@ -135,12 +130,29 @@ $('#pills-cotacao-tab').on('focus', function(e) {
     resetaSelectCotacao()
 });
 
+
 const btnCalculaCotacao = document.getElementById('btnCalculaCotacao');
 btnCalculaCotacao.addEventListener('click',function(e){
+    calculafrete();
+});
+
+const calculafrete = async () =>{
     let dados = geraDadosCotacao()
     let conexao = new Conexao('/faturamento/calculaFrete/',dados)
-    conexao.sendPostRequest()
-});
+    let resultado = await conexao.sendPostRequest()
+    populaFrete(resultado)
+}
+
+const populaFrete = (resultado)=>{
+    $('#fretePesoCotacao').val(resultado.frete['freteCalculado']);
+    $('#freteValorCotacao').val(resultado.frete['freteCalculado']);
+    $('#pedagioCotacao').val(resultado.frete['pedagio']);
+    $('#grisCotacao').val(resultado.frete['gris']);
+    $('#outrosCotacao').val(resultado.frete['outros']);
+    $('#advalorCotacao').val(resultado.frete['adValor']);
+    $('#despachoCotacao').val(resultado.frete['despacho']);
+    $('#freteTotalCotacao').val(resultado.frete['freteTotal']);
+}
 
 const geraDadosCotacao=()=>{
 return{
@@ -148,6 +160,7 @@ return{
         'vlrNf':$('#valorNfCotacao').val(),
         'peso':$('#pesoCotacao').val(),
         'm3':$('#resultM3Cotacao').val(),
+        'vlrColeta':$('#vlrColetaCotacao').val(),
         'tabela':$('#tabelaCotacao').val()
     }
 };
