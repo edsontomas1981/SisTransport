@@ -1,3 +1,5 @@
+var listaTabelas
+
 $('#btnNovaCotacao').on('click', function(e) {
     limpaCotacao()
     e.preventDefault();
@@ -46,28 +48,6 @@ $('#tipoTabelaCotacao').on('change', function() {
     }
 });
 
-const carregaTabelasEspecificas=async()=>{
-    let conexao = new Conexao('/comercial/readTabelasPorParceiro/', {tomador:$('#cnpjTomador').val()});
-    try {
-        const result = await conexao.sendPostRequest();
-        populaSelectTabelas('tabelaCotacao',result)
-        // console.log(result); // Imprime a resposta JSON da solicitação POST
-    } catch (error) {
-        console.error(error); // Imprime a mensagem de erro
-    }
-}
-
-const carregaTabelasGerais=async()=>{
-    let dados = {'idRota':$('#rotasDtc').val()}
-    let conexao = new Conexao('/comercial/readTabelasGeraisPorRota/', dados);
-    try {
-        const result = await conexao.sendPostRequest();
-        populaSelectTabelas('tabelaCotacao',result)
-        console.log(result); // Imprime a resposta JSON da solicitação POST
-    } catch (error) {
-        console.error(error); // Imprime a mensagem de erro
-    }
-}
 
 
 $('#btnExcluiCotacao').on('click', function(e) {
@@ -125,34 +105,48 @@ const resetaSelectCotacao = () => {
     tabelaCotacao.innerHTML =''
     tabelaCotacao.innerHTML = '<option value="0">Selecione a tabela</option>';
 };
-
 $('#pills-cotacao-tab').on('focus', function(e) {
     resetaSelectCotacao()
 });
 
-
 const btnCalculaCotacao = document.getElementById('btnCalculaCotacao');
 btnCalculaCotacao.addEventListener('click',function(e){
-    calculafrete();
+    const valores = Object.values(listaTabelas);
+    const tabelasSelecionadas = valores.find(listaTabelas => listaTabelas.id == $('#tabelaCotacao').val());
+    const tabela= tabelasSelecionadas ? tabelasSelecionadas : null;
+    let calcula=new CalculaFrete(tabela,$('#volumeCotacao').val(),$('#pesoCotacao').val(),$('#valorNfCotacao').val(),$('#resultM3Cotacao').val());
+    calcula.calculaFrete();
 });
 
 const calculafrete = async () =>{
-    let dados = geraDadosCotacao()
-    let conexao = new Conexao('/faturamento/calculaFrete/',dados)
-    let resultado = await conexao.sendPostRequest()
     populaFrete(resultado)
 }
-
-const populaFrete = (resultado)=>{
-    $('#fretePesoCotacao').val(resultado.frete['freteCalculado']);
-    $('#freteValorCotacao').val(resultado.frete['freteCalculado']);
-    $('#pedagioCotacao').val(resultado.frete['pedagio']);
-    $('#grisCotacao').val(resultado.frete['gris']);
-    $('#outrosCotacao').val(resultado.frete['outros']);
-    $('#advalorCotacao').val(resultado.frete['adValor']);
-    $('#despachoCotacao').val(resultado.frete['despacho']);
-    $('#freteTotalCotacao').val(resultado.frete['freteTotal']);
+const carregaTabelasEspecificas=async()=>{
+    let conexao = new Conexao('/comercial/readTabelasPorParceiro/', {tomador:$('#cnpjTomador').val()});
+    try {
+        const result = await conexao.sendPostRequest();
+        populaSelectTabelas('tabelaCotacao',result)
+        listaTabelas=result.tabelas
+        // console.log(result); // Imprime a resposta JSON da solicitação POST
+    } catch (error) {
+        console.error(error); // Imprime a mensagem de erro
+    }
 }
+
+const carregaTabelasGerais=async()=>{
+    let dados = {'idRota':$('#rotasDtc').val()}
+    let conexao = new Conexao('/comercial/readTabelasGeraisPorRota/', dados);
+    try {
+        const result = await conexao.sendPostRequest();
+        populaSelectTabelas('tabelaCotacao',result)
+        listaTabelas=result.tabelas
+        // console.log(result); // Imprime a resposta JSON da solicitação POST
+    } catch (error) {
+        console.error(error); // Imprime a mensagem de erro
+    }
+}
+
+const populaFrete = (resultado)=>{}
 
 const geraDadosCotacao=()=>{
 return{
