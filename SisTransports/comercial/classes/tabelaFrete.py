@@ -4,14 +4,15 @@ from parceiros.models.parceiros import Parceiros as MdlParceiros
 from Classes.utils import toFloat, checkBox, dprint
 from django.core.exceptions import ObjectDoesNotExist
 from django.db.utils import DatabaseError
+from comercial.classes.tblFaixa import TabelaFaixa
 
 
 
 class TabelaFrete:
     def __init__(self):
         self.tabela = TblFrete()
+
     def get_tabelas_por_parceiro(self,parceiro):
-        dprint(parceiro)
         try:
             tabelas = TblFrete.objects.filter(parceiro=parceiro)
             return 200,[tabela.toDict() for tabela in tabelas]
@@ -23,8 +24,6 @@ class TabelaFrete:
             return 301, {'message': 'Erro ao buscar tabelas de frete.'}
         except:
             return 302, {'message': 'Erro não identificado.'}
-
-
 
     def readTabelas(self,parceiro:object):
         tabCnpj = []
@@ -43,12 +42,7 @@ class TabelaFrete:
     def selecionaTabelasPelaRota(self,rota):
         try:
             tabelas=TblFrete.objects.filter(rota__id=rota.id)
-            
             return 200,tabelas
-        # except:
-        #     return 301,[] #objeto nao encontrado
-        # except TblFrete.DatabaseError:
-        #     return 302,[] #Erro de Banco de Dados
         except:
             return 303,[] #Erro nao identificado    
         
@@ -161,5 +155,15 @@ class TabelaFrete:
         else:
             return False
 
+    def readFaixas(self,idTabela):
+        listaFaixas = TabelaFaixa()        
+        lista,faixas=listaFaixas.readFaixas(idTabela)
+        tabelaFaixas=[]
+        for i in lista:
+           tabelaFaixas.append( i.toDict())
+
+        self.tabela.listaFaixas=tabelaFaixas
+
     def toDict(self):
+
         return self.tabela.toDict()

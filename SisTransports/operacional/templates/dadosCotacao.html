@@ -56,7 +56,7 @@
             </div>            
             <div class="col-sm-3 mb-0 pr-1 pl-1 form-group form-floating">
                 <input type="text" class="form-control form-control-sm" 
-                placeholder="Volumes" name="volumeCotacao" id="volumeCotacao">
+                placeholder="Volumes" name="volumeCotacao" id="volumeCotacao" value="5">
                 <label class="text-secondary" for="volumeCotacao">Volumes:</label>
 
             </div>
@@ -69,13 +69,13 @@
             </div>             
             <div class="col-sm-3 mb-0 pr-1 pl-1 form-group form-floating">
                 <input type="text" class="form-control form-control-sm" 
-                placeholder="Valor R$" name="valorNfCotacao" id="valorNfCotacao">
+                placeholder="Valor R$" name="valorNfCotacao" id="valorNfCotacao" value="1500.00">
                 <label class="text-secondary" for="valorNfCotacao">Valor Nf:</label>
             </div> 
 
             <div class="col-sm-4 mt-1 mb-0 pr-1 pl-1 form-group form-floating">
                 <input type="text" class="form-control  form-control-sm " 
-                placeholder="Peso" id="pesoCotacao" name="pesoCotacao">
+                placeholder="Peso" id="pesoCotacao" name="pesoCotacao" value="30">
                 <label class="text-secondary" for="pesoCotacao">Peso real:</label>
             </div> 
 
@@ -87,7 +87,7 @@
             <div class="col-sm-4 mt-1 mb-0 pr-1 pl-1 form-group form-floating">
                 <div class="input-group form-group form-floating">
                     <input type="text" class="form-control small  form-control-sm" id='resultM3Cotacao' 
-                    name='resultM3Cotacao' placeholder="M³" aria-label="Search" aria-describedby="basic-addon2">
+                    name='resultM3Cotacao' placeholder="M³" aria-label="Search" aria-describedby="basic-addon2" value="1">
                     <label class="text-secondary" for="resultM3Cotacao">M³:</label>
                     <div class="input-group-append">
                         <a class="btn btn-primary" data-bs-toggle="modal" id="btnM3Cotacao"
@@ -108,23 +108,19 @@
     <div class="form-group col-6 mb-0 mt-0">
         <div class="form-group row mb-1">
             <p class="text-primary">Cálculo do Frete</p>
-            <div class="col-sm-3 mb-1 form-group pr-1 pl-1 form-floating">
+            <div class="col-sm-4 mb-1 form-group pr-1 pl-1 form-floating">
                 <input type="text" class="form-control form-control-sm " 
                     placeholder="Frete Peso" name="fretePesoCotacao" id="fretePesoCotacao">
-                <label class="text-secondary" for="fretePesoCotacao">Frete peso:</label>
+                <label class="text-secondary" for="fretePesoCotacao">Frete:</label>
 
             </div>
-            <div class="col-sm-3 mb-1 pl-0 pr-1 form-group form-floating">
-                <input type="text" class="form-control form-control-sm" 
-                placeholder="Frete Valor" name="freteValorCotacao" id="freteValorCotacao">
-                <label class="text-secondary" for="freteValorCotacao">Frete valor:</label>
-            </div> 
-            <div class="col-sm-3 mb-1 pl-0 pr-1 form-group form-floating">
+ 
+            <div class="col-sm-4 mb-1 pl-0 pr-1 form-group form-floating">
                 <input type="text" class="form-control form-control-sm " 
                 placeholder="Advalor" name="advalorCotacao" id="advalorCotacao">
                 <label class="text-secondary"for="advalorCotacao">Advalor:</label>                
             </div> 
-            <div class="col-sm-3 mb-1 pl-0 pr-1 form-group form-floating">
+            <div class="col-sm-4 mb-1 pl-0 pr-1 form-group form-floating">
                 <input type="text" class="form-control form-control-sm " 
                 placeholder="Vlr Coleta" name="vlrColetaCotacao" id="vlrColetaCotacao">
                 <label class="text-secondary"for="vlrColetaCotacao">Valor Coleta:</label>                

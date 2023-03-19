@@ -3,6 +3,8 @@ from django.http import JsonResponse
 from comercial.classes.tabelaFrete import TabelaFrete
 from operacional.classes.rotas import Rota
 from Classes.utils import dprint
+from comercial.classes.tblFaixa import TabelaFaixa
+
 import json
 
 @login_required(login_url='/auth/entrar/')
@@ -15,7 +17,11 @@ def readTabelasGeraisPorRota (request):
         rota=Rota()
         rota.readRota(data['idRota'])
         status,tabelas=tabela.selecionaTabelasPelaRota(rota.rota)
-        tabela=[]
-        for i in tabelas:
-            tabela.append(i.toDict())
-        return JsonResponse({'status':status,'tabelas': tabela})
+        listaTabelas=[]
+        for tabela in tabelas:
+            faixas=TabelaFaixa()
+            objTabela={}
+            objTabela=tabela.toDict()
+            objTabela['faixas']=faixas.readFaixasCalculo(tabela.id)
+            listaTabelas.append(objTabela)
+        return JsonResponse({'status':status,'tabelas': listaTabelas})

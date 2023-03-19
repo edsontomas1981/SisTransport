@@ -1,4 +1,3 @@
-from comercial.models.tabelaFrete import TabelaFrete as TblFrete
 from comercial.models.tabelaFaixa import TabelaFaixa as Faixa
 from Classes.utils import toFloat, dprint
 
@@ -6,9 +5,6 @@ from Classes.utils import toFloat, dprint
 class TabelaFaixa:
     def __init__(self):
         self.faixa = None
-
-    def __str__(self):
-        return self.faixa.toDict()
 
     def verificaFaixa(self, idFaixa, idTabela):
         valorFaixa = idFaixa['valor']
@@ -40,10 +36,26 @@ class TabelaFaixa:
     # seleciona todas as faixas referentes a tabela
 
     def readFaixas(self, idTabela):
+        
         if Faixa.objects.filter(tblVinculada=idTabela).exists():
-           faixas = Faixa.objects.filter(
-               tblVinculada=idTabela).order_by('faixaInicial')
+           listaFaixas=[]
+           faixas = Faixa.objects.filter(tblVinculada=idTabela).order_by('faixaInicial')
+           for faixa in faixas:
+               listaFaixas.append(faixa)
            return faixas
+
+    def readFaixasCalculo(self, idTabela):
+        
+        if Faixa.objects.filter(tblVinculada=idTabela).exists():
+           listaFaixas=[]
+           faixas = Faixa.objects.filter(tblVinculada=idTabela).order_by('faixaInicial')
+           for faixa in faixas:
+               listaFaixas.append(faixa.toDict())
+           return listaFaixas
+        else:
+            return []
+
+        
 
     def readFaixa(self, idFaixa):
         if Faixa.objects.filter(id=idFaixa).exists():

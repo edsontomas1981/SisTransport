@@ -3,6 +3,7 @@ from django.contrib.auth.decorators import login_required
 from django.http import JsonResponse
 from comercial.classes.tabelaFrete import TabelaFrete
 from parceiros.classes.parceiros import Parceiros
+from comercial.classes.tblFaixa import TabelaFaixa
 from Classes.utils import dprint
 import json 
 
@@ -13,8 +14,14 @@ def readTabelasPorParceiro (request):
     elif request.method == "POST" :
         data = json.loads(request.body.decode('utf-8'))
         parceiro=Parceiros()
-        dprint(data['tomador'])
         parceiro.readParceiro(data['tomador'])
         tabelas=TabelaFrete()
-        status,listTabelas=tabelas.get_tabelas_por_parceiro(parceiro.parceiro)
-        return JsonResponse({'status': status,'tabelas':listTabelas}) 
+        status,tabelas=tabelas.get_tabelas_por_parceiro(parceiro.parceiro)
+        listaTabelas=[]
+        for tabela in tabelas:
+            faixas=TabelaFaixa()
+            objTabela={}
+            objTabela=tabela
+            objTabela['faixas']=faixas.readFaixasCalculo(tabela['id'])
+            listaTabelas.append(objTabela)
+        return JsonResponse({'status':status,'tabelas': listaTabelas})
