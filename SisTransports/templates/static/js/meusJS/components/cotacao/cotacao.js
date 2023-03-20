@@ -1,4 +1,5 @@
 var listaTabelas
+var icmsIncluso = document.getElementById("icmsInclusoCotacao");
 
 $('#btnNovaCotacao').on('click', function(e) {
     limpaCotacao()
@@ -30,8 +31,14 @@ Clique em "OK" para calcular o frete.')
     e.preventDefault();
 })
 
+
 const tabelaCotacao = document.getElementById('tabelaCotacao');
 tabelaCotacao.addEventListener('change', (event) => {
+    limpaCamposFreteCotacao();
+    calculoFreteGeral();
+});
+
+const calculoFreteGeral =()=>{
     // Obtenha a opção selecionada
     const tabelaSelecionada = event.target.value;
     if(tabelaSelecionada !=0) {
@@ -53,32 +60,57 @@ tabelaCotacao.addEventListener('change', (event) => {
                     inputPlaceholder: 'Exemplo: 25,99'
                 })
                 if (vlrColeta) {
-                    let calcula = new CalculaFrete(tabela, $('#volumeCotacao').val(), $('#pesoCotacao').val(), $('#valorNfCotacao').val(),
-                        $('#resultM3Cotacao').val());
+                    let calcula = new CalculaFrete(tabela,geraDadosCotacao());
                     calcula.setVlrColeta(vlrColeta)
                     calcula.calculaFrete()
                     $('#aliquotaCotacao').val(calcula.tabela.aliquotaIcms);
                     populaFreteCotacao(calcula.listaFrete)
+                    calcularTotalFrete();
+
                 } else {
-                    let calcula = new CalculaFrete(tabela, $('#volumeCotacao').val(), $('#pesoCotacao').val(), $('#valorNfCotacao').val(),
-                        $('#resultM3Cotacao').val());
+                    let calcula = new CalculaFrete(tabela,geraDadosCotacao());
                     calcula.setVlrColeta(0)
                     calcula.calculaFrete()
                     $('#aliquotaCotacao').val(calcula.tabela.aliquotaIcms);
                     populaFreteCotacao(calcula.listaFrete)
+                    calcularTotalFrete();
+
                 }
             } else if (result.isDenied) {
-                let calcula = new CalculaFrete(tabela, $('#volumeCotacao').val(), $('#pesoCotacao').val(), $('#valorNfCotacao').val(),
-                    $('#resultM3Cotacao').val());
+                let calcula = new CalculaFrete(tabela,geraDadosCotacao());
                 calcula.setVlrColeta(0)
                 calcula.calculaFrete()
                 $('#aliquotaCotacao').val(calcula.tabela.aliquotaIcms);
                 populaFreteCotacao(calcula.listaFrete)
+                calcularTotalFrete();
             }
         })
     }
-});
+}
 
+const calcularTotalFrete=()=>{
+    let freteTotal = 0
+    let vlrIcms
+    let subtotal=0
+    let aliquota=(100-parseFloat($('#aliquotaCotacao').val()))/100;
+    let valores= [$('#fretePesoCotacao').val(),$('#advalorCotacao').val(),$('#vlrColetaCotacao').val(),
+                $('#grisCotacao').val(),$('#pedagioCotacao').val(),$('#despachoCotacao').val(),$('#outrosCotacao').val()]
+
+    for (const valoresKey in valores) {
+        subtotal+= valores[valoresKey] ? parseFloat(valores[valoresKey]) : 0
+    }
+    if (icmsIncluso.checked){
+        freteTotal = subtotal/aliquota
+        vlrIcms=freteTotal-subtotal
+    }else{
+        vlrIcms=(subtotal*parseFloat($('#aliquotaCotacao').val()))/100
+        freteTotal=subtotal
+    }
+    
+    $('#baseCalculoCotacao').val(freteTotal.toFixed(2))
+    $('#freteTotalCotacao').val(freteTotal.toFixed(2))
+    $('#icmsCotacao').val(vlrIcms.toFixed(2))
+}
 
 $('#tipoTabelaCotacao').on('change', function() {
     // Verifica o valor da opção selecionada
@@ -95,7 +127,6 @@ $('#tipoTabelaCotacao').on('change', function() {
       // Executa ação quando nenhuma opção é selecionada
     }
 });
-
 
 
 $('#btnExcluiCotacao').on('click', function(e) {
@@ -130,8 +161,16 @@ function limpaCotacao(){
     $('#pesoFaturadoCotacao').val('')
     $('#resultM3Cotacao').val('')
     $('#obsCotacao').val('')
-    $('#fretePesoCotacao').val('')
+    limpaCamposFreteCotacao();
+    resetaSelectCotacao();
+}
+$('#rotasDtc').on('change',function(e){
+    resetaSelectCotacao()
+})
+
+const limpaCamposFreteCotacao = ()=>{
     $('#freteValorCotacao').val('')
+    $('#fretePesoCotacao').val('')
     $('#advalorCotacao').val('')
     $('#grisCotacao').val('')
     $('#pedagioCotacao').val('')
@@ -140,11 +179,7 @@ function limpaCotacao(){
     $('#baseCalculoCotacao').val('')
     $('#aliquotaCotacao').val('')
     $('#icmsCotacao').val('')
-    resetaSelectCotacao();
 }
-$('#rotasDtc').on('change',function(e){
-    resetaSelectCotacao()
-})
 const resetaSelectCotacao = () => {
     const tipoTabelaCotacao = $('#tipoTabelaCotacao')[0];
     tipoTabelaCotacao.innerHTML = '<option value="0">Selecione o tipo de tabela</option><option value="1">Tabela geral</option><option value="2">Tabela cliente</option><option value="3">Frete informado</option>';
@@ -159,38 +194,24 @@ $('#pills-cotacao-tab').on('focus', function(e) {
 
 const btnCalculaCotacao = document.getElementById('btnCalculaCotacao');
 btnCalculaCotacao.addEventListener('click',async (e)=>{
-   let valores= [$('#fretePesoCotacao').val(),
-    $('#advalorCotacao').val(),
-    $('#vlrColetaCotacao').val(),
-    $('#grisCotacao').val(),
-    $('#pedagioCotacao').val(),
-    $('#despachoCotacao').val(),
-    $('#outrosCotacao').val()]
-    let subtotal=0
-    for (const valoresKey in valores) {
-        subtotal+=parseFloat(valores[valoresKey])
-    }
-    let aliquota=(100-parseFloat($('#aliquotaCotacao').val()))/100;
+    calcularTotalFrete();
+    e.preventDefault();
 
-    let freteTotal = subtotal/aliquota
-    let icms=freteTotal-subtotal
-    $('#baseCalculoCotacao').val(freteTotal.toFixed(2))
-    $('#freteTotalCotacao').val(freteTotal.toFixed(2))
-    $('#icmsCotacao').val(icms.toFixed(2))
 });
 
 const populaFreteCotacao = (listaFrete) => {
-    $('#fretePesoCotacao').val(listaFrete.fretePeso.toFixed(2));
-    $('#advalorCotacao').val(listaFrete.advalor.toFixed(2));
-    $('#vlrColetaCotacao').val(listaFrete.vlrColeta.toFixed(2));
-    $('#grisCotacao').val(listaFrete.gris.toFixed(2));
-    $('#pedagioCotacao').val(listaFrete.vlrPedagio.toFixed(2));
-    $('#despachoCotacao').val(listaFrete.despacho.toFixed(2));
-    $('#outrosCotacao').val(listaFrete.outros.toFixed(2));
-
-
+    $('#fretePesoCotacao').val(listaFrete.fretePeso ? arredondaDuasCasas(listaFrete.fretePeso):arredondaDuasCasas(0));
+    $('#advalorCotacao').val(listaFrete.advalor ? arredondaDuasCasas(listaFrete.advalor) :arredondaDuasCasas(0) );
+    $('#vlrColetaCotacao').val(listaFrete.vlrColeta ? arredondaDuasCasas(listaFrete.vlrColeta):arredondaDuasCasas(0) );
+    $('#grisCotacao').val(listaFrete.gris ? arredondaDuasCasas(listaFrete.gris) : arredondaDuasCasas(0));
+    $('#pedagioCotacao').val(listaFrete.vlrPedagio ? arredondaDuasCasas(listaFrete.vlrPedagio):arredondaDuasCasas(0));
+    $('#despachoCotacao').val(listaFrete.despacho ? arredondaDuasCasas(listaFrete.despacho):arredondaDuasCasas(0));
+    $('#outrosCotacao').val(listaFrete.outros ? arredondaDuasCasas(listaFrete.outros):arredondaDuasCasas(0));
 }
 
+const arredondaDuasCasas=(valor)=>{
+    return parseFloat(valor).toFixed(2)
+}
 
 const carregaTabelasEspecificas=async()=>{
     let conexao = new Conexao('/comercial/readTabelasPorParceiro/', {tomador:$('#cnpjTomador').val()});
@@ -219,12 +240,11 @@ const carregaTabelasGerais=async()=>{
 
 const geraDadosCotacao=()=>{
 return{
-        'qtde':$('#volumeCotacao').val(),
+        'volumes':$('#volumeCotacao').val(),
         'vlrNf':$('#valorNfCotacao').val(),
         'peso':$('#pesoCotacao').val(),
         'm3':$('#resultM3Cotacao').val(),
-        'vlrColeta':$('#vlrColetaCotacao').val(),
-        'tabela':$('#tabelaCotacao').val()
+        'icmsSimNao':icmsIncluso.checked
     }
 };
 
