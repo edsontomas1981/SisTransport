@@ -59,58 +59,31 @@ const calculoFreteGeral =()=>{
                     inputLabel: 'Insira o valor em R$',
                     inputPlaceholder: 'Exemplo: 25,99'
                 })
+
                 if (vlrColeta) {
-                    let calcula = new CalculaFrete(tabela,geraDadosCotacao());
-                    calcula.setVlrColeta(vlrColeta)
-                    calcula.calculaFrete()
-                    $('#aliquotaCotacao').val(calcula.tabela.aliquotaIcms);
-                    populaFreteCotacao(calcula.listaFrete)
-                    calcularTotalFrete();
-
-                } else {
-                    let calcula = new CalculaFrete(tabela,geraDadosCotacao());
-                    calcula.setVlrColeta(0)
-                    calcula.calculaFrete()
-                    $('#aliquotaCotacao').val(calcula.tabela.aliquotaIcms);
-                    populaFreteCotacao(calcula.listaFrete)
-                    calcularTotalFrete();
-
+                    alert(vlrColeta)
+                    calculoCotacao(tabela,vlrColeta)
+                }else{
+                    calculoCotacao(tabela,vlrColeta)
                 }
+
             } else if (result.isDenied) {
-                let calcula = new CalculaFrete(tabela,geraDadosCotacao());
-                calcula.setVlrColeta(0)
-                calcula.calculaFrete()
-                $('#aliquotaCotacao').val(calcula.tabela.aliquotaIcms);
-                populaFreteCotacao(calcula.listaFrete)
-                calcularTotalFrete();
+                calculoCotacao(tabela)
             }
         })
     }
 }
 
-const calcularTotalFrete=()=>{
-    let freteTotal = 0
-    let vlrIcms
-    let subtotal=0
-    let aliquota=(100-parseFloat($('#aliquotaCotacao').val()))/100;
-    let valores= [$('#fretePesoCotacao').val(),$('#advalorCotacao').val(),$('#vlrColetaCotacao').val(),
-                $('#grisCotacao').val(),$('#pedagioCotacao').val(),$('#despachoCotacao').val(),$('#outrosCotacao').val()]
-
-    for (const valoresKey in valores) {
-        subtotal+= valores[valoresKey] ? parseFloat(valores[valoresKey]) : 0
+const calculoCotacao= async (tabela,vlrColeta)=>{
+    let calcula = new CalculaFrete(tabela,geraDadosCotacao());
+    if (vlrColeta){
+        calcula.setVlrColeta(vlrColeta)
     }
-    if (icmsIncluso.checked){
-        freteTotal = subtotal/aliquota
-        vlrIcms=freteTotal-subtotal
-    }else{
-        vlrIcms=(subtotal*parseFloat($('#aliquotaCotacao').val()))/100
-        freteTotal=subtotal
-    }
+    calcula.calculaFrete()
+    populaFreteCotacao(calcula.composicaoFrete)
     
-    $('#baseCalculoCotacao').val(freteTotal.toFixed(2))
-    $('#freteTotalCotacao').val(freteTotal.toFixed(2))
-    $('#icmsCotacao').val(vlrIcms.toFixed(2))
 }
+
 
 $('#tipoTabelaCotacao').on('change', function() {
     // Verifica o valor da opção selecionada
@@ -199,14 +172,19 @@ btnCalculaCotacao.addEventListener('click',async (e)=>{
 
 });
 
-const populaFreteCotacao = (listaFrete) => {
-    $('#fretePesoCotacao').val(listaFrete.fretePeso ? arredondaDuasCasas(listaFrete.fretePeso):arredondaDuasCasas(0));
-    $('#advalorCotacao').val(listaFrete.advalor ? arredondaDuasCasas(listaFrete.advalor) :arredondaDuasCasas(0) );
-    $('#vlrColetaCotacao').val(listaFrete.vlrColeta ? arredondaDuasCasas(listaFrete.vlrColeta):arredondaDuasCasas(0) );
-    $('#grisCotacao').val(listaFrete.gris ? arredondaDuasCasas(listaFrete.gris) : arredondaDuasCasas(0));
-    $('#pedagioCotacao').val(listaFrete.vlrPedagio ? arredondaDuasCasas(listaFrete.vlrPedagio):arredondaDuasCasas(0));
-    $('#despachoCotacao').val(listaFrete.despacho ? arredondaDuasCasas(listaFrete.despacho):arredondaDuasCasas(0));
-    $('#outrosCotacao').val(listaFrete.outros ? arredondaDuasCasas(listaFrete.outros):arredondaDuasCasas(0));
+const populaFreteCotacao = (composicaoFrete) => {
+    $('#fretePesoCotacao').val(composicaoFrete.fretePeso ? arredondaDuasCasas(composicaoFrete.fretePeso):arredondaDuasCasas(0));
+    $('#advalorCotacao').val(composicaoFrete.advalor ? arredondaDuasCasas(composicaoFrete.advalor) :arredondaDuasCasas(0) );
+    $('#vlrColetaCotacao').val(composicaoFrete.vlrColeta ? arredondaDuasCasas(composicaoFrete.vlrColeta):arredondaDuasCasas(0) );
+    $('#grisCotacao').val(composicaoFrete.gris ? arredondaDuasCasas(composicaoFrete.gris) : arredondaDuasCasas(0));
+    $('#pedagioCotacao').val(composicaoFrete.vlrPedagio ? arredondaDuasCasas(composicaoFrete.vlrPedagio):arredondaDuasCasas(0));
+    $('#despachoCotacao').val(composicaoFrete.despacho ? arredondaDuasCasas(composicaoFrete.despacho):arredondaDuasCasas(0));
+    $('#outrosCotacao').val(composicaoFrete.outros ? arredondaDuasCasas(composicaoFrete.outros):arredondaDuasCasas(0));
+    $('#baseCalculoCotacao').val(arredondaDuasCasas(composicaoFrete.baseDeCalculo))
+    $('#freteTotalCotacao').val(arredondaDuasCasas(composicaoFrete.freteTotal))
+    $('#icmsCotacao').val(arredondaDuasCasas(composicaoFrete.icms))
+    $('#aliquotaCotacao').val(composicaoFrete.aliquota);
+    $('#vlrColetaCotacao').val(composicaoFrete.vlrColeta)
 }
 
 const arredondaDuasCasas=(valor)=>{

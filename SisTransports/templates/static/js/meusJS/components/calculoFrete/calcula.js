@@ -6,7 +6,7 @@ class CalculaFrete{
         this.vlrNf=dados['vlrNf']
         this.volumes=dados['volumes']
         this.icmsSimNao=dados['icmsSimNao']
-        this.listaFrete= {}
+        this.composicaoFrete= {}
 
     }
     setPesoCubado=()=>{
@@ -14,7 +14,7 @@ class CalculaFrete{
     }
     setVlrColeta=(vlrColeta)=>{
         this.vlrColeta=vlrColeta
-        this.listaFrete['vlrColeta']=parseFloat(this.vlrColeta)
+        this.composicaoFrete['vlrColeta']=parseFloat(this.vlrColeta)
     }
     calculaPesoACalcular=()=>{
         this.setPesoCubado();
@@ -23,9 +23,9 @@ class CalculaFrete{
     calculaFretePeso=()=>{
         this.calculaPesoACalcular();
         if(this.pesoEstaNaFaixa()){
-            this.listaFrete['fretePeso']=this.vlrFreteFaixa
+            this.composicaoFrete['fretePeso']=this.vlrFreteFaixa
             this.calculaTotal()
-            return this.listaFrete
+            return this.composicaoFrete
         }else{
                 alert('tem faixa mas peso nao esta na faixa')
                 this.calculaAdvalor();
@@ -33,87 +33,89 @@ class CalculaFrete{
                 this.adicionaDespacho();
                 this.adicionaOutros();
                 this.calculaPedagio();
-                this.listaFrete['fretePeso']=this.pesoFaturado*this.tabela.frete
+                this.composicaoFrete['fretePeso']=this.pesoFaturado*this.tabela.frete
                 this.calculaTotal()
-                console.log(this.subTotal)
         }
     }
     calculaFreteValor=()=>{
         this.calculaPesoACalcular();
         if(this.pesoEstaNaFaixa()){
-            this.listaFrete['fretePeso']=this.vlrFreteFaixa
+            this.composicaoFrete['fretePeso']=this.vlrFreteFaixa
             this.calculaTotal()
-            return this.listaFrete
+            return this.composicaoFrete
         }else{
             this.calculaAdvalor();
             this.calculaGris();
             this.adicionaDespacho();
             this.adicionaOutros();
             this.calculaPedagio();
-            this.listaFrete['fretePeso']=(this.vlrNf*this.tabela.frete)/100
+            this.composicaoFrete['fretePeso']=(this.vlrNf*this.tabela.frete)/100
             this.calculaTotal()
-            console.log(this.subTotal)
         }
     }
     calculaFreteVolume= ()=>{
         this.calculaPesoACalcular();
         if(this.pesoEstaNaFaixa()){
-            this.listaFrete['fretePeso']=this.vlrFreteFaixa
+            this.composicaoFrete['fretePeso']=this.vlrFreteFaixa
             this.calculaTotal()
-            return this.listaFrete
+            return this.composicaoFrete
         }else{
             this.calculaAdvalor();
             this.calculaGris();
             this.adicionaDespacho();
             this.adicionaOutros();
             this.calculaPedagio();
-            this.listaFrete['fretePeso']=this.volumes*this.tabela.frete
+            this.composicaoFrete['fretePeso']=this.volumes*this.tabela.frete
             this.calculaTotal()
-            alert(this.freteTotal)
-            alert(this.icms)
+
         }
     }
     calculaTotal=()=>{
         this.aliquotaIcms()
-        this.subTotal=0
-        for (const i in this.listaFrete) {
-            this.subTotal+=this.listaFrete[i]
+        this.composicaoFrete['vlrColeta']=this.vlrColeta ? this.vlrColeta : 0
+        this.subtotal=0
+        for (const i in this.composicaoFrete) {
+            this.subtotal+=parseFloat(this.composicaoFrete[i])
         }
-
         if(this.icmsSimNao){
-
-            this.freteTotal = parseFloat(this.subTotal)/parseFloat(this.aliquota)
-            this.icms=parseFloat(this.freteTotal)-parseFloat(this.subTotal)
+            this.freteTotal = parseFloat(this.subtotal)/parseFloat(this.aliquota)
+            this.icms=parseFloat(this.freteTotal)-parseFloat(this.subtotal)
+            this.baseDeCalculo=this.freteTotal
         }else{
-            this.subTotal = parseFloat(this.subTotal) < parseFloat(this.tabela.freteMinimo) ? parseFloat(this.tabela.freteMinimo) : parseFloat(this.subTotal);
-            this.icms=parseFloat((this.subtotal*parseFloat(this.tabela.aliquotaIcms))/100)
+            this.freteTotal = parseFloat(this.subtotal)
+            this.icms=(this.subtotal*parseFloat(this.tabela.aliquotaIcms))/100
             this.freteTotal=parseFloat(this.subtotal)
+            this.baseDeCalculo=this.freteTotal
         }
+        this.composicaoFrete['baseDeCalculo']=this.baseDeCalculo
+        this.composicaoFrete['freteTotal']=this.freteTotal
+        this.composicaoFrete['icms']=this.icms
+        this.composicaoFrete['aliquota']=this.tabela.aliquotaIcms
     }
 
     calculaAdvalor=()=>{
         let percentual = (this.tabela.adValor/1000)
         let advalor = this.vlrNf*percentual
-        this.listaFrete['advalor']=advalor
+        this.composicaoFrete['advalor']=advalor
     }
 
     calculaGris=()=>{
         let percentual = (this.tabela.gris/100)
         let gris = this.vlrNf*percentual
-        this.listaFrete['gris']=gris
+        this.composicaoFrete['gris']=gris
     }
     adicionaDespacho=()=>{
-        this.listaFrete['despacho']=parseFloat(this.tabela.despacho)
+        this.composicaoFrete['despacho']=parseFloat(this.tabela.despacho)
     }
     adicionaOutros=()=>{
-        this.listaFrete['outros']=parseFloat(this.tabela.outros)
+        this.composicaoFrete['outros']=parseFloat(this.tabela.outros)
     }
     calculaPedagio=()=>{
         let peso =this.calculaPesoPedagio()
         if(this.tabela.tipoPedagio==1) {
-            this.listaFrete['vlrPedagio']=parseFloat(this.tabela.pedagio)
+            this.composicaoFrete['vlrPedagio']=parseFloat(this.tabela.pedagio)
         }else if (this.tabela.tipoPedagio==2){
-            this.listaFrete['vlrPedagio'] = peso * this.tabela.pedagio
+            this.composicaoFrete['vlrPedagio'] = peso * this.tabela.pedagio
         }
     }
     calculaPesoPedagio=()=>{
@@ -145,7 +147,6 @@ class CalculaFrete{
                 this.calculaFreteValor()
                 break
             case 3:
-                alert('frete Unidade')
                 this.calculaFreteVolume()
                 break
             default:
