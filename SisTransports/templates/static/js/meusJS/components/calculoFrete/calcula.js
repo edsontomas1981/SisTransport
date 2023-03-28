@@ -7,7 +7,6 @@ class CalculaFrete{
         this.volumes=dados['volumes']
         this.icmsSimNao=dados['icmsSimNao']
         this.composicaoFrete= {}
-
     }
     setPesoCubado=()=>{
         this.pesoCubado=this.m3 > 0 ?  this.m3*this.tabela.fatorCubagem : 0
@@ -153,6 +152,4 @@ class CalculaFrete{
                 break
         }
     }
-
-
 }

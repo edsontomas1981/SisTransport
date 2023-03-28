@@ -16,6 +16,36 @@ async function createCotacao() {
     }
 }
 
+const bloqueiaFreteCotacao=()=>{
+    $('#freteValorCotacao').attr('disabled',true)
+    $('#fretePesoCotacao').attr('disabled',true)
+    $('#advalorCotacao').attr('disabled',true)
+    $('#grisCotacao').attr('disabled',true)
+    $('#pedagioCotacao').attr('disabled',true)
+    $('#despachoCotacao').attr('disabled',true)
+    $('#outrosCotacao').attr('disabled',true)
+    $('#baseCalculoCotacao').attr('disabled',true)
+    $('#aliquotaCotacao').attr('disabled',true)
+    $('#icmsCotacao').attr('disabled',true)
+    $('#vlrColetaCotacao').attr('disabled',true)
+}
+
+const desbloqueiaFreteCotacao=()=>{
+    $('#freteValorCotacao').attr('disabled',false)
+    $('#fretePesoCotacao').attr('disabled',false)
+    $('#advalorCotacao').attr('disabled',false)
+    $('#grisCotacao').attr('disabled',false)
+    $('#pedagioCotacao').attr('disabled',false)
+    $('#despachoCotacao').attr('disabled',false)
+    $('#outrosCotacao').attr('disabled',false)
+    $('#baseCalculoCotacao').attr('disabled',false)
+    $('#aliquotaCotacao').attr('disabled',false)
+    $('#icmsCotacao').attr('disabled',false)
+    $('#vlrColetaCotacao').attr('disabled',false)
+    $('#tabelaCotacao').val(0)
+
+}
+
 $('#btnSalvaCotacao').on('click', function(e) {
     if ($('#freteTotalCotacao').val()!=0){
         createCotacao();
@@ -39,6 +69,7 @@ tabelaCotacao.addEventListener('change', (event) => {
 });
 
 const calculoFreteGeral =()=>{
+    bloqueiaFreteCotacao();
     // Obtenha a opção selecionada
     const tabelaSelecionada = event.target.value;
     if(tabelaSelecionada !=0) {
@@ -88,18 +119,27 @@ const calculoCotacao= async (tabela,vlrColeta)=>{
 $('#tipoTabelaCotacao').on('change', function() {
     // Verifica o valor da opção selecionada
     var selectedValue = $(this).val();
-   
-    // Executa ação com base no valor selecionado
+       // Executa ação com base no valor selecionado
     if (selectedValue === '1') {
         carregaTabelasGerais()
     } else if (selectedValue === '2') {
         carregaTabelasEspecificas()
       // Executa ação quando a opção "Tabela cliente" é selecionada
     } else {
-        alert(selectedValue)
+        carregaFreteInformado();
       // Executa ação quando nenhuma opção é selecionada
     }
 });
+
+const carregaFreteInformado=()=>{
+    let select = $('#tabelaCotacao');
+    select.empty();
+    select.append($('<option>', {
+        value: 0,
+        text: 'Selecione a tabela'
+    }));
+    desbloqueiaFreteCotacao();
+}
 
 
 $('#btnExcluiCotacao').on('click', function(e) {
@@ -156,7 +196,6 @@ const limpaCamposFreteCotacao = ()=>{
 const resetaSelectCotacao = () => {
     const tipoTabelaCotacao = $('#tipoTabelaCotacao')[0];
     tipoTabelaCotacao.innerHTML = '<option value="0">Selecione o tipo de tabela</option><option value="1">Tabela geral</option><option value="2">Tabela cliente</option><option value="3">Frete informado</option>';
-
     const tabelaCotacao = $('#tabelaCotacao')[0];
     tabelaCotacao.innerHTML =''
     tabelaCotacao.innerHTML = '<option value="0">Selecione a tabela</option>';
@@ -167,9 +206,8 @@ $('#pills-cotacao-tab').on('focus', function(e) {
 
 const btnCalculaCotacao = document.getElementById('btnCalculaCotacao');
 btnCalculaCotacao.addEventListener('click',async (e)=>{
-    calcularTotalFrete();
+    bloqueiaFreteCotacao();
     e.preventDefault();
-
 });
 
 const populaFreteCotacao = (composicaoFrete) => {
