@@ -5,7 +5,7 @@ from faturamento.components.calculaFrete import aplicaIcms, geraPercentualAliquo
 from comercial.classes.geraFrete import CalculaFrete
 from Classes.utils import dpprint, dprint,toFloat
 from comercial.classes.tblFaixa import TabelaFaixa
-
+from datetime import datetime
 
 class Cotacao:
     def __init__(self):
@@ -40,7 +40,6 @@ class Cotacao:
     def criaOuAtualizaCotacao(self, dados):
         try:
             self.cotacao.dtc_fk = dados['dtc_fk'][0]
-            self.cotacao.rota_fk = dados['rota'][0]
             self.cotacao.formaDeCalculo = dados['formaDeCalculo'][0]
             self.cotacao.numNf = dados['numNf'][0]
             self.cotacao.peso = dados['peso'][0]
@@ -50,6 +49,7 @@ class Cotacao:
             self.cotacao.tabela_fk = dados['tabela'][0]
             self.cotacao.pesoCalcular = 0
             self.cotacao.totalFrete = 0
+            self.cotacao.dataHora=datetime.now()
             self.cotacao.save()
             return 200
         except:

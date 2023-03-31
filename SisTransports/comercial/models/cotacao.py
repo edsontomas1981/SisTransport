@@ -39,6 +39,7 @@ class Cotacao(models.Model):
     icmsIncluso = models.BooleanField(default=True)
     nome = models.CharField(max_length=30, null=True)
     contato = models.CharField(max_length=50, null=True)
+    dataHora = models.DateTimeField(null=True)
 
     def toDict(self):
         cotacao = {'id': self.id,

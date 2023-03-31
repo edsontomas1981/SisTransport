@@ -46,11 +46,6 @@ function incluiTabela(response) {
     }
 }
 
-
-
-
-
-
 const tableRotasAnexadas =()=>{
     // Seleciona todas as linhas da tabela
     const linhas = document.querySelectorAll('rotasAnexadasTabela tr');

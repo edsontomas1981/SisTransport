@@ -6,15 +6,7 @@ $('#btnNovaCotacao').on('click', function(e) {
     e.preventDefault();
 })
 
-async function createCotacao() {
-    let conexao = new Conexao('/comercial/cotacao/createCotacao/', {dados: 'meus dados'});
-    try {
-        const result = await conexao.sendPostRequest();
-        console.log(result); // Imprime a resposta JSON da solicitação POST
-    } catch (error) {
-        console.error(error); // Imprime a mensagem de erro
-    }
-}
+
 
 const bloqueiaFreteCotacao=()=>{
     $('#freteValorCotacao').attr('disabled',true)
@@ -24,9 +16,6 @@ const bloqueiaFreteCotacao=()=>{
     $('#pedagioCotacao').attr('disabled',true)
     $('#despachoCotacao').attr('disabled',true)
     $('#outrosCotacao').attr('disabled',true)
-    $('#baseCalculoCotacao').attr('disabled',true)
-    $('#aliquotaCotacao').attr('disabled',true)
-    $('#icmsCotacao').attr('disabled',true)
     $('#vlrColetaCotacao').attr('disabled',true)
 }
 
@@ -38,28 +27,11 @@ const desbloqueiaFreteCotacao=()=>{
     $('#pedagioCotacao').attr('disabled',false)
     $('#despachoCotacao').attr('disabled',false)
     $('#outrosCotacao').attr('disabled',false)
-    $('#baseCalculoCotacao').attr('disabled',false)
-    $('#aliquotaCotacao').attr('disabled',false)
-    $('#icmsCotacao').attr('disabled',false)
     $('#vlrColetaCotacao').attr('disabled',false)
     $('#tabelaCotacao').val(0)
-
 }
 
-$('#btnSalvaCotacao').on('click', function(e) {
-    if ($('#freteTotalCotacao').val()!=0){
-        createCotacao();
-    }else{
-        let calculafrete = confirm('ATENÇÃO! Antes de salvar, calcule o frete para obter o valor correto.\
-Clique em "OK" para calcular o frete.')
-        if (calculafrete){
-            desejaExluir()
-        }else{
-            alert('não calcula')
-        }
-    }        
-    e.preventDefault();
-})
+
 
 
 const tabelaCotacao = document.getElementById('tabelaCotacao');
@@ -68,42 +40,7 @@ tabelaCotacao.addEventListener('change', (event) => {
     calculoFreteGeral();
 });
 
-const calculoFreteGeral =()=>{
-    bloqueiaFreteCotacao();
-    // Obtenha a opção selecionada
-    const tabelaSelecionada = event.target.value;
-    if(tabelaSelecionada !=0) {
-        const valores = Object.values(listaTabelas);
-        const tabelasSelecionadas = valores.find(listaTabelas => listaTabelas.id == tabelaSelecionada);
-        const tabela = tabelasSelecionadas ? tabelasSelecionadas : null;
-        Swal.fire({
-            title: 'Deseja adicionar um valor de coleta?',
-            icon: 'question',
-            showDenyButton: true,
-            confirmButtonText: 'Sim',
-            denyButtonText: 'Não',
-        }).then(async (result) => {
-            /* Read more about isConfirmed, isDenied below */
-            if (result.isConfirmed) {
-                const {value: vlrColeta} = await Swal.fire({
-                    input: 'text',
-                    inputLabel: 'Insira o valor em R$',
-                    inputPlaceholder: 'Exemplo: 25,99'
-                })
 
-                if (vlrColeta) {
-                    alert(vlrColeta)
-                    calculoCotacao(tabela,vlrColeta)
-                }else{
-                    calculoCotacao(tabela,vlrColeta)
-                }
-
-            } else if (result.isDenied) {
-                calculoCotacao(tabela)
-            }
-        })
-    }
-}
 
 const calculoCotacao= async (tabela,vlrColeta)=>{
     let calcula = new CalculaFrete(tabela,geraDadosCotacao());
@@ -112,7 +49,6 @@ const calculoCotacao= async (tabela,vlrColeta)=>{
     }
     calcula.calculaFrete()
     populaFreteCotacao(calcula.composicaoFrete)
-    
 }
 
 
@@ -121,11 +57,13 @@ $('#tipoTabelaCotacao').on('change', function() {
     var selectedValue = $(this).val();
        // Executa ação com base no valor selecionado
     if (selectedValue === '1') {
+        bloqueiaFreteCotacao();
         carregaTabelasGerais()
     } else if (selectedValue === '2') {
         carregaTabelasEspecificas()
       // Executa ação quando a opção "Tabela cliente" é selecionada
     } else {
+        bloqueiaFreteCotacao();
         carregaFreteInformado();
       // Executa ação quando nenhuma opção é selecionada
     }
@@ -161,7 +99,6 @@ const desejaExluir=()=>{
         }
     })
 }
-
 
 function limpaCotacao(){
     $('#nomeCotacao').val('')
@@ -218,16 +155,118 @@ const populaFreteCotacao = (composicaoFrete) => {
     $('#pedagioCotacao').val(composicaoFrete.vlrPedagio ? arredondaDuasCasas(composicaoFrete.vlrPedagio):arredondaDuasCasas(0));
     $('#despachoCotacao').val(composicaoFrete.despacho ? arredondaDuasCasas(composicaoFrete.despacho):arredondaDuasCasas(0));
     $('#outrosCotacao').val(composicaoFrete.outros ? arredondaDuasCasas(composicaoFrete.outros):arredondaDuasCasas(0));
+    $('#vlrColetaCotacao').val(composicaoFrete.vlrColeta)
+}
+
+const calculaIcmsCotacao=()=>{
     $('#baseCalculoCotacao').val(arredondaDuasCasas(composicaoFrete.baseDeCalculo))
     $('#freteTotalCotacao').val(arredondaDuasCasas(composicaoFrete.freteTotal))
     $('#icmsCotacao').val(arredondaDuasCasas(composicaoFrete.icms))
     $('#aliquotaCotacao').val(composicaoFrete.aliquota);
-    $('#vlrColetaCotacao').val(composicaoFrete.vlrColeta)
 }
+
+const recalculaFreteCotacao=()=>{
+    let fretePeso=$('#fretePesoCotacao').val()=="" ? 0:$('#fretePesoCotacao').val();
+    let advalor=$('#advalorCotacao').val()=="" ? 0:$('#advalorCotacao').val()
+    let vlrColeta=$('#vlrColetaCotacao').val()=="" ? 0:$('#vlrColetaCotacao').val()
+    let gris=$('#grisCotacao').val()=="" ? 0:$('#grisCotacao').val()
+    let pedagio=$('#pedagioCotacao').val()=="" ? 0:$('#pedagioCotacao').val()
+    let despacho =$('#despachoCotacao').val()=="" ? 0:$('#despachoCotacao').val()
+    let outros=$('#outrosCotacao').val()=="" ? 0:$('#outrosCotacao').val()
+
+    let valor =parseFloat(fretePeso)+parseFloat(advalor)+parseFloat(vlrColeta)+parseFloat(gris)+parseFloat(pedagio)+parseFloat(despacho)+parseFloat(outros)
+    console.log("fretePeso: ", fretePeso);
+    console.log("advalor: ", advalor);
+    console.log("vlrColeta: ", vlrColeta);
+    console.log("gris: ", gris);
+    console.log("pedagio: ", pedagio);
+    console.log("despacho: ", despacho);
+    console.log("outros: ", outros);
+    return valor
+}
+
+$('.calculoCotacao').on('change',()=>{
+    let valor= recalculaFreteCotacao();
+    console.log(valor)
+})
 
 const arredondaDuasCasas=(valor)=>{
     return parseFloat(valor).toFixed(2)
 }
+
+
+const geraDadosSalvarCotacao=()=>{
+    let postData = $('#formCotacao').serializeArray();
+    let dados = {}
+
+    $.each(postData, function(index, field) {
+        dados[field.name] = field.value;
+    });
+    return dados
+};
+
+// Calcula Cotacao
+
+const calculoFreteGeral =()=>{
+    // Obtenha a opção selecionada
+    const tabelaSelecionada = event.target.value;
+    if(tabelaSelecionada !=0) {
+        const valores = Object.values(listaTabelas);
+        const tabelasSelecionadas = valores.find(listaTabelas => listaTabelas.id == tabelaSelecionada);
+        const tabela = tabelasSelecionadas ? tabelasSelecionadas : null;
+        Swal.fire({
+            title: 'Deseja adicionar um valor de coleta?',
+            icon: 'question',
+            showDenyButton: true,
+            confirmButtonText: 'Sim',
+            denyButtonText: 'Não',
+        }).then(async (result) => {
+            /* Read more about isConfirmed, isDenied below */
+            if (result.isConfirmed) {
+                const {value: vlrColeta} = await Swal.fire({
+                    input: 'text',
+                    inputLabel: 'Insira o valor em R$',
+                    inputPlaceholder: 'Exemplo: 25,99'
+                })
+
+                if (vlrColeta) {
+                    alert(vlrColeta)
+                    calculoCotacao(tabela,vlrColeta)
+                }else{
+                    calculoCotacao(tabela,vlrColeta)
+                }
+
+            } else if (result.isDenied) {
+                calculoCotacao(tabela)
+            }
+        })
+    }
+}
+
+
+// Carrega Tabelas  
+const geraDadosCotacao=()=>{
+    return{
+            'volumes':$('#volumeCotacao').val(),
+            'vlrNf':$('#valorNfCotacao').val(),
+            'peso':$('#pesoCotacao').val(),
+            'm3':$('#resultM3Cotacao').val(),
+            'icmsSimNao':icmsIncluso.checked
+        }
+    };
+
+const carregaTabelasGerais=async()=>{
+    let dados = {'idRota':$('#rotasDtc').val()}
+    let conexao = new Conexao('/comercial/readTabelasGeraisPorRota/', dados);
+    try {
+        const result = await conexao.sendPostRequest();
+        populaSelectTabelas('tabelaCotacao',result)
+        listaTabelas=result.tabelas
+        // console.log(result); // Imprime a resposta JSON da solicitação POST
+    } catch (error) {
+        console.error(error); // Imprime a mensagem de erro
+    }
+}  
 
 const carregaTabelasEspecificas=async()=>{
     let conexao = new Conexao('/comercial/readTabelasPorParceiro/', {tomador:$('#cnpjTomador').val()});
@@ -241,26 +280,21 @@ const carregaTabelasEspecificas=async()=>{
     }
 }
 
-const carregaTabelasGerais=async()=>{
-    let dados = {'idRota':$('#rotasDtc').val()}
-    let conexao = new Conexao('/comercial/readTabelasGeraisPorRota/', dados);
+//salvar Cotação
+
+const salvaCotacao = document.getElementById('btnSalvaCotacao')
+salvaCotacao.addEventListener('click',(e)=>{
+        let dados = geraDadosSalvarCotacao()
+        createCotacao(dados)
+        e.preventDefault
+})
+
+async function createCotacao(dados) {
+    let conexao = new Conexao('/comercial/cotacao/createCotacao/',dados);
     try {
         const result = await conexao.sendPostRequest();
-        populaSelectTabelas('tabelaCotacao',result)
-        listaTabelas=result.tabelas
-        // console.log(result); // Imprime a resposta JSON da solicitação POST
+        console.log(result); // Imprime a resposta JSON da solicitação POST
     } catch (error) {
         console.error(error); // Imprime a mensagem de erro
     }
 }
-
-const geraDadosCotacao=()=>{
-return{
-        'volumes':$('#volumeCotacao').val(),
-        'vlrNf':$('#valorNfCotacao').val(),
-        'peso':$('#pesoCotacao').val(),
-        'm3':$('#resultM3Cotacao').val(),
-        'icmsSimNao':icmsIncluso.checked
-    }
-};
-
