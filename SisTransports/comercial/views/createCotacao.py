@@ -12,5 +12,4 @@ def createCotacao (request):
         return JsonResponse({'status': 200})     
     elif request.method == "POST" :
         data = json.loads(request.body.decode('utf-8'))
-        dprint(data)
         return JsonResponse({'status': 200})         

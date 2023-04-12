@@ -83,7 +83,6 @@ class CalculaFrete{
         }else{
             this.freteTotal = parseFloat(this.subtotal)
             this.icms=(this.subtotal*parseFloat(this.tabela.aliquotaIcms))/100
-            this.freteTotal=parseFloat(this.subtotal)
             this.baseDeCalculo=this.freteTotal
         }
         this.composicaoFrete['baseDeCalculo']=this.baseDeCalculo

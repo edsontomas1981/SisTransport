@@ -49,6 +49,7 @@ const calculoCotacao= async (tabela,vlrColeta)=>{
     }
     calcula.calculaFrete()
     populaFreteCotacao(calcula.composicaoFrete)
+    recalculaFreteCotacao()
 }
 
 
@@ -143,7 +144,8 @@ $('#pills-cotacao-tab').on('focus', function(e) {
 
 const btnCalculaCotacao = document.getElementById('btnCalculaCotacao');
 btnCalculaCotacao.addEventListener('click',async (e)=>{
-    bloqueiaFreteCotacao();
+    alert(2)
+    recalculaFreteCotacao()
     e.preventDefault();
 });
 
@@ -156,34 +158,58 @@ const populaFreteCotacao = (composicaoFrete) => {
     $('#despachoCotacao').val(composicaoFrete.despacho ? arredondaDuasCasas(composicaoFrete.despacho):arredondaDuasCasas(0));
     $('#outrosCotacao').val(composicaoFrete.outros ? arredondaDuasCasas(composicaoFrete.outros):arredondaDuasCasas(0));
     $('#vlrColetaCotacao').val(composicaoFrete.vlrColeta)
+    $('#aliquotaCotacao').val(composicaoFrete.aliquota)
 }
 
-const calculaIcmsCotacao=()=>{
-    $('#baseCalculoCotacao').val(arredondaDuasCasas(composicaoFrete.baseDeCalculo))
-    $('#freteTotalCotacao').val(arredondaDuasCasas(composicaoFrete.freteTotal))
-    $('#icmsCotacao').val(arredondaDuasCasas(composicaoFrete.icms))
-    $('#aliquotaCotacao').val(composicaoFrete.aliquota);
+const calculaIcmsCotacao=(listaValores)=>{
+    let baseDeCalculo
+    let freteTotal=0.00
+    let subTotal=0.00
+    let icms
+    let aliquota = document.getElementById('aliquotaCotacao')
+    
+    for (const valor in listaValores) {
+        console.log(listaValores[valor])
+        subTotal += parseFloat(listaValores[valor])
+    }
+    let icmsInclusoCotacao = document.getElementById('icmsInclusoCotacao')
+
+    console.log($('#icmsInclusoCotacao').val())
+
+    percentuaAliquota=((100-parseFloat(aliquota.value))/100)
+    console.log(percentuaAliquota)
+
+    if (icmsInclusoCotacao.checked){
+        freteTotal = parseFloat(subTotal)/percentuaAliquota
+        icms = parseFloat(freteTotal)-parseFloat(subTotal)
+        baseDeCalculo = freteTotal
+        $('#freteTotalCotacao').val(arredondaDuasCasas(freteTotal));    
+        $('#baseCalculoCotacao').val(arredondaDuasCasas(baseDeCalculo));
+        $('#icmsCotacao').val(arredondaDuasCasas(icms));
+    }else{
+        freteTotal = parseFloat(subTotal)
+        icms=freteTotal-(subTotal*parseFloat(percentuaAliquota))
+        baseDeCalculo=freteTotal
+        $('#freteTotalCotacao').val(arredondaDuasCasas(freteTotal));    
+        $('#baseCalculoCotacao').val(arredondaDuasCasas(baseDeCalculo));
+        $('#icmsCotacao').val(arredondaDuasCasas(icms));        
+    }
 }
 
 const recalculaFreteCotacao=()=>{
-    let fretePeso=$('#fretePesoCotacao').val()=="" ? 0:$('#fretePesoCotacao').val();
-    let advalor=$('#advalorCotacao').val()=="" ? 0:$('#advalorCotacao').val()
-    let vlrColeta=$('#vlrColetaCotacao').val()=="" ? 0:$('#vlrColetaCotacao').val()
-    let gris=$('#grisCotacao').val()=="" ? 0:$('#grisCotacao').val()
-    let pedagio=$('#pedagioCotacao').val()=="" ? 0:$('#pedagioCotacao').val()
-    let despacho =$('#despachoCotacao').val()=="" ? 0:$('#despachoCotacao').val()
-    let outros=$('#outrosCotacao').val()=="" ? 0:$('#outrosCotacao').val()
+    let listaValores=[]
+    listaValores.push($('#fretePesoCotacao').val()=="" ? 0:$('#fretePesoCotacao').val())
+    listaValores.push($('#advalorCotacao').val()=="" ? 0:$('#advalorCotacao').val())
+    listaValores.push($('#vlrColetaCotacao').val()=="" ? 0:$('#vlrColetaCotacao').val())
+    listaValores.push($('#grisCotacao').val()=="" ? 0:$('#grisCotacao').val())
+    listaValores.push($('#pedagioCotacao').val()=="" ? 0:$('#pedagioCotacao').val())
+    listaValores.push($('#despachoCotacao').val()=="" ? 0:$('#despachoCotacao').val())
+    listaValores.push($('#outrosCotacao').val()=="" ? 0:$('#outrosCotacao').val())
+    calculaIcmsCotacao(listaValores)
 
-    let valor =parseFloat(fretePeso)+parseFloat(advalor)+parseFloat(vlrColeta)+parseFloat(gris)+parseFloat(pedagio)+parseFloat(despacho)+parseFloat(outros)
-    console.log("fretePeso: ", fretePeso);
-    console.log("advalor: ", advalor);
-    console.log("vlrColeta: ", vlrColeta);
-    console.log("gris: ", gris);
-    console.log("pedagio: ", pedagio);
-    console.log("despacho: ", despacho);
-    console.log("outros: ", outros);
-    return valor
 }
+
+
 
 $('.calculoCotacao').on('change',()=>{
     let valor= recalculaFreteCotacao();
