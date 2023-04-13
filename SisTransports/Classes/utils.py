@@ -11,13 +11,18 @@ def checaCampos(request, **kwargs):
             camposVazios.append(nomeCampo)
     return camposVazios
 
+# def checaCamposJson(json, **kwargs):
+#     campos_vazios = [nome_amigavel for campo, nome_amigavel in kwargs.items() if not json.get(campo)]
+#     if campos_vazios:
+#         mensagem = "Os seguintes campos estão vazios: {}".format(", ".join(campos_vazios))
+#         raise ValueError(mensagem)
+#     return campos_vazios
+
 def checaCamposJson(json,**kwargs):
-    listaDeCamposVazios=[]
-    # key == nome do campo,value == nome amigavel para retorno e informação
-    # para usuário de que oi campo esta vazio
-    for key,value in kwargs.items():
-        if json[key]=='':
-            listaDeCamposVazios.append(value)
+    # deve ser enviados kwargs com chaves e valores identificando quais 
+    # campos sao obrigatorios e quais o nomes para apresenta-los ao usuario 
+    # ex nomeContato="Nome do contato"
+    listaDeCamposVazios = [nome_apresenta for campo, nome_apresenta in kwargs.items() if json.get(campo) == '']
     return listaDeCamposVazios
     
 def checaCamposGeral(request, **kwargs):
@@ -25,7 +30,6 @@ def checaCamposGeral(request, **kwargs):
     for nomeCampo, value in kwargs.items():
         if testaCampos(request[nomeCampo][0], nomeCampo,regrasValidacao={nomeCampo: value}):
             camposInvalidos.append(nomeCampo)
-
     return camposInvalidos
 
 def testaCampos(dado, tipo_dado):
@@ -39,7 +43,6 @@ def testaCampos(dado, tipo_dado):
         return True
     else:
         return "Tipo de dado inválido"
-                   
 
 def verificaCamposObrigatorios(request):
     camposObrigatorios = []

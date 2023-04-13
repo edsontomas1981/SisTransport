@@ -1,1 +1,0 @@
-alert('5-salvarCotacao')

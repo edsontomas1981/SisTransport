@@ -35,7 +35,6 @@ class Conexao {
 }
 
 
-
 function conectaBackEnd(dados, callback,...idComponente) {
     let url = dados.url
     let postData = $('form').serialize();
