@@ -7,7 +7,6 @@ $('#btnNovaCotacao').on('click', function(e) {
 })
 
 
-
 const bloqueiaFreteCotacao=()=>{
     $('#freteValorCotacao').attr('disabled',true)
     $('#fretePesoCotacao').attr('disabled',true)
@@ -18,6 +17,7 @@ const bloqueiaFreteCotacao=()=>{
     $('#outrosCotacao').attr('disabled',true)
     $('#vlrColetaCotacao').attr('disabled',true)
 }
+
 
 const desbloqueiaFreteCotacao=()=>{
     $('#freteValorCotacao').attr('disabled',false)
@@ -32,14 +32,11 @@ const desbloqueiaFreteCotacao=()=>{
 }
 
 
-
-
 const tabelaCotacao = document.getElementById('tabelaCotacao');
 tabelaCotacao.addEventListener('change', (event) => {
     limpaCamposFreteCotacao();
     calculoFreteGeral();
 });
-
 
 
 const calculoCotacao= async (tabela,vlrColeta)=>{
@@ -70,6 +67,7 @@ $('#tipoTabelaCotacao').on('change', function() {
     }
 });
 
+
 const carregaFreteInformado=()=>{
     let select = $('#tabelaCotacao');
     select.empty();
@@ -86,6 +84,7 @@ $('#btnExcluiCotacao').on('click', function(e) {
     e.preventDefault();
 })
 
+
 const desejaExluir=()=>{
     Swal.fire({
         title: 'Tem certeza de que deseja apagar a cotação? Essa ação não pode ser desfeita e todos os dados relacionados serão perdidos.\n' +
@@ -101,6 +100,7 @@ const desejaExluir=()=>{
     })
 }
 
+
 function limpaCotacao(){
     $('#nomeCotacao').val('')
     $('#contatoCotacao').val('')
@@ -115,9 +115,12 @@ function limpaCotacao(){
     limpaCamposFreteCotacao();
     resetaSelectCotacao();
 }
+
+
 $('#rotasDtc').on('change',function(e){
     resetaSelectCotacao()
 })
+
 
 const limpaCamposFreteCotacao = ()=>{
     $('#freteValorCotacao').val('')
@@ -131,6 +134,8 @@ const limpaCamposFreteCotacao = ()=>{
     $('#aliquotaCotacao').val('')
     $('#icmsCotacao').val('')
 }
+
+
 const resetaSelectCotacao = () => {
     const tipoTabelaCotacao = $('#tipoTabelaCotacao')[0];
     tipoTabelaCotacao.innerHTML = '<option value="0">Selecione o tipo de tabela</option><option value="1">Tabela geral</option><option value="2">Tabela cliente</option><option value="3">Frete informado</option>';
@@ -138,9 +143,12 @@ const resetaSelectCotacao = () => {
     tabelaCotacao.innerHTML =''
     tabelaCotacao.innerHTML = '<option value="0">Selecione a tabela</option>';
 };
+
+
 $('#pills-cotacao-tab').on('focus', function(e) {
     resetaSelectCotacao()
 });
+
 
 const btnCalculaCotacao = document.getElementById('btnCalculaCotacao');
 btnCalculaCotacao.addEventListener('click',async (e)=>{
@@ -148,6 +156,7 @@ btnCalculaCotacao.addEventListener('click',async (e)=>{
     recalculaFreteCotacao()
     e.preventDefault();
 });
+
 
 const populaFreteCotacao = (composicaoFrete) => {
     $('#fretePesoCotacao').val(composicaoFrete.fretePeso ? arredondaDuasCasas(composicaoFrete.fretePeso):arredondaDuasCasas(0));
@@ -161,6 +170,7 @@ const populaFreteCotacao = (composicaoFrete) => {
     $('#aliquotaCotacao').val(composicaoFrete.aliquota)
 }
 
+
 const calculaIcmsCotacao=(listaValores)=>{
     let baseDeCalculo
     let freteTotal=0.00
@@ -173,8 +183,6 @@ const calculaIcmsCotacao=(listaValores)=>{
         subTotal += parseFloat(listaValores[valor])
     }
     let icmsInclusoCotacao = document.getElementById('icmsInclusoCotacao')
-
-    console.log($('#icmsInclusoCotacao').val())
 
     percentuaAliquota=((100-parseFloat(aliquota.value))/100)
     console.log(percentuaAliquota)
@@ -206,15 +214,14 @@ const recalculaFreteCotacao=()=>{
     listaValores.push($('#despachoCotacao').val()=="" ? 0:$('#despachoCotacao').val())
     listaValores.push($('#outrosCotacao').val()=="" ? 0:$('#outrosCotacao').val())
     calculaIcmsCotacao(listaValores)
-
 }
-
 
 
 $('.calculoCotacao').on('change',()=>{
     let valor= recalculaFreteCotacao();
     console.log(valor)
 })
+
 
 const arredondaDuasCasas=(valor)=>{
     return parseFloat(valor).toFixed(2)
@@ -231,8 +238,8 @@ const geraDadosSalvarCotacao=()=>{
     return dados
 };
 
-// Calcula Cotacao
 
+// Calcula Cotacao
 const calculoFreteGeral =()=>{
     // Obtenha a opção selecionada
     const tabelaSelecionada = event.target.value;
@@ -281,6 +288,7 @@ const geraDadosCotacao=()=>{
         }
     };
 
+
 const carregaTabelasGerais=async()=>{
     let dados = {'idRota':$('#rotasDtc').val()}
     let conexao = new Conexao('/comercial/readTabelasGeraisPorRota/', dados);
@@ -294,6 +302,7 @@ const carregaTabelasGerais=async()=>{
     }
 }  
 
+
 const carregaTabelasEspecificas=async()=>{
     let conexao = new Conexao('/comercial/readTabelasPorParceiro/', {tomador:$('#cnpjTomador').val()});
     try {
@@ -306,14 +315,15 @@ const carregaTabelasEspecificas=async()=>{
     }
 }
 
-//salvar Cotação
 
+//salvar Cotação
 const salvaCotacao = document.getElementById('btnSalvaCotacao')
 salvaCotacao.addEventListener('click',(e)=>{
         let dados = geraDadosSalvarCotacao()
         createCotacao(dados)
         e.preventDefault
 })
+
 
 async function createCotacao(dados) {
     let conexao = new Conexao('/comercial/cotacao/createCotacao/',dados);
