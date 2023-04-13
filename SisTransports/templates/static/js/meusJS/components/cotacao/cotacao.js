@@ -1,5 +1,5 @@
 var listaTabelas
-var icmsIncluso = document.getElementById("icmsInclusoCotacao");
+// var icmsIncluso = document.getElementById("icmsInclusoCotacao");
 
 $('#btnNovaCotacao').on('click', function(e) {
     limpaCotacao()
@@ -176,13 +176,13 @@ const calculaIcmsCotacao=(listaValores)=>{
     let freteTotal=0.00
     let subTotal=0.00
     let icms
+    let icmsInclusoCotacao = document.getElementById('icmsInclusoCotacao')
     let aliquota = document.getElementById('aliquotaCotacao')
     
     for (const valor in listaValores) {
         console.log(listaValores[valor])
         subTotal += parseFloat(listaValores[valor])
     }
-    let icmsInclusoCotacao = document.getElementById('icmsInclusoCotacao')
 
     percentuaAliquota=((100-parseFloat(aliquota.value))/100)
     console.log(percentuaAliquota)
