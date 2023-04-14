@@ -134,12 +134,18 @@ $('#rotasDtc').on('change',function(e){
     resetaSelectCotacao()
 })
 
-const checkCamposVazios=()=>{
-    let formulario = document.getElementById('formCotacao')
-    let campos= formulario.querySelectorAll('campoObrigatorio')
-    return campos
-}
-
+const checkCamposVazios = (idForm,idCposObrigatorios) => {
+    let formulario = document.getElementById(idForm);
+    let campos = formulario.querySelectorAll(idCposObrigatorios);
+    let campoVazios = []
+    for (let i = 0; i < campos.length; i++) {
+      if (campos[i].value.trim() === '') {
+        campoVazios.push(campos[i].placeholder)
+      }
+    }
+    return campoVazios;
+  };
+  
 
 
 

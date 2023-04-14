@@ -203,3 +203,14 @@ function validateCNPJ(cnpj) {
   return true;
 }
 
+const geraMensagemCamposFaltando=(campos)=>{
+  let msgInicial = 'Os campos '
+  let camposFaltando = ''
+  for (let i = 0; i < campos.length; i++) {
+    eOuVirgula = campos.length == i + 2 ? " e " :
+        campos.length == i + 1 ? '' : ', ';
+    camposFaltando += campos[i] + eOuVirgula
+  }
+ msgInicial += camposFaltando + ' precisam ser preenchidos.'
+ return msgInicial
+}

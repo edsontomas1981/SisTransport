@@ -62,7 +62,6 @@ const carregaFreteInformado=()=>{
 
 const btnCalculaCotacao = document.getElementById('btnCalculaCotacao');
 btnCalculaCotacao.addEventListener('click',async (e)=>{
-    alert(2)
     recalculaFreteCotacao()
     e.preventDefault();
 });
