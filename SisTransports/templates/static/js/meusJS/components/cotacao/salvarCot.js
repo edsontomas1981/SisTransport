@@ -10,17 +10,21 @@ async function createCotacao(dados) {
 
 const salvaCotacao = document.getElementById('btnSalvaCotacao')
 salvaCotacao.addEventListener('click',(e)=>{
+        let camposVazios = checkCamposVazios()
+        console.log(camposVazios)
+        if (camposVazios.length>0){
+            alert('cpos')
+
+        }
         let dados = geraDadosSalvarCotacao()
         createCotacao(dados)
         e.preventDefault
 })
 
 const geraDadosSalvarCotacao=()=>{
-    let postData = $('#formCotacao').serializeArray();
     let dados = {}
-
-    $.each(postData, function(index, field) {
-        dados[field.name] = field.value;
+    $('#formCotacao :input').each(function() {
+        dados[$(this).attr('name')] = $(this).val();
     });
     return dados
 };

@@ -134,6 +134,11 @@ $('#rotasDtc').on('change',function(e){
     resetaSelectCotacao()
 })
 
+const checkCamposVazios=()=>{
+    let formulario = document.getElementById('formCotacao')
+    let campos= formulario.querySelectorAll('campoObrigatorio')
+    return campos
+}
 
 
 

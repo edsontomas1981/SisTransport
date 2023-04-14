@@ -1,7 +1,6 @@
 <form method="POST" class="mt-0" id="formCotacao">{% csrf_token %}
 <input type="hidden" name="idCotacao" id="idCotacao">
     <div class="row">
-      
         <div class="input-group col-3 pr-4 pt-2 justify-content-end">
             <button class="btn btn-secondary btn-rounded form-control-sm" 
             data-toggle="tooltip" data-placement="top" title="Novo" id="btnNovaCotacao">
@@ -19,187 +18,186 @@
                 <i class="ti-trash"></i>
             </button>    
         </div> 
-<div class="row mt-3 pl-3" >
-    <div class="form-group col-6 mb-0 mt-0">
-        <div class="form-group row mb-1">
-            <p class="text-primary">Dados Gerais</p>
-            <div class="col-sm-7 mb-1 form-group form-floating pl-1 pr-1">
-                <input type="text" class="form-control form-control-sm " 
-                    placeholder="Nome" name="nomeCotacao" id="nomeCotacao">
-                <label class="text-secondary" for="nomeCotacao">Nome do solicitante:</label>
+        <div class="row mt-3 pl-3" >
+            <div class="form-group col-6 mb-0 mt-0">
+                <div class="form-group row mb-1">
+                    <p class="text-primary">Dados Gerais</p>
+                    <div class="col-sm-7 mb-1 form-group form-floating pl-1 pr-1">
+                        <input type="text" class="form-control form-control-sm " 
+                            placeholder="Nome" name="nomeCotacao" id="nomeCotacao">
+                        <label class="text-secondary" for="nomeCotacao">Nome do solicitante:</label>
 
-            </div>
-            <div class="col-sm-5 mb-0 pr-1 pl-0 form-group form-floating">
-                <input type="text" class="form-control form-control-sm" 
-                placeholder="Contato" name="contatoCotacao" id="contatoCotacao">
-                <label class="text-secondary" for="contatoCotacao">Contato do solicitante:</label>
+                    </div>
+                    <div class="col-sm-5 mb-0 pr-1 pl-0 form-group form-floating">
+                        <input type="text" class="form-control form-control-sm" 
+                        placeholder="Contato" name="contatoCotacao" id="contatoCotacao">
+                        <label class="text-secondary" for="contatoCotacao">Contato do solicitante:</label>
+                    </div> 
+                    <div class="col-sm-3 mb-0 pr-1 pl-1 form-group form-floating">
+                        <input type="text" class="form-control form-control-sm " 
+                        placeholder="Nº Nota Fiscal" name="nfCotacao" id="nfCotacao">
+                        <label class="text-secondary" for="nfCotacao">Nº Nota Fiscal:</label>
+
+                    </div>            
+                    <div class="col-sm-3 mb-0 pr-1 pl-1 form-group form-floating">
+                        <input type="text" class="form-control form-control-sm" 
+                        placeholder="Volumes" name="volumeCotacao" id="volumeCotacao" value="5">
+                        <label class="text-secondary" for="volumeCotacao">Volumes:</label>
+
+                    </div>
+
+                    <div class="col-sm-3 mb-0 pr-1 pl-1 form-group form-floating">
+                        <input type="text" class="form-control form-control-sm" 
+                        placeholder="Mercadoria" name="mercadoriaCotacao" id="mercadoriaCotacao">
+                        <label class="text-secondary" for="mercadoriaCotacao">Tipo Mercadoria:</label>
+
+                    </div>             
+                    <div class="col-sm-3 mb-0 pr-1 pl-1 form-group form-floating">
+                        <input type="text" class="form-control form-control-sm" 
+                        placeholder="Valor R$" name="valorNfCotacao" id="valorNfCotacao" value="1500.00">
+                        <label class="text-secondary" for="valorNfCotacao">Valor Nf:</label>
+                    </div> 
+
+                    <div class="col-sm-3 mt-1 mb-0 pr-1 pl-1 form-group form-floating">
+                        <input type="text" class="form-control  form-control-sm " 
+                        placeholder="Peso" id="pesoCotacao" name="pesoCotacao" value="30">
+                        <label class="text-secondary" for="pesoCotacao">Peso real:</label>
+                    </div> 
+
+                    <div class="col-sm-3 mb-1 mt-1 form-group form-floating pl-1 pr-1">
+                        <input type="text" class="form-control form-control-sm" 
+                        placeholder="Peso Faturado" name="pesoFaturadoCotacao" id="pesoFaturadoCotacao">
+                        <label class="text-secondary" for="pesoFaturadoCotacao">Peso Faturado:</label>
+                    </div>
+                    <div class="col-sm-3 mb-1 mt-1 form-group form-floating pl-1 pr-1">
+                        <input type="text" class="form-control form-control-sm" 
+                        placeholder="M³" name="resultM3Cotacao" id="resultM3Cotacao">
+                        <label class="text-secondary" for="resultM3Cotacao">M³:</label>
+                    </div>
+                    <div class="col-sm-3 mb-1 mt-1 form-group form-floating pl-0 pr-1 " align="right">
+                        <button type="button" class="btn btn-secondary btn-icon-text btn-lg" id="btnM3" >
+                            M³
+                        </button>
+                    </div>
+
+                    <div class="col-sm-12 form-group form-floating mb-0 mt-0 pl-1 pr-1">
+                        <input type="text" class="form-control form-control-sm" 
+                        placeholder="Peso Faturado" name="obsCotacao" id="obsCotacao">
+                        <label class="text-secondary" for="obsCotacao"> Observações:</label>
+                    </div>                        
+                </div>
             </div> 
-            <div class="col-sm-3 mb-0 pr-1 pl-1 form-group form-floating">
-                <input type="text" class="form-control form-control-sm " 
-                placeholder="Nº Nota Fiscal" name="nfCotacao" id="nfCotacao">
-                <label class="text-secondary" for="nfCotacao">Nº Nota Fiscal:</label>
+            <div class="form-group col-6 mb-0 mt-0">
+                <p class="text-primary">Cálculo do Frete</p>
+                <div class="row">
+                    <div class="form-floating col-4 pr-1 pl-1">
+                        <select type="text" name="tipoTabelaCotacao" id="tipoTabelaCotacao" class="form-control-sm form-select">
+                            <option value="0">Selecione o tipo de tabela</option>
+                            <option value="1">Tabela geral</option>
+                            <option value="2">Tabela cliente</option>
+                            <option value="3">Frete informado</option>
+                        </select>   
+                        <label for="tipoTabelaCotacao">Tipo Tabela</label>
+                    </div>        
+                    <div class="form-floating col-4 pr-1 pl-1">
+                        <select type="text" name="tabelaCotacao" id="tabelaCotacao" class="form-control-sm form-select">
+                            <option value="0">Selecione a tabela</option>
+                        </select>
+                        <label for="tabelaCotacao">Tabela:</label>
+                    </div> 
+                    <div class="form-check form-check-primary col-3 pl-3 pr-0 mt-4">
+                        <label class="form-check-label">
+                        <input type="checkbox" class="form-check-input calculoCotacao campoObrigatorio" checked="" id="icmsInclusoCotacao" name="icmsInclusoCotacao">
+                        Icms incluso ?
+                        <i class="input-helper"></i></label>
+                    </div>             
+                </div>
+                <div class="form-group row mb-1">
+                    <div class="col-sm-4 mb-1 form-group pr-1 pl-1 form-floating">
+                        <input type="text" class="form-control form-control-sm calculoCotacao" 
+                            placeholder="Frete Peso" name="fretePesoCotacao" id="fretePesoCotacao" disabled>
+                        <label class="text-secondary" for="fretePesoCotacao">Frete:</label>
+                    </div>
+                    <div class="col-sm-4 mb-1 pl-0 pr-1 form-group form-floating ">
+                        <input type="text" class="form-control form-control-sm calculoCotacao campoObrigatorio " 
+                        placeholder="Advalor" name="advalorCotacao" id="advalorCotacao" disabled>
+                        <label class="text-secondary"for="advalorCotacao">Advalor:</label>                
+                    </div> 
+                    <div class="col-sm-4 mb-1 pl-0 pr-1 form-group form-floating">
+                        <input type="text" class="form-control form-control-sm calculoCotacao" 
+                        placeholder="Vlr Coleta" name="vlrColetaCotacao" id="vlrColetaCotacao" disabled> 
+                        <label class="text-secondary"for="vlrColetaCotacao">Valor Coleta:</label>                
+                    </div>                        
+                    <div class="col-sm-3 mb-1 pr-1 pl-1 form-group form-floating" >
+                        <input type="text" class="form-control form-control-sm calculoCotacao" 
+                        placeholder="Gris" name="grisCotacao" id="grisCotacao" disabled>
+                        <label class="text-secondary" for="grisCotacao">Gris:</label>
+                    </div>
+                    <div class="col-sm-3 mb-1 pr-1 pl-0 form-group form-floating">
+                        <input type="text" class="form-control  form-control-sm  calculoCotacao" 
+                        placeholder="Pedágio" id="pedagioCotacao" name="pedagioCotacao" disabled>
+                        <label class="text-secondary"for="pedagioCotacao">Pedágio:</label>
+                    </div>              
+                    <div class="col-sm-3 mb-1 pl-0 pr-1 form-group form-floating">
+                        <input type="text" class="form-control  form-control-sm calculoCotacao " 
+                        placeholder="Despacho" id="despachoCotacao" name="despachoCotacao" disabled>
+                        <label class="text-secondary"for="despachoCotacao">Despacho:</label>                
+                    </div>                                
+                    <div class="col-sm-3 mb-1 pl-0 pr-1 form-group form-floating ">
+                        <input type="text" class="form-control  form-control-sm calculoCotacao" 
+                        placeholder="Outros" id="outrosCotacao" name="outrosCotacao" disabled>
+                        <label class="text-secondary"for="outrosCotacao">Outros:</label>
+                    </div> 
+                    <div class="col-sm-3 mb-0 pr-1 pl-1 form-group form-floating ">
+                        <input type="text" class="form-control form-control-sm"  
+                        placeholder="Gris" name="baseCalculoCotacao" id="baseCalculoCotacao" disabled>
+                        <label class="text-secondary" for="baseCalculoCotacao">Base de Cálculo:</label>
+                    </div>
+                    <div class="col-sm-3 mb-1 pr-1 pl-0 form-group form-floating">
+                        <input type="text" class="form-control  form-control-sm" 
+                        placeholder="Pedágio" id="aliquotaCotacao" name="aliquotaCotacao" disabled>
+                        <label class="text-secondary"for="aliquotaCotacao">Alíquota:</label>
+                    </div>              
+                    <div class="col-sm-3 mb-1 pl-0 pr-1 form-group form-floating">
+                        <input type="text" class="form-control  form-control-sm " 
+                        placeholder="Despacho" id="icmsCotacao" name="icmsCotacao" disabled>
+                        <label class="text-secondary h1"for="icmsCotacao">Icms R$:</label>                
+                    </div>                                
+                    <div class="col-sm-3 mb-1 pl-0 pr-1 form-group form-floating ">
+                        <input type="text" class="form-control form-control-sm bg-primary text-capitalize text-danger h1" 
+                        placeholder="Outros" id="freteTotalCotacao" name="freteTotalCotacao" value=0.0 disabled>
+                        <label class="text-secondary"for="freteTotalCotacao">Total Frete :</label>
+                    </div>  
 
-            </div>            
-            <div class="col-sm-3 mb-0 pr-1 pl-1 form-group form-floating">
-                <input type="text" class="form-control form-control-sm" 
-                placeholder="Volumes" name="volumeCotacao" id="volumeCotacao" value="5">
-                <label class="text-secondary" for="volumeCotacao">Volumes:</label>
+                    <div class="col-sm-3 mb-0 mt-1 form-group form-floating pl-1 pr-1">
+                        <button type="button" class="btn btn-warning btn-icon-text" id="btnCalculaCotacao">
+                                <i class="ti-credit-card btn-icon-prepend"></i>
+                                        Calcular
+                        </button>
+                    </div>
+                    <div class="col-sm-3 mb-1 mt-1 form-group pl-1 pr-1">
+                        <button type="button" class="btn btn-info btn-icon-text">
+                        <i class="ti-printer btn-icon-prepend"></i>           
+                                Imprimir
+                        </button>  
+                    </div>
 
-            </div>
-
-            <div class="col-sm-3 mb-0 pr-1 pl-1 form-group form-floating">
-                <input type="text" class="form-control form-control-sm" 
-                placeholder="Mercadoria" name="mercadoriaCotacao" id="mercadoriaCotacao">
-                <label class="text-secondary" for="mercadoriaCotacao">Tipo Mercadoria:</label>
-
-            </div>             
-            <div class="col-sm-3 mb-0 pr-1 pl-1 form-group form-floating">
-                <input type="text" class="form-control form-control-sm" 
-                placeholder="Valor R$" name="valorNfCotacao" id="valorNfCotacao" value="1500.00">
-                <label class="text-secondary" for="valorNfCotacao">Valor Nf:</label>
-            </div> 
-
-            <div class="col-sm-3 mt-1 mb-0 pr-1 pl-1 form-group form-floating">
-                <input type="text" class="form-control  form-control-sm " 
-                placeholder="Peso" id="pesoCotacao" name="pesoCotacao" value="30">
-                <label class="text-secondary" for="pesoCotacao">Peso real:</label>
-            </div> 
-
-            <div class="col-sm-3 mb-1 mt-1 form-group form-floating pl-1 pr-1">
-                <input type="text" class="form-control form-control-sm" 
-                placeholder="Peso Faturado" name="pesoFaturadoCotacao" id="pesoFaturadoCotacao">
-                <label class="text-secondary" for="pesoFaturadoCotacao">Peso Faturado:</label>
-            </div>
-            <div class="col-sm-3 mb-1 mt-1 form-group form-floating pl-1 pr-1">
-                <input type="text" class="form-control form-control-sm" 
-                placeholder="M³" name="resultM3Cotacao" id="resultM3Cotacao">
-                <label class="text-secondary" for="resultM3Cotacao">M³:</label>
-            </div>
-            <div class="col-sm-3 mb-1 mt-1 form-group form-floating pl-0 pr-1 " align="right">
-                <button type="button" class="btn btn-secondary btn-icon-text btn-lg" id="btnM3" >
-                    M³
-                </button>
-            </div>
-
-            <div class="col-sm-12 form-group form-floating mb-0 mt-0 pl-1 pr-1">
-                <input type="text" class="form-control form-control-sm" 
-                placeholder="Peso Faturado" name="obsCotacao" id="obsCotacao">
-                <label class="text-secondary" for="obsCotacao"> Observações:</label>
-            </div>                        
-        </div>
-    </div> 
-    <div class="form-group col-6 mb-0 mt-0">
-        <p class="text-primary">Cálculo do Frete</p>
-        <div class="row">
-            <div class="form-floating col-4 pr-1 pl-1">
-                <select type="text" name="tipoTabelaCotacao" id="tipoTabelaCotacao" class="form-control-sm form-select">
-                    <option value="0">Selecione o tipo de tabela</option>
-                    <option value="1">Tabela geral</option>
-                    <option value="2">Tabela cliente</option>
-                    <option value="3">Frete informado</option>
-                </select>   
-                <label for="tipoTabelaCotacao">Tipo Tabela</label>
-            </div>        
-            <div class="form-floating col-4 pr-1 pl-1">
-                <select type="text" name="tabelaCotacao" id="tabelaCotacao" class="form-control-sm form-select">
-                    <option value="0">Selecione a tabela</option>
-                </select>
-                <label for="tabelaCotacao">Tabela:</label>
-            </div> 
-            <div class="form-check form-check-primary col-3 pl-3 pr-0 mt-4">
-                <label class="form-check-label">
-                  <input type="checkbox" class="form-check-input calculoCotacao" checked="" id="icmsInclusoCotacao" name="icmsInclusoCotacao">
-                  Icms incluso ?
-                <i class="input-helper"></i></label>
-            </div>             
-
-        </div>
-        <div class="form-group row mb-1">
-            <div class="col-sm-4 mb-1 form-group pr-1 pl-1 form-floating">
-                <input type="text" class="form-control form-control-sm calculoCotacao" 
-                    placeholder="Frete Peso" name="fretePesoCotacao" id="fretePesoCotacao" disabled>
-                <label class="text-secondary" for="fretePesoCotacao">Frete:</label>
-            </div>
-            <div class="col-sm-4 mb-1 pl-0 pr-1 form-group form-floating ">
-                <input type="text" class="form-control form-control-sm calculoCotacao " 
-                placeholder="Advalor" name="advalorCotacao" id="advalorCotacao" disabled>
-                <label class="text-secondary"for="advalorCotacao">Advalor:</label>                
-            </div> 
-            <div class="col-sm-4 mb-1 pl-0 pr-1 form-group form-floating">
-                <input type="text" class="form-control form-control-sm calculoCotacao" 
-                placeholder="Vlr Coleta" name="vlrColetaCotacao" id="vlrColetaCotacao" disabled> 
-                <label class="text-secondary"for="vlrColetaCotacao">Valor Coleta:</label>                
-            </div>                        
-            <div class="col-sm-3 mb-1 pr-1 pl-1 form-group form-floating" >
-                <input type="text" class="form-control form-control-sm calculoCotacao" 
-                placeholder="Gris" name="grisCotacao" id="grisCotacao" disabled>
-                <label class="text-secondary" for="grisCotacao">Gris:</label>
-            </div>
-            <div class="col-sm-3 mb-1 pr-1 pl-0 form-group form-floating">
-                <input type="text" class="form-control  form-control-sm  calculoCotacao" 
-                placeholder="Pedágio" id="pedagioCotacao" name="pedagioCotacao" disabled>
-                <label class="text-secondary"for="pedagioCotacao">Pedágio:</label>
-            </div>              
-            <div class="col-sm-3 mb-1 pl-0 pr-1 form-group form-floating">
-                <input type="text" class="form-control  form-control-sm calculoCotacao " 
-                placeholder="Despacho" id="despachoCotacao" name="despachoCotacao" disabled>
-                <label class="text-secondary"for="despachoCotacao">Despacho:</label>                
-            </div>                                
-            <div class="col-sm-3 mb-1 pl-0 pr-1 form-group form-floating ">
-                <input type="text" class="form-control  form-control-sm calculoCotacao" 
-                placeholder="Outros" id="outrosCotacao" name="outrosCotacao" disabled>
-                <label class="text-secondary"for="outrosCotacao">Outros:</label>
-            </div> 
-            <div class="col-sm-3 mb-0 pr-1 pl-1 form-group form-floating ">
-                <input type="text" class="form-control form-control-sm"  
-                placeholder="Gris" name="baseCalculoCotacao" id="baseCalculoCotacao" disabled>
-                <label class="text-secondary" for="baseCalculoCotacao">Base de Cálculo:</label>
-            </div>
-            <div class="col-sm-3 mb-1 pr-1 pl-0 form-group form-floating">
-                <input type="text" class="form-control  form-control-sm" 
-                placeholder="Pedágio" id="aliquotaCotacao" name="aliquotaCotacao" disabled>
-                <label class="text-secondary"for="aliquotaCotacao">Alíquota:</label>
-            </div>              
-            <div class="col-sm-3 mb-1 pl-0 pr-1 form-group form-floating">
-                <input type="text" class="form-control  form-control-sm " 
-                placeholder="Despacho" id="icmsCotacao" name="icmsCotacao" disabled>
-                <label class="text-secondary h1"for="icmsCotacao">Icms R$:</label>                
-            </div>                                
-            <div class="col-sm-3 mb-1 pl-0 pr-1 form-group form-floating ">
-                <input type="text" class="form-control form-control-sm bg-primary text-capitalize text-danger h1" 
-                placeholder="Outros" id="freteTotalCotacao" name="freteTotalCotacao" value=0.0 disabled>
-                <label class="text-secondary"for="freteTotalCotacao">Total Frete :</label>
+                    <div class="col-sm-3 mb-1 mt-1 form-group pl-1 pr-1">
+                        <button type="button" class="btn btn-danger btn-icon-text">
+                        <i class="ti-trash btn-icon-prepend"></i>           
+                                Apagar
+                        </button>  
+                    </div>  
+                    
+                    <div class="col-sm-3 mb-1 mt-1 form-group pl-1 pr-1">
+                        <button type="button" class="btn btn-success btn-icon-text">
+                        <i class="ti-alert btn-icon-prepend"></i>           
+                                Gerar coleta
+                        </button>  
+                    </div>            
+                </div>
             </div>  
-
-            <div class="col-sm-3 mb-0 mt-1 form-group form-floating pl-1 pr-1">
-                <button type="button" class="btn btn-warning btn-icon-text" id="btnCalculaCotacao">
-                          <i class="ti-credit-card btn-icon-prepend"></i>
-                                Calcular
-                </button>
-            </div>
-            <div class="col-sm-3 mb-1 mt-1 form-group pl-1 pr-1">
-                <button type="button" class="btn btn-info btn-icon-text">
-                  <i class="ti-printer btn-icon-prepend"></i>           
-                          Imprimir
-                </button>  
-            </div>
-
-            <div class="col-sm-3 mb-1 mt-1 form-group pl-1 pr-1">
-                <button type="button" class="btn btn-danger btn-icon-text">
-                  <i class="ti-trash btn-icon-prepend"></i>           
-                          Apagar
-                </button>  
-            </div>  
-            
-            <div class="col-sm-3 mb-1 mt-1 form-group pl-1 pr-1">
-                <button type="button" class="btn btn-success btn-icon-text">
-                  <i class="ti-alert btn-icon-prepend"></i>           
-                          Gerar coleta
-                </button>  
-            </div>            
         </div>
-    </div>  
-    </div>
     </div>
 </form>
     
