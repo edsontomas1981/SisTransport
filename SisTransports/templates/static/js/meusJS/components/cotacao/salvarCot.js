@@ -11,19 +11,19 @@ async function createCotacao(dados) {
 const salvaCotacao = document.getElementById('btnSalvaCotacao')
 salvaCotacao.addEventListener('click',(e)=>{
     let camposVazios = checkCamposVazios('formCotacao','.campoObrigatorio')
-
     geraMensagemCamposFaltando(camposVazios)
-
-    if (camposVazios.length>0){
-        Swal.fire({
-            icon: 'error',
-            title: 'Oops ...',
-            text:geraMensagemCamposFaltando(camposVazios),
-            footer: '<a href="">Why do I have this issue?</a>'
-          })
+    if ($('#numDtc').val()!='') {
+        if (camposVazios.length > 0) {
+            Swal.fire({
+                icon: 'error',
+                title: 'Oops ...',
+                text: geraMensagemCamposFaltando(camposVazios),
+            })
+        } else {
+            let dados = geraDadosSalvarCotacao()
+            createCotacao(dados)
+        }
     }
-    let dados = geraDadosSalvarCotacao()
-    createCotacao(dados)
     e.preventDefault
 })
 
