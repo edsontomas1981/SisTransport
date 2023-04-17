@@ -10,14 +10,19 @@ def buscaDtc (request):
     if request.method == 'GET':
         return render(request, 'preDtc.html')
     elif request.method == "POST" :
-        dtc=Dtc()
-        dtc.readDtc(request.POST.get('numPed'))
-        tabela=TabelaFrete()
-        tabelas=tabela.get_tabelas_por_parceiro(dtc.dtc.tomador_fk)
-        return JsonResponse({
-                    'status': 200,
-                    'dtc': dtc.to_dict() if dtc is not None else None,
-                    'coleta': dtc.dtc.coleta_fk.to_dict() if dtc is not None and dtc.dtc.coleta_fk is not None else None,
-                    'tabelas': tabelas                    
-                })
-        
+        if request.POST.get('numPed')!='':
+            dtc=Dtc()
+            if dtc.readDtc(request.POST.get('numPed'))==200:
+                tabela=TabelaFrete()
+                tabelas=tabela.get_tabelas_por_parceiro(dtc.dtc.tomador_fk)
+                return JsonResponse({
+                            'status': 200,
+                            'dtc': dtc.to_dict() if dtc is not None else None,
+                            'coleta': dtc.dtc.coleta_fk.to_dict() if dtc is not None and dtc.dtc.coleta_fk is not None else None,
+                            'tabelas': tabelas                    
+                        })
+            else:
+                return JsonResponse({'status': 300}) 
+        else:
+            return JsonResponse({'status': 300})
+            

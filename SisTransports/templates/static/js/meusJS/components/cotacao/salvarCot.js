@@ -12,18 +12,26 @@ const salvaCotacao = document.getElementById('btnSalvaCotacao')
 salvaCotacao.addEventListener('click',(e)=>{
     let camposVazios = checkCamposVazios('formCotacao','.campoObrigatorio')
     geraMensagemCamposFaltando(camposVazios)
-    if ($('#numDtc').val()!='') {
-        if (camposVazios.length > 0) {
+    
+        if ($('#numDtc').val()!='') {
+            if (camposVazios.length > 0) {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Oops ...',
+                    text: geraMensagemCamposFaltando(camposVazios),
+                })
+            } else {
+                let dados = geraDadosSalvarCotacao()
+                createCotacao(dados)
+            }
+        }else{
             Swal.fire({
                 icon: 'error',
                 title: 'Oops ...',
-                text: geraMensagemCamposFaltando(camposVazios),
+                text: 'Pedido inválido. Por favor, insira um pedido válido para salvar a cotação.',
             })
-        } else {
-            let dados = geraDadosSalvarCotacao()
-            createCotacao(dados)
+
         }
-    }
     e.preventDefault
 })
 

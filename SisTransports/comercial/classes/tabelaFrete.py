@@ -7,7 +7,6 @@ from django.db.utils import DatabaseError
 from comercial.classes.tblFaixa import TabelaFaixa
 
 
-
 class TabelaFrete:
     def __init__(self):
         self.tabela = TblFrete()
