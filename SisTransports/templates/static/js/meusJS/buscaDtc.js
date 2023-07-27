@@ -1,6 +1,5 @@
-function carregaDtc(response){
+const carregaDtc=(response)=>{
     limpaDtc()
-   console.log(response)
     $('#numDtc').val(response.dtc.id)
     if (response.dtc.remetente){
         const remetenteDtc = new Parceiro(response.dtc.remetente.cnpj_cpf,'Rem');
@@ -196,6 +195,7 @@ function buscaDtc() {
         data: postData,
         success: function(response) {
             limpaDtc()
+            console.log(response)
             carregaDtc(response)
         },
         error: function(xhr) {

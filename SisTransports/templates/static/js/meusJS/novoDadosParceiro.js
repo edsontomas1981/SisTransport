@@ -17,6 +17,9 @@ $('#btnLimpaCnpjRem').on('click', function(e) {
 $('#btnCnpjRem').on('click', function(e) {
     remetente.openModalParceiro();
     remetente.carregaParceiroMdl()
+    $('#cnpjMdl').val('')
+    $('#cnpjMdl').val($($('#cnpjRem').val()))
+    
 });
 
 // Destinatario
@@ -55,10 +58,17 @@ $('#btnCnpjConsig').on('click', function(e) {
 });
 
 
+
 // Modal
-$('#btnBuscaCnpj').on('click', function(e) {
-    parceiroMdl.getWsParceiro();
-    parceiroMdl.aguardaMdl();
+$('#btnBuscaCnpj').on('click', async (e)=> {
+    parceiroMdl.cnpj=$('#cnpjMdl').val()
+    if (validateDocumentNumber($('#cnpjMdl').val()))
+    {
+        await parceiroMdl.getWsParceiro();
+        // parceiroMdl.carregaParceiroMdl()
+    }else{
+        alert("CNPJ inválido");
+    }
     e.preventDefault();
 })
 
