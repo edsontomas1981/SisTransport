@@ -39,7 +39,10 @@ const geraDadosSalvarCotacao=()=>{
     let dados = {}
     $('#formCotacao :input').each(function() {
         dados[$(this).attr('name')] = $(this).val();
+        console.log(dados)
     });
+    dados.idPreDtc =$('#numDtc').val()
+     
     return dados
 };
 

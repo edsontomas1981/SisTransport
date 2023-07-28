@@ -7,6 +7,7 @@ from Classes.utils import dpprint, dprint,toFloat
 from comercial.classes.tblFaixa import TabelaFaixa
 from datetime import datetime
 
+
 class Cotacao:
     def __init__(self):
         self.cotacao = ClsCotacao()
@@ -38,22 +39,39 @@ class Cotacao:
             return {'resposta': 400, 'mensagem': 'Cotação nao encontrada'}
 
     def criaOuAtualizaCotacao(self, dados):
-        try:
-            self.cotacao.dtc_fk = dados['dtc_fk'][0]
-            self.cotacao.formaDeCalculo = dados['formaDeCalculo'][0]
-            self.cotacao.numNf = dados['numNf'][0]
-            self.cotacao.peso = dados['peso'][0]
-            self.cotacao.qtde = dados['qtde'][0]
-            self.cotacao.vlrNf = dados['vlrNf'][0]
-            self.cotacao.m3 = dados['m3'][0]
-            self.cotacao.tabela_fk = dados['tabela'][0]
-            self.cotacao.pesoCalcular = 0
-            self.cotacao.totalFrete = 0
-            self.cotacao.dataHora=datetime.now()
-            self.cotacao.save()
-            return 200
-        except:
-            return 400
+    # try:
+        self.cotacao.dtc_fk = int(dados['idPreDtc'])
+        self.cotacao.tabela_fk = dados['tabelaCotacao']
+        self.cotacao.rota_fk = dados['rota']
+        self.cotacao.formaDeCalculo = dados['tipoTabelaCotacao']
+        self.cotacao.numNf = dados['nfCotacao']
+        self.cotacao.peso = dados['pesoCotacao']
+        self.cotacao.pesoCalcular = dados['pesoFaturadoCotacao']
+        self.cotacao.qtde  = dados['volumeCotacao']
+        self.cotacao.vlrNf = dados['valorNfCotacao']
+        self.cotacao.m3 = dados['resultM3Cotacao']
+        self.cotacao.contato = dados['contatoCotacao']
+        self.cotacao.tipoMercadoria = dados['mercadoriaCotacao']
+        self.cotacao.totalFrete = dados['freteTotalCotacao']
+        self.cotacao.fretePeso = dados['fretePesoCotacao']
+        self.cotacao.adValor = dados['advalorCotacao']
+        self.cotacao.gris = dados['grisCotacao']
+        self.cotacao.despacho = dados['despachoCotacao']
+        self.cotacao.outros = dados['outrosCotacao']
+        self.cotacao.pedagio = dados['pedagioCotacao']
+        self.cotacao.vlrColeta = dados['freteTotalCotacao']
+        self.cotacao.baseDeCalculo = dados['baseCalculoCotacao']
+        self.cotacao.aliquota = dados['aliquotaCotacao']
+        self.cotacao.icmsRS = dados['icmsCotacao']
+        self.cotacao.icmsIncluso = dados['icmsInclusoCotacao']
+        self.cotacao.observacao = dados['obsCotacao']
+        self.cotacao.nome = dados['nomeCotacao']
+        self.cotacao.vlrColeta = dados['vlrColetaCotacao']
+        self.cotacao.dataHora=datetime.now()
+        self.cotacao.save()
+        return 200
+    # except:
+    #     return 400
 
     def calculaFrete(self):
         faixa = self.buscafaixas()

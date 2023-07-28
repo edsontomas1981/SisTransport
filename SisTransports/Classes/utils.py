@@ -11,13 +11,6 @@ def checaCampos(request, **kwargs):
             camposVazios.append(nomeCampo)
     return camposVazios
 
-# def checaCamposJson(json, **kwargs):
-#     campos_vazios = [nome_amigavel for campo, nome_amigavel in kwargs.items() if not json.get(campo)]
-#     if campos_vazios:
-#         mensagem = "Os seguintes campos estão vazios: {}".format(", ".join(campos_vazios))
-#         raise ValueError(mensagem)
-#     return campos_vazios
-
 def checaCamposJson(json,**kwargs):
     # deve ser enviados kwargs com chaves e valores identificando quais 
     # campos sao obrigatorios e quais o nomes para apresenta-los ao usuario 

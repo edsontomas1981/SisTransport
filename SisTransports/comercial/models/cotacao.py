@@ -38,6 +38,7 @@ class Cotacao(models.Model):
     icmsRS = models.DecimalField(max_digits=5, decimal_places=2, default=0.00)
     icmsIncluso = models.BooleanField(default=True)
     nome = models.CharField(max_length=30, null=True)
+    observacao = models.CharField(max_length=70, null=True)
     contato = models.CharField(max_length=50, null=True)
     dataHora = models.DateTimeField(null=True)
 
