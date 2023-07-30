@@ -15,9 +15,9 @@ class TabelaFrete:
         try:
             tabelas = TblFrete.objects.filter(parceiro=parceiro)
             return 200,[tabela.toDict() for tabela in tabelas]
-        except ObjectDoesNotExist:
-            # Lidar com a exceção aqui, como retornar um erro 404 ou um objeto vazio
-            return 300, {'message': 'Não há tabelas de frete para este parceiro.'}
+        # except ObjectDoesNotExist:
+        #     # Lidar com a exceção aqui, como retornar um erro 404 ou um objeto vazio
+        #     return 300, {'message': 'Não há tabelas de frete para este parceiro.'}
         except DatabaseError:
             # Lidar com a exceção aqui, como registrar em um log ou retornar um erro 500
             return 301, {'message': 'Erro ao buscar tabelas de frete.'}

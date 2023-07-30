@@ -4,6 +4,10 @@ from django.http import JsonResponse
 from comercial.classes.tabelaFrete import TabelaFrete 
 from parceiros.classes.parceiros import Parceiros
 from Classes.utils import dprint,checaCamposJson
+from comercial.classes.tblFaixa import TabelaFaixa
+from operacional.classes.dtc import Dtc
+from comercial.classes.tabelaFrete import TabelaFrete
+from operacional.classes.rotas import Rota
 import json
 from comercial.classes.cotacao import Cotacao
 
@@ -13,6 +17,43 @@ def createCotacao (request):
         return JsonResponse({'status': 200})     
     elif request.method == "POST" :
         data = json.loads(request.body.decode('utf-8'))
+
         cotacao = Cotacao()
-        print(cotacao.createCotacao(data))
+        resposta = cotacao.selectCotacaoByDtc(data['idPreDtc'])
+
+        print(resposta['status'])
+
+        if resposta['status'] == 200:
+            altera_cotacao(data)
+            return JsonResponse({'status': 200})# Altera cotação
+        elif resposta['status'] == 404 :
+            cria_nova_cotacao(data)
+
         return JsonResponse({'status': 200})         
+
+def cria_nova_cotacao(data):
+        dados=prepara_dados(data)
+        cotacao = Cotacao()
+        return cotacao.createCotacao(dados)
+
+def altera_cotacao(data):
+        dados=prepara_dados(data)
+        cotacao = Cotacao()
+        cotacao.selectCotacaoByDtc(data['idPreDtc'])
+        return cotacao.updateCotacao(dados,cotacao.cotacao.id)
+
+def prepara_dados(data):
+    dtc = Dtc()
+    dtc.readDtc(data['idPreDtc'])
+
+    tabela=TabelaFrete()
+    tabela.readTabela(data['tabelaCotacao'])
+
+    rota=Rota()
+    rota.readRota(data['idRota'])
+
+    data['rota']=rota.rota
+    data['dtc']=dtc.dtc
+    data['tabela_frete'] = tabela.tabela
+    return data
+    

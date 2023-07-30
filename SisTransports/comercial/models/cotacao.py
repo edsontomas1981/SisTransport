@@ -13,29 +13,23 @@ class Cotacao(models.Model):
     # Dados da Nota Fiscal
     numNf = models.CharField(max_length=15, null=True)
     peso = models.IntegerField()
-    pesoFaturado = models.DecimalField(
-        max_digits=9, decimal_places=2, default=0.00)
+    pesoFaturado = models.FloatField(default=0.00)
     qtde = models.IntegerField()
-    vlrNf = models.DecimalField(max_digits=9, decimal_places=2, default=0.00)
-    m3 = models.DecimalField(max_digits=7, decimal_places=2, default=0.00)
+    vlrNf = models.FloatField(default=0.00)
+    m3 = models.FloatField(default=0.00)
     tipoMercadoria = models.CharField(max_length=15, null=True)
     # Valores de Frete
-    totalFrete = models.DecimalField(
-        max_digits=5, decimal_places=2, default=0.00)
-    fretePeso = models.DecimalField(
-        max_digits=5, decimal_places=2, default=0.00)
-    adValor = models.DecimalField(max_digits=5, decimal_places=2, default=0.00)
-    gris = models.DecimalField(max_digits=5, decimal_places=2, default=0.00)
-    despacho = models.DecimalField(
-        max_digits=5, decimal_places=2, default=0.00)
-    outros = models.DecimalField(max_digits=5, decimal_places=2, default=0.00)
-    pedagio = models.DecimalField(max_digits=5, decimal_places=2, default=0.00)
-    vlrColeta = models.DecimalField(max_digits=5, decimal_places=2, default=0.00)
-    baseDeCalculo = models.DecimalField(
-        max_digits=5, decimal_places=2, default=0.00)
-    aliquota = models.DecimalField(
-        max_digits=5, decimal_places=2, default=0.00)
-    icmsRS = models.DecimalField(max_digits=5, decimal_places=2, default=0.00)
+    totalFrete = models.FloatField(default=0.00)
+    fretePeso = models.FloatField(default=0.00)
+    adValor = models.FloatField(default=0.00)
+    gris = models.FloatField(default=0.00)
+    despacho = models.FloatField(default=0.00)
+    outros = models.FloatField(default=0.00)
+    pedagio = models.FloatField(default=0.00)
+    vlrColeta = models.FloatField(default=0.00)
+    baseDeCalculo = models.FloatField(default=0.00)
+    aliquota = models.FloatField(default=0.00)
+    icmsRS = models.FloatField(default=0.00)
     icmsIncluso = models.BooleanField(default=True)
     nome = models.CharField(max_length=30, null=True)
     observacao = models.CharField(max_length=70, null=True)
@@ -65,6 +59,7 @@ class Cotacao(models.Model):
                    'icmsRS': self.icmsRS,
                    'icmsIncluso': self.icmsIncluso,
                    'nome': self.nome,
+                   'obs': self.observacao,
                    'contato': self.contato,
                    'dtc': self.dtc_fk.to_dict(),
                    'rota': self.rota_fk.to_dict(),

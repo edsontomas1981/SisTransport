@@ -29,14 +29,15 @@ const carregaDtc=(response)=>{
     if (response.dtc.coleta){
         completaColeta(response.dtc.coleta)
     }
+    if (response.cotacao){
+        console.log(response.cotacao)
+        populaCotacao(response.cotacao)
+    }
     if(response.dtc.tomador && response.dtc.tomador.cnpj_cpf){
         $('#cnpjTomador').val(response.dtc.tomador.cnpj_cpf);
         $('#razaoTomador').val(response.dtc.tomador.raz_soc);
     }
 }
-
-
-
 
 $('#modalidadeFrete').on('change', function () {
     defineTomador($('#modalidadeFrete').val())
