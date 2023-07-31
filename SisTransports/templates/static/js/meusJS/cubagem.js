@@ -23,11 +23,11 @@ $('#btnSalvarM3').on('click', function(e) {
 });
 
 $('#btnM3Cotacao').on('click', function(e) {
-    textResultadoM3 = '#resultM3Cotacao'
+    textResultadoM3 = 'resultM3Cotacao'
 });
 
 $('#btnM3Coleta').on('click', function(e) {
-    textResultadoM3 = '#resultM3'
+    textResultadoM3 = 'resultM3'
 });
 
 
@@ -37,10 +37,13 @@ $('#totalM3').on('blur', function(e) {
 
 $('#fechar').on('click', function(e) {
     descartar();
+    fecharMdlM3();
+});
+
+const fecharMdlM3 = ()=>{
     $('#totalM3').val(0)
     textResultadoM3 = ''
-
-});
+}
 
 function limpaM3() {
     $('.m3').val('')
@@ -52,7 +55,8 @@ $('#modalCalcM3').on('keypress', function(e) {
 
 
 function salvarM3() {
-    $(textResultadoM3).val($('#totalM3').val())
+    console.log(textResultadoM3)
+    $("#"+textResultadoM3).val($('#totalM3').val())
     limpaM3()
     $('#totalM3').val(0)
     textResultadoM3 = ''
@@ -62,8 +66,7 @@ function salvarM3() {
 function descartar() {
     limpaM3()
     $('#totalM3').val(0)
-    textResultadoM3 = ''
-    $('#modalCalcM3').modal('hide')
+fecharMdlM3();
 }
 
 
@@ -76,3 +79,13 @@ function salvaComTecla(e) {
         descartar();
     }
 }
+
+document.getElementById("resultM3Cotacao").addEventListener('keydown',(e)=>{
+    // Verificar se a tecla Shift e F1 foram pressionadas
+    if (e.shiftKey && e.key === "F1") {
+        textResultadoM3 = 'resultM3Cotacao';
+        $("#modalCalcM3").modal("show");
+    }
+});
+
+

@@ -1,13 +1,14 @@
 const tabelaCotacao = document.getElementById('tabelaCotacao');
 tabelaCotacao.addEventListener('change', (event) => {
     limpaCamposFreteCotacao();
-    calculoFreteGeral();
+    calculoFreteGeral(event);
 });
 
-const calculoFreteGeral =()=>{
+const calculoFreteGeral = (event) => { 
     // Obtenha a opção selecionada
     const tabelaSelecionada = event.target.value;
-    if(tabelaSelecionada !=0) {
+
+    if (tabelaSelecionada != 0) {
         const valores = Object.values(listaTabelas);
         const tabelasSelecionadas = valores.find(listaTabelas => listaTabelas.id == tabelaSelecionada);
         const tabela = tabelasSelecionadas ? tabelasSelecionadas : null;
@@ -27,18 +28,19 @@ const calculoFreteGeral =()=>{
                 })
 
                 if (vlrColeta) {
-                    alert(vlrColeta)
-                    calculoCotacao(tabela,vlrColeta)
-                }else{
-                    calculoCotacao(tabela,vlrColeta)
+                    alert(vlrColeta);
+                    calculoCotacao(tabela, vlrColeta);
+                } else {
+                    calculoCotacao(tabela); // Aqui você está passando "vlrColeta" que é undefined
                 }
 
             } else if (result.isDenied) {
-                calculoCotacao(tabela)
+                calculoCotacao(tabela);
             }
         })
     }
 }
+
 
 const calculoCotacao= async (tabela,vlrColeta)=>{
     let calcula = new CalculaFrete(tabela,geraDadosCotacao());
@@ -46,6 +48,7 @@ const calculoCotacao= async (tabela,vlrColeta)=>{
         calcula.setVlrColeta(vlrColeta)
     }
     calcula.calculaFrete()
+    $('#pesoFaturadoCotacao').val(calcula.pesoFaturado)
     populaFreteCotacao(calcula.composicaoFrete)
     recalculaFreteCotacao()
 }
@@ -75,12 +78,10 @@ const calculaIcmsCotacao=(listaValores)=>{
     let aliquota = document.getElementById('aliquotaCotacao')
     
     for (const valor in listaValores) {
-        console.log(listaValores[valor])
         subTotal += parseFloat(listaValores[valor])
     }
 
     percentuaAliquota=((100-parseFloat(aliquota.value))/100)
-    console.log(percentuaAliquota)
 
     if (icmsInclusoCotacao.checked){
         freteTotal = parseFloat(subTotal)/percentuaAliquota
@@ -115,3 +116,51 @@ $('.calculoCotacao').on('change',()=>{
     let valor= recalculaFreteCotacao();
     console.log(valor)
 })
+
+const populaCotacao=(response)=>{
+    $('#nomeCotacao').val(response.nome)
+    $('#contatoCotacao').val(response.contato)
+    $('#nfCotacao').val(response.numNf)
+    $('#volumeCotacao').val(response.qtde)
+    $('#mercadoriaCotacao').val(response.tipoMercadoria)
+    $('#valorNfCotacao').val(response.vlrNf)
+    $('#pesoCotacao').val(response.peso)
+    $('#pesoFaturadoCotacao').val(response.pesoFaturado)
+    $('#resultM3Cotacao').val(response.m3)
+    $('#obsCotacao').val(response.obs)
+    $('#fretePesoCotacao').val(response.freteValor)
+    $('#advalorCotacao').val(response.adValor)
+    $('#vlrColetaCotacao').val(response.vlrColeta)
+    $('#grisCotacao').val(response.gris)
+    $('#pedagioCotacao').val(response.pedagio)
+    $('#despachoCotacao').val(response.despacho)
+    $('#Outros').val(response.mercadoria)
+    $('#baseCalculoCotacao').val(response.baseDeCalculo)
+    $('#aliquotaCotacao').val(response.aliquota)
+    $('#icmsCotacao').val(response.icmsRS)
+    $('#freteTotalCotacao').val(response.totalFrete)
+  }
+
+  const limpaCotacao=()=>{
+    $('#nomeCotacao').val('')
+    $('#contatoCotacao').val('')
+    $('#nfCotacao').val('')
+    $('#volumeCotacao').val('')
+    $('#mercadoriaCotacao').val('')
+    $('#valorNfCotacao').val('')
+    $('#pesoCotacao').val('')
+    $('#pesoFaturadoCotacao').val('')
+    $('#resultM3Cotacao').val('')
+    $('#obsCotacao').val('')
+    $('#fretePesoCotacao').val('')
+    $('#advalorCotacao').val('')
+    $('#vlrColetaCotacao').val('')
+    $('#grisCotacao').val('')
+    $('#pedagioCotacao').val('')
+    $('#despachoCotacao').val('')
+    $('#Outros').val('')
+    $('#baseCalculoCotacao').val('')
+    $('#aliquotaCotacao').val('')
+    $('#icmsCotacao').val('')
+    $('#freteTotalCotacao').val('')
+  }

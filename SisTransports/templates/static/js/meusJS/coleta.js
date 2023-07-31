@@ -205,32 +205,6 @@ function limpaColeta(){
 
 }
 
-function populaCotacao(response){
-  $('#nomeCotacao').val(response.nome)
-  $('#contatoCotacao').val(response.contato)
-  $('#nfCotacao').val(response.numNf)
-  $('#volumeCotacao').val(response.qtde)
-  $('#mercadoriaCotacao').val(response.tipoMercadoria)
-  $('#valorNfCotacao').val(response.vlrNf)
-  $('#pesoCotacao').val(response.peso)
-  $('#pesoFaturadoCotacao').val(response.pesoFaturado)
-  $('#resultM3Cotacao').val(response.m3)
-  $('#obsCotacao').val(response.obs)
-  $('#fretePesoCotacao').val(response.freteValor)
-  $('#advalorCotacao').val(response.adValor)
-  $('#vlrColetaCotacao').val(response.vlrColeta)
-  $('#grisCotacao').val(response.gris)
-  $('#pedagioCotacao').val(response.pedagio)
-  $('#despachoCotacao').val(response.despacho)
-  $('#Outros').val(response.mercadoria)
-  $('#baseCalculoCotacao').val(response.baseDeCalculo)
-  $('#aliquotaCotacao').val(response.aliquota)
-  $('#icmsCotacao').val(response.icmsRS)
-  $('#freteTotalCotacao').val(response.totalFrete)
-  
-}
-
-
 function completaColeta(response){
   $('#nf').val(response.notaFiscal)
   $('#volumes').val(response.volume)
@@ -253,4 +227,3 @@ function completaColeta(response){
   $('#horario').val(response.horario)
   $('#idColeta').val(response.id)
 }
-

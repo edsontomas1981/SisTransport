@@ -21,25 +21,23 @@ def createCotacao (request):
         cotacao = Cotacao()
         resposta = cotacao.selectCotacaoByDtc(data['idPreDtc'])
 
-        print(resposta['status'])
-
         if resposta['status'] == 200:
-            altera_cotacao(data)
-            return JsonResponse({'status': 200})# Altera cotação
+            altera_cotacao(data,cotacao)
+            return JsonResponse({'status': 201})# Altera cotação
         elif resposta['status'] == 404 :
             cria_nova_cotacao(data)
-
-        return JsonResponse({'status': 200})         
+            return JsonResponse({'status': 200}) # Gera nova cotação
+        else:
+            return JsonResponse({'status': 200})         
+        
 
 def cria_nova_cotacao(data):
         dados=prepara_dados(data)
         cotacao = Cotacao()
         return cotacao.createCotacao(dados)
 
-def altera_cotacao(data):
+def altera_cotacao(data,cotacao):
         dados=prepara_dados(data)
-        cotacao = Cotacao()
-        cotacao.selectCotacaoByDtc(data['idPreDtc'])
         return cotacao.updateCotacao(dados,cotacao.cotacao.id)
 
 def prepara_dados(data):

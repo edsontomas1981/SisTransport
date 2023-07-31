@@ -185,6 +185,7 @@ function limpaDtc(){
     $('#numDtc').val('')
     $('#rotasDtc').val(0)
     limpaColeta()
+    limpaCotacao()
 }
 
 function buscaDtc() {

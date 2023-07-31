@@ -85,21 +85,6 @@ const arredondaDuasCasas=(valor)=>{
     return parseFloat(valor).toFixed(2)
 }
 
-function limpaCotacao(){
-    $('#nomeCotacao').val('')
-    $('#contatoCotacao').val('')
-    $('#nfCotacao').val('')
-    $('#volumeCotacao').val('')
-    $('#mercadoriaCotacao').val('')
-    $('#valorNfCotacao').val('')
-    $('#pesoCotacao').val('')
-    $('#pesoFaturadoCotacao').val('')
-    $('#resultM3Cotacao').val('')
-    $('#obsCotacao').val('')
-    limpaCamposFreteCotacao();
-    resetaSelectCotacao();
-}
-
 const geraDadosCotacao=()=>{
     return{
             'volumes':$('#volumeCotacao').val(),
@@ -146,6 +131,9 @@ const checkCamposVazios = (idForm,idCposObrigatorios) => {
     return campoVazios;
   };
   
-
+  const telefoneInput = document.getElementById('contatoCotacao');
+  telefoneInput.addEventListener('input', function() {
+    formatarTelefone(this);
+  });
 
 

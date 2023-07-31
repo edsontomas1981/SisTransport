@@ -34,7 +34,6 @@ class Conexao {
       }
 }
 
-
 function conectaBackEnd(dados, callback,...idComponente) {
     let url = dados.url
     let postData = $('form').serialize();
@@ -213,4 +212,30 @@ const geraMensagemCamposFaltando=(campos)=>{
   }
  msgInicial += camposFaltando + ' precisam ser preenchidos.'
  return msgInicial
+}
+
+const formatarTelefone=(input)=> {
+  const numeroLimpo = input.value.replace(/\D/g, '');
+  const isCelular = numeroLimpo.length === 11; // 11 dígitos para números de celular
+
+  let mascara;
+  if (isCelular) {
+    mascara = '(XX) XXXXX-XXXX';
+  } else {
+    mascara = '(XX) XXXX-XXXX';
+  }
+
+  let indice = 0;
+  let telefoneFormatado = '';
+
+  for (let i = 0; i < mascara.length; i++) {
+    if (mascara[i] === 'X') {
+      telefoneFormatado += numeroLimpo[indice] || '';
+      indice++;
+    } else {
+      telefoneFormatado += mascara[i];
+    }
+  }
+
+  input.value = telefoneFormatado;
 }

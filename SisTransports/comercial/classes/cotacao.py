@@ -5,7 +5,6 @@ from faturamento.components.calculaFrete import aplicaIcms, geraPercentualAliquo
 from comercial.classes.geraFrete import CalculaFrete
 from comercial.classes.tblFaixa import TabelaFaixa
 from Classes.utils import  dprint,toFloat,checkBox
-from django.http import JsonResponse
 from datetime import datetime
 
 class Cotacao:
@@ -26,12 +25,10 @@ class Cotacao:
     def updateCotacao(self, dados, id):
         
         if ClsCotacao.objects.filter(id=id).exists():
-            print("Atualiza")
             self.cotacao = ClsCotacao.objects.filter(id=id).get()
             self.criaOuAtualizaCotacao(dados)
             return {'resposta': 200, 'cotacao': self.cotacao.toDict()}
         else:
-            print("Não Atualiza")
             return {'resposta': 400, 'mensagem': 'Cotação nao encontrada'}
 
     def deleteCotacao(self, id):
