@@ -131,9 +131,9 @@ const checkCamposVazios = (idForm,idCposObrigatorios) => {
     return campoVazios;
   };
   
-  const telefoneInput = document.getElementById('contatoCotacao');
-  telefoneInput.addEventListener('input', function() {
+const telefoneInput = document.getElementById('contatoCotacao');
+telefoneInput.addEventListener('input', function() {
     formatarTelefone(this);
-  });
+});
 
 

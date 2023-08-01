@@ -2,10 +2,43 @@ async function createCotacao(dados) {
     let conexao = new Conexao('/comercial/cotacao/createCotacao/',dados);
     try {
         const result = await conexao.sendPostRequest();
-        console.log(result); // Imprime a resposta JSON da solicitação POST
+        alertCriaCotacao(result)
     } catch (error) {
         console.error(error); // Imprime a mensagem de erro
     }
+}
+
+const alertCriaCotacao=(result)=>{
+    switch (result.status) {
+        case 200:
+          Swal.fire({
+            position: 'top-end',
+            icon: 'success',
+            title: 'A cotação foi salva com sucesso!',
+            showConfirmButton: false,
+            timer: 1500
+          })
+  
+          break;
+        case 201:
+          Swal.fire({
+            position: 'top-end',
+            icon: 'success',
+            title: 'A cotação foi alterada com sucesso!',
+            showConfirmButton: false,
+            timer: 1500
+          })
+            break;        
+        case 404:
+            Swal.fire({
+            icon: 'error',
+            title: 'Coleta não foi localizada',
+            showConfirmButton: true,
+          })
+          break;        
+        default:
+          break;
+      }
 }
 
 const salvaCotacao = document.getElementById('btnSalvaCotacao')
@@ -21,7 +54,7 @@ salvaCotacao.addEventListener('click',(e)=>{
                     text: geraMensagemCamposFaltando(camposVazios),
                 })
             } else {
-                let dados = geraDadosSalvarCotacao()
+                let dados = geraDadosFormCotacao()
                 createCotacao(dados)
             }
         }else{
@@ -35,7 +68,7 @@ salvaCotacao.addEventListener('click',(e)=>{
     e.preventDefault
 })
 
-const geraDadosSalvarCotacao=()=>{
+const geraDadosFormCotacao=()=>{
     let dados = {}
     $('#formCotacao :input').each(function() {
         dados[$(this).attr('name')] = $(this).val();
@@ -51,3 +84,4 @@ $('#btnNovaCotacao').on('click', function(e) {
     limpaCotacao()
     e.preventDefault();
 })
+
