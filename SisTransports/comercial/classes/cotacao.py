@@ -22,10 +22,9 @@ class Cotacao:
         else:
             return {'resposta': 400, 'mensagem': 'Cotação nao encontrada'}
 
-    def updateCotacao(self, dados, id):
-        
-        if ClsCotacao.objects.filter(id=id).exists():
-            self.cotacao = ClsCotacao.objects.filter(id=id).get()
+    def updateCotacao(self, dados):
+        if ClsCotacao.objects.filter(dtc_fk=dados['idPreDtc']).exists():
+            self.cotacao = ClsCotacao.objects.get(dtc_fk=dados['idPreDtc'])
             self.criaOuAtualizaCotacao(dados)
             return {'resposta': 200, 'cotacao': self.cotacao.toDict()}
         else:
@@ -69,6 +68,7 @@ class Cotacao:
             self.cotacao.icmsIncluso = checkBox(dados['icmsInclusoCotacao'])
             self.cotacao.observacao = dados['obsCotacao']
             self.cotacao.nome = dados['nomeCotacao']
+            self.cotacao.pesoFaturado = dados['pesoFaturadoCotacao']
             self.cotacao.vlrColeta = toFloat(dados['vlrColetaCotacao'])
             self.cotacao.dataHora=datetime.now()
             self.cotacao.save()

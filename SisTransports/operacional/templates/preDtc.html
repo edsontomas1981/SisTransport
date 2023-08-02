@@ -9,22 +9,21 @@
       <div class="col-sm-12 col-12">
         <ul class="nav nav-pills nav-pills-primary" id="pills-tab" role="tablist">
           <li class="nav-item pl-0 " role="presentation">
-            <button class="nav-link active" id="pills-dtc-tab" 
+            <button class="nav-link  p-1" id="pills-dtc-tab" 
                     data-bs-toggle="pill" data-bs-target="#pills-dtc" type="button" 
                     role="tab" aria-controls="pills-dtc" aria-selected="true">
               <i class="ti-layers-alt" ></i> DTC
             </button>
           </li>
           <li class="nav-item pl-0" role="presentation">
-            <button class="nav-link" id="pills-coleta-tab" data-bs-toggle="pill" 
+            <button class="nav-link  p-1" id="pills-coleta-tab" data-bs-toggle="pill" 
                     data-bs-target="#pills-coleta" type="button" role="tab" 
                     aria-controls="pills-coleta" aria-selected="true">
-
               <i class="ti-truck"></i> Coleta
             </button>
           </li>
           <li class="nav-item pl-0 " role="presentation">
-            <button class="nav-link" id="pills-cotacao-tab" data-bs-toggle="pill" 
+            <button class="nav-link active p-1" id="pills-cotacao-tab" data-bs-toggle="pill" 
                     data-bs-target="#pills-cotacao" type="button" role="tab" 
                     aria-controls="pills-cotacao" aria-selected="true">
 
@@ -32,37 +31,36 @@
             </button>
           </li>         
           <li class="nav-item pl-0" role="presentation">
-            <button class="nav-link" id="pills-nf-tab" data-bs-toggle="pill" 
+            <button class="nav-link  p-1" id="pills-nf-tab" data-bs-toggle="pill" 
                     data-bs-target="#pills-nf" type="button" role="tab" 
                     aria-controls="pills-nf" aria-selected="false">Nota Fiscal</button>
           </li>
           <li class="nav-item pl-0" role="presentation">
-            <button class="nav-link" id="pills-calculoFrete-tab" data-bs-toggle="pill" 
+            <button class="nav-link  p-1" id="pills-calculoFrete-tab" data-bs-toggle="pill" 
             data-bs-target="#pills-calculoFrete" type="button" role="tab" aria-controls="pills-calculoFrete" 
             aria-selected="false">Cálculo</button>
           </li>
           <li class="nav-item pl-0" role="presentation">
-            <button class="nav-link" id="pills-rastreamento-tab" data-bs-toggle="pill" data-bs-target="#pills-rastreamento" 
+            <button class="nav-link  p-1" id="pills-rastreamento-tab" data-bs-toggle="pill" data-bs-target="#pills-rastreamento" 
             type="button" role="tab" aria-controls="pills-rastreamento" 
             aria-selected="false">Rastreamento</button>
           </li>          
           <li class="nav-item pl-0" role="presentation">
-            <button class="nav-link" id="pills-contact-tab" data-bs-toggle="pill" 
+            <button class="nav-link  p-1" id="pills-contact-tab" data-bs-toggle="pill" 
             data-bs-target="#pills-contact" type="button" role="tab" 
             aria-controls="pills-contact" aria-selected="false">Outros</button>
           </li>          
           <li>
-            <div class="form-floating mt-3">
-              <input type="text" class="form-control text-primary" id="numDtc" name="numDtc"
+            <div class="mt-3 text-end w-100">
+              <input type="text" class="form-control text-primary  p-1 small nav-link " id="numDtc" name="numDtc"
               placeholder="Nº" readOnly>
-              <label for="numDtc" class="text-primary">Nº</label>
             </div>  
           </li>  
         </ul>
       </div>
     </div>
     <div class="tab-content" id="pills-tabContent">
-      <div class="tab-pane fade  show active  " id="pills-dtc" role="tabpanel" 
+      <div class="tab-pane fade" id="pills-dtc" role="tabpanel" 
             aria-labelledby="pills-dtc-tab">
           {% include 'origDestPreDtc.html' %}
         </div>
@@ -71,7 +69,7 @@
             role="tabpanel" aria-labelledby="pills-coleta-tab">
           {% include 'dadosColetaPreDtc.html' %}
         </div>
-        <div class="tab-pane fade" id="pills-cotacao" 
+        <div class="tab-pane fade show active" id="pills-cotacao" 
               role="tabpanel" aria-labelledby="pills-cotacao-tab">
           {% include 'dadosCotacao.html' %}
         </div>

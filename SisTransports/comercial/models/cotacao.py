@@ -59,7 +59,7 @@ class Cotacao(models.Model):
                    'icmsRS': self.icmsRS,
                    'icmsIncluso': self.icmsIncluso,
                    'nome': self.nome,
-                   'obs': self.observacao,
+                   'observacao': self.observacao,
                    'contato': self.contato,
                    'dtc': self.dtc_fk.to_dict(),
                    'rota': self.rota_fk.to_dict(),

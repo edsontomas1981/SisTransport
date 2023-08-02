@@ -139,7 +139,8 @@ const populaCotacao=(response)=>{
     $('#aliquotaCotacao').val(response.aliquota)
     $('#icmsCotacao').val(response.icmsRS)
     $('#freteTotalCotacao').val(response.totalFrete)
-  }
+  
+}
 
   const limpaCotacao=()=>{
     $('#nomeCotacao').val('')
