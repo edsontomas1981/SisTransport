@@ -127,7 +127,7 @@ const populaCotacao=(response)=>{
     $('#pesoCotacao').val(response.peso)
     $('#pesoFaturadoCotacao').val(response.pesoFaturado)
     $('#resultM3Cotacao').val(response.m3)
-    $('#obsCotacao').val(response.obs)
+    $('#obsCotacao').val(response.observacao)
     $('#fretePesoCotacao').val(response.freteValor)
     $('#advalorCotacao').val(response.adValor)
     $('#vlrColetaCotacao').val(response.vlrColeta)

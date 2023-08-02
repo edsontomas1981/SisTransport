@@ -22,9 +22,11 @@ def createCotacao (request):
         resposta = cotacao.selectCotacaoByDtc(data['idPreDtc'])
 
         if resposta['status'] == 200:
+            print('altera')
             altera_cotacao(data)
             return JsonResponse({'status': 201})# Altera cotação
         elif resposta['status'] == 404 :
+            print('cadastra')
             cria_nova_cotacao(data)
             return JsonResponse({'status': 200}) # Gera nova cotação
         else:
@@ -34,6 +36,7 @@ def createCotacao (request):
 def cria_nova_cotacao(data):
         dados=prepara_dados(data)
         cotacao = Cotacao()
+        print('cria_nova_cotacao')
         return cotacao.createCotacao(dados)
 
 def altera_cotacao(data):

@@ -38,7 +38,7 @@ class Cotacao(models.Model):
 
     def toDict(self):
         cotacao = {'id': self.id,
-                   'numNf': self.id,
+                   'numNf': self.numNf,
                    'peso': self.peso,
                    'qtde': self.qtde,
                    'pesoFaturado': self.pesoFaturado,

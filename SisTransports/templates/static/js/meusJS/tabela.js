@@ -1,6 +1,3 @@
-//recebe uma tabela hash com as chaves url e id contendo os dados a serem consultados 
-//Ex: postData = '&cnpj_cpf='0000000000191;
-//Ex {url:'/rotaAcessada/',id:postData} 
 function conectaBdGeral(dados, callback) {
     let url = dados.url
     let postData = $('form').serialize();
@@ -289,7 +286,6 @@ $('#rotasAnexadasTabela').on("click", "#desanexaRota", function(event) {
         console.error(error); // Imprime a mensagem de erro
     }
 }
-
 
 carregaDadosForm=()=>{
     return{'idTabela':$('#numTabela').val(),
