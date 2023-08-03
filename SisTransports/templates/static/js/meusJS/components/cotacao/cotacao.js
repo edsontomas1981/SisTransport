@@ -2,6 +2,7 @@ var listaTabelas
 
 const carregaTabelasGerais=async()=>{
     let dados = {'idRota':$('#rotasDtc').val()}
+    console.log(dados)
     let conexao = new Conexao('/comercial/readTabelasGeraisPorRota/', dados);
     try {
         const result = await conexao.sendPostRequest();
@@ -95,25 +96,32 @@ const geraDadosCotacao=()=>{
 };
 
 $('#pills-cotacao-tab').on('focus', function(e) {
-    resetaSelectCotacao()
+    
+    // resetaSelectCotacao()
 });
 
 $('#tipoTabelaCotacao').on('change', function() {
-    // Verifica o valor da opção selecionada
-    var selectedValue = $(this).val();
-       // Executa ação com base no valor selecionado
-    if (selectedValue === '1') {
-        bloqueiaFreteCotacao();
-        carregaTabelasGerais()
-    } else if (selectedValue === '2') {
-        carregaTabelasEspecificas()
-      // Executa ação quando a opção "Tabela cliente" é selecionada
-    } else {
-        bloqueiaFreteCotacao();
-        carregaFreteInformado();
-      // Executa ação quando nenhuma opção é selecionada
-    }
+    carregaSelectTabelas($(this).val())
 });
+
+const carregaSelectTabelas= async (tipoTabela)=>{
+        // Verifica o valor da opção selecionada
+        var selectedValue = tipoTabela;
+        // Executa ação com base no valor selecionado
+        console.log(typeof(tipoTabela))
+     if (selectedValue == '1') {
+         bloqueiaFreteCotacao();
+         carregaTabelasGerais()
+     } else if (selectedValue == '2') {
+         carregaTabelasEspecificas()
+       // Executa ação quando a opção "Tabela cliente" é selecionada
+     } else if (selectedValue == '3') {
+         bloqueiaFreteCotacao();
+         carregaFreteInformado();
+       // Executa ação quando nenhuma opção é selecionada
+     }
+}
+
 
 $('#rotasDtc').on('change',function(e){
     resetaSelectCotacao()

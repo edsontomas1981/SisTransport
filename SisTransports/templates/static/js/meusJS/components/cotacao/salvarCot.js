@@ -18,7 +18,6 @@ const alertCriaCotacao=(result)=>{
             showConfirmButton: false,
             timer: 1500
           })
-  
           break;
         case 201:
           Swal.fire({
@@ -32,11 +31,16 @@ const alertCriaCotacao=(result)=>{
         case 404:
             Swal.fire({
             icon: 'error',
-            title: 'Coleta não foi localizada',
+            title: 'Cotação não foi localizada',
             showConfirmButton: true,
           })
           break;        
         default:
+            Swal.fire({
+                icon: 'error',
+                title: 'Erro interno',
+                showConfirmButton: true,
+              })
           break;
       }
 }

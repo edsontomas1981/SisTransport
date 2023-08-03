@@ -114,33 +114,35 @@ const recalculaFreteCotacao=()=>{
 
 $('.calculoCotacao').on('change',()=>{
     let valor= recalculaFreteCotacao();
-    console.log(valor)
 })
 
-const populaCotacao=(response)=>{
-    $('#nomeCotacao').val(response.nome)
-    $('#contatoCotacao').val(response.contato)
-    $('#nfCotacao').val(response.numNf)
-    $('#volumeCotacao').val(response.qtde)
-    $('#mercadoriaCotacao').val(response.tipoMercadoria)
-    $('#valorNfCotacao').val(response.vlrNf)
-    $('#pesoCotacao').val(response.peso)
-    $('#pesoFaturadoCotacao').val(response.pesoFaturado)
-    $('#resultM3Cotacao').val(response.m3)
-    $('#obsCotacao').val(response.observacao)
-    $('#fretePesoCotacao').val(response.freteValor)
-    $('#advalorCotacao').val(response.adValor)
-    $('#vlrColetaCotacao').val(response.vlrColeta)
-    $('#grisCotacao').val(response.gris)
-    $('#pedagioCotacao').val(response.pedagio)
-    $('#despachoCotacao').val(response.despacho)
-    $('#Outros').val(response.mercadoria)
-    $('#baseCalculoCotacao').val(response.baseDeCalculo)
-    $('#aliquotaCotacao').val(response.aliquota)
-    $('#icmsCotacao').val(response.icmsRS)
-    $('#freteTotalCotacao').val(response.totalFrete)
-  
-}
+const populaCotacao = async(response) => {
+    $('#tipoTabelaCotacao').val(response.tabela.tipoTabela);
+    await carregaSelectTabelas(response.tabela.tipoTabela)
+    $('#nomeCotacao').val(response.nome);
+    $('#contatoCotacao').val(response.contato);
+    $('#nfCotacao').val(response.numNf);
+    $('#volumeCotacao').val(response.qtde);
+    $('#mercadoriaCotacao').val(response.tipoMercadoria);
+    $('#valorNfCotacao').val(response.vlrNf);
+    $('#pesoCotacao').val(response.peso);
+    $('#pesoFaturadoCotacao').val(response.pesoFaturado);
+    $('#resultM3Cotacao').val(response.m3);
+    $('#obsCotacao').val(response.observacao);
+    $('#fretePesoCotacao').val(response.freteValor);
+    $('#advalorCotacao').val(response.adValor);
+    $('#vlrColetaCotacao').val(response.vlrColeta);
+    $('#grisCotacao').val(response.gris);
+    $('#pedagioCotacao').val(response.pedagio);
+    $('#despachoCotacao').val(response.despacho);
+    $('#Outros').val(response.mercadoria);
+    $('#baseCalculoCotacao').val(response.baseDeCalculo);
+    $('#aliquotaCotacao').val(response.aliquota);
+    $('#icmsCotacao').val(response.icmsRS);
+    $('#freteTotalCotacao').val(response.totalFrete);
+    console.log(id)
+    $('#tabelaCotacao').val(response.tabela.id);
+};
 
   const limpaCotacao=()=>{
     $('#nomeCotacao').val('')

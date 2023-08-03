@@ -312,6 +312,7 @@ carregaDadosForm=()=>{
  }
 
 const populaSelectTabelas = (idSelect,dados) => {
+    alert('populaSelectTabelas')
     let select = $('#' + idSelect);
     switch (dados.status) {
         case 200:

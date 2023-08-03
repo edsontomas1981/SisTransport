@@ -30,7 +30,6 @@ const carregaDtc=(response)=>{
         completaColeta(response.dtc.coleta)
     }
     if (response.cotacao){
-        console.log(response.cotacao)
         populaCotacao(response.cotacao)
     }
     if(response.dtc.tomador && response.dtc.tomador.cnpj_cpf){
@@ -197,7 +196,6 @@ function buscaDtc() {
         data: postData,
         success: function(response) {
             limpaDtc()
-            console.log(response)
             carregaDtc(response)
         },
         error: function(xhr) {

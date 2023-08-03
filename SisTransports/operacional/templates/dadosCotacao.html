@@ -35,34 +35,40 @@
                     <p class="text-primary">Dados Nota Fiscal</p>
                     <div class="col-sm-3 mb-0 pr-1 pl-1 form-group form-floating">
                         <input type="text" class="form-control form-control-sm " 
-                        placeholder="Nº Nota Fiscal" name="nfCotacao" id="nfCotacao">
+                        placeholder="Nº Nota Fiscal" name="nfCotacao" id="nfCotacao"
+                        oninput="this.value = this.value.replace(/[^0-9]/g, '');">
                         <label class="text-secondary" for="nfCotacao">Nº Nota Fiscal:</label>
                     </div>  
                     
                     <div class="col-sm-3 mb-0 pr-1 pl-1 form-group form-floating">
                         <input type="text" class="form-control form-control-sm campoObrigatorio" 
-                        placeholder="Volumes" name="volumeCotacao" id="volumeCotacao">
+                        placeholder="Volumes" name="volumeCotacao" id="volumeCotacao" 
+                        oninput="this.value = this.value.replace(/[^0-9]/g, '');">
                         <label class="text-secondary" for="volumeCotacao">Volumes:</label>
                     </div>
                     <div class="col-sm-3 mb-0 pr-1 pl-1 form-group form-floating">
                         <input type="text" class="form-control  form-control-sm campoObrigatorio" 
-                        placeholder="Peso" id="pesoCotacao" name="pesoCotacao">
+                        placeholder="Peso" id="pesoCotacao" name="pesoCotacao"
+                        oninput="this.value = this.value.replace(/[^0-9.,]/g, '');">
                         <label class="text-secondary" for="pesoCotacao">Peso real:</label>
                     </div> 
                     <div class="col-sm-3 mb-1 form-group form-floating pl-1 pr-1 custom-tooltip">
                         <input type="text" class="form-control form-control-sm" 
-                        placeholder="M³" name="resultM3Cotacao" id="resultM3Cotacao">
+                        placeholder="M³" name="resultM3Cotacao" id="resultM3Cotacao"
+                        oninput="this.value = this.value.replace(/[^0-9.,]/g, '');">
                         <label class="text-secondary" for="resultM3Cotacao">M³: </label>
                         <span class="tooltip-text">Aperte Shift + F1,para abrir a calculadora de M³</span>
                     </div>                    
                     <div class="col-sm-3 mb-1 mt-1 form-group form-floating pl-1 pr-1">
                         <input type="text" class="form-control form-control-sm campoObrigatorio" 
-                        placeholder="Peso Faturado" name="pesoFaturadoCotacao" id="pesoFaturadoCotacao" disabled>
+                        placeholder="Peso Faturado" name="pesoFaturadoCotacao" id="pesoFaturadoCotacao" disabled
+                        oninput="this.value = this.value.replace(/[^0-9.,]/g, '');">
                         <label class="text-secondary" for="pesoFaturadoCotacao">Peso Faturado:</label>
                     </div>
                     <div class="col-sm-3 mt-1 mb-0 pr-1 pl-1 form-group form-floating">
                         <input type="text" class="form-control form-control-sm campoObrigatorio" 
-                        placeholder="Valor R$" name="valorNfCotacao" id="valorNfCotacao" >
+                        placeholder="Valor R$" name="valorNfCotacao" id="valorNfCotacao"
+                        oninput="this.value = this.value.replace(/[^0-9.,]/g, '');">
                         <label class="text-secondary" for="valorNfCotacao">Valor Nf:</label>
                     </div>  
                     <div class="col-sm-6 mb-0 mt-1 pr-1 pl-1 form-group form-floating">
@@ -82,10 +88,10 @@
                 <div class="row">
                     <div class="form-floating col-4 pr-1 pl-1">
                         <select type="text" name="tipoTabelaCotacao" id="tipoTabelaCotacao" class="form-control-sm form-select">
-                            <option value="0">Selecione o tipo de tabela</option>
-                            <option value="1">Tabela geral</option>
-                            <option value="2">Tabela cliente</option>
-                            <option value="3">Frete informado</option>
+                            <option value=0>Selecione o tipo de tabela</option>
+                            <option value=1>Tabela geral</option>
+                            <option value=2>Tabela cliente</option>
+                            <option value=3>Frete informado</option>
                         </select>   
                         <label for="tipoTabelaCotacao">Tipo Tabela</label>
                     </div>        
