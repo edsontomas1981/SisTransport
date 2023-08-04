@@ -57,6 +57,6 @@ def prepara_dados(data):
 
     data['rota']=rota.rota
     data['dtc']=dtc.dtc
-    data['tabela_frete'] = tabela.tabela
+    data['tabela_frete'] = tabela.tabela if tabela is not None else ''
     return data
     

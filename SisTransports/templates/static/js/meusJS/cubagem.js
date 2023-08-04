@@ -55,7 +55,6 @@ $('#modalCalcM3').on('keypress', function(e) {
 
 
 function salvarM3() {
-    console.log(textResultadoM3)
     $("#"+textResultadoM3).val($('#totalM3').val())
     limpaM3()
     $('#totalM3').val(0)

@@ -28,7 +28,6 @@ const calculoFreteGeral = (event) => {
                 })
 
                 if (vlrColeta) {
-                    alert(vlrColeta);
                     calculoCotacao(tabela, vlrColeta);
                 } else {
                     calculoCotacao(tabela); // Aqui você está passando "vlrColeta" que é undefined
@@ -50,7 +49,8 @@ const calculoCotacao= async (tabela,vlrColeta)=>{
     calcula.calculaFrete()
     $('#pesoFaturadoCotacao').val(calcula.pesoFaturado)
     populaFreteCotacao(calcula.composicaoFrete)
-    recalculaFreteCotacao()
+    recalculaFreteCotacao()//mudar nome funcao na verdade ela não recalcula ela soma os valores apos preenchidos
+    preencheTabelaEmUso(tabela.descricao)
 }
 
 const carregaFreteInformado=()=>{
@@ -63,11 +63,7 @@ const carregaFreteInformado=()=>{
     desbloqueiaFreteCotacao();
 }
 
-const btnCalculaCotacao = document.getElementById('btnCalculaCotacao');
-btnCalculaCotacao.addEventListener('click',async (e)=>{
-    recalculaFreteCotacao()
-    e.preventDefault();
-});
+
 
 const calculaIcmsCotacao=(listaValores)=>{
     let baseDeCalculo
@@ -100,7 +96,7 @@ const calculaIcmsCotacao=(listaValores)=>{
     }
 }
 
-const recalculaFreteCotacao=()=>{
+const recalculaFreteCotacao=()=>{//mudar nome funcao na verdade ela não recalcula ela soma os valores apos preenchidos
     let listaValores=[]
     listaValores.push($('#fretePesoCotacao').val()=="" ? 0:$('#fretePesoCotacao').val())
     listaValores.push($('#advalorCotacao').val()=="" ? 0:$('#advalorCotacao').val())
@@ -117,8 +113,7 @@ $('.calculoCotacao').on('change',()=>{
 })
 
 const populaCotacao = async(response) => {
-    $('#tipoTabelaCotacao').val(response.tabela.tipoTabela);
-    await carregaSelectTabelas(response.tabela.tipoTabela)
+    console.log(response)
     $('#nomeCotacao').val(response.nome);
     $('#contatoCotacao').val(response.contato);
     $('#nfCotacao').val(response.numNf);
@@ -140,9 +135,13 @@ const populaCotacao = async(response) => {
     $('#aliquotaCotacao').val(response.aliquota);
     $('#icmsCotacao').val(response.icmsRS);
     $('#freteTotalCotacao').val(response.totalFrete);
-    console.log(id)
-    $('#tabelaCotacao').val(response.tabela.id);
+    preencheTabelaEmUso(response.tabela.descricao)
 };
+
+const preencheTabelaEmUso = (descricaoTabela)=>{
+    let tabelaEmUso = document.getElementById("tabelaEmUso")
+    tabelaEmUso.textContent = "Tabela selecionada : " + descricaoTabela
+}
 
   const limpaCotacao=()=>{
     $('#nomeCotacao').val('')

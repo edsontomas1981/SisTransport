@@ -96,8 +96,7 @@ const geraDadosCotacao=()=>{
 };
 
 $('#pills-cotacao-tab').on('focus', function(e) {
-    
-    // resetaSelectCotacao()
+    resetaSelectCotacao()
 });
 
 $('#tipoTabelaCotacao').on('change', function() {

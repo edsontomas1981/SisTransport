@@ -30,7 +30,6 @@ class Parceiro {
   }
 
   async getWsParceiro() {
-    console.log('getWs');
     await this.sendPostRequest('/parceiros/searchPartnerWs/', this.populaAPartirMdl);
   }
 

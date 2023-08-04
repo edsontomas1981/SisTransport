@@ -5,8 +5,8 @@ from comercial.models.tabelaFrete import TabelaFrete
 
 class Cotacao(models.Model):
     dtc_fk = models.ForeignKey(DctoCarga, on_delete=models.CASCADE, blank=False)
-    tabela_fk = models.ForeignKey(TabelaFrete, on_delete=models.CASCADE, blank=False,
-                                  related_name='tabelaCotacao', null=True)
+    tabela_fk = models.ForeignKey(TabelaFrete, on_delete=models.CASCADE,
+                                  related_name='tabelaCotacao')
     rota_fk = models.ForeignKey(Rota, on_delete=models.CASCADE,
                                 blank=False, related_name='rotaCotacao', null=True)
     formaDeCalculo = models.IntegerField(null=True)

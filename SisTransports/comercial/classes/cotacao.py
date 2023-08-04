@@ -41,35 +41,36 @@ class Cotacao:
             return {'status': 400, 'mensagem': 'Erro interno'}
         
     def atualizaCotacao(self,dados):
-            self.cotacao.rota_fk = dados['rota']
-            self.cotacao.numNf = dados['nfCotacao']
-            self.cotacao.nome = dados['nomeCotacao']
-            self.cotacao.contato = dados['contatoCotacao']
-            self.cotacao.observacao = dados['obsCotacao']
-            self.cotacao.peso = int(dados['pesoCotacao'])
-            self.cotacao.qtde  = int(dados['volumeCotacao'])
-            self.cotacao.tabela_fk = dados['tabela_frete']
-            self.cotacao.formaDeCalculo = dados['tipoTabelaCotacao']
-            self.cotacao.pesoCalcular = float(dados['pesoFaturadoCotacao'])
-            self.cotacao.vlrNf = toFloat(dados['valorNfCotacao'])
-            self.cotacao.m3 = toFloat(dados['resultM3Cotacao'])
-            self.cotacao.tipoMercadoria = dados['mercadoriaCotacao']
-            self.cotacao.totalFrete = toFloat(dados['freteTotalCotacao'])
-            self.cotacao.fretePeso = toFloat(dados['fretePesoCotacao'])
-            self.cotacao.adValor = toFloat(dados['advalorCotacao'])
-            self.cotacao.gris = toFloat(dados['grisCotacao'])
-            self.cotacao.despacho = toFloat(dados['despachoCotacao'])
-            self.cotacao.outros = toFloat(dados['outrosCotacao'])
-            self.cotacao.pedagio = toFloat(dados['pedagioCotacao'])
-            self.cotacao.vlrColeta = toFloat(dados['freteTotalCotacao'])
-            self.cotacao.baseDeCalculo = toFloat(dados['baseCalculoCotacao'])
-            self.cotacao.aliquota = toFloat(dados['aliquotaCotacao'])
-            self.cotacao.icmsRS = toFloat(dados['icmsCotacao'])
-            self.cotacao.icmsIncluso = checkBox(dados['icmsInclusoCotacao'])
-            self.cotacao.pesoFaturado = dados['pesoFaturadoCotacao']
-            self.cotacao.vlrColeta = toFloat(dados['vlrColetaCotacao'])
-            self.cotacao.dataHora=datetime.now()
-            self.cotacao.save()                  
+        self.cotacao.rota_fk = dados['rota']
+        self.cotacao.numNf = dados['nfCotacao']
+        self.cotacao.nome = dados['nomeCotacao']
+        self.cotacao.contato = dados['contatoCotacao']
+        self.cotacao.observacao = dados['obsCotacao']
+        self.cotacao.peso = int(dados['pesoCotacao'])
+        self.cotacao.qtde  = int(dados['volumeCotacao'])
+        self.cotacao.tabela_fk = dados['tabela_frete'] if dados['tabela_frete'] is not '' else None
+        self.cotacao.formaDeCalculo = dados['tipoTabelaCotacao']
+        self.cotacao.pesoCalcular = float(dados['pesoFaturadoCotacao'])
+        self.cotacao.vlrNf = toFloat(dados['valorNfCotacao'])
+        self.cotacao.m3 = toFloat(dados['resultM3Cotacao'])
+        self.cotacao.tipoMercadoria = dados['mercadoriaCotacao']
+        self.cotacao.totalFrete = toFloat(dados['freteTotalCotacao'])
+        self.cotacao.fretePeso = toFloat(dados['fretePesoCotacao'])
+        self.cotacao.adValor = toFloat(dados['advalorCotacao'])
+        self.cotacao.gris = toFloat(dados['grisCotacao'])
+        self.cotacao.despacho = toFloat(dados['despachoCotacao'])
+        self.cotacao.outros = toFloat(dados['outrosCotacao'])
+        self.cotacao.pedagio = toFloat(dados['pedagioCotacao'])
+        self.cotacao.vlrColeta = toFloat(dados['freteTotalCotacao'])
+        self.cotacao.baseDeCalculo = toFloat(dados['baseCalculoCotacao'])
+        self.cotacao.aliquota = toFloat(dados['aliquotaCotacao'])
+        self.cotacao.icmsRS = toFloat(dados['icmsCotacao'])
+        dprint(dados['icmsInclusoCotacao'])
+        self.cotacao.icmsIncluso = checkBox(dados['icmsInclusoCotacao'])
+        self.cotacao.pesoFaturado = dados['pesoFaturadoCotacao']
+        self.cotacao.vlrColeta = toFloat(dados['vlrColetaCotacao'])
+        self.cotacao.dataHora=datetime.now()
+        self.cotacao.save()                  
         
     def criaCotacao(self, dados):
         try:
