@@ -16,7 +16,6 @@ $('#btnBuscaCep').on('click', function(e){
 
 function meu_callback(conteudo,rua,bairro, cidade, uf) {
     if (!("erro" in conteudo)) {
-        console.log('conteudo')
         //Atualiza os campos com os valores.
         $('#'+rua).val(conteudo.logradouro);
         $('#'+bairro).val(conteudo.bairro);

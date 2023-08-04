@@ -21,7 +21,7 @@ def buscaDtc (request):
                 return JsonResponse({
                             'status': 200,
                             'dtc': dtc.to_dict() if dtc is not None else None,
-                            'cotacao': cot['cotacao'] if cot['cotacao'] is not None else None,
+                            'cotacao': cot['cotacao'],
                             'coleta': dtc.dtc.coleta_fk.to_dict() if dtc is not None and dtc.dtc.coleta_fk is not None else None,
                             'tabelas': tabelas                    
                         })

@@ -80,6 +80,9 @@ const geraDadosFormCotacao=()=>{
 
     dados.idPreDtc =$('#numDtc').val()
     dados.idRota = $('#rotasDtc').val()
+    let check = document.getElementById('icmsInclusoCotacao')
+
+    console.log(check)
 
     return dados
 };

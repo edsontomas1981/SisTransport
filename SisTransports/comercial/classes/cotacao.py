@@ -48,7 +48,7 @@ class Cotacao:
         self.cotacao.observacao = dados['obsCotacao']
         self.cotacao.peso = int(dados['pesoCotacao'])
         self.cotacao.qtde  = int(dados['volumeCotacao'])
-        self.cotacao.tabela_fk = dados['tabela_frete'] if dados['tabela_frete'] is not '' else None
+        self.cotacao.tabela_fk = dados['tabela_frete'] if isinstance(dados['tabela_frete'], str) and dados['tabela_frete'] != '' else None
         self.cotacao.formaDeCalculo = dados['tipoTabelaCotacao']
         self.cotacao.pesoCalcular = float(dados['pesoFaturadoCotacao'])
         self.cotacao.vlrNf = toFloat(dados['valorNfCotacao'])
@@ -116,13 +116,13 @@ class Cotacao:
             return listaFaixas
        
     def selectCotacaoByDtc(self, dtc):
-        try:
-            if ClsCotacao.objects.filter(dtc_fk=dtc).exists():
-                self.cotacao = ClsCotacao.objects.get(dtc_fk=dtc)
-                return {'status': 200, 'cotacao': self.cotacao.toDict()}
-            else:
-                return {'status': 404, 'cotacao': {}}
-        except :
-            return {'status': 400, 'mensagem': 'Erro interno'}
+    # try:
+        if ClsCotacao.objects.filter(dtc_fk=dtc).exists():
+            self.cotacao = ClsCotacao.objects.get(dtc_fk=dtc)
+            return {'status': 200, 'cotacao': self.cotacao.toDict()}
+        else:
+            return {'status': 404, 'cotacao': {}}
+    # except :
+    #     return {'status': 400, 'mensagem': 'Erro interno'}
 
         

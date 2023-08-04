@@ -2,6 +2,7 @@ from django.db import models
 from operacional.models.dtc import Dtc as DctoCarga
 from operacional.models.rota import Rota
 from comercial.models.tabelaFrete import TabelaFrete
+from Classes.utils import dprint
 
 class Cotacao(models.Model):
     dtc_fk = models.ForeignKey(DctoCarga, on_delete=models.CASCADE, blank=False)
@@ -37,6 +38,10 @@ class Cotacao(models.Model):
     dataHora = models.DateTimeField(null=True)
 
     def toDict(self):
+        tabela=""
+        if self.tabela_fk.toDict():
+            tabela=self.tabela_fk.toDict()
+
         cotacao = {'id': self.id,
                    'numNf': self.numNf,
                    'peso': self.peso,
@@ -63,6 +68,6 @@ class Cotacao(models.Model):
                    'contato': self.contato,
                    'dtc': self.dtc_fk.to_dict(),
                    'rota': self.rota_fk.to_dict(),
-                   'tabela': self.tabela_fk.toDict()
+                   'tabela': tabela
                    }
         return cotacao
