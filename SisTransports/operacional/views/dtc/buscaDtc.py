@@ -10,6 +10,7 @@ from comercial.classes.cotacao import Cotacao
 def buscaDtc (request):
     if request.method == 'GET':
         return render(request, 'preDtc.html')
+    
     elif request.method == "POST" :
         if request.POST.get('numPed')!='':
             dtc=Dtc()

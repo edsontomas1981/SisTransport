@@ -78,11 +78,12 @@ const geraDadosFormCotacao=()=>{
         dados[$(this).attr('name')] = $(this).val();
     });
 
+    const icmsInclusoCotacao = document.getElementById('icmsInclusoCotacao');
+    const valorEnviado = icmsInclusoCotacao.checked ? 'on' : 'off';
     dados.idPreDtc =$('#numDtc').val()
     dados.idRota = $('#rotasDtc').val()
-    let check = document.getElementById('icmsInclusoCotacao')
-
-    console.log(check)
+    dados.icmsInclusoCotacao = valorEnviado
+    console.log(dados)
 
     return dados
 };

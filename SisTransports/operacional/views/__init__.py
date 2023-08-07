@@ -1,36 +1,29 @@
 from operacional.views.operacional import operacional
 
-from operacional.views.preDtc import preDtc
-from operacional.views.saveDtc import saveDtc
-from operacional.views.buscaDtc import buscaDtc
-from operacional.views.excluiDtc import excluiDtc
-from operacional.views.createDtc import createDtc
-from operacional.views.readDtc import readDtc
-from operacional.views.updateDtc import updateDtc
-from operacional.views.deleteDtc import deleteDtc
+from operacional.views.dtc.preDtc import preDtc
+from operacional.views.dtc.saveDtc import saveDtc
+from operacional.views.dtc.buscaDtc import buscaDtc
+from operacional.views.dtc.excluiDtc import excluiDtc
+from operacional.views.dtc.createDtc import createDtc
+from operacional.views.dtc.readDtc import readDtc
+from operacional.views.dtc.updateDtc import updateDtc
+from operacional.views.dtc.deleteDtc import deleteDtc
 
-from operacional.views.saveColeta import saveColeta
-from operacional.views.deletaColeta import deletaColeta
+from operacional.views.rota.rotas import rotas
+from operacional.views.rota.createRota import createRota
+from operacional.views.rota.readRota import readRota
+from operacional.views.rota.readRotas import readRotas
+from operacional.views.rota.updateRota import updateRota
+from operacional.views.rota.deleteRota import deleteRota
 
-from operacional.views.rotas import rotas
-from operacional.views.createRota import createRota
-from operacional.views.readRota import readRota
-from operacional.views.readRotas import readRotas
-from operacional.views.updateRota import updateRota
-from operacional.views.deleteRota import deleteRota
+from operacional.views.coleta.createColeta import createColeta
+from operacional.views.coleta.readColeta import readColeta
+from operacional.views.coleta.updateColeta import updateColeta
+from operacional.views.coleta.deleteColeta import deleteColeta
+from operacional.views.coleta.saveColeta import saveColeta
+from operacional.views.coleta.deletaColeta import deletaColeta
 
-from operacional.views.createColeta import createColeta
-from operacional.views.readColeta import readColeta
-from operacional.views.updateColeta import updateColeta
-from operacional.views.deleteColeta import deleteColeta
-
-
-
-
-
-
-
-
-
-
-
+from operacional.views.nf.create_nf import create_nf
+from operacional.views.nf.read_nf import read_nf
+from operacional.views.nf.update_nf import update_nf
+from operacional.views.nf.delete_nf import delete_nf

@@ -3,7 +3,7 @@ from django.contrib.auth.decorators import login_required
 from django.http import JsonResponse
 from comercial.classes.tabelaFrete import TabelaFrete 
 from parceiros.classes.parceiros import Parceiros
-from Classes.utils import dprint,checaCamposJson
+from Classes.utils import dprint,checaCamposJson,dpprint
 from comercial.classes.tblFaixa import TabelaFaixa
 from operacional.classes.dtc import Dtc
 from comercial.classes.tabelaFrete import TabelaFrete
@@ -22,11 +22,10 @@ def createCotacao (request):
         resposta = cotacao.selectCotacaoByDtc(data['idPreDtc'])
 
         if resposta['status'] == 200:
-            print('altera')
             altera_cotacao(data)
+            dprint(cotacao.cotacao.tabela_fk)
             return JsonResponse({'status': 201})# Altera cotação
         elif resposta['status'] == 404 :
-            print('cadastra')
             cria_nova_cotacao(data)
             return JsonResponse({'status': 200}) # Gera nova cotação
         else:
@@ -36,7 +35,6 @@ def createCotacao (request):
 def cria_nova_cotacao(data):
         dados=prepara_dados(data)
         cotacao = Cotacao()
-        print('cria_nova_cotacao')
         return cotacao.createCotacao(dados)
 
 def altera_cotacao(data):

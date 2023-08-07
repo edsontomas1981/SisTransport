@@ -2,7 +2,6 @@ var listaTabelas
 
 const carregaTabelasGerais=async()=>{
     let dados = {'idRota':$('#rotasDtc').val()}
-    console.log(dados)
     let conexao = new Conexao('/comercial/readTabelasGeraisPorRota/', dados);
     try {
         const result = await conexao.sendPostRequest();

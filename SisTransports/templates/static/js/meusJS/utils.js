@@ -70,7 +70,6 @@ function capturaDadosNaRowClicada() {
         var data = $(this).find("td").map(function() {
           return $(this).text();
         }).get();
-    
         // Exibe os dados capturados no console
         console.log(data);
       });

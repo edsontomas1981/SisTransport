@@ -40,15 +40,15 @@ class Cotacao:
         except:
             return {'status': 400, 'mensagem': 'Erro interno'}
         
-    def atualizaCotacao(self,dados):
+    def atualizaCotacao(self, dados):
         self.cotacao.rota_fk = dados['rota']
         self.cotacao.numNf = dados['nfCotacao']
         self.cotacao.nome = dados['nomeCotacao']
         self.cotacao.contato = dados['contatoCotacao']
         self.cotacao.observacao = dados['obsCotacao']
         self.cotacao.peso = int(dados['pesoCotacao'])
-        self.cotacao.qtde  = int(dados['volumeCotacao'])
-        self.cotacao.tabela_fk = dados['tabela_frete'] if isinstance(dados['tabela_frete'], str) and dados['tabela_frete'] != '' else None
+        self.cotacao.qtde = int(dados['volumeCotacao'])
+        self.cotacao.tabela_fk = None if dados['tabela_frete'].id == None else dados['tabela_frete']
         self.cotacao.formaDeCalculo = dados['tipoTabelaCotacao']
         self.cotacao.pesoCalcular = float(dados['pesoFaturadoCotacao'])
         self.cotacao.vlrNf = toFloat(dados['valorNfCotacao'])
@@ -65,13 +65,12 @@ class Cotacao:
         self.cotacao.baseDeCalculo = toFloat(dados['baseCalculoCotacao'])
         self.cotacao.aliquota = toFloat(dados['aliquotaCotacao'])
         self.cotacao.icmsRS = toFloat(dados['icmsCotacao'])
-        dprint(dados['icmsInclusoCotacao'])
         self.cotacao.icmsIncluso = checkBox(dados['icmsInclusoCotacao'])
         self.cotacao.pesoFaturado = dados['pesoFaturadoCotacao']
         self.cotacao.vlrColeta = toFloat(dados['vlrColetaCotacao'])
-        self.cotacao.dataHora=datetime.now()
-        self.cotacao.save()                  
-        
+        self.cotacao.dataHora = datetime.now()
+        self.cotacao.save()
+
     def criaCotacao(self, dados):
         try:
             self.cotacao.dtc_fk = dados['dtc']

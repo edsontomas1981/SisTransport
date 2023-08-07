@@ -50,7 +50,11 @@ const calculoCotacao= async (tabela,vlrColeta)=>{
     $('#pesoFaturadoCotacao').val(calcula.pesoFaturado)
     populaFreteCotacao(calcula.composicaoFrete)
     recalculaFreteCotacao()//mudar nome funcao na verdade ela não recalcula ela soma os valores apos preenchidos
+    if(tabela.descricao){
     preencheTabelaEmUso(tabela.descricao)
+    }else{
+        preencheTabelaEmUso('Frete informado')
+    }
 }
 
 const carregaFreteInformado=()=>{
@@ -134,13 +138,20 @@ const populaCotacao = async(response) => {
     $('#baseCalculoCotacao').val(response.baseDeCalculo);
     $('#aliquotaCotacao').val(response.aliquota);
     $('#icmsCotacao').val(response.icmsRS);
+    $('#icmsInclusoCotacao').prop('checked', response.icmsIncluso);
     $('#freteTotalCotacao').val(response.totalFrete);
-    preencheTabelaEmUso(response.tabela.descricao)
+    
+    if(response.tabela){
+        preencheTabelaEmUso(response.tabela.descricao)
+        }else{
+            preencheTabelaEmUso('Frete informado')
+        }
 };
 
 const preencheTabelaEmUso = (descricaoTabela)=>{
+    console.log(descricaoTabela)
     let tabelaEmUso = document.getElementById("tabelaEmUso")
-    tabelaEmUso.textContent = "Tabela selecionada : " + descricaoTabela
+    tabelaEmUso.textContent = " | Tabela selecionada : " + descricaoTabela
 }
 
   const limpaCotacao=()=>{
