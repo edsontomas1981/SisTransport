@@ -45,17 +45,19 @@ class Nota_fiscal_CRUD:
     def create(self, dados):
         self.obj_nota_fiscal.chave_acesso = dados['chave_acesso']
         self.obj_nota_fiscal.num_nf = dados['num_nf']
-        self.obj_nota_fiscal.data_emissao_nf = dados['data_emissao_nf']
+        self.obj_nota_fiscal.data_emissao = dados['data_emissao']
         self.obj_nota_fiscal.natureza = dados['natureza']
         self.obj_nota_fiscal.especie = dados['especie']
         self.obj_nota_fiscal.tipo_documento = dados['tipo_documento']
-        self.obj_nota_fiscal.volumes = dados['volumes']
+        self.obj_nota_fiscal.volume = dados['volume']
         self.obj_nota_fiscal.peso = dados['peso']
         self.obj_nota_fiscal.valor_nf = toFloat(dados['valor_nf'])
         self.obj_nota_fiscal.m3 = toFloat(dados['m3'])
+        self.obj_nota_fiscal.dtc_fk = dados['dtc']  # Adicionando campo dtc
         self.obj_nota_fiscal.usuario_cadastro = dados['usuario_cadastro']
         self.obj_nota_fiscal.usuario_ultima_atualizacao = dados['usuario_ultima_atualizacao']
-        # Preencha outros campos relevantes
+        self.obj_nota_fiscal.data_cadastro = dados['data_cadastro']  # Adicionando campo data_cadastro
+        self.obj_nota_fiscal.data_ultima_atualizacao = dados['data_ultima_atualizacao']  # Adicionando campo data_ultima_atualizacao
         self.obj_nota_fiscal.save()
 
     def update(self, dados):

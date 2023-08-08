@@ -1,97 +1,126 @@
+<form id="formNf">
 <div class="row">
     <div class="col-12">
-        <div class="row pl-0">
-            <div class="form-floating mb-3 col-sm-4 pl-1" >
-                <input type="text" class="form-control" id="chaveAcessoNf" placeholder="Data de emissão">
-                <label for="chaveAcessoNf" >Chave de  acesso</label>
-            </div>
+            <div class="row pl-0">
+                <div class="form-floating mb-3 col-sm-4 pl-1" >
+                    <input type="text" class="form-control" name="chaveAcessoNf" id="chaveAcessoNf" data-nome="Chave de Acesso"  maxlength="44" required>
+                    <label for="chaveAcessoNf" >Chave de  acesso</label>
+                </div>
+                <div class="col-2">
+                    <div class="form-floating mb-3">
+                        <input type="text" class="form-control" name="numNf" id="numNf" data-nome="Nº Nota Fiscal" required>
+                        <label for="numNf">Nº Nota Fiscal</label>
+                    </div>
+                </div>
+                <div class="col-2">
+                    <div class="form-floating mb-3">
+                        <input type="date" class="form-control" name="dataEmissaoNf" id="dataEmissaoNf" data-nome="Data de emissão" required>
+                        <label for="dataEmissaoNf">Data de emissão</label>
+                    </div>
+                </div>
+                <div class="col-2">
+                    <div class="form-floating mb-3">
+                        <select class="form-select" name="natureza" id="natureza" aria-label="natureza" data-nome="Natureza" required>
+                            <option value="" selected>Selecione uma opção</option>
+                            <option value="1">Alimentos</option>
+                            <option value="2">Produtos químicos</option>
+                            <option value="3">Equipamentos eletrônicos</option>
+                            <option value="4">Vestuário</option>
+                            <option value="5">Materiais de construção</option>
+                            <option value="6">Papelaria e material de escritório</option>
+                            <option value="7">Peças automotivas</option>
+                            <option value="8">Móveis</option>
+                            <option value="9">Produtos farmacêuticos</option>
+                            <option value="10">Produtos têxteis</option>
+                            <option value="11">Diversos</option>
+                            <option value="12">Produtos de limpeza</option>
+                            <option value="13">Embalagens</option>
+                            <option value="14">Produtos de higiene pessoal</option>
+                            <option value="15">Acessórios esportivos</option>
+                            <option value="16">Produtos de jardinagem</option>
+                            <option value="17">Brinquedos</option>
+                            <option value="18">Produtos de beleza</option>
+                            <option value="19">Produtos de cuidados com o lar</option>
+                        </select>
+                        <label for="especieNf">Natureza</label>
 
-            <div class="col-2">
-                <div class="form-floating mb-3">
-                    <input type="text" class="form-control" id="numNf" placeholder="Data de emissão">
-                    <label for="numNf">Nº Nota Fiscal</label>
+                    </div>
                 </div>
+                <div class="col-2">
+                    <div class="form-floating mb-3">
+                        <select class="form-select" name="especieNf" id="especieNf" aria-label="especie nf" data-nome="Espécie" data-nome="Espécie" required>
+                            <option value="" selected>Selecione uma opção</option>
+                            <option value="1">Caixas</option>
+                            <option value="2">Sacos</option>
+                            <option value="3">Amarrados</option>
+                            <option value="4">Paletes</option>
+                            <option value="5">Tambores</option>
+                            <option value="6">Tubos</option>
+                            <option value="7">Bombonas</option>
+                            <option value="8">Barris</option>
+                            <option value="9">Outros</option>
+                        </select>
+                        <label for="especieNf">Espécie</label>
+                    </div>
+                </div>            
+            </div> 
+        </div>
+        <div class="col-2 pl-1">
+            <div class="form-floating mb-3">
+                <select class="form-select" name="tipoDocumento" id="tipoDocumento" aria-label="Tipo de Documento" data-nome="Tipo de Documento" required>
+                <option selected>Tipo de Documento</option>
+                <option value="1">NF-e</option>
+                <option value="2">Outros</option>
+                </select>
+                <label for="Tipo Documento">Tipo de Documento</label>
             </div>
-            <div class="col-2">
-                <div class="form-floating mb-3">
-                    <input type="date" class="form-control" id="dataEmissaoNf" placeholder="Data de emissão">
-                    <label for="dataEmissaoNf">Data de emissão</label>
-                </div>
-            </div>
-            <div class="col-2">
-                <div class="form-floating mb-3">
-                    <input type="text" class="form-control" id="naturezNf" placeholder="Natureza">
-                    <label for="naturezNf">Natureza</label>
-                </div>
-            </div>
-            <div class="col-2">
-                <div class="form-floating mb-3">
-                    <select class="form-select" id="especieNf" aria-label="especie nf">
-                      <option selected>Espécie</option>
-                      <option value="1">One</option>
-                      <option value="2">Two</option>
-                      <option value="3">Three</option>
-                    </select>
-                    <label for="especieNf">Espécie</label>
-                  </div>
-            </div>            
         </div> 
-    </div>
-    <div class="col-2 pl-1">
-        <div class="form-floating mb-3">
-            <select class="form-select" id="tipoDocumento" aria-label="especie nf">
-              <option selected>Tipo de Documento</option>
-              <option value="1">NF-e</option>
-              <option value="2">Outros</option>
-            </select>
-            <label for="Tipo Documento">Espécie</label>
-          </div>
-    </div> 
-    <div class="col-2">
-        <div class="form-floating mb-3">
-            <input type="text" class="form-control" id="volumeNf" placeholder="Data de emissão">
-            <label for="volumeNf">Vols</label>
-        </div>
-    </div>
-    <div class="col-2">
-        <div class="form-floating mb-3">
-            <input type="text" class="form-control" id="pesoNf" placeholder="Data de emissão">
-            <label for="pesoNf">Peso</label>
-        </div>
-    </div>   
-    <div class="col-sm-2 mb-3 pr-1 pl-1 form-group form-floating">
-        <div class="input-group form-group form-floating">
-            <input type="text" class="form-control small  form-control-sm" id='resultM3Peso' 
-            name='resultM3Peso' placeholder="M³" aria-label="Search" aria-describedby="basic-addon2">
-            <label class="text-secondary" for="resultM3Peso">M³:</label>
-            <div class="input-group-append">
-                <a class="btn btn-primary" data-bs-toggle="modal" id="btnM3Peso"
-                data-bs-target="#modalCalcM3">
-                    M³
-                </a>
+        <div class="col-2">
+            <div class="form-floating mb-3">
+                <input type="text" class="form-control" name="qtdeNf" id="qtdeNf" data-nome="Quantidade">
+                <label for="volumeNf">Quantidade</label>
             </div>
         </div>
-    </div>
-    <div class="col-2">
-        <div class="form-floating mb-3">
-            <input type="text" class="form-control" id="Valor Nf" placeholder="Data de emissão">
-            <label for="Valor Nf">R$</label>
-        </div>
-    </div>    
-    <div class="col-2 pl-0"  align="right"> 
-        <div class="input-group col- mb-3 mt-1 ">
-            <button type="button" class="btn btn-success"
-            data-toggle="tooltip" data-placement="top" title="Salvar" id="btnSalvaColeta">
-            <i class="ti-save"></i>
-            </button>
-            <button type="button" class="btn btn-danger" 
-                data-toggle="tooltip" data-placement="top" title="Excluir" 
-                id="btnExcluiColeta">
-                <i class="ti-trash"></i>
-            </button>    
+        <div class="col-2">
+            <div class="form-floating mb-3">
+                <input type="text" class="form-control" name="pesoNf" id="pesoNf" data-nome="Peso">
+                <label for="pesoNf">Peso</label>
+            </div>
         </div>   
+        <div class="col-sm-2 mb-3 pr-1 pl-1 form-group form-floating">
+            <div class="input-group form-group form-floating">
+                <input type="text" class="form-control small  form-control-sm" name='resultM3Peso' id='resultM3Peso' 
+                name='resultM3Peso' data-nome="M³" aria-label="Search" aria-describedby="basic-addon2">
+                <label class="text-secondary" for="resultM3Peso">M³:</label>
+                <div class="input-group-append">
+                    <a class="btn btn-primary" data-bs-toggle="modal" id="btnM3Peso"
+                    data-bs-target="#modalCalcM3">
+                        M³
+                    </a>
+                </div>
+            </div>
+        </div>
+        <div class="col-2">
+            <div class="form-floating mb-3">
+                <input type="text" class="form-control" name="valorNf" id="valorNf" data-nome="Valor da Nota Fiscal" required>
+                <label for="valorNf">R$</label>
+            </div>
+        </div>
+
+        <div class="col-2 pl-0"  align="right"> 
+            <div class="input-group col- mb-3 mt-1 ">
+                <button type="button" class="btn btn-success"
+                data-toggle="tooltip" data-placement="top" title="Salvar" id="btnSalvaNf">
+                <i class="ti-save"></i>
+                </button>
+                <button type="button" class="btn btn-danger" 
+                    data-toggle="tooltip" data-placement="top" title="Excluir" 
+                    id="btnExcluiNf">
+                    <i class="ti-trash"></i>
+                </button>    
+            </div>  
+        </div>
     </div>
-    
     <div class="col-12">
         <table class="table table-sm">
             <thead>
@@ -123,3 +152,4 @@
           </table>        
     </div>
 </div>
+</form> 
