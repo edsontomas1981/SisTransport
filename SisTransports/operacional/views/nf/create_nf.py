@@ -21,9 +21,21 @@ def create_nf(request):
         dados = prepara_dados(data, request)
         dados['dtc'] = dtc.dtc
 
+
         nf = Nota_fiscal_CRUD()
-        nf.create(dados)
-        return JsonResponse({'status': 200})  # Cadastro efetuado com sucesso
+        nf_existe = nf.is_nf_linked_to_dtc(data['chaveAcessoNf'],dtc.dtc.id)
+
+        if nf_existe == 201:
+            nf.update(dados)
+            return JsonResponse({'status': 201,'nf':nf.carrega_nfs(dtc.dtc.id)}) 
+        elif nf_existe == 200:
+            nf.create(dados)
+            
+            return JsonResponse({'status': 200,'nf':nf.carrega_nfs(dtc.dtc.id)}) 
+        else:
+            return JsonResponse({'status': 404})
+
+
 
 def prepara_dados(data, request):
     dados = {

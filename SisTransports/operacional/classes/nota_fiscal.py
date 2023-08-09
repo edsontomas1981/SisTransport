@@ -5,19 +5,6 @@ class Nota_fiscal_CRUD:
     def __init__(self):
         self.obj_nota_fiscal = MdlNotaFiscal()
 
-    def save_or_update(self, dados):
-        self.obj_nota_fiscal.chave_acesso = dados['chave_acesso']
-        self.obj_nota_fiscal.num_nf = dados['num_nf']
-        self.obj_nota_fiscal.data_emissao_nf = dados['data_emissao_nf']
-        self.obj_nota_fiscal.natureza_nf = dados['natureza_nf']
-        self.obj_nota_fiscal.especie_nf = dados['especie_nf']
-        self.obj_nota_fiscal.tipo_documento = dados['tipo_documento']
-        self.obj_nota_fiscal.volume_nf = dados['volume_nf']
-        self.obj_nota_fiscal.peso_nf = dados['peso_nf']
-        self.obj_nota_fiscal.m3_nf = dados['m3_nf']
-        self.obj_nota_fiscal.valor_nf = toFloat(dados['valor_nf'])
-        self.obj_nota_fiscal.save()
-
     def read_by_id(self, nota_fiscal_id):
         if MdlNotaFiscal.objects.filter(id=nota_fiscal_id).exists():
             self.obj_nota_fiscal = MdlNotaFiscal.objects.get(id=nota_fiscal_id)
@@ -61,20 +48,33 @@ class Nota_fiscal_CRUD:
         self.obj_nota_fiscal.save()
 
     def update(self, dados):
-        if self.obj_nota_fiscal.pk:
-            self.obj_nota_fiscal.chave_acesso = dados.get('chave_acesso', self.obj_nota_fiscal.chave_acesso)
-            self.obj_nota_fiscal.num_nf = dados.get('num_nf', self.obj_nota_fiscal.num_nf)
-            self.obj_nota_fiscal.data_emissao_nf = dados.get('data_emissao_nf', self.obj_nota_fiscal.data_emissao_nf)
-            self.obj_nota_fiscal.natureza = dados.get('natureza', self.obj_nota_fiscal.natureza)
-            self.obj_nota_fiscal.especie = dados.get('especie', self.obj_nota_fiscal.especie)
-            self.obj_nota_fiscal.tipo_documento = dados.get('tipo_documento', self.obj_nota_fiscal.tipo_documento)
-            self.obj_nota_fiscal.volumes = dados.get('volumes', self.obj_nota_fiscal.volumes)
-            self.obj_nota_fiscal.peso = dados.get('peso', self.obj_nota_fiscal.peso)
-            self.obj_nota_fiscal.valor_nf = toFloat(dados.get('valor_nf', self.obj_nota_fiscal.valor_nf))
-            self.obj_nota_fiscal.m3 = toFloat(dados.get('m3', self.obj_nota_fiscal.m3))
-            self.obj_nota_fiscal.usuario_ultima_atualizacao = dados.get('usuario_ultima_atualizacao', self.obj_nota_fiscal.usuario_ultima_atualizacao)
-            # Atualize outros campos relevantes
-            self.obj_nota_fiscal.save()
+        try:
+            if MdlNotaFiscal.objects.filter(chave_acesso=dados['chave_acesso'], dtc_fk=dados['dtc']).exists():
+                self.obj_nota_fiscal = MdlNotaFiscal.objects.get(chave_acesso=dados['chave_acesso'], dtc_fk=dados['dtc'])
+                self.obj_nota_fiscal.chave_acesso = dados['chave_acesso']
+                self.obj_nota_fiscal.num_nf = dados['num_nf']
+                self.obj_nota_fiscal.data_emissao = dados['data_emissao']
+                self.obj_nota_fiscal.natureza = dados['natureza']
+                self.obj_nota_fiscal.especie = dados['especie']
+                self.obj_nota_fiscal.tipo_documento = dados['tipo_documento']
+                self.obj_nota_fiscal.volume = dados['volume']
+                self.obj_nota_fiscal.peso = dados['peso']
+                self.obj_nota_fiscal.valor_nf = toFloat(dados['valor_nf'])
+                self.obj_nota_fiscal.m3 = toFloat(dados['m3'])
+                self.obj_nota_fiscal.dtc_fk = dados['dtc']  # Adicionando campo dtc
+                self.obj_nota_fiscal.usuario_ultima_atualizacao = dados['usuario_ultima_atualizacao']
+                self.obj_nota_fiscal.data_cadastro = dados['data_cadastro']  # Adicionando campo data_cadastro
+                self.obj_nota_fiscal.data_ultima_atualizacao = dados['data_ultima_atualizacao']  # Adicionando campo data_ultima_atualizacao
+                self.obj_nota_fiscal.save()
+            
+        except MdlNotaFiscal.DoesNotExist:
+            print('objeto nao existe')  # A nota fiscal não está vinculada ao DTC especificado, não faz nada
+
+    def carrega_nfs(self, id_dtc):
+        nfs = self.list_by_dtc(id_dtc)
+        lista_nfs = [nf.to_dict() for nf in nfs]
+        return lista_nfs
+
 
     def delete(self):
         if self.obj_nota_fiscal.pk:
@@ -93,4 +93,27 @@ class Nota_fiscal_CRUD:
         return MdlNotaFiscal.objects.filter(tipo_documento=tipo_documento)
 
     def list_by_date_range(self, start_date, end_date):
-        return MdlNotaFiscal.objects.filter(data_emissao_nf__range=(start_date, end_date))    
+        return MdlNotaFiscal.objects.filter(data_emissao_nf__range=(start_date, end_date))  
+
+    def is_nf_linked_to_dtc(self, chave_acesso, dtc_id):
+        print(chave_acesso,dtc_id)
+        try:
+            if MdlNotaFiscal.objects.filter(chave_acesso=chave_acesso, dtc_fk=dtc_id).exists():
+                return 201  # A nota fiscal está vinculada ao DTC especificado
+            else:
+                return 200  # A nota fiscal não está vinculada ao DTC especificado
+        except MdlNotaFiscal.DoesNotExist:
+            return 404  # A nota fiscal não está vinculada ao DTC especificado
+    
+    def read_by_dtc_chave(self, chave_acesso, dtc_id):
+        try:
+            print('Dtc Id',dtc_id)
+            if MdlNotaFiscal.objects.filter(chave_acesso=chave_acesso, dtc_fk=dtc_id).exists():
+                self.obj_nota_fiscal=MdlNotaFiscal.objects.get(chave_acesso=chave_acesso, dtc_fk=dtc_id)
+        except MdlNotaFiscal.DoesNotExist:
+            return 404  # A nota fiscal não está vinculada ao DTC especificado        
+    
+    def list_by_dtc(self, dtc_id):
+        return MdlNotaFiscal.objects.filter(dtc_fk=dtc_id)
+
+      

@@ -2,6 +2,8 @@ from django.db import models
 from django.contrib.auth.models import User
 from operacional.models.dtc import Dtc
 from django.conf import settings
+from datetime import datetime
+
 
 
 class Nota_fiscal(models.Model):

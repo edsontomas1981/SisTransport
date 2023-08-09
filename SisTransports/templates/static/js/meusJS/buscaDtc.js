@@ -32,6 +32,10 @@ const carregaDtc=(response)=>{
     if (response.cotacao){
         populaCotacao(response.cotacao)
     }
+    if(response.notasFiscais){
+        console.log('preencherTabelaNf')
+        preencherTabelaNf(response.notasFiscais)
+    }
     if(response.dtc.tomador && response.dtc.tomador.cnpj_cpf){
         $('#cnpjTomador').val(response.dtc.tomador.cnpj_cpf);
         $('#razaoTomador').val(response.dtc.tomador.raz_soc);
@@ -195,6 +199,7 @@ function buscaDtc() {
         type: 'POST',
         data: postData,
         success: function(response) {
+            console.log (response)
             limpaDtc()
             carregaDtc(response)
         },

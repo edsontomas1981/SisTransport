@@ -5,6 +5,7 @@ from Classes.dtc import Dtc
 from Classes.utils import dprint,dpprint
 from comercial.classes.tabelaFrete import TabelaFrete
 from comercial.classes.cotacao import Cotacao
+from operacional.classes.nota_fiscal import Nota_fiscal_CRUD
 
 @login_required(login_url='/auth/entrar/')
 def buscaDtc (request):
@@ -19,11 +20,14 @@ def buscaDtc (request):
                 tabelas=tabela.get_tabelas_por_parceiro(dtc.dtc.tomador_fk)
                 cotacao = Cotacao()
                 cot=cotacao.selectCotacaoByDtc(request.POST.get('numPed'))
+                notas_fiscais = Nota_fiscal_CRUD()
+                
                 return JsonResponse({
                             'status': 200,
                             'dtc': dtc.to_dict() if dtc is not None else None,
                             'cotacao': cot['cotacao'],
                             'coleta': dtc.dtc.coleta_fk.to_dict() if dtc is not None and dtc.dtc.coleta_fk is not None else None,
+                            'notasFiscais':notas_fiscais.carrega_nfs(dtc.dtc.id),
                             'tabelas': tabelas                    
                         })
             else:
