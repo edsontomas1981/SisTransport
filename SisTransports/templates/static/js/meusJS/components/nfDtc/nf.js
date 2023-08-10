@@ -2,7 +2,6 @@ const gereDadosNf = () => {
     let dados = {};
     $('#formNf :input').each(function() {
         const id = $(this).attr('id');
-        
         if ($(this).prop('required') && $(this).val() === '') {
             msgVazioNf($(this).data('nome'))
             dados=false
@@ -10,7 +9,6 @@ const gereDadosNf = () => {
         }
         dados[id] = $(this).val();
     });
-
     return dados;
 }
 
@@ -27,7 +25,9 @@ const limpaNf = async ()=>{
     $('#resultM3Peso').val('')
     $('#valorNf').val('')    
     let result = await loadNfs($('#numDtc').val())
+    if (result){
     preencherTabelaNf(result.nfs)
+    }
 }
 
 
@@ -107,6 +107,7 @@ const populaFormNf = (nota)=>{
 }
 
 
+
 // Função para capturar o clique nos botões Excluir e Alterar
 function capturarClique(event) {
     const button = event.target;
@@ -114,7 +115,6 @@ function capturarClique(event) {
 
     if (button.classList.contains('btn-danger')) {
         // Clique no botão Excluir
-        preencherFormularioNf(row);
         row.remove(); // Remover a linha da tabela
     } else if (button.classList.contains('btn-primary')) {
         // Clique no botão Alterar

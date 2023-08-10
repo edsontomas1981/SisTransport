@@ -10,12 +10,14 @@ let conexao = new Conexao('/operacional/readNf/', data);
 }
 
 const loadNfs = async (idDtc)=>{
-    let data = {'idDtc':idDtc}
-    let conexao = new Conexao('/operacional/readNfDtc/', data);
-        try {
-            const result = await conexao.sendPostRequest();
-            return result
-        } catch (error) {
-            console.error(error); // Imprime a mensagem de erro
-    }    
+    if(idDtc){
+        let data = {'idDtc':idDtc}
+        let conexao = new Conexao('/operacional/readNfDtc/', data);
+            try {
+                const result = await conexao.sendPostRequest();
+                return result
+            } catch (error) {
+                console.error(error); // Imprime a mensagem de erro
+        }    
+    }
 }

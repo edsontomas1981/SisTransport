@@ -5,14 +5,8 @@ class Nota_fiscal_CRUD:
     def __init__(self):
         self.obj_nota_fiscal = MdlNotaFiscal()
 
-    def read_by_id(self, nota_fiscal_id):
-        if MdlNotaFiscal.objects.filter(id=nota_fiscal_id).exists():
-            self.obj_nota_fiscal = MdlNotaFiscal.objects.get(id=nota_fiscal_id)
-
-    def delete(self, nota_fiscal_id):
-        if MdlNotaFiscal.objects.filter(id=nota_fiscal_id).exists():
-            self.obj_nota_fiscal = MdlNotaFiscal.objects.get(id=nota_fiscal_id)
-            self.obj_nota_fiscal.delete()
+    def delete(self):
+        self.obj_nota_fiscal.delete()
 
     def list_all(self):
         return MdlNotaFiscal.objects.all()
@@ -75,11 +69,6 @@ class Nota_fiscal_CRUD:
         lista_nfs = [nf.to_dict() for nf in nfs]
         return lista_nfs
 
-
-    def delete(self):
-        if self.obj_nota_fiscal.pk:
-            self.obj_nota_fiscal.delete()
-
     def read_by_id(self, nota_id):
         try:
             self.obj_nota_fiscal = MdlNotaFiscal.objects.get(id=nota_id)
@@ -107,7 +96,6 @@ class Nota_fiscal_CRUD:
     
     def read_by_dtc_chave(self, chave_acesso, dtc_id):
         try:
-            print('Dtc Id',dtc_id)
             if MdlNotaFiscal.objects.filter(chave_acesso=chave_acesso, dtc_fk=dtc_id).exists():
                 self.obj_nota_fiscal=MdlNotaFiscal.objects.get(chave_acesso=chave_acesso, dtc_fk=dtc_id)
         except MdlNotaFiscal.DoesNotExist:
