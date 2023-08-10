@@ -27,3 +27,4 @@ from operacional.views.nf.create_nf import create_nf
 from operacional.views.nf.read_nf import read_nf
 from operacional.views.nf.update_nf import update_nf
 from operacional.views.nf.delete_nf import delete_nf
+from operacional.views.nf.read_nfs_by_dtc import read_nfs_by_dtc

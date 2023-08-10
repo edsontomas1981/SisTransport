@@ -235,6 +235,28 @@ const formatarTelefone=(input)=> {
       telefoneFormatado += mascara[i];
     }
   }
-
   input.value = telefoneFormatado;
 }
+
+
+
+// Controla o comportamento das tabs
+let tabs = document.querySelectorAll('.nav-link');
+
+// Adiciona um ouvinte de evento para cada guia
+tabs.forEach(tab => {
+    tab.addEventListener('click', () => {
+        // Obtém o ID do conteúdo da guia associado
+        let tabContentId = tab.getAttribute('aria-controls');
+        
+        switch (tabContentId) {
+            case 'pills-nf':
+                limparTabelaNf()
+                limpaNf()
+                break;
+            default:
+                break;
+        }
+
+    });
+});

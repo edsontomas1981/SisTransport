@@ -14,7 +14,7 @@ const gereDadosNf = () => {
     return dados;
 }
 
-const limpaNf = ()=>{
+const limpaNf = async ()=>{
     $('#chaveAcessoNf').val('')
     $('#numNf').val('')
     $('#dataEmissaoNf').val('')
@@ -25,6 +25,9 @@ const limpaNf = ()=>{
     $('#qtdeNf').val('')
     $('#pesoNf').val('')
     $('#resultM3Peso').val('')
+    $('#valorNf').val('')    
+    let result = await loadNfs($('#numDtc').val())
+    preencherTabelaNf(result.nfs)
 }
 
 
@@ -123,7 +126,14 @@ function capturarClique(event) {
 const table = document.querySelector('.table');
 table.addEventListener('click', capturarClique);
 
-
+function limparTabelaNf() {
+    let tabela = document.getElementById('tabelaNfs'); // Seleciona a tabela pela classe
+    let tbody = tabela.querySelector('tbody'); // Seleciona o corpo da tabela
+    // Remove todos os elementos <tr> (linhas) do corpo da tabela
+    while (tbody.firstChild) {
+        tbody.removeChild(tbody.firstChild);
+    }
+}
 
 
 
