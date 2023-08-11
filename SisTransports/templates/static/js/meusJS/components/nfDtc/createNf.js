@@ -7,6 +7,10 @@ btnSalvaNf.addEventListener('click',async (e)=>{
         let conexao = new Conexao('/operacional/createNf/', data);
         try {
             const result = await conexao.sendPostRequest();
+            console.log(result)
+            msgCadastraAlteraNf(result)
+            preencherTabelaNf(result.nf)
+            limpaNf();
             // Imprime a resposta JSON da solicitação POST
         } catch (error) {
             console.error(error); // Imprime a mensagem de erro
@@ -37,13 +41,12 @@ const msgCadastraAlteraNf =(response)=>{
 }
 
 const msgNf =(mensagem)=>{
-
   Swal.fire({
     position: 'top-end',
     icon: 'success',
     title: `A nota fiscal foi ${mensagem} com sucesso!`,
     showConfirmButton: false,
-    timer: 1500
+    timer: 500
   })
 
 }

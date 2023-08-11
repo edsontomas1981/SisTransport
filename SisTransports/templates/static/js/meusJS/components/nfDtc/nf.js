@@ -24,13 +24,7 @@ const limpaNf = async ()=>{
     $('#pesoNf').val('')
     $('#resultM3Peso').val('')
     $('#valorNf').val('')    
-    let result = await loadNfs($('#numDtc').val())
-    if (result){
-    preencherTabelaNf(result.nfs)
-    }
 }
-
-
 
 const msgVazioNf = (campo) => {
     Swal.fire({
@@ -64,8 +58,15 @@ valorNfInput.addEventListener('input', function() {
 
 
 // Função para preencher a tabela com os dados
-const preencherTabelaNf=(dados)=> {
-    const tbody = document.querySelector('.table tbody');
+const preencherTabelaNf = (dados) => {
+    limparTabelaNf()
+    const tbody = document.querySelector('#tabelaNfs tbody');
+    if (!dados || dados.length === 0) {
+        // Caso não haja dados informados, você pode tomar alguma ação aqui
+        console.log('Não há dados para preencher a tabela.');
+        return;
+    }
+
     dados.forEach(nf => {
         const row = document.createElement('tr');
         row.innerHTML = `
@@ -108,19 +109,15 @@ const populaFormNf = (nota)=>{
 
 
 
-// Função para capturar o clique nos botões Excluir e Alterar
-function capturarClique(event) {
-    const button = event.target;
-    const row = button.closest('tr');
-
-    if (button.classList.contains('btn-danger')) {
-        // Clique no botão Excluir
-        row.remove(); // Remover a linha da tabela
-    } else if (button.classList.contains('btn-primary')) {
-        // Clique no botão Alterar
-        preencherFormularioNf(row); // Preencher o formulário com os dados da linha
-    }
-}
+// // Função para capturar o clique nos botões Excluir e Alterar
+ function capturarClique(event) {
+     const button = event.target;
+     const row = button.closest('tr');
+       if (button.classList.contains('btn-primary')) {
+         // Clique no botão Alterar
+         preencherFormularioNf(row); // Preencher o formulário com os dados da linha
+     }
+ }
 
 // Adicionar os manipuladores de evento aos botões Excluir e Alterar
 const table = document.querySelector('.table');
@@ -134,6 +131,16 @@ function limparTabelaNf() {
         tbody.removeChild(tbody.firstChild);
     }
 }
+
+document.getElementById("resultM3Nf").addEventListener('keydown',(e)=>{
+    console.log(1)
+    // Verificar se a tecla Shift e F1 foram pressionadas
+
+    if (e.shiftKey && e.key === "F1") {
+        textResultadoM3 = 'resultM3Nf';
+        $("#modalCalcM3").modal("show");
+    }
+});
 
 
 

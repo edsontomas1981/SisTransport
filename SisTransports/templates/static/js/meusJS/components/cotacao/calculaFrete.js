@@ -117,7 +117,6 @@ $('.calculoCotacao').on('change',()=>{
 })
 
 const populaCotacao = async(response) => {
-    console.log(response)
     $('#nomeCotacao').val(response.nome);
     $('#contatoCotacao').val(response.contato);
     $('#nfCotacao').val(response.numNf);
@@ -149,7 +148,6 @@ const populaCotacao = async(response) => {
 };
 
 const preencheTabelaEmUso = (descricaoTabela)=>{
-    console.log(descricaoTabela)
     let tabelaEmUso = document.getElementById("tabelaEmUso")
     tabelaEmUso.textContent = " | Tabela selecionada : " + descricaoTabela
 }

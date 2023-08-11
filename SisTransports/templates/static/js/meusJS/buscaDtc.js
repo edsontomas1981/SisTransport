@@ -1,44 +1,53 @@
 const carregaDtc=(response)=>{
     limpaDtc()
-    $('#numDtc').val(response.dtc.id)
-    if (response.dtc.remetente){
-        const remetenteDtc = new Parceiro(response.dtc.remetente.cnpj_cpf,'Rem');
-        remetenteDtc.readParceiro();
-        remetenteDtc.populaCampos();
-     }
-    if (response.dtc.destinatario){
-        const destinatarioDtc= new Parceiro(response.dtc.destinatario.cnpj_cpf,'Dest');
-        destinatarioDtc.readParceiro();
-        destinatarioDtc.populaCampos();
-     }
+    if (response.status == 300){        
+        Swal.fire({
+        position: 'top-end',
+        icon: 'error',
+        title: 'Dtc não localizado!',
+        showConfirmButton: false,
+        timer: 1500
+      })}else{
+        $('#numDtc').val(response.dtc.id)
+        
+        if (response.dtc.remetente){
+            const remetenteDtc = new Parceiro(response.dtc.remetente.cnpj_cpf,'Rem');
+            remetenteDtc.readParceiro();
+            remetenteDtc.populaCampos();
+        }
+        if (response.dtc.destinatario){
+            const destinatarioDtc= new Parceiro(response.dtc.destinatario.cnpj_cpf,'Dest');
+            destinatarioDtc.readParceiro();
+            destinatarioDtc.populaCampos();
+        }
 
-    if (response.dtc.consignatario){
-        const consignatarioDtc = new Parceiro(response.dtc.consignatario.cnpj_cpf,'Consig');
-        consignatarioDtc.readParceiro();
-        consignatarioDtc.populaCampos();
-    }
+        if (response.dtc.consignatario){
+            const consignatarioDtc = new Parceiro(response.dtc.consignatario.cnpj_cpf,'Consig');
+            consignatarioDtc.readParceiro();
+            consignatarioDtc.populaCampos();
+        }
 
-    if (response.dtc.tipoFrete){
-     $('#modalidadeFrete').val(response.dtc.tipoFrete)
-    }
+        if (response.dtc.tipoFrete){
+        $('#modalidadeFrete').val(response.dtc.tipoFrete)
+        }
 
-    if (response.dtc.rota){
-        $('#rotasDtc').val(response.dtc.rota.id)
-       }
-    
-    if (response.dtc.coleta){
-        completaColeta(response.dtc.coleta)
-    }
-    if (response.cotacao){
-        populaCotacao(response.cotacao)
-    }
-    if(response.notasFiscais){
-        console.log('preencherTabelaNf')
-        preencherTabelaNf(response.notasFiscais)
-    }
-    if(response.dtc.tomador && response.dtc.tomador.cnpj_cpf){
-        $('#cnpjTomador').val(response.dtc.tomador.cnpj_cpf);
-        $('#razaoTomador').val(response.dtc.tomador.raz_soc);
+        if (response.dtc.rota){
+            $('#rotasDtc').val(response.dtc.rota.id)
+        }
+        
+        if (response.dtc.coleta){
+            completaColeta(response.dtc.coleta)
+        }
+        if (response.cotacao){
+            populaCotacao(response.cotacao)
+        }
+        if(response.notasFiscais){
+            preencherTabelaNf(response.notasFiscais)
+        }
+        if(response.dtc.tomador && response.dtc.tomador.cnpj_cpf){
+            $('#cnpjTomador').val(response.dtc.tomador.cnpj_cpf);
+            $('#razaoTomador').val(response.dtc.tomador.raz_soc);
+        }
     }
 }
 
@@ -199,7 +208,6 @@ function buscaDtc() {
         type: 'POST',
         data: postData,
         success: function(response) {
-            console.log (response)
             limpaDtc()
             carregaDtc(response)
         },

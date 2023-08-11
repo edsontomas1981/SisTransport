@@ -1,23 +1,5 @@
 document.getElementById('btnExcluiNf').addEventListener('click',()=>{
-    Swal.fire({
-        title: 'Você tem certeza?',
-        text: "Você não poderá reverter isso!",
-        icon: 'warning',
-        showCancelButton: true,
-        confirmButtonColor: '#3085d6',
-        cancelButtonColor: '#d33',
-        confirmButtonText: 'Sim, exclua!',
-        cancelButtonText: 'Cancelar'
-    }).then((result) => {
-        if (result.isConfirmed) {
 
-            Swal.fire(
-                'Excluído!',
-                'Seu arquivo foi excluído.',
-                'success'
-            )
-        }
-    })
 })
 
 const deletaNf = async (chaveAcesso,idDtc) => {
@@ -38,7 +20,27 @@ const deletaNf = async (chaveAcesso,idDtc) => {
 $("#tabelaNfs").on("click", ".btn-danger", function() {
     var row = $(this).closest("tr");
     var dadosCapturados = capturaDadosNaRowClicada(row);
-    deletaNf(dadosCapturados[0], $('#numDtc').val())
+    Swal.fire({
+        title: 'Você tem certeza?',
+        text: "Você não poderá reverter isso!",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Sim, exclua!',
+        cancelButtonText: 'Cancelar'
+    }).then((result) => {
+        if (result.isConfirmed) {
+            deletaNf(dadosCapturados[0], $('#numDtc').val())
+            row.remove();
+            Swal.fire(
+                'Excluído!',
+                'Seu arquivo foi excluído.',
+                'success'
+            )
+        }
+    })
+
 });
 
 

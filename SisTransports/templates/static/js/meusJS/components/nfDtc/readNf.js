@@ -9,7 +9,8 @@ let conexao = new Conexao('/operacional/readNf/', data);
     }    
 }
 
-const loadNfs = async (idDtc)=>{
+const loadNfs = async ()=>{
+    let idDtc = $('#numDtc').val()
     if(idDtc){
         let data = {'idDtc':idDtc}
         let conexao = new Conexao('/operacional/readNfDtc/', data);

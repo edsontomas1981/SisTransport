@@ -249,8 +249,9 @@ tabs.forEach(tab => {
         
         switch (tabContentId) {
             case 'pills-nf':
-                limparTabelaNf()
+                // 
                 limpaNf()
+
                 break;
             default:
                 break;
