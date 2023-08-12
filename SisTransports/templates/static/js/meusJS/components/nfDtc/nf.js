@@ -132,15 +132,61 @@ function limparTabelaNf() {
     }
 }
 
-document.getElementById("resultM3Nf").addEventListener('keydown',(e)=>{
-    console.log(1)
-    // Verificar se a tecla Shift e F1 foram pressionadas
-
+document.getElementById("resultM3Peso").addEventListener('keydown',(e)=>{
     if (e.shiftKey && e.key === "F1") {
-        textResultadoM3 = 'resultM3Nf';
+        textResultadoM3 = 'resultM3Peso';
         $("#modalCalcM3").modal("show");
+        document.getElementById('altura').focus();
     }
 });
+
+
+let chaveAcesso = document.getElementById('chaveAcessoNf')
+chaveAcesso.addEventListener('blur',()=>{
+    let nf = getNfChaveAcesso(chaveAcesso.value)
+    document.getElementById('numNf').value = nf
+});
+
+const getNfChaveAcesso = (chaveAcesso) => {
+    if (typeof chaveAcesso !== 'string' || chaveAcesso.length !== 44) {
+      throw new Error('Chave de acesso inválida.');
+    }
+    const numeroNf = chaveAcesso.substring(25, 34).replace(/^0+/, '');
+    return numeroNf;
+  };
+
+const getCnpjChaveAcesso = (chaveAcesso) => {
+    if (typeof chaveAcesso !== 'string' || chaveAcesso.length !== 44) {
+        throw new Error('Chave de acesso inválida.');
+    }
+
+    const cnpj = chaveAcesso.substring(6, 20);
+    return cnpj;
+};
+
+const checaChaveAcessoCnpjRem = (chaveAcesso)=>{
+    let checkCnpjRem = document.getElementById('cnpjRem')
+    let cnpjNf = getCnpjChaveAcesso(chaveAcesso)
+
+    switch (checkCnpjRem.value == cnpjNf) {
+        case true:
+            return true
+        case false:
+            return false
+    
+        default:
+            break;
+    }
+}
+
+// Aplicar validação ao campo de entrada "qtdeNf"
+const qtdeNfInput = document.getElementById('qtdeNf');
+validarNumeroInteiroInput(qtdeNfInput);
+
+// Aplicar validação ao campo de entrada "pesoNf"
+const pesoNfInput = document.getElementById('pesoNf');
+validarNumeroInteiroInput(pesoNfInput);
+
 
 
 

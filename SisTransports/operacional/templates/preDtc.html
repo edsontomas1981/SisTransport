@@ -60,11 +60,18 @@
       </div>
     </div>
     <div class="tab-content" id="pills-tabContent">
-      <div class="tab-pane fade show active" id="pills-dtc" role="tabpanel" 
+        <div class="tab-pane fade" id="pills-calculoFrete"
+              role="tabpanel" aria-labelledby="pills-calculoFrete-tab">
+          {% include 'calculoFrete.html' %}
+        </div>    
+        <div class="tab-pane fade" id="pills-rastreamento" role="tabpanel" 
+        aria-labelledby="pills-rastreamento-tab">
+          {% include 'rastreamento.html' %}
+        </div>        
+        <div class="tab-pane fade show active" id="pills-dtc" role="tabpanel" 
             aria-labelledby="pills-dtc-tab">
           {% include 'origDestPreDtc.html' %}
         </div>
-        
         <div class="tab-pane fade" id="pills-coleta" 
             role="tabpanel" aria-labelledby="pills-coleta-tab">
           {% include 'dadosColetaPreDtc.html' %}
@@ -73,24 +80,15 @@
               role="tabpanel" aria-labelledby="pills-cotacao-tab">
           {% include 'dadosCotacao.html' %}
         </div>
-
         <div class="tab-pane fade" id="pills-nf" role="tabpanel" aria-labelledby="pills-nf-tab">
           {% include 'notasFiscais.html' %}
         </div>
-        <div class="tab-pane fade" id="pills-rastreamento" role="tabpanel" 
-        aria-labelledby="pills-rastreamento-tab">
-        {% include 'rastreamento.html' %}
-        </div>
-        <div class="tab-pane fade" id="pills-calculoFrete" role="tabpanel" aria-labelledby="pills-calculoFrete-tab">
-          {% include 'calculoFrete.html' %}
 
-        </div>
-        <div class="tab-pane fade" id="pills-cotacao" role="tabpanel" aria-labelledby="pills-cotacao-tab">cotacao</div>
+          
+        <!-- <div class="tab-pane fade" id="pills-cotacao" role="tabpanel" aria-labelledby="pills-cotacao-tab">cotacao</div> -->
       </div>
-      
     </div>
   </form>
-
 {% endblock %} 
 {% block 'js' %} 
   <script src="{% static 'js/meusJS/buscaDtc.js' %}"></script>
@@ -113,7 +111,16 @@
   <script src="{% static 'js/meusJS/dadosParceiro.js' %}"></script>
   <script src="{% static 'js/meusJS/validaDtc.js' %}"></script>
 
+  <script src="{% static 'js/meusJS/components/calcFrete/createFrete.js' %}"></script>
+  <script src="{% static 'js/meusJS/components/calcFrete/deleteFrete.js' %}"></script>
+  <script src="{% static 'js/meusJS/components/calcFrete/readFrete.js' %}"></script>
+  <script src="{% static 'js/meusJS/components/calcFrete/updateFrete.js' %}"></script>
+  <script src="{% static 'js/meusJS/components/calcFrete/calcFrete.js' %}"></script>
+  <script src="{% static 'js/meusJS/components/calcFrete/botoesCalcFrete/calcularFrete.js' %}"></script>
+  <script src="{% static 'js/meusJS/components/calcFrete/botoesCalcFrete/alterarFrete.js' %}"></script>
+
   <script src="{% static 'js/meusJS/components/nfDtc/createNf.js' %}"></script>
+  <script src="{% static 'js/meusJS/components/nfDtc/novoNf.js' %}"></script>
   <script src="{% static 'js/meusJS/components/nfDtc/readNf.js' %}"></script>
   <script src="{% static 'js/meusJS/components/nfDtc/updateNf.js' %}"></script>
   <script src="{% static 'js/meusJS/components/nfDtc/deleteNf.js' %}"></script>

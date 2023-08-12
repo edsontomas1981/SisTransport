@@ -1,7 +1,3 @@
-document.getElementById('btnExcluiNf').addEventListener('click',()=>{
-
-})
-
 const deletaNf = async (chaveAcesso,idDtc) => {
     let data = {'chaveAcesso':chaveAcesso,
                 'idDtc':idDtc}; // Inicialize o objeto 'data'

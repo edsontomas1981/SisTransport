@@ -87,24 +87,11 @@
                 <label for="pesoNf">Peso</label>
             </div>
         </div>   
-        <div class="col-sm-3 mb-1 form-group form-floating pl-1 pr-1 custom-tooltip">
-            <input type="text" class="form-control form-control-sm" placeholder="M³" name="resultM3Nf" id="resultM3Nf" oninput="this.value = this.value.replace(/[^0-9.,]/g, '');">
-            <label class="text-secondary" for="resultM3Nf">M³: </label>
+        <div class="col-sm-2 mb-1 form-group form-floating pl-1 pr-1 custom-tooltip">
+            <input type="text" class="form-control form-control-sm" placeholder="M³" name="resultM3Peso" id="resultM3Peso" oninput="this.value = this.value.replace(/[^0-9.,]/g, '');">
+            <label class="text-secondary" for="resultM3Peso">M³: </label>
             <span class="tooltip-text">Aperte Shift + F1,para abrir a calculadora de M³</span>
         </div>
-        <!-- <div class="col-sm-2 mb-3 pr-1 pl-1 form-group form-floating">
-            <div class="input-group form-group form-floating">
-                <input type="text" class="form-control small  form-control-sm" name='resultM3Peso' id='resultM3Peso' 
-                name='resultM3Peso' data-nome="M³" aria-label="Search" aria-describedby="basic-addon2">
-                <label class="text-secondary" for="resultM3Peso">M³:</label>
-                <div class="input-group-append">
-                    <a class="btn btn-primary" data-bs-toggle="modal" id="btnM3Peso"
-                    data-bs-target="#modalCalcM3">
-                        M³
-                    </a>
-                </div>
-            </div>
-        </div> -->
         <div class="col-2">
             <div class="form-floating mb-3">
                 <input type="text" class="form-control" name="valorNf" id="valorNf" data-nome="Valor da Nota Fiscal" required>
@@ -118,10 +105,10 @@
                 data-toggle="tooltip" data-placement="top" title="Salvar" id="btnSalvaNf">
                 <i class="ti-save"></i>
                 </button>
-                <button type="button" class="btn btn-danger" 
-                    data-toggle="tooltip" data-placement="top" title="Excluir" 
-                    id="btnExcluiNf">
-                    <i class="ti-trash"></i>
+                <button type="button" class="btn btn-secondary" 
+                    data-toggle="tooltip" data-placement="top" title="Nova Nf" 
+                    id="btnNovoNf">
+                    <i class="ti-write"></i>
                 </button>    
             </div>  
         </div>

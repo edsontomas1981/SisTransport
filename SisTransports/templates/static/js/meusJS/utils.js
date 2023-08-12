@@ -249,13 +249,38 @@ tabs.forEach(tab => {
         
         switch (tabContentId) {
             case 'pills-nf':
-                // 
-                limpaNf()
-
-                break;
+              limpaNf()
+              break;
+            case 'pills-calculoFrete':
+              getTotaisNf();
+              break;
             default:
                 break;
         }
 
     });
+});
+
+// Função para validar entrada como números inteiros
+function validarNumeroInteiroInput(inputElement) {
+  inputElement.addEventListener('keydown', function (event) {
+    const key = event.key;
+    // Permitir teclas especiais como backspace, delete, setas, home, end, etc.
+    if (key === 'Backspace' || key === 'Delete' || key === 'ArrowLeft' || key === 'ArrowRight' || key === 'Tab' || key === 'Home' || key === 'End') {
+      return;
+    }
+    // Verificar se a tecla é um número inteiro
+    if (!/^[0-9]$/.test(key)) {
+      event.preventDefault();
+    }
+  });
+}
+
+$('#numPed').on('keydown', function(event) {
+  if (event.key === "Enter") {
+    event.preventDefault();
+    // Seu código aqui para lidar com a tecla Enter
+    // Por exemplo, você pode chamar uma função ou executar um código específico.
+    // Por exemplo, exibir um alert ou fazer uma busca.
+  }
 });
