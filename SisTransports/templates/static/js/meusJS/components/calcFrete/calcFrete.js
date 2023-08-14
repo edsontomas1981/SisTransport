@@ -1,18 +1,12 @@
-document.getElementById('btnCalcFrete').addEventListener('click', () => {
-    getTotaisNf();
-});
-
 const getTotaisNf = async () => {
     let vlrNf = 0;
     let vols = 0;
     let peso = 0;
     let m3 = 0;
-
     let idDtc = $('#numDtc').val();
     if (idDtc) {
         let response = await loadNfs(); // Certifique-se de que loadNfs() retorna a resposta completa
         let nfs = response.nfs; // Acesso à propriedade "nfs" das NFS
-        console.log(nfs);
         nfs.forEach(nf => {
             vlrNf += parseFloat(nf.valor_nf);
             vols += parseInt(nf.volume);
@@ -35,3 +29,5 @@ const populaTotaisNfs=(totais)=>{
                         <td>${null}</td>
                         <td>R$ ${totais.vlrNf}</td>`
 }
+
+
