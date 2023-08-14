@@ -243,23 +243,31 @@ let tabs = document.querySelectorAll('.nav-link');
 
 // Adiciona um ouvinte de evento para cada guia
 tabs.forEach(tab => {
-    tab.addEventListener('click', () => {
-        // Obtém o ID do conteúdo da guia associado
-        let tabContentId = tab.getAttribute('aria-controls');
-        
-        switch (tabContentId) {
-            case 'pills-nf':
-              limpaNf()
+  tab.addEventListener('click', async () => {
+      // Obtém o ID do conteúdo da guia associado
+      let tabContentId = tab.getAttribute('aria-controls');
+      
+      switch (tabContentId) {
+          case 'pills-nf':
+              limpaNf();
               break;
-            case 'pills-calculoFrete':
-              getTotaisNf();
+          case 'pills-calculoFrete':
+              let nf = await loadNfs();
+              console.log(nf);
+              if (nf.nfs.length !== 0) {
+                await loadCalculoCte();
+                getTotaisNf();
+              } else {
+                  preDtcSemNf()
+                  return;
+              }
               break;
-            default:
-                break;
-        }
-
-    });
+          default:
+              break;
+      }
+  });
 });
+
 
 // Função para validar entrada como números inteiros
 function validarNumeroInteiroInput(inputElement) {
