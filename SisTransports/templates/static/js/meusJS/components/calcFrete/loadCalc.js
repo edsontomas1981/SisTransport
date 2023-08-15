@@ -1,35 +1,5 @@
 const loadCalculoCte = () => {
-    limpaDivCalculo();
-
-    const loadFunctions = [
-        loadDivOrigemCte,
-        loadDivDestinoCte,
-        loadDivEmissoraCte,
-        loadDivTipoCte,
-        loadDivTipoCalcCte,
-        loadDivSelecionaTabelaCte,
-        loadDivCfopCte,
-        loadDivReDespachanteCte,
-        loadDivObsCte,
-        loadDivTabelaTotaisCte,
-        loadDivFretePesoCte,
-        loadDivFreteValorCte,
-        loadDivAdvalorCte,
-        loadDivGrisCte,
-        loadDivPedagioCte,
-        loadDivDespachoCte,
-        loadDivOutrosCte,
-        loadDivIcmsInclusoCte,
-        loadDivBaseCalculoCte,
-        loadDivAliquotaCte,
-        loadDivIcmsNfCte,
-        loadDivTotalFreteCte,
-        loadDivBtnCalcCte
-    ];
-
-    for (const loadFunction of loadFunctions) {
-        loadFunction();
-    }
+    // limpaDivCalculo();
 };
 
 
@@ -42,7 +12,7 @@ const preDtcSemNf = ()=>{
     `;
 }
 
-const limpaDivCalculo = ()=>{
+const limpaDivCalculo = async ()=>{
     let messageContainer = document.getElementById('divGeralcalcFrete');
     messageContainer.innerHTML = `    <div class="form-group col-6 mb-0 mt-0">
     <div class="row">
@@ -59,7 +29,15 @@ const limpaDivCalculo = ()=>{
         </div>
 
         <div class="col-4 pl-1 pr-0 mt-1" id="divTipoCalc">
-
+            <div class="form-floating">
+                <select class="form-select" id="tipoCalc" aria-label="especie nf">
+                <option selected>Selecione</option>
+                <option value="1">Tabela Geral</option>
+                <option value="2">Tabela Cliente</option>
+                <option value="2">Frete Informado</option>
+                </select>
+                <label for="tipoCalc">Tipo de cálculo</label>
+            </div>
         </div>      
         <div class="col-4 pl-1 pr-1 mt-1" id="divSelecionaTabelaCte">
 
@@ -134,22 +112,22 @@ const limpaDivCalculo = ()=>{
 </div> `;
 }
 
-const loadDivOrigemCte=()=>{
+const loadDivOrigemCte=(origem)=>{
     let divOrigem = document.getElementById('divOrigemCte')
     divOrigem.innerHTML=`<div class="form-floating">
                             <select class="form-select" id="origemCte" aria-label="especie nf">
-                                <option value=1>GUARULHOS-SP</option>
+                                <option value=1>${origem}</option>
                             </select>
                             <label for="origemCte">Origem</label>
                          </div>
                         `
 }
 
-const loadDivDestinoCte=()=>{
+const loadDivDestinoCte=(destino)=>{
     let divDestino = document.getElementById('divDestinoCte')
     divDestino.innerHTML=`<div class="form-floating">
                             <select class="form-select" id="destinoCte" aria-label="especie nf">
-                                <option value="1">TERESINA-PI</option>
+                                <option value="1">${destino}</option>
                             </select>
                             <label for="destinoCte">Destino</label>
                         </div>
@@ -181,7 +159,7 @@ const loadDivTipoCte=()=>{
                         `
 }
 
-const loadDivTipoCalcCte=()=>{
+const loadDivTipoCalcCte=async ()=>{
     let divTipoCalc = document.getElementById('divTipoCalc')
     divTipoCalc.innerHTML=`<div class="form-floating">
                             <select class="form-select" id="tipoCalc" aria-label="especie nf">

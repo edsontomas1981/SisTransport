@@ -57,8 +57,8 @@ const calculoCotacao= async (tabela,vlrColeta)=>{
     }
 }
 
-const carregaFreteInformado=()=>{
-    let select = $('#tabelaCotacao');
+const carregaFreteInformado=(selectDestino)=>{
+    let select = $('#'+selectDestino);
     select.empty();
     select.append($('<option>', {
         value: 0,

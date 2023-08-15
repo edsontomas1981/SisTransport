@@ -4,6 +4,7 @@ $(window).load(function(){
 });
 
 function populaRota (response){
+  console.log(response)
     data= response.rotas
     var selectbox = $('#rota');
     selectbox.find('option').remove();

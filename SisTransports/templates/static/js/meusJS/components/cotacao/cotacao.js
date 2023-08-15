@@ -1,11 +1,11 @@
 var listaTabelas
 
-const carregaTabelasGerais=async()=>{
+const carregaTabelasGerais=async(selectTabela)=>{
     let dados = {'idRota':$('#rotasDtc').val()}
     let conexao = new Conexao('/comercial/readTabelasGeraisPorRota/', dados);
     try {
         const result = await conexao.sendPostRequest();
-        populaSelectTabelas('tabelaCotacao',result)
+        populaSelectTabelas(selectTabela,result)
         listaTabelas=result.tabelas
         // console.log(result); // Imprime a resposta JSON da solicitação POST
     } catch (error) {
@@ -13,11 +13,11 @@ const carregaTabelasGerais=async()=>{
     }
 }  
 
-const carregaTabelasEspecificas=async()=>{
+const carregaTabelasEspecificas=async(selectTabela)=>{
     let conexao = new Conexao('/comercial/readTabelasPorParceiro/', {tomador:$('#cnpjTomador').val()});
     try {
         const result = await conexao.sendPostRequest();
-        populaSelectTabelas('tabelaCotacao',result)
+        populaSelectTabelas(selectTabela,result)
         listaTabelas=result.tabelas
         console.log(result); // Imprime a resposta JSON da solicitação POST
     } catch (error) {
@@ -109,13 +109,13 @@ const carregaSelectTabelas= async (tipoTabela)=>{
         console.log(typeof(tipoTabela))
      if (selectedValue == '1') {
          bloqueiaFreteCotacao();
-         carregaTabelasGerais()
+         carregaTabelasGerais('tabelaCotacao')
      } else if (selectedValue == '2') {
-         carregaTabelasEspecificas()
+         carregaTabelasEspecificas('tabelaCotacao')
        // Executa ação quando a opção "Tabela cliente" é selecionada
      } else if (selectedValue == '3') {
          bloqueiaFreteCotacao();
-         carregaFreteInformado();
+         carregaFreteInformado('tabelaCotacao');
        // Executa ação quando nenhuma opção é selecionada
      }
 }

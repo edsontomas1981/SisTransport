@@ -85,13 +85,11 @@ const preencherTabelaNf = (dados) => {
     });
 }
 
-const preencherFormularioNf= async (row)=> {
-    const cells = row.getElementsByTagName('td');
-    let chave = cells[0].textContent
+const preencherFormularioNf= async (chaveAcesso)=> {
+    
     let idDtc = $('#numDtc').val()
-    let nota =await buscaNf(idDtc,chave)
+    let nota =await buscaNf(idDtc,chaveAcesso)
     populaFormNf(nota)
-    console.log(nota)
 }
 
 const populaFormNf = (nota)=>{
@@ -111,6 +109,7 @@ const populaFormNf = (nota)=>{
 
 // // Função para capturar o clique nos botões Excluir e Alterar
  function capturarClique(event) {
+
      const button = event.target;
      const row = button.closest('tr');
        if (button.classList.contains('btn-primary')) {

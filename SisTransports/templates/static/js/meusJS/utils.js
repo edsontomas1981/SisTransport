@@ -253,9 +253,8 @@ tabs.forEach(tab => {
               break;
           case 'pills-calculoFrete':
               let nf = await loadNfs();
-              console.log(nf);
               if (nf.nfs.length !== 0) {
-                await loadCalculoCte();
+                // await limpaDivCalculo();
                 getTotaisNf();
               } else {
                   preDtcSemNf()

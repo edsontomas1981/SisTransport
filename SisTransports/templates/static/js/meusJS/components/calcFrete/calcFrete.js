@@ -29,5 +29,32 @@ const populaTotaisNfs=(totais)=>{
                         <td>${null}</td>
                         <td>R$ ${totais.vlrNf}</td>`
 }
+const populaCamposFrete=async (response)=>{
+        loadDivOrigemCte(response.dtc.rota.origemCidade+"-"+response.dtc.rota.origemUf)
+        loadDivDestinoCte(response.dtc.rota.destinoCidade+"-"+response.dtc.rota.destinoUf)
+        loadDivEmissoraCte()
+        loadDivTipoCte()
+        // await loadDivTipoCalcCte()
+        loadDivSelecionaTabelaCte()
+        loadDivCfopCte()
+        loadDivReDespachanteCte()
+        loadDivObsCte()
+        loadDivTabelaTotaisCte()
+        loadDivFretePesoCte()
+        loadDivFreteValorCte()
+        loadDivAdvalorCte()
+        loadDivGrisCte()
+        loadDivPedagioCte()
+        loadDivDespachoCte()
+        loadDivOutrosCte()
+        loadDivIcmsInclusoCte()
+        loadDivBaseCalculoCte()
+        loadDivAliquotaCte()
+        loadDivIcmsNfCte()
+        loadDivTotalFreteCte()
+        loadDivBtnCalcCte()
+
+}
+
 
 

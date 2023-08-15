@@ -36,7 +36,6 @@ $("#tabelaNfs").on("click", ".btn-danger", function() {
             )
         }
     })
-
 });
 
 

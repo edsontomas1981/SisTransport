@@ -1,4 +1,4 @@
-const carregaDtc=(response)=>{
+const carregaDtc=async (response)=>{
     limpaDtc()
     if (response.status == 300){        
         Swal.fire({
@@ -9,6 +9,7 @@ const carregaDtc=(response)=>{
         timer: 1500
       })}else{
         $('#numDtc').val(response.dtc.id)
+        console.log(response)
         
         if (response.dtc.remetente){
             const remetenteDtc = new Parceiro(response.dtc.remetente.cnpj_cpf,'Rem');
@@ -42,7 +43,9 @@ const carregaDtc=(response)=>{
             populaCotacao(response.cotacao)
         }
         if(response.notasFiscais){
+            populaCamposFrete(response)
             preencherTabelaNf(response.notasFiscais)
+
         }
         if(response.dtc.tomador && response.dtc.tomador.cnpj_cpf){
             $('#cnpjTomador').val(response.dtc.tomador.cnpj_cpf);
