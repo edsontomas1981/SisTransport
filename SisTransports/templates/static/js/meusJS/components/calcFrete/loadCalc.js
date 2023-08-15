@@ -175,11 +175,3 @@ $('#tipoCalc').on('change', function() {
     console.log('Change event triggered');
     carregaSelectTabelasCte($(this).val());
 });
-
-
-
-
-
-
-
-
