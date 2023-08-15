@@ -1,345 +1,185 @@
-const loadCalculoCte = () => {
-    // limpaDivCalculo();
-};
-
-
 const preDtcSemNf = ()=>{
-    let messageContainer = document.getElementById('divGeralcalcFrete');
-    messageContainer.innerHTML = `
-        <div class="alert alert-info mt-3" role="alert">
-            Não há notas fiscais associadas a esta DTC.
-        </div>
-    `;
+    desBloqueiaSemNf()
+    bloqueiaDivFrete()
 }
 
-const limpaDivCalculo = async ()=>{
-    let messageContainer = document.getElementById('divGeralcalcFrete');
-    messageContainer.innerHTML = `    <div class="form-group col-6 mb-0 mt-0">
-    <div class="row">
-        <div class="col-4  pl-1 pr-1 mt-0" id="divOrigemCte">
+const bloqueiaSemNf=()=>{
+    let semNf = document.getElementById('semNf');
+    semNf.style.display = 'none';
+}
+const desBloqueiaSemNf=()=>{
+    let semNf = document.getElementById('semNf');
+    semNf.style.display = 'block';
+}
 
-        </div>    
-        <div class="col-4  pl-1 pr-1 mt-0" id="divDestinoCte">
+const divCalculoFrete = async ()=>{
+    bloqueiaSemNf()
+    desBloqueiaDivFrete()
+}
 
-        </div> 
-        <div class="col-4 pl-1 pr-0" id="divEmissoraCte">
+const bloqueiaDivFrete=()=>{
+    let esquerda = document.getElementById('esquerda');
+    esquerda.style.display = 'none';
+    let direita = document.getElementById('direita');
+    direita.style.display = 'none';
+}
 
-        </div> 
-        <div class="col-4 pl-1 pr-1 mt-1" id="divTipoCte">
-        </div>
-
-        <div class="col-4 pl-1 pr-0 mt-1" id="divTipoCalc">
-            <div class="form-floating">
-                <select class="form-select" id="tipoCalc" aria-label="especie nf">
-                <option selected>Selecione</option>
-                <option value="1">Tabela Geral</option>
-                <option value="2">Tabela Cliente</option>
-                <option value="2">Frete Informado</option>
-                </select>
-                <label for="tipoCalc">Tipo de cálculo</label>
-            </div>
-        </div>      
-        <div class="col-4 pl-1 pr-1 mt-1" id="divSelecionaTabelaCte">
-
-        </div> 
-        <div class="col-8  pl-1 pr-1 mt-1" id="divCfopCte">
-
-        </div>    
-        <div class="col-4 pl-1 pr-1 mt-1" id="divRedespachanteCte">
-
-        </div> 
-        <div class="col-12  pl-1 pr-1 mt-1" id="divObsCte">
-
-        </div>  
-        <div class="col-12 pl-1 mt-1" id="divTabelaTotaisCte">
-
-        </div>                                
-    </div>
-</div>
-<div class="form-group col-6 mt-0" >
-    <div class="form-group row mb-1">
-        <div class="col-sm-4 mb-1 form-group pr-1 pl-1 form-floating" id="divFretePeso">
-        </div>
-        <div class="col-sm-4 mb-1 pl-0 pr-1 form-group form-floating" id="divFreteValor">
-
-        </div> 
-        <div class="col-sm-4 mb-1 pl-0 pr-1 form-group form-floating" id="divAdvalor"> 
-          
-        </div>            
-        <div class="col-sm-3 mb-0 pr-1 pl-1 form-group form-floating" id="divGris">
-        </div>
-        <div class="col-sm-3 mb-1 pr-1 pl-0 form-group form-floating" id="divPedagio">
-
-        </div>              
-        <div class="col-sm-3 mb-1 pl-0 pr-1 form-group form-floating" id="divDespacho">
-          
-        </div>                                
-        <div class="col-sm-3 mb-1 pl-0 pr-1 form-group form-floating " id="divOutros">
-            
-        </div> 
-
-        <div class="form-check form-check-primary col-3 pl-3 pr-0 mt-4" id="divIcmsIncluso">
-            
-        </div>  
-
-        <div class="col-sm-3 mb-0 pr-1 pl-1 form-group form-floating " id="divBaseCalculo">
-            
-        </div>
-        <div class="col-sm-3 mb-1 pr-1 pl-0 form-group form-floating" id="divAliquota">
-            
-        </div>              
-        <div class="col-sm-3 mb-1 pl-0 pr-1 form-group form-floating" id="divIcmsNf">
-          
-        </div>                                
-        <div class="col-sm-12 mb-1 pl-0 pr-1 form-group form-floating" id="divTotalFrete">
-            
-        </div>  
-
-        <div class="col-sm-3 mb-0 mt-1 form-group form-floating pl-1 pr-1" id="divBtnCalc">
-
-        </div>
-        <div class="col-sm-3 mb-1 mt-1 form-group pl-1 pr-1">
-
-        </div>
-
-        <div class="col-sm-3 mb-1 mt-1 form-group pl-1 pr-1">
-        </div>  
-        
-        <div class="col-sm-3 mb-1 mt-1 form-group pl-1 pr-1">
-
-        </div>            
-    </div>
-</div> `;
+const desBloqueiaDivFrete=()=>{
+    let esquerda = document.getElementById('esquerda');
+    esquerda.style.display = 'block';
+    let direita = document.getElementById('direita');
+    direita.style.display = 'block';
 }
 
 const loadDivOrigemCte=(origem)=>{
-    let divOrigem = document.getElementById('divOrigemCte')
-    divOrigem.innerHTML=`<div class="form-floating">
-                            <select class="form-select" id="origemCte" aria-label="especie nf">
-                                <option value=1>${origem}</option>
-                            </select>
-                            <label for="origemCte">Origem</label>
-                         </div>
+    let divOrigem = document.getElementById('origemCte')
+    divOrigem.innerHTML=`<option value=1>${origem}</option>
                         `
 }
 
 const loadDivDestinoCte=(destino)=>{
-    let divDestino = document.getElementById('divDestinoCte')
-    divDestino.innerHTML=`<div class="form-floating">
-                            <select class="form-select" id="destinoCte" aria-label="especie nf">
-                                <option value="1">${destino}</option>
-                            </select>
-                            <label for="destinoCte">Destino</label>
-                        </div>
+    let divDestino = document.getElementById('destinoCte')
+    divDestino.innerHTML=`<option value="1">${destino}</option>
                         `
 }
 
 const loadDivEmissoraCte=()=>{
     let divEmissora = document.getElementById('divEmissoraCte')
-    divEmissora.innerHTML=`<div class="form-floating" >
-                            <select class="form-select" id="emissoraCte" aria-label="especie nf">
-                            <option selected>Emissora</option>
-                            <option value="1">SAO(MATRIZ)</option>
-                            <option value="2">THE(FILIAL)</option>
-                            </select>
-                            <label for="emissoraCte">Emissora</label>
-                        </div>
-                        `
+    // divEmissora.innerHTML=`
+    //                     `
 }
 
 const loadDivTipoCte=()=>{
-    let divTipo = document.getElementById('divTipoCte')
-    divTipo.innerHTML=`<div class="form-floating">
-                            <select class="form-select" id="tipoCte" aria-label="especie nf">
-                                <option value="1">Normal</option>
-                                <option value="2">Complemento</option>
-                            </select>
-                            <label for="tipoCte">Tipo CT-e</label>
-                        </div>
-                        `
+    let divTipo = document.getElementById('tipoCte')
+    divTipo.innerHTML=`<option value="1">Normal</option>
+                       <option value="2">Complemento</option>
+                      `
 }
 
 const loadDivTipoCalcCte=async ()=>{
     let divTipoCalc = document.getElementById('divTipoCalc')
-    divTipoCalc.innerHTML=`<div class="form-floating">
-                            <select class="form-select" id="tipoCalc" aria-label="especie nf">
-                            <option selected>Selecione</option>
-                            <option value="1">Tabela Geral</option>
-                            <option value="2">Tabela Cliente</option>
-                            <option value="2">Frete Informado</option>
-                            </select>
-                            <label for="tipoCalc">Tipo de cálculo</label>
-                          </div>
-                        `
+    // divTipoCalc.innerHTML=`
+    //                     `
 }
 
 const loadDivSelecionaTabelaCte=()=>{
     let divSelecionaTabelaCte = document.getElementById('divSelecionaTabelaCte')
-    divSelecionaTabelaCte.innerHTML=`<div class="form-floating">
-                                <select class="form-select" id="selecionaTabelaCte" aria-label="especie nf">
-                                    <option selected>Selecione</option>
-                                </select>
-                                <label for="selecionaTabelaCte">Tabela de frete</label>
-                            </div>
-                        `
+    // divSelecionaTabelaCte.innerHTML=`
+    //                     `
 }
 
 const loadDivCfopCte=()=>{
     let divCfopCte = document.getElementById('divCfopCte')
-    divCfopCte.innerHTML=`<div class="form-floating">
-                            <select class="form-select" id="cfopCte" aria-label="especie nf">
-                                <option selected>CFOP</option>
-                            </select>
-                            <label for="cfopCte">CFOP</label>
-                          </div>
-                        `
+    // divCfopCte.innerHTML=`
+    //                     `
 }
 
 const loadDivReDespachanteCte=()=>{
     let divRedespachanteCte = document.getElementById('divRedespachanteCte')
-    divRedespachanteCte.innerHTML=`<div class="form-floating">
-                                    <input type="text" class="form-control form-control-sm " 
-                                    placeholder="Redespachante" name="redespCte" id="redespCte">
-                                    <label class="text-secondary" for="redespCte">Redespachante :</label>
-                                   </div>
-                        `
+    // divRedespachanteCte.innerHTML=`
+    //                     `
 }
 
 const loadDivObsCte=()=>{
     let divObsCte = document.getElementById('divObsCte')
-    divObsCte.innerHTML=`<div class="form-floating">
-                            <textarea class="form-control" id="observacaoCte"></textarea>
-                            <label for="observacaoCte">Observação</label>
-                         </div>
-                        `
+    // divObsCte.innerHTML=`
+    //                     `
 }
 
 const loadDivTabelaTotaisCte=()=>{
     let divTabelaTotaisCte = document.getElementById('divTabelaTotaisCte')
-    divTabelaTotaisCte.innerHTML=`<div class="table-responsive">
-                                    <table class="table">
-                                    <thead>
-                                        <tr>
-                                        <th>Total de Volumes</th>
-                                        <th>Peso Real</th>
-                                        <th>M³</th>
-                                        <th>Peso faturado</th>
-                                        <th>Valor Nf's</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <tr id="totaisNfs">
-                                        </tr>
-                                    </tbody>
-                                    </table>
-                                </div>
-                        `
+    // divTabelaTotaisCte.innerHTML=`
+    //                     `
 }
 
 const loadDivFretePesoCte=()=>{
     let divFretePeso = document.getElementById('divFretePeso')
-    divFretePeso.innerHTML=`<input type="text" class="form-control form-control-sm " 
-                                placeholder="Frete Peso" name="fretePesoNf" id="fretePesoNf">
-                            <label class="text-secondary" for="fretePesoNf">Frete peso:</label>
-                        `
+    // divFretePeso.innerHTML=`
+    //                     `
 }
 
 const loadDivFreteValorCte=()=>{
     let divFreteValor = document.getElementById('divFreteValor')
-    divFreteValor.innerHTML=`<input type="text" class="form-control form-control-sm" 
-                                placeholder="Frete Valor" name="freteValorNf" id="freteValorNf">
-                            <label class="text-secondary" for="freteValorNf">Frete valor:</label>
-                        `
+    // divFreteValor.innerHTML=`
+    //                     `
 }
 
 const loadDivAdvalorCte=()=>{
     let divAdvalor = document.getElementById('divAdvalor')
-    divAdvalor.innerHTML=`<input type="text" class="form-control form-control-sm " 
-                            placeholder="Advalor" name="advalorNf" id="advalorNf">
-                        <label class="text-secondary"for="advalorNf">Advalor:</label>  
-                        `
+    // divAdvalor.innerHTML=`
+    //                     `
 }
 
 const loadDivGrisCte=()=>{
     let divGris = document.getElementById('divGris')
-    divGris.innerHTML=`<input type="text" class="form-control form-control-sm" 
-                        placeholder="Gris" name="grisNf" id="grisNf">
-                        <label class="text-secondary" for="grisNf">Gris:</label>
-                        `
+    // divGris.innerHTML=`
+    //                     `
 }
 
 const loadDivPedagioCte=()=>{
     let divPedagio = document.getElementById('divPedagio')
-    divPedagio.innerHTML=`<input type="text" class="form-control  form-control-sm " 
-                        placeholder="Pedágio" id="pedagioNf" name="pedagioNf">
-                        <label class="text-secondary"for="pedagioNf">Pedágio:</label>
-                        `
+    // divPedagio.innerHTML=`
+    //                     `
 }
 
 const loadDivDespachoCte=()=>{
     let divDespacho = document.getElementById('divDespacho')
-    divDespacho.innerHTML=`<input type="text" class="form-control  form-control-sm " 
-                            placeholder="Despacho" id="despachoNf" name="despachoNf">
-                            <label class="text-secondary"for="despachoNf">Despacho:</label>  
-                        `
+    // divDespacho.innerHTML=`
+    //                     `
 }
 
 const loadDivOutrosCte=()=>{
     let divOutros = document.getElementById('divOutros')
-    divOutros.innerHTML=`<input type="text" class="form-control  form-control-sm " 
-                            placeholder="Outros" id="outrosNf" name="outrosNf">
-                            <label class="text-secondary"for="outrosNf">Outros:</label>
-                        `
+    // divOutros.innerHTML=`
+    //                     `
 }
 
 const loadDivIcmsInclusoCte=()=>{
     let divIcmsIncluso = document.getElementById('divIcmsIncluso')
-    divIcmsIncluso.innerHTML=`<label class="form-check-label">
-                                <input type="checkbox" class="form-check-input" checked="" id="icmsInclusoNf" name="icmsInclusoNf">
-                                Icms incluso ?
-                                <i class="input-helper"></i></label>
-                        `
+    // divIcmsIncluso.innerHTML=`
+    //                     `
 }
 
 const loadDivBaseCalculoCte=()=>{
     let divBaseCalculo = document.getElementById('divBaseCalculo')
-    divBaseCalculo.innerHTML=`<input type="text" class="form-control form-control-sm" 
-                                placeholder="Gris" name="baseCalculoNf" id="baseCalculoNf" disabled>
-                                <label class="text-secondary" for="baseCalculoNf">Base de Cálculo:</label>
-                             `
+    // divBaseCalculo.innerHTML=`
+    //                          `
 }
 
 const loadDivAliquotaCte=()=>{
     let divAliquota = document.getElementById('divAliquota')
-    divAliquota.innerHTML=`<input type="text" class="form-control  form-control-sm " 
-                            placeholder="Pedágio" id="aliquotaNf" name="aliquotaNf" disabled>
-                            <label class="text-secondary"for="aliquotaNf">Alíquota:</label>
-                             `
+    // divAliquota.innerHTML=`
+    //                          `
 }
 
 const loadDivIcmsNfCte=()=>{
     let divIcmsNf = document.getElementById('divIcmsNf')
-    divIcmsNf.innerHTML=`<input type="text" class="form-control  form-control-sm " 
-                            placeholder="Despacho" id="icmsNf" name="icmsNf" disabled>
-                           <label class="text-secondary h1"for="icmsNf">Icms R$:</label>  
-                        `
+    // divIcmsNf.innerHTML=`
+    //                     `
 }
 
 const loadDivTotalFreteCte=()=>{
     let divTotalFrete = document.getElementById('divTotalFrete')
-    divTotalFrete.innerHTML=`<input type="text" class="form-control form-control-sm bg-primary text-capitalize text-danger h1" 
-                            placeholder="Outros" id="freteTotalNf" name="freteTotalNf" value="R$ 0.00"disabled>
-                            <label class="text-secondary"for="freteTotalNf">Total Frete :</label>
-                        `
+    // divTotalFrete.innerHTML=`
+    //                     `
 }
 
 const loadDivBtnCalcCte=()=>{
     let divBtnCalc = document.getElementById('divBtnCalc')
-    divBtnCalc.innerHTML=`<button type="button" class="btn btn-warning btn-icon-text" id="btnCalcFrete">
-                            <i class="ti-credit-card btn-icon-prepend"></i>
-                                    Calcular
-                         </button>
-                        `
+    // divBtnCalc.innerHTML=`
+    //                     `
 }
+
+
+$('#tipoCalc').on('change', function() {
+    console.log('Change event triggered');
+    carregaSelectTabelasCte($(this).val());
+});
+
+
+
+
+
+
 
 

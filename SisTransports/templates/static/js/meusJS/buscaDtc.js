@@ -201,6 +201,8 @@ function limpaDtc(){
     $('#rotasDtc').val(0)
     limpaColeta()
     limpaCotacao()
+    limpaNf()
+    limparTabelaNf()
 }
 
 function buscaDtc() {

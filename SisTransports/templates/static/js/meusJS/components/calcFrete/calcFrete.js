@@ -30,11 +30,12 @@ const populaTotaisNfs=(totais)=>{
                         <td>R$ ${totais.vlrNf}</td>`
 }
 const populaCamposFrete=async (response)=>{
+        divCalculoFrete();
         loadDivOrigemCte(response.dtc.rota.origemCidade+"-"+response.dtc.rota.origemUf)
         loadDivDestinoCte(response.dtc.rota.destinoCidade+"-"+response.dtc.rota.destinoUf)
         loadDivEmissoraCte()
         loadDivTipoCte()
-        // await loadDivTipoCalcCte()
+        loadDivTipoCalcCte()
         loadDivSelecionaTabelaCte()
         loadDivCfopCte()
         loadDivReDespachanteCte()
