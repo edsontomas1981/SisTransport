@@ -255,7 +255,7 @@ tabs.forEach(tab => {
               let nf = await loadNfs();
               if (nf.nfs.length !== 0) {
                 // await limpaDivCalculo();
-                getTotaisNf();
+                populaTotaisNaTabelaNfCte();
               } else {
                   preDtcSemNf()
                   return;

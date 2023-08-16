@@ -22,6 +22,8 @@ from comercial.views.cotacao.readCotacao import readCotacao
 from comercial.views.cotacao.deleteCotacao import deleteCotacao
 from comercial.views.cotacao.updateCotacao import updateCotacao
 
+from comercial.views.calcula_frete import calcula_frete
+
 
 
 

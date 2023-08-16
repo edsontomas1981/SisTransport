@@ -1,4 +1,9 @@
-const getTotaisNf = async () => {
+const populaTotaisNaTabelaNfCte = async () => {
+    let totais = await calculaTotalNfs()
+    populaTotaisNfs(totais)
+};
+
+const calculaTotalNfs = async ()=>{
     let vlrNf = 0;
     let vols = 0;
     let peso = 0;
@@ -17,9 +22,11 @@ const getTotaisNf = async () => {
                     'volumes':vols,
                     'peso':peso,
                     'm3':m3}
-        populaTotaisNfs(totais)
+
+        return totais
     }
-};
+
+}
 
 const populaTotaisNfs=(totais)=>{
     let rowTotais = document.getElementById('totaisNfs')
