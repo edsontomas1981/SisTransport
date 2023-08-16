@@ -1,9 +1,25 @@
+
 <div class="row p-0" id="semNf">
     <div class="alert alert-info mt-3 col-sm-12" role="alert">
         Não há notas fiscais associadas a esta DTC.
     </div>
 </div>
 <div class="row">
+        <div class="col-12">
+            <div class="input-group col-12 pr-4 justify-content-end mt-0">
+                <input type="text" class="form-control-sm alert alert-secondary" disabled="" value="Tabela : Edson Tomas da Silva">
+                <input type="text" class="form-control-sm alert alert-info" disabled="" value="Tomador : Edson Tomas da Silva">
+                <button class="btn btn-secondary btn-rounded form-control-sm" data-toggle="tooltip" data-placement="top" title="Novo" id="btnNovoCoCalc">
+                <i class="ti-write"></i>
+                </button>
+                <button type="button" class="btn btn-success btn-rounded form-control-sm" data-toggle="tooltip" data-placement="top" title="Salvar" id="btnSalvaCalc">
+                <i class="ti-save"></i>
+                </button>
+                <button type="button" class="btn btn-light btn-rounded form-control-sm" data-toggle="tooltip" data-placement="top" title="Excluir" id="btnLimpaCalc">
+                    <i class="fa fa-calculator" aria-hidden="true"></i>
+                </button>    
+            </div>
+        </div>
         <div class="col-sm-6" id="esquerda">
             <div class="form-group col-sm-12 mb-0 mt-0">
                 <div class="row">
@@ -39,27 +55,7 @@
                             <label for="tipoCte">Tipo CT-e</label>
                         </div>
                     </div>
-        
-                    <div class="col-4 pl-1 pr-0 mt-1" id="divTipoCalc">
-                        <div class="form-floating">
-                            <select class="form-select" id="tipoCalc" aria-label="especie nf">
-                            <option selected>Selecione</option>
-                            <option value="1">Tabela Geral</option>
-                            <option value="2">Tabela Cliente</option>
-                            <option value="2">Frete Informado</option>
-                            </select>
-                            <label for="tipoCalc">Tipo de cálculo</label>
-                        </div>
-                    </div>       
-                    <div class="col-4 pl-1 pr-0 mt-1" id="divSelecionaTabelaCte">
-                        <div class="form-floating">
-                            <select class="form-select" id="selecionaTabelaCte" aria-label="especie nf">
-                                <option selected>Selecione</option>
-                            </select>
-                            <label for="selecionaTabelaCte">Tabela de frete</label>
-                        </div>
-                    </div> 
-                    <div class="col-8  pl-1 pr-1 mt-1" id="divCfopCte">
+                    <div class="col-4  pl-1 pr-1 mt-1" id="divCfopCte">
                         <div class="form-floating">
                             <select class="form-select" id="cfopCte" aria-label="especie nf">
                                 <option selected>CFOP</option>
@@ -105,21 +101,51 @@
         <div class="col-sm-6" id="direita">
             <div class="form-group col-sm-12 mb-0 mt-0" >
                 <div class="form-group row mb-1">
-                    <div class="col-sm-4 mb-1 form-group pr-1 pl-1 form-floating" id="divFretePeso">
+                    <div class="col-4 pl-1 pr-0 mt-0" id="divTipoCalc">
+                        <div class="form-floating">
+                            <select class="form-select" id="tipoCalc" aria-label="especie nf">
+                            <option selected>Selecione</option>
+                            <option value="1">Tabela Geral</option>
+                            <option value="2">Tabela Cliente</option>
+                            <option value="2">Frete Informado</option>
+                            </select>
+                            <label for="tipoCalc">Tipo de cálculo</label>
+                        </div>
+                    </div>       
+                    <div class="col-4 pl-1 pr-1 mt-0" id="divSelecionaTabelaCte">
+                        <div class="form-floating">
+                            <select class="form-select" id="selecionaTabelaCte" aria-label="especie nf">
+                                <option selected>Selecione</option>
+                            </select>
+                            <label for="selecionaTabelaCte">Tabela de frete</label>
+                        </div>
+                    </div> 
+                    <div class="form-check form-check-primary col-3 pl-3 pr-0 mt-4" id="divIcmsIncluso">
+                        <label class="form-check-label">
+                            <input type="checkbox" class="form-check-input" checked="" id="icmsInclusoNf" name="icmsInclusoNf">
+                            Icms incluso ?
+                        <i class="input-helper"></i></label>
+                    </div> 
+                    <div class="col-sm-3 mb-1 form-group pr-1 pl-1 form-floating" id="divFretePeso">
                         <input type="text" class="form-control form-control-sm " 
                                         placeholder="Frete Peso" name="fretePesoNf" id="fretePesoNf">
                         <label class="text-secondary" for="fretePesoNf">Frete peso:</label>
                     </div>
-                    <div class="col-sm-4 mb-1 pl-0 pr-1 form-group form-floating" id="divFreteValor">
+                    <div class="col-sm-3 mb-1 pl-0 pr-1 form-group form-floating" id="divFreteValor">
                         <input type="text" class="form-control form-control-sm" 
                                         placeholder="Frete Valor" name="freteValorNf" id="freteValorNf">
                         <label class="text-secondary" for="freteValorNf">Frete valor:</label>
                     </div> 
-                    <div class="col-sm-4 mb-1 pl-0 pr-1 form-group form-floating" id="divAdvalor"> 
+                    <div class="col-sm-3 mb-1 pl-0 pr-1 form-group form-floating" id="divAdvalor"> 
                         <input type="text" class="form-control form-control-sm " 
                         placeholder="Advalor" name="advalorNf" id="advalorNf">
                         <label class="text-secondary"for="advalorNf">Advalor:</label>  
-                    </div>            
+                    </div>         
+                    <div class="col-sm-3 mb-1 pl-0 pr-1 form-group form-floating" id="divColeta"> 
+                        <input type="text" class="form-control form-control-sm " 
+                        placeholder="coleta" name="coletaNf" id="coletaNf">
+                        <label class="text-secondary"for="coletaNf">Coleta:</label>  
+                    </div>      
                     <div class="col-sm-3 mb-0 pr-1 pl-1 form-group form-floating" id="divGris">
                         <input type="text" class="form-control form-control-sm" 
                                 placeholder="Gris" name="grisNf" id="grisNf">
@@ -140,32 +166,27 @@
                                     placeholder="Outros" id="outrosNf" name="outrosNf">
                         <label class="text-secondary"for="outrosNf">Outros:</label>
                     </div> 
-                    <div class="form-check form-check-primary col-3 pl-3 pr-0 mt-4" id="divIcmsIncluso">
-                        <label class="form-check-label">
-                            <input type="checkbox" class="form-check-input" checked="" id="icmsInclusoNf" name="icmsInclusoNf">
-                            Icms incluso ?
-                        <i class="input-helper"></i></label>
-                    </div>  
-                    <div class="col-sm-3 mb-0 pr-1 pl-1 form-group form-floating " id="divBaseCalculo">
+ 
+                    <div class="col-sm-2 mb-0 pr-1 pl-1 form-group form-floating " id="divBaseCalculo">
                         <input type="text" class="form-control form-control-sm" 
                                         placeholder="Gris" name="baseCalculoNf" id="baseCalculoNf" disabled>
                         <label class="text-secondary" for="baseCalculoNf">Base de Cálculo:</label>
                     </div>
-                    <div class="col-sm-3 mb-1 pr-1 pl-0 form-group form-floating" id="divAliquota">
+                    <div class="col-sm-2 mb-1 pr-1 pl-0 form-group form-floating" id="divAliquota">
                         <input type="text" class="form-control  form-control-sm " 
                                     placeholder="Pedágio" id="aliquotaNf" name="aliquotaNf" disabled>
                         <label class="text-secondary"for="aliquotaNf">Alíquota:</label>
                     </div>              
-                    <div class="col-sm-3 mb-1 pl-0 pr-1 form-group form-floating" id="divIcmsNf">
+                    <div class="col-sm-2 mb-1 pl-0 pr-1 form-group form-floating" id="divIcmsNf">
                         <input type="text" class="form-control  form-control-sm " 
                                     placeholder="Despacho" id="icmsNf" name="icmsNf" disabled>
                         <label class="text-secondary h1"for="icmsNf">Icms R$:</label>  
                     </div>                                
-                    <div class="col-sm-12 mb-1 pl-0 pr-1 form-group form-floating" id="divTotalFrete">
-                        <input type="text" class="form-control form-control-sm bg-primary text-capitalize text-danger h1" 
-                                    placeholder="Outros" id="freteTotalNf" name="freteTotalNf" value="R$ 0.00"disabled>
-                        <label class="text-secondary"for="freteTotalNf">Total Frete :</label>
-                    </div>  
+                    <div class="col-sm-6 mb-1 pl-0 pr-1 form-group form-floating" id="divTotalFrete">
+                        <input type="text" class="form-control form-control-sm bg-info text-capitalize text-dark h1" 
+                            placeholder="Outros" id="freteTotalNf" name="freteTotalNf" value="R$ 0.00" disabled>
+                        <label class="text-dark" for="freteTotalNf"><b>Total Frete :</b></label>
+                    </div> 
                     <div class="col-sm-3 mb-0 mt-1 form-group form-floating pl-1 pr-1" id="divBtnCalc">
                         <button type="button" class="btn btn-warning btn-icon-text" id="btnCalcFrete">
                             <i class="ti-credit-card btn-icon-prepend"></i>
@@ -173,12 +194,10 @@
                         </button>
                     </div>
                     <div class="col-sm-3 mb-1 mt-1 form-group pl-1 pr-1">
-        
                     </div>
                     <div class="col-sm-3 mb-1 mt-1 form-group pl-1 pr-1">
                     </div>  
                     <div class="col-sm-3 mb-1 mt-1 form-group pl-1 pr-1">
-        
                     </div>            
                 </div>
             </div> 

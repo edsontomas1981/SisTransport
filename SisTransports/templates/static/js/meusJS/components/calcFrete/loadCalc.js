@@ -86,10 +86,8 @@ const loadDivObsCte=()=>{
     //                     `
 }
 
-const loadDivTabelaTotaisCte=()=>{
-    let divTabelaTotaisCte = document.getElementById('divTabelaTotaisCte')
-    // divTabelaTotaisCte.innerHTML=`
-    //                     `
+const populaTabelaTotaisCte=()=>{
+ 
 }
 
 const loadDivFretePesoCte=()=>{
