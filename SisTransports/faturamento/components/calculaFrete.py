@@ -58,7 +58,6 @@ def geraPercentualAliquota(aliquotaIcms):
 
 
 def calculaCubagem(m3, fatorCubagem):
-    
     if toFloat(m3) > 0:
         if fatorCubagem > 0:
             return fatorCubagem*m3

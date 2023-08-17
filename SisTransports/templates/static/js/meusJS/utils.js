@@ -256,6 +256,7 @@ tabs.forEach(tab => {
               if (nf.nfs.length !== 0) {
                 // await limpaDivCalculo();
                 populaTotaisNaTabelaNfCte();
+                identificaTomadorCalculoCte()
               } else {
                   preDtcSemNf()
                   return;

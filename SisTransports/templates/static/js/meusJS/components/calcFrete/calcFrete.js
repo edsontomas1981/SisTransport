@@ -2,7 +2,6 @@ const populaTotaisNaTabelaNfCte = async () => {
     let totais = await calculaTotalNfs()
     populaTotaisNfs(totais)
 };
-
 const calculaTotalNfs = async ()=>{
     let vlrNf = 0;
     let vols = 0;
@@ -25,7 +24,15 @@ const calculaTotalNfs = async ()=>{
 
         return totais
     }
+}
 
+const existemNfs=async()=>{
+    let nf = await loadNfs();
+    let existeNf = false
+    if(nf.nfs.length !== 0){
+        existeNf = true
+    }
+    return existeNf
 }
 
 const populaTotaisNfs=(totais)=>{
@@ -74,6 +81,8 @@ const bloquearCamposCalcFrete=()=> {
     document.getElementById('tipoCalc').setAttribute('disabled', 'true');
     document.getElementById('selecionaTabelaCte').setAttribute('disabled', 'true');
 }
+
+
 
 const desbloquearCamposCalcFrete=()=> {
     const campos = document.querySelectorAll('.form-control');

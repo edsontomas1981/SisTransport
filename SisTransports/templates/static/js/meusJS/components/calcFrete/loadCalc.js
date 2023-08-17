@@ -168,8 +168,14 @@ const loadDivBtnCalcCte=()=>{
     //                     `
 }
 
+const identificaTabela=()=>{
+    let identificadorTabelaCte = document.getElementById('identificaTabela')
+    let tabela = document.getElementById('selecionaTabelaCte')
+    identificadorTabelaCte.value = ''
+}
 
-$('#tipoCalc').on('change', function() {
-    console.log('Change event triggered');
-    carregaSelectTabelasCte($(this).val());
-});
+const identificaTomadorCalculoCte = ()=>{
+    let identicadorTomadorCte = document.getElementById('identificaTomador')
+    let tomadorDtc = document.getElementById('razaoTomador')
+    identicadorTomadorCte.value = tomadorDtc.value
+}
