@@ -4,9 +4,6 @@ from django.conf import settings
 from datetime import datetime
 import faturamento.components.calculaFrete
 
-
-
-
 class Frete_Dtc (models.Model):
     # Relação ForeignKey com o modelo Dtc
     dtc_fk = models.ForeignKey(Dtc, on_delete=models.CASCADE, related_name='frete_dtc', null=True)

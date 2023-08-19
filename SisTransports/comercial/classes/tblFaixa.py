@@ -36,7 +36,6 @@ class TabelaFaixa:
     # seleciona todas as faixas referentes a tabela
 
     def readFaixas(self, idTabela):
-        
         if Faixa.objects.filter(tblVinculada=idTabela).exists():
            listaFaixas=[]
            faixas = Faixa.objects.filter(tblVinculada=idTabela).order_by('faixaInicial')

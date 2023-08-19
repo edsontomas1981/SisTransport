@@ -45,9 +45,6 @@ class TabelaFrete:
         except:
             return 303,[] #Erro nao identificado    
         
-        
-        
-
     def anexaRotasTabela(self,rota):
         try:
             self.tabela.rota.add(rota)
