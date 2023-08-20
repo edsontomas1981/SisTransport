@@ -1,22 +1,17 @@
 from math import ceil
-from Classes.utils import dprint, dpprint, toFloat
+from Classes.utils import dprint, toFloat
 from comercial.classes.tabelaFrete import TabelaFrete
 from comercial.classes.tblFaixa import TabelaFaixa
-
-# {'vlrNf': '1661.79', 'volumes': 90, 'peso': 634, 
-# 'm3': 0, 'idDtc': '183', 'idTabela': '72'}
-
-# {'id': 72, 'freteMinimo': Decimal('180.00'), 
-# 'descricao': 'GLACE INTERIOR', 'icmsIncluso': True, 
-# 'bloqueada': True, 'frete': Decimal('10.00'), 
-# 'tipoCalculo': 3, 'adValor': Decimal('0.00'), 
-# 'gris': Decimal('0.00'), 'despacho': Decimal('0.00'), 
-# 'outros': Decimal('0.00'), 'pedagio': Decimal('0.00'), 
-# 'tipoPedagio': 2, 'cubagem': False, 
-# 'fatorCubagem': 300, 'tipoTabela': 1, 
-# 'aliquotaIcms': 7} 
+import decimal
+import json
 
 
+
+# {'id': 100, 'freteMinimo': Decimal('1500.00'), 'descricao': 'Tabela Geral Teste', 
+# 'icmsIncluso': True, 'bloqueada': True, 'frete': Decimal('150.00'), 'tipoCalculo': 1, 
+# 'adValor': Decimal('35.00'), 'gris': Decimal('3.90'), 'despacho': Decimal('55.00'), 
+# 'outros': Decimal('35.00'), 'pedagio': Decimal('1.90'), 'tipoPedagio': 2, 'cubagem': True, 
+# 'fatorCubagem': 300, 'tipoTabela': 2, 'aliquotaIcms': 0}
 
 class FreightCalculator:
     def __init__(self,dados):
@@ -27,16 +22,16 @@ class FreightCalculator:
         self.volumes = dados['volumes']
         self.peso = dados['peso']
         self.m3 = dados['m3']
+        self.vlr_coleta=dados['vlrColeta']
         self.peso_cubado = self.calcula_cubagem()
         self.peso_faturado = self.peso_calcular()
         self.aliquota_icms = self.gera_percentual_aliquota()
-        self.soma_total = 0.0
+        self.total_frete = 0.0
         self.subtotal = []
-
 
     def gera_percentual_aliquota(self):
         if self.tabela.aliquotaIcms <= 0:
-            self.tabela.aliquotaIcms = 0
+            return 0
         else:
             return round(1 - (self.tabela.aliquotaIcms / 100),2)
         
@@ -53,91 +48,142 @@ class FreightCalculator:
         self.peso = toFloat(self.peso)
         self.peso_cubado = toFloat(self.peso_cubado)
         
-        if self.peso >= self.peso_cubado and self.peso > 0:
+        if self.peso >= self.peso_cubado > 0:
             return self.peso
         elif self.peso_cubado > 0:
             return self.peso_cubado
         elif self.peso > 0:
             return self.peso
         else:
-            return 0        
+            return 0
 
     def calcula_frete(self):
+
+        if not self.tabela:
+            raise ValueError("Tabela de frete não encontrada")
+
+        if self.tabela.tipoCalculo == 1:  # Cálculo de frete por peso
+            self.calcula_frete_peso()
+        elif self.tabela.tipoCalculo == 2:  # Cálculo de frete por valor
+            self.calcula_frete_valor()
+        elif self.tabela.tipoCalculo == 3:  # Cálculo de frete por volumes
+            self.calcula_frete_volumes()
+        
         self.calcula_advalor()
+        self.despacho()
         self.calcula_gris()
         self.calcula_pedagio()
-        if self.tabela.tipoCalculo == 1:# calculo frete peso
-            self.calcula_frete_peso()
-        elif self.tabela.tipoCalculo == 2:# calculo frete valor
-            self.calcula_frete_valor()
-        elif self.tabela.tipoCalculo == 3:
-            self.calcula_frete_volumes()
-
-        self.despacho()
+        self.outros()
+        self.coleta()
         self.soma_subtotais()   
         self.aplica_icms()
+        self.frete_menor_que_minimo()
+        self.gera_subtotais_dict()
+
+    def frete_menor_que_minimo(self):
+        if self.total_frete < self.tabela.freteMinimo:
+            self.total_frete = self.tabela.freteMinimo
+            return True
+        else:
+            return False
+        
+    def aplica_icms(self):
+        if self.total_frete > 0 and self.aliquota_icms > 0:
+            self.total_frete = round(self.total_frete / self.aliquota_icms, 2)
 
     def despacho(self):
-        self.subtotal.append({'despacho':self.tabela.despacho})
-    
+        if self.tabela and self.tabela.despacho > 0:
+            self.subtotal.append({'despacho': self.tabela.despacho})
+
+    def coleta(self):
+        if self.vlr_coleta and toFloat(self.vlr_coleta) > 0:
+            self.subtotal.append({'coleta': toFloat(self.vlr_coleta)})
+
     def outros(self):
-        self.subtotal.append({'outros':self.tabela.outros})
-
-
+        if self.tabela and self.tabela.outros > 0:
+            self.subtotal.append({'outros': self.tabela.outros})
 
 
     def calcula_frete_peso(self):
         self.tabela.frete = toFloat(self.tabela.frete)
         self.peso_faturado = toFloat(self.peso_faturado)
-        if (self.frete_faixa()):
-            self.subtotal.append({'frete_peso':self.frete_faixa()})
-        else: 
-            if self.tabela.frete > 0:
-                if self.peso_faturado > 0:
-                    self.subtotal.append({'frete_peso':self.tabela.frete * self.peso_faturado})
+        
+        if self.frete_faixa():
+            self.subtotal.append({'frete_calculado': self.frete_faixa()})
+        elif self.tabela.frete > 0 and self.peso_faturado > 0:
+            self.subtotal.append({'frete_calculado': self.tabela.frete * self.peso_faturado})
+
 
     def frete_faixa(self):
         faixa = TabelaFaixa()
         faixas = faixa.readFaixas(self.tabela.id)
+        
         for i in faixas:
-            if round(self.peso_faturado) in range(i.faixaInicial, (i.faixaFinal + 1)):
+            if i.faixaInicial <= round(self.peso_faturado) <= i.faixaFinal:
                 return i.vlrFaixa
-        else:
-            return None
+        
+        return None
+
         
     def calcula_frete_volumes(self):
-        self.subtotal.append({'frete_volume':toFloat(self.volumes) * float(self.tabela.frete)})        
+        self.tabela.frete = toFloat(self.tabela.frete)
+        volumes = toFloat(self.volumes)
+        
+        if self.tabela.frete > 0 and volumes > 0:
+            self.subtotal.append({'frete_calculado': volumes * self.tabela.frete})
 
     def calcula_frete_valor(self):
-        self.subtotal.append({'frete_valor':toFloat(self.vlrNf) * float((self.tabela.frete / 100))})        
+        self.tabela.frete = toFloat(self.tabela.frete)
+        vlrNf = toFloat(self.vlrNf)
+        
+        if self.tabela.frete > 0 and vlrNf > 0:
+            self.subtotal.append({'frete_calculado': vlrNf * (self.tabela.frete / 100)})
 
     def calcula_pedagio(self):
-        if self.tabela.tipoPedagio == 1:
-            self.subtotal.append({'pedagio':self.tabela.pedagio})
-        elif self.tabela.tipoPedagio == 2:
-            self.subtotal.append({'pedagio':ceil(self.peso_faturado / 100) * self.tabela.pedagio})            
+        if not self.tabela:
+            raise ValueError("Tabela de frete não encontrada")
 
+        if self.tabela.tipoPedagio == 1 and self.tabela.pedagio > 0:
+            self.subtotal.append({'pedagio': self.tabela.pedagio})
+        elif self.tabela.tipoPedagio == 2 and self.tabela.pedagio > 0 and self.peso_faturado > 0:
+            self.subtotal.append({'pedagio': ceil(self.peso_faturado / 100) * self.tabela.pedagio})
+   
     def calcula_gris(self):
-        self.vlrNf = float(toFloat(self.vlrNf))
-        if self.vlrNf > 0:
-            if self.tabela.gris > 0:
-                gris = float(self.tabela.gris / 100)
-                self.subtotal.append({'gris':round(gris * self.vlrNf, 2)})
+        vlrNf = decimal.Decimal(self.vlrNf)
+        if vlrNf > 0 and self.tabela and self.tabela.gris > 0:
+            gris = decimal.Decimal(self.tabela.gris / 100)
+            self.subtotal.append({'gris': round(gris * vlrNf, 2)})
 
     def calcula_advalor(self):
-        self.vlrNf = toFloat(self.vlrNf)
-        if self.vlrNf > 0:
-            if self.tabela.adValor > 0:
-                advalor = float(self.tabela.adValor / 100)
-                self.subtotal.append({'advalor':round(advalor * self.vlrNf, 2)})
-    
-    def soma_subtotais(self):
-        self.soma_total = sum(float(valor) for sub_total in self.subtotal for valor in sub_total.values())
+        vlrNf = decimal.Decimal(self.vlrNf)
+        if vlrNf > 0 and self.tabela and self.tabela.adValor > 0:
+            advalor = decimal.Decimal(self.tabela.adValor / 100)
+            self.subtotal.append({'advalor': round(advalor * vlrNf, 2)})
 
-    def aplica_icms(self):
-        if self.soma_total > 0:
-            if self.aliquota_icms > 0:
-                self.total_frete = round(float(self.soma_total) / float(self.aliquota_icms), 2)
+    def soma_subtotais(self):
+        self.total_frete = sum(float(valor) for sub_total in self.subtotal for valor in sub_total.values())
+
+    def decimal_to_string(self, value):
+        if isinstance(value, decimal.Decimal):
+            return str(value)
+        return value
+
+    def gera_subtotais_dict(self):
+        subtotais_dict = {
+            'despacho': next((item['despacho'] for item in self.subtotal if 'despacho' in item), 0),
+            'coleta': next((item['coleta'] for item in self.subtotal if 'coleta' in item), 0),
+            'outros': next((item['outros'] for item in self.subtotal if 'outros' in item), 0),
+            'frete_calculado': next((item['frete_calculado'] for item in self.subtotal if 'frete_calculado' in item), 0),
+            'pedagio': next((item['pedagio'] for item in self.subtotal if 'pedagio' in item), 0),
+            'gris': next((item['gris'] for item in self.subtotal if 'gris' in item), 0),
+            'advalor': next((item['advalor'] for item in self.subtotal if 'advalor' in item), 0)
+        }
+
+        return subtotais_dict
+
+
+
+
 
    
 

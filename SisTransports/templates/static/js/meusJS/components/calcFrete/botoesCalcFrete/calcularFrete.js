@@ -6,7 +6,7 @@ document.getElementById('btnCalcular').addEventListener('click',()=>{
     if (selecionaTabelaFrete.value == 0){
         msgTabela(titulo,msg)
     }else{
-        calcular()
+        calcular('numDtc','selecionaTabelaCte','coletaNf')
     }
 })
 
@@ -23,12 +23,14 @@ const msgTabela=(titulo,msg)=>{
     });
 }
 
-const calcular = async ()=>{
+const calcular = async (numDtc,tabelaDtc,coleta)=>{
     let dados = await calculaTotalNfs()
-    dados.idDtc = $('#numDtc').val(); 
-    dados.idTabela = $('#selecionaTabelaCte').val()
+    dados.idDtc = $('#'+numDtc).val(); 
+    dados.idTabela = $('#'+tabelaDtc).val()
+    dados.vlrColeta = $('#'+coleta).val();
     let url = '/comercial/calcula/calcula_frete/'    
     let conexao = new Conexao(url,dados)
-    conexao.sendPostRequest()
+    let result = await conexao.sendPostRequest()
+    console.log(result)
 }
 

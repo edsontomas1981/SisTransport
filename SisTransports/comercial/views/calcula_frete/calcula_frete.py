@@ -1,21 +1,23 @@
-from django.shortcuts import render
+from faturamento.components.obj_calcula_frete import FreightCalculator
 from django.contrib.auth.decorators import login_required
 from django.http import JsonResponse
-from comercial.classes.tabelaFrete import TabelaFrete 
-from Classes.parceiros import Parceiros
 from Classes.utils import dprint 
-from comercial.classes.cotacao import Cotacao
 import json
-from faturamento.components.obj_calcula_frete import FreightCalculator
 
 @login_required(login_url='/auth/entrar/')
-def calcula_frete (request):
+def calcula_frete(request):
     if request.method == 'GET':
-        return JsonResponse({'status': 200}) 
-    elif request.method == "POST" :
-        data = json.loads(request.body.decode('utf-8'))
-        calcula_frete = FreightCalculator(data)
-        calcula_frete.calcula_frete()
-        return JsonResponse({'status':'post'}) 
+        return JsonResponse({'status': 200})
+    elif request.method == "POST":
+        try:
+            data = json.loads(request.body.decode('utf-8'))
+            calcula_frete = FreightCalculator(data)
+            calcula_frete.calcula_frete()
+            subtotais_dict = calcula_frete.gera_subtotais_dict()
+            return JsonResponse({'subtotais': subtotais_dict},status=200)
+        except json.JSONDecodeError as e:
+            return JsonResponse({'error': 'Invalid JSON format'}, status=400)
+        # except Exception as e:
+        #     return JsonResponse({'error': 'An error occurred while calculating subtotals'}, status=500)
 
     
