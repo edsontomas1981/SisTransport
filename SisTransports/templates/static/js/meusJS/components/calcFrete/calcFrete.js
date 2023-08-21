@@ -71,6 +71,8 @@ const populaCamposFrete=async (response)=>{
 
 }
 
+
+
 const bloquearCamposCalcFrete=()=> {
     const campos = document.querySelectorAll('.form-control');
     campos.forEach(campo => {

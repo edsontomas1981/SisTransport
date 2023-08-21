@@ -13,7 +13,7 @@ def calcula_frete(request):
             data = json.loads(request.body.decode('utf-8'))
             calcula_frete = FreightCalculator(data)
             calcula_frete.calcula_frete()
-            subtotais_dict = calcula_frete.gera_subtotais_dict()
+            subtotais_dict = calcula_frete.dict_subtotais()
             return JsonResponse({'subtotais': subtotais_dict},status=200)
         except json.JSONDecodeError as e:
             return JsonResponse({'error': 'Invalid JSON format'}, status=400)
