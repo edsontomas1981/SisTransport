@@ -17,7 +17,5 @@ def calcula_frete(request):
             return JsonResponse({'subtotais': subtotais_dict},status=200)
         except json.JSONDecodeError as e:
             return JsonResponse({'error': 'Invalid JSON format'}, status=400)
-        # except Exception as e:
-        #     return JsonResponse({'error': 'An error occurred while calculating subtotals'}, status=500)
-
-    
+        except Exception as e:
+            return JsonResponse({'error': 'An error occurred while calculating subtotals'}, status=500)

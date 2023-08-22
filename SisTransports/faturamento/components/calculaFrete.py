@@ -2,8 +2,6 @@ from math import ceil
 from Classes.utils import dprint, dpprint,toFloat
 import decimal
 
-
-
 def pesoACalcular(pesoReal, pesoCubado):
     pesoReal=toFloat(pesoReal)
     pesoCubado=toFloat(pesoCubado)

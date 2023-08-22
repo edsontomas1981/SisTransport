@@ -9,12 +9,10 @@ class Calculo():
         tabela=TabelaFrete()
         tabela.readTabela(self.dados['tabela'])
         self.tabela=tabela.tabela
+    
     def calcula(self):
         self.carregaTabela()
-        dprint(vars(self.tabela))
-        
     
-
     def calculaFrete(self):
         pass
        

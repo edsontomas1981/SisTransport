@@ -2,7 +2,10 @@ from django.db import models
 from parceiros.models.parceiros import Parceiros
 from operacional.models.rota import Rota
 from operacional.models.coleta import Coleta
-
+from operacional.models.frete_dtc import Frete_Dtc
+from django.conf import settings
+from datetime import datetime
+from django.utils import timezone
 
 class Dtc (models.Model):
     coleta_fk=models.ForeignKey(Coleta, on_delete=models.CASCADE,related_name='coletaDtc', null=True)
@@ -13,20 +16,38 @@ class Dtc (models.Model):
     tomador_fk=models.ForeignKey(Parceiros, on_delete=models.CASCADE,related_name='tomadoDtc', null=True)
     tipoFrete=models.IntegerField(default=2)
     rota_fk=models.ForeignKey(Rota, on_delete=models.CASCADE,related_name='rotaDtc',null=True)
-    
+    # Relação ForeignKey com o frete Dtc
+    frete_dtc_fk = models.ForeignKey(Frete_Dtc, on_delete=models.CASCADE, related_name='frete_dtc', null=True)
+
+    # Informações de usuário e data/hora
+    usuario_cadastro = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.SET_NULL, null=True, related_name='criador_dtc')
+    usuario_ultima_atualizacao = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.SET_NULL, null=True, related_name='atualizador_frete_dtc')
+    data_cadastro = models.DateTimeField(null=True)
+    data_ultima_atualizacao = models.DateTimeField(default=timezone.now)  
+
     def to_dict(self):
-        dtc = {'id':self.id,
-               'tipoFrete':self.tipoFrete}
-        if self.tomador_fk :
-            dtc.update({'tomador':self.tomador_fk.to_dict()})
-        if self.remetente_fk :
-            dtc.update({'remetente':self.remetente_fk.to_dict()})
-        if self.destinatario_fk :
-            dtc.update({'destinatario':self.destinatario_fk.to_dict() })
-        if self.consignatario_fk :
-            dtc.update({'consignatario':self.consignatario_fk.to_dict()}) 
-        if self.coleta_fk :
-            dtc.update({'coleta':self.coleta_fk.to_dict()})          
-        if self.rota_fk :
-            dtc.update({'rota':self.rota_fk.to_dict()})          
+
+        dtc = {
+            'id': self.id,
+            'tipoFrete': self.tipoFrete,
+            'usuario_cadastro': self.usuario_cadastro_id,
+            'usuario_ultima_atualizacao': self.usuario_ultima_atualizacao_id,
+            'data_cadastro': self.data_cadastro.strftime('%Y-%m-%d %H:%M:%S'),
+            'data_ultima_atualizacao': self.data_ultima_atualizacao.strftime('%Y-%m-%d %H:%M:%S')
+        }
+
+        related_objects = {
+            'tomador_fk': 'tomador',
+            'remetente_fk': 'remetente',
+            'destinatario_fk': 'destinatario',
+            'consignatario_fk': 'consignatario',
+            'coleta_fk': 'coleta',
+            'rota_fk': 'rota'
+        }
+
+        for attribute, key in related_objects.items():
+            related_obj = getattr(self, attribute)
+            if related_obj:
+                dtc[key] = related_obj.to_dict()
+
         return dtc

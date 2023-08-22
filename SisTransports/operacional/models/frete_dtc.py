@@ -1,12 +1,9 @@
 from django.db import models
-from operacional.models.dtc import Dtc
 from django.conf import settings
 from datetime import datetime
-import faturamento.components.calculaFrete
 
 class Frete_Dtc (models.Model):
-    # Relação ForeignKey com o modelo Dtc
-    dtc_fk = models.ForeignKey(Dtc, on_delete=models.CASCADE, related_name='frete_dtc', null=True)
+
     # Valores de Frete
     totalFrete = models.FloatField(default=0.00)
     fretePeso = models.FloatField(default=0.00)
@@ -23,8 +20,8 @@ class Frete_Dtc (models.Model):
     observacao = models.CharField(max_length=70, null=True)
 
     # Informações de usuário e data/hora
-    usuario_cadastro = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.SET_NULL, null=True, related_name='notas_fiscais_cadastradas_frete_dtc')
-    usuario_ultima_atualizacao = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.SET_NULL, null=True, related_name='notas_fiscais_atualizadas_frete_dtc')
+    usuario_cadastro = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.SET_NULL, null=True, related_name='cadastrado_dtc')
+    usuario_ultima_atualizacao = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.SET_NULL, null=True, related_name='alterou_dtc')
     data_cadastro = models.DateTimeField(auto_now_add=True)
     data_ultima_atualizacao = models.DateTimeField(auto_now=True)
 

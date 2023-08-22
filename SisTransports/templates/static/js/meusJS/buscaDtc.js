@@ -46,7 +46,6 @@ const carregaDtc=async (response)=>{
 }
 
 const populaCamposDtc = (response,sufixo) => {
-    console.log(response)
     $(`#cnpj${sufixo}`).val(response.cnpj_cpf);
     $(`#insc${sufixo}`).val(response.insc_est);
     $(`#fantasia${sufixo}`).val(response.nome_fantasia);

@@ -13,4 +13,5 @@ urlpatterns = [
     path('readNfDtc/',viewsOperacional.read_nfs_by_dtc,name='read_nfs_by_dtc'),
     path('updateNf/',viewsOperacional.update_nf,name='updateNf'),
     path('deleteNf/',viewsOperacional.delete_nf,name='deleteNf'),
+    path('createFrete/',viewsOperacional.create_frete_dtc,name='createFrete'),
     ]

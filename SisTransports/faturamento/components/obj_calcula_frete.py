@@ -4,10 +4,8 @@ from comercial.classes.tabelaFrete import TabelaFrete
 from comercial.classes.tblFaixa import TabelaFaixa
 import decimal
 
-
 class FreightCalculator:
     def __init__(self,dados):
-        print(dados)
         self.dados = dados
         self.carrega_tabela()
         self.vlrNf = dados['vlrNf']
@@ -113,9 +111,9 @@ class FreightCalculator:
     def aplica_icms(self):
         if self.icms_incluso:
             if self.total_frete > 0 and self.aliquota_icms > 0:
-                self.total_frete_com_icms = round(self.total_frete / self.aliquota_icms, 2)
+                self.total_frete_com_icms = toFloat(round(float(self.total_frete) / self.aliquota_icms, 2))
         else:
-            self.total_frete_com_icms = round(self.total_frete, 2)            
+            self.total_frete_com_icms = (round(float(self.total_frete), 2))            
 
     def calcula_despacho(self):
         if self.tabela and self.tabela.despacho > 0:
@@ -195,7 +193,6 @@ class FreightCalculator:
 
     def  calcula_subtotais(self):
         self.total_frete = sum(self.subtotal)
-        dprint(self.total_frete)
         return self.total_frete
 
     def decimal_to_string(self, value):
