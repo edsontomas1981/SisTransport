@@ -12,30 +12,21 @@ const carregaDtc=async (response)=>{
         console.log(response)
         
         if (response.dtc.remetente){
-            const remetenteDtc = new Parceiro(response.dtc.remetente.cnpj_cpf,'Rem');
-            remetenteDtc.readParceiro();
-            remetenteDtc.populaCampos();
+            populaCamposDtc(response.dtc.remetente,'Rem');
         }
         if (response.dtc.destinatario){
-            const destinatarioDtc= new Parceiro(response.dtc.destinatario.cnpj_cpf,'Dest');
-            destinatarioDtc.readParceiro();
-            destinatarioDtc.populaCampos();
+            populaCamposDtc(response.dtc.destinatario,'Dest');
         }
-
         if (response.dtc.consignatario){
-            const consignatarioDtc = new Parceiro(response.dtc.consignatario.cnpj_cpf,'Consig');
-            consignatarioDtc.readParceiro();
-            consignatarioDtc.populaCampos();
+            populaCamposDtc(response.dtc.consignatario,'Consig');
         }
-
         if (response.dtc.tipoFrete){
         $('#modalidadeFrete').val(response.dtc.tipoFrete)
         }
-
         if (response.dtc.rota){
             $('#rotasDtc').val(response.dtc.rota.id)
         }
-        
+       
         if (response.dtc.coleta){
             completaColeta(response.dtc.coleta)
         }
@@ -53,6 +44,21 @@ const carregaDtc=async (response)=>{
         }
     }
 }
+
+const populaCamposDtc = (response,sufixo) => {
+    console.log(response)
+    $(`#cnpj${sufixo}`).val(response.cnpj_cpf);
+    $(`#insc${sufixo}`).val(response.insc_est);
+    $(`#fantasia${sufixo}`).val(response.nome_fantasia);
+    $(`#razao${sufixo}`).val(response.raz_soc);
+    $(`#cep${sufixo}`).val(response.endereco_fk.cep);
+    $(`#rua${sufixo}`).val(response.endereco_fk.logradouro);
+    $(`#numero${sufixo}`).val(response.endereco_fk.numero);
+    $(`#complemento${sufixo}`).val(response.endereco_fk.complemento);
+    $(`#bairro${sufixo}`).val(response.endereco_fk.bairro);
+    $(`#cidade${sufixo}`).val(response.endereco_fk.cidade);
+    $(`#uf${sufixo}`).val(response.endereco_fk.uf);
+  };
 
 $('#modalidadeFrete').on('change', function () {
     defineTomador($('#modalidadeFrete').val())
@@ -215,6 +221,7 @@ function buscaDtc() {
         success: function(response) {
             limpaDtc()
             carregaDtc(response)
+            console.log(response)
         },
         error: function(xhr) {
             console.log('Erro');

@@ -3,12 +3,11 @@ from Classes.utils import dprint, toFloat
 from comercial.classes.tabelaFrete import TabelaFrete
 from comercial.classes.tblFaixa import TabelaFaixa
 import decimal
-import json
 
 
 class FreightCalculator:
     def __init__(self,dados):
-
+        print(dados)
         self.dados = dados
         self.carrega_tabela()
         self.vlrNf = dados['vlrNf']
@@ -16,6 +15,7 @@ class FreightCalculator:
         self.peso = dados['peso']
         self.m3 = dados['m3']
         self.vlr_coleta=dados['vlrColeta']
+        self.frete_informado = dados['freteInformado']
         self.peso_cubado = self.calcula_cubagem()
         self.peso_faturado = self.peso_calcular()
         self.aliquota_icms = self.calcula_percentual_aliquota()
@@ -43,8 +43,6 @@ class FreightCalculator:
             self.tabela.despacho = 0
             self.tabela.tipoPedagio = 0
             self.tabela.freteMinimo = 0
-
-
 
     def calcula_percentual_aliquota(self):
         if self.tabela.aliquotaIcms <= 0:
@@ -85,7 +83,7 @@ class FreightCalculator:
             self.calcula_frete_valor()
         elif self.tabela.tipoCalculo == 3:  # Cálculo de frete por volumes
             self.calcula_frete_volumes()
-        elif self.tabela.tipoCalculo == 3:
+        elif self.tabela.tipoCalculo == 4:  # Cálculo de frete informado
             self.calcula_frete_informado()
         
         self.calcula_advalor()
@@ -101,7 +99,8 @@ class FreightCalculator:
         self.calcula_vlr_icms()        
 
     def calcula_frete_informado(self):
-        self.frete_calculado = self.freteInformado
+        self.subtotal.append(toFloat(self.frete_informado))
+        self.frete_calculado = self.frete_informado
 
 
     def frete_menor_que_minimo(self):
@@ -195,8 +194,8 @@ class FreightCalculator:
             self.advalor = toFloat(round(advalor * vlrNf, 2))
 
     def  calcula_subtotais(self):
-        dprint(self.subtotal)
         self.total_frete = sum(self.subtotal)
+        dprint(self.total_frete)
         return self.total_frete
 
     def decimal_to_string(self, value):

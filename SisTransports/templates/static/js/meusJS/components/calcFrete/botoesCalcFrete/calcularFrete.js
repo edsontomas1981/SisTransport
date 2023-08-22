@@ -24,8 +24,7 @@ const msgTabela=(titulo,msg)=>{
 const verificaFreteCalculado=()=>{
     let tipoCalculo = document.getElementById('tipoCalc')
     let freteCalculado = document.getElementById('freteCalculado')
-
-    if (tipoCalculo.value == 3 && !(freteCalculado.value == '' || freteCalculado.value == 0 )){
+    if (tipoCalculo.value === '3' && (freteCalculado.value === '' || freteCalculado.value === '0' )){
         return false
     }else{
         return true
@@ -49,7 +48,6 @@ const calcular = async (numDtc,tabelaDtc,coleta)=>{
         msgTabela(titulo,msg)
         return false
     }
-
     let url = '/comercial/calcula/calcula_frete/'    
     let conexao = new Conexao(url,dados)
     let result = await conexao.sendPostRequest()

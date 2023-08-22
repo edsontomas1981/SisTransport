@@ -14,6 +14,8 @@ class Dtc:
         self.dtc.tomador_fk=dados['tomador']
         if dados['consignatario'] :
             self.dtc.consignatario_fk=dados['consignatario']
+        else:
+            self.dtc.consignatario_fk=None
         if dados['rota'] : 
             self.dtc.rota_fk=dados['rota']            
         self.dtc.save()
@@ -30,10 +32,20 @@ class Dtc:
             dtc=ClsDtc.objects.filter(id=idDtc).get()  
             self.dtc=dtc
     
-    def updateDtc (self,dados,idDtc):
+    def updateDtc(self, dados, idDtc):
         if ClsDtc.objects.filter(id=idDtc).exists():
-            self.dtc=ClsDtc.objects.filter(id=idDtc).get() 
-            self.salvaOuAlteraDtc(dados)
+            self.dtc = ClsDtc.objects.get(id=idDtc)
+
+            fields_to_update = ['consignatario', 'remetente', 'destinatario', 'modalidadeFrete', 'tomador', 'rota']
+            for field in fields_to_update:
+                if field in dados:
+                    if field == 'tipoFrete':
+                        setattr(self.dtc, field, dados[field])
+                    else:
+                        setattr(self.dtc, f'{field}_fk', dados[field] if dados[field] else None)
+                        
+            self.dtc.tipoFrete=dados['modalidadeFrete']
+            self.dtc.save()
             return 200
         else:
             return 400
