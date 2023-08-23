@@ -1,19 +1,49 @@
 from django.db import models
 from django.conf import settings
 from operacional.models.cte import Cte as Mdl_cte
+from django.core.exceptions import ObjectDoesNotExist
+
 
 class Cte():
     def __init__ (self):
         self.obj_cte = Mdl_cte()
+    @staticmethod
+    def verificar_campos_obrigatorios(dados, campos_obrigatorios):
+        campos_faltantes = []
+        for campo in campos_obrigatorios:
+            if campo not in dados or not dados[campo]:
+                campos_faltantes.append(campo)
+        return campos_faltantes
+    @staticmethod
+    def criar_mensagem_erro(campos_faltantes):
+        if campos_faltantes:
+            campos_faltantes_str = ', '.join(campos_faltantes)
+            return 300, f"Campos obrigatórios faltando: {campos_faltantes_str}"
+        return None
 
     def create(self, dados):
+        campos_obrigatorios = ['origem_cte', 'destino_cte', 'emissora_cte', 'tipo_cte', 'cfop_cte',
+                            'tipo_calculo_cte', 'dtc_fk', 'icms_incluso', 'base_de_calculo',
+                            'aliquota', 'icms_valor', 'total_frete', 'usuario_cadastro']
+
+        campos_faltantes = Cte.verificar_campos_obrigatorios(dados, campos_obrigatorios)
+        
+        mensagem_erro = Cte.criar_mensagem_erro(campos_faltantes)
+        if mensagem_erro:
+            return mensagem_erro
+
         for key, value in dados.items():
             setattr(self.obj_cte, key, value)
+        
         self.obj_cte.save()
-        return self.obj_cte
+        return 200
 
-    def read(self):
-        pass
+    def read(self, dtc_fk):
+        try:
+            cte_obj = Mdl_cte.objects.get(dtc_fk=dtc_fk)
+            return cte_obj
+        except ObjectDoesNotExist:
+            return None
 
     def update(self):
         pass
@@ -22,28 +52,3 @@ class Cte():
         pass
 
     pass
-    # def criar_frete_dtc(self, **kwargs):
-    #     return self.create(**kwargs)
-
-    # @classmethod
-    # def criar(cls, **kwargs):
-    #     return cls.objects.criar_frete_dtc(**kwargs)
-
-    # @classmethod
-    # def ler(cls, dtc_fk_id):
-    #     try:
-    #         return cls.objects.get(dtc_fk_id=dtc_fk_id)
-    #     except cls.DoesNotExist:
-    #         return None
-        
-    # def atualizar(self, **kwargs):
-    #     for campo, valor in kwargs.items():
-    #         setattr(self, campo, valor)
-    #     self.save()
-
-    # def deletar(self):
-    #     self.delete()
-
-    # @classmethod
-    # def listar(cls):
-    #     return cls.objects.all()

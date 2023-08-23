@@ -3,7 +3,7 @@ from django.conf import settings
 from datetime import datetime
 from comercial.models.tabelaFrete import TabelaFrete
 from operacional.models.dtc import Dtc
- 
+
 class Cte (models.Model):
     origem_cte = models.CharField(max_length=5, null=True)
     destino_cte = models.CharField(max_length=5, null=True)
@@ -33,8 +33,8 @@ class Cte (models.Model):
     # Informações de usuário e data/hora
     usuario_cadastro = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.SET_NULL, null=True, related_name='cadastrado_dtc')
     usuario_ultima_atualizacao = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.SET_NULL, null=True, related_name='alterou_dtc')
-    data_cadastro = models.DateTimeField(auto_now_add=True)
-    data_ultima_atualizacao = models.DateTimeField(auto_now=True)
+    data_cadastro = models.DateTimeField(null=True)
+    data_ultima_atualizacao = models.DateTimeField(null=True)
 
 
     def to_dict(self):
