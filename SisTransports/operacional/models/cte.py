@@ -1,23 +1,34 @@
 from django.db import models
 from django.conf import settings
 from datetime import datetime
-
-class Frete_Dtc (models.Model):
+from comercial.models.tabelaFrete import TabelaFrete
+from operacional.models.dtc import Dtc
+ 
+class Cte (models.Model):
+    origem_cte = models.CharField(max_length=5, null=True)
+    destino_cte = models.CharField(max_length=5, null=True)
+    emissora_cte = models.CharField(max_length=5, null=True)
+    tipo_cte = models.CharField(max_length=5, null=True)
+    cfop_cte = models.CharField(max_length=5, null=True)
+    redesp_cte = models.CharField(max_length=5, null=True)
+    tipo_calculo_cte = models.CharField(max_length=5, null=True)
+    dtc_fk = models.ForeignKey(Dtc, on_delete=models.CASCADE, related_name='frete_dtc', null=True)
 
     # Valores de Frete
-    totalFrete = models.FloatField(default=0.00)
-    fretePeso = models.FloatField(default=0.00)
-    adValor = models.FloatField(default=0.00)
+    tabela_frete = models.ForeignKey(TabelaFrete, on_delete=models.CASCADE, null=True, related_name='coletaDtc')
+    observacao = models.CharField(max_length=70, null=True)
+    icms_incluso= models.BooleanField()
+    frete_calculado = models.FloatField(default=0.00)
+    advalor = models.FloatField(default=0.00)
     gris = models.FloatField(default=0.00)
     despacho = models.FloatField(default=0.00)
     outros = models.FloatField(default=0.00)
     pedagio = models.FloatField(default=0.00)
-    vlrColeta = models.FloatField(default=0.00)
-    baseDeCalculo = models.FloatField(default=0.00)
+    vlr_coleta = models.FloatField(default=0.00)
+    base_de_calculo = models.FloatField(default=0.00)
     aliquota = models.FloatField(default=0.00)
-    icmsRS = models.FloatField(default=0.00)
-    icmsIncluso = models.BooleanField(default=True)
-    observacao = models.CharField(max_length=70, null=True)
+    icms_valor = models.FloatField(default=0.00)
+    total_frete = models.FloatField(default=0.00)
 
     # Informações de usuário e data/hora
     usuario_cadastro = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.SET_NULL, null=True, related_name='cadastrado_dtc')

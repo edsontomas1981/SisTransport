@@ -2,7 +2,6 @@ from django.db import models
 from parceiros.models.parceiros import Parceiros
 from operacional.models.rota import Rota
 from operacional.models.coleta import Coleta
-from operacional.models.frete_dtc import Frete_Dtc
 from django.conf import settings
 from datetime import datetime
 from django.utils import timezone
@@ -11,13 +10,11 @@ class Dtc (models.Model):
     coleta_fk=models.ForeignKey(Coleta, on_delete=models.CASCADE,related_name='coletaDtc', null=True)
     remetente_fk=models.ForeignKey(Parceiros, on_delete=models.CASCADE,related_name='remetDtc', null=True)
     destinatario_fk=models.ForeignKey(Parceiros, on_delete=models.CASCADE, related_name='destDtc', null=True)
-    redespacho_fk=models.ForeignKey(Parceiros, on_delete=models.CASCADE, related_name='redespDtc', null=True)
     consignatario_fk=models.ForeignKey(Parceiros, on_delete=models.CASCADE,related_name='consigDtc',null=True)
     tomador_fk=models.ForeignKey(Parceiros, on_delete=models.CASCADE,related_name='tomadoDtc', null=True)
     tipoFrete=models.IntegerField(default=2)
     rota_fk=models.ForeignKey(Rota, on_delete=models.CASCADE,related_name='rotaDtc',null=True)
-    # Relação ForeignKey com o frete Dtc
-    frete_dtc_fk = models.ForeignKey(Frete_Dtc, on_delete=models.CASCADE, related_name='frete_dtc', null=True)
+    # Relação ForeignKey com o Cte
 
     # Informações de usuário e data/hora
     usuario_cadastro = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.SET_NULL, null=True, related_name='criador_dtc')

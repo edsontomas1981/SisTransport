@@ -1,10 +1,16 @@
 from django.db import models
 from django.conf import settings
+from operacional.models.cte import Cte as Mdl_cte
 
-class Frete_Dtc_CRUD():
+class Cte():
+    def __init__ (self):
+        self.obj_cte = Mdl_cte()
 
-    def create(self):
-        pass
+    def create(self, dados):
+        for key, value in dados.items():
+            setattr(self.obj_cte, key, value)
+        self.obj_cte.save()
+        return self.obj_cte
 
     def read(self):
         pass

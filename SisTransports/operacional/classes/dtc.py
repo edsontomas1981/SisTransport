@@ -25,7 +25,6 @@ class Dtc:
             self.salvaOuAlteraDtc(dados)
         except:
             return 300
-        
     
     def readDtc(self,idDtc):
         if ClsDtc.objects.filter(id=idDtc).exists():
