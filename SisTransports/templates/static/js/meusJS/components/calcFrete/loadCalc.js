@@ -1,6 +1,19 @@
 const preDtcSemNf = ()=>{
     desBloqueiaSemNf()
     bloqueiaDivFrete()
+    bloqueiaFreteCalculado()    
+}
+
+const preDtcCalculado = ()=>{
+    bloqueiaSemNf()
+    bloqueiaDivFrete()
+    desbloqueiaFreteCalculado()    
+}
+
+const preDtcSemCalculo = ()=>{
+    bloqueiaSemNf()
+    desBloqueiaDivFrete()
+    bloqueiaFreteCalculado()    
 }
 
 const bloqueiaSemNf=()=>{
@@ -10,6 +23,16 @@ const bloqueiaSemNf=()=>{
 const desBloqueiaSemNf=()=>{
     let semNf = document.getElementById('semNf');
     semNf.style.display = 'block';
+}
+
+const bloqueiaFreteCalculado=()=>{
+    let divFreteCalculado = document.getElementById('divFreteCalculado');
+    divFreteCalculado.style.display = 'none';
+}
+
+const desbloqueiaFreteCalculado=()=>{
+    let divFreteCalculado = document.getElementById('divFreteCalculado');
+    divFreteCalculado.style.display = 'block';
 }
 
 const divCalculoFrete = async ()=>{

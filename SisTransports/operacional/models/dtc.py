@@ -21,7 +21,7 @@ class Dtc (models.Model):
     usuario_ultima_atualizacao = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.SET_NULL, null=True, related_name='atualizador_frete_dtc')
     data_cadastro = models.DateTimeField(null=True)
     data_ultima_atualizacao = models.DateTimeField(default=timezone.now)  
-
+ 
     def to_dict(self):
 
         dtc = {
@@ -29,8 +29,8 @@ class Dtc (models.Model):
             'tipoFrete': self.tipoFrete,
             'usuario_cadastro': self.usuario_cadastro_id,
             'usuario_ultima_atualizacao': self.usuario_ultima_atualizacao_id,
-            'data_cadastro': self.data_cadastro.strftime('%Y-%m-%d %H:%M:%S'),
-            'data_ultima_atualizacao': self.data_ultima_atualizacao.strftime('%Y-%m-%d %H:%M:%S')
+            'data_cadastro': self.data_cadastro.strftime('%Y-%m-%d %H:%M:%S') if self.data_cadastro else None,
+            'data_ultima_atualizacao': self.data_ultima_atualizacao.strftime('%Y-%m-%d %H:%M:%S') if self.data_ultima_atualizacao else None,
         }
 
         related_objects = {

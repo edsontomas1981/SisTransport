@@ -40,15 +40,30 @@ class Cte():
 
     def read(self, dtc_fk):
         try:
-            cte_obj = Mdl_cte.objects.get(dtc_fk=dtc_fk)
-            return cte_obj
+            self.cte_obj = Mdl_cte.objects.get(dtc_fk=dtc_fk)
+            print(self.cte_obj.to_dict())
+            return self.cte_obj
         except ObjectDoesNotExist:
             return None
 
-    def update(self):
-        pass
+    def update(self, dtc_fk, novos_dados):
+        try:
+            print('mdl atualiza')
+            self.cte_obj = Mdl_cte.objects.get(dtc_fk=dtc_fk)
+            for key, value in novos_dados.items():
+                setattr(self.cte_obj, key, value)
+            self.cte_obj.save()
+            return self.cte_obj
+        except Mdl_cte.DoesNotExist:
+            print('cte nao existe')
+            return None
 
-    def delete(self):
-        pass
+    def delete(self, dtc_fk):
+        try:
+            cte_obj = Mdl_cte.objects.get(dtc_fk=dtc_fk)
+            cte_obj.delete()
+            return 200  # Indicando sucesso na exclusão
+        except Mdl_cte.DoesNotExist:
+            return None  # O objeto não existe
 
     pass

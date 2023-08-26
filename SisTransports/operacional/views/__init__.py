@@ -30,5 +30,6 @@ from operacional.views.nf.delete_nf import delete_nf
 from operacional.views.nf.read_nfs_by_dtc import read_nfs_by_dtc
 
 from operacional.views.calculo_frete.cria_frete import create_frete_dtc
+from operacional.views.calculo_frete.delete_cte import delete_cte
 
 

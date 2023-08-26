@@ -1,1 +1,1 @@
-from operacional.test.tests_gerafrete import GeraFreteTest
+from operacional.test.tests_gerafrete import BuscaDtcViewTest

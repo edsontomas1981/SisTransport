@@ -1,15 +1,29 @@
 document.getElementById('btnCalcular').addEventListener('click',()=>{
-    let selecionaTabelaFrete = document.getElementById('selecionaTabelaCte')
-    let tipoCalculo = document.getElementById('tipoCalc')
-    let titulo = 'Tabela de Frete Não Selecionada'
-    let msg = "É essencial escolher pelo menos uma tabela de frete ou optar pela alternativa de 'Frete Informado'."
+    preDtcSemCalculo()
+    
+    // let selecionaTabelaFrete = document.getElementById('selecionaTabelaCte')
+    // let tipoCalculo = document.getElementById('tipoCalc')
+    // let titulo = 'Tabela de Frete Não Selecionada'
+    // let msg = "É essencial escolher pelo menos uma tabela de frete ou optar pela alternativa de 'Frete Informado'."
 
-    if (selecionaTabelaFrete.value == 0 && tipoCalculo.value != 3 ){
-        msgTabela(titulo,msg)
-    }else{
-        calcular('numDtc','selecionaTabelaCte','coletaNf')
-    }
+    // if (selecionaTabelaFrete.value == 0 && tipoCalculo.value != 3 ){
+    //     msgTabela(titulo,msg)
+    // }else{
+    //     calcular('numDtc','selecionaTabelaCte','coletaNf')
+    // }
 })
+
+
+document.getElementById('btnNovoCalc').addEventListener('click',(e)=>{
+    preDtcSemNf()
+    e.preventDefault();
+})
+
+document.getElementById('btnExcluiCalc').addEventListener('click',(e)=>{
+    preDtcCalculado()
+    e.preventDefault();
+})
+
 
 const msgTabela=(titulo,msg)=>{
     Swal.fire({

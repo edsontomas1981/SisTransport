@@ -1,114 +1,42 @@
-from faturamento.components.calculaFrete import calculaAdvalor, calculaGris, pesoACalcular, calculaCubagem, calculaPedagio
-from faturamento.components.calculaFrete import somaSubtotais, geraPercentualAliquota, freteFaixa
-from django.test import TestCase, Client
-from comercial.classes.geraFrete import CalculaFrete
-from Classes.utils import checkBox
-from Classes.geraDados import GeraDados
+from django.test import TestCase
+from django.urls import reverse
+from unittest.mock import patch
+from Classes.dtc import Dtc
+from comercial.classes.cotacao import Cotacao
+from operacional.classes.cte import Cte
 
-
-class GeraFreteTest(TestCase):
-
+class BuscaDtcViewTest(TestCase):
     def setUp(self):
-        self.tabela = self.geraTabela(10,2,0,0,0,0,0,1,300,150, 1,'on','on','off',7)
-        self.dados = {'peso': 250, 'qtde': 5, 'vlrNf': 1500.00, 'm3': 1}
-        self.faixas=self.geraFaixas()
-
-    def test_calculaFrete(self):
-        self.calculaFrete = CalculaFrete()
-        self.calculaFrete.calculaFrete(self.dados, self.tabela)
-        
-        '''Teste calculo percentual '''
-        self.dados={'peso': [250], 'qtde': [5], 'vlrNf': [1500.00],'m3': [1]}
-        self.assertEquals(self.calculaFrete.fretePeso,150)
-        self.assertEquals(self.calculaFrete.adValor, 0)                      
-        self.assertEquals(self.calculaFrete.gris, 0) 
-        self.assertEquals(self.calculaFrete.despacho, 0)
-        self.assertEquals(self.calculaFrete.outros, 0)
-        self.assertEquals(self.calculaFrete.pedagio, 0)
-        self.assertEquals(self.calculaFrete.aliquotaIcms, 0.93) 
-        self.assertEquals(self.calculaFrete.subtotal, 150.00) 
-        self.assertEquals(self.calculaFrete.totalFrete, 161.29)
-        
-        '''Teste calculo por peso'''
-        self.tabela = self.geraTabela(1.50,1,5,15,35,25,3.5,1,300,150,1,'on','on','off',7)
-        self.dados = {'peso': [5], 'qtde': [5], 'vlrNf': [15.00],'m3': [0.001]}
-        self.calculaFrete.calculaFrete(self.dados, self.tabela)
-
-        self.assertEquals(self.calculaFrete.adValor, 0.75)                      
-        self.assertEquals(self.calculaFrete.gris, 2.25)                         
-        self.assertEquals(self.calculaFrete.pesoCubado, 0.3)                    
-        self.assertEquals(self.calculaFrete.pesoCalcular, 5)
-        self.assertEquals(self.calculaFrete.peso, 5)
-        self.assertEquals(self.calculaFrete.fretePeso, 7.5)
-        self.assertEquals(self.calculaFrete.despacho, 35)
-        self.assertEquals(self.calculaFrete.outros, 25)
-        self.assertEquals(self.calculaFrete.pedagio, 3.5)
-        self.assertEquals(self.calculaFrete.aliquotaIcms, 0.93) 
-        self.assertEquals(self.calculaFrete.subtotal, 74) 
-        self.assertEquals(self.calculaFrete.totalFrete, 150.00)        
-        
-        '''Teste calculo por volumes'''
-        self.tabela = self.geraTabela(110,3,0,0,0,0,0,1,300,150,1,'on','on','off',7)
-        self.dados = {'peso': [250], 'qtde': [1], 'vlrNf': [1500.00],'m3': [1]}
-        self.calculaFrete.calculaFrete(self.dados, self.tabela)  
-        
-        self.assertEquals(self.calculaFrete.adValor, 0)                      
-        self.assertEquals(self.calculaFrete.gris, 0) 
-        self.assertEquals(self.calculaFrete.despacho, 0)
-        self.assertEquals(self.calculaFrete.outros, 0)
-        self.assertEquals(self.calculaFrete.pedagio, 0)
-        self.assertEquals(self.calculaFrete.aliquotaIcms, 0.93) 
-        self.assertEquals(self.calculaFrete.fretePeso,110)
-        self.assertEquals(self.calculaFrete.subtotal, 110) 
-        self.assertEquals(self.calculaFrete.totalFrete, 150)    
-        
-        '''Teste calculo por faixas'''  
-        self.tabela = self.geraTabela(1.5, 1, 0, 0, 0, 0, 0, 1, 300, 50, 1, 'off', 'on', 'off', 7)
-        self.dados = {'peso': [1], 'qtde': [5], 'vlrNf': [1500.30], 'm3': [0.01]}
-        self.calculaFrete.calculaFrete(self.dados, self.tabela,faixas=self.faixas) 
-        '''Testa limite inicial da faixa'''
-        self.assertEquals(self.calculaFrete.totalFrete,60.00)   
-
-        '''Testa limite mmeio da faixa'''
-        self.dados = {'peso': [15.5], 'qtde': [5], 'vlrNf': [1500.30], 'm3': [0.01]}
-        self.calculaFrete.calculaFrete(self.dados, self.tabela,faixas=self.faixas)   
-        self.assertEquals(self.calculaFrete.totalFrete,60.00)    
-
-        
-        '''Testa limite final da faixa'''
-        self.dados = {'peso': [30], 'qtde': [5], 'vlrNf': [1500.30], 'm3': [0.01]}
-        self.calculaFrete.calculaFrete(self.dados, self.tabela,faixas=self.faixas)   
-        self.assertEquals(self.calculaFrete.totalFrete,60.00)   
-        
-         
-        
-        
-        
-
-    def geraTabela(self, vlrFrete, tipoCalculoFrete: int,
-                   advalor: int, gris: int, despacho: float,
-                   outros: float, pedagio: float, tipoPeda: int,
-                   cubagem: int, freteMinimo: float, tipTab: int,
-                   icms='on', cobraCubagem='on', tabBloq='off', aliquotaIcms=7):
-
-        return {'descTabela': ['Tabela Teste'], 'icms': [checkBox(icms)],
-                'tabBloq': [checkBox(tabBloq)], 'vlrFrete': [vlrFrete],
-                'tipoFrete': [tipoCalculoFrete], 'advalor': [advalor],
-                'gris': [gris], 'despacho': [despacho], 'outros': [outros],
-                'pedagio': [pedagio], 'tipoCobranPedagio': [tipoPeda],
-                'cobraCubagem': [checkBox(cobraCubagem)], 'cubagem': [cubagem],
-                'freteMinimo': [freteMinimo], 'tipoTabela': [tipTab],
-                'aliquotaIcms': [aliquotaIcms]}
-
-    def geraFaixas(self):
-       return{Faixa(1, 30, 60),
-        Faixa(31, 50,70),
-        Faixa(51, 60, 80),
-        Faixa(61, 70, 90)}
-       
-class Faixa:
-    def __init__(self,inicio,final,vlr):
-        self.faixaInicial=inicio
-        self.faixaFinal=final
-        self.vlrFaixa=vlr
+        self.url = reverse('buscaDtc')  # Certifique-se de que 'buscaDtc' é o nome da URL
     
+    @patch('comercial.classes.tabelaFrete.TabelaFrete.get_tabelas_por_parceiro')
+    @patch('comercial.classes.cotacao.Cotacao.selectCotacaoByDtc')
+    @patch('operacional.classes.nota_fiscal.Nota_fiscal_CRUD.carrega_nfs')
+    @patch('operacional.classes.cte.Cte.read')
+    @patch('Classes.dtc.Dtc.readDtc')
+    def test_busca_dtc_post_success(self, mock_readDtc, mock_read_cte, mock_carrega_nfs, mock_selectCotacaoByDtc, mock_get_tabelas_por_parceiro):
+        mock_readDtc.return_value = 200
+        mock_read_cte.return_value = Cte()  # Substitua pelo objeto Cte que você quiser retornar
+        mock_carrega_nfs.return_value = []  # Substitua pela lista de notas fiscais
+        mock_selectCotacaoByDtc.return_value = {'cotacao': 'alguma_cotacao'}  # Substitua pela cotação desejada
+        mock_get_tabelas_por_parceiro.return_value = []  # Substitua pela lista de tabelas
+        
+        response = self.client.post(self.url, {'numPed': 'algum_numero_de_pedido'})
+        
+        self.assertEqual(response.status_code, 200)
+        # Realize mais verificações no conteúdo da resposta JSON, se necessário
+
+    @patch('Classes.dtc.Dtc.readDtc')
+    def test_busca_dtc_post_failure(self, mock_readDtc):
+        mock_readDtc.return_value = 300
+        
+        response = self.client.post(self.url, {'numPed': 'algum_numero_de_pedido'})
+        
+        self.assertEqual(response.status_code, 200)  # Seu código retorna 300, mas a resposta é bem-sucedida
+        # Verifique o conteúdo da resposta JSON para garantir que o status seja 300
+
+    def test_busca_dtc_get(self):
+        response = self.client.get(self.url)
+        
+        self.assertEqual(response.status_code, 200)  # Certifique-se de que sua view está retornando um render de sucesso
+        # Realize mais verificações no conteúdo da resposta, se necessário

@@ -13,10 +13,17 @@ def create_frete_dtc(request):
     elif request.method == 'POST':
         data = json.loads(request.body.decode('utf-8'))
 
-        data = prepare_data(data, request.user)
-        status = create_cte(data)
-        
-        return JsonResponse({'create': status})
+        cte = Cte()
+        cte.read(data['idDtc'])
+
+        if cte.obj_cte.id:
+            data=prepare_data_update(data,request.user)
+            cte.update(data['idDtc'],data)
+            return JsonResponse({'create': cte.obj_cte.to_dict()})
+        else:
+            data = prepare_data(data, request.user)
+            status = create_cte(data)
+            return JsonResponse({'create': status})
 
 def prepare_data(data, user):
     tabela = TabelaFrete()
@@ -31,6 +38,25 @@ def prepare_data(data, user):
     
     return data
 
+def prepare_data_update(data, user):
+    print(data)
+    tabela = TabelaFrete()
+    tabela.readTabela(data['tabela_frete'])
+    data['tabela_frete'] = tabela.tabela
+
+    dtc = Dtc()
+    dtc.readDtc(data['idDtc'])
+    data['dtc_fk'] = dtc.dtc
+
+    data['usuario_ultima_atualizacao'] = user
+    
+    return data
+
 def create_cte(data):
     cte = Cte()
     return cte.create(data)
+
+def read_cte(data):
+    cte = Cte()
+    return cte.read(data['idDtc'])
+

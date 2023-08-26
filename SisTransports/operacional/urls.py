@@ -14,4 +14,5 @@ urlpatterns = [
     path('updateNf/',viewsOperacional.update_nf,name='updateNf'),
     path('deleteNf/',viewsOperacional.delete_nf,name='deleteNf'),
     path('createFrete/',viewsOperacional.create_frete_dtc,name='createFrete'),
+    path('delete_cte/',viewsOperacional.delete_cte,name='delete_cte'),
     ]
