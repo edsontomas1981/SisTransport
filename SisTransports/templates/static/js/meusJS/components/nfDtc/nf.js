@@ -64,6 +64,7 @@ const preencherTabelaNf = (dados) => {
     if (!dados || dados.length === 0) {
         // Caso não haja dados informados, você pode tomar alguma ação aqui
         console.log('Não há dados para preencher a tabela.');
+        
         return;
     }
 

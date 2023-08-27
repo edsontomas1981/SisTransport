@@ -1,18 +1,24 @@
-const preDtcSemNf = ()=>{
+const preDtcSemNf = async()=>{
     desBloqueiaSemNf()
     bloqueiaDivFrete()
     bloqueiaFreteCalculado()    
 }
 
-const preDtcCalculado = ()=>{
+const preDtcCalculado = async()=>{
     bloqueiaSemNf()
     bloqueiaDivFrete()
     desbloqueiaFreteCalculado()    
 }
 
-const preDtcSemCalculo = ()=>{
+const preDtcSemCalculo = async()=>{
     bloqueiaSemNf()
     desBloqueiaDivFrete()
+    bloqueiaFreteCalculado()    
+}
+
+const calculoSemDiv = ()=>{
+    bloqueiaSemNf()
+    bloqueiaDivFrete()
     bloqueiaFreteCalculado()    
 }
 

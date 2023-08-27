@@ -15,4 +15,8 @@ def read_nfs_by_dtc (request):
     elif request.method == 'POST':
         data = json.loads(request.body.decode('utf-8'))
         notas_fiscais = Nota_fiscal_CRUD()
-        return JsonResponse({'status':300,'nfs':notas_fiscais.carrega_nfs(data['idDtc'])}) #Cadastro efetuado com sucesso
+        nfs=notas_fiscais.carrega_nfs(data['idDtc'])
+        if len(nfs):
+            return JsonResponse({'status':200,'nfs':nfs}) #Cadastro efetuado com sucesso
+        else:
+            return JsonResponse({'status':300}) #Cadastro efetuado com sucesso
