@@ -40,7 +40,6 @@ const populaTotaisNfs=(totais)=>{
     rowTotais.innerHTML=`<td>${totais.volumes}</td>
                         <td>${totais.peso}</td>
                         <td>${totais.m3}</td>
-                        <td>${null}</td>
                         <td>R$ ${totais.vlrNf}</td>`
 }
 const populaCamposFrete=async (response)=>{

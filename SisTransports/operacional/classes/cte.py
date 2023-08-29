@@ -21,7 +21,7 @@ class Cte():
             return 300, f"Campos obrigatórios faltando: {campos_faltantes_str}"
         return None
 
-    def create(self, dados):
+    def create_or_update(self, dados):
         campos_obrigatorios = ['origem_cte', 'destino_cte', 'emissora_cte', 'tipo_cte', 'cfop_cte',
                             'tipo_calculo_cte', 'dtc_fk', 'icms_incluso', 'base_de_calculo',
                             'aliquota', 'icms_valor', 'total_frete', 'usuario_cadastro']
@@ -32,30 +32,35 @@ class Cte():
         if mensagem_erro:
             return mensagem_erro
 
-        for key, value in dados.items():
-            setattr(self.obj_cte, key, value)
-        
-        self.obj_cte.save()
-        return 200
+        dtc_fk = dados['dtc_fk']
+        existing_cte = self.read(dtc_fk)
+
+        if existing_cte is not None:
+            for key, value in dados.items():
+                setattr(existing_cte, key, value)
+            existing_cte.save()
+            return 201
+        else:
+            for key, value in dados.items():
+                setattr(self.obj_cte, key, value)
+            self.obj_cte.save()
+            return 200
 
     def read(self, dtc_fk):
         try:
             self.cte_obj = Mdl_cte.objects.get(dtc_fk=dtc_fk)
-            print(self.cte_obj.to_dict())
             return self.cte_obj
         except ObjectDoesNotExist:
             return None
 
     def update(self, dtc_fk, novos_dados):
         try:
-            print('mdl atualiza')
             self.cte_obj = Mdl_cte.objects.get(dtc_fk=dtc_fk)
             for key, value in novos_dados.items():
                 setattr(self.cte_obj, key, value)
             self.cte_obj.save()
             return self.cte_obj
         except Mdl_cte.DoesNotExist:
-            print('cte nao existe')
             return None
 
     def delete(self, dtc_fk):

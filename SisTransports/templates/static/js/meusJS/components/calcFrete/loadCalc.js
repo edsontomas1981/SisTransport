@@ -1,50 +1,97 @@
+const buscaCte = async ()=>{
+    let idDtc = document.getElementById('numDtc')
+    let url = '/operacional/read_cte_by_dtc/'   
+    let dados = {'idDtc':idDtc.value} 
+    console.log(dados)
+    let conexao = new Conexao(url,dados)
+    let result = await conexao.sendPostRequest()
+    return result
+}
+
 const preDtcSemNf = async()=>{
     desBloqueiaSemNf()
     bloqueiaDivFrete()
-    bloqueiaFreteCalculado()    
+    bloqueiaFreteCalculado()
+    bloqueiaBotoes()    
 }
 
 const preDtcCalculado = async()=>{
     bloqueiaSemNf()
-    bloqueiaDivFrete()
-    desbloqueiaFreteCalculado()    
+    desBloqueiaDivFrete()
+    bloqueiaFreteCalculado()
+    desbloqueiaBotoes() 
 }
 
 const preDtcSemCalculo = async()=>{
     bloqueiaSemNf()
+    desbloqueiaBotoes()
     desBloqueiaDivFrete()
-    bloqueiaFreteCalculado()    
+    desbloqueiaFreteCalculado()
 }
-
 const calculoSemDiv = ()=>{
     bloqueiaSemNf()
     bloqueiaDivFrete()
     bloqueiaFreteCalculado()    
-}
-
-const bloqueiaSemNf=()=>{
-    let semNf = document.getElementById('semNf');
-    semNf.style.display = 'none';
-}
-const desBloqueiaSemNf=()=>{
-    let semNf = document.getElementById('semNf');
-    semNf.style.display = 'block';
-}
-
-const bloqueiaFreteCalculado=()=>{
-    let divFreteCalculado = document.getElementById('divFreteCalculado');
-    divFreteCalculado.style.display = 'none';
-}
-
-const desbloqueiaFreteCalculado=()=>{
-    let divFreteCalculado = document.getElementById('divFreteCalculado');
-    divFreteCalculado.style.display = 'block';
+    bloqueiaBotoes()
 }
 
 const divCalculoFrete = async ()=>{
     bloqueiaSemNf()
     desBloqueiaDivFrete()
 }
+
+const bloqueiaBotoes=()=>{
+    let semNf = document.getElementById('botoes');
+    semNf.style.display = 'none';
+}
+
+const desbloqueiaBotoes=()=>{
+    let semNf = document.getElementById('botoes');
+    semNf.style.display = 'block';
+}
+
+const bloqueiaSemNf=()=>{
+    let semNf = document.getElementById('semNf');
+    semNf.style.display = 'none';
+}
+
+const desBloqueiaSemNf=()=>{
+    let semNf = document.getElementById('semNf');
+    semNf.style.display = 'block';
+}
+
+const desbloqueiaFreteCalculado=()=>{
+    const idsParaDesbloquear = [
+        'origemCte', 'destinoCte', 'emissoraCte', 'tipoCte', 'cfopCte', 'redespCte', 'observacaoCte',
+        'tipoCalc', 'selecionaTabelaCte', 'icmsInclusoNf', 'freteCalc', 'advalorNf', 'coletaNf',
+        'pedagioNf', 'despachoNf', 'outrosNf', 'grisNf','freteCalculado','nfCte'
+    ];
+
+    idsParaDesbloquear.forEach(id => {
+        const campo = document.getElementById(id);
+        if (campo) {
+            campo.disabled = false;
+            campo.classList.remove('bloqueado');
+        }
+    });}
+
+const bloqueiaFreteCalculado=()=>{
+    const idsParaBloquear = [
+        'origemCte', 'destinoCte', 'emissoraCte', 'tipoCte', 'cfopCte', 'redespCte', 'observacaoCte',
+        'tipoCalc', 'selecionaTabelaCte', 'icmsInclusoNf', 'freteCalc', 'advalorNf', 'coletaNf',
+        'pedagioNf', 'despachoNf', 'outrosNf', 'baseCalculoNf', 'aliquotaNf', 'icmsNf',  'grisNf',
+        'freteTotalNf','freteCalculado','nfCte'
+    ];
+
+    idsParaBloquear.forEach(id => {
+        const campo = document.getElementById(id);
+        if (campo) {
+            campo.disabled = true;
+            campo.classList.add('bloqueado');
+        }
+    });
+}
+
 
 const bloqueiaDivFrete=()=>{
     let esquerda = document.getElementById('esquerda');

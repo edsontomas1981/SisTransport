@@ -7,7 +7,7 @@ from comercial.classes.tabelaFrete import TabelaFrete
 from operacional.classes.dtc import Dtc
 
 @login_required(login_url='/auth/entrar/')
-def create_frete_dtc(request):
+def create_cte(request):
     if request.method == 'GET':
         return JsonResponse({'create': 'create'})
     elif request.method == 'POST':
@@ -22,7 +22,7 @@ def create_frete_dtc(request):
             return JsonResponse({'create': cte.obj_cte.to_dict()})
         else:
             data = prepare_data(data, request.user)
-            status = create_cte(data)
+            status = cria_cte(data)
             return JsonResponse({'create': status})
 
 def prepare_data(data, user):
@@ -52,9 +52,9 @@ def prepare_data_update(data, user):
     
     return data
 
-def create_cte(data):
+def cria_cte(data):
     cte = Cte()
-    return cte.create(data)
+    return cte.create_or_update(data)
 
 def read_cte(data):
     cte = Cte()

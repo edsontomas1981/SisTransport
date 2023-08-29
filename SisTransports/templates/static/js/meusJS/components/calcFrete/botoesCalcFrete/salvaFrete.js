@@ -1,17 +1,14 @@
 let btnSalvaFrete = document.getElementById('btnSalvaCalc')
-
 btnSalvaFrete.addEventListener('click',async ()=>{
     let dados = criarDadosFreteDtc();
     dados.idDtc = $('#numDtc').val(); 
-    let url = '/operacional/createFrete/'    
+    let url = '/operacional/createCte/'    
     let conexao = new Conexao(url,dados)
     let result = await conexao.sendPostRequest()
     console.log(result)
 })
 
-
 const criarDadosFreteDtc=()=>{
-
     const getValue = (elementId) => {
         const element = document.getElementById(elementId);
         if (element.value !='') {

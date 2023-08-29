@@ -13,6 +13,8 @@ urlpatterns = [
     path('readNfDtc/',viewsOperacional.read_nfs_by_dtc,name='read_nfs_by_dtc'),
     path('updateNf/',viewsOperacional.update_nf,name='updateNf'),
     path('deleteNf/',viewsOperacional.delete_nf,name='deleteNf'),
-    path('createFrete/',viewsOperacional.create_frete_dtc,name='createFrete'),
+    path('createCte/',viewsOperacional.create_cte,name='createCte'),
     path('delete_cte/',viewsOperacional.delete_cte,name='delete_cte'),
+    path('read_cte_by_dtc/',viewsOperacional.read_cte_by_dtc,name='read_cte_by_dtc'),
+
     ]

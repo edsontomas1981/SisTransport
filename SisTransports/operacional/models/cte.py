@@ -39,12 +39,12 @@ class Cte (models.Model):
 
     def to_dict(self):
         return {
-            'dtc_fk': self.dtc_fk_id,
+            'dtc_fk': self.dtc_fk.to_dict(),
             'totalFrete': self.total_frete,
-            'fretePeso': self.frete_calculado,
-            'adValor': self.advalor,
+            'freteCalculado': self.frete_calculado,
+            'advalor': self.advalor,
             'gris': self.gris,
-            'despacho': self.despacho,
+            'despacho': self.despacho, 
             'outros': self.outros,
             'pedagio': self.pedagio,
             'vlrColeta': self.vlr_coleta,
@@ -57,5 +57,14 @@ class Cte (models.Model):
             'data_ultima_atualizacao': self.data_ultima_atualizacao.strftime('%Y-%m-%d %H:%M:%S') if self.data_ultima_atualizacao else None,
             'usuario_cadastro': self.usuario_cadastro_id,
             'usuario_ultima_atualizacao': self.usuario_ultima_atualizacao_id,
+            'tabela_frete': self.tabela_frete.toDict(),
+            'origem_cte': self.origem_cte,
+            'destino_cte': self.destino_cte,
+            'emissora_cte': self.emissora_cte,
+            'tipo_cte': self.tipo_cte,
+            'cfop_cte': self.cfop_cte,
+            'redesp_cte': self.redesp_cte,
+            'tipo_calculo_cte': self.tipo_calculo_cte,
         }
+
 
