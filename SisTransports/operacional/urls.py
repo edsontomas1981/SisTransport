@@ -16,5 +16,6 @@ urlpatterns = [
     path('createCte/',viewsOperacional.create_cte,name='createCte'),
     path('delete_cte/',viewsOperacional.delete_cte,name='delete_cte'),
     path('read_cte_by_dtc/',viewsOperacional.read_cte_by_dtc,name='read_cte_by_dtc'),
-
+ 
+    path('read_rotas/',viewsOperacional.readRota,name='read_rotas'),
     ]

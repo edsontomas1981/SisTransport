@@ -43,7 +43,6 @@ const populaTotaisNfs=(totais)=>{
                         <td>R$ ${totais.vlrNf}</td>`
 }
 const populaCamposFrete=async (response)=>{
-        divCalculoFrete();
         loadDivOrigemCte(response.dtc.rota.origemCidade+"-"+response.dtc.rota.origemUf)
         loadDivDestinoCte(response.dtc.rota.destinoCidade+"-"+response.dtc.rota.destinoUf)
         loadDivEmissoraCte()
@@ -67,23 +66,17 @@ const populaCamposFrete=async (response)=>{
         loadDivIcmsNfCte()
         loadDivTotalFreteCte()
         loadDivBtnCalcCte()
-
 }
-
-
 
 const bloquearCamposCalcFrete=()=> {
     const campos = document.querySelectorAll('.form-control');
     campos.forEach(campo => {
         campo.setAttribute('disabled', 'true');
     });
-
     document.getElementById('icmsInclusoNf').setAttribute('disabled', 'true');
     document.getElementById('tipoCalc').setAttribute('disabled', 'true');
     document.getElementById('selecionaTabelaCte').setAttribute('disabled', 'true');
 }
-
-
 
 const desbloquearCamposCalcFrete=()=> {
     const campos = document.querySelectorAll('.form-control');

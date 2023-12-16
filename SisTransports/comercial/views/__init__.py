@@ -1,4 +1,5 @@
 from comercial.views.tabela.createTabela import createTabela
+from comercial.views.tabela.readTabelaId import readTabelaId
 from comercial.views.tabela.readTabela import readTabela
 from comercial.views.tabela.updateTabela import updateTabela
 from comercial.views.tabela.deleteTabela import deleteTabela

@@ -4,8 +4,4 @@ from operacional.models.rota import Rota
 from operacional.models.percurso import Percurso
 from operacional.models.nota_fiscal import Nota_fiscal
 from operacional.models.cte import Cte
-
-
-
-
-
+from operacional.models.emissor import Emissor

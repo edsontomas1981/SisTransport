@@ -1,3 +1,8 @@
 from django.contrib import admin
+from operacional.models.emissor import Emissor
 
-# Register your models here.
+admin.site.register(Emissor)
+
+
+
+

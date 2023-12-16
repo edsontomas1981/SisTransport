@@ -65,23 +65,24 @@ function limpaCamposFaixa(){
 }
 
 function tabelaFaixas(response) {
-    limpaTabela('#tabelaFaixas td')
-    const data = response.faixa;
-    let template
-    for (let i = 0; i < data.length; i++) {
-        template = '<tr class="tr" id=' + data[i].id + ' ">' +
-            '<td>' + data[i].faixaInicial + '</td>' +
-            '<td>' + data[i].faixaFinal + '</td>' +
-            '<td>' + data[i].vlrFaixa + '</td>' +
-            '<td>' + 
-                '<button type="button"class="btn btn-outline-primary btn-sm">'+
-                    '<i class="fa fa-eye" aria-hidden="true"></i>'+
-                '</button>' + 
-            '</td>' +            
-            '</tr>'
-        $('#tabelaFaixas tbody').append(template)
-    }
-};
+    // Verificar se response.faixa está definido e é um array
+    if (response.faixa && Array.isArray(response.faixa)) {
+        limpaTabela('#tabelaFaixas td');
+
+        const data = response.faixa;
+        let template;
+
+        for (let i = 0; i < data.length; i++) {
+            template = '<tr class="tr" id=' + data[i].id + ' ">' +
+                '<td>' + data[i].faixaInicial + '</td>' +
+                '<td>' + data[i].faixaFinal + '</td>' +
+                '<td>' + data[i].vlrFaixa + '</td>' +
+                '</tr>';
+            $('#tabelaFaixas tbody').append(template);
+        }
+    } 
+}
+
 
 function faixa(response) {
     switch (response.status) {

@@ -18,8 +18,12 @@ tabs.forEach(tab => {
               break;
           case 'pills-calculoFrete':
             calculoSemDiv()
+            populaOrigemDtc()
+            carregaDestino()
+            loadDivTipoCte()
+            populaNumNfs()
+            populaTomadorCte()
             let nf = await loadNfs();
-            console.log(nf)
             if (nf === undefined){
               preDtcSemNf()
             }else{
@@ -29,7 +33,6 @@ tabs.forEach(tab => {
                   break;
                 case 200:
                   let cte =await buscaCte()
-                  console.log(cte)
                   if (cte.status === 200){
                     await preDtcCalculado()
                     populaCalculoCte(cte)
@@ -52,9 +55,8 @@ tabs.forEach(tab => {
 
 const populaCalculoCte=async (data)=>{
   populaNfsCalculoCte()
-  console.log(data)
   document.getElementById('tomadorCte').value = "Tomador : "+ data.cte.dtc_fk.tomador.raz_soc;
-  document.getElementById('tabelaFreteCte').value = "Tabela Frete : "+data.cte.tabela_frete.descricao;
+  document.getElementById('tabelaFreteCte').value = "Tabela Frete : " + (data.cte.tabela_frete.descricao !== undefined ? data.cte.tabela_frete.descricao : "Frete informado");
   document.getElementById('freteCalculado').value = data.cte.freteCalculado;
   document.getElementById('grisNf').value = data.cte.gris;
   document.getElementById('advalorNf').value = data.cte.advalor;
@@ -65,8 +67,8 @@ const populaCalculoCte=async (data)=>{
   document.getElementById('aliquotaNf').value = data.cte.aliquota;
   document.getElementById('icmsNf').value = data.cte.icmsRS;
   document.getElementById('freteTotalNf').value = data.cte.totalFrete;
-  document.getElementById('tipoCalc').value = data.cte.dtc.tipoFrete;
-  document.getElementById('selecionaTabelaCte').value = data.cte.tabela_frete.descricao;
+  document.getElementById('tipoCalc').value = "0"
+  document.getElementById('selecionaTabelaCte').value = "0"
 }
 
 const populaNfsCalculoCte=async()=>{
@@ -115,4 +117,21 @@ const geraTextoNf = (nfs) => {
     }
   });
   return notasFiscais;
+};
+
+const confirmacao = async (msg) => {
+  return new Promise(async (resolve) => {
+    const result = await Swal.fire({
+      title: msg,
+      showDenyButton: true,
+      confirmButtonText: 'Confirmar',
+      denyButtonText: 'Cancelar',
+    });
+
+    if (result.isConfirmed) {
+      resolve(true);
+    } else {
+      resolve(false);
+    }
+  });
 };

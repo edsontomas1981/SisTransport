@@ -27,8 +27,15 @@ def create_cte(request):
 
 def prepare_data(data, user):
     tabela = TabelaFrete()
-    tabela.readTabela(data['tabela_frete'])
-    data['tabela_frete'] = tabela.tabela
+
+    if 'tabela_frete' in data:
+        if data['tabela_frete'] == '0':
+            data['tabela_frete'] = None
+        else:
+            tabela.readTabela(data['tabela_frete'])
+            data['tabela_frete'] = tabela.tabela
+    else:
+        data['tabela_frete'] = None
 
     dtc = Dtc()
     dtc.readDtc(data['idDtc'])
@@ -39,16 +46,22 @@ def prepare_data(data, user):
     return data
 
 def prepare_data_update(data, user):
-    print(data)
     tabela = TabelaFrete()
-    tabela.readTabela(data['tabela_frete'])
-    data['tabela_frete'] = tabela.tabela
+
+    if 'tabela_frete' in data:
+        if data['tabela_frete'] == '0':
+            data['tabela_frete'] = None
+        else:
+            tabela.readTabela(data['tabela_frete'])
+            data['tabela_frete'] = tabela.tabela
+    else:
+        data['tabela_frete'] = None
 
     dtc = Dtc()
     dtc.readDtc(data['idDtc'])
     data['dtc_fk'] = dtc.dtc
 
-    data['usuario_ultima_atualizacao'] = user
+    data['usuario_cadastro'] = user
     
     return data
 

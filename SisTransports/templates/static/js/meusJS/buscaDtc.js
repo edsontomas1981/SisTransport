@@ -9,7 +9,6 @@ const carregaDtc=async (response)=>{
         timer: 1500
       })}else{
         $('#numDtc').val(response.dtc.id)
-        console.log(response)
         
         if (response.dtc.remetente){
             populaCamposDtc(response.dtc.remetente,'Rem');
@@ -34,7 +33,7 @@ const carregaDtc=async (response)=>{
             populaCotacao(response.cotacao)
         }
         if(response.notasFiscais){
-            populaCamposFrete(response)
+            // populaCamposFrete(response)
             preencherTabelaNf(response.notasFiscais)
         }
 
@@ -211,7 +210,7 @@ function limpaDtc(){
     limparTabelaNf()
 }
 
-function buscaDtc() {
+function buscaDtc () {
     let url = '/preDtc/buscaDtc/'
     let postData = $('form').serialize();
     $.ajax({
@@ -221,12 +220,31 @@ function buscaDtc() {
         success: function(response) {
             limpaDtc()
             carregaDtc(response)
+            return(response)
          },
         error: function(xhr) {
             console.log('Erro');
         }
     });
 }
+
+async function carregaDtcMemoria () {
+    let url = '/preDtc/buscaDtc/'
+    let postData = $('form').serialize();
+    $.ajax({
+        url: url,
+        type: 'POST',
+        data: postData,
+        success: function(response) {
+
+            return(response)
+         },
+        error: function(xhr) {
+            console.log('Erro');
+        }
+    });
+}
+
 
 function excluiDtc(idDtc) {
     let url = '/preDtc/excluiDtc/'
@@ -245,19 +263,25 @@ function excluiDtc(idDtc) {
         }
     });
 }
-$('#btnBuscaDtc').on('click', function(e) {
+
+$('#btnBuscaDtc').on('click', async function(e) {
     limpaDtc()
     buscaDtc()
     e.preventDefault();
 });
 
-$('#excluiDtc').on('click', function(e) {
-    let msg='o dtc de nº' + $('#numPed').val() + ' ?'
-    if (confirmacao(msg)){
-        excluiDtc($('#numPed').val())
+$('#excluiDtc').on('click', async (e) => {
+    let numPedido = $('#numPed').val();
+    let msg = `Tem certeza que deseja excluir o DTC de número ${numPedido}?`;
+  
+    let confirmacaoExclusao = await confirmacao(msg);
+  
+    if (confirmacaoExclusao) {
+      excluiDtc(numPedido);
     }
+  
     e.preventDefault();
-});
+  });
 
 $('#btnNovo').on('click', function(e) {
     e.preventDefault();

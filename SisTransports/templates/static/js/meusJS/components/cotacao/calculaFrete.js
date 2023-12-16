@@ -42,6 +42,7 @@ const calculoFreteGeral = (event) => {
 
 
 const calculoCotacao= async (tabela,vlrColeta)=>{
+    console.log(tabela)
     let calcula = new CalculaFrete(tabela,geraDadosCotacao());
     if (vlrColeta){
         calcula.setVlrColeta(vlrColeta)

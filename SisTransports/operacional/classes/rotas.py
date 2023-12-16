@@ -31,6 +31,18 @@ class Rota:
             return 300
         except ValueError:
             return 500
+        
+    def seleciona_rota(self,idRota):
+        try:
+            self.rota=MdlRota.objects.filter(id=idRota).get()
+            return 200
+        except MdlRota.DoesNotExist:
+            return 400
+        except MdlRota.MultipleObjectsReturned:
+            return 300
+        except ValueError:
+            return 500
+    
    
     def deleteRota(self,idRota):
         pass

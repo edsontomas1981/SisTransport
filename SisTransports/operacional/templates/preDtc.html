@@ -91,6 +91,7 @@
   </form>
 {% endblock %} 
 {% block 'js' %} 
+
   <script src="{% static 'js/meusJS/buscaDtc.js' %}"></script>
   <script src="{% static 'js/meusJS/coleta.js' %}"></script>
   <script src="{% static 'js/meusJS/formatar.js' %}"></script>
@@ -108,7 +109,6 @@
   <script src="{% static 'js/meusJS/endereco.js' %}"></script>
   <script src="{% static 'js/meusJS/parceiro.js' %}"></script>
   <script src="{% static 'js/meusJS/novoDadosParceiro.js' %}"></script>
-  <script src="{% static 'js/meusJS/dadosParceiro.js' %}"></script>
   <script src="{% static 'js/meusJS/validaDtc.js' %}"></script>
 
   <script src="{% static 'js/meusJS/components/calcFrete/createFrete.js' %}"></script>
@@ -121,7 +121,13 @@
   <script src="{% static 'js/meusJS/components/calcFrete/botoesCalcFrete/alterarFrete.js' %}"></script>
   <script src="{% static 'js/meusJS/components/calcFrete/botoesCalcFrete/salvaFrete.js' %}"></script>
   <script src="{% static 'js/meusJS/components/calcFrete/calcFrete.js' %}"></script>
-
+  <script src="{% static 'js/meusJS/components/calcFrete/destinoDtc.js' %}"></script>
+  <script src="{% static 'js/meusJS/components/calcFrete/tipoCte.js' %}"></script>
+  <script src="{% static 'js/meusJS/components/calcFrete/nfCte.js' %}"></script>
+  <script src="{% static 'js/meusJS/components/calcFrete/tomadorCte.js' %}"></script>
+  <script src="{% static 'js/meusJS/components/calcFrete/btnCalcFreteCte.js' %}"></script>
+  <script src="{% static 'js/meusJS/components/calcFrete/selectTabelaCte.js' %}"></script>
+  <script src="{% static 'js/meusJS/components/calcFrete/checkIcms.js' %}"></script>
 
   <script src="{% static 'js/meusJS/components/nfDtc/createNf.js' %}"></script>
   <script src="{% static 'js/meusJS/components/nfDtc/novoNf.js' %}"></script>
@@ -131,5 +137,5 @@
   <script src="{% static 'js/meusJS/components/nfDtc/nf.js' %}"></script>
 
   <script src="{% static 'js/meusJS/components/dtc/utils.js' %}"></script>
-
+  <script src="{% static 'js/meusJS/components/calcFrete/origemDtc.js' %}"></script>
 {% endblock %} 

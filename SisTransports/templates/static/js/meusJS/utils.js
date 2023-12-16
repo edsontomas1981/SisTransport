@@ -236,11 +236,6 @@ const formatarTelefone=(input)=> {
   input.value = telefoneFormatado;
 }
 
-
-
-
-
-
 // Função para validar entrada como números inteiros
 function validarNumeroInteiroInput(inputElement) {
   inputElement.addEventListener('keydown', function (event) {

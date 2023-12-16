@@ -5,12 +5,14 @@ class CalculaFrete{
         this.m3=dados['m3']
         this.vlrNf=dados['vlrNf']
         this.volumes=dados['volumes']
-        this.icmsSimNao=dados['icmsSimNao']
+        // this.icmsSimNao=dados['icmsSimNao']
         this.composicaoFrete= {}
+
     }
     setPesoCubado=()=>{
         this.pesoCubado=this.m3 > 0 ?  this.m3*this.tabela.fatorCubagem : 0
     }
+
     setVlrColeta=(vlrColeta)=>{
         this.vlrColeta=vlrColeta
         this.composicaoFrete['vlrColeta']=parseFloat(this.vlrColeta)
@@ -69,14 +71,15 @@ class CalculaFrete{
 
         }
     }
-    calculaTotal=()=>{
+    calculaTotal=async()=>{
         this.aliquotaIcms()
+        this.tabela.icmsIncluso
         this.composicaoFrete['vlrColeta']=this.vlrColeta ? this.vlrColeta : 0
         this.subtotal=0
         for (const i in this.composicaoFrete) {
             this.subtotal+=parseFloat(this.composicaoFrete[i])
         }
-        if(this.icmsSimNao){
+        if(this.tabela.icmsIncluso){
             this.freteTotal = parseFloat(this.subtotal)/parseFloat(this.aliquota)
             this.icms=parseFloat(this.freteTotal)-parseFloat(this.subtotal)
             this.baseDeCalculo=this.freteTotal
@@ -122,10 +125,12 @@ class CalculaFrete{
     }
 
     pesoEstaNaFaixa=()=>{
-        for (let i = 0; i < this.tabela.faixas.length; i++) {
-            if (this.between(this.pesoFaturado,this.tabela.faixas[i].faixaInicial,this.tabela.faixas[i].faixaFinal)){
-                this.vlrFreteFaixa=this.tabela.faixas[i].vlrFaixa
-                return true
+        if (this.tabela.faixas){
+            for (let i = 0; i < this.tabela.faixas.length; i++) {
+                if (this.between(this.pesoFaturado,this.tabela.faixas[i].faixaInicial,this.tabela.faixas[i].faixaFinal)){
+                    this.vlrFreteFaixa=this.tabela.faixas[i].vlrFaixa
+                    return true
+                }
             }
         }
     }
@@ -137,6 +142,7 @@ class CalculaFrete{
         this.aliquota=(100-this.tabela.aliquotaIcms)/100;
     }
     calculaFrete=()=>{
+
         switch (this.tabela['tipoCalculo']) {
             case 1:
                 this.calculaFretePeso()

@@ -9,9 +9,9 @@
                 <div class="col-12">
                     <div class="input-group col-12">
                         <input type="text" class="alert-info form-control form-control-sm " 
-                        placeholder="Tomador : " name="tomadorCte" id="tomadorCte" disabled>
+                        placeholder="Tomador : " name="tomadorCte" id="tomadorCte" readonly>
                         <input type="text" class="form-control alert-success form-control-sm " 
-                        placeholder="Tabela Frete : " name="tabelaFreteCte" id="tabelaFreteCte" disabled>
+                        placeholder="Tabela Frete : " name="tabelaFreteCte" id="tabelaFreteCte" readonly>
                         <button class="btn btn-secondary btn-rounded form-control-sm" data-toggle="tooltip" data-placement="top" title="Novo" id="btnNovoCalc">
                         <i class="ti-write"></i>
                         </button>
@@ -31,6 +31,16 @@
         <div class="col-sm-6" id="esquerda">
             <div class="form-group col-sm-12 mb-0 mt-0">
                 <div class="row">
+                    <div class="col-4 pl-1 pr-0" id="divEmissoraCte">
+                        <div class="form-floating" >
+                            <select class="form-select campoObrigatorio" id="emissoraCte" aria-label="especie nf" data-alert-tag="Emissor">
+                            <option value="0" selected>Escolha a emissora</option>
+                            <option value="1">SAO(MATRIZ)</option>
+                            <option value="2">THE(FILIAL)</option>
+                            </select>
+                            <label for="emissoraCte">Escolha a emissora</label>
+                        </div>
+                    </div>                     
                     <div class="col-4  pl-1 pr-1 mt-0" id="divOrigemCte">
                         <div class="form-floating">
                             <select class="form-select campoObrigatorio" id="origemCte" placeholder="origem">
@@ -38,27 +48,17 @@
                             <label for="origemCte">Origem</label>
                         </div>
                     </div>    
-                    <div class="col-4  pl-1 pr-1 mt-0 " id="divDestinoCte">
+                    <div class="col-4  pl-1 pr-0 mt-0 " id="divDestinoCte">
                         <div class="form-floating">
-                            <select class="form-select campoObrigatorio" id="destinoCte" placeholder="Destino">
-                            </select>
+                            <input class="form-control campoObrigatorio" id="destinoCte" placeholder="Destino">
                             <label for="destinoCte">Destino</label>
                         </div>
                     </div> 
-                    <div class="col-4 pl-1 pr-0" id="divEmissoraCte">
-                        <div class="form-floating" >
-                            <select class="form-select campoObrigatorio" id="emissoraCte" aria-label="especie nf" data-alert-tag="Emissor">
-                            <option value="" selected>Emissora</option>
-                            <option value="1">SAO(MATRIZ)</option>
-                            <option value="2">THE(FILIAL)</option>
-                            </select>
-                            <label for="emissoraCte">Emissora</label>
-                        </div>
-                    </div> 
+
                     <div class="col-4 pl-1 pr-1 mt-1" id="divTipoCte">
                         <div class="form-floating">
                             <select class="form-select campoObrigatorio" id="tipoCte" aria-label="especie nf" data-alert-tag="Tipo Cte">
-        
+                                
                             </select>
                             <label for="tipoCte">Tipo CT-e</label>
                         </div>
@@ -66,8 +66,8 @@
                     <div class="col-4  pl-1 pr-1 mt-1" id="divCfopCte">
                         <div class="form-floating">
                             <select class="form-select campoObrigatorio" id="cfopCte" aria-label="especie nf" data-alert-tag="CFOP">
-                                <option value="" selected>Selecione</option>
-                                <option value="1">CFOP</option>
+                                <option value="0" selected>Selecione</option>
+                                <option value="1">6.101-Venda de produção do estabelecimento</option>
                             </select>
                             <label for="cfopCte">CFOP</label>
                         </div>
@@ -78,19 +78,14 @@
                             placeholder="Redespachante" name="redespCte" id="redespCte" data-alert-tag="Redespachante">
                             <label class="text-secondary" for="redespCte">Redespachante :</label>
                         </div>
-                    </div> 
+                    </div>
+                   
                     <div class="col-12  pl-1 pr-0 mt-1" id="divObsCte">
                         <div class="form-floating">
                             <textarea class="form-control" id="nfCte" data-alert-tag="notasFiscais"></textarea>
                             <label for="nfCte">Nº Notas Fiscais</label>
                         </div>
                     </div>
-                    <div class="col-12  pl-1 pr-0 mt-1" id="divObsCte">
-                        <div class="form-floating">
-                            <textarea class="form-control" id="observacaoCte"></textarea>
-                            <label for="observacaoCte">Observação</label>
-                        </div>
-                    </div>                          
                     <div class="col-12 pl-1 mt-1" id="divTabelaTotaisCte">
                         <div class="table-responsive">
                             <table class="table">
@@ -108,7 +103,7 @@
                             </tbody>
                             </table>
                         </div>
-                    </div>                                
+                    </div>                       
                 </div>
             </div>
         </div>
@@ -118,7 +113,7 @@
                     <div class="col-4 pl-1 pr-0 mt-0" id="divTipoCalc">
                         <div class="form-floating">
                             <select class="form-select campoObrigatorio" id="tipoCalc" aria-label="especie nf" data-alert-tag="Tipo Cálculo">
-                            <option value="" selected>Selecione</option>
+                            <option value="0" selected>Selecione</option>
                             <option value="1">Tabela Geral</option>
                             <option value="2">Tabela Cliente</option>
                             <option value="3">Frete Informado</option>
@@ -142,62 +137,68 @@
                     </div> 
                     <div class="col-sm-4 mb-1 form-group pr-1 pl-1 form-floating" id="divFretePeso">
                         <input type="text" class="form-control form-control-sm campoObrigatorio" 
-                                        placeholder="Frete Calculado" data-alert-tag="Frete Calculado" name="freteCalculado" id="freteCalculado">
-                        <label class="text-secondary" for="freteCalculado">Frete Calculado</label>
+                                        placeholder="Frete Calculado" data-alert-tag="Frete Calculado" name="freteCalculadoCte" id="freteCalculadoCte">
+                        <label class="text-secondary" for="freteCalculadoCte">Frete Calculado</label>
                     </div>
                     <div class="col-sm-4 mb-1 pl-0 pr-1 form-group form-floating" id="divAdvalor" data-alert-tag="Advalor"> 
                         <input type="text" class="form-control form-control-sm " 
-                        placeholder="Advalor" name="advalorNf" id="advalorNf">
-                        <label class="text-secondary"for="advalorNf">Advalor:</label>  
+                        placeholder="Advalor" name="advalorCte" id="advalorCte">
+                        <label class="text-secondary"for="advalorCte">Advalor:</label>  
                     </div>         
                     <div class="col-sm-4 mb-1 pl-0 pr-1 form-group form-floating" id="divColeta"> 
                         <input type="text" class="form-control form-control-sm " 
-                        placeholder="Coleta" data-alert-tag="Coleta" name="coletaNf" id="coletaNf">
-                        <label class="text-secondary"for="coletaNf">Coleta:</label>  
+                        placeholder="Coleta" data-alert-tag="Coleta" name="coletaCte" id="coletaCte">
+                        <label class="text-secondary"for="coletaCte">Coleta:</label>  
                     </div>      
                     <div class="col-sm-3 mb-0 pr-1 pl-1 form-group form-floating" id="divGris">
                         <input type="text" class="form-control form-control-sm" 
-                                placeholder="Gris" data-alert-tag="Gris" name="grisNf" id="grisNf">
-                        <label class="text-secondary" for="grisNf">Gris:</label>
+                                placeholder="Gris" data-alert-tag="Gris" name="grisCte" id="grisCte">
+                        <label class="text-secondary" for="grisCte">Gris:</label>
                     </div>
                     <div class="col-sm-3 mb-1 pr-1 pl-0 form-group form-floating" id="divPedagio">
                         <input type="text" class="form-control  form-control-sm " 
-                                placeholder="Pedágio" data-alert-tag="Pedágio" id="pedagioNf" name="pedagioNf">
-                        <label class="text-secondary"for="pedagioNf">Pedágio:</label>
+                                placeholder="Pedágio" data-alert-tag="Pedágio" id="pedagioCte" name="pedagioCte">
+                        <label class="text-secondary"for="pedagioCte">Pedágio:</label>
                     </div>              
                     <div class="col-sm-3 mb-1 pl-0 pr-1 form-group form-floating" id="divDespacho">
                         <input type="text" class="form-control  form-control-sm " 
-                        placeholder="Despacho" data-alert-tag="Despacho" id="despachoNf" name="despachoNf">
-                        <label class="text-secondary"for="despachoNf">Despacho:</label>  
+                        placeholder="Despacho" data-alert-tag="Despacho" id="despachoCte" name="despachoCte">
+                        <label class="text-secondary"for="despachoCte">Despacho:</label>  
                     </div>                                
                     <div class="col-sm-3 mb-1 pl-0 pr-1 form-group form-floating " id="divOutros">
                         <input type="text" class="form-control  form-control-sm " 
-                                    placeholder="Outros" data-alert-tag="Outros" id="outrosNf" name="outrosNf">
-                        <label class="text-secondary"for="outrosNf">Outros:</label>
+                                    placeholder="Outros" data-alert-tag="Outros" id="outrosCte" name="outrosCte">
+                        <label class="text-secondary"for="outrosCte">Outros:</label>
                     </div> 
 
                     <div class="col-sm-2 mb-0 pr-1 pl-1 form-group form-floating " id="divBaseCalculo">
                         <input type="text" class="form-control form-control-sm  campoObrigatorio" 
-                                        placeholder="Base de Cálculo" data-alert-tag="Base de Cálculo" name="baseCalculoNf" id="baseCalculoNf" disabled>
-                        <label class="text-secondary" for="baseCalculoNf">Base de Cálculo:</label>
+                                        placeholder="Base de Cálculo" data-alert-tag="Base de Cálculo" name="baseCalculoCte" id="baseCalculoCte" disabled>
+                        <label class="text-secondary" for="baseCalculoCte">Base de Cálculo:</label>
                     </div>
                     <div class="col-sm-2 mb-1 pr-1 pl-0 form-group form-floating" id="divAliquota">
                         <input type="text" class="form-control  form-control-sm  campoObrigatorio" 
-                                    placeholder="Aliquota" data-alert-tag="Aliquota" id="aliquotaNf" name="aliquotaNf" disabled>
-                        <label class="text-secondary"for="aliquotaNf">Alíquota:</label>
+                                    placeholder="Aliquota" data-alert-tag="Aliquota" id="aliquotaCte" name="aliquotaCte" disabled>
+                        <label class="text-secondary"for="aliquotaCte">Alíquota:</label>
                     </div>              
                     <div class="col-sm-2 mb-1 pl-0 pr-1 form-group form-floating" id="divIcmsNf">
                         <input type="text" class="form-control  form-control-sm  campoObrigatorio" 
-                                    placeholder="Icms R$" data-alert-tag="Icms R$" id="icmsNf" name="icmsNf" disabled>
-                        <label class="text-secondary h1"for="icmsNf">Icms R$:</label>  
+                                    placeholder="Icms R$" data-alert-tag="Icms R$" id="icmsCte" name="icmsCte" disabled>
+                        <label class="text-secondary h1"for="icmsCte">Icms R$:</label>  
                     </div>                                
                     <div class="col-sm-6 mb-1 pl-0 pr-1 form-group form-floating" id="divTotalFrete">
                         <input type="text" class="form-control form-control-sm bg-info text-capitalize text-dark h1  campoObrigatorio" 
-                            placeholder="Total Frete" id="freteTotalNf" data-alert-tag="Total Frete" name="freteTotalNf" disabled>
-                        <label class="text-dark" for="freteTotalNf"><b>Total Frete :</b></label>
+                            placeholder="Total Frete" id="freteTotalCte" data-alert-tag="Total Frete" name="freteTotalCte" disabled>
+                        <label class="text-dark" for="freteTotalCte"><b>Total Frete :</b></label>
+                    </div> 
+                    <div class="col-12  pl-1 pr-0 mt-1" id="divObsCte">
+                        <div class="form-floating">
+                            <textarea class="form-control" id="observacaoCte"></textarea>
+                            <label for="observacaoCte">Observação</label>
+                        </div>
                     </div> 
                     <div class="col-sm-3 mb-0 mt-1 form-group form-floating pl-1 pr-1" id="divBtnCalc">
-                        <button type="button" class="btn btn-warning btn-icon-text" id="btnCalcFrete">
+                        <button type="button" class="btn btn-warning btn-icon-text" id="btnCalcFreteCte">
                             <i class="ti-credit-card btn-icon-prepend"></i>
                                     Calcular
                         </button>

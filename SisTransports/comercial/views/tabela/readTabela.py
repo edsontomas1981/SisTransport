@@ -14,4 +14,4 @@ def readTabela (request):
         parceiro=tabela.selecionaTabCnpj()
         rotas=tabela.readTabelasGeraisPorRota()
         return JsonResponse({'status':200,'tabela':tabela.tabela.toDict(),
-                            'parceirosVinculados':parceiro,'rotas':rotas})
+                            'rotas':rotas,'parceirosVinculados':parceiro})

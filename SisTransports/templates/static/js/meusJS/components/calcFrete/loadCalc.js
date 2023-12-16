@@ -2,7 +2,6 @@ const buscaCte = async ()=>{
     let idDtc = document.getElementById('numDtc')
     let url = '/operacional/read_cte_by_dtc/'   
     let dados = {'idDtc':idDtc.value} 
-    console.log(dados)
     let conexao = new Conexao(url,dados)
     let result = await conexao.sendPostRequest()
     return result
@@ -33,6 +32,14 @@ const calculoSemDiv = ()=>{
     bloqueiaDivFrete()
     bloqueiaFreteCalculado()    
     bloqueiaBotoes()
+    let camposForm = [
+        'origemCte', 'destinoCte', 'emissoraCte', 'tipoCte', 'cfopCte', 'redespCte', 'observacaoCte',
+        'tipoCalc', 'selecionaTabelaCte', 'icmsInclusoNf', 'freteCalc', 'advalorNf', 'coletaNf',
+        'pedagioNf', 'despachoNf', 'outrosNf', 'grisNf','freteCalculado','nfCte','baseCalculoNf',
+        'aliquotaNf','icmsNf','freteTotalNf'
+        
+    ];
+    limpaCamposCalculo(camposForm)
 }
 
 const divCalculoFrete = async ()=>{
@@ -40,6 +47,36 @@ const divCalculoFrete = async ()=>{
     desBloqueiaDivFrete()
 }
 
+const populaRotaCte= async ()=>{
+    let idRota = document.getElementById('rotasDtc')
+    let data = {'idRota':idRota.value}
+    let url  = '/operacional/read_rotas/'
+    let conexao = new Conexao(url, data);
+        try {
+            const result = await conexao.sendPostRequest();
+            return result
+        } catch (error) {
+            console.error(error); // Imprime a mensagem de erro
+            // return error
+        }
+        loadDivOrigemCte(result.rota.origemCidade+"/"+response.dtc.rota.origemUf)
+}
+
+const limpaCamposCalculo =(campos)=>{
+    campos.forEach(campoId => {
+        const element = document.getElementById(campoId);
+        if (element) {
+          if (element.type === 'text' || element.type === 'password' || element.tagName === 'TEXTAREA') {
+            element.value = '';
+          } else if (element.type === 'select-one') {
+            element.value = '0';
+          } else if (element.type === 'checkbox' || element.type === 'radio') {
+            element.checked = true;
+          }
+        }
+      });
+  
+}
 const bloqueiaBotoes=()=>{
     let semNf = document.getElementById('botoes');
     semNf.style.display = 'none';
@@ -109,13 +146,15 @@ const desBloqueiaDivFrete=()=>{
 
 const loadDivOrigemCte=(origem)=>{
     let divOrigem = document.getElementById('origemCte')
-    divOrigem.innerHTML=`<option value=1>${origem}</option>
+    divOrigem.innerHTML=`<option value=0>Escolha a Origem</option>
+                        <option value=1 selected>${origem}</option>
                         `
 }
 
 const loadDivDestinoCte=(destino)=>{
     let divDestino = document.getElementById('destinoCte')
-    divDestino.innerHTML=`<option value="1">${destino}</option>
+    divDestino.innerHTML=`<option value="0">Escolha a Destino</option>  
+                          <option value="1">${destino}</option>
                         `
 }
 
@@ -127,8 +166,8 @@ const loadDivEmissoraCte=()=>{
 
 const loadDivTipoCte=()=>{
     let divTipo = document.getElementById('tipoCte')
-    divTipo.innerHTML=`<option value="1">Normal</option>
-                       <option value="2">Complemento</option>
+    divTipo.innerHTML=`<option value="0">Normal</option>
+                       <option value="1">Complemento</option>
                       `
 }
 
@@ -161,6 +200,7 @@ const loadDivObsCte=()=>{
     // divObsCte.innerHTML=`
     //                     `
 }
+
 
 const populaTabelaTotaisCte=()=>{
  
@@ -254,4 +294,5 @@ const identificaTomadorCalculoCte = ()=>{
     let identicadorTomadorCte = document.getElementById('identificaTomador')
     let tomadorDtc = document.getElementById('razaoTomador')
     identicadorTomadorCte.value = tomadorDtc.value
+    
 }

@@ -57,7 +57,7 @@ class Cte (models.Model):
             'data_ultima_atualizacao': self.data_ultima_atualizacao.strftime('%Y-%m-%d %H:%M:%S') if self.data_ultima_atualizacao else None,
             'usuario_cadastro': self.usuario_cadastro_id,
             'usuario_ultima_atualizacao': self.usuario_ultima_atualizacao_id,
-            'tabela_frete': self.tabela_frete.toDict(),
+            'tabela_frete': self.tabela_frete.toDict() if self.tabela_frete and hasattr(self.tabela_frete, 'toDict') else {'tabela_frete': 'Frete Informado'},
             'origem_cte': self.origem_cte,
             'destino_cte': self.destino_cte,
             'emissora_cte': self.emissora_cte,

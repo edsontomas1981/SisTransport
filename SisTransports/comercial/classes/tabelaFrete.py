@@ -151,14 +151,19 @@ class TabelaFrete:
         else:
             return False
 
-    def readFaixas(self,idTabela):
+    def readFaixas(self, idTabela):
         listaFaixas = TabelaFaixa()        
-        lista,faixas=listaFaixas.readFaixas(idTabela)
-        tabelaFaixas=[]
+        lista = listaFaixas.readFaixas(idTabela)
+        
+        if not lista:  # Verifica se a lista está vazia
+            print("A lista de faixas está vazia.")
+            return  # Retorna ou executa outra ação adequada ao seu caso
+        
+        tabelaFaixas = []
         for i in lista:
-           tabelaFaixas.append( i.toDict())
+            tabelaFaixas.append(i.toDict())
 
-        self.tabela.listaFaixas=tabelaFaixas
+        self.tabela.listaFaixas = tabelaFaixas
 
     def toDict(self):
 

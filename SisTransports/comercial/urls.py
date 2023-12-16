@@ -8,6 +8,7 @@ urlpatterns = [
     path('createTabela/',viewsComercial.createTabela,name='createTabela'),
     path('updateTabela/',viewsComercial.updateTabela,name='updateTabela'),    
     path('readTabela/',viewsComercial.readTabela,name='readTabela'),  
+    path('readTabelaId/',viewsComercial.readTabelaId,name='readTabelaId'),  
     path('readTabelasPorParceiro/',viewsComercial.readTabelasPorParceiro,
          name='readTabelaPorParceiro'),
     path('readTabelasGeraisPorRota/',viewsComercial.readTabelasGeraisPorRota,
