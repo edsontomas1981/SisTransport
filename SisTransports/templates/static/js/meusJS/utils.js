@@ -259,3 +259,33 @@ $('#numPed').on('keydown', function(event) {
     // Por exemplo, exibir um alert ou fazer uma busca.
   }
 });
+
+
+const getDadosForm=(formId)=>{
+    var formulario = document.getElementById(formId);
+    var elementos = formulario.elements;
+    var dados = {};
+
+    for (var i = 0; i < elementos.length; i++) {
+        var elemento = elementos[i];
+        var id = elemento.id;
+
+        // Ignora elementos sem ID
+        if (!id) continue;
+
+        // Lida com diferentes tipos de elementos
+        if (elemento.tagName === 'SELECT') {
+            dados[id] = elemento.value;
+        } else if (elemento.tagName === 'INPUT') {
+            if (elemento.type === 'checkbox') {
+                dados[id] = elemento.checked;
+            } else {
+                dados[id] = elemento.value;
+            }
+        }
+    }
+
+    return dados;
+}
+
+

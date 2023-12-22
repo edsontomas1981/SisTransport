@@ -28,7 +28,6 @@ class CalculaFrete{
             this.calculaTotal()
             return this.composicaoFrete
         }else{
-                alert('tem faixa mas peso nao esta na faixa')
                 this.calculaAdvalor();
                 this.calculaGris();
                 this.adicionaDespacho();

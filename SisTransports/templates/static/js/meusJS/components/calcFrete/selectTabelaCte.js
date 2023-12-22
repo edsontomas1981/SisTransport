@@ -2,6 +2,7 @@
 const tabelaCte = document.getElementById('selecionaTabelaCte');
 tabelaCte.addEventListener('change', async () => {
     let tabela =await readTabelaCte()
+    tabela.tabela.faixas = tabela.faixas
     let dadosNfs = await calculaTotalNfs()
     populaFreteCte(await calculaFreteCte(tabela,dadosNfs))
     populaTabelaCte(tabela.tabela,'tabelaFreteCte')
@@ -21,7 +22,6 @@ const readTabelaCte = async ()=>{
 }  
 
 const populaFreteCte = async (composicaoFrete)=>{
-    console.log(composicaoFrete)
     $('#freteCalculadoCte').val(composicaoFrete.fretePeso ?parseFloat(composicaoFrete.fretePeso).toFixed(2) : '');
     $('#advalorCte').val(composicaoFrete.advalor ? composicaoFrete.advalor.toFixed(2) : '');
     $('#coletaCte').val(composicaoFrete.vlrColeta ? composicaoFrete.vlrColeta.toFixed(2) : '');
@@ -36,6 +36,21 @@ const populaFreteCte = async (composicaoFrete)=>{
 
 }
 
+const limpaFreteCte = ()=>{
+    $('#freteCalculadoCte').val('');
+    $('#advalorCte').val('');
+    $('#coletaCte').val('');
+    $('#grisCte').val('');
+    $('#pedagioCte').val('');
+    $('#despachoCte').val('');
+    $('#outrosCte').val('');
+    $('#baseCalculoCte').val('');
+    $('#aliquotaCte').val('');
+    $('#icmsCte').val('');
+    $('#freteTotalCte').val('');
+}
+
+
 const populaTabelaCte = (tabela,idCampo)=>{
     $('#'+idCampo).val('Tabela : ' + tabela.descricao)
 }
@@ -44,9 +59,9 @@ const calculaFreteCte = async (tabela, dadosNfs) => {
     // tabela.tabela.faixas = tabela.faixas; // Removi o await, pois não parece necessário
   
     let vlrColeta = document.getElementById('coletaCte');
-    vlrColeta.value = await adicionaColeta();
+    // vlrColeta.value = await adicionaColeta();
     let calculoFrete = new CalculaFrete(tabela.tabela, dadosNfs);
-    calculoFrete.setVlrColeta(parseFloat(vlrColeta.value));
+    // calculoFrete.setVlrColeta(parseFloat(vlrColeta.value));
     calculoFrete.calculaFrete();
   
     return calculoFrete.composicaoFrete;

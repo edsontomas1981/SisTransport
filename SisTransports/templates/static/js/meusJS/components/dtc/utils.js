@@ -23,6 +23,8 @@ tabs.forEach(tab => {
             loadDivTipoCte()
             populaNumNfs()
             populaTomadorCte()
+            carregaEmissores()
+            limpaFreteCte()
             let nf = await loadNfs();
             if (nf === undefined){
               preDtcSemNf()
@@ -135,3 +137,4 @@ const confirmacao = async (msg) => {
     }
   });
 };
+

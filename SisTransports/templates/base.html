@@ -81,13 +81,16 @@
                                     </div>
         </div>
         {% include 'rodape.html'%}
+    
     <!-- Js de outras Paginas -->
     {% block 'js'%} {% endblock %}
-
 
     <!-- plugins:js -->
     <script src="{% static 'vendors/js/vendor.bundle.base.js' %}"></script>
     <!-- endinject -->
+
+    <script src="{% static 'js/meusJS/dadosEmpresa.js' %}"></script>
+
     <!-- Plugin js for this page -->
     <script src="{% static 'vendors/chart.js/Chart.min.js' %}"></script>
     <script src="{% static 'vendors/datatables.net/jquery.dataTables.js' %}"></script>
@@ -112,6 +115,7 @@
     <script src="{% static 'js/meusJS/formatar.js' %}"></script>
     <script src="{% static 'js/meusJS/cubagem.js' %}"></script>
     <script src="{% static 'js/meusJS/salvarDtc.js' %}"></script>
+
     <!-- End custom js for this page-->
 </body>
 </html>

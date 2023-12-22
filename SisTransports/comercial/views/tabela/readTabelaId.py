@@ -14,6 +14,10 @@ def readTabelaId(request):
         tabela = TabelaFrete()
         tabela.readTabela(data['numTabela'])
         tabela.readFaixas(data['numTabela'])
-        return JsonResponse({'status': 200, 'tabela': tabela.tabela.toDict(),
-                            'faixas': tabela.tabela.listaFaixas if hasattr(tabela.tabela, 'listaFaixas') else None})
+
+        faixas = []
+        if hasattr(tabela.tabela,'faixas'):
+            faixas = tabela.tabela.faixas
+
+        return JsonResponse({'status': 200, 'tabela': tabela.tabela.toDict(),'faixas':faixas})
 

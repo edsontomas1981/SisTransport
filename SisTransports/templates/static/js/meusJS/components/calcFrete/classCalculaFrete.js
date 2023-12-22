@@ -81,8 +81,6 @@ class CalculoFreteCte {
         tabelaEmUso.textContent = " | Tabela selecionada : " + descricaoTabela;
     }
 
-    // ... Restante das funções
-
 }
 
 $('.calculoCotacao').on('change', () => {
