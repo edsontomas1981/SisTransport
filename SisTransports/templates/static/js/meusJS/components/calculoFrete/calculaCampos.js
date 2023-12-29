@@ -3,11 +3,8 @@ document.addEventListener('DOMContentLoaded',()=>{
 })
 
 const calculaFreteAPartirDosInputs = async ()=>{
-
-    console.log($('#emissoraCte').val())
-    let dadosEmissora  = await carregaEmissoresPorId($('#emissoraCte').val()) // carrega dados do emissor tais como aliquota que e usado nesta funcao
+    let dadosEmissora  = carregaEmissoresPorId($('#emissoraCte').val()) // carrega dados do emissor tais como aliquota que e usado nesta funcao
     let subtotal =await carregaValores()
-    console.log(dadosEmissora)
     let aliquota = await selecionaAliquota(dadosEmissora)
     let freteTotal = calculaFrete(subtotal,aliquota)
     populaCalculo(freteTotal)

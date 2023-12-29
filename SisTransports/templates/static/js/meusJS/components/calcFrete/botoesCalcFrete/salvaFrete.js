@@ -1,16 +1,14 @@
-let btnSalvaFrete = document.getElementById('btnSalvaCalc')
-btnSalvaFrete.addEventListener('click',async ()=>{
-    let dados = criarDadosFreteDtc();
-    dados.idDtc = $('#numDtc').val(); 
-    let url = '/operacional/createCte/'    
-    let conexao = new Conexao(url,dados)
-    let result = await conexao.sendPostRequest()
-    console.log(result)
-})
-
 const criarDadosFreteDtc=()=>{
     const getValue = (elementId) => {
+        
         const element = document.getElementById(elementId);
+
+        if (element.id == 'cfopCte' && element.value ==0){
+            campoObrigatorio('CFOP')
+            element.focus();
+            throw new Error(`Elemento obrigatório ${elementId} não encontrado.`);
+        }
+
         if (element.value !='') {
             return element.value;
         } else if (element.classList.contains('campoObrigatorio') && element.value == '') {
@@ -34,17 +32,17 @@ const criarDadosFreteDtc=()=>{
         tabela_frete: getValue('selecionaTabelaCte'),
         observacao: getValue('observacaoCte'),
         icms_incluso: document.getElementById('icmsInclusoNf').checked,
-        frete_calculado: getValue('freteCalculado'),
-        advalor: getValue('advalorNf'),
-        gris: getValue('grisNf'),
-        despacho: getValue('despachoNf'),
-        outros: getValue('outrosNf'),
-        pedagio: getValue('pedagioNf'),
-        vlr_coleta: getValue('coletaNf'),
-        base_de_calculo: getValue('baseCalculoNf'),
-        aliquota: getValue('aliquotaNf'),
-        icms_valor: getValue('icmsNf'),
-        total_frete: getValue('freteTotalNf'),
+        frete_calculado : getValue('freteCalculadoCte'),
+        advalor: getValue('advalorCte'),
+        gris: getValue('grisCte'),
+        despacho: getValue('despachoCte'),
+        outros: getValue('outrosCte'),
+        pedagio: getValue('pedagioCte'),
+        vlr_coleta: getValue('coletaCte'),
+        base_de_calculo: getValue('baseCalculoCte'),
+        aliquota: getValue('aliquotaCte'),
+        icms_valor: getValue('icmsCte'),
+        total_frete: getValue('freteTotalCte'),
     };
     console.table(dadosFreteDtc)
 

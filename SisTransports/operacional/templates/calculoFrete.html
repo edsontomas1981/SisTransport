@@ -3,33 +3,33 @@
             Não há notas fiscais associadas a esta DTC.
         </div>
     </div>
-    <div class="row p-0" disabled>
-        <div class="col-sm-12 mb-1 d-flex justify-content-end">
-            <div class="col-sm-8" id="botoes">
-                <div class="col-12">
-                    <div class="input-group col-12">
-                        <input type="text" class="alert-info form-control form-control-sm " 
-                        placeholder="Tomador : " name="tomadorCte" id="tomadorCte" readonly>
-                        <input type="text" class="form-control alert-success form-control-sm " 
-                        placeholder="Tabela Frete : " name="tabelaFreteCte" id="tabelaFreteCte" readonly>
-                        <button class="btn btn-secondary btn-rounded form-control-sm" data-toggle="tooltip" data-placement="top" title="Novo" id="btnNovoCalc">
-                        <i class="ti-write"></i>
-                        </button>
-                        <button type="button" class="btn btn-danger btn-rounded form-control-sm" data-toggle="tooltip" data-placement="top" title="Salvar" id="btnExcluiCalc">
-                            <i class="ti-trash"></i>
-                        </button>
-                        <button type="button" class="btn btn-success btn-rounded form-control-sm" data-toggle="tooltip" data-placement="top" title="Salvar" id="btnSalvaCte">
-                        <i class="ti-save"></i>
-                        </button>
-                        <button type="button" class="btn btn-dark btn-rounded form-control-sm" data-toggle="tooltip" data-placement="top" title="Excluir" id="btnCalcular">
-                            <i class="fa fa-calculator" aria-hidden="true"></i>
-                        </button> 
+    <form method="POST" id="formCalculoFrete">
+        <div class="row p-0" disabled>
+            <div class="col-sm-12 mb-1 d-flex justify-content-end">
+                <div class="col-sm-8" id="botoes">
+                    <div class="col-12">
+                        <div class="input-group col-12">
+                            <input type="text" class="alert-info form-control form-control-sm " 
+                            placeholder="Tomador : " name="tomadorCte" id="tomadorCte" readonly>
+                            <input type="text" class="form-control alert-success form-control-sm " 
+                            placeholder="Tabela Frete : " name="tabelaFreteCte" id="tabelaFreteCte" readonly>
+                            <button class="btn btn-secondary btn-rounded form-control-sm" data-toggle="tooltip" data-placement="top" title="Novo" id="btnNovoCalc">
+                            <i class="ti-write"></i>
+                            </button>
+                            <button type="button" class="btn btn-danger btn-rounded form-control-sm" data-toggle="tooltip" data-placement="top" title="Salvar" id="btnExcluiCalc">
+                                <i class="ti-trash"></i>
+                            </button>
+                            <button type="button" class="btn btn-success btn-rounded form-control-sm" data-toggle="tooltip" data-placement="top" title="Salvar" id="btnSalvaCte">
+                            <i class="ti-save"></i>
+                            </button>
+                            <button type="button" class="btn btn-dark btn-rounded form-control-sm" data-toggle="tooltip" data-placement="top" title="Excluir" id="btnCalcular">
+                                <i class="fa fa-calculator" aria-hidden="true"></i>
+                            </button> 
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
-        <form id="formCalculoFrete">
-            <div class="col-sm-6" id="esquerda">
+            <div class="col-sm-5" id="esquerda">
                 <div class="form-group col-sm-12 mb-0 mt-0">
                     <div class="row">
                         <div class="col-4 pl-1 pr-0" id="divEmissoraCte">
@@ -105,7 +105,7 @@
                     </div>
                 </div>
             </div>
-            <div class="col-sm-6" id="direita">
+            <div class="col-sm-5" id="direita">
                 <div class="form-group col-sm-12 mb-0 mt-0" >
                     <div class="form-group row mb-1">
                         <div class="col-4 pl-1 pr-0 mt-0" id="divTipoCalc">
@@ -195,12 +195,6 @@
                                 <label for="observacaoCte">Observação</label>
                             </div>
                         </div> 
-                        <div class="col-sm-3 mb-0 mt-1 form-group form-floating pl-1 pr-1" id="divBtnCalc">
-                            <button type="button" class="btn btn-warning btn-icon-text" id="btnCalcFreteCte">
-                                <i class="ti-credit-card btn-icon-prepend"></i>
-                                        Calcular
-                            </button>
-                        </div>
                         <div class="col-sm-3 mb-1 mt-1 form-group pl-1 pr-1">
                         </div>
                         <div class="col-sm-3 mb-1 mt-1 form-group pl-1 pr-1">
@@ -210,5 +204,19 @@
                     </div>
                 </div> 
             </div>
-        </form>
-    </div>
+            <div class="col-sm-2">
+                <button class="btn btn-primary" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight" aria-controls="offcanvasRight" id="btnOffcanvasCotacao">Toggle right offcanvas</button>
+            
+                <!-- Inclua a div do offcanvas dentro da div com a classe "col-sm-2" -->
+                <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasRight" aria-labelledby="offcanvasRightLabel" style="width: 250px; height: 300px; margin-top: 250px;">
+                    <div class="offcanvas-header">
+                        <h5 id="offcanvasRightLabel">Cotações</h5>
+                        <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+                    </div>
+                    <div class="offcanvas-body">
+                        <!-- Conteúdo do offcanvas -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>

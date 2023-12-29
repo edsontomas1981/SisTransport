@@ -261,31 +261,44 @@ $('#numPed').on('keydown', function(event) {
 });
 
 
-const getDadosForm=(formId)=>{
-    var formulario = document.getElementById(formId);
-    var elementos = formulario.elements;
-    var dados = {};
+const getDadosForm=(formularioId)=>{
 
-    for (var i = 0; i < elementos.length; i++) {
-        var elemento = elementos[i];
-        var id = elemento.id;
+  console.log(formularioId)
 
-        // Ignora elementos sem ID
-        if (!id) continue;
+  var tabelaHash = {};
 
-        // Lida com diferentes tipos de elementos
-        if (elemento.tagName === 'SELECT') {
-            dados[id] = elemento.value;
-        } else if (elemento.tagName === 'INPUT') {
-            if (elemento.type === 'checkbox') {
-                dados[id] = elemento.checked;
-            } else {
-                dados[id] = elemento.value;
-            }
-        }
-    }
+  var formulario = document.getElementById(formularioId);
 
-    return dados;
+
+  if (formulario) {
+      // Obtém todos os elementos do formulário
+      var elementos = formulario.elements;
+
+      // Itera sobre os elementos do formulário
+      for (var i = 0; i < elementos.length; i++) {
+          var campo = elementos[i];
+
+          // Ignora os campos que não têm nome
+          if (campo.name) {
+              // Verifica o tipo do campo para determinar como obter o valor
+              switch (campo.type) {
+                  case 'text':
+                  case 'select-one':
+                  case 'textarea':
+                      tabelaHash[campo.name] = campo.value;
+                      break;
+                  case 'checkbox':
+                      tabelaHash[campo.name] = campo.checked;
+                      break;
+                  // Adicione mais casos conforme necessário para outros tipos de campo
+              }
+          }
+      }
+
+      console.log(tabelaHash);
+      return tabelaHash;
+  } else {
+      console.error("Formulário não encontrado com o ID fornecido: " + formularioId);
+      return null;
+  }
 }
-
-

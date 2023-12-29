@@ -1,5 +1,6 @@
 let btnSalvaCte = document.getElementById('btnSalvaCte')
 
 btnSalvaCte.addEventListener('click',()=>{
-    console.log(getDadosForm('formCalculoFrete'))
+    let dados = criarDadosFreteDtc();
+    console.log(dados)
 })

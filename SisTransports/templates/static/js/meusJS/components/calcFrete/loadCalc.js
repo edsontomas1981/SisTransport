@@ -74,9 +74,9 @@ const limpaCamposCalculo =(campos)=>{
             element.checked = true;
           }
         }
-      });
-  
+    });
 }
+
 const bloqueiaBotoes=()=>{
     let semNf = document.getElementById('botoes');
     semNf.style.display = 'none';
