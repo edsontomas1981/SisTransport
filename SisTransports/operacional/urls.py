@@ -7,7 +7,10 @@ urlpatterns = [
     path('readColeta/',viewsOperacional.readColeta,name='readColeta'),
     path('updateColeta/',viewsOperacional.updateColeta,name='updateColeta'),
     path('deleteColeta/',viewsOperacional.deleteColeta,name='deleteColeta'),
-    
+    path('readColetasGeral/',viewsOperacional.read_coletas_geral,name='readColetasGeral'),
+
+    path('impressaoColetas/',viewsOperacional.impressao_coletas,name='impressao_coletas'),
+
     path('createNf/',viewsOperacional.create_nf,name='createNf'),
     path('readNf/',viewsOperacional.read_nf,name='readNf'),
     path('readNfDtc/',viewsOperacional.read_nfs_by_dtc,name='read_nfs_by_dtc'),

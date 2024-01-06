@@ -11,9 +11,10 @@ class Cte():
     def verificar_campos_obrigatorios(dados, campos_obrigatorios):
         campos_faltantes = []
         for campo in campos_obrigatorios:
-            if campo not in dados or not dados[campo]:
+            if campo not in dados or (dados[campo] is None and not isinstance(dados[campo], bool)):
                 campos_faltantes.append(campo)
         return campos_faltantes
+
     @staticmethod
     def criar_mensagem_erro(campos_faltantes):
         if campos_faltantes:
@@ -71,4 +72,3 @@ class Cte():
         except Mdl_cte.DoesNotExist:
             return None  # O objeto não existe
 
-    pass

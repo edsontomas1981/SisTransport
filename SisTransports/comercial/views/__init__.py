@@ -20,6 +20,7 @@ from comercial.views.faixas.deleteFaixa import deleteFaixa
 
 from comercial.views.cotacao.createCotacao import createCotacao
 from comercial.views.cotacao.readCotacao import readCotacao
+from comercial.views.cotacao.read_cotacao_cnpj import read_cotacao_cnpj
 from comercial.views.cotacao.deleteCotacao import deleteCotacao
 from comercial.views.cotacao.updateCotacao import updateCotacao
 

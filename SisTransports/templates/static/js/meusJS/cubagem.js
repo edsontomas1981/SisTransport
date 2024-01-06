@@ -79,12 +79,6 @@ function salvaComTecla(e) {
     }
 }
 
-document.getElementById("resultM3Cotacao").addEventListener('keydown',(e)=>{
-    // Verificar se a tecla Shift e F1 foram pressionadas
-    if (e.shiftKey && e.key === "F1") {
-        textResultadoM3 = 'resultM3Cotacao';
-        $("#modalCalcM3").modal("show");
-    }
-});
+
 
 

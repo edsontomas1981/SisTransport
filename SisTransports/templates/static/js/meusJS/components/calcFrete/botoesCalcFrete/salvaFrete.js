@@ -44,7 +44,6 @@ const criarDadosFreteDtc=()=>{
         icms_valor: getValue('icmsCte'),
         total_frete: getValue('freteTotalCte'),
     };
-    console.table(dadosFreteDtc)
 
     return dadosFreteDtc
 }

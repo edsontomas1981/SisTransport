@@ -22,6 +22,9 @@ from operacional.views.coleta.updateColeta import updateColeta
 from operacional.views.coleta.deleteColeta import deleteColeta
 from operacional.views.coleta.saveColeta import saveColeta
 from operacional.views.coleta.deletaColeta import deletaColeta
+from operacional.views.coleta.read_coletas_geral import read_coletas_geral
+from operacional.views.coleta.impressao_coletas import impressao_coletas
+
 
 from operacional.views.nf.create_nf import create_nf
 from operacional.views.nf.read_nf import read_nf

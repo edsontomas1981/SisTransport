@@ -16,14 +16,15 @@ def createCotacao (request):
     if request.method == 'GET':
         return JsonResponse({'status': 200})     
     elif request.method == "POST" :
+        user = request.user  # Aqui você obtém o usuário associado à requisição
         data = json.loads(request.body.decode('utf-8'))
+        data['usuario']=user
 
         cotacao = Cotacao()
         resposta = cotacao.selectCotacaoByDtc(data['idPreDtc'])
 
         if resposta['status'] == 200:
             altera_cotacao(data)
-            dprint(cotacao.cotacao.tabela_fk)
             return JsonResponse({'status': 201})# Altera cotação
         elif resposta['status'] == 404 :
             cria_nova_cotacao(data)

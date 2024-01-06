@@ -3,6 +3,9 @@ const populaOrigemDtc = async()=>{
     let ufRem = document.getElementById('ufRem')
     let cidadeRem = document.getElementById('cidadeRem')
 
+    while (origemCte.firstChild) {
+        origemCte.removeChild(origemCte.firstChild);
+    }
 
     // Array de opções que você deseja adicionar
     var opcoes = ["Cidade do Emissor",(cidadeRem.value + '-' + ufRem.value) ];

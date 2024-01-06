@@ -17,11 +17,6 @@ document.getElementById('btnNovoCalc').addEventListener('click',(e)=>{
     e.preventDefault();
 })
 
-document.getElementById('btnExcluiCalc').addEventListener('click',(e)=>{
-    e.preventDefault();
-})
-
-
 const msgTabela=(titulo,msg)=>{
     Swal.fire({
         title: titulo,
@@ -66,7 +61,6 @@ const calcular = async (numDtc,tabelaDtc,coleta)=>{
 }
 
 const populaFreteNf=(response)=>{
-    console.log(response)
     document.getElementById('freteCalculado').value=response.subtotais.frete_calculado
     document.getElementById('advalorNf').value=response.subtotais.advalor
     document.getElementById('coletaNf').value=response.subtotais.coleta

@@ -11,6 +11,8 @@ def delete_cte(request):
     elif request.method == 'POST':
         data = json.loads(request.body.decode('utf-8'))
 
+        print(data)
+
         cte = Cte()
         cte.read(data['idDtc'])
         if cte.obj_cte:

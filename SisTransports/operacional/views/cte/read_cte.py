@@ -12,7 +12,6 @@ def read_cte_by_dtc(request):
     elif request.method == 'POST':
         data = json.loads(request.body.decode('utf-8'))
         cria_cte = Cte()
-        dprint(data['idDtc'])
         cte = cria_cte.read(data['idDtc'])
         if cte is not None:
             return JsonResponse({'status':200,'cte': cte.to_dict()})

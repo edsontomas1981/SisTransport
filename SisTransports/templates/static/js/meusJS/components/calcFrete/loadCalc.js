@@ -294,5 +294,4 @@ const identificaTomadorCalculoCte = ()=>{
     let identicadorTomadorCte = document.getElementById('identificaTomador')
     let tomadorDtc = document.getElementById('razaoTomador')
     identicadorTomadorCte.value = tomadorDtc.value
-    
 }

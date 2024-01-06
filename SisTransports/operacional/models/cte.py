@@ -13,7 +13,7 @@ class Cte (models.Model):
     redesp_cte = models.CharField(max_length=5, null=True)
     tipo_calculo_cte = models.CharField(max_length=5, null=True)
     dtc_fk = models.ForeignKey(Dtc, on_delete=models.CASCADE, related_name='frete_dtc', null=True)
-
+       
     # Valores de Frete
     tabela_frete = models.ForeignKey(TabelaFrete, on_delete=models.CASCADE, null=True, related_name='coletaDtc')
     observacao = models.CharField(max_length=70, null=True)
@@ -39,7 +39,7 @@ class Cte (models.Model):
 
     def to_dict(self):
         return {
-            'dtc_fk': self.dtc_fk.to_dict(),
+            'dtc_fk': self.dtc_fk.to_dict() if self.dtc_fk else None,
             'totalFrete': self.total_frete,
             'freteCalculado': self.frete_calculado,
             'advalor': self.advalor,

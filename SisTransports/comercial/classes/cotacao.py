@@ -1,11 +1,10 @@
 from comercial.models.cotacao import Cotacao as ClsCotacao
-from faturamento.components.calculaFrete import calculaAdvalor, calculaGris, pesoACalcular, calculaCubagem
-from faturamento.components.calculaFrete import somaSubtotais, calculaPedagio, calculaFretePeso, freteFaixa
-from faturamento.components.calculaFrete import aplicaIcms, geraPercentualAliquota, calculaFreteValor, calculaFreteVolume
 from comercial.classes.geraFrete import CalculaFrete
 from comercial.classes.tblFaixa import TabelaFaixa
 from Classes.utils import  dprint,toFloat,checkBox
 from datetime import datetime
+from operacional.models.dtc import Dtc
+from parceiros.models.parceiros import Parceiros
 
 class Cotacao:
     def __init__(self):
@@ -13,8 +12,11 @@ class Cotacao:
         self.geraFrete = CalculaFrete()
 
     def createCotacao(self, dados):
-        print("createCotacao")
         return self.criaCotacao(dados)
+    
+    def adiciona_cte_cotacao(self,cte):
+        self.cotacao.cotaca_aplicada_no_cte_fk = cte
+        self.cotacao.save()
 
     def readCotacao(self, id):
         if ClsCotacao.objects.filter(id=id).exists():
@@ -68,6 +70,7 @@ class Cotacao:
         self.cotacao.icmsIncluso = checkBox(dados['icmsInclusoCotacao'])
         self.cotacao.pesoFaturado = dados['pesoFaturadoCotacao']
         self.cotacao.vlrColeta = toFloat(dados['vlrColetaCotacao'])
+        self.cotacao.usuario_cadastro = dados['usuario']
         self.cotacao.dataHora = datetime.now()
         self.cotacao.save()
 
@@ -101,6 +104,7 @@ class Cotacao:
             self.cotacao.nome = dados['nomeCotacao']
             self.cotacao.pesoFaturado = dados['pesoFaturadoCotacao']
             self.cotacao.vlrColeta = toFloat(dados['vlrColetaCotacao'])
+            self.cotacao.usuario_cadastro = dados['usuario']
             self.cotacao.dataHora=datetime.now()
             self.cotacao.save()
             return 200
@@ -115,13 +119,47 @@ class Cotacao:
             return listaFaixas
        
     def selectCotacaoByDtc(self, dtc):
-    # try:
-        if ClsCotacao.objects.filter(dtc_fk=dtc).exists():
-            self.cotacao = ClsCotacao.objects.get(dtc_fk=dtc)
-            return {'status': 200, 'cotacao': self.cotacao.toDict()}
-        else:
-            return {'status': 404, 'cotacao': {}}
-    # except :
-    #     return {'status': 400, 'mensagem': 'Erro interno'}
+        try:
+            if ClsCotacao.objects.filter(dtc_fk=dtc).exists():
+                self.cotacao = ClsCotacao.objects.get(dtc_fk=dtc)
+                return {'status': 200, 'cotacao': self.cotacao.toDict()}
+            else:
+                return {'status': 404, 'cotacao': {}}
+        except :
+            return {'status': 400, 'mensagem': 'Erro interno'}
+        
+    @staticmethod
+    def selectCotacaoPorCnpj(cnpj):
+        try:
+            # Verificar se o CNPJ é válido
+            if not cnpj:
+                raise ValueError("CNPJ fornecido é inválido")
+
+            # Encontrar o Parceiro (tomador) com o CNPJ fornecido
+            parceiro_tomador = Parceiros.objects.get(cnpj_cpf=cnpj)
+
+            # Encontrar as cotações associadas ao tomador com base no CNPJ, filtrando pelo campo em_uso igual a False
+            cotacoes_do_tomador = ClsCotacao.objects.filter(
+                dtc_fk__tomador_fk=parceiro_tomador.id,
+                em_uso=False,
+                cotaca_aplicada_no_cte_fk__isnull=True  # Adicione esta condição
+            )            # Criar uma lista de dicionários contendo informações sobre cada cotação, incluindo o ID
+            cotacoes_info = [{'id': cotacao.id, 'info': cotacao.toDict()} for cotacao in cotacoes_do_tomador]
+
+            # 'cotacoes_do_tomador' agora contém todas as cotações onde o tomador_fk é igual ao tomador associado ao CNPJ fornecido.
+            return cotacoes_info 
+        except ValueError as ve:
+            # Lide com o erro de CNPJ inválido
+            return {"error": str(ve)}
+        except Parceiros.DoesNotExist:
+            # Lide com o caso em que o parceiro (tomador) com o CNPJ fornecido não existe
+            return {"error": "Parceiro com CNPJ não encontrado"}
+        except ClsCotacao.DoesNotExist:
+            # Lide com o caso em que não há cotações para o tomador
+            return {"error": "Não há cotações para o tomador associado ao CNPJ fornecido"}
+        except Exception as e:
+            # Lide com outros erros inesperados
+            return {"error": str(e)}
+
 
         

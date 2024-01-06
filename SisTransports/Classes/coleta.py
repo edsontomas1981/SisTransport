@@ -33,7 +33,6 @@ class Coleta():
         self.coleta.save()
    
     def readColeta(self,idParceiro):
-        print(idParceiro)
         if Coleta.objects.filter(coleta_fk=idParceiro).exists():
             self.coleta=Dtc.objects.filter(coleta_fk=idParceiro).get()
             

@@ -2,10 +2,28 @@ from operacional.models.dtc import Dtc as ClsDtc
 from Classes.utils import verificaCamposObrigatorios,toFloat
 from Classes.utils import checkBox,dprint,dpprint
 from operacional.classes.rotas import Rota
+from datetime import datetime  # Adicione esta linha para importar a classe datetime
+
 
 class Dtc:
     def __init__(self):
         self.dtc=ClsDtc()
+
+    @staticmethod
+    def buscar_registros_por_intervalo_de_tempo(data_inicial, data_final):
+        try:
+            registros = ClsDtc.objects.filter(
+                coleta_fk__isnull=False,  # Garante que o campo coleta_fk não seja nulo
+                data_cadastro__range=(data_inicial, data_final)
+            )
+            # Opcional: você pode ajustar o retorno conforme necessário
+            return registros
+        except Exception as e:
+            # Log ou trate a exceção conforme necessário
+            print(f"Erro ao buscar registros: {e}")
+            raise
+
+    
     
     def salvaOuAlteraDtc(self,dados):
         self.dtc.remetente_fk=dados['remetente'] if dados['remetente'] else None

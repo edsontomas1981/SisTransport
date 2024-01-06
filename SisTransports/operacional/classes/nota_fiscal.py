@@ -85,7 +85,6 @@ class Nota_fiscal_CRUD:
         return MdlNotaFiscal.objects.filter(data_emissao_nf__range=(start_date, end_date))  
 
     def is_nf_linked_to_dtc(self, chave_acesso, dtc_id):
-        print(chave_acesso,dtc_id)
         try:
             if MdlNotaFiscal.objects.filter(chave_acesso=chave_acesso, dtc_fk=dtc_id).exists():
                 return 201  # A nota fiscal está vinculada ao DTC especificado

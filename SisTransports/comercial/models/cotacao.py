@@ -3,6 +3,7 @@ from operacional.models.dtc import Dtc as DctoCarga
 from operacional.models.rota import Rota
 from comercial.models.tabelaFrete import TabelaFrete
 from Classes.utils import dprint
+from operacional.models.cte import Cte
 
 class Cotacao(models.Model):
     dtc_fk = models.ForeignKey(DctoCarga, on_delete=models.CASCADE, blank=False)
@@ -10,6 +11,14 @@ class Cotacao(models.Model):
                                   related_name='tabelaCotacao', null=True, blank=True)
     rota_fk = models.ForeignKey(Rota, on_delete=models.CASCADE,
                                 blank=False, related_name='rotaCotacao', null=True)
+    #o campo em_uso é semaforo que deve ser atualizado assim que um cte 
+    # usar uma cotacao.true qdo a cotacao esta sendo usada e false qdo contrario
+    em_uso = models.BooleanField(max_length=15,null=True,default=False)
+    
+    cotaca_aplicada_no_cte_fk = models.ForeignKey(Cte, on_delete=models.SET_NULL, blank=True,null=True)
+    
+    usuario_cadastro=models.CharField(max_length=15,null=True,blank=True)
+
     formaDeCalculo = models.IntegerField(null=True)
     # Dados da Nota Fiscal
     numNf = models.CharField(max_length=15, null=True)
@@ -66,5 +75,6 @@ class Cotacao(models.Model):
             'nome': self.nome,
             'observacao': self.observacao,
             'contato': self.contato,
+            'usuario': self.usuario_cadastro,
         }
         return cotacao
