@@ -1,0 +1,30 @@
+
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <!-- Adicione seus estilos CSS aqui se necessário -->
+    </head>
+    <body>
+        {% for coleta in coletas %}
+            <div class="coleta">
+                <h2>Coleta {{ coleta.id }}</h2>
+                <p><strong>Nota Fiscal:</strong> {{ coleta.coleta.notaFiscal }}</p>
+                <p><strong>Horário:</strong> {{ coleta.coleta.horario }}</p>
+                <p><strong>Volume:</strong> {{ coleta.coleta.volume }}</p>
+                <p><strong>Peso:</strong> {{ coleta.coleta.peso }}</p>
+                <p><strong>Valor:</strong> {{ coleta.coleta.valor }}</p>
+                <!-- Adicione mais campos conforme necessário -->
+            </div>
+            <div class="coleta">
+                <h2>Coleta {{ coleta.id }}</h2>
+                <p><strong>Nota Fiscal:</strong> {{ coleta.coleta.notaFiscal }}</p>
+                <p><strong>Horário:</strong> {{ coleta.coleta.horario }}</p>
+                <p><strong>Volume:</strong> {{ coleta.coleta.volume }}</p>
+                <p><strong>Peso:</strong> {{ coleta.coleta.peso }}</p>
+                <p><strong>Valor:</strong> {{ coleta.coleta.valor }}</p>
+                <!-- Adicione mais campos conforme necessário -->
+            </div>
+        {% endfor %}
+    </body>
+    </html>
+    

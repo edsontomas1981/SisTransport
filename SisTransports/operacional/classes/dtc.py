@@ -10,17 +10,40 @@ class Dtc:
         self.dtc=ClsDtc()
 
     @staticmethod
-    def buscar_registros_por_intervalo_de_tempo(data_inicial, data_final):
+    def buscar_registros_com_filtro(data_inicial, data_final, ordenar_por=1,filtrar = 0, rota_id=0 ):
         try:
+            # primeiro seleciona o periodo
             registros = ClsDtc.objects.filter(
-                coleta_fk__isnull=False,  # Garante que o campo coleta_fk não seja nulo
+                coleta_fk__isnull=False,
                 data_cadastro__range=(data_inicial, data_final)
             )
-            # Opcional: você pode ajustar o retorno conforme necessário
+
+            # Aplicar filtros adicionais
+            if int(filtrar) == 1:  # Em aberto
+                registros = registros.filter(coleta_fk__status=int(filtrar))
+            elif int(filtrar) == 2:  # Coletados
+                    registros = registros.filter(coleta_fk__status=int(filtrar))
+            elif int(filtrar) == 3:  # Em rota
+                    registros = registros.filter(coleta_fk__status=int(filtrar))
+                
+            print(rota_id)
+            if int(rota_id) != 0:  # Se não for "Todos"
+                registros = registros.filter(rota_fk__id=int(rota_id))
+
+            # Adicione mais condições conforme necessário para outros filtros
+
+            # Ordenar
+            if int(ordenar_por) == 2:  # Remetente
+                registros = registros.order_by('remetente_fk__raz_soc')
+            elif int(ordenar_por) == 3:  # Destinatário
+                registros = registros.order_by('destinatario_fk__raz_soc')
+            else:  # Data (padrão)
+                registros = registros.order_by('data_cadastro')
+
             return registros
         except Exception as e:
             # Log ou trate a exceção conforme necessário
-            print(f"Erro ao buscar registros: {e}")
+            print(f"Erro ao buscar registros com filtro: {e}")
             raise
 
     

@@ -59,6 +59,15 @@ class Dtc():
                 return 300
         except:
             return 500
+    @staticmethod
+    def getDtcId(idDtc):
+        try:
+            if DctoCarga.objects.filter(id=idDtc).exists():
+                return DctoCarga.objects.filter(id=idDtc).get()  
+            else:
+                return 300
+        except:
+            return 500
            
     def to_dict(self):
         return self.dtc.to_dict()

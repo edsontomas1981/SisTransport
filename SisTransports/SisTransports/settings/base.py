@@ -42,6 +42,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     #Apps de terceiros
     'bootstrapform',
+    'report_builder',
+    'nested_admin',
     #Meus apps
     'principal',
     'usuarios',
