@@ -1,14 +1,15 @@
 from datetime import datetime
-from django.conf import settings
 import webbrowser
-from reportlab.platypus import SimpleDocTemplate, Paragraph, Spacer, Image, Table, PageBreak
-from reportlab.platypus.doctemplate import BaseDocTemplate, PageTemplate
+from django.conf import settings
 from reportlab.lib.pagesizes import letter
+from reportlab.platypus import SimpleDocTemplate, Paragraph, Spacer, Image, Table, PageBreak
 from reportlab.lib import colors
 from reportlab.lib.styles import getSampleStyleSheet, ParagraphStyle
 from reportlab.platypus.frames import Frame
 from reportlab.platypus.flowables import KeepTogether
 from reportlab.platypus.doctemplate import _addGeneratedContent
+from reportlab.platypus.doctemplate import PageTemplate
+
 
 class TableContent(KeepTogether):
     def __init__(self, table_data, style):
@@ -30,13 +31,13 @@ def imprimir_documento(coletas):
     # Defina as dimensões da página e as margens
     width, height = letter
     print(letter)
-    doc = BaseDocTemplate(pdf_filename, pagesize=(width, height), leftMargin=margem_esquerda, rightMargin=margem_direita, topMargin=margem_superior, bottomMargin=margem_inferior)
+    doc = SimpleDocTemplate(pdf_filename, pagesize=(width, height), leftMargin=margem_esquerda, rightMargin=margem_direita, topMargin=margem_superior, bottomMargin=margem_inferior)
 
     # Lista para armazenar os frames
     frames = []
 
     # Adiciona um frame para o cabeçalho
-    header_frame = Frame(margem_esquerda, height - 50, width - margem_esquerda - margem_direita,70, showBoundary=1)
+    header_frame = Frame(margem_esquerda, height - 150, width - margem_esquerda - margem_direita, 100, showBoundary=1)
     frames.append(header_frame)
 
     # Adiciona um frame para o corpo do relatório
@@ -49,8 +50,6 @@ def imprimir_documento(coletas):
 
     # Adiciona um modelo de página padrão ao objeto doc com os frames
     doc.addPageTemplates([PageTemplate(id='default', frames=frames)])
-    # Adiciona um modelo de página padrão ao objeto doc
-    # doc.addPageTemplates([PageTemplate(id='default', frames=Frame(margem_esquerda, margem_inferior, width - margem_esquerda - margem_direita, height - margem_superior - margem_inferior))])
 
     # Inicializa a folha de estilos
     styles = getSampleStyleSheet()
@@ -88,6 +87,7 @@ def imprimir_documento(coletas):
 
     # Adiciona o conteúdo ao PDF
     _addGeneratedContent(content, doc)
+    
     doc.build(content)
 
     try:
