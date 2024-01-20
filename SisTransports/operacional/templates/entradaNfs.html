@@ -1,0 +1,24 @@
+{% extends 'base.html'%}
+
+{% load static %}
+
+{% block 'conteudo_container'%}
+    <div class="row mt-5 container-fluid">
+        <div class="col-sm-4 col-4 col-xl-4">
+            <div class="form-floating mb-3">
+                <input type="email" class="form-control" id="chaveAcesso" 
+                placeholder="ex:35240107654901000146550010000274781491725441" 
+                maxlength="44" pattern="[0-9]{44}">
+                <label for="chaveAcesso">Chave de acesso nota fiscal</label>
+            </div>
+        </div>
+        <div class="col-sm-4 col-12">
+            <input type="text" class="form-control" id="chaveAcesso" placeholder="ex:35240107654901000146550010000274781491725441" maxlength="44" pattern="[0-9]{44}">
+        </div>
+        <div class="col-sm-4 col-4">
+            <input type="text" class="form-control" id="chaveAcesso" placeholder="ex:35240107654901000146550010000274781491725441" maxlength="44" pattern="[0-9]{44}">
+        </div>
+    </div>
+{% endblock %} 
+{% block 'js' %} 
+{% endblock %} 

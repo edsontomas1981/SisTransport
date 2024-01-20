@@ -15,7 +15,6 @@ const conectar = async (url,data)=>{
  }
 
 const obterCamposSelecionados=()=> {
-    
     var camposSelecionados = [];
   
     // Obtém todas as linhas da tabela
@@ -42,6 +41,10 @@ const obterCamposSelecionados=()=> {
     // Exibe os campos selecionados no console (você pode ajustar isso conforme necessário)
     return camposSelecionados;
 }
+
+
+
+
   
 
   

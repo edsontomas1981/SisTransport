@@ -57,8 +57,9 @@
                 {% include 'sidebar.html'%}
                 <div>
                     <div class="container-fluid d-flex flex-row ">
+                        {% block 'conteudo_container' %}{% endblock %} 
                         <div class="row">
-                            <div class="col-md-12 grid-margin pt-4 pl-4 pr-4">
+                            <div class="col-md-12 col-12 col-sm-12 col-xl-12 grid-margin pt-4 pl-4 pr-4">
                                 <div class="row">
                                     <!-- Conteudo -->
                                     <section class="mx-auto">
@@ -73,14 +74,15 @@
                 </div>
             </div>
             <div id="loader" style="display:none;">
-                                        <div class="col-md-12 col-sm-6 grid-margin stretch-card">
-                                          <div class="spinner-grow text-success" role="status">
-                                            <span class="visually-hidden">Loading...</span>
-                                          </div>
-                                        </div>
-                                    </div>
+                <div class="col-md-12 col-sm-6 grid-margin stretch-card">
+                    <div class="spinner-grow text-success" role="status">
+                    <span class="visually-hidden">Loading...</span>
+                    </div>
+                </div>
+            </div>
         </div>
         {% include 'rodape.html'%}
+    </div>
     
     <!-- Js de outras Paginas -->
     {% block 'js'%} {% endblock %}

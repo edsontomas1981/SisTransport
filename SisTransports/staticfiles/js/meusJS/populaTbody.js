@@ -89,7 +89,7 @@ const popula_tbody_paginacao = (divParaNavegacao, id_tbody, dados, botoes = {}, 
         var tdBotao = document.createElement("td");
         var btn = document.createElement("a");
         btn.setAttribute('data-id', element.id);
-        btn.id = 'btn_' + nomeBotao + element.id;
+        btn.id = 'btn_' + nomeBotao + "_" + element.id;
         btn.className = "btn btn-sm " + botoes[nomeBotao].classe;
         btn.innerHTML = botoes[nomeBotao].texto;
 

@@ -2,10 +2,8 @@
 var botoes = {
   imprimir: {
     classe: "btn-warning text-white",
-    texto: '<i class="fa fa-print" aria-hidden="true"></i>',
-    callback: ()=>{
-      console.log(`Botão "Remover" clicado para o ID ${this.id}`);
-    }
+    texto: '<i class="fa fa-print" aria-hidden="true imprimirColetaUnica"></i>',
+    callback: imprimirColetaUnica
   }
 };
 
@@ -113,6 +111,16 @@ const generateRandomData = () => {
   }
 
   return data;
+};
+
+// Suponha que você tenha um elemento com a classe "seu-elemento" ao qual deseja adicionar o evento
+const seuElemento = document.querySelector('.imprimirColetaUnica');
+
+// Adicione o evento onclick usando a lógica fornecida
+seuElemento.onclick = () => {
+    const dataId = seuElemento.getAttribute('data-id');
+    conectar('/operacional/printColetas/', [{'id': dataId}]);
+    console.log(`Clicado para o ID ${dataId}`);
 };
 
 

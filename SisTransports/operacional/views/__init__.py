@@ -31,6 +31,8 @@ from operacional.views.nf.read_nf import read_nf
 from operacional.views.nf.update_nf import update_nf
 from operacional.views.nf.delete_nf import delete_nf
 from operacional.views.nf.read_nfs_by_dtc import read_nfs_by_dtc
+from operacional.views.nf.entrada_nfs import entrada_nfs
+
 
 from operacional.views.cte.cria_cte import create_cte
 from operacional.views.cte.delete_cte import delete_cte

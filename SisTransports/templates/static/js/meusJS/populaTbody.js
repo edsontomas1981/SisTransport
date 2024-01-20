@@ -39,7 +39,7 @@ const createPaginationButton = (iconClass, page, totalPages, isActive = false, d
 
 /**
  * Preenche o corpo de uma tabela com dados paginados e adiciona controles de paginação.
- * @param {string} divParaNavegacao - O ID da div que contém a tabela a ser paginada.
+ * @param {string} divParaNavegacao - O ID da div serão colocados os botoes da navegação.
  * @param {string} id_tbody - O ID do corpo da tabela a ser populado com os dados.
  * @param {Array} dados - Os dados a serem exibidos na tabela paginada.
  * @param {Object} [botoes={}] - Um objeto contendo definições de botões personalizados.
@@ -47,7 +47,10 @@ const createPaginationButton = (iconClass, page, totalPages, isActive = false, d
  * @param {number} [itensPorPagina=10] - O número de itens a serem exibidos por página (padrão é 10).
  */
 const popula_tbody_paginacao = (divParaNavegacao, id_tbody, dados, botoes = {}, paginaAtual = 1, itensPorPagina = 10) => {
+
+  console.log(botoes)
   // Calcula o índice inicial e final dos dados a serem exibidos na página atual
+
   const startIndex = (paginaAtual - 1) * itensPorPagina;
   const endIndex = startIndex + itensPorPagina;
 
@@ -59,12 +62,10 @@ const popula_tbody_paginacao = (divParaNavegacao, id_tbody, dados, botoes = {}, 
   // Limpa o conteúdo atual da tabela
   limpa_tabelas(id_tbody);
 
-  // Preenche a tabela com os dados da página atual
   dadosPaginados.forEach(element => {
-
     var tr = document.createElement("tr");
     tr.setAttribute('data-id', element.id);
-
+  
     // Adiciona o checkbox como o primeiro campo
     var tdCheckbox = document.createElement("td");
     var checkbox = document.createElement("input");
@@ -72,7 +73,7 @@ const popula_tbody_paginacao = (divParaNavegacao, id_tbody, dados, botoes = {}, 
     checkbox.name = "selecao";
     tdCheckbox.appendChild(checkbox);
     tr.appendChild(tdCheckbox);
-
+  
     // Loop através do dicionário de dados para criar as células <td> dinamicamente
     for (const chave in element) {
       if (element.hasOwnProperty(chave)) {
@@ -81,34 +82,33 @@ const popula_tbody_paginacao = (divParaNavegacao, id_tbody, dados, botoes = {}, 
         tr.appendChild(td);
       }
     }
-
+  
     // Adiciona botões personalizados se existirem na hash 'botoes'
     for (const nomeBotao in botoes) {
-
       if (botoes.hasOwnProperty(nomeBotao)) {
         var tdBotao = document.createElement("td");
         var btn = document.createElement("a");
         btn.setAttribute('data-id', element.id);
-        btn.id = 'btn_' + nomeBotao + element.id;
+        btn.id = element.id;
         btn.className = "btn btn-sm " + botoes[nomeBotao].classe;
         btn.innerHTML = botoes[nomeBotao].texto;
-
-        // Adiciona evento de clique ao botão
-        btn.addEventListener('click', function (event) {
-          const id = event.target.getAttribute('data-id');
-          // Chama a função de callback do botão correspondente
-          if (botoes[nomeBotao].callback) {
-            botoes[nomeBotao].callback(id);
-          }
-        });
-
+  
+        if (botoes[nomeBotao].callback) {
+          // Use uma função anônima para passar o ID
+          btn.onclick = function() {
+            // Chame a função de callback passando o ID
+            botoes[nomeBotao].callback(element.id);
+          };
+        }
+  
         tdBotao.appendChild(btn);
         tr.appendChild(tdBotao);
       }
     }
-
+  
     tbody.appendChild(tr);
   });
+  
 
   // Remove qualquer elemento de paginação existente
   var existingPagination = document.querySelector('.pagination');

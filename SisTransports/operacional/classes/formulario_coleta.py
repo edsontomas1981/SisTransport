@@ -6,21 +6,43 @@ import base64
 
 
 def get_image_base64(imagem_path):
+    """
+    Converte uma imagem em base64.
+
+    Args:
+        imagem_path (str): O caminho para o arquivo da imagem.
+
+    Returns:
+        str: A representação da imagem em base64.
+    """
     with open(imagem_path, "rb") as image_file:
         base64_image = base64.b64encode(image_file.read()).decode("utf-8")
         return f"data:image/jpeg;base64,{base64_image}"
 
 def imprimir_documento(coletas):
-    # Ajuste as margens como desejado
-    margem_esquerda = "20mm"
-    margem_direita = "20mm"
-    margem_superior = "20mm"
-    margem_inferior = "20mm"
+    """
+    Gera um documento PDF contendo informações sobre coletas.
+
+    Args:
+        coletas (list): Lista de dicionários representando informações de coletas.
+
+    Returns:
+        str: O nome do arquivo PDF gerado.
+
+    Raises:
+        Exception: Se ocorrer um erro ao abrir o navegador para exibir o PDF.
+    """
+    margem_esquerda = "10mm"
+    margem_direita = "10mm"
+    margem_superior = "0mm"
+    margem_inferior = "0mm"
 
     # HTML content for the PDF
     html_content = f"""
         <html>
         <head>
+            <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+            <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
             <style>
                 @page {{
                     size: letter;
@@ -30,8 +52,65 @@ def imprimir_documento(coletas):
                     margin-bottom: {margem_inferior};
                 }}
                 body {{
-                    font-family: Courier, monospace;
+                    font-family: Arial, monospace;
                 }}
+                #logo{{
+                    margin-top:15px;
+                      width : 200px; 
+                      height : 40px;
+                }}
+                .titulo-empresa{{
+                    text-align: left; /* Adiciona a propriedade text-align para centralizar o texto */
+                    margin: 0 auto; 
+                    font-weight: bold;
+                    padding:10px;
+
+                }}
+                .texto-descricao{{
+                    font-size: 12px;
+                    text-align: left; /* Adiciona a propriedade text-align para centralizar o texto */
+                    margin: 0 auto; 
+                    padding:10px;
+
+                }}
+                .texto-descricao-coleta{{
+                    font-size: 10px;
+                    text-align: rigth;
+                    margin-right:30px; 
+                }}
+                .bordaRemetenteDestinatario{{
+                    border-style:solid;
+                    margin:5px;
+                    padding:10px;
+                    border-width:0.5px;
+                    border-radius: 10px;
+
+                }}
+                .remetente-destinatario{{
+                    font-size: 12px;
+                    text-align: left;
+                    margin: 0 auto; 
+                }}
+                .numero-coleta{{
+                    text-align: right;
+                    font-weight: bold;
+                }}
+                .titulo{{
+                    text-align: left;
+                    font-weight: bold;
+                }}
+
+            .divisao {{
+                margin-top: 10px;
+                border-top: 1px dashed black;
+                width: 100%; /* Ou a largura desejada */
+            }}
+            .negrito {{
+                font-weight: bold;
+            }}
+            .coleta-numero {{
+                font-size:15px;
+            }}
             </style>
         </head>
         <body>
@@ -44,8 +123,8 @@ def imprimir_documento(coletas):
         data_hora_formatada = data_hora_obj.strftime('%d/%m/%Y %H:%M')
 
         titulo_empresa = f"""
-            <br/><br/><font size='14' color='black'>Serafim Tranportes De Cargas Ltda - EPP</font><br/>
-            <font size='11'>Rua: Nova Veneza , 172<br/>Cidade Industrial Satelite - Guarulhos - SP<br/>Fone 11-2481-9121/11-91349-9161</font>
+            <h5 class="titulo-empresa">Serafim Tranportes De Cargas Ltda - EPP</h5>
+            <p class="texto-descricao">Rua: Nova Veneza , 172<br/>Cidade Industrial Satelite - Guarulhos - SP<br/>Fone 11-2481-9121/11-91349-9161</p>
         """
 
         tipo_frete = "CIF"
@@ -55,57 +134,100 @@ def imprimir_documento(coletas):
             tipo_frete = "CONSIGNATÁRIO"
 
         dados_coleta = f"""
-            <font size='16' color='black'>Ordem de Coleta Nº {coleta['id']} </font><br/><br/>
-            <font size='12' color='black'>Data de Solicitação: {data_hora_formatada}<br/>
-            Emitido por:{coleta['usuario_cadastro']}<br/></font>
-            <font size='11' color='black'>Tipo Frete : {tipo_frete}</font><br/>
+            <h6 class="texto-descricao-coleta coleta-numero negrito ">Coleta Nº #{coleta['id']} </h6>
+            <p class="texto-descricao-coleta">Data : {data_hora_formatada}
+            Emitido por:{coleta['usuario_cadastro']} <br/>Tipo Frete : {tipo_frete}</p><br/>
         """
 
         remetente = f"""
-            <font size='14' color='black'>Remetente:</font><br/><br/>
-            <font size='11' color='black'>Razão Social : {coleta['remetente']['raz_soc'][:25]}</font><br/>
-            <!-- Remaining remetente content... -->
+            <h6>Remetente: {coleta['remetente']['raz_soc'][:25]}</h6>
+            <p class="remetente-destinatario"> {coleta['coleta']['rua']}, {coleta['coleta']['numero']} <br/></p>
+            <p class="remetente-destinatario"> {coleta['coleta']['bairro']} {coleta['coleta']['complemento']}<br/></p>
+            <p class="remetente-destinatario"> {coleta['coleta']['cidade']},{coleta['coleta']['uf']} Cep : {coleta['coleta']['cep']} <br/></p>                        
+            <p class="remetente-destinatario">Solicitante : {coleta['coleta']['nome']} Fone : {coleta['coleta']['contato']}</p>
         """
 
         destinatario = f"""
-            <font size='14' color='black'>Destinatário :</font><br/><br/>
-            <font size='11' color='black'>Razão Social : {coleta['destinatario']['raz_soc']}</font><br/>
-            <!-- Remaining destinatario content... -->
+                        <h6>Destinatário : {coleta['destinatario']['raz_soc'][:25]}</h6>
+                        <p class="remetente-destinatario"> {coleta['destinatario']['endereco_fk']['logradouro']}, {coleta['destinatario']['endereco_fk']['numero']}<br/></p>
+                        <p class="remetente-destinatario"> {coleta['destinatario']['endereco_fk']['bairro']}<br/></p>
+                        <p class="remetente-destinatario"> {coleta['destinatario']['endereco_fk']['cidade']}- {coleta['destinatario']['endereco_fk']['uf']} Cep :{coleta['destinatario']['endereco_fk']['cep']}</p>
         """
 
         dados_gerais = f"""
-            <font size='14' color='black'>Dados da carga : </font><br/>
-            <br/>
-            <!-- Remaining dados_gerais content... -->
+            <h6 class="titulo">Dados da carga : </h6>
+            <h7>Volumes : {coleta['coleta']['volume']} Peso : {coleta['coleta']['peso']}  M³ : {coleta['coleta']['cubM3']} Valor :R$ {coleta['coleta']['valor']} </h7><br/>                        
+            <h7>Notas Fiscais : {coleta['coleta']['notaFiscal']} Horario de Coleta : {coleta['coleta']['horario']}</h7><br/> 
+            <h7>Veículo :<span> {coleta['coleta']['veiculo']} Espécie : {coleta['coleta']['especie']} Mercadoria : {coleta['coleta']['valor']}  </span></h7><br/>
+            <h7>Observação : {coleta['coleta']['observacao']}</h7>
         """
 
- # Get base64 representation of the image
+        # Get base64 representation of the image
         base64_image = get_image_base64(imagem_path)
 
         # Adicione uma quebra de página antes de cada novo registro
         html_content += f"""
-            <div style="page-break-before: always;">
-                <img src="{base64_image}" width="150" height="30" style="float: left;">
-                <div style="float: left; margin-left: 10px;">
-                    {dados_coleta}
+            <div class="row" style="page-break-before: always;">
+                <div class="col-12">
+                    <img src="{base64_image}" id="logo">
+                </div>
+                <div class="col-8">
                     {titulo_empresa}
                 </div>
-                <div style="clear: both;"></div>
-            </div>
-            <hr style="border-top: 1px dashed black; margin-top: 5px; margin-bottom: 5px;">
-            <div>
-                <div style="float: left; width: 50%;">
-                    {remetente}
+                <div class="col-4 numero-coleta">
+                    <br/>
+                    {dados_coleta}
                 </div>
-                <div style="float: left; width: 50%;">
-                    {destinatario}
+                <div class="col-12 bordaRemetenteDestinatario">
+                    <div class="row">
+                        <div class="col-6 ">
+                            {remetente}
+                        </div>
+                        <div  class="col-6 ">
+                            {destinatario}
+                        </div>
+                    </div>
                 </div>
-                <div style="clear: both;"></div>
-            </div>
-            <div>
-                {dados_gerais}
-            </div>
-            <hr style="border-top: 1px dashed black; margin-top: 5px; margin-bottom: 5px;">
+                <div class="col-12 bordaRemetenteDestinatario">
+                    <div class="row">
+                        <div class="col-12">
+                            {dados_gerais}
+                        </div>
+                    </div>
+                </div>
+
+                <div class="divisao col-12"></div>
+
+                <div class="col-12">
+                    <img src="{base64_image}" id="logo">
+                    <br/>
+                </div>
+                <div class="col-8">
+                    <br/>
+                    {titulo_empresa}
+                </div>
+                <div class="col-4 numero-coleta">
+                    <br/>
+                    {dados_coleta}
+                </div>
+                <div class="col-12 bordaRemetenteDestinatario">
+                    <div class="row">
+                        <div class="col-6 ">
+                            {remetente}
+                        </div>
+                        <div  class="col-6 ">
+                            {destinatario}
+                        </div>
+                    </div>
+                </div>
+                <div class="col-12 bordaRemetenteDestinatario">
+                    <div class="row">
+                        <div class="col-12">
+                            {dados_gerais}
+                        </div>
+                    </div>
+                </div>                
+            </div>            
         """
 
     html_content += """
@@ -126,171 +248,9 @@ def imprimir_documento(coletas):
     return pdf_filename
 
 
-    return pdf_filename
-
 if __name__ == "__main__":
+    # Este bloco será executado somente quando o script for executado diretamente.
+    # Pode ser útil para testes ou execução independente.
     pdf_filename = imprimir_documento()
     print(f"PDF gerado com sucesso: {pdf_filename}")
 
-
-
-
-# from datetime import datetime
-# import webbrowser
-# from django.conf import settings
-# from reportlab.lib.pagesizes import letter
-# from reportlab.platypus import SimpleDocTemplate, Paragraph, Spacer, Image, Table, PageBreak
-# from reportlab.lib import colors
-# from reportlab.lib.styles import getSampleStyleSheet, ParagraphStyle
-# from reportlab.platypus.frames import Frame
-# from reportlab.platypus.flowables import KeepTogether
-# from reportlab.platypus.doctemplate import _addGeneratedContent
-# from reportlab.platypus.doctemplate import PageTemplate
-# from reportlab.platypus import HRFlowable
-# from reportlab.platypus import Table, TableStyle
-
-
-
-
-# class TableContent(KeepTogether):
-#     def __init__(self, table_data, style):
-#         self.table = Table(table_data, style=style)
-#         KeepTogether.__init__(self, [self.table])
-
-#     def getKeepWithNext(self):
-#         return True
-
-# def imprimir_documento(coletas):
-#     pdf_filename = "pedido_frete_reportlab.pdf"
-
-#     # Ajuste as margens como desejado
-#     margem_esquerda = 20
-#     margem_direita = 20
-#     margem_superior = 20
-#     margem_inferior = 20
-
-#     # Defina as dimensões da página e as margens
-#     width, height = letter
-
-#     doc = SimpleDocTemplate(pdf_filename, pagesize=(width, height), leftMargin=margem_esquerda, rightMargin=margem_direita, topMargin=margem_superior, bottomMargin=margem_inferior)
-
-#     # Inicializa a folha de estilos
-#     styles = getSampleStyleSheet()
-
-#     # Adiciona negrito ao estilo BodyText
-#     styles.add(ParagraphStyle(name='BodyTextBold', parent=styles['BodyText'], fontWeight='Bold'))
-    
-#     fonte_dados = "Courier"
-
-#     # Conteúdo do PDF
-#     content = []
-#     for i, coleta in enumerate(coletas):
-#         imagem_path = settings.STATIC_ROOT.joinpath("images/logonorte.jpg")
-#         data_hora_original = coleta['data_cadastro']
-#         data_hora_obj = datetime.strptime(data_hora_original, '%Y-%m-%d %H:%M:%S')
-#         data_hora_formatada = data_hora_obj.strftime('%d/%m/%Y %H:%M')
-
-#         logo = Image(imagem_path, width=150, height=30, hAlign='LEFT')
-
-#         titulo_empresa = f"<br/><br/><font size='14' face={fonte_dados}  color='black'>Serafim Tranportes De Cargas Ltda - EPP</font><br/><font size='11' face={fonte_dados}>Rua: Nova Veneza , 172<br/>Cidade Industrial Satelite - Guarulhos - SP<br/>Fone 11-2481-9121/11-91349-9161</font>"
-        
-#         tipo_frete = "CIF"
-
-#         if coleta['tipoFrete'] ==2:
-#             tipo_frete = "FOB"
-#         elif coleta['tipoFrete'] ==3:
-#             tipo_frete = "CONSIGNATÁRIO"
-
-#         dados_coleta = f"""
-#                     <font size='16' face={fonte_dados} color='black'>Ordem de Coleta Nº {coleta['id']} </font><br/><br/>
-#                     <font size='12' face={fonte_dados} color='black'>Data de Solicitação: {data_hora_formatada}<br/>
-#                     Emitido por:{coleta['usuario_cadastro']}<br/></font>
-#                     <font size='11' face={fonte_dados}  color='black'>Tipo Frete : {tipo_frete}</font><br/>"""
-
-
-#         remetente = f"""<font size='14' face={fonte_dados}  color='black'>Remetente:</font><br/><br/>
-#                         <font size='11' face={fonte_dados}  color='black'>Razão Social : {coleta['remetente']['raz_soc'][:25]}</font><br/>
-#                         <font size='11' face={fonte_dados}> {coleta['coleta']['rua']}, {coleta['coleta']['numero']} Cep : {coleta['coleta']['cep']} <br/></font>
-#                         <font size='11' face={fonte_dados}>  {coleta['coleta']['complemento']} {coleta['coleta']['bairro']}<br/></font>
-#                         <font size='11' face={fonte_dados}>  {coleta['coleta']['cidade']}, {coleta['coleta']['uf']}<br/></font>                        
-#                         <font size='11' face={fonte_dados}  color='black'>Solicitante : {coleta['coleta']['nome']} Fone : {coleta['coleta']['contato']}</font><br/>
-#                         """
-        
-#         destinatario = f"""<font size='14' face={fonte_dados}  color='black'>Destinatário :</font><br/><br/>
-#                         <font size='11' face={fonte_dados}  color='black'>Razão Social : {coleta['destinatario']['raz_soc']}</font><br/>
-#                         <font size='11' face={fonte_dados}> {coleta['destinatario']['endereco_fk']['logradouro']}, {coleta['destinatario']['endereco_fk']['numero']} 
-#                                                             Cep :{coleta['destinatario']['endereco_fk']['cep']} <br/></font>
-#                         <font size='11' face={fonte_dados}> {coleta['destinatario']['endereco_fk']['bairro']}<br/></font>
-#                         <font size='11' face={fonte_dados}>  {coleta['destinatario']['endereco_fk']['cidade']}- {coleta['destinatario']['endereco_fk']['uf']}<br/></font>
-#                         <font size='11' face={fonte_dados}><br/></font>                        
-#                         """
-        
-#         dados_gerais = f"""
-#                         <font size='14' face={fonte_dados} color='black'>Dados da carga : </font><br/>
-#                         <br/>
-#                         <font size='12' face={fonte_dados} color='black'>Veículo : {coleta['coleta']['veiculo']}</font><br/>
-#                         <font size='12' face={fonte_dados} color='black'>Volumes : {coleta['coleta']['volume']}   
-#                         Peso : {coleta['coleta']['peso']}  </font><br/>
-#                         <font size='12' face={fonte_dados} color='black'>M³ : {coleta['coleta']['cubM3']}   
-#                         Valor :R$ {coleta['coleta']['valor']}  </font><br/>                        
-#                         <font size='12' face={fonte_dados} color='black'>Espécie : {coleta['coleta']['especie']}   
-#                         Mercadoria : {coleta['coleta']['valor']}  </font><br/>
-#                         <font size='12' face={fonte_dados} color='black'>Notas Fiscais : {coleta['coleta']['notaFiscal']}   
-#                         Horario de Coleta : {coleta['coleta']['horario']}</font><br/> 
-#                         <font size='12' face={fonte_dados} color='black'>Observação : {coleta['coleta']['observacao']}</font><br/>                         
-#                         """
-#         # Seu primeiro conjunto de dados
-#         header = [
-#             [[logo],[Paragraph(dados_coleta, styles['BodyText'])]],
-#             [[Paragraph(titulo_empresa, styles['BodyText'])]],
-#         ]
-
-#         pontilhado = [
-#             [],
-#             [HRFlowable(width='100%', color='black', thickness=1, lineCap='round', dash=(2, 2), spaceBefore=5, spaceAfter=5)]
-#         ]
-
-#         # Seu primeiro conjunto de dados
-#         separador = [
-#                 [HRFlowable(width='100%', color='black', spaceBefore=5, spaceAfter=5)]          
-#         ]
-
-#         remetente_destinatario = [
-#             [Paragraph(remetente, styles['BodyText']), Paragraph(destinatario, styles['BodyText'])],
-#         ]
-
-#         dados_mercadoria = [
-#             [Paragraph(dados_gerais, styles['BodyText'])]
-#         ]
-
-
-#         # Estilo da tabela
-#         table_style = [('VALIGN', (0, 0), (-1, -1), 'TOP')]
-
-#         # Cria a tabela com os dados e aplica estilos
-#         table = Table(remetente_destinatario)
-#         styles = getSampleStyleSheet()
-#         style = TableStyle([('LINEBELOW', (0, -2), (-1, -2), 2, colors.black)])  # Define a linha abaixo da HRFlowable
-#         table.setStyle(style)
-
-#         content.extend([Table(header), Table(separador), Table(remetente_destinatario),Table(separador),Table(dados_mercadoria),Table(pontilhado),Table(header), Table(separador), Table(remetente_destinatario),Table(separador),Table(dados_mercadoria)])
-
-#         if i < len(coletas) - 1:
-#             # Adiciona uma quebra de página antes do próximo conjunto de informações
-#             content.append(PageBreak())
-
-#     # Adiciona o conteúdo ao PDF
-#     _addGeneratedContent(content, doc)
-
-#     doc.build(content)
-
-#     try:
-#         webbrowser.open(pdf_filename)
-#     except Exception as e:
-#         print(f"Erro ao abrir o PDF: {e}")
-
-#     return pdf_filename
-
-# if __name__ == "__main__":
-#     pdf_filename = imprimir_documento()
-#     print(f"PDF gerado com sucesso: {pdf_filename}")
