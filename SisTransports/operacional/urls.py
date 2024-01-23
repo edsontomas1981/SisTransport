@@ -20,6 +20,22 @@ urlpatterns = [
     path('delete_cte/',viewsOperacional.delete_cte,name='delete_cte'),
     path('read_cte_by_dtc/',viewsOperacional.read_cte_by_dtc,name='read_cte_by_dtc'),
     path('entrada_nfs/',viewsOperacional.entrada_nfs,name='entrada_nfs'),
+
+    path('motorista/',viewsOperacional.motorista,name='motorista'),    
+    path('create_motorista/',viewsOperacional.create_motorista,name='create_motorista'),
+    path('delete_motorista/',viewsOperacional.delete_motorista,name='delete_motorista'),
+    path('read_por_veiculo_motorista/',viewsOperacional.read_motorista_por_veiculo,name='read_motorista_por_veiculo'),
+    path('read_motorista/',viewsOperacional.read_motorista,name='read_motorista'),
+    path('read_motoristas/',viewsOperacional.read_motoristas,name='read_motoristas'),
+    path('update_motorista/',viewsOperacional.update_motorista,name='update_motorista'),
+
+    path('proprietario/', viewsOperacional.proprietario, name='proprietario'),
+    path('create_proprietario/', viewsOperacional.create_proprietario, name='create_proprietario'),
+    path('delete_proprietario/', viewsOperacional.delete_proprietario, name='delete_proprietario'),
+    path('read_proprietario_por_veiculo/', viewsOperacional.read_proprietario_por_veiculo, name='read_proprietario_por_veiculo'),
+    path('read_proprietario/', viewsOperacional.read_proprietario, name='read_proprietario'),
+    path('read_proprietarios/', viewsOperacional.read_proprietarios, name='read_proprietarios'),
+    path('update_proprietario/',viewsOperacional.update_proprietario, name='update_proprietario'),
      
     path('read_rotas/',viewsOperacional.readRota,name='read_rotas'),
     ]

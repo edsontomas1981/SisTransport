@@ -5,3 +5,6 @@ from operacional.models.percurso import Percurso
 from operacional.models.nota_fiscal import Nota_fiscal
 from operacional.models.cte import Cte
 from operacional.models.emissor import Emissor
+from operacional.models.motoristas import Motorista
+from operacional.models.proprietario import Proprietario
+from operacional.models.veiculos import Veiculo

@@ -1,1 +1,3 @@
-from operacional.test.tests_gerafrete import BuscaDtcViewTest
+from operacional.test.tests_motoristas import MotoristaManagerTestCase
+from operacional.test.tests_proprietario import ProprietarioManagerTestCase
+

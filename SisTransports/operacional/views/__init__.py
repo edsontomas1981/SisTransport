@@ -33,6 +33,25 @@ from operacional.views.nf.delete_nf import delete_nf
 from operacional.views.nf.read_nfs_by_dtc import read_nfs_by_dtc
 from operacional.views.nf.entrada_nfs import entrada_nfs
 
+from operacional.views.proprietario.proprietario import proprietario
+from operacional.views.proprietario.create_proprietario import create_proprietario
+from operacional.views.proprietario.delete_proprietario import delete_proprietario
+from operacional.views.proprietario.read_proprietario import read_proprietario
+from operacional.views.proprietario.read_proprietario_por_veiculo import read_proprietario_por_veiculo
+from operacional.views.proprietario.read_proprietarios import read_proprietarios
+from operacional.views.proprietario.update_proprietario import update_proprietario
+
+from operacional.views.motoristas.motorista import motorista
+from operacional.views.motoristas.create_motorista import create_motorista
+from operacional.views.motoristas.delete_motorista import delete_motorista
+from operacional.views.motoristas.read_motorista import read_motorista
+from operacional.views.motoristas.read_motorista_por_veiculo import read_motorista_por_veiculo
+from operacional.views.motoristas.read_motoristas import read_motoristas
+from operacional.views.motoristas.update_motorista import update_motorista
+
+
+
+from operacional.views.veiculos import create_veiculo,read_veiculo,read_veiculo_por_motorista,read_veiculo_por_placa,read_veiculos,read_veiculos_proprietario,update_veiculo,delete_veiculo,veiculos
 
 from operacional.views.cte.cria_cte import create_cte
 from operacional.views.cte.delete_cte import delete_cte

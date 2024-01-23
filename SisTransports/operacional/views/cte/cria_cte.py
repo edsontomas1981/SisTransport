@@ -11,37 +11,37 @@ from Classes.utils import  dprint,toFloat,checkBox
 @login_required(login_url='/auth/entrar/')
 def create_cte(request):
     if request.method == 'POST':
-        # try:
-        data = json.loads(request.body.decode('utf-8'))
-        cte = Cte()
-        cte.obj_cte = cte.read(data['idDtc'])
+        try:
+            data = json.loads(request.body.decode('utf-8'))
+            cte = Cte()
+            cte.obj_cte = cte.read(data['idDtc'])
 
-        data['usuario_cadastro'] = request.user  
+            data['usuario_cadastro'] = request.user  
 
-        if cte.obj_cte is not None:
-            data = prepare_data_update(data, request.user)
-            cte.update(data['idDtc'], data)
-            if 'cotacao' in data:
-                cotacao=Cotacao()
-                cotacao.readCotacao(data['cotacao'])
-                cotacao.adiciona_cte_cotacao(cte.obj_cte)
+            if cte.obj_cte is not None:
+                data = prepare_data_update(data, request.user)
+                cte.update(data['idDtc'], data)
+                if 'cotacao' in data:
+                    cotacao=Cotacao()
+                    cotacao.readCotacao(data['cotacao'])
+                    cotacao.adiciona_cte_cotacao(cte.obj_cte)
 
-            return JsonResponse({'update': cte.obj_cte.to_dict(),'status':201})
-        else:
-            data = prepare_data_update(data, request.user)
-            status = cria_cte(data)
-            if 'cotacao' in data:
-                cotacao=Cotacao()
-                cotacao.readCotacao(data['cotacao'])
-                cte=Cte()
-                cte.obj_cte = cte.read(data['idDtc'])
-                cotacao.adiciona_cte_cotacao(cte.obj_cte)
-            # if status == 200:
-            return JsonResponse({'status': 200})  # Created
-            # else:
-            #     return JsonResponse({'error': 'Falha ao gerar o cte', 'details': status}, status=400)  # Bad Request
-        # except Exception as e:
-        #     return JsonResponse({'error': 'Internal Server Error', 'details': str(e)}, status=500)  # Internal Server Error
+                return JsonResponse({'update': cte.obj_cte.to_dict(),'status':201})
+            else:
+                data = prepare_data_update(data, request.user)
+                status = cria_cte(data)
+                if 'cotacao' in data:
+                    cotacao=Cotacao()
+                    cotacao.readCotacao(data['cotacao'])
+                    cte=Cte()
+                    cte.obj_cte = cte.read(data['idDtc'])
+                    cotacao.adiciona_cte_cotacao(cte.obj_cte)
+                    if status == 200:
+                        return JsonResponse({'status': 200})  # Created
+                    else:
+                        return JsonResponse({'error': 'Falha ao gerar o cte', 'details': status}, status=400)  # Bad Request
+        except Exception as e:
+            return JsonResponse({'error': 'Internal Server Error', 'details': str(e)}, status=500)  # Internal Server Error
 
     else:
         return HttpResponseNotAllowed(['GET'])
