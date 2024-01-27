@@ -66,7 +66,11 @@
                                         {% block 'conteudo' %}{% endblock %}     
                                     </section>
                                     {% include 'cadastroParceiros.html'%}
-                                    {% include 'menu.html'%}  {% include 'calcM3.html'%}
+                                    {% include 'menu.html'%}  
+                                    {% include 'calcM3.html'%}
+                                    {% include 'cadastroProprietario.html'%}
+                                    {% include 'cadastroVeiculos.html'%}
+                                    {% include 'cadastroMotoristas.html'%}
                                 </div>
                             </div>
                         </div>
@@ -110,6 +114,11 @@
     <script src="{% static 'js/dashboard.js' %}"></script>
     <script src="{% static 'js/Chart.roundedBarCharts.js' %}"></script>
     <!--Meus Js-->
+    <script src="{% static 'js/meusJS/cadastroProprietarios/txtCnpjProp.js' %}"></script>
+    <script src="{% static 'js/meusJS/cadastroProprietarios/btnLimpaCnpjProp.js' %}"></script>
+    <script src="{% static 'js/meusJS/cadastroProprietarios/btnBuscaProp.js' %}"></script>
+    <script src="{% static 'js/meusJS/cadastroProprietarios/btnSalvaProp.js' %}"></script>
+
     <script src="{% static 'js/meusJS/cnpj.js' %}"></script>
     <script src="{% static 'js/meusJS/cadastroParceiros.js' %}"></script>
     <script src="{% static 'js/meusJS/cep.js' %}"></script>

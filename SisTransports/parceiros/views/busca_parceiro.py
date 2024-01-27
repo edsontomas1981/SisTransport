@@ -12,7 +12,6 @@ from contatos.classes.contato import Contato
 def busca_parceiro(request):
     if validaCnpjCpf(request.POST.get('cnpj_cpf')):
         if Parceiros.objects.filter(cnpj_cpf=request.POST.get('cnpj_cpf')).exists():
-            
             parceiro = Parceiros.objects.filter(cnpj_cpf=request.POST.get('cnpj_cpf')).get()
             dados=[parceiro.to_dict()]
             contato=Contato()

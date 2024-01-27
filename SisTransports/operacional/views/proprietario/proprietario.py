@@ -6,7 +6,6 @@ from Classes.utils import checaCampos
 @login_required(login_url='/auth/entrar/')
 def proprietario (request):
     if request.method == 'GET':
-        return JsonResponse({'status': 200,'dados':'prop'})
-        # return render(request, 'preDtc.html')
+        return render(request, 'home.html')
     elif request.method == "POST" :
         return JsonResponse({'status': 200})

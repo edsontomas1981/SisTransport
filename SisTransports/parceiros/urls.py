@@ -4,11 +4,12 @@ from django.urls import path,include
 from parceiros import views as viewsParceiros
 
 urlpatterns = [
-    path('',viewsParceiros.parceiros,name='parceiros'),
-    path('createParceiro/',viewsParceiros.createParceiro,name='createParceiro'),
-    path('readParceiro/',viewsParceiros.readParceiro,name='readParceiro'),
-    path('updateParceiro/',viewsParceiros.updateParceiro,name='updateteParceiro'),
-    path('searchPartnerWs/',viewsParceiros.searchPartnerWs,name='searchPartnerWs'),
-    path('deleteParceiro/',viewsParceiros.deleteParceiro,name='deleteParceiro'),
+        path('',viewsParceiros.parceiros,name='parceiros'),
+        path('createParceiro/',viewsParceiros.createParceiro,name='createParceiro'),
+        path('readParceiro/',viewsParceiros.readParceiro,name='readParceiro'),
+        path('updateParceiro/',viewsParceiros.updateParceiro,name='updateParceiro'),
+        path('searchPartnerWs/',viewsParceiros.searchPartnerWs,name='searchPartnerWs'),
+        path('deleteParceiro/',viewsParceiros.deleteParceiro,name='deleteParceiro'),
+        path('read_parceiro_json/',viewsParceiros.read_parceiro_sem_request_via_json,name='read_parceiro_json'),
     ]
     

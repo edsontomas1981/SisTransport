@@ -14,15 +14,15 @@ class ProprietarioManager:
         self.obj_proprietario.tipo_proprietario = dados.get('tipo_proprietario', '')
 
     def create_proprietario(self, dados):
-        try:
-            self.save_or_update(dados)
-            self.obj_proprietario.criado_por = get_user_model().objects.get(id=dados['criado_por_id'])
-            self.obj_proprietario.created_at = timezone.now()
-            self.obj_proprietario.save()
-            return 200
-        except Exception as e:
-            print(f"Erro ao criar proprietário: {e}")
-            return 300
+        # try:
+        self.save_or_update(dados)
+        self.obj_proprietario.criado_por = get_user_model().objects.get(id=dados['criado_por_id'])
+        self.obj_proprietario.created_at = timezone.now()
+        self.obj_proprietario.save()
+        return 200
+        # except Exception as e:
+        #     print(f"Erro ao criar proprietário: {e}")
+        #     return 300
 
     def delete_proprietario(self, id_proprietario):
         try:

@@ -7,3 +7,5 @@ from .updateParceiro import updateParceiro
 from .deleteParceiro import deleteParceiro
 from .searchPartnerWs import searchPartnerWs
 
+from .read_parceiro_json import read_parceiro_json
+
