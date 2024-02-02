@@ -1,0 +1,34 @@
+{% load static %}
+{% load bootstrap %}
+<div>
+<form method="POST">
+{% csrf_token %}
+<div class="modal" id="mdlCadParceirosProprietario" tabindex="-1" data-bs-backdrop="static" style="z-index: 1060;" 
+    data-bs-keyboard="false" aria-labelledby="staticBackdropLabel" 
+    aria-hidden="true">
+    <div class="modal-dialog modal-lg modal-dialog-scrollable mb-5" >
+      <div class="modal-content">
+        <div class="modal-header">
+            <h5 class="modal-title"><i class="fa fa-arrow-left" aria-hidden="true"></i></h5>
+          <h5 class="modal-title">Cadastro de Parceiros</h5>
+          <div>
+            <div class="input-group" align="right">
+              <button type="button" class="btn btn-secondary btn-rounded btn-icon" id="btnLimpaParceirosProp" onclick="limpaModalParceiroCnpj()" align=right>            
+                <i class="ti-write"></i>
+              </button>
+              <button type="button" class="btn btn-success btn-rounded btn-icon" id="salvaParceiro" align=right>            
+                <i class="ti-save"></i>
+              </button>
+              <button type="button" class="btn btn-danger btn-rounded btn-icon" id="btnCloseProp" align=right>
+                <i class="ti-close"></i>
+              </button>
+            </div>
+          </div>  
+        </div>
+        <div class="modal-body ">
+          {% include 'corpoModalParceiro.html'%}  
+        </div>
+    </div>
+  </div>
+</form>
+</div>

@@ -4,10 +4,10 @@
 <div>
 <form method="POST">
 {% csrf_token %}
-<div class="modal" id="mdlCadParceiros" tabindex="-1"data-bs-backdrop="static" 
+<div class="modal " id="mdlCadParceiros" tabindex="-1" data-bs-backdrop="static" style="margin-top: 0px;" 
     data-bs-keyboard="false" aria-labelledby="staticBackdropLabel" 
     aria-hidden="true">
-    <div class="modal-dialog modal-lg modal-dialog-scrollable mb-5" >
+    <div class="modal-dialog modal-lg modal-dialog-scrollable altura-modal-parceiro" >
       <div class="modal-content">
         <div class="modal-header">
           <h5 class="modal-title">Cadastro de Parceiros</h5>
@@ -22,269 +22,257 @@
               <button type="button" class="btn btn-danger btn-rounded btn-icon" id="btnClose" align=right>
                 <i class="ti-close"></i>
               </button>
+              <div id="paginacaoParceiro" style="display: none;"></div>
+
             </div>
           </div>  
         </div>
-        <div class="modal-body ">
-            <div class="accordion " id="accordionExample">
-                <div class="accordion-item">
-                  <h2 class="accordion-header " id="headingOne">
-                    <button class="col-sm-12 btn btn-primary" type="button" 
-                            data-bs-toggle="collapse" data-bs-target="#collapseOne" 
-                            aria-expanded="true" aria-controls="collapseOne">
-                      Pessoas Fisícas/Jurídicas
-                    </button>
-                  </h2>
-                  <div id="collapseOne" class="accordion-collapse collapse " 
-                      aria-labelledby="headingOne" data-bs-parent="#accordionExample" >
-                    <div class="accordion-body">
-                      <!--Trecho Pessoas Fisicas/Juridicas-->
-                      <div class="form-group row">
-                        <div class="col-sm-7 mb-1 form-group">
-                          <input type="hidden" class="form-control form-control-sm" 
-                          placeholder="
-                          " name="idParceiro" id="idParceiro">
-                          <input type="hidden" class="form-control form-control-sm" 
-                                 id="acaoForm" name="acaoForm">
-                          <input type="hidden" class="form-control form-control-sm" 
-                                 id="idEndereco" name="idEndereco">                                 
-                          <div class="input-group form-group form-floating">
-                            <input type="text" class="form-control small  form-control-sm" id="cnpjMdl" name="cnpjMdl" placeholder="Cpf/Cnpj" aria-label="Search" aria-describedby="basic-addon2">
-                            <label class="text-secondary" for="cnpjMdl">CPF/CNPJ:</label>
-                            <div class="input-group-append">
-                              <a class="btn btn-success" id="btnBuscaCnpj">
-                                <i class="ti-rss-alt"></i>   
+        <div class="modal-body"  style="margin: 3px;">
+          <div class="card-body">
+            <ul class="nav nav-pills nav-pills-success" id="pills-tab" role="tablist">
+              <li class="nav-item nav-item-cadastro-parceiros">
+                <a class="nav-link active text-black" id="pills-pessoa-tab" data-bs-toggle="pill" href="#pills-pessoa" role="tab" aria-controls="pills-pessoa" aria-selected="true">Pessoa Física/Jurídica</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" id="pills-endereco-tab" data-bs-toggle="pill" href="#pills-endereco" role="tab" aria-controls="pills-endereco" aria-selected="false">endereco</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" id="pills-contatos-tab" data-bs-toggle="pill" href="#pills-contatos" role="tab" aria-controls="pills-contatos" aria-selected="false">contatos</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" id="pills-comercial-tab" data-bs-toggle="pill" href="#pills-comercial" role="tab" aria-controls="pills-comercial" aria-selected="false">comercial</a>
+              </li>   
+              <li class="nav-item">
+              </li> 
+            </ul>
+            <div class="tab-content" id="pills-tabContent">
+              <div class="tab-pane fade active show" id="pills-pessoa" role="tabpanel" aria-labelledby="pills-pessoa-tab">
+                <div class="media">
+                    <!--Trecho Pessoas Fisicas/Juridicas-->
+                    <div class="form-group row">
+                      <div class="col-sm-7 mb-0 form-group">
+                        <input type="hidden" class="form-control form-control-sm" 
+                        placeholder="
+                        " name="idParceiro" id="idParceiro">
+                        <input type="hidden" class="form-control form-control-sm" 
+                                id="acaoForm" name="acaoForm">
+                        <input type="hidden" class="form-control form-control-sm" 
+                                id="idEndereco" name="idEndereco">                                 
+                        <div class="input-group form-group form-floating mb-1 pt-1">
+                          <input type="text" class="form-control small  form-control-sm" id="cnpjMdl" name="cnpjMdl" placeholder="Cpf/Cnpj" aria-label="Search" aria-describedby="basic-addon2">
+                          <label class="text-secondary" for="cnpjMdl">CPF/CNPJ:</label>
+                          <div class="input-group-append">
+                            <a class="btn btn-success" id="btnBuscaCnpj">
+                              <i class="ti-rss-alt"></i>   
+                            </a>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="col-sm-5 mb-1 form-group">
+                        <div class="form-floating mb-3  text-primary">
+                          <input type="text" class="form-control" id="insc_estMdl" name="insc_estMdl" placeholder="Inscrição Estadual">
+                          <label for="insc_estMdl">Insc. Est:</label>
+                        </div>
+                      </div>
+                      <div class="col-sm-6 mb-1 form-group">
+                          <div class="form-floating mb-3  text-primary">
+                            <input type="text" class="form-control" id="razaoMdl" name="razaoMdl" placeholder="Nome/Razão Social">
+                            <label for="razaoMdl">Nome/Razão Social</label>
+                          </div>
+                      </div>
+                      <div class="col-sm-6 mb-1 form-group">
+                        <div class="form-floating mb-3  text-primary">
+                          <input type="text" class="form-control" id="fantasiaMdl" name="fantasiaMdl" placeholder="Nome/Razão Social">
+                          <label for="fantasiaMdl">Nome Fantasia</label>
+                        </div>
+                      </div>
+                      <div class="col-sm-12 mb-1 form-group">
+                        <div class="form-floating mb-3  text-primary">
+                          <input type="text" class="form-control" id="obsMdl" name="obsMdl" placeholder="Nome/Razão Social">
+                          <label for="obsMdl">Observação</label>
+                        </div>
+                      </div> 
+                    </div>
+                </div>
+              </div>
+              <div class="tab-pane fade" id="pills-endereco" role="tabpanel" aria-labelledby="pills-endereco-tab">
+                <div class="media">
+                    <!--Trecho Endereço-->
+                    <div class="form-group row">
+                      <div class="col-sm-4 form-group pr-1">
+                        <div class="input-group form-group form-floating">
+                          <input type="text" class="form-control small  form-control-sm text-primary" id="cepMdl" name="cepMdl" placeholder="M³" aria-label="Search" aria-describedby="basic-addon2">
+                          <label class="text-secondary" for="cepMdl">Cep</label>
+                          <div class="input-group-append">
+                              <a class="btn btn-primary" id="btnBuscaCep">
+                                <i class="ti-search"></i>   
                               </a>
-                            </div>
                           </div>
                         </div>
-                        <div class="col-sm-5 mb-1 form-group">
-                          <div class="form-floating mb-3  text-primary">
-                            <input type="text" class="form-control" id="insc_estMdl" name="insc_estMdl" placeholder="Inscrição Estadual">
-                            <label for="insc_estMdl">Insc. Est:</label>
-                          </div>
+                      </div>
+                      <div class="col-sm-8 mb-3 form-group">
+                        <div class="form-floating mb-3  text-primary">
+                          <input type="text" class="form-control" id="ruaMdl" name="ruaMdl" placeholder="Nome/Razão Social">
+                          <label for="ruaMdl">Rua</label>
                         </div>
-                        <div class="col-sm-6 mb-1 form-group">
-                            <div class="form-floating mb-3  text-primary">
-                              <input type="text" class="form-control" id="razaoMdl" name="razaoMdl" placeholder="Nome/Razão Social">
-                              <label for="razaoMdl">Nome/Razão Social</label>
-                            </div>
+                      </div>
+                      <div class="col-sm-2 mb-3 form-group">
+                        <div class="form-floating mb-3  text-primary">
+                          <input type="text" class="form-control" id="numeroMdl" name="numeroMdl" placeholder="Nome/Razão Social">
+                          <label for="numeroMdl">Número</label>
                         </div>
-                        <div class="col-sm-6 mb-1 form-group">
-                          <div class="form-floating mb-3  text-primary">
-                            <input type="text" class="form-control" id="fantasiaMdl" name="fantasiaMdl" placeholder="Nome/Razão Social">
-                            <label for="fantasiaMdl">Nome Fantasia</label>
-                          </div>
+                      </div>
+                      <div class="col-sm-3 mb-3 form-group">
+                        <div class="form-floating mb-3  text-primary">
+                          <input type="text" class="form-control" id="complementoMdl" id="complementoMdl" placeholder="Nome/Razão Social">
+                          <label for="complementoMdl">Complemento</label>
                         </div>
-                        <div class="col-sm-12 mb-1 form-group">
-                          <div class="form-floating mb-3  text-primary">
-                            <input type="text" class="form-control" id="obsMdl" name="obsMdl" placeholder="Nome/Razão Social">
-                            <label for="obsMdl">Observação</label>
-                          </div>
-                        </div> 
-                    </div>
-                    </div>
+                      </div>
+                      <div class="col-sm-7 mb-3 form-group">
+                        <div class="form-floating mb-3  text-primary">
+                          <input type="text" class="form-control" id="bairroMdl" name="bairroMdl"  placeholder="Nome/Razão Social">
+                          <label for="bairroMdl">Bairro</label>
+                        </div>
+                      </div>
+                      <div class="col-sm-9 mb-3 form-group">
+                        <div class="form-floating mb-3  text-primary">
+                          <input type="text" class="form-control" id="cidadeMdl" name="cidadeMdl" placeholder="Nome/Razão Social">
+                          <label for="cidadeMdl">Cidade</label>
+                        </div>
+                      </div>
+                      <div class="col-sm-3 mb-3 form-group">
+                        <div class="form-floating mb-3  text-primary">
+                          <input type="text" class="form-control" id="ufMdl" name="ufMdl" placeholder="Nome/Razão Social">
+                          <label for="ufMdl">Uf</label>
+                        </div>
+                      </div>
                   </div>
                 </div>
-
-                <div id="loader-parceiro" style="display:none;">
-                  <div class="col-md-12 col-sm-6 grid-margin stretch-card">
-                    <div class="spinner-grow text-success" role="status">
-                      <span class="visually-hidden">Loading...</span>
+              </div>
+              <div class="tab-pane fade" id="pills-contatos" role="tabpanel" aria-labelledby="pills-contatos-tab">
+                <div class="media">
+                  <div class="form-group row">
+                    <input type="hidden" class="form-control form-control-sm" 
+                    name="idContato" id="idContato">
+                    <div class="col-sm-2 mb-3 pr-1 form-group">
+                      <div class="form-floating mb-3 text-primary">
+                        <select type="text" class="form-select form-control-sm"
+                        name="tipo_contato" id="tipo_contato" placeholder="Tipo contato">
+                          <option value="0">Selecione o tipo do contato.</option>
+                          <option value="1">Telefone.</option>
+                          <option value="2">Celular.</option>
+                          <option value="3">Email.</option>
+                          <option value="4">Site.</option>
+                          <option value="5">Facebook.</option>
+                          <option value="6">Twitter.</option>
+                          <option value="7">Instagram.</option>
+                          <option value="8">Whatsapp.</option>
+                          <option value="9">Skype.</option>
+                          <option value="10">Outro.</option>
+                        </select>
+                        <label for="tipo_contato">Tipo Contato</label>
+                      </div>
                     </div>
-                  </div>
-                </div>
-
-                <div class="accordion-item">
-                  <h2 class="accordion-header" id="headingTwo">
-                    <button class="col-sm-12 collapsed btn btn-primary" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
-                        Endereço
-                    </button>
-                  </h2>
-                  <div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo" data-bs-parent="#accordionExample">
-                    <div class="accordion-body">
-                      <!--Trecho Endereço-->
-                        <div class="form-group row">
-                            <div class="col-sm-4 form-group pr-1">
-                              <div class="input-group form-group form-floating">
-                                <input type="text" class="form-control small  form-control-sm text-primary" id="cepMdl" name="cepMdl" placeholder="M³" aria-label="Search" aria-describedby="basic-addon2">
-                                <label class="text-secondary" for="cepMdl">Cep</label>
-                                <div class="input-group-append">
-                                    <a class="btn btn-primary" id="btnBuscaCep">
-                                      <i class="ti-search"></i>   
-                                    </a>
-                                </div>
-                              </div>
-                            </div>
-                            <div class="col-sm-8 mb-3 form-group">
-                              <div class="form-floating mb-3  text-primary">
-                                <input type="text" class="form-control" id="ruaMdl" name="ruaMdl" placeholder="Nome/Razão Social">
-                                <label for="ruaMdl">Rua</label>
-                              </div>
-                            </div>
-                            <div class="col-sm-2 mb-3 form-group">
-                              <div class="form-floating mb-3  text-primary">
-                                <input type="text" class="form-control" id="numeroMdl" name="numeroMdl" placeholder="Nome/Razão Social">
-                                <label for="numeroMdl">Número</label>
-                              </div>
-                            </div>
-                            <div class="col-sm-3 mb-3 form-group">
-
-                              <div class="form-floating mb-3  text-primary">
-                                <input type="text" class="form-control" id="complementoMdl" id="complementoMdl" placeholder="Nome/Razão Social">
-                                <label for="complementoMdl">Complemento</label>
-                              </div>
-                            </div>
-                            <div class="col-sm-7 mb-3 form-group">
-
-                              <div class="form-floating mb-3  text-primary">
-                                <input type="text" class="form-control" id="bairroMdl" name="bairroMdl"  placeholder="Nome/Razão Social">
-                                <label for="bairroMdl">Bairro</label>
-                              </div>
-                            </div>
-                            <div class="col-sm-9 mb-3 form-group">
-
-                              <div class="form-floating mb-3  text-primary">
-                                <input type="text" class="form-control" id="cidadeMdl" name="cidadeMdl" placeholder="Nome/Razão Social">
-                                <label for="cidadeMdl">Cidade</label>
-                              </div>
-                            </div>
-                            <div class="col-sm-3 mb-3 form-group">
-                              <div class="form-floating mb-3  text-primary">
-                                <input type="text" class="form-control" id="ufMdl" name="ufMdl" placeholder="Nome/Razão Social">
-                                <label for="ufMdl">Uf</label>
-                              </div>
-                            </div>
+                    <div class="col-sm-2 mb-3 pr-1 pl-1 form-group">
+                      <div class="form-floating mb-3  text-primary">
+                        <input type="text" class="form-control" id="cargo" name="cargo" placeholder="Cargo">
+                        <label for="cargo">Cargo</label>
+                      </div>
+                    </div>
+                    <div class="col-sm-2 mb-3 pr-1 pl-1 form-group">
+                      <div class="form-floating mb-3  text-primary">
+                        <input type="text" class="form-control" id="nome" name="nome" placeholder="Nome contato">
+                        <label for="nome">Nome contato</label>
+                      </div>
+                    </div>
+                    <div class="col-sm-3 mb-3 pl-1 form-group">
+                      <div class="form-floating mb-3  text-primary">
+                        <input type="text" class="form-control" id="contato" name="contato" placeholder="Contato">
+                        <label for="contato">Contato</label>
+                      </div>
+                    </div>                                                      
+                    <div class="col-sm-1 pl-0 form-group mx-auto">
+                        <div class="custom-control custom-switch mt-3 mx-auto">
+                            <input type="checkbox" class="custom-control-input" id="envio" name="envio">
+                            <label class="custom-control-label" for="envio">Emails</label>
                         </div>
                     </div>
-                  </div>
-                </div>
-                <div class="accordion-item" >
-                    <h2 class="accordion-header" id="headingThree">
-                      <button class="col-sm-12 collapsed btn btn-primary" id="btnContato" type="button" 
-                      data-bs-toggle="collapse" data-bs-target="#collapseThree" 
-                      aria-expanded="false" aria-controls="collapseThree">
-                        Contatos
-                      </button>
-                    </h2>
-                  <div id="collapseThree" class="accordion-collapse collapse" aria-labelledby="headingThree" data-bs-parent="#accordionExample">
-                    <div class="accordion-body">
-                        <div class="form-group row">
-                          <input type="hidden" class="form-control form-control-sm" 
-                          name="idContato" id="idContato">
-                            <div class="col-sm-2 mb-3 pr-1 form-group">
-
-                              <div class="form-floating mb-3 text-primary">
-                                <select type="text" class="form-select form-control-sm"
-                                name="tipo_contato" id="tipo_contato" placeholder="Tipo contato">
-                                  <option value="0">Selecione o tipo do contato.</option>
-                                  <option value="1">Telefone.</option>
-                                  <option value="2">Celular.</option>
-                                  <option value="3">Email.</option>
-                                  <option value="4">Site.</option>
-                                  <option value="5">Facebook.</option>
-                                  <option value="6">Twitter.</option>
-                                  <option value="7">Instagram.</option>
-                                  <option value="8">Whatsapp.</option>
-                                  <option value="9">Skype.</option>
-                                  <option value="10">Outro.</option>
-                                </select>
-                                <label for="tipo_contato">Tipo Contato</label>
-                              </div>
-                            </div>
-                            <div class="col-sm-2 mb-3 pr-1 pl-1 form-group">
-                              <div class="form-floating mb-3  text-primary">
-                                <input type="text" class="form-control" id="cargo" name="cargo" placeholder="Cargo">
-                                <label for="cargo">Cargo</label>
-                              </div>
-                            </div>
-                            <div class="col-sm-2 mb-3 pr-1 pl-1 form-group">
-                              <div class="form-floating mb-3  text-primary">
-                                <input type="text" class="form-control" id="nome" name="nome" placeholder="Nome contato">
-                                <label for="nome">Nome contato</label>
-                              </div>
-                            </div>
-                            <div class="col-sm-3 mb-3 pl-1 form-group">
-                              <div class="form-floating mb-3  text-primary">
-                                <input type="text" class="form-control" id="contato" name="contato" placeholder="Contato">
-                                <label for="contato">Contato</label>
-                              </div>
-                            </div>                                                      
-                            <div class="col-sm-1 pl-0 form-group mx-auto">
-                                <div class="custom-control custom-switch mt-3 mx-auto">
-                                    <input type="checkbox" class="custom-control-input" id="envio" name="envio">
-                                    <label class="custom-control-label" for="envio">Emails</label>
-                                </div>
-                            </div>
-                            <div class="col-sm-2 mt-2">
-                              <div class="form-group" align="right">
-                                <div class="input-group" align="right">
-                                  <button type="button" class="btn btn-secondary btn-rounded btn-icon" id="btnLimpaContatos" align=right>            
-                                    <i class="ti-write"></i>
-                                  </button>
-                                  <button type="button" class="btn btn-success btn-rounded btn-icon" id="incluiContato" align=right>            
-                                    <i class="ti-save"></i>
-                                  </button>
-                                  </div>
-                              </div>
-                            </div>
-                            <div class="col-sm-12 mb-3 form-group" >
-                                <h4 class="card-title">Contatos</h4>
-                                <div class="card">  
-                                  <div class="table-responsive">
-                                      <table class="table table-striped table-sm" id="tabela" name='tabela'>
-                                        <thead>
-                                            <tr>  
-                                              <th>Id</th>
-                                              <th>Nome</th>
-                                              <th>Cargo</th>
-                                              <th>Tipo</th>
-                                              <th>Contato</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody id="corpoTabela">
-                                        </tbody>
-                                      </table>
-                                  </div>
-                                </div>
-                            </div>
-                        </div>                        
-                    </div>
-                  </div>
-                </div>
-                  <div class="accordion-item">
-                    <h2 class="accordion-header" id="btnAccordionComercial">
-                      <button class="col-sm-12 collapsed btn btn-primary" type="button" data-bs-toggle="collapse" 
-                      data-bs-target="#accordionComercial" aria-expanded="true" aria-controls="accordionComercial">
-                        Comercial
-                      </button>
-                    </h2>
-                    <div id="accordionComercial" class="accordion-collapse collapse" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
-                      <div class="accordion-body">
-                        <div class="col-12">
-                          <table class="table table-striped table-sm" id="relatorioTabelaParceiro">
-                            <thead>
-                              <tr>
-                                <th scope="col">Id</th>
-                                <th scope="col">Descrição</th>
-                                <th scope="col">Mínimo</th>
-                                <th scope="col">Advalor</th>
-                                <th scope="col">Gris</th>
-                                <th scope="col">Despacho</th>
-                                <th scope="col">Pedágio</th>
-                                <th scope="col">Gris</th>
-                                <th scope="col">Outros</th>
-                              </tr>
-                            </thead>
-                            <tbody>
-                            </tbody>
-                          </table>
+                    <div class="col-sm-2 mt-2">
+                      <div class="form-group" align="right">
+                        <div class="input-group" align="right">
+                          <button type="button" class="btn btn-secondary btn-rounded btn-icon" id="btnLimpaContatos" align=right>            
+                            <i class="ti-write"></i>
+                          </button>
+                          <button type="button" class="btn btn-success btn-rounded btn-icon" id="incluiContato" align=right>            
+                            <i class="ti-save"></i>
+                          </button>
                         </div>
                       </div>
                     </div>
-                  </div>
+                    <div class="col-sm-12 mb-3 form-group" >
+                        <h4 class="card-title">Contatos</h4>
+                        <div class="card">  
+                          <div class="table-responsive">
+                              <table class="table table-striped table-sm" id="tabela" name='tabela'>
+                                <thead>
+                                    <tr>  
+                                      <th>Id</th>
+                                      <th>Nome</th>
+                                      <th>Cargo</th>
+                                      <th>Tipo</th>
+                                      <th>Contato</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="corpoTabela">
+                                </tbody>
+                              </table>
+                          </div>
+                        </div>
+                    </div>
+                  </div>     
+                </div>
+              </div>
+              </div>
+              <div class="tab-pane fade" id="pills-comercial" role="tabpanel" aria-labelledby="pills-comercial-tab">
+                <div class="media">
+                    <div class="row">
+                      <div class="col-12">
+                        <table class="table table-striped table-sm" id="relatorioTabelaParceiro">
+                          <thead>
+                            <tr>
+                              <th scope="col"></th>
+                              <th scope="col">Id</th>
+                              <th scope="col">Descrição</th>
+                              <th scope="col">Mínimo</th>
+                              <th scope="col">Frete</th>
+                              <th scope="col">Advalor</th>
+                              <th scope="col">Gris</th>
+                              <th scope="col">Despacho</th>
+                              <th scope="col">Pedágio</th>
+                              <th scope="col">Outros</th>                            
+                              <th scope="col"></th>
+                              <th scope="col"></th>
+                            </tr>
+                          </thead>
+                          <tbody id="tbodyTabelaParceiro">
+                          </tbody>
+                        </table>
+                      </div>                  
+                    </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+            <div id="loader-parceiro" style="display:none;">
+              <div class="col-md-12 col-sm-6 grid-margin stretch-card">
+                <div class="spinner-grow text-success" role="status">
+                  <span class="visually-hidden">Loading...</span>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
-      </div>
     </div>
   </div>
 </form>

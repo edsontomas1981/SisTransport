@@ -72,16 +72,16 @@ def print_coletas(request):
     if request.method == 'GET':
         return JsonResponse({'status': "imprimirColetas"})
     elif request.method == 'POST':
-        try:
-            data = json.loads(request.body.decode('utf-8'))
-            if not data:
-                return JsonResponse({'error': "A lista de coletas está vazia."}, status=400)
-            coletas_processadas = processar_coletas(data)
-            imprimir_documento(coletas_processadas)
-            return JsonResponse({'status': 200})
-        except json.JSONDecodeError:
-            return JsonResponse({'error': "Erro ao decodificar o JSON no corpo da solicitação."}, status=400)
-        except ValueError as ve:
-            return JsonResponse({'error': str(ve)}, status=400)
-        except Exception as e:
-            return JsonResponse({'error': f"Erro ao processar coletas: {str(e)}"}, status=500)
+        # try:
+        data = json.loads(request.body.decode('utf-8'))
+        if not data:
+            return JsonResponse({'error': "A lista de coletas está vazia."}, status=400)
+        coletas_processadas = processar_coletas(data)
+        imprimir_documento(coletas_processadas)
+        return JsonResponse({'status': 200})
+        # except json.JSONDecodeError:
+        #     return JsonResponse({'error': "Erro ao decodificar o JSON no corpo da solicitação."}, status=400)
+        # except ValueError as ve:
+        #     return JsonResponse({'error': str(ve)}, status=400)
+        # except Exception as e:
+        #     return JsonResponse({'error': f"Erro ao processar coletas: {str(e)}"}, status=500)

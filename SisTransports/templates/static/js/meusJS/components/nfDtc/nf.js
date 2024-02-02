@@ -179,13 +179,13 @@ const checaChaveAcessoCnpjRem = (chaveAcesso)=>{
     }
 }
 
-// Aplicar validação ao campo de entrada "qtdeNf"
-const qtdeNfInput = document.getElementById('qtdeNf');
-validarNumeroInteiroInput(qtdeNfInput);
+// // Aplicar validação ao campo de entrada "qtdeNf"
+// const qtdeNfInput = document.getElementById('qtdeNf');
+// validarNumeroInteiroInput(qtdeNfInput);
 
-// Aplicar validação ao campo de entrada "pesoNf"
-const pesoNfInput = document.getElementById('pesoNf');
-validarNumeroInteiroInput(pesoNfInput);
+// // Aplicar validação ao campo de entrada "pesoNf"
+// const pesoNfInput = document.getElementById('pesoNf');
+// validarNumeroInteiroInput(pesoNfInput);
 
 
 

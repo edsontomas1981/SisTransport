@@ -262,14 +262,8 @@ $('#numPed').on('keydown', function(event) {
 
 
 const getDadosForm=(formularioId)=>{
-
-  console.log(formularioId)
-
   var tabelaHash = {};
-
   var formulario = document.getElementById(formularioId);
-
-
   if (formulario) {
       // Obtém todos os elementos do formulário
       var elementos = formulario.elements;
@@ -294,8 +288,6 @@ const getDadosForm=(formularioId)=>{
               }
           }
       }
-
-      console.log(tabelaHash);
       return tabelaHash;
   } else {
       console.error("Formulário não encontrado com o ID fornecido: " + formularioId);

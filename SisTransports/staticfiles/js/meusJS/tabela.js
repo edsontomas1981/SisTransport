@@ -116,6 +116,7 @@ function limpaTabela(tabela) {
 }
 
 function relatorioTabela(response) {
+    
     limpaTabela('#relatorioTabela td')
     const data = response.tabela;
     let template

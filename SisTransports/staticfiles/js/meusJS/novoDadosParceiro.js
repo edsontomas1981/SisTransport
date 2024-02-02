@@ -18,7 +18,6 @@ $('#btnCnpjRem').on('click', function(e) {
     remetente.openModalParceiro();
     remetente.carregaParceiroMdl()
     $('#cnpjMdl').val('')
-    $('#cnpjMdl').val($($('#cnpjRem').val()))
     
 });
 

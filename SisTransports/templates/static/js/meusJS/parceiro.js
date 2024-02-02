@@ -2,6 +2,14 @@ class Parceiro {
   constructor(cnpj, sufixo) {
     this.cnpj = cnpj;
     this.sufixo = sufixo;
+    this.botoes = {
+                      mostrar: {
+                        classe: "btn-primary text-white",
+                        texto: '<i class="fa fa-print" aria-hidden="true"></i>',
+                        callback: abrirMdlTabela
+                      }
+                    };
+    
   }
 
   async sendPostRequest(url, onSuccess = () => {}) {
@@ -148,28 +156,10 @@ class Parceiro {
   };
 
   populaTabelas = (response) => {
-    if (response !== 'undefined') {
-      limpaTabela('#relatorioTabelaParceiro td');
-      const data = response;
-      let template;
-      for (let i = 0; i < data.length; i++) {
-        template = `<tr class="tr" id="${data[i].id}">
-          <td>${data[i].id}</td>
-          <td>${data[i].descricao}</td>
-          <td>${data[i].freteMinimo}</td>
-          <td>${data[i].adValor}</td>
-          <td>${data[i].gris}</td>
-          <td>${data[i].despacho}</td>
-          <td>${data[i].pedagio}</td>
-          <td>${data[i].gris}</td>
-          <td>${data[i].outros}</td>
-          <td><button type="button" class="btn btn-dark btn-rounded btn-icon" id="exclui"><i class="ti-trash"></i></button></td>
-          <td><button type="button" class="btn btn-dark btn-rounded btn-icon" id="altera"><i class="ti-new-window"></i></button></td>
-          </tr>`;
-        $('#relatorioTabelaParceiro tbody').append(template);
-      }
-    }
+    popula_tbody_paginacao('paginacaoParceiro','tbodyTabelaParceiro',this.preparaDadosTabelas(response[1]),this.botoes,1,70)
   };
+
+
 
   populaMdl = () => {
     $('#cnpjMdl').val(this.cnpj);
@@ -243,19 +233,29 @@ class Parceiro {
     populaContatos(listaContatos);
   };
 
-  //   buscacidades(){
-  //     const estado = 'AC'; // altere para o estado desejado
-  //     const apiUrl = `https://servicodados.ibge.gov.br/api/v1/localidades/estados/${estado}/municipios`;
-
-  //     fetch(apiUrl)
-  //       .then(response => response.json())
-  //       .then(cidades => {
-  //         console.log(cidades); // lista de cidades do estado selecionado
-  //       })
-  //       .catch(error => {
-  //         console.error(error);
-  //       });
-
-  //   }
-
+  preparaDadosTabelas=(tabelas)=>{
+    let listaTabelas = []
+    tabelas.forEach(e => {
+      listaTabelas.push({'id':e.id,'descricao':e.descricao,
+                        'minimo':e.freteMinimo,'frete':e.frete,'advalor':e.adValor,'gris':e.gris,
+                        'despacho':e.despacho,'pedagio':e.pedagio,'outros':e.outros})
+                      });
+    return listaTabelas
+  }
 }
+
+let mdlCadParceiros = document.getElementById('mdlCadParceiros')
+let flag = false
+
+const abrirMdlTabela = (e)=>{
+  mdlCadParceiros.style.display = 'none'
+  flag = true 
+  mostrarTabela(e)
+}
+document.getElementById('btnCloseTabelaFrete').addEventListener('click',()=>{
+  if (flag){
+    flag = false;
+    mdlCadParceiros.style.display = 'block'
+  }
+})
+

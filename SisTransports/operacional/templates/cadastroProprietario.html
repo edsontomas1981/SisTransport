@@ -1,63 +1,52 @@
 <!-- Modal -->
-<div class="modal fade" id="cadastroProprietario" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-<div class="modal-dialog modal-lg">
-    <div class="modal-content">
-    <div class="modal-header">
-            <h5 class="modal-title" id="tituloModal">Cadastro de Proprietarios</h5>
-            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-    </div>
-    <div class="modal-body">
-        <div class="row">
-            <div class="col-sm-4 mb-1 pr-1 input-group">
-                <input type="text" class="form-control form-control-sm" 
-                id="cnpj_cpf" name="cnpj_cpf" placeholder="Cnpj/Cpf">
-                <div class="input-group-append">
-                    <button class="btn btn-danger form-control-sm"  id="btnLimpaCnpjProp" type="button">
-                        <i class="ti-eraser"></i>   
-                    </button> 
-                    <button class="btn btn-primary form-control-sm"  id="btnBuscaProp" type="button">
-                        <i class="ti-search"></i>   
-                    </button>   
+<form id="frmProprietario">
+    <div class="modal fade" id="cadastroProprietario" data-bs-backdrop="static" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true" style="z-index: 1050;">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                        <h5 class="modal-title" id="tituloModal">Cadastro de Proprietarios</h5>
+                        <button type="button" class="btn-close" id="btnCloseModalProprietario" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
-            </div> 
-            <div class="col-sm-4">
-                <input type="text" class="form-control form-control-sm" 
-                id="razaoProp" name="razaoProp" placeholder="Cnpj/Cpf">
-                <div class="input-group-append"></div>         
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-sm-12 mb-1 pr-1 input-group">
+                            <input type="text" class="form-control form-control-sm" 
+                            id="cnpj_cpf" name="cnpj_cpf" placeholder="Cnpj/Cpf">
+                            <div class="input-group-append">
+                                <button class="btn btn-primary form-control-sm" id="btnBuscaProp"  type="button">
+                                    <i class="ti-search"></i>   
+                                </button>   
+                            </div>
+                        </div> 
+                        <div class="col-sm-12 pt-2">
+                            <input type="text" class="form-control form-control-sm" 
+                            id="razaoProp" name="razaoProp" placeholder="Nome/Razao Social">
+                            <div class="input-group-append"></div>         
+                        </div>
+                        <div class="col-sm-12 pt-2">
+                            <select type="text" class="form-control form-control-sm form-select" 
+                            id="selectTipoProp" name="selectTipoProp" placeholder="Cnpj/Cpf">
+                                <option value="0">Selecione o tipo de proprietário</option>
+                                <option value="1">CTC(Cooperativa de Transporte de Cargas)</option>
+                                <option value="2">ETC(Empresa de Transporte de Cargas )</option>
+                                <option value="3">TAC(Transporte Autônomo de Cargas)</option>
+                            </select>
+                        </div>
+                        <div class="col-sm-6 pt-2 pr-1">
+                            <input type="text" class="form-control form-control-sm" 
+                            id="anttProp" name="anttProp" placeholder="Antt">
+                        </div>
+                        <div class="col-sm-6 pt-2 pl-1">
+                            <input type="date" class="form-control form-control-sm" 
+                            id="dataAntt" name="dataAntt" placeholder="Antt">
+                        </div>                  
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Sair</button>
+                    <button type="button" id="btnSalvaProprietario" class="btn btn-primary">Salvar</button>
+                </div>                
             </div>
-            <div class="col-sm-4">
-                <select type="text" class="form-control form-control-sm form-select" 
-                id="selectTipoProp" name="selectTipoProp" placeholder="Cnpj/Cpf">
-                    <option>CTC(Cooperativa de Transporte de Cargas)</option>
-                    <option>ETC(Empresa de Transporte de Cargas )</option>
-                    <option>TAC(Transporte Autônomo de Cargas)</option>
-                </select>
-            </div>
-            <div class="col-sm-4">
-                <input type="text" class="form-control form-control-sm form-select" 
-                id="anttProp" name="anttProp" placeholder="Antt">
-            </div>
-            <div class="col-sm-4">
-                <input type="date" class="form-control form-control-sm form-select" 
-                id="dataAntt" name="dataAntt" placeholder="Antt">
-            </div>                  
         </div>
     </div>
-    <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Sair</button>
-        <button type="button" class="btn btn-primary">Salvar</button>
-    </div>
-</div>
-</div>
-
-<!-- 
-{
-    'antt': '123456',
-    'parceiro_id': <ID_DO_PARCEIRO>,
-    'validade_antt': '2022-01-01',
-    'tipo_proprietario': 'Individual',
-    'criado_por_id': <ID_DO_USUARIO>,
-    'atualizado_por_id': <ID_DO_USUARIO>,
-}
-*/
- -->
+</form>

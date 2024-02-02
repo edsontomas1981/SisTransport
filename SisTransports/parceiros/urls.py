@@ -10,6 +10,6 @@ urlpatterns = [
         path('updateParceiro/',viewsParceiros.updateParceiro,name='updateParceiro'),
         path('searchPartnerWs/',viewsParceiros.searchPartnerWs,name='searchPartnerWs'),
         path('deleteParceiro/',viewsParceiros.deleteParceiro,name='deleteParceiro'),
-        path('read_parceiro_json/',viewsParceiros.read_parceiro_sem_request_via_json,name='read_parceiro_json'),
+        path('read_parceiro_json/',viewsParceiros.read_parceiro_json,name='read_parceiro_json'),
     ]
     

@@ -55,8 +55,6 @@ $('.btn-close').on('click', function(e) {
     limpaForm()
 })
 
-//funcoes 
-
 function populaRazao(response) {
     $('#comlRazao').val(response.parceiro.raz_soc)
 }
@@ -87,29 +85,7 @@ function limpaForm() {
     limpaTabela('#rotasAnexadasTabela td')
 }
 
-function populaTabela(response) {
-    $('#numTabela').val(response.tabela.id)
-    populaFaixas($('#numTabela').val())
-    $('#descTabela').val(response.tabela.descricao)
-    $('#tabBloq').prop("checked", response.tabela.bloqueada);
-    $('#icms').prop("checked", response.tabela.icmsIncluso);
-    $('#cobraCubagem').prop("checked", response.tabela.cubagem);
-    $('#vlrFrete').val(response.tabela.frete);
-    $('#tipoTabela').val(response.tabela.tipoTabela);
-    $('#advalor').val(response.tabela.adValor);
-    $('#gris').val(response.tabela.gris);
-    $('#despacho').val(response.tabela.despacho);
-    $('#outros').val(response.tabela.outros);
-    $('#pedagio').val(response.tabela.pedagio);
-    $('#cubagem').val(response.tabela.fatorCubagem);
-    $('#freteMinimo').val(response.tabela.freteMinimo); 
-    $('#tipoFrete').val(response.tabela.tipoCalculo);
-    $('#tipoCobranPedagio').val(response.tabela.tipoPedagio);
-    $('#aliquotaIcms').val(response.tabela.aliquotaIcms);
-    $('#aliquotaIcms').val(response.tabela.aliquotaIcms);
-    populaTabelaRotas(response)
-    parceirosVinculados(response)
-}
+
 
 function limpaTabela(tabela) {
     $(tabela).remove();
@@ -158,40 +134,43 @@ function linhaTabela(e) {
     }
 };
 
-function mostrarTabela(e) {
-    idTabela = e.currentTarget.id
-    let postData = '&numTabela=' + idTabela;
-    let dados = { 'url': '/comercial/readTabela/', 'id': postData }
-    conectaBdGeral(dados, populaTabela)
-}
-
-function populaRelatTabelas() {
-    dados = { 'url': '/comercial/getTodasTabelas/' }
-    conectaBdGeral(dados, relatorioTabela);
-    limpaForm()
-}
-
-function excluirTabelas(idTabela) {
+const excluirTabelas= async (idTabela)=> {
     let id = idTabela 
     if (confirm("Deseja realmente apagar a tabela selecionada ?") == true) {
-        let postData = '&idAdd=' + id;
-        let dados = { 'url': '/comercial/deleteTabela/', 'id': postData }
-        conectaBdGeral(dados, exclui)
-        alert('Tabela apagada com sucesso !!')
+        // let postData = '&idAdd=' + id;
+        resultado = await conexaTabelas('/comercial/deleteTabela/', {'id': idTabela});
+        if (resultado.status === 200){
+            alert('Tabela apagada com sucesso !!')
+        }else{
+            alert('Erro em apagar a tabela !!')
+        }
         populaRelatTabelas()
     }
 }
+
+
 
 function excTabela(e) {
     id = e.currentTarget.id;
     excluirTabelas(id)
 }
 
-function populaRelatTabelas() {
-    dados = { 'url': '/comercial/getTodasTabelas/' }
-    conectaBdGeral(dados, relatorioTabela);
-    limpaForm()
+const carregaTabelas = async ()=>{
+    let data = {}
+    return conexaTabelas('/comercial/getTodasTabelas/', data);
 }
+
+
+
+const preparaDadosTabelas=(tabelas)=>{
+    let listaTabelas = []
+    tabelas.forEach(e => {
+        listaTabelas.push({'id':e.id,'descricao':e.descricao,
+                          'minimo':e.freteMinimo,'frete':e.frete,'advalor':e.adValor,'gris':e.gris,'despacho':e.despacho,
+                          'pedagio':e.pedagio,'outros':e.outros})
+    });
+    return listaTabelas
+  }
 
 var readTabelasEspecificas = (response,idSelect) =>{
     options = response.tabelas
@@ -200,24 +179,7 @@ var readTabelasEspecificas = (response,idSelect) =>{
     });
 }
 
-const populaTabelaRotas=(response)=>{
-    limpaTabela('#rotasAnexadasTabela td')
-    const data = response.rotas;
-    let template
-    for (let i = 0; i < data.length; i++) {
-        template = '<tr class="tr" id="' + data[i].id + '">' +
-            '<td id="nomeRota">' + data[i].nome + '</td>' +
-            '<td>' + data[i].origemCidade + '-' + data[i].origemUf + '</td>' +
-            '<td>' + data[i].destinoCidade + '-' +data[i].destinoUf + '</td>' +
-            '<td>'+
-            '<button type="button"class="btn btn-outline-danger btn-sm" id="desanexaRota">'+
-            '<i class="fa fa-trash" aria-hidden="true"></i>'+
-            '</button></td>' +
-            '</tr>'
 
-        $('#rotasAnexadasTabela tbody').append(template)
-    }
-}
 
 $('#rotasAnexadasTabela').on("click", "#desanexaRota", function(event) {
     let nomeTabela = document.getElementById('descTabela')
@@ -350,5 +312,27 @@ const populaSelectTabelas = (idSelect,dados) => {
 
 }
 
+
+
+
+
+const populaRelatTabelas= async () => {
+    let botoes={
+        alterar: {
+            classe: "btn-primary text-white",
+            texto: '<i class="fa fa-print" aria-hidden="true"></i>',
+            callback: mostrarTabela
+          },
+        excluir: {
+            classe: "btn-danger text-white",
+            texto: '<i class="fa fa-print" aria-hidden="true"></i>',
+            callback: excluirTabelas
+          }
+      };
+    let tabelas = await carregaTabelas()
+    tabelas = preparaDadosTabelas(tabelas.tabela)
+    popula_tbody_paginacao('paginacaoRelatTabelas','tbodyRelatorioTabelas',tabelas,botoes,1,10)
+    limpaForm()
+}
 
 

@@ -1,6 +1,5 @@
 
 const imprimirColetaUnica = (element)=>{
-  console.log(element)
   conectar('/operacional/printColetas/',[{'id':element}])
 }
 

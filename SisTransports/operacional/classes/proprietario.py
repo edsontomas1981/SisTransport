@@ -8,21 +8,21 @@ class ProprietarioManager:
         self.obj_proprietario = Proprietario()
 
     def save_or_update(self, dados):
-        self.obj_proprietario.parceiro_fk = Parceiros.objects.get(id=dados['parceiro_id'])
-        self.obj_proprietario.ciot = dados.get('ciot', '')
+        self.obj_proprietario.parceiro_fk = dados.get('parceiro_id', '')
+        self.obj_proprietario.antt = dados.get('antt', '')
         self.obj_proprietario.validade_antt = dados.get('validade_antt', None)
         self.obj_proprietario.tipo_proprietario = dados.get('tipo_proprietario', '')
 
     def create_proprietario(self, dados):
-        # try:
-        self.save_or_update(dados)
-        self.obj_proprietario.criado_por = get_user_model().objects.get(id=dados['criado_por_id'])
-        self.obj_proprietario.created_at = timezone.now()
-        self.obj_proprietario.save()
-        return 200
-        # except Exception as e:
-        #     print(f"Erro ao criar proprietário: {e}")
-        #     return 300
+        try:
+            self.save_or_update(dados)
+            self.obj_proprietario.criado_por = get_user_model().objects.get(id=dados['criado_por_id'])
+            self.obj_proprietario.created_at = timezone.now()
+            self.obj_proprietario.save()
+            return 200
+        except Exception as e:
+            print(f"Erro ao criar proprietário: {e}")
+            return 300
 
     def delete_proprietario(self, id_proprietario):
         try:
@@ -35,6 +35,25 @@ class ProprietarioManager:
         except Exception as e:
             print(f"Erro ao excluir proprietário: {e}")
             return 500
+        
+    def buscar_proprietario_por_cnpj(self, cnpj):
+            try:
+                # Busca um Parceiro pelo CNPJ
+                parceiro = Parceiros.objects.filter(cnpj_cpf=cnpj).first()
+
+                if parceiro:    
+                    # Se encontrou o Parceiro, busca o Proprietário associado a ele
+                    self.obj_proprietario = Proprietario.objects.filter(parceiro_fk=parceiro).first()
+
+                    if self.obj_proprietario:
+                        return 200
+                    else:
+                        return None
+                else:
+                    return None
+            except Exception as e:
+                print(f"Erro ao buscar proprietário por CNPJ: {e}")
+                return None 
 
     def read_proprietario(self, id_proprietario):
         try:
@@ -76,5 +95,6 @@ class ProprietarioManager:
             self.obj_proprietario.save()
             return 200
         except Exception as e:
+            print(e)
             print(f"Erro ao atualizar proprietário: {e}")
             return 300

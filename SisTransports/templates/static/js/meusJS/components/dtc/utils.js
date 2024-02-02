@@ -155,31 +155,3 @@ const geraTextoNf = (nfs) => {
   });
   return notasFiscais;
 };
-
-const confirmacao = async (msg) => {
-  return new Promise(async (resolve) => {
-    const result = await Swal.fire({
-      title: msg,
-      showDenyButton: true,
-      confirmButtonText: 'Confirmar',
-      denyButtonText: 'Cancelar',
-    });
-
-    if (result.isConfirmed) {
-      resolve(true);
-    } else {
-      resolve(false);
-    }
-  });
-};
-
-const msgOk = (msg)=>{
-  Swal.fire({
-    position: 'top-end',
-    icon: 'success',
-    title: msg,
-    showConfirmButton: false,
-    timer: 2000
-  })
-}
-

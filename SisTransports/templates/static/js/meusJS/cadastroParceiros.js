@@ -6,3 +6,4 @@ $('#btnFechar').on('click' ,function(e){
     $('#mdlCadParceiros').hide();
 })
 
+

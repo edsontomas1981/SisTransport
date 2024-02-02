@@ -18,7 +18,7 @@ def create_proprietario(request):
 
     Exemplo de dados no corpo da solicitação:
     {
-        'ciot': '123456',
+        'antt': '123456',
         'parceiro_id': <ID_DO_PARCEIRO>,
         'validade_antt': '2022-01-01',
         'tipo_proprietario': 'Individual',
@@ -26,14 +26,20 @@ def create_proprietario(request):
         'atualizado_por_id': <ID_DO_USUARIO>,
     }
     """
+    status_code = 0
     if request.method == "POST":
         try:
             data = json.loads(request.body.decode('utf-8'))
             data['usuario_cadastro'] = request.user 
             # Lógica para criar um novo proprietário com os dados do corpo da solicitação
-            dados = prepare_dados_create(data)
+            dados_para_cadastro = prepare_dados_create(data)
             proprietario = ProprietarioManager()
-            return JsonResponse({'status': 200, 'message': 'Proprietário criado com sucesso'})
+            if(proprietario.buscar_proprietario_por_cnpj(data['cnpj_cpf'])):
+                status_code=proprietario.update_proprietario(proprietario.obj_proprietario.id,dados_para_cadastro)
+            else:
+                proprietario = ProprietarioManager()
+                status_code=proprietario.create_proprietario(dados_para_cadastro)
+            return JsonResponse({'status': status_code, 'message': 'Proprietário criado com sucesso'})
         except ValidationError as ve:
             return JsonResponse({'status': 400, 'error': f'Erro de validação: {str(ve)}'})
         except Exception as e:
@@ -43,10 +49,10 @@ def create_proprietario(request):
 
 def prepare_dados_create(data):
     return {
-    'ciot': '123456',
-    'parceiro_id': _carrega_parceiro('23926683000299'),
-    'validade_antt': '2022-01-01',
-    'tipo_proprietario': 'Individual',
+    'antt': data['antt'],
+    'parceiro_id': _carrega_parceiro(data['cnpj_cpf']),
+    'validade_antt': data['validade_antt'],
+    'tipo_proprietario': data['tipo_proprietario'],
     'criado_por_id': data['usuario_cadastro'].id,
     'atualizado_por_id':data['usuario_cadastro'].id,
 }
@@ -54,4 +60,4 @@ def prepare_dados_create(data):
 def _carrega_parceiro(cnpj_parceiro):
     parceiro = Parceiros()
     parceiro.readParceiro(cnpj_parceiro)
-    return parceiro.parceiro.id    
+    return parceiro.parceiro

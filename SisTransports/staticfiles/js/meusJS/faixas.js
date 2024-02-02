@@ -1,13 +1,12 @@
 function populaFaixa(e) {
     id = e.currentTarget.id
     let postData = '&idFaixa=' + id;
-    dados = { 'url': 'faixa/readFaixa/', 'id': postData }
+    dados = { 'url': '/comercial/faixa/readFaixa/', 'id': postData }
     conectaBdGeral(dados, function(response) {
         $('#faixaInicial').val(response.faixa.faixaInicial)
         $('#faixaFinal').val(response.faixa.faixaFinal)
         $('#faixaValor').val(response.faixa.vlrFaixa)
     })
-
 }
 
 $('#tabelaFaixas').dblclick(function(e) {

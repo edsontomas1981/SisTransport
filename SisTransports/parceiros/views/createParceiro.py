@@ -17,11 +17,15 @@ def createParceiro(request):
             endereco=Enderecos()
             endereco.createEndereco(dados)
             dados['endereco_fk']=endereco.endereco
+            print(dados)
             parceiro=Parceiros()
+
             status=parceiro.createParceiro(dados)
             if status == 200:
+                print(parceiro.parceiro.to_dict())
                 return JsonResponse({'status': status, 'parceiro':parceiro.parceiro.to_dict()})
             elif status == 201:
+                print(parceiro.parceiro.to_dict())
                 return JsonResponse({'status': status, 'parceiro':parceiro.parceiro.to_dict()})
             else:
                 return JsonResponse({'status': status}) 

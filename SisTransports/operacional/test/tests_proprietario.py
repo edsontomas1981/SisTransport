@@ -12,8 +12,8 @@ class ProprietarioManagerTestCase(TestCase):
         self.parceiro = self.criar_parceiro(self.endereco)
         self.manager = ProprietarioManager()
         self.proprietario_data = {
-            'ciot': '123456',
-            'parceiro_id': self.parceiro.id,
+            'antt': '123456',
+            'parceiro_id': self.parceiro,
             'validade_antt': '2022-01-01',
             'tipo_proprietario': 'Individual',
             'criado_por_id': self.user.id,
@@ -66,12 +66,12 @@ class ProprietarioManagerTestCase(TestCase):
 
     def test_update_proprietario(self):
         self.manager.create_proprietario(self.proprietario_data)
-        novo_ciot = '654321'
-        self.proprietario_data['ciot'] = novo_ciot
+        novo_antt = '654321'
+        self.proprietario_data['antt'] = novo_antt
         response = self.manager.update_proprietario(self.manager.obj_proprietario.id, self.proprietario_data)
         self.assertEqual(response, 200)
         self.manager.obj_proprietario.refresh_from_db()
-        self.assertEqual(self.manager.obj_proprietario.ciot, novo_ciot)
+        self.assertEqual(self.manager.obj_proprietario.antt, novo_antt)
 
     def test_delete_proprietario(self):
         self.manager.create_proprietario(self.proprietario_data)

@@ -49,8 +49,8 @@ class VeiculoManagerTestCase(TestCase):
     def criar_proprietario(self):
         proprietario = ProprietarioManager()
         dados= {
-            'ciot': '123456',
-            'parceiro_id': self.parceiro.id,
+            'antt': '123456',
+            'parceiro_id': self.parceiro,
             'validade_antt': '2022-01-01',
             'tipo_proprietario': 'Individual',
             'criado_por_id': self.user.id,

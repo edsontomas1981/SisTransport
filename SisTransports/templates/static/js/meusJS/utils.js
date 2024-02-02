@@ -263,8 +263,6 @@ $('#numPed').on('keydown', function(event) {
 
 const getDadosForm=(formularioId)=>{
 
-  console.log(formularioId)
-
   var tabelaHash = {};
 
   var formulario = document.getElementById(formularioId);
@@ -295,7 +293,6 @@ const getDadosForm=(formularioId)=>{
           }
       }
 
-      console.log(tabelaHash);
       return tabelaHash;
   } else {
       console.error("Formulário não encontrado com o ID fornecido: " + formularioId);
@@ -338,5 +335,52 @@ const populaRotaGeral= (response,idCmbRotas,textoFirstOpt='Selecione')=>{
   selectbox.append(`<option value="0">${textoFirstOpt}</option>`);
   $.each(data, function (i, d) {
       selectbox.append('<option value="' + d.id+ '">' + d.nome + '</option>');
+  });
+}
+
+const msgConfirmacao = async (msg) => {
+  return new Promise(async (resolve) => {
+    const result = await Swal.fire({
+      title: msg,
+      showDenyButton: true,
+      confirmButtonText: 'Confirmar',
+      denyButtonText: 'Cancelar',
+    });
+
+    if (result.isConfirmed) {
+      resolve(true);
+    } else {
+      resolve(false);
+    }
+  });
+};
+
+const msgOk = (msg)=>{
+  Swal.fire({
+    position: 'top-end',
+    icon: 'success',
+    title: msg,
+    showConfirmButton: false,
+    timer: 2000
+  })
+}
+
+const msgErro = (msg)=>{
+  Swal.fire({
+    position: 'top-end',
+    icon: 'error',
+    title: msg,
+    showConfirmButton: false,
+    timer: 2000
+  })
+}
+
+const msgAviso = (msg)=>{
+  Swal.fire({
+    position: "top-end",
+    icon: "warning",
+    title: msg,
+    showConfirmButton: false,
+    timer: 1500
   });
 }

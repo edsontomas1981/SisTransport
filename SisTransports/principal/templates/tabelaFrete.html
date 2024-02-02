@@ -17,38 +17,36 @@
           </div>  
       </div>                
     </div>
-    <div class="col-12">
+    <div class="col-12" id="paginacaoRelatTabelas">
       <table class="table table-dark table-striped table-sm" id="relatorioTabela">
         <thead>
           <tr>
+            <th scope="col"></th>
             <th scope="col">Id</th>
             <th scope="col">Descrição</th>
             <th scope="col">Mínimo</th>
+            <th scope="col">Frete</th>
             <th scope="col">Advalor</th>
             <th scope="col">Gris</th>
             <th scope="col">Despacho</th>
             <th scope="col">Pedágio</th>
-            <th scope="col">Gris</th>
             <th scope="col">Outros</th>
-            <th scope="col">Excluir</th>
-            <th scope="col">Visualizar</th> 
+            <th scope="col"></th>
+            <th scope="col"></th> 
           </tr>
         </thead>
-        <tbody>
+        <tbody id="tbodyRelatorioTabelas">
 
         </tbody>
       </table>
     </div>
-  {% include 'mdlTabela.html' %}        
   </div>        
 {% endblock %}
 
 {%block 'js'%}
   <script src="{% static 'js/meusJS/tabela.js' %}"></script>
-  <script src="{% static 'js/meusJS/components/tabela/anexaParceiro/anexaParceiro.js' %}"></script>
   <script src="{% static 'js/meusJS/components/tabela/faixas/faixas.js' %}"></script>  
   <script src="{% static 'js/meusJS/components/tabela/Tabela.js' %}"></script>
   <script src="{% static 'js/meusJS/components/tabela/salvaTabela.js' %}"></script>
   <!-- <script src="{% static 'js/meusJS/faixas.js' %}"></script> -->
-  <script src="{% static 'js/meusJS/cmbRota.js' %}"></script>
 {% endblock 'js' %}

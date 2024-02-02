@@ -1,4 +1,3 @@
-// Certifique-se de que 'botoes' esteja no escopo correto
 var botoes = {
   imprimir: {
     classe: "btn-warning text-white",
