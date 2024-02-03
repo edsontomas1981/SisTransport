@@ -4,12 +4,12 @@
 <div>
 <form method="POST">
 {% csrf_token %}
-<div class="modal " id="mdlCadParceiros" tabindex="-1" data-bs-backdrop="static" style="margin-top: 0px;" 
+<div class="modal modal-cadastro-parceiros" id="mdlCadParceiros" tabindex="-1" data-bs-backdrop="static"
     data-bs-keyboard="false" aria-labelledby="staticBackdropLabel" 
-    aria-hidden="true">
+    aria-hidden="true" style="height: 80%;">
     <div class="modal-dialog modal-lg modal-dialog-scrollable altura-modal-parceiro" >
       <div class="modal-content">
-        <div class="modal-header">
+        <div class="modal-header cabecalho-modal-parceiro">
           <h5 class="modal-title">Cadastro de Parceiros</h5>
           <div>
             <div class="input-group" align="right">
@@ -22,30 +22,26 @@
               <button type="button" class="btn btn-danger btn-rounded btn-icon" id="btnClose" align=right>
                 <i class="ti-close"></i>
               </button>
-              <div id="paginacaoParceiro" style="display: none;"></div>
-
             </div>
           </div>  
         </div>
-        <div class="modal-body"  style="margin: 3px;">
-          <div class="card-body">
-            <ul class="nav nav-pills nav-pills-success" id="pills-tab" role="tablist">
-              <li class="nav-item nav-item-cadastro-parceiros">
+        <div class="corpo-modal-parceiros modal-body">
+          <div class="card-body body-do-card">
+            <ul class="nav nav-pills lista-navegacao nav-pills-primary" id="pills-tab" role="tablist">
+              <li class="nav-item btn-item-parceiros">
                 <a class="nav-link active text-black" id="pills-pessoa-tab" data-bs-toggle="pill" href="#pills-pessoa" role="tab" aria-controls="pills-pessoa" aria-selected="true">Pessoa Física/Jurídica</a>
               </li>
-              <li class="nav-item">
-                <a class="nav-link" id="pills-endereco-tab" data-bs-toggle="pill" href="#pills-endereco" role="tab" aria-controls="pills-endereco" aria-selected="false">endereco</a>
+              <li class="nav-item btn-item-parceiros">
+                <a class="nav-link text-black" id="pills-endereco-tab" data-bs-toggle="pill" href="#pills-endereco" role="tab" aria-controls="pills-endereco" aria-selected="false">Endereço</a>
               </li>
-              <li class="nav-item">
-                <a class="nav-link" id="pills-contatos-tab" data-bs-toggle="pill" href="#pills-contatos" role="tab" aria-controls="pills-contatos" aria-selected="false">contatos</a>
+              <li class="nav-item btn-item-parceiros">
+                <a class="nav-link text-black" id="pills-contatos-tab" data-bs-toggle="pill" href="#pills-contatos" role="tab" aria-controls="pills-contatos" aria-selected="false">Contatos</a>
               </li>
-              <li class="nav-item">
-                <a class="nav-link" id="pills-comercial-tab" data-bs-toggle="pill" href="#pills-comercial" role="tab" aria-controls="pills-comercial" aria-selected="false">comercial</a>
+              <li class="nav-item btn-item-parceiros">
+                <a class="nav-link text-black" id="pills-comercial-tab" data-bs-toggle="pill" href="#pills-comercial" role="tab" aria-controls="pills-comercial" aria-selected="false">Comercial</a>
               </li>   
-              <li class="nav-item">
-              </li> 
             </ul>
-            <div class="tab-content" id="pills-tabContent">
+            <div class="tab-content conteudo-tabs" id="pills-tabContent">
               <div class="tab-pane fade active show" id="pills-pessoa" role="tabpanel" aria-labelledby="pills-pessoa-tab">
                 <div class="media">
                     <!--Trecho Pessoas Fisicas/Juridicas-->
@@ -58,7 +54,7 @@
                                 id="acaoForm" name="acaoForm">
                         <input type="hidden" class="form-control form-control-sm" 
                                 id="idEndereco" name="idEndereco">                                 
-                        <div class="input-group form-group form-floating mb-1 pt-1">
+                        <div class="input-group form-group form-floating pt-1">
                           <input type="text" class="form-control small  form-control-sm" id="cnpjMdl" name="cnpjMdl" placeholder="Cpf/Cnpj" aria-label="Search" aria-describedby="basic-addon2">
                           <label class="text-secondary" for="cnpjMdl">CPF/CNPJ:</label>
                           <div class="input-group-append">
@@ -68,26 +64,26 @@
                           </div>
                         </div>
                       </div>
-                      <div class="col-sm-5 mb-1 form-group">
-                        <div class="form-floating mb-3  text-primary">
-                          <input type="text" class="form-control" id="insc_estMdl" name="insc_estMdl" placeholder="Inscrição Estadual">
+                      <div class="col-sm-5 form-group">
+                        <div class="form-floating   text-primary">
+                          <input type="text" class="form-control mt-1" id="insc_estMdl" name="insc_estMdl" placeholder="Inscrição Estadual">
                           <label for="insc_estMdl">Insc. Est:</label>
                         </div>
                       </div>
-                      <div class="col-sm-6 mb-1 form-group">
-                          <div class="form-floating mb-3  text-primary">
+                      <div class="col-sm-6 form-group">
+                          <div class="form-floating   text-primary">
                             <input type="text" class="form-control" id="razaoMdl" name="razaoMdl" placeholder="Nome/Razão Social">
                             <label for="razaoMdl">Nome/Razão Social</label>
                           </div>
                       </div>
-                      <div class="col-sm-6 mb-1 form-group">
-                        <div class="form-floating mb-3  text-primary">
+                      <div class="col-sm-6 form-group">
+                        <div class="form-floating   text-primary">
                           <input type="text" class="form-control" id="fantasiaMdl" name="fantasiaMdl" placeholder="Nome/Razão Social">
                           <label for="fantasiaMdl">Nome Fantasia</label>
                         </div>
                       </div>
-                      <div class="col-sm-12 mb-1 form-group">
-                        <div class="form-floating mb-3  text-primary">
+                      <div class="col-sm-12 form-group">
+                        <div class="form-floating   text-primary">
                           <input type="text" class="form-control" id="obsMdl" name="obsMdl" placeholder="Nome/Razão Social">
                           <label for="obsMdl">Observação</label>
                         </div>
@@ -99,8 +95,8 @@
                 <div class="media">
                     <!--Trecho Endereço-->
                     <div class="form-group row">
-                      <div class="col-sm-4 form-group pr-1">
-                        <div class="input-group form-group form-floating">
+                      <div class="col-sm-4 form-group">
+                        <div class="input-group form-floating">
                           <input type="text" class="form-control small  form-control-sm text-primary" id="cepMdl" name="cepMdl" placeholder="M³" aria-label="Search" aria-describedby="basic-addon2">
                           <label class="text-secondary" for="cepMdl">Cep</label>
                           <div class="input-group-append">
@@ -110,38 +106,38 @@
                           </div>
                         </div>
                       </div>
-                      <div class="col-sm-8 mb-3 form-group">
-                        <div class="form-floating mb-3  text-primary">
+                      <div class="col-sm-8  form-group">
+                        <div class="form-floating   text-primary">
                           <input type="text" class="form-control" id="ruaMdl" name="ruaMdl" placeholder="Nome/Razão Social">
                           <label for="ruaMdl">Rua</label>
                         </div>
                       </div>
-                      <div class="col-sm-2 mb-3 form-group">
-                        <div class="form-floating mb-3  text-primary">
+                      <div class="col-sm-2  form-group">
+                        <div class="form-floating   text-primary">
                           <input type="text" class="form-control" id="numeroMdl" name="numeroMdl" placeholder="Nome/Razão Social">
                           <label for="numeroMdl">Número</label>
                         </div>
                       </div>
-                      <div class="col-sm-3 mb-3 form-group">
-                        <div class="form-floating mb-3  text-primary">
+                      <div class="col-sm-3  form-group">
+                        <div class="form-floating   text-primary">
                           <input type="text" class="form-control" id="complementoMdl" id="complementoMdl" placeholder="Nome/Razão Social">
                           <label for="complementoMdl">Complemento</label>
                         </div>
                       </div>
-                      <div class="col-sm-7 mb-3 form-group">
-                        <div class="form-floating mb-3  text-primary">
+                      <div class="col-sm-7  form-group">
+                        <div class="form-floating   text-primary">
                           <input type="text" class="form-control" id="bairroMdl" name="bairroMdl"  placeholder="Nome/Razão Social">
                           <label for="bairroMdl">Bairro</label>
                         </div>
                       </div>
-                      <div class="col-sm-9 mb-3 form-group">
-                        <div class="form-floating mb-3  text-primary">
+                      <div class="col-sm-9  form-group">
+                        <div class="form-floating   text-primary">
                           <input type="text" class="form-control" id="cidadeMdl" name="cidadeMdl" placeholder="Nome/Razão Social">
                           <label for="cidadeMdl">Cidade</label>
                         </div>
                       </div>
-                      <div class="col-sm-3 mb-3 form-group">
-                        <div class="form-floating mb-3  text-primary">
+                      <div class="col-sm-3  form-group">
+                        <div class="form-floating   text-primary">
                           <input type="text" class="form-control" id="ufMdl" name="ufMdl" placeholder="Nome/Razão Social">
                           <label for="ufMdl">Uf</label>
                         </div>
@@ -154,8 +150,8 @@
                   <div class="form-group row">
                     <input type="hidden" class="form-control form-control-sm" 
                     name="idContato" id="idContato">
-                    <div class="col-sm-2 mb-3 pr-1 form-group">
-                      <div class="form-floating mb-3 text-primary">
+                    <div class="col-sm-2  pr-1 form-group">
+                      <div class="form-floating  text-primary">
                         <select type="text" class="form-select form-control-sm"
                         name="tipo_contato" id="tipo_contato" placeholder="Tipo contato">
                           <option value="0">Selecione o tipo do contato.</option>
@@ -173,20 +169,20 @@
                         <label for="tipo_contato">Tipo Contato</label>
                       </div>
                     </div>
-                    <div class="col-sm-2 mb-3 pr-1 pl-1 form-group">
-                      <div class="form-floating mb-3  text-primary">
+                    <div class="col-sm-2  pr-1 pl-1 form-group">
+                      <div class="form-floating   text-primary">
                         <input type="text" class="form-control" id="cargo" name="cargo" placeholder="Cargo">
                         <label for="cargo">Cargo</label>
                       </div>
                     </div>
-                    <div class="col-sm-2 mb-3 pr-1 pl-1 form-group">
-                      <div class="form-floating mb-3  text-primary">
+                    <div class="col-sm-2  pr-1 pl-1 form-group">
+                      <div class="form-floating   text-primary">
                         <input type="text" class="form-control" id="nome" name="nome" placeholder="Nome contato">
                         <label for="nome">Nome contato</label>
                       </div>
                     </div>
-                    <div class="col-sm-3 mb-3 pl-1 form-group">
-                      <div class="form-floating mb-3  text-primary">
+                    <div class="col-sm-3  pl-1 form-group">
+                      <div class="form-floating   text-primary">
                         <input type="text" class="form-control" id="contato" name="contato" placeholder="Contato">
                         <label for="contato">Contato</label>
                       </div>
@@ -209,7 +205,7 @@
                         </div>
                       </div>
                     </div>
-                    <div class="col-sm-12 mb-3 form-group" >
+                    <div class="col-sm-12  form-group" >
                         <h4 class="card-title">Contatos</h4>
                         <div class="card">  
                           <div class="table-responsive">
@@ -235,30 +231,29 @@
               </div>
               <div class="tab-pane fade" id="pills-comercial" role="tabpanel" aria-labelledby="pills-comercial-tab">
                 <div class="media">
-                    <div class="row">
-                      <div class="col-12">
-                        <table class="table table-striped table-sm" id="relatorioTabelaParceiro">
-                          <thead>
-                            <tr>
-                              <th scope="col"></th>
-                              <th scope="col">Id</th>
-                              <th scope="col">Descrição</th>
-                              <th scope="col">Mínimo</th>
-                              <th scope="col">Frete</th>
-                              <th scope="col">Advalor</th>
-                              <th scope="col">Gris</th>
-                              <th scope="col">Despacho</th>
-                              <th scope="col">Pedágio</th>
-                              <th scope="col">Outros</th>                            
-                              <th scope="col"></th>
-                              <th scope="col"></th>
-                            </tr>
-                          </thead>
-                          <tbody id="tbodyTabelaParceiro">
-                          </tbody>
-                        </table>
-                      </div>                  
-                    </div>
+                  <div class="col-12">
+                    <table class="table table-striped table-sm" id="relatorioTabelaParceiro">
+                      <thead>
+                        <tr>
+                          <th scope="col"></th>
+                          <th scope="col">Id</th>
+                          <th scope="col">Descrição</th>
+                          <th scope="col">Mínimo</th>
+                          <th scope="col">Frete</th>
+                          <th scope="col">Advalor</th>
+                          <th scope="col">Gris</th>
+                          <th scope="col">Despacho</th>
+                          <th scope="col">Pedágio</th>
+                          <th scope="col">Outros</th>                            
+                          <th scope="col"></th>
+                          <th scope="col"></th>
+                        </tr>
+                      </thead>
+                      <tbody id="tbodyTabelaParceiro">
+                      </tbody>
+                    </table>
+                    <div id="paginacaoParceiro"></div>
+                  </div>                  
                 </div>
               </div>
             </div>

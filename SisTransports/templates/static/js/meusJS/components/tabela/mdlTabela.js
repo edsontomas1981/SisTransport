@@ -12,7 +12,7 @@ const conexaTabelas =async (url,dados)=>{
 
 function populaTabela(response) {
     $('#numTabela').val(response.tabela.id)
-    populaFaixas($('#numTabela').val())
+    populaFaixas(response.tabela.id)
     $('#descTabela').val(response.tabela.descricao)
     $('#tabBloq').prop("checked", response.tabela.bloqueada);
     $('#icms').prop("checked", response.tabela.icmsIncluso);

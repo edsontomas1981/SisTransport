@@ -139,8 +139,9 @@ $('#btnNovaFaixa').on('click', function(e) {
 
 function populaFaixas(idTabela) {
     limpaCamposFaixa();
+    console.log(idTabela)
     let postData = '&numTabela=' + idTabela;
-    let dados = { 'url': 'faixa/readFaixas/', 'id': postData }
+    let dados = { 'url': '/comercial/faixa/readFaixas/', 'id': postData }
     conectaBdGeral(dados, tabelaFaixas)
 }
 

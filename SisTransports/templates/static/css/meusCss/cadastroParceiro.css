@@ -1,3 +1,32 @@
-.altura-modal-parceiro{
-    margin-top: 3px;
+.corpo-modal-parceiros {
+    padding: 0px 0px !important;
+}
+
+.body-do-card{
+    padding: 0.25rem !important;
+}
+.conteudo-tabs{
+    padding: 0rem 0rem !important;
+    margin-left: 3px !important;
+    margin-right: 3px !important;
+    margin-top: 3px !important;
+    border: none !important;
+}
+
+.btn-item-parceiros{
+    padding: 1px !important;
+    margin-bottom: 3px !important;
+}
+
+.cabecalho-modal-parceiro{
+    padding: 25px 26px 0px 25px !important; 
+}
+
+.modal-cadastro-parceiros{
+    margin-top: 0px !important;
+}
+
+.lista-navegacao{
+    padding: 10px 10px 7px 10px !important;
+    border-bottom: none !important;
 }

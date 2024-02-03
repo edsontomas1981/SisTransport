@@ -5,9 +5,9 @@
 {% block 'conteudo'%}
 
   <form method="POST">
-    <div class="row p-0">
+    <div class="row">
       <div class="col-sm-12 col-12">
-        <ul class="nav nav-pills nav-pills-primary" id="pills-tab" role="tablist">
+        <ul class="nav nav-pills nav-pills-primary pill-preDtc" id="pills-tab" role="tablist">
           <li class="nav-item pl-0 " role="presentation">
             <button class="nav-link active p-1" id="pills-dtc-tab" 
                     data-bs-toggle="pill" data-bs-target="#pills-dtc" type="button" 
@@ -59,7 +59,7 @@
         </ul>
       </div>
     </div>
-    <div class="tab-content" id="pills-tabContent">
+    <div class="tab-content tab-preDtc" id="pills-tabContent">
         <div class="tab-pane fade" id="pills-calculoFrete"
               role="tabpanel" aria-labelledby="pills-calculoFrete-tab">
           {% include 'calculoFrete.html' %}
@@ -83,8 +83,6 @@
         <div class="tab-pane fade" id="pills-nf" role="tabpanel" aria-labelledby="pills-nf-tab">
           {% include 'notasFiscais.html' %}
         </div>
-
-          
         <!-- <div class="tab-pane fade" id="pills-cotacao" role="tabpanel" aria-labelledby="pills-cotacao-tab">cotacao</div> -->
       </div>
     </div>

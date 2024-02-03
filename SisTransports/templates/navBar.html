@@ -1,5 +1,5 @@
 {% load static %}
-<div class="container-fluid" id="navbar">
+<div id="navbar">
     <nav class="navbar navbar-expand-md fixed-top navbar-light bg-white p-0 altura-navbar">
         <a class="navbar-brand mr-4" href="#">
             <div>
@@ -10,10 +10,83 @@
             <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="navbarNav">
-            <button type="button" class="btn btn-toggle-collapse" data-toggle="collapse" data-target="#sidebar">
-                <i class="ti-menu-alt"></i>              
-            </button>
             <ul class="navbar-nav">
+                <li class="nav-item">
+                    <a class="nav-link" href="#" id="navbarDropdown1" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Cadastros</a>
+                    <div class="dropdown-menu" id="dropdown-menu1" aria-labelledby="navbarDropdown1">
+                        <div class="container">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="row d-flex">
+                                        <div class="input-group-append">
+                                            <div class="fa-icon text-center">
+                                                <span class="fa fa-briefcase icone-menu"></span>
+                                            </div>
+                                            <div class="d-flex flex-column">
+                                                <a class="dropdown-item" data-bs-toggle="modal" data-bs-target="#mdlCadParceiros">
+                                                    <h6 class="mb-0">Parceiros</h6>
+                                                    <small class="text-muted">Cadastro de Parceiros</small>
+                                                </a>
+                                            </div>                                            
+                                        </div>
+                                    </div>
+                                    <div class="row d-flex">
+                                        <div class="input-group-append">
+                                            <div class="fa-icon text-center">
+                                                <span class="fa fa-truck icone-menu"></span>
+                                            </div>
+                                            <div class="d-flex flex-column">
+                                                <a class="dropdown-item" data-bs-toggle="modal" data-bs-target="#cadastroVeiculo">
+                                                    <h6 class="mb-0">Veiculos</h6>
+                                                    <small class="text-muted">Cadastro Veiculos</small>
+                                                </a>
+                                            </div>                                            
+                                        </div>
+                                    </div>
+                                    <div class="row d-flex">
+                                        <div class="input-group-append">
+                                            <div class="fa-icon text-center">
+                                                <span class="fa fa-road icone-menu" aria-hidden="true"></span>
+                                            </div>
+                                            <div class="d-flex flex-column">
+                                                <a class="dropdown-item" data-bs-toggle="modal" data-bs-target="#mdlRotas">
+                                                    <h6 class="mb-0">Rotas</h6>
+                                                    <small class="text-muted">Cadastro de Rotas</small>
+                                                </a>
+                                            </div>                                            
+                                        </div>
+                                    </div> 
+                                    <div class="row d-flex">
+                                        <div class="input-group-append">
+                                            <div class="fa-icon text-center">
+                                                <span class="fa fa-calculator icone-menu" aria-hidden="true"></span>
+                                            </div>
+                                            <div class="d-flex flex-column">
+                                                <a class="dropdown-item" data-bs-toggle="modal" data-bs-target="#mdlTabFrete">
+                                                    <h6 class="mb-0">Tabelas de Frete</h6>
+                                                    <small class="text-muted">Cadastro de Tabelas de Frete</small>
+                                                </a>
+                                            </div>                                            
+                                        </div>
+                                    </div>    
+                                    <div class="row d-flex">
+                                        <div class="input-group-append" >
+                                            <div class="fa-icon text-center ">
+                                                <span class="fa fa-id-card icone-menu" aria-hidden="true"></span>
+                                            </div>
+                                            <div class="d-flex flex-column">
+                                                <a class="dropdown-item" data-bs-toggle="modal" data-bs-target="#cadastroMotorista">
+                                                    <h6 class="mb-0">Motoristas</h6>
+                                                    <small class="text-muted">Cadastro de Motoristas</small>
+                                                </a>
+                                            </div>                                            
+                                        </div>
+                                    </div>                                                                                                             
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </li>
                 <li class="nav-item">
                     <a class="nav-link" href="#" id="navbarDropdown1" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Operacional</a>
                     <div class="dropdown-menu" id="dropdown-menu1" aria-labelledby="navbarDropdown1">

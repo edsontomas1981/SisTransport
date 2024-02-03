@@ -58,13 +58,20 @@
         {% include 'configuracoes.html'%}
         <!-- partial -->
         <div class="row">
-            <div class="container-fluid page-body-wrapper d-block">
+            <div class="container-fluid page-body-wrapper  d-block">
                 {% include 'sidebar.html'%}
                 <div>
-                    <div class="container-fluid d-flex flex-row ">
+                    <div class="d-flex flex-row bloco-conteudo">
                         {% block 'conteudo_container' %}{% endblock %} 
+                        {% include 'cadastroParceiros.html'%}
+                        {% include 'cadastroProprietario.html'%}
+                        {% include 'cadastroVeiculos.html'%}
+                        {% include 'cadastroMotoristas.html'%}  
+                        {% include 'mdlTabela.html' %} 
+                        {% include 'mdlRotas.html' %}       
+      
                         <div class="row">
-                            <div class="col-md-12 col-12 col-sm-12 col-xl-12 grid-margin pt-4 pl-4 pr-4">
+                            <div class="col-md-12 col-12 col-sm-12 col-xl-12 grid-margin pl-4 pr-4">
                                 <div class="row">
                                     <!-- Conteudo -->
                                     <section class="mx-auto">
@@ -75,12 +82,6 @@
                                      
                                 </div>
                             </div>
-                            {% include 'cadastroParceiros.html'%}
-                            {% include 'cadastroProprietario.html'%}
-                            {% include 'cadastroVeiculos.html'%}
-                            {% include 'cadastroMotoristas.html'%}  
-                            {% include 'modalCadastroParceirosProprietario.html'%}
-                            {% include 'mdlTabela.html' %}        
                         </div>
                     </div>
                 </div>
@@ -107,8 +108,6 @@
 
     <script src="{% static 'js/meusJS/dadosEmpresa.js' %}"></script>
 
-
-
     <!-- Plugin js for this page -->
     <script src="{% static 'vendors/chart.js/Chart.min.js' %}"></script>
     <script src="{% static 'vendors/datatables.net/jquery.dataTables.js' %}"></script>
@@ -133,7 +132,9 @@
     <script src="{% static 'js/meusJS/cadastroProprietarios/btnSalvaProp.js' %}"></script>
     <script src="{% static 'js/meusJS/cadastroProprietarios/modalCadProprietario.js' %}"></script>
 
-    
+    <script src="{% static 'js/meusJS/municipios.js' %}"></script>
+    <script src="{% static 'js/meusJS/rotas.js' %}"></script>       
+
     <script src="{% static 'js/meusJS/cnpj.js' %}"></script>
     <script src="{% static 'js/meusJS/cadastroParceiros.js' %}"></script>
     <script src="{% static 'js/meusJS/cep.js' %}"></script>

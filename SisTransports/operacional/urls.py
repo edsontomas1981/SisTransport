@@ -38,4 +38,7 @@ urlpatterns = [
     path('update_proprietario/',viewsOperacional.update_proprietario, name='update_proprietario'),
      
     path('read_rotas/',viewsOperacional.readRota,name='read_rotas'),
+    path('rotas/',viewsOperacional.rotas,name='rotas'),
+
+
     ]

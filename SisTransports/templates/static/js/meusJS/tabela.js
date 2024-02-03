@@ -311,11 +311,6 @@ const populaSelectTabelas = (idSelect,dados) => {
     }
 
 }
-
-
-
-
-
 const populaRelatTabelas= async () => {
     let botoes={
         alterar: {
