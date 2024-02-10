@@ -1,9 +1,9 @@
 .altura-navbar{
-    height: 40px;
+    height: 40px !important;
 }
 
 .bloco-conteudo{
-    padding-top: 0px;
+    padding: 0px 10px 0px 10px !important;
 }
 
 .tab-preDtc{
@@ -21,4 +21,29 @@
 
 .icone-menu{
     width: 50px !important;
+}
+
+.margin-topo{
+    margin-top: 0px !important;
+    margin-bottom: 0px !important;
+    padding-top: 0px !important; 
+    padding-left: 0px !important;
+}
+.margin-topo-modal{
+    margin-top: 0px !important;
+    margin-bottom: 0px !important;
+    padding-top: 0px !important; 
+    padding-left: 10px !important;
+}
+
+.conjunto-botoes{
+    margin-bottom: 3px !important;
+}
+
+.modal-altura{
+    position: fixed !important; 
+    top: 10px !important; 
+    left: 0px !important; 
+    right: 0px !important; 
+    margin: auto !important;
 }

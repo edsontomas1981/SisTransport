@@ -78,14 +78,20 @@ class VeiculoManager:
 
 
         # Atribui diretamente os valores aos atributos do objeto Veiculo.
-        instancia.proprietario_fk = dados['proprietario_fk']
-        instancia.placa = dados['placa']
-        instancia.marca = dados['marca']
-        instancia.modelo = dados['modelo']
-        instancia.ano_fabricacao = dados['ano_fabricacao']
-        instancia.cor = dados['cor']
-        instancia.renavam = dados['renavam']
-        instancia.chassi = dados['chassi']
+        instancia.proprietario_fk = dados.get('proprietario_fk')
+        instancia.placa = dados.get('placa', None)
+        instancia.marca = dados.get('marca', None)
+        instancia.modelo = dados.get('modelo', None)
+        instancia.ano_fabricacao = dados.get('ano_fabricacao', None)
+        instancia.cor = dados.get('cor', None)
+        instancia.renavam = dados.get('renavam', None)
+        instancia.chassi = dados.get('chassi', None)
+        instancia.ano_modelo = dados.get('ano_modelo', None)
+        instancia.cidade = dados.get('cidade', None)
+        instancia.numero_frota = dados.get('numero_frota', None)
+        instancia.capacidade_kg = dados.get('capacidade_kg', None)
+        instancia.capacidade_cubica = dados.get('capacidade_cubica', None)
+        instancia.tara = dados.get('tara', None)
 
     @classmethod
     def create_veiculo(cls, dados):

@@ -6,7 +6,7 @@ class Parceiro {
                       mostrar: {
                         classe: "btn-primary text-white",
                         texto: '<i class="fa fa-print" aria-hidden="true"></i>',
-                        callback: abrirMdlTabela
+                        // callback: abrirMdlTabela
                       }
                     };
     
@@ -179,7 +179,8 @@ class Parceiro {
   };
 
   openModalParceiro = () => {
-    $('#mdlCadParceiros').show();
+    openModal('mdlCadParceiros')
+    // $('#mdlCadParceiros').show();
   };
 
   aguardaMdl = () => {
@@ -244,18 +245,18 @@ class Parceiro {
   }
 }
 
-let mdlCadParceiros = document.getElementById('mdlCadParceiros')
-let flag = false
+// let mdlCadParceiros = document.getElementById('mdlCadParceiros')
+// let flag = false
 
-const abrirMdlTabela = (e)=>{
-  mdlCadParceiros.style.display = 'none'
-  flag = true 
-  mostrarTabela(e)
-}
-document.getElementById('btnCloseTabelaFrete').addEventListener('click',()=>{
-  if (flag){
-    flag = false;
-    mdlCadParceiros.style.display = 'block'
-  }
-})
+// const abrirMdlTabela = (e)=>{
+//   mdlCadParceiros.style.display = 'none'
+//   flag = true 
+//   mostrarTabela(e)
+// }
+// document.getElementById('btnCloseTabelaFrete').addEventListener('click',()=>{
+//   if (flag){
+//     flag = false;
+//     mdlCadParceiros.style.display = 'block'
+//   }
+// })
 

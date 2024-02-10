@@ -7,7 +7,7 @@
 <div class="modal modal-cadastro-parceiros" id="mdlCadParceiros" tabindex="-1" data-bs-backdrop="static"
     data-bs-keyboard="false" aria-labelledby="staticBackdropLabel" 
     aria-hidden="true" style="height: 80%;">
-    <div class="modal-dialog modal-lg modal-dialog-scrollable altura-modal-parceiro" >
+    <div class="modal-dialog modal-lg modal-dialog-scrollable margin-topo-modal" >
       <div class="modal-content">
         <div class="modal-header cabecalho-modal-parceiro">
           <h5 class="modal-title">Cadastro de Parceiros</h5>
@@ -19,7 +19,7 @@
               <button type="button" class="btn btn-success btn-rounded btn-icon" id="salvaParceiro" align=right>            
                 <i class="ti-save"></i>
               </button>
-              <button type="button" class="btn btn-danger btn-rounded btn-icon" id="btnClose" align=right>
+              <button type="button" class="btn btn-danger btn-rounded btn-icon" id="btnClose" onclick="closeModal()" align=right>
                 <i class="ti-close"></i>
               </button>
             </div>
@@ -256,16 +256,15 @@
                   </div>                  
                 </div>
               </div>
-            </div>
           </div>
-
-            <div id="loader-parceiro" style="display:none;">
-              <div class="col-md-12 col-sm-6 grid-margin stretch-card">
-                <div class="spinner-grow text-success" role="status">
-                  <span class="visually-hidden">Loading...</span>
-                </div>
+          </div>
+          <div id="loader-parceiro" style="display:none;">
+            <div class="col-md-12 col-sm-6 grid-margin stretch-card">
+              <div class="spinner-grow text-success" role="status">
+                <span class="visually-hidden">Loading...</span>
               </div>
             </div>
+          </div>
           </div>
         </div>
     </div>

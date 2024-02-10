@@ -34,16 +34,26 @@ class VeiculoManagerTestCase(TestCase):
         }       
 
     def dados_cadastrais(self,placa='ABC123'):
-        return {
-            'proprietario_fk': self.proprietario,
+        # Dados de exemplo para o teste
+        dados_veiculo = {
+            'proprietario_fk': self.proprietario,  # Substitua pelo ID do proprietário desejado
+            'cidade': 'Guarulhos',
+
             'placa': placa,
-            'marca': 'Ford',
-            'modelo': 'Fiesta',
-            'ano_fabricacao': 2022,
-            'cor': 'Azul',
             'renavam': '123456789',
-            'chassi': 'ABCDEF12345678901',
-            'criado_por_id': self.user.id
+            'chassi': 'ABCDEFG123456789',
+            'marca': 'Ford',
+            'modelo': 'Focus',
+            'cor': 'Preto',
+            'ano_fabricacao': 2022,
+            'ano_modelo':2022,
+            'numero_rastreados':168555665,
+            'numero_frota':4044,
+
+            'capacidade_kg':27000,
+            'capacidade_cubica':35,            
+            'tara':27000,
+            'criado_por_id': 1  # Substitua pelo ID do usuário criador desejado
         }
 
     def criar_proprietario(self):
@@ -85,13 +95,22 @@ class VeiculoManagerTestCase(TestCase):
         # Dados de exemplo para o teste
         dados_veiculo = {
             'proprietario_fk': self.proprietario,  # Substitua pelo ID do proprietário desejado
+            'cidade': 'Guarulhos',
+
             'placa': 'ABC123',
-            'marca': 'Ford',
-            'modelo': 'Focus',
-            'ano_fabricacao': 2022,
-            'cor': 'Preto',
             'renavam': '123456789',
             'chassi': 'ABCDEFG123456789',
+            'marca': 'Ford',
+            'modelo': 'Focus',
+            'cor': 'Preto',
+            'ano_fabricacao': 2022,
+            'ano_modelo':2022,
+            'numero_rastreados':168555665,
+            'numero_frota':4044,
+
+            'capacidade_kg':27000,
+            'capacidade_cubica':35,            
+            'tara':27000,
             'criado_por_id': 1  # Substitua pelo ID do usuário criador desejado
         }
 
@@ -144,16 +163,24 @@ class VeiculoManagerTestCase(TestCase):
         self.assertEqual(veiculo.chassi, dados_veiculo['chassi'])
 
     def test_delete_veiculo(self):
-        # Dados de exemplo para o teste
         dados_veiculo = {
             'proprietario_fk': self.proprietario,  # Substitua pelo ID do proprietário desejado
+            'cidade': 'Guarulhos',
+
             'placa': 'ABC123',
-            'marca': 'Ford',
-            'modelo': 'Focus',
-            'ano_fabricacao': 2022,
-            'cor': 'Preto',
             'renavam': '123456789',
             'chassi': 'ABCDEFG123456789',
+            'marca': 'Ford',
+            'modelo': 'Focus',
+            'cor': 'Preto',
+            'ano_fabricacao': 2022,
+            'ano_modelo':2022,
+            'numero_rastreados':168555665,
+            'numero_frota':4044,
+
+            'capacidade_kg':27000,
+            'capacidade_cubica':35,            
+            'tara':27000,
             'criado_por_id': 1  # Substitua pelo ID do usuário criador desejado
         }
 
@@ -173,13 +200,22 @@ class VeiculoManagerTestCase(TestCase):
         # Dados de exemplo para o teste
         dados_veiculo = {
             'proprietario_fk': self.proprietario,  # Substitua pelo ID do proprietário desejado
+            'cidade': 'Guarulhos',
+
             'placa': 'ABC123',
-            'marca': 'Ford',
-            'modelo': 'Focus',
-            'ano_fabricacao': 2022,
-            'cor': 'Preto',
             'renavam': '123456789',
             'chassi': 'ABCDEFG123456789',
+            'marca': 'Ford',
+            'modelo': 'Focus',
+            'cor': 'Preto',
+            'ano_fabricacao': 2022,
+            'ano_modelo':2022,
+            'numero_rastreados':168555665,
+            'numero_frota':4044,
+
+            'capacidade_kg':27000,
+            'capacidade_cubica':35,            
+            'tara':27000,
             'criado_por_id': 1  # Substitua pelo ID do usuário criador desejado
         }
 
@@ -187,10 +223,30 @@ class VeiculoManagerTestCase(TestCase):
         result = self.veiculo_manager.create_veiculo(dados_veiculo)
         veiculo = Veiculo.objects.get(placa='ABC123')
 
-        self.dados = {
+                # Dados de exemplo para o teste
+        self.dados_alteracao =  {
+            'proprietario_fk': self.proprietario,  # Substitua pelo ID do proprietário desejado
+            'cidade': 'Guarulhos',
+
+            'placa': 'XYZ987',            
+            'renavam': '123456789123',
+            'chassi': 'ABCDEFG123456789123',
             'marca': 'Chevrolet',
-            'atualizado_por_id': self.user.id
+            'modelo': 'Corsa',
+            'cor': 'Preto',
+            'ano_fabricacao': 2022,
+            'ano_modelo':2023,
+            'numero_rastreados':168555665,
+            'numero_frota':4044,
+
+            'capacidade_kg':27000,
+            'capacidade_cubica':35,            
+            'tara':27000,
+            'atualizado_por_id': 1, 
         }
+
+
+        
 
         result = self.veiculo_manager.update_veiculo(veiculo.id, self.dados_alteracao)
         veiculo_atualizado = Veiculo.objects.get(id=veiculo.id)
@@ -201,15 +257,25 @@ class VeiculoManagerTestCase(TestCase):
     def test_get_veiculo_by_id(self):
         # Testa se é possível obter um veículo pelo ID.
         # Dados de exemplo para o teste
+        # Dados de exemplo para o teste
         dados_veiculo = {
             'proprietario_fk': self.proprietario,  # Substitua pelo ID do proprietário desejado
+            'cidade': 'Guarulhos',
+
             'placa': 'ABC123',
-            'marca': 'Ford',
-            'modelo': 'Focus',
-            'ano_fabricacao': 2022,
-            'cor': 'Preto',
             'renavam': '123456789',
             'chassi': 'ABCDEFG123456789',
+            'marca': 'Ford',
+            'modelo': 'Focus',
+            'cor': 'Preto',
+            'ano_fabricacao': 2022,
+            'ano_modelo':2022,
+            'numero_rastreados':168555665,
+            'numero_frota':4044,
+
+            'capacidade_kg':27000,
+            'capacidade_cubica':35,            
+            'tara':27000,
             'criado_por_id': 1  # Substitua pelo ID do usuário criador desejado
         }
 
@@ -223,15 +289,25 @@ class VeiculoManagerTestCase(TestCase):
         # Dados de exemplo para o teste
         dados_veiculo = {
             'proprietario_fk': self.proprietario,  # Substitua pelo ID do proprietário desejado
+            'cidade': 'Guarulhos',
+
             'placa': 'ABC123',
-            'marca': 'Ford',
-            'modelo': 'Focus',
-            'ano_fabricacao': 2022,
-            'cor': 'Preto',
             'renavam': '123456789',
             'chassi': 'ABCDEFG123456789',
+            'marca': 'Ford',
+            'modelo': 'Focus',
+            'cor': 'Preto',
+            'ano_fabricacao': 2022,
+            'ano_modelo':2022,
+            'numero_rastreados':168555665,
+            'numero_frota':4044,
+
+            'capacidade_kg':27000,
+            'capacidade_cubica':35,            
+            'tara':27000,
             'criado_por_id': 1  # Substitua pelo ID do usuário criador desejado
         }
+        
 
         # Chama o método create_veiculo
         result = self.veiculo_manager.create_veiculo(dados_veiculo)
@@ -240,15 +316,25 @@ class VeiculoManagerTestCase(TestCase):
         # Dados de exemplo para o teste
         dados_veiculo = {
             'proprietario_fk': self.proprietario,  # Substitua pelo ID do proprietário desejado
-            'placa': 'XYZ987',
-            'marca': 'Ford',
-            'modelo': 'Focus',
-            'ano_fabricacao': 2022,
-            'cor': 'Preto',
+            'cidade': 'Guarulhos',
+
+            'placa': 'XYZ987',            
             'renavam': '123456789123',
             'chassi': 'ABCDEFG123456789123',
+            'marca': 'Ford',
+            'modelo': 'Focus',
+            'cor': 'Preto',
+            'ano_fabricacao': 2022,
+            'ano_modelo':2022,
+            'numero_rastreados':168555665,
+            'numero_frota':4044,
+
+            'capacidade_kg':27000,
+            'capacidade_cubica':35,            
+            'tara':27000,
             'criado_por_id': 1  # Substitua pelo ID do usuário criador desejado
         }
+
 
         # Chama o método create_veiculo
         result = self.veiculo_manager.create_veiculo(dados_veiculo)
@@ -262,15 +348,25 @@ class VeiculoManagerTestCase(TestCase):
         # Dados de exemplo para o teste
         dados_veiculo = {
             'proprietario_fk': self.proprietario,  # Substitua pelo ID do proprietário desejado
+            'cidade': 'Guarulhos',
+
             'placa': 'ABC123',
-            'marca': 'Ford',
-            'modelo': 'Focus',
-            'ano_fabricacao': 2022,
-            'cor': 'Preto',
             'renavam': '123456789',
             'chassi': 'ABCDEFG123456789',
+            'marca': 'Ford',
+            'modelo': 'Focus',
+            'cor': 'Preto',
+            'ano_fabricacao': 2022,
+            'ano_modelo':2022,
+            'numero_rastreados':168555665,
+            'numero_frota':4044,
+
+            'capacidade_kg':27000,
+            'capacidade_cubica':35,            
+            'tara':27000,
             'criado_por_id': 1  # Substitua pelo ID do usuário criador desejado
         }
+        
 
         # Chama o método create_veiculo
         result = self.veiculo_manager.create_veiculo(dados_veiculo)
@@ -279,15 +375,25 @@ class VeiculoManagerTestCase(TestCase):
         # Dados de exemplo para o teste
         dados_veiculo = {
             'proprietario_fk': self.proprietario,  # Substitua pelo ID do proprietário desejado
-            'placa': 'XYZ987',
-            'marca': 'Ford',
-            'modelo': 'Focus',
-            'ano_fabricacao': 2022,
-            'cor': 'Preto',
+            'cidade': 'Guarulhos',
+
+            'placa': 'XYZ987',            
             'renavam': '123456789123',
             'chassi': 'ABCDEFG123456789123',
+            'marca': 'Ford',
+            'modelo': 'Focus',
+            'cor': 'Preto',
+            'ano_fabricacao': 2022,
+            'ano_modelo':2022,
+            'numero_rastreados':168555665,
+            'numero_frota':4044,
+
+            'capacidade_kg':27000,
+            'capacidade_cubica':35,            
+            'tara':27000,
             'criado_por_id': 1  # Substitua pelo ID do usuário criador desejado
         }
+
 
         # Chama o método create_veiculo
         result = self.veiculo_manager.create_veiculo(dados_veiculo)

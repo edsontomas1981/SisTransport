@@ -1,18 +1,215 @@
-<div class="modal" id="cadastroVeiculo" tabindex="-1">
-    <div class="modal-dialog">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title">Modal title</h5>
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-        </div>
-        <div class="modal-body">
-          <p>Modal body text goes here.</p>
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-          <button type="button" class="btn btn-primary">Save changes</button>
+<form id="frmCadastroVeiculos">
+  <div class="modal" id="cadastroVeiculo" tabindex="-1" data-bs-backdrop="static"
+      data-bs-keyboard="false">
+      <div class="modal-dialog modal-lg modal-altura">
+        <div class="modal-content">
+          <div class="modal-header cabecalho-modal-parceiro">
+            <h5 class="modal-title">Cadastro de Veículos</h5>
+            <div>
+              <div class="input-group mb-2" align="right">
+                <button type="button" class="btn btn-secondary btn-rounded btn-icon" id="btnLimpaVeiculo" align="right">            
+                  <i class="ti-write"></i>
+                </button>
+                <button type="button" class="btn btn-success btn-rounded btn-icon" id="salvaVeiculo" align="right">            
+                  <i class="ti-save"></i>
+                </button>
+                <button type="button" class="btn btn-danger btn-rounded btn-icon" id="btnCloseVeiculo" onclick="closeModal()" align="right">
+                  <i class="ti-close"></i>
+                </button>
+              </div>
+            </div>  
+          </div>
+          <div class="modal-body">
+            <!-- # Dados de exemplo para o teste
+            dados_veiculo = {
+                'proprietario_fk': self.proprietario,  # Substitua pelo ID do proprietário desejado
+                'cidade': 'Guarulhos',
+    
+                'placa': 'ABC123',
+                'renavam': '123456789',
+                'chassi': 'ABCDEFG123456789',
+                'marca': 'Ford',
+                'modelo': 'Focus',
+                'cor': 'Preto',
+                'ano_fabricacao': 2022,
+                'ano_modelo':2022,
+                'numero_rastreados':168555665,
+                'numero_frota':4044,
+    
+                'capacidade_kg':27000,
+                'capacidade_cubica':35,            
+                'tara':27000,
+                'criado_por_id': 1  # Substitua pelo ID do usuário criador desejado
+            } -->
+            <form id="frmVeiculos">
+              <div class="row">
+                <div class="col-sm-2 pb-0 pt-1 pl-1 pr-1 form-group margin-topo">
+                  <div class="form-group form-floating pt-1">
+                    <input type="text" class="form-control small  form-control-sm" id="placaProprietario" name="placaProprietario" placeholder="Placa" aria-label="Search" aria-describedby="basic-addon2">
+                    <label class="text-secondary" for="placaProprietario">Placa:</label>
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="form-group row  margin-topo-modal pl-5">
+                  <div class="col-sm-3 pb-0 pt-1 pl-0 pr-1 form-group margin-topo">
+                    <div class="input-group form-group form-floating pt-1">
+                      <input type="text" class="form-control small  form-control-sm" id="cnpjProprietario" name="cnpjProprietario" placeholder="Cpf/Cnpj" aria-label="Search" aria-describedby="basic-addon2">
+                      <label class="text-secondary" for="cnpjProprietario">CPF/CNPJ:</label>
+                      <div class="input-group-append">
+                        <a class="btn btn-primary" id="btnBuscaProprietario" onclick="openModal('cadastroProprietario')">
+                          <i class="fas fa-search fa-lg" style="width: 100%;"></i>   
+                        </a>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-sm-3 pb-0 pt-1 pl-1 pr-1 form-group margin-topo">
+                    <div class="form-group form-floating pt-1">
+                      <input type="text" class="form-control small  form-control-sm" id="nomeProprietario" name="nomeProprietario" placeholder="Nome/Razão Social" aria-label="Search" aria-describedby="basic-addon2">
+                      <label class="text-secondary" for="nomeProprietario">Nome/Razão Social:</label>
+                    </div>
+                  </div>
+
+                  <div class="col-sm-2 pb-0 pt-1 pl-1 pr-1 form-group margin-topo">
+                    <div class="form-floating pt-1">
+                      <select class="form-select" id="tipoVeiculo" aria-label="Floating label select example">
+                        <option selected>Selecione o tipo</option>
+                        <option value="1">Automóvel</option>
+                        <option value="2">Utilitário</option>
+                        <option value="3">3/4</option>
+                        <option value="4">Toco</option>
+                        <option value="5">Truck</option>
+                        <option value="6">Cavalo mecânico</option>
+                        <option value="7">Carreta</option>
+                        <option value="8">Outros</option>
+                      </select>
+                      <label for="tipoVeiculo">Tipo Veículo</label>
+                    </div>
+                  </div>  
+                  <div class="col-sm-2 pb-0 pt-1 pl-1 pr-1 form-group margin-topo">
+                    <div class="form-group form-floating pt-1">
+                      <select class="form-select" id="tipoCarroceria" aria-label="Floating label select example">
+                        <option selected>Selecione o tipo</option>
+                        <option value="1">Grade Baixa</option>
+                        <option value="2">Graneleiro</option>
+                        <option value="3">Container</option>
+                        <option value="4">Sider</option>
+                        <option value="5">Baú</option>
+                        <option value="6">Tanque</option>
+                        <option value="7">Prancha</option>
+                        <option value="8">Outros</option>
+                      </select>
+                      <label for="tipoCarroceria">Tipo Carroceria</label>
+                    </div>
+                  </div>
+                  <div class="col-sm-2 pb-0 pt-1 pl-1 pr-1 form-group margin-topo">
+                    <div class="form-group form-floating pt-1">
+                      <select class="form-select" id="marcaVeiculo" aria-label="Floating label select example">
+                        <option selected>Selecione a marca</option>
+                        <option value="1">Scania</option>
+                        <option value="2">Mercedez Bens</option>
+                        <option value="3">Volvo</option>
+                      </select>
+                      <label for="marcaVeiculo">Marca</label>
+                    </div>
+                  </div>
+                  <div class="col-sm-2 pb-0 pt-1 pl-1 pr-1 form-group margin-topo">
+                    <div class="form-group form-floating pt-1">
+                      <input type="text" class="form-control small  form-control-sm" id="modeloVeiculo" name="modeloVeiculo" placeholder="Placa" aria-label="Search" aria-describedby="basic-addon2">
+                    <label class="text-secondary" for="modeloVeiculo">Modelo:</label>
+                    </div>
+                  </div>           
+                  <div class="col-sm-2 pb-0 pt-1 pl-1 pr-1 form-group margin-topo">
+                    <div class="form-group form-floating pt-1">
+                      <input type="text" class="form-control small  form-control-sm" id="corVeiculo" name="corVeiculo" placeholder="Placa" aria-label="Search" aria-describedby="basic-addon2">
+                      <label class="text-secondary" for="corVeiculo">Cor:</label>
+                    </div>
+                  </div>  
+                  <div class="col-sm-2 pb-0 pt-1 pl-1 pr-1 form-group margin-topo">
+                    <div class="form-group form-floating pt-1">
+                      <input type="text" class="form-control small  form-control-sm" id="anoFab" name="anoFab" placeholder="Placa" aria-label="Search" aria-describedby="basic-addon2">
+                      <label class="text-secondary" for="anoFab">Ano Fabricação:</label>
+                    </div>
+                  </div>  
+                  <div class="col-sm-2 pb-0 pt-1 pl-1 pr-1 form-group margin-topo">
+                    <div class="form-group form-floating pt-1">
+                      <input type="text" class="form-control small  form-control-sm" id="anoModelo" name="anoModelo" placeholder="Placa" aria-label="Search" aria-describedby="basic-addon2">
+                      <label class="text-secondary" for="anoModelo">Ano Modelo:</label>
+                    </div>
+                  </div>  
+                  <div class="col-sm-2 pb-0 pt-1 pl-1 pr-1 form-group margin-topo">
+                    <div class="form-group form-floating pt-1">
+                      <select class="form-select" id="tipoCombustivel" aria-label="Floating label select example">
+                        <option selected>Selecione o Combustível</option>
+                        <option value="1">Diesel</option>
+                        <option value="2">Eletrico</option>
+                        <option value="3">Gás Natural</option>
+                        <option value="4">Gasolina</option>
+                        <option value="5">Álcool</option>
+                        <option value="7">Outros</option>
+                      </select>
+                      <label for="tipoCombustivel">Tipo Combustível</label>
+                    </div>
+                  </div>
+                  <div class="col-sm-3 pb-0 pt-1 pl-1 pr-1 form-group margin-topo">
+                    <div class="form-group form-floating pt-1">
+                      <input type="text" class="form-control small  form-control-sm" id="renavam" name="renavam" placeholder="Placa" aria-label="Search" aria-describedby="basic-addon2">
+                      <label class="text-secondary" for="renavam">Renavam:</label>
+                    </div>
+                  </div>  
+                  <div class="col-sm-3 pb-0 pt-1 pl-1 pr-1 form-group margin-topo">
+                    <div class="form-group form-floating pt-1">
+                      <input type="text" class="form-control small  form-control-sm" id="chassisVeiculo" name="chassisVeiculo" placeholder="Placa" aria-label="Search" aria-describedby="basic-addon2">
+                      <label class="text-secondary" for="chassisVeiculo">Chassis:</label>
+                    </div>
+                  </div>  
+                  <div class="col-sm-2 pb-0 pt-1 pl-1 pr-1 form-group margin-topo">
+                    <div class="form-group form-floating pt-1">
+                      <input type="text" class="form-control small  form-control-sm margin-topo" id="cidadeVeiculo" name="cidadeVeiculo" placeholder="cidadeVeiculo" aria-label="Search" aria-describedby="basic-addon2">
+                      <label class="text-secondary" for="cidadeVeiculo">Cidade:</label>
+                    </div>
+                  </div>
+                  <div class="col-sm-2 pb-0 pt-1 pl-1 pr-1 form-group margin-topo">
+                    <div class="form-group form-floating pt-1">
+                      <input type="text" class="form-control small  form-control-sm margin-topo" id="ufVeiculo" name="ufVeiculo" placeholder="Placa" aria-label="Search" aria-describedby="basic-addon2">
+                      <label class="text-secondary" for="ufVeiculo">Uf:</label>
+                    </div>
+                  </div>  
+                  <div class="col-sm-2 pb-0 pt-1 pl-1 pr-1 form-group margin-topo">
+                    <div class="form-group form-floating pt-1">
+                      <input type="text" class="form-control small  form-control-sm" id="numeroFrota" name="numeroFrota" placeholder="Placa" aria-label="Search" aria-describedby="basic-addon2">
+                      <label class="text-secondary" for="numeroFrota">Frota:</label>
+                    </div>
+                  </div>
+                  <div class="col-sm-3 pb-0 pt-1 pl-1 pr-1 form-group margin-topo">
+                    <div class="form-group form-floating pt-1">
+                      <input type="text" class="form-control small  form-control-sm margin-topo" id="tara" name="tara" placeholder="Placa" aria-label="Search" aria-describedby="basic-addon2">
+                      <label class="text-secondary" for="tara">Tara</label>
+                    </div>
+                  </div>
+                  <div class="col-sm-3 pb-0 pt-1 pl-1 pr-1 form-group margin-topo">
+                    <div class="form-group form-floating pt-1">
+                      <input type="text" class="form-control small  form-control-sm margin-topo" id="capacidadeKg" name="capacidadeKg" placeholder="Placa" aria-label="Search" aria-describedby="basic-addon2">
+                      <label class="text-secondary" for="capacidadeKg">Capacidade Kg:</label>
+                    </div>
+                  </div>  
+                  <div class="col-sm-3 pb-0 pt-1 pl-1 pr-1 form-group margin-topo">
+                    <div class="form-group form-floating pt-1">
+                      <input type="text" class="form-control small  form-control-sm" id="capacidadeCubica" name="capacidadeCubica" placeholder="Placa" aria-label="Search" aria-describedby="basic-addon2">
+                      <label class="text-secondary" for="capacidadeCubica">Capacidade M³:</label>
+                    </div>
+                  </div>
+                  <div class="col-sm-3 pb-0 pt-1 pl-1 pr-1 form-group margin-topo">
+                    <div class="form-group form-floating pt-1">
+                      <input type="text" class="form-control small  form-control-sm" id="numeroRastreador" name="numeroRastreador" placeholder="Placa" aria-label="Search" aria-describedby="basic-addon2">
+                      <label class="text-secondary" for="numeroRastreador">Numero Rastreador:</label>
+                    </div>
+                  </div>                                                                                                                                                          
+                </div>
+              </div>
+            </form>
+          </div>
         </div>
       </div>
-    </div>
-</div>
-
+  </div>
+</form>

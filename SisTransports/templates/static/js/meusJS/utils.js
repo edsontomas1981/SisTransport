@@ -384,3 +384,42 @@ const msgAviso = (msg)=>{
     timer: 1500
   });
 }
+
+const obterDadosDoFormulario = (formularioId)=> {
+  const formulario = document.getElementById(formularioId);
+  const dados = {};
+
+  if (!formulario) {
+      console.error("Formulário não encontrado.");
+      return null;
+  }
+
+  // Loop através de todos os elementos do formulário
+  for (let i = 0; i < formulario.elements.length; i++) {
+      const elemento = formulario.elements[i];
+      // Verificar se o elemento tem um name atribuído
+      if (elemento.name) {
+          // Verificar o tipo de elemento
+          switch (elemento.type) {
+              case 'checkbox':
+                  // Se for um checkbox, armazenar true/false com base em checked status
+                  dados[elemento.name] = elemento.checked;
+                  break;
+              case 'radio':
+                  // Se for um radio button, armazenar o valor apenas se estiver marcado
+                  if (elemento.checked) {
+                      dados[elemento.name] = elemento.value;
+                  }
+                  break;
+              default:
+                  // Para outros tipos de elementos, armazenar o valor
+                  dados[elemento.name] = elemento.value;
+                  break;
+          }
+      }
+  }
+
+  return dados;
+}
+
+

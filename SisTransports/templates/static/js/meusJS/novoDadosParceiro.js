@@ -117,11 +117,11 @@ $('#btnFechar').on('click', function(e) {
     e.preventDefault();
 })
 
-$('#btnClose').on('click', function(e) {
-    $('#mdlCadParceiros').modal('hide'); 
-    closeModal();
-    e.preventDefault();
-})
+// $('#btnClose').on('click', function(e) {
+//     $('#mdlCadParceiros').modal('hide'); 
+//     closeModal();
+//     e.preventDefault();
+// })
 
 // funcoes diversas
 

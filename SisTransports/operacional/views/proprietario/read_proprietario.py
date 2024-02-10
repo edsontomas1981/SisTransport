@@ -14,6 +14,7 @@ def read_proprietario(request):
         data = json.loads(request.body.decode('utf-8'))
         data['usuario_cadastro'] = request.user 
         status=proprietario.buscar_proprietario_por_cnpj(data['cnpj_cpf'])
+        
         if status:
             if proprietario.obj_proprietario.id:
                 return JsonResponse({'status': 200,'dados':proprietario.obj_proprietario.to_dict()}) 

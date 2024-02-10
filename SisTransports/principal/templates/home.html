@@ -4,62 +4,106 @@
 
 {% block 'conteudo' %}
 <div class="row pt-3">
+  <div class="col-md-6 grid-margin stretch-card">
+    <div class="card">
+      <div class="card-body">
+        <p class="card-title">Order Details</p>
+        <p class="font-weight-500">The total number of sessions within the date range. It is the period time a
+          user is actively engaged with your website, page or app, etc</p>
+        <div class="d-flex flex-wrap mb-5">
+          <div class="me-5 mt-3">
+            <p class="text-muted">Order value</p>
+            <h3 class="text-primary fs-30 font-weight-medium">12.3k</h3>
+          </div>
+          <div class="me-5 mt-3">
+            <p class="text-muted">Orders</p>
+            <h3 class="text-primary fs-30 font-weight-medium">14k</h3>
+          </div>
+          <div class="me-5 mt-3">
+            <p class="text-muted">Users</p>
+            <h3 class="text-primary fs-30 font-weight-medium">71.56%</h3>
+          </div>
+          <div class="mt-3">
+            <p class="text-muted">Downloads</p>
+            <h3 class="text-primary fs-30 font-weight-medium">34040</h3>
+          </div>
+        </div>
+        <canvas id="coletasPorFilial" width="462" height="231" style="display: block; box-sizing: border-box; height: 231px; width: 462px;"></canvas>
+      </div>
+    </div>
+  </div>
+
+
+
+  <div class="col-md-3 mb-4 stretch-card transparent">
+    <div class="card card-tale">
+      <div class="card-body">
+        <canvas id="atrasoVsEmDia"></canvas>
+      </div>
+    </div>
+  </div>
+  <div class="col-md-3 mb-4 stretch-card transparent">
+    <div class="card bg-primary">
+      <div class="card-body">
+        <canvas id="manifPorFilial"></canvas>
+      </div>
+    </div>
+  </div>
+  <div class="col-md-3 mb-4 stretch-card transparent">
+    <div class="card bg-secondary">
+      <div class="card-body">
+        <canvas id="ctesEmitidos"></canvas>
+      </div>
+    </div>
+  </div>
+  <div class="col-md-3 mb-4 stretch-card transparent">
+    <div class="card bg-warning">
+      <div class="card-body">
+        <canvas id="avarias"></canvas>
+      </div>
+    </div>
+  </div>
 	<div class="col-md-6 grid-margin stretch-card">
 	  <div class="card tale-bg">
 	    <div class="card-people mt-auto">
-	      <img src="{% static 'images/dashboard/people.svg' %}" alt="people">
+        <canvas id="entregasNoPrazoPorFilial" width="200" height="100" style="top:30px"></canvas>
 	      <div class="weather-info">
 	        <div class="d-flex">
 	          <div>
-	            <h2 class="mb-0 font-weight-normal"><i class="icon-sun mr-2"></i>31<sup>C</sup></h2>
 	          </div>
 	          <div class="ml-2">
-	            <h4 class="location font-weight-normal">Bangalore</h4>
-	            <h6 class="font-weight-normal">India</h6>
 	          </div>
 	        </div>
 	      </div>
 	    </div>
 	  </div>
 	</div>
-	<div class="col-md-6 grid-margin transparent">
-      <div class="row">
-        <div class="col-md-6 mb-4 stretch-card transparent">
-          <div class="card card-tale">
-            <div class="card-body">
-              <p class="mb-4">Today’s Bookings</p>
-              <p class="fs-30 mb-2">4006</p>
-              <p>10.00% (30 days)</p>
-            </div>
-          </div>
-        </div>
-        <div class="col-md-6 mb-4 stretch-card transparent">
-          <div class="card card-dark-blue">
-            <div class="card-body">
-              <p class="mb-4">Total Bookings</p>
-              <p class="fs-30 mb-2">61344</p>
-              <p>22.00% (30 days)</p>
-            </div>
-          </div>
-        </div>
-        <div class="col-md-6 mb-4 stretch-card transparent">
-          <div class="card card-light-danger">
-            <div class="card-body">
-              <p class="mb-4">Total Bookings</p>
-              <p class="fs-30 mb-2">61344</p>
-              <p>22.00% (30 days)</p>
-            </div>
-          </div>
-        </div>
-        <div class="col-md-6 mb-4 stretch-card transparent">
-          <div class="card card-light-blue">
-            <div class="card-body">
-              <p class="mb-4">Total Bookings</p>
-              <p class="fs-30 mb-2">61344</p>
-              <p>22.00% (30 days)</p>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>	
+  <div class="col-md-6 grid-margin stretch-card">
+	  <div class="card tale-bg">
+	    <div class="card-people mt-auto">
+        <canvas id="coletasPorFilial" width="200" height="100" style="top:30px"></canvas>
+	      <div class="weather-info">
+	        <div class="d-flex">
+	          <div>
+	          </div>
+	          <div class="ml-2">
+	          </div>
+	        </div>
+	      </div>
+	    </div>
+	  </div>
+	</div>
+</div>	
 {% endblock %}
+
+{% block 'js'%} 
+  <script src="{% static 'js/meusJS/home/graficos.js' %}"></script>
+  <script src="{% static 'js/meusJS/home/entregasPorFilial.js' %}"></script>
+  <script src="{% static 'js/meusJS/home/coletasPorFilial.js' %}"></script>
+  <script src="{% static 'js/meusJS/home/coletasEmAtrasoVsColetasEmDia.js' %}"></script>
+  <script src="{% static 'js/meusJS/home/cteEmitidos.js' %}"></script>
+  <script src="{% static 'js/meusJS/home/manifestoPorFilial.js' %}"></script>
+  <script src="{% static 'js/meusJS/home/avarias.js' %}"></script>
+
+{% endblock %}
+
