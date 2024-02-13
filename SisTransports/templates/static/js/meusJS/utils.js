@@ -200,6 +200,7 @@ function validateCNPJ(cnpj) {
 }
 
 const geraMensagemCamposFaltando=(campos)=>{
+  console.log(campos)
   let msgInicial = 'Os campos '
   let camposFaltando = ''
   for (let i = 0; i < campos.length; i++) {
@@ -267,7 +268,6 @@ const getDadosForm=(formularioId)=>{
 
   var formulario = document.getElementById(formularioId);
 
-
   if (formulario) {
       // Obtém todos os elementos do formulário
       var elementos = formulario.elements;
@@ -275,6 +275,7 @@ const getDadosForm=(formularioId)=>{
       // Itera sobre os elementos do formulário
       for (var i = 0; i < elementos.length; i++) {
           var campo = elementos[i];
+          console.log(campo)
 
           // Ignora os campos que não têm nome
           if (campo.name) {
@@ -384,42 +385,91 @@ const msgAviso = (msg)=>{
     timer: 1500
   });
 }
+const obterValorElemento = (elemento) => {
+  switch (elemento.tagName.toLowerCase()) {
+    case 'input':
+      if (elemento.type === 'checkbox') {
+        return elemento.checked;
+      } else if (elemento.type === 'radio' && elemento.checked) {
+        return elemento.value;
+      } else if (elemento.type !== 'radio') {
+        return elemento.value;
+      }
+      break;
+    case 'select':
+      return elemento.value;
+    case 'textarea':
+      return elemento.value;
+    default:
+      return null;
+  }
+};
 
-const obterDadosDoFormulario = (formularioId)=> {
+const validarCamposObrigatorios = (dados, camposObrigatorios) => {
+
+  let camposFaltantes = []
+
+  camposObrigatorios.forEach(element => {
+    if (dados[element]=='') {
+      camposFaltantes.push(element)
+      document.getElementById(element).classList.add('campo-vazio');
+    }else{
+      document.getElementById(element).classList.remove('campo-vazio');
+    }
+  });
+
+  return camposFaltantes;
+
+};
+
+const obterDadosDoFormulario = (formularioId, camposObrigatorios) => {
   const formulario = document.getElementById(formularioId);
-  const dados = {};
+  let dados = {};
 
   if (!formulario) {
-      console.error("Formulário não encontrado.");
-      return null;
+    console.error("Formulário não encontrado.");
+    return null;
   }
 
   // Loop através de todos os elementos do formulário
   for (let i = 0; i < formulario.elements.length; i++) {
-      const elemento = formulario.elements[i];
-      // Verificar se o elemento tem um name atribuído
-      if (elemento.name) {
-          // Verificar o tipo de elemento
-          switch (elemento.type) {
-              case 'checkbox':
-                  // Se for um checkbox, armazenar true/false com base em checked status
-                  dados[elemento.name] = elemento.checked;
-                  break;
-              case 'radio':
-                  // Se for um radio button, armazenar o valor apenas se estiver marcado
-                  if (elemento.checked) {
-                      dados[elemento.name] = elemento.value;
-                  }
-                  break;
-              default:
-                  // Para outros tipos de elementos, armazenar o valor
-                  dados[elemento.name] = elemento.value;
-                  break;
-          }
-      }
+    const elemento = formulario.elements[i];
+
+    // Verificar se o elemento tem um name atribuído
+    if (elemento.name) {
+      dados[elemento.name] = obterValorElemento(elemento);
+    }
+  } 
+
+// Verificar se todos os campos obrigatórios foram preenchidos
+  const camposPreenchidos = validarCamposObrigatorios(dados, camposObrigatorios);
+  
+  if (camposPreenchidos.length>0) {
+    msgAviso(geraMensagemCamposFaltando(camposPreenchidos))
+    return null;
   }
 
   return dados;
+};
+
+function adicionarDadosAoSelect(dados, selectId,id,valor) {
+  var select = document.getElementById(selectId);
+
+  
+  // Limpar opções existentes
+  select.innerHTML = '';
+  
+  // Adicionar nova opção padrão
+  var defaultOption = document.createElement('option');
+  defaultOption.value = '';
+  defaultOption.textContent = 'Selecione ...';
+  select.appendChild(defaultOption);
+
+  // Adicionar novas opções
+  dados.forEach(function(dado) {
+    var option = document.createElement('option');
+    option.value = dado[id];
+    option.textContent = dado[valor];
+    select.appendChild(option);
+  });
 }
-
-

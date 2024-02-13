@@ -3,7 +3,6 @@ var pilhaDeModais = new PilhaDeModais();
 
 // Função para abrir um modal e empilhar
 function openModal(modalId) {
-    console.log(pilhaDeModais)
     // Esconde o modal atual, se houver
     if (!pilhaDeModais.isEmpty()) {
         var currentModal = pilhaDeModais.peek();
@@ -17,7 +16,6 @@ function openModal(modalId) {
 
 // Função para fechar o modal atual e retornar ao anterior
 function closeModal() {
-    console.log(pilhaDeModais)
     // Remove o modal atual da pilha
     var currentModal = pilhaDeModais.pop();
 

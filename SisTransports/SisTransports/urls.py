@@ -17,11 +17,12 @@ from django.conf import settings
 from django.conf.urls.static import static
 from django.contrib import admin
 from django.urls import path, re_path, include
-
+# from SisTransports.operacional.admin import ModelosJSON
 urlpatterns = [
     path('' , include('principal.urls')),
-    # path('report_builder/', include('report_builder.urls')),
+
     path('admin/', admin.site.urls),
+
     path('auth/', include('autenticacao.urls')),
     path('comercial/' , include('comercial.urls')),
     path('faturamento/' , include('faturamento.urls')),

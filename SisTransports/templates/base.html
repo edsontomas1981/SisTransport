@@ -41,6 +41,10 @@
     
     <link rel="stylesheet" href="{% static 'css/meusCss/base.css' %}">
     <link rel="stylesheet" href="{% static 'css/meusCss/cadastroParceiro.css' %}">
+    <!-- Inclua a biblioteca Inputmask -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.inputmask/5.0.8/jquery.inputmask.min.js"></script>
+    <!-- Em seguida, inclua mascaraAnoModelo.js -->
+    <script src="{% static 'js/meusJS/home/mascaraAnoModelo.js' %}"></script>
 
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
@@ -124,7 +128,7 @@
     <!-- endinject -->
     <!-- Custom js for this page-->
     <script src="{% static 'js/dashboard.js' %}"></script>
-    <script src="{% static 'js/Chart.roundedBarCharts.js' %}"></script>
+    <!-- <script src="{% static 'js/Chart.roundedBarCharts.js' %}"></script> -->
 
     <!--Meus Js-->
     <script src="{% static 'js/meusJS/cadastroProprietarios/txtCnpjProp.js' %}"></script>
@@ -158,9 +162,11 @@
     <script src="{% static 'js/meusJS/modalCadVeiculos/modalCadastroVeiculos.js' %}"></script>
     
     <script src="{% static 'js/meusJS/modalCadVeiculos/txtPlaca.js' %}"></script>
+    <script src="{% static 'js/meusJS/modalCadVeiculos/selectVeiculo.js' %}"></script>
+
     <script src="{% static 'js/meusJS/pilhaDeModais.js' %}"></script>
     <script src="{% static 'js/meusJS/controleModais.js' %}"></script>
-
+    <script src="{% static 'js/meusJS/home/mascaraAnoModelo.js' %}"></script>
 
 </body>
 </html> 

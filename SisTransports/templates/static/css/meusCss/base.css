@@ -47,3 +47,9 @@
     right: 0px !important; 
     margin: auto !important;
 }
+
+.campo-vazio {
+    border-color: red;
+    background-color: #ffe6e6; /* ou outra cor de fundo desejada */
+}
+  

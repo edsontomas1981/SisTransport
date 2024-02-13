@@ -36,7 +36,10 @@ urlpatterns = [
     path('read_proprietario/', viewsOperacional.read_proprietario, name='read_proprietario'),
     path('read_proprietarios/', viewsOperacional.read_proprietarios, name='read_proprietarios'),
     path('update_proprietario/',viewsOperacional.update_proprietario, name='update_proprietario'),
-     
+
+    path('create_veiculo/',viewsOperacional.create_veiculo, name='create_veiculo'),
+    path('dados_combos_veiculos/',viewsOperacional.dados_cadatro_veiculo, name='cad_veiculo'),
+    
     path('read_rotas/',viewsOperacional.readRota,name='read_rotas'),
     path('rotas/',viewsOperacional.rotas,name='rotas'),
 
