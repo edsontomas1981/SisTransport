@@ -1,6 +1,7 @@
 let btnSalvaVeiculo = document.getElementById('salvaVeiculo')
 
 btnSalvaVeiculo.addEventListener('click',async()=>{
+    
     let camposObrigatorios = [
                         'placaProprietario','renavam',
                         'chassisVeiculo','tipoCombustivel',
@@ -9,16 +10,26 @@ btnSalvaVeiculo.addEventListener('click',async()=>{
                         'tipoVeiculo','tipoCarroceria',
                         'anoFabMod','cidadeVeiculo',
                         'ufVeiculo']
+
     let dados=obterDadosDoFormulario('frmCadastroVeiculos',camposObrigatorios)
 
-    let conexao = new Conexao('/operacional/create_veiculo/',dados);
-    try {
-        const result = await conexao.sendPostRequest();
-        return result
-        // Imprime a resposta JSON da solicitação POST
-    } catch (error) {
-        console.error(error); // Imprime a mensagem de erro
+    if(dados){
+        let resposta = await conecta('/operacional/create_veiculo/',dados)
+        switch (resposta.status) {
+            case 200:
+                msgOk('Veículo cadastrado com sucesso !')
+                break;
+            case 201:
+                msgOk('Veículo alterado com sucesso !')
+                break;
+            case 401:
+                msgErro('Erro de integridade !')
+                break;                
+            default:
+                break;
+        }
     }
-
+    
 })
+
 

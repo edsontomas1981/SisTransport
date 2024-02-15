@@ -5,6 +5,12 @@ class Tipo_Combustivel(models.Model):
     tipo_combustivel = models.CharField(max_length=255)
 
     @classmethod
-    def to_dict(cls):
+    def to_dict_all(cls):
         tipos_combustivel = cls.objects.values('id', 'tipo_combustivel')
         return list(tipos_combustivel)
+    
+    def to_dict(self):
+        return {
+            'id': self.id,
+            'tipo_veiculo': self.tipo_combustivel,
+            }

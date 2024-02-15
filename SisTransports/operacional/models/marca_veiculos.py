@@ -5,6 +5,13 @@ class Marca (models.Model):
     marca = models.CharField(max_length=255)
 
     @classmethod
-    def to_dict(cls):
+    def to_dict_all(cls):
         marcas = cls.objects.values('id', 'marca')
         return list(marcas)
+    
+    def to_dict(self):
+        return {
+            'id': self.id,
+            'tipo_veiculo': self.marca,
+            }
+        

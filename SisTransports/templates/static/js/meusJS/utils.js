@@ -473,3 +473,14 @@ function adicionarDadosAoSelect(dados, selectId,id,valor) {
     select.appendChild(option);
   });
 }
+
+const conecta = async (url,dados)=>{
+  let conexao = new Conexao('/operacional/create_veiculo/',dados);
+  try {
+      const result = await conexao.sendPostRequest();
+      return result
+      // Imprime a resposta JSON da solicitação POST
+  } catch (error) {
+      console.error(error); // Imprime a mensagem de erro
+  }
+}

@@ -51,6 +51,7 @@ from operacional.views.motoristas.update_motorista import update_motorista
 
 from operacional.views.veiculos.create_veiculo import create_veiculo
 from operacional.views.veiculos.dados_cadastro import dados_cadatro_veiculo
+from operacional.views.veiculos.read_veiculo_por_placa import read_veiculo_placa
 
 from operacional.views.cte.cria_cte import create_cte
 from operacional.views.cte.delete_cte import delete_cte

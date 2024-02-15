@@ -17,10 +17,10 @@ import json
 def dados_cadatro_veiculo(request):
     if request.method == "POST":
         try:
-            return JsonResponse({'status': 200, 'marcas' : Marca.to_dict(),
-                                'tipo_carroceria':Tipo_Carroceria.to_dict(),
-                                'tipo_combustivel':Tipo_Combustivel.to_dict(),
-                                'tipo_veiculo':Tipo_Veiculo.to_dict()
+            return JsonResponse({'status': 200, 'marcas' : Marca.to_dict_all(),
+                                'tipo_carroceria':Tipo_Carroceria.to_dict_all(),
+                                'tipo_combustivel':Tipo_Combustivel.to_dict_all(),
+                                'tipo_veiculo':Tipo_Veiculo.to_dict_all()
                                 })
         except ValidationError as ve:
             return JsonResponse({'status': 400, 'error': f'Erro de validação: {str(ve)}'})

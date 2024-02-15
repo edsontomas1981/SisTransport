@@ -5,6 +5,13 @@ class Tipo_Veiculo(models.Model):
     tipo_veiculo = models.CharField(max_length=255)
 
     @classmethod
-    def to_dict(cls):
+    def to_dict_all(cls):
         tipos_veiculo = cls.objects.values('id', 'tipo_veiculo')
         return list(tipos_veiculo)
+    
+    def to_dict(self):
+        return {
+            'id': self.id,
+            'tipo_veiculo': self.tipo_veiculo,
+            }
+    

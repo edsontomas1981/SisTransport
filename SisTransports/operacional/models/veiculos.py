@@ -39,6 +39,7 @@ class Veiculo(models.Model):
     chassi = models.CharField(max_length=20, unique=True)
     modelo = models.CharField(max_length=50)
     cidade = models.CharField(max_length=50,null=True)
+    uf = models.CharField(max_length=4,null=True)
     ano = models.CharField(max_length=5,default='00/00')
     cor = models.CharField(max_length=20)
     numero_rastreador = models.CharField(max_length=20,null=True)
@@ -72,6 +73,8 @@ class Veiculo(models.Model):
             'modelo': self.modelo,
             'ano': self.ano,
             'cidade': self.cidade,
+            'cor':self.cor,
+            'uf':self.uf,
             'renavam': self.renavam,
             'chassi': self.chassi,
             'numero_rastreador': self.numero_rastreador,
