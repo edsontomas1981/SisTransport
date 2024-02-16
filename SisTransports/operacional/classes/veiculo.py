@@ -71,7 +71,7 @@ class VeiculoManager:
         - QuerySet: QuerySet contendo o Veiculo associados à placa.
         """
         try:
-            return Veiculo.objects.get(placa=placa)
+            return Veiculo.objects.get(placa__iexact=placa)
         except Veiculo.DoesNotExist:
             return None
 

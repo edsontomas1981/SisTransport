@@ -35,8 +35,8 @@ class Veiculo(models.Model):
 
     placa = models.CharField(max_length=10, unique=True)
     marca = models.CharField(max_length=50)
-    renavam = models.CharField(max_length=20, unique=True)
-    chassi = models.CharField(max_length=20, unique=True)
+    renavam = models.CharField(max_length=20)
+    chassi = models.CharField(max_length=20)
     modelo = models.CharField(max_length=50)
     cidade = models.CharField(max_length=50,null=True)
     uf = models.CharField(max_length=4,null=True)

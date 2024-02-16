@@ -1,18 +1,48 @@
 <!-- Modal -->
 <div class="modal fade" id="cadastroMotorista" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-        <div class="modal-header">
-            <h5 class="modal-title" id="exampleModalLabel">Cadastro Motoristas</h5>
-            <button type="button" class="btn-close" onclick="closeModal()"></button>
-        </div>
-        <div class="modal-body">
-            ...
-        </div>
-        <div class="modal-footer">
-            <button type="button" class="btn btn-secondary">Close</button>
-            <button type="button" class="btn btn-primary">Save changes</button>
-        </div>
-        </div>
+    <div class="modal-dialog modal-xl">
+      <div class="modal-content">
+      <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Cadastro de Motoristas</h5>
+          <div>
+            <div class="input-group mb-2" align="right">
+              <button type="button" class="btn btn-secondary btn-rounded btn-icon" id="btnLimpaMotorista" align="right">            
+                <i class="ti-write"></i>
+              </button>
+              <button type="button" class="btn btn-success btn-rounded btn-icon" id="salvaMotorista" align="right">            
+                <i class="ti-save"></i>
+              </button>
+              <button type="button" class="btn btn-danger btn-rounded btn-icon" id="btnCloseMotorista" onclick="closeModal()" align="right">
+                <i class="ti-close"></i>
+              </button>
+            </div>
+          </div>  
+      </div>
+      <div class="modal-body">
+        <form id="frmCadastroMotoristas">
+          <div class="row">
+            
+            <div class="col-sm-3 pb-0 pt-1 pl-0 pr-1 form-group margin-topo">
+              <div class="input-group form-group form-floating pt-1">
+                <input type="text" class="form-control small  form-control-sm" id="cpfMotorista" name="cpfMotorista" placeholder="Cpf"  >
+                <label class="text-secondary" for="cpfMotorista">Cpf Motorista:</label>
+                <div class="input-group-append">
+                  <a class="btn btn-primary" id="btnBuscaMMotorista" onclick="openModal('mdlCadParceiros')">
+                    <i class="fas fa-search fa-lg" style="width: 100%;"></i>   
+                  </a>
+                </div>
+              </div>
+            </div>
+
+            <div class="col-sm-3 pb-0 pt-1 pl-1 pr-1 form-group margin-topo">
+              <div class="form-group form-floating pt-1">
+                  <input type="text" class="form-control small  form-control-sm" id="nomeMMotorista" name="nomeMMotorista" placeholder="Nome/Razão Social" >
+                  <label class="text-secondary" for="nomeMMotorista">Nome/Razão Social:</label>
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
     </div>
-    </div>
+  </div>
+</div>

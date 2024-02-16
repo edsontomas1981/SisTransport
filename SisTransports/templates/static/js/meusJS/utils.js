@@ -200,7 +200,6 @@ function validateCNPJ(cnpj) {
 }
 
 const geraMensagemCamposFaltando=(campos)=>{
-  console.log(campos)
   let msgInicial = 'Os campos '
   let camposFaltando = ''
   for (let i = 0; i < campos.length; i++) {
@@ -275,8 +274,6 @@ const getDadosForm=(formularioId)=>{
       // Itera sobre os elementos do formulário
       for (var i = 0; i < elementos.length; i++) {
           var campo = elementos[i];
-          console.log(campo)
-
           // Ignora os campos que não têm nome
           if (campo.name) {
               // Verifica o tipo do campo para determinar como obter o valor
@@ -475,12 +472,13 @@ function adicionarDadosAoSelect(dados, selectId,id,valor) {
 }
 
 const conecta = async (url,dados)=>{
-  let conexao = new Conexao('/operacional/create_veiculo/',dados);
+  let conexao = new Conexao(url,dados);
   try {
       const result = await conexao.sendPostRequest();
       return result
-      // Imprime a resposta JSON da solicitação POST
   } catch (error) {
       console.error(error); // Imprime a mensagem de erro
   }
 }
+
+

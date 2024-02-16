@@ -9,7 +9,8 @@ btnSalvaVeiculo.addEventListener('click',async()=>{
                         'corVeiculo','cnpjProprietario',
                         'tipoVeiculo','tipoCarroceria',
                         'anoFabMod','cidadeVeiculo',
-                        'ufVeiculo']
+                        'ufVeiculo','capacidadeKg',
+                        'capacidadeCubica']
 
     let dados=obterDadosDoFormulario('frmCadastroVeiculos',camposObrigatorios)
 
