@@ -3,6 +3,7 @@ from parceiros.models.parceiros import Parceiros
 from django.conf import settings
 from django.utils import timezone
 from django.utils import formats
+from datetime import datetime
 
 class Motorista(models.Model):
     """
@@ -23,33 +24,48 @@ class Motorista(models.Model):
     """
     parceiro_fk = models.ForeignKey(Parceiros, on_delete=models.CASCADE, related_name='parceiro_motorista', null=True)
     data_nascimento = models.DateField(null=True, blank=True)
+    validade_toxicologico = models.DateField(null=True, blank=True)
+    pis = models.CharField(max_length=20, blank=True, null=True)
+    estado_civil = models.CharField(max_length=20, blank=True, null=True)
     filiacao_pai = models.CharField(max_length=255, blank=True, null=True)
     filiacao_mae = models.CharField(max_length=255, blank=True, null=True)
-    cnh_numero = models.CharField(max_length=20, unique=True, blank=True, null=True)
+    cnh_numero = models.CharField(max_length=20, blank=True, null=True)
     cnh_categoria = models.CharField(max_length=5, blank=True, null=True)
     cnh_validade = models.DateField(null=True, blank=True)
-    numero_registro_cnh = models.CharField(max_length=20, unique=True, blank=True, null=True)
+    dt_emissao_cnh = models.DateField(null=True, blank=True)
+    dt_primeira_cnh = models.DateField(null=True, blank=True)
+    numero_registro_cnh = models.CharField(max_length=20, blank=True, null=True)
     criado_por = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.SET_NULL, related_name='motorista_criado_por', null=True)
     atualizado_por = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.SET_NULL, related_name='motorista_atualizado_por', null=True)
     created_at = models.DateTimeField(default=timezone.now)
     updated_at = models.DateTimeField(default=timezone.now)
 
     def __str__(self):
-        return self.nome
+        return self.parceiro_fk.raz_soc
 
     def to_dict(self):
         return {
             'parceiro_fk': self.parceiro_fk.to_dict() if self.parceiro_fk else None,
-            'criado_por': self.criado_por.username if self.criado_por else None,
-            'atualizado_por': self.atualizado_por.username if self.atualizado_por else None,
-            'nome': self.nome,
-            'data_nascimento': formats.date_format(self.data_nascimento, "DATE_FORMAT") if self.data_nascimento else None,
+            'data_nascimento': self.formatar_data(self.data_nascimento) if self.data_nascimento else None,
+            'validade_toxicologico': self.formatar_data(self.validade_toxicologico) if self.validade_toxicologico else None,
+            'pis':self.pis,
+            'estado_civil':self.estado_civil,
             'filiacao_pai': self.filiacao_pai,
-            'filiacao_mae': self.filiacao_mae,
+            'filiacao_mae': self.filiacao_mae,  
             'cnh_numero': self.cnh_numero,
             'cnh_categoria': self.cnh_categoria,
-            'cnh_validade': formats.date_format(self.cnh_validade, "DATE_FORMAT") if self.cnh_validade else None,
+            'cnh_validade': self.formatar_data(self.cnh_validade) if self.cnh_validade else None,
+            'dt_emissao_cnh': self.formatar_data(self.dt_emissao_cnh) if self.dt_emissao_cnh else None,
+            'dt_primeira_cnh': self.formatar_data(self.dt_primeira_cnh) if self.dt_primeira_cnh else None,
             'numero_registro_cnh': self.numero_registro_cnh,
-            'created_at': formats.date_format(self.created_at, "DATETIME_FORMAT"),
-            'updated_at': formats.date_format(self.updated_at, "DATETIME_FORMAT"),
+            'criado_por': self.criado_por.username if self.criado_por else None,
+            'atualizado_por': self.atualizado_por.username if self.atualizado_por else None,
+            'created_at': self.formatar_data(self.created_at),
+            'updated_at': self.formatar_data(self.updated_at),
         }
+    
+    def formatar_data(self, data):
+        if data and isinstance(data, str):
+            # Se for uma string, converte para datetime
+            data = datetime.strptime(data, "%Y-%m-%d")
+        return data.strftime("%Y-%m-%d %H:%M:%S") if data else None

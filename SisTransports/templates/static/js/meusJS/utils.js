@@ -395,6 +395,9 @@ const obterValorElemento = (elemento) => {
       break;
     case 'select':
       return elemento.value;
+    case 'select-one':
+
+      return elemento.value;
     case 'textarea':
       return elemento.value;
     default:
@@ -432,9 +435,9 @@ const obterDadosDoFormulario = (formularioId, camposObrigatorios) => {
   for (let i = 0; i < formulario.elements.length; i++) {
     const elemento = formulario.elements[i];
 
-    // Verificar se o elemento tem um name atribuído
-    if (elemento.name) {
-      dados[elemento.name] = obterValorElemento(elemento);
+    // Verificar se o elemento tem um id atribuído
+    if (elemento.id) {
+      dados[elemento.id] = obterValorElemento(elemento);
     }
   } 
 
@@ -479,6 +482,18 @@ const conecta = async (url,dados)=>{
   } catch (error) {
       console.error(error); // Imprime a mensagem de erro
   }
+}
+
+const formataData=(dataString)=>{
+  // Data em formato de string
+  var dataString = dataString;
+
+  // Converter a string para um objeto de data
+  var data = new Date(dataString);
+
+  // Formatar a data como uma string no formato apropriado para o input date (AAAA-MM-DD)
+  var dataFormatada = data.toISOString().split('T')[0];
+  return dataFormatada
 }
 
 

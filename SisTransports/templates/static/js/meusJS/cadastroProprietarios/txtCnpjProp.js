@@ -47,14 +47,3 @@ const populaProprietario=(dados)=>{
     $('#dataAntt').val(formataData(dados.validade_antt))
 }
 
-const formataData=(dataString)=>{
-    // Data em formato de string
-    var dataString = dataString;
-
-    // Converter a string para um objeto de data
-    var data = new Date(dataString);
-
-    // Formatar a data como uma string no formato apropriado para o input date (AAAA-MM-DD)
-    var dataFormatada = data.toISOString().split('T')[0];
-    return dataFormatada
-}

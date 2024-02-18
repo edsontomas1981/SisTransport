@@ -23,12 +23,18 @@ class MotoristaManager:
         # Salva os dados no objeto Motorista
         self.obj_motorista.parceiro_fk = Parceiros.objects.get(id=dados['parceiro_id'])
         self.obj_motorista.data_nascimento = dados.get('data_nascimento', None)
+        self.obj_motorista.validade_toxicologico = dados.get('validade_toxicologico', None)
         self.obj_motorista.filiacao_pai = dados.get('filiacao_pai', '')
+        self.obj_motorista.pis = dados.get('pis', '')
+        self.obj_motorista.estado_civil = dados.get('estado_civil', '')
         self.obj_motorista.filiacao_mae = dados.get('filiacao_mae', '')
         self.obj_motorista.cnh_numero = dados.get('cnh_numero', '')
         self.obj_motorista.cnh_categoria = dados.get('cnh_categoria', '')
         self.obj_motorista.cnh_validade = dados.get('cnh_validade', None)
+        self.obj_motorista.dt_primeira_cnh = dados.get('dt_primeira_cnh', None)
+        self.obj_motorista.dt_emissao_cnh = dados.get('dt_emissao_cnh', None)
         self.obj_motorista.numero_registro_cnh = dados.get('numero_registro_cnh', '')
+
 
     def read_motorista_by_id(self, id_motorista):
         """
@@ -41,6 +47,17 @@ class MotoristaManager:
             raise ValueError(f"O motorista com o ID {id_motorista} não foi encontrado.")
         self.obj_motorista = Motorista.objects.get(id=id_motorista)
 
+    def read_motorista_by_cpf(self, cpf_motorista):
+        """
+        Lê um motorista com base no ID fornecido.
+
+        Args:
+        - id_motorista (int): ID do motorista a ser lido.
+        """
+        if not Motorista.objects.filter(parceiro_fk__cnpj_cpf=cpf_motorista).exists():
+            return None
+        self.obj_motorista = Motorista.objects.get(parceiro_fk__cnpj_cpf=cpf_motorista)
+
     def create_motorista(self, dados):
         """
         Cria um novo motorista com base nos dados fornecidos.
@@ -48,16 +65,16 @@ class MotoristaManager:
         Args:
         - dados (dict): Dados do motorista a serem criados.
         """
-        try:
-            self.save_or_update(dados)
-            self.obj_motorista.criado_por = get_user_model().objects.get(id=dados['criado_por_id'])
-            self.obj_motorista.created_at = timezone.now()
-            self.obj_motorista.save()
-            return 200
-        except Exception as e:
-            # Trata a exceção de maneira apropriada
-            print(f"Erro ao criar motorista: {e}")
-            return 300
+        # try:
+        self.save_or_update(dados)
+        self.obj_motorista.criado_por = get_user_model().objects.get(id=dados['usuario_cadastro'])
+        self.obj_motorista.created_at = timezone.now()
+        self.obj_motorista.save()
+        return 200
+        # except Exception as e:
+        #     # Trata a exceção de maneira apropriada
+        #     print(f"Erro ao criar motorista: {e}")
+        #     return 300
 
     def update_motorista(self, id_motorista, dados):
         """
@@ -74,7 +91,7 @@ class MotoristaManager:
 
             self.obj_motorista = Motorista.objects.get(id=id_motorista)
             self.save_or_update(dados)
-            self.obj_motorista.atualizado_por = get_user_model().objects.get(id=dados['atualizado_por_id'])
+            self.obj_motorista.atualizado_por = get_user_model().objects.get(id=dados['usuario_cadastro'])
             self.obj_motorista.updated_at = timezone.now()
             self.obj_motorista.save()
             return 200

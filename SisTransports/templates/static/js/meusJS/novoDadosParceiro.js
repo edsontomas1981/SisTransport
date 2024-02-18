@@ -16,15 +16,6 @@ $('#btnLimpaCnpjRem').on('click', function(e) {
     e.preventDefault();
 });
 
-$('#btnCnpjRem').on('click', function(e) {
-    remetente.openModalParceiro();
-    if($('#cnpjRem').val()!=='' ){
-        remetente.carregaParceiroMdl()
-        remetente.populaContatos()
-        $('#cnpjMdl').val('')
-    }
-});
-
 // Destinatario
 $('#cnpjDest').on('blur', function(e) {
     if($('#cnpjDest').val()!=='' ){
@@ -37,15 +28,6 @@ $('#btnLimpaCnpjDest').on('click', function(e) {
     destinatario.limparCamposDtc()
     destinatario.limpaDados()
     e.preventDefault();
-});
-
-$('#btnCnpjDest').on('click', function(e) {
-    destinatario.openModalParceiro()
-    if($('#cnpjDest').val()!=='' ){
-        destinatario.carregaParceiroMdl()
-        destinatario.populaContatos()
-        $('#cnpjMdl').val('')
-    }
 });
 
 
@@ -62,16 +44,6 @@ $('#btnLimpaCnpjConsig').on('click', function(e) {
     consignatario.limpaDados()
     e.preventDefault();
 });
-
-$('#btnCnpjConsig').on('click', function(e) {
-    consignatario.openModalParceiro()
-    if($('#cnpjConsig').val()!=='' ){
-        consignatario.carregaParceiroMdl()
-        consignatario.populaContatos()
-        $('#cnpjMdl').val('')
-    }
-});
-
 
 
 // Modal

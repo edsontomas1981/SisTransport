@@ -2,6 +2,7 @@
 # sendo identificacaoCampo e o nome vindo da requisição
 # e nome campo e uma frase mais agradavel para retorno da requisição
 from termcolor import colored
+from datetime import datetime
 import re
 
 def checaCampos(request, **kwargs):
@@ -105,3 +106,11 @@ def dpprint(titulo, *args):
     for i in args:
         print(colored('******************'+titulo+'*************', 'yellow'))
         print(colored(i, 'green'))
+
+
+def string_para_data(data_str):
+    try:
+        data = datetime.strptime(data_str, '%Y-%m-%d').date()
+        return data
+    except ValueError:
+        print("Formato de data inválido. Utilize o formato 'YYYY-MM-DD'.")
