@@ -41,6 +41,9 @@ urlpatterns = [
     path('dados_combos_veiculos/',viewsOperacional.dados_cadatro_veiculo, name='cad_veiculo'),
     path('read_veiculo_placa/',viewsOperacional.read_veiculo_placa,name='read_veiculo_placa'),
 
+    path('manifesto/',viewsOperacional.manifesto,name='manifesto'),
+
+
     path('read_rotas/',viewsOperacional.readRota,name='read_rotas'),
     path('rotas/',viewsOperacional.rotas,name='rotas'),
 

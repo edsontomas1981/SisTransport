@@ -53,6 +53,8 @@ from operacional.views.veiculos.create_veiculo import create_veiculo
 from operacional.views.veiculos.dados_cadastro import dados_cadatro_veiculo
 from operacional.views.veiculos.read_veiculo_por_placa import read_veiculo_placa
 
+from operacional.views.manifesto.manifesto import manifesto
+
 from operacional.views.cte.cria_cte import create_cte
 from operacional.views.cte.delete_cte import delete_cte
 from operacional.views.cte.read_cte import read_cte_by_dtc

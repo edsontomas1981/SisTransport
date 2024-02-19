@@ -13,15 +13,16 @@ def create_motorista(request):
     try:
         data = json.loads(request.body.decode('utf-8'))
         data['usuario_cadastro'] = request.user 
-        required_fields = ['cpfMotorista', 'dataNascimento', 
-                           'dtToxicologico', 'pisMotorista', 
-                           'estadoCivil', 'numeroHabilitacao', 
-                           'categoriaHabilitacao', 'dataNascimento', 
-                           'dataEmissao', 'registroHabilitacao', 
-                           'usuario_cadastro']
+
+        required_fields = ['cpfMotorista','dataNascimento',
+                            'filiacaoMae','numeroHabilitacao',
+                            'registroHabilitacao','categoriaHabilitacao',
+                            'dtToxicologico','dataEmissao','dataValidade',
+                            'dataPrimeiraHabilitacao','usuario_cadastro']
+        
         for field in required_fields:
-            if field not in data:
-                return JsonResponse({'status': 400, 'error': f'O campo {field} é obrigatório.'})
+            if field not in data or data[field] == '':
+                return JsonResponse({'status': 422, 'error': f'O campo {field} é obrigatório.'})
         
         dados_formatados = prepare_dados_create(data)
         

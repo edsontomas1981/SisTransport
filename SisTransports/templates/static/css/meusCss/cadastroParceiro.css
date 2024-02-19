@@ -13,6 +13,14 @@
     border: none !important;
 }
 
+.conteudo-tabs-motorista{
+    padding: 0rem 0rem !important;
+    margin-left: 15px !important;
+    margin-right: 15px !important;
+    margin-top: 1px !important;
+    border: none !important;
+}
+
 .btn-item-parceiros{
     padding: 1px !important;
     margin-bottom: 3px !important;
@@ -22,7 +30,7 @@
     padding: 25px 26px 0px 25px !important; 
 }
 
-.modal-cadastro-parceiros{
+.altura-modal-topo{
     margin-top: 0px !important;
 }
 

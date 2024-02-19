@@ -1,0 +1,103 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block 'conteudo' %}
+<div class="row">
+    <div class="col-sm-12 col-12">
+      <ul class="nav nav-pills nav-pills-primary pill-preDtc" id="pills-tab" role="tablist">
+        <li class="nav-item pl-0 " role="presentation">
+          <button class="nav-link active p-1" id="pills-manifesto-tab" 
+                  data-bs-toggle="pill" data-bs-target="#pills-manifesto" type="button" 
+                  role="tab" aria-controls="pills-manifesto" aria-selected="true">
+            <i class="ti-layers-alt" ></i> Manifesto
+          </button>
+        </li>
+        <li class="nav-item pl-0" role="presentation">
+          <button class="nav-link  p-1" id="pills-dtc-tab"  data-bs-toggle="pill" 
+                  data-bs-target="#pills-dtc" type="button" role="tab" 
+                  aria-controls="pills-dtc" aria-selected="true">
+            <i class="ti-truck"></i> Dtc
+          </button>
+        </li>
+        <li class="nav-item pl-0 " role="presentation">
+          <button class="nav-link  p-1" id="pills-cotacao-tab" data-bs-toggle="pill" 
+                  data-bs-target="#pills-cotacao" type="button" role="tab" 
+                  aria-controls="pills-cotacao" aria-selected="true">
+
+            <i class="ti-clipboard"></i> Cotação
+          </button>
+        </li>         
+        <li class="nav-item pl-0" role="presentation">
+          <button class="nav-link  p-1" id="pills-nf-tab" data-bs-toggle="pill" 
+                  data-bs-target="#pills-nf" type="button" role="tab" 
+                  aria-controls="pills-nf" aria-selected="false">Nota Fiscal</button>
+        </li>
+        <li class="nav-item pl-0" role="presentation">
+          <button class="nav-link  p-1" id="pills-calculoFrete-tab" data-bs-toggle="pill" 
+          data-bs-target="#pills-calculoFrete" type="button" role="tab" aria-controls="pills-calculoFrete" 
+          aria-selected="false">Cálculo</button>
+        </li>
+        <li class="nav-item pl-0" role="presentation">
+          <button class="nav-link  p-1" id="pills-rastreamento-tab" data-bs-toggle="pill" data-bs-target="#pills-rastreamento" 
+          type="button" role="tab" aria-controls="pills-rastreamento" 
+          aria-selected="false">Rastreamento</button>
+        </li>          
+        <li class="nav-item pl-0" role="presentation">
+          <button class="nav-link  p-1" id="pills-contact-tab" data-bs-toggle="pill" 
+          data-bs-target="#pills-contact" type="button" role="tab" 
+          aria-controls="pills-contact" aria-selected="false">Outros</button>
+        </li>          
+        <li>
+          <div class="mt-3 text-end w-100">
+            <input type="text" class="form-control text-primary  p-1 small nav-link " id="numDtc" name="numDtc"
+            placeholder="Nº" readOnly>
+          </div>  
+        </li>  
+      </ul>
+    </div>
+  </div>
+  <div class="tab-content tab-preDtc" id="pills-tabContent">
+      <div class="tab-pane fade" id="pills-calculoFrete"
+            role="tabpanel" aria-labelledby="pills-calculoFrete-tab">
+
+
+      </div>    
+      <div class="tab-pane fade" id="pills-rastreamento" role="tabpanel" 
+      aria-labelledby="pills-rastreamento-tab">
+
+
+    </div>        
+      <div class="tab-pane fade show active" id="pills-manifesto" role="tabpanel" 
+          aria-labelledby="pills-manifesto-tab">
+
+          <h1>Manifesto</h1>
+
+
+      </div>
+      <div class="tab-pane fade" id="pills-dtc" 
+          role="tabpanel" aria-labelledby="pills-dtc-tab">
+
+          <h1>DTC</h1>
+
+
+        </div>
+      <div class="tab-pane fade" id="pills-cotacao" 
+            role="tabpanel" aria-labelledby="pills-cotacao-tab">
+    
+
+
+      </div>
+      <div class="tab-pane fade" id="pills-nf" role="tabpanel" aria-labelledby="pills-nf-tab">
+
+
+
+      </div>
+      <!-- <div class="tab-pane fade" id="pills-cotacao" role="tabpanel" aria-labelledby="pills-cotacao-tab">cotacao</div> -->
+    </div>
+  </div>
+{% endblock %}
+
+{% block 'js'%} 
+
+{% endblock %}
