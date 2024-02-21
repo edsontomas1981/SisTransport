@@ -52,35 +52,146 @@
       </ul>
     </div>
   </div>
-  <div class="tab-content conteudo-tabs" id="pills-tabContent">
+  <div class="tab-content bloco-conteudo" id="pills-tabContent">
     <div class="tab-pane fade show active" id="pills-manifesto" role="tabpanel"
         aria-labelledby="pills-manifesto-tab">
-        <div class="row ml-4 mb-3">
-          <div class="col col-sm-4">
+      <div class="row">
+        <div class="col-sm-4 pl-4">
+          <div class="col col-sm-12 mb-3">
+            <h4 class="card-title text-primary">Motoristas</h4>
+            <div class="input-group">
+              <input class="form-control form-control-sm col-sm-4" id="cpfMotorista" placeholder="Cpf Motorista : ">
+              <input class="form-control form-control-sm col-sm-8" id="nomeMotorista" placeholder="Motorista : ">
+              <a class="btn btn-outline-primary btn-sm" style="display: flex; justify-content: center; align-items: center;"><i class="fa fa-plus" aria-hidden="true" style="top: 50% !important;"></i></a>
+            </div>
+            
+              <table class="display expandable-table dataTable no-footer" style="width: 100%;">
+                <thead>
+                  <tr>
+                    <th class="select-checkbox" >CPF Motorista</th>
+                    <th class="">Nome Motorista</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr class=" border">
+                    <td class="sorting_1">3078431541</td>
+                    <td>Edson Tomas da Silva</td>
+                  </tr>
+
+                  <tr>
+                    <td class="sorting_1">3078431541</td>
+                    <td>Edson Tomas da Silva</td>
+                  </tr>
+
+                </tbody>
+              </table>
+
+
+            </div>
+        </div>
+
+        <div class="col-sm-4 mb-3">
+          <h4 class="card-title text-primary ml-4">Veículo</h4>
+          <div class="col col-sm-12 mb-3">
             <div class="input-group">
               <input class="form-control form-control-sm col-sm-4" id="placaPrincipal"placeholder="Veículo Placa : ">
-              <input class="form-control form-control-sm col-sm-8" id="proprietarioPrincipal"placeholder="Proprietário">
+              <input class="form-control form-control-sm col-sm-8" id="proprietarioPrincipal"placeholder="Proprietário" disabled>
             </div>
           </div>
-        </div>
 
-        <div class="row ml-4 mb-3">
-          <div class="col col-sm-4">
+          <div class="col col-sm-12 mb-3">
             <div class="input-group">
-              <input class="form-control form-control-sm col-sm-4" id="carretaPrincipal" placeholder="Carreta Placa: ">
-              <input class="form-control form-control-sm" id="proprietarioCarretaPrincipal"placeholder="Proprietário">
+              <input class="form-control form-control-sm col-sm-4" id="carretaPrincipal" placeholder="Carreta Placa : ">
+              <input class="form-control form-control-sm" id="proprietarioCarretaPrincipal"placeholder="Proprietário : " disabled>
             </div>
           </div>
-        </div>
 
-        <div class="row ml-4 mb-3">
-          <div class="col col-sm-4">
+          <div class="col col-sm-12 mb-3">
             <div class="input-group">
               <input class="form-control form-control-sm col-sm-4" id="carretaSecundaria" placeholder="Carreta Placa: ">
-              <input class="form-control form-control-sm" id="proprietarioCarretaSecundaria"placeholder="Nome Proprietário">
+              <input class="form-control form-control-sm" id="proprietarioCarretaSecundaria"placeholder="Nome Proprietário" disabled>
             </div>
           </div>
+
         </div>
+
+        <div class="col-sm-4 mb-3">
+          <h4 class="card-title text-primary">Outros</h4>
+          <div class="row">
+            <div class="col-sm-4">
+              <div class="form-floating">
+                <input type="text" class="form-control mb-3" id="floatingPassword" placeholder="Password">
+                <label for="floatingPassword">Frete</label>
+              </div>
+            </div>
+            <div class="col-sm-4">
+              <div class="form-floating">
+                <input type="text" class="form-control mb-3" id="floatingPassword" placeholder="Password">
+                <label for="floatingPassword">Adiantamento</label>
+              </div>
+            </div>
+            <div class="col-sm-4">
+              <div class="form-floating">
+                <input type="text" class="form-control mb-3" id="floatingPassword" placeholder="Password">
+                <label for="floatingPassword">Rota</label>
+              </div>
+            </div>
+
+            <div class="col-sm-6">
+              <div class="form-floating">
+                <input type="date" class="form-control" id="floatingPassword" placeholder="Password">
+                <label for="floatingPassword">Data Inicio</label>
+              </div>
+            </div>   
+            
+            <div class="col-sm-6">
+              <div class="form-floating">
+                <input type="date" class="form-control" id="floatingPassword" placeholder="Password">
+                <label for="floatingPassword">Data Chagada</label>
+              </div>
+            </div>             
+          </div>
+
+        </div>
+
+        <div class="col-sm-3 pl-5 mb-3">
+          <div class="form-floating">
+            <input type="text" class="form-control text-primary" id="numPed" name="numPed" placeholder="Nº Pré Dtc" align="right">
+            <label for="numPed" class="text-primary">Lacres</label>
+          </div>
+        </div>
+
+
+        <div class="col-sm-3 ">
+          <div class="form-floating">
+            <input type="text" class="form-control text-primary" id="numPed" name="numPed" placeholder="Nº Pré Dtc" align="right">
+            <label for="numPed" class="text-primary">Averbação</label>
+          </div>
+        </div>
+
+        <div class="col-sm-3 ">
+          <div class="form-floating">
+            <input type="text" class="form-control text-primary" id="numPed" name="numPed" placeholder="Nº Pré Dtc" align="right">
+            <label for="numPed" class="text-primary">Liberação</label>
+          </div>
+        </div>   
+
+        <div class="col-sm-3 ">
+          <div class="form-floating">
+            <input type="text" class="form-control text-primary" id="numPed" name="numPed" placeholder="Nº Pré Dtc" align="right">
+            <label for="numPed" class="text-primary">Liberação</label>
+          </div>
+        </div>  
+
+
+        <div class="col-sm-12 pl-5 mb-3 ">
+          <div class="form-floating">
+            <textarea class="form-control text-primary" placeholder="Leave a comment here" id="floatingTextarea"></textarea>
+            <label class="text-primary" for="floatingTextarea">Observações</label>
+          </div>
+        </div>     
+      </div>
+  
     </div>
 
     <div class="tab-pane fade" id="pills-dtc" 
