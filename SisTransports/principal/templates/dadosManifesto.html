@@ -1,0 +1,137 @@
+<div class="row">
+      
+    <div class="col-sm-3 pl-5 mb-3">
+      <div class="form-floating">
+        <select class="form-select text-primary" name="emissorMdfe" id="emissorMdfe">
+          <option selected > Selecione um Emissor</option>
+        </select>
+        <label for="emissorMdfe" class="text-primary">Emissora</label>
+      </div>
+    </div>
+
+    <div class="col-sm-3 ">
+      <div class="form-floating">
+        <input type="date" class="form-control text-primary" id="dtInicioManif" name="dtInicioManif" placeholder="Data Inicio" align="right">
+        <label for="dtInicioManif" class="text-primary">Previsão de Inicio : </label>
+      </div>
+    </div>
+
+    <div class="col-sm-3 ">
+      <div class="form-floating">
+        <input type="date" class="form-control text-primary" id="dtPrevisaoChegada" name="dtPrevisaoChegada" placeholder="Nº Pré Dtc" align="right">
+        <label for="dtPrevisaoChegada" class="text-primary">Previsão de Chegada</label>
+      </div>
+    </div>   
+
+    <div class="col-sm-3 ">
+      <div class="form-floating">
+        <select class="form-select text-primary" name="rotasManifesto" id="rotasManifesto">
+          <option selected > Selecione uma Rota</option>
+        </select>
+        <label for="rotasManifesto" class="text-primary">Rotas : </label>
+      </div>
+    </div> 
+
+    <div class="col-sm-3 pl-5 mb-3 ">
+      <div class="form-floating">
+        <input type="text" class="form-control text-primary" id="freteCarreteiro" name="freteCarreteiro" placeholder="Nº Pré Dtc" align="right">
+        <label for="freteCarreteiro" class="text-primary">Frete Carreteiro : </label>
+      </div>
+    </div>          
+
+    <div class="col-sm-3 ">
+      <div class="form-floating">
+        <input type="text" class="form-control text-primary" id="adiantamentoCarreteiro" name="adiantamentoCarreteiro" placeholder="Nº Pré Dtc" align="right">
+        <label for="adiantamentoCarreteiro" class="text-primary">Adiantamento : </label>
+      </div>
+    </div>
+
+    <div class="col-sm-2 ">
+      <div class="form-floating">
+        <input type="text" class="form-control text-primary" id="lacresManifesto" name="lacresManifesto" placeholder="Nº Pré Dtc" align="right">
+        <label for="lacresManifesto" class="text-primary">Lacres</label>
+      </div>
+    </div>
+
+    <div class="col-sm-2 ">
+      <div class="form-floating">
+        <input type="text" class="form-control text-primary" id="averbacaoManifesto" name="averbacaoManifesto" placeholder="Nº Pré Dtc" align="right">
+        <label for="averbacaoManifesto" class="text-primary">Averbação</label>
+      </div>
+    </div>
+
+    <div class="col-sm-2 ">
+      <div class="form-floating">
+        <input type="text" class="form-control text-primary" id="liberacaoMotorista" name="liberacaoMotorista" placeholder="Nº Pré Dtc" align="right">
+        <label for="liberacaoMotorista" class="text-primary">Liberação</label>
+      </div>
+    </div>   
+
+    <div class="col-sm-4 pl-4">
+      <div class="col col-sm-12 mb-3">
+        <h4 class="card-title text-primary">Motoristas</h4>
+        <div class="input-group">
+          <input class="form-control form-control-sm col-sm-4" id="cpfMotorista" placeholder="Cpf Motorista : ">
+          <input class="form-control form-control-sm col-sm-8" id="nomeMotorista" placeholder="Motorista : ">
+          <a class="btn btn-primary btn-sm" id="btnBuscaMotorista" style="display: flex; justify-content: center; align-items: center;"><i class="fa fa-search" aria-hidden="true"></i></i></a>
+          <a class="btn btn-success btn-sm" id="btnAdicionaMotorista" style="display: flex; justify-content: center; align-items: center;"><i class="fa fa-plus" aria-hidden="true"></i></a>
+        </div>
+        
+        <table class="display expandable-table dataTable no-footer" style="width: 100%;">
+          <thead>
+            <tr>
+              <th class="select-checkbox" >CPF Motorista</th>
+              <th class="">Nome Motorista</th>
+            </tr>
+          </thead>
+          <tbody id="tbodyMotorista">
+            <tr class=" border">
+              <td class="sorting_1">3078431541</td>
+              <td>Edson Tomas da Silva</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="col-sm-8 mb-3">
+
+      <h4 class="card-title text-primary ml-4">Veículo</h4>
+      
+      <div class="col col-sm-12 mb-3">
+        <div class="input-group">
+          <input class="form-control form-control-sm col-sm-3" id="placaPrincipal"placeholder="Veículo Placa : ">
+          <input class="form-control form-control-sm col-sm-4" id="modeloPrincipal"placeholder="Modelo" disabled>
+          <input class="form-control form-control-sm col-sm-5" id="proprietarioPrincipal"placeholder="Proprietário" disabled>
+          <a class="btn btn-primary btn-sm" style="display: flex; justify-content: center; align-items: center;"><i class="fa fa-search" aria-hidden="true"></i></i></a>
+        </div>
+      </div>
+
+      <div class="col col-sm-12 mb-3">
+        <div class="input-group">
+          <input class="form-control form-control-sm col-sm-3" id="carretaPrincipal"placeholder="Carreta Placa : ">
+          <input class="form-control form-control-sm col-sm-4" id="modeloCarretaPrincipal"placeholder="Modelo" disabled>
+          <input class="form-control form-control-sm col-sm-5" id="proprietarioCarretaPrincipal"placeholder="Proprietário" disabled>   
+          <a class="btn btn-primary btn-sm" style="display: flex; justify-content: center; align-items: center;"><i class="fa fa-search" aria-hidden="true"></i></i></a>
+       
+        </div>
+      </div>
+
+      <div class="col col-sm-12 mb-3">
+        <div class="input-group">
+          <input class="form-control form-control-sm col-sm-3" id="carretaSecundaria"placeholder="Carreta Placa : ">
+          <input class="form-control form-control-sm col-sm-4" id="modeloCarretaSecundaria"placeholder="Modelo" disabled>
+          <input class="form-control form-control-sm col-sm-5" id="proprietarioCarretaSecundaria"placeholder="Proprietário" disabled>   
+          <a class="btn btn-primary btn-sm" style="display: flex; justify-content: center; align-items: center;"><i class="fa fa-search" aria-hidden="true"></i></i></a>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="col-sm-12 pl-5 mb-3 ">
+      <div class="form-floating">
+        <textarea class="form-control text-primary" placeholder="Observação" id="txtObservacao"></textarea>
+        <label class="text-primary" for="txtObservacao">Observação</label>
+      </div>
+    </div>     
+  </div>

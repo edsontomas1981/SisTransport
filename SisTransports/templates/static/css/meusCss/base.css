@@ -7,6 +7,21 @@
 border-top: 1px !important;
 }
 
+.thead-padrao{
+    background-color: #4B49AC !important; /* Cor de fundo para o cabeçalho */
+    padding: 8px !important;
+    text-align: left !important;
+    color: white !important;
+    border-bottom: 1px solid #ddd !important;
+    border-radius: 10px !important;
+  }
+
+  .celula-titulo{
+    padding: 8px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+  }
+
 .tab-preDtc{
     padding: 15px 40px 15px 40px !important;
 }
