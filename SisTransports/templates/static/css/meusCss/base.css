@@ -4,7 +4,7 @@
 
 .bloco-conteudo{
     padding: 0px 10px 0px 10px !important;
-border-top: 1px !important;
+    border-top: 1px !important;
 }
 
 .thead-padrao{
@@ -15,7 +15,7 @@ border-top: 1px !important;
     border-bottom: 1px solid #ddd !important;
   }
 
-  .celula-titulo{
+.celula-titulo{
     padding: 8px;
     text-align: left;
     border-bottom: 1px solid #ddd;
@@ -27,7 +27,7 @@ border-top: 1px !important;
 
 .pill-preDtc{
     padding: 1px 40px 0px 40px !important;
-    border: none;
+    border-bottom: none;
 }
 
 .footer{
