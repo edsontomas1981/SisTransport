@@ -1,0 +1,104 @@
+<div class="row pl-4">
+    <div class="form-floating mb-3 col-sm-2 pl-2">
+        <input type="text" class="form-control" id="numeroCartaFrete" placeholder="Nº Contrato de Frete" disabled>
+        <label class="ml-2" for="floatingInput">Nº Contrato</label>
+    </div>
+
+    <div class="form-floating mb-3 col-sm-2 pl-2">
+        <input type="text" class="form-control" id="freteContratado" placeholder="Frete Contratado" disabled>
+        <label class="ml-2" for="floatingInput">Frete Contratado</label>
+    </div>
+
+    <div class="form-floating mb-3 col-sm-2 pl-2">
+        <input type="date" class="form-control" id="dataEmissaoContrato" placeholder="Data de emissão ">
+        <label class="ml-2" for="floatingInput">Data Emissão</label>
+    </div>
+
+    <div class="form-floating mb-3 col-sm-2 pl-2">
+        <input type="text" class="form-control" id="numeroCiot" placeholder="Ciot">
+        <label class="ml-2" for="floatingInput">Ciot Nº</label>
+    </div>
+</div>
+<div class="row pl-4">
+    <div class=" row col-sm-8" style="left: 0px !important;">
+        <div class="row col-sm-6">
+            <h4 class="text-info  mt-3">Créditos</h4>
+            <div class="form-floating mb-3 col-sm-12 pl-2">
+                <input type="text" class="form-control" id="valorPedagio" placeholder="Valor pedágio">
+                <label class="ml-2 text-info" for="valorPedagio">R$ Pedágio</label>
+            </div>
+
+            <div class="form-floating mb-3 col-sm-12 pl-2">
+                <input type="text" class="form-control" id="valorColeta" placeholder="Valor Coleta">
+                <label class="ml-2 text-info" for="valorColeta">R$ Coleta</label>
+            </div>
+
+            <div class="form-floating mb-3 col-sm-12 pl-2">
+                <input type="text" class="form-control" id="outrosCreditos" placeholder="Outros">
+                <label class="ml-2 text-info" for="outrosCreditos">R$ Outros</label>
+            </div>
+        </div>
+        <div class="row col-sm-6">
+            <h4 class="text-danger mt-3">Débitos</h4>
+            <div class="form-floating mb-3 col-sm-6 ">
+                <input type="text" class="form-control" id="irRetido" placeholder="Valor pedágio">
+                <label class="ml-2 text-danger" for="irRetido">IR Retido na Fonte</label>
+            </div>
+
+            <div class="form-floating mb-3 col-sm-6 pr-0">
+                <input type="text" class="form-control" id="inss" placeholder="Valor Coleta">
+                <label class="ml-2 text-danger" for="inss">INSS</label>
+            </div>
+
+            <div class="form-floating mb-3 col-sm-6 ">
+                <input type="text" class="form-control" id="iss" placeholder="Outros">
+                <label class="ml-2 text-danger" for="iss">ISS</label>
+            </div>
+
+            <div class="form-floating mb-3 col-sm-6  pr-0">
+                <input type="text" class="form-control" id="sestSenat" placeholder="Sest/Senat">
+                <label class="ml-2 text-danger" for="sestSenat">SEST/SENAT</label>
+            </div>
+
+            <div class="form-floating mb-3 col-sm-6">
+                <input type="text" class="form-control" id="adiantamento" placeholder="Sest/Senat">
+                <label class="ml-2 text-danger" for="adiantamento">Adiantamento</label>
+            </div>
+
+            <div class="form-floating mb-3 col-sm-6 pr-0">
+                <input type="text" class="form-control" id="outrosDescontos" placeholder="Sest/Senat">
+                <label class="ml-2 text-danger" for="outrosDescontos">Outros</label>
+            </div>
+        </div>
+    
+    </div>
+    <div class="row col-sm-4">
+        
+        <h4 class="text-primary mt-3 pl-0">Totais</h4>
+        <div class="form-floating mb-3 col-sm-12 pl-0">
+            <input type="text" class="form-control" id="freteBruto" placeholder="Valor pedágio" disabled>
+            <label class="ml-2 text-primary" for="freteBruto">Frete Bruto</label>
+        </div>
+
+        <div class="form-floating mb-3 col-sm-12  pl-0">
+            <input type="text" class="form-control" id="totalDescontos" placeholder="Outros" disabled>
+            <label class="ml-2 text-primary" for="totalDescontos">Total de descontos</label>
+        </div>
+
+        <div class="form-floating mb-3 col-sm-12  pl-0">
+            <input type="text" class="form-control" id="freteAPagar" placeholder="Valor Coleta" disabled>
+            <label class="ml-2 text-primary" for="freteAPagar">Frete á pagar </label>
+        </div>
+    </div>
+
+    <div class="col-sm-12 mt-3">
+        <div class="form-floating">
+            <textarea class="form-control" placeholder="Leave a comment here" id="contratoObs"></textarea>
+            <label for="contratoObs">Observações</label>
+        </div>
+    </div>
+
+
+      
+
+</div>

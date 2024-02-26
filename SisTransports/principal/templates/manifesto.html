@@ -40,11 +40,11 @@
             type="button" role="tab" aria-controls="pills-rastreamento" 
             aria-selected="false">Rastreamento</button>
           </li>          
-          <li class="nav-item pl-0" role="presentation">
+          <!-- <li class="nav-item pl-0" role="presentation">
             <button class="nav-link  p-1" id="pills-outros-tab" data-bs-toggle="pill" 
             data-bs-target="#pills-outros" type="button" role="tab" 
             aria-controls="pills-outros" aria-selected="false">Outros</button>
-          </li>
+          </li> -->
        
           <li class="mt-3">
             <div class="input-group mb-2" align="right">
@@ -61,8 +61,8 @@
           </li> 
 
           <li>
-            <button class="form-control btn btn-primary p-1 btn-lg mt-3" id="enviarSefaz" style="border-radius: 30px;">
-              <i class="fa fa-paper-plane" aria-hidden="true"></i><span class="ml-2"> Enviar Sefaz</span>
+            <button class="form-control btn btn-success p-1 btn-lg mt-3" id="enviarSefaz" style="border-radius: 30px;">
+              <i class="fas fa-spinner spinner"></i><span class="ml-2">Em carregamento</span>
             </button>
           </li>   
         </ul>
@@ -97,26 +97,70 @@
 
     <div class="tab-pane fade" id="pills-mdfe" 
         role="tabpanel" aria-labelledby="pills-mdfe-tab">
-      <h1>MDF-E</h1>
+        {% include 'mdfe.html' %}
     </div>
 
     <div class="tab-pane fade" id="pills-pagamentos" 
         role="tabpanel" aria-labelledby="pills-pagamentos-tab">
-      <h1>Pagamentos</h1>
+        {% include 'pagamentoMotorista.html' %}
     </div>
 
     <div class="tab-pane fade" id="pills-rastreamento" 
         role="tabpanel" aria-labelledby="pills-rastreamento-tab">
-      <h1>Rastreamento</h1>
+        {% include 'rastreamentoManifesto.html' %}
     </div>
 
-    <div class="tab-pane fade" id="pills-outros" 
+    <!-- <div class="tab-pane fade" id="pills-outros" 
         role="tabpanel" aria-labelledby="pills-outros-tab">
       <h1>Outros</h1>
-    </div>
+    </div> -->
   </div>
+
+  <style>
+    .spinner {
+      animation: spin 2s linear infinite; /* Aplica a animação spin */
+    }
+
+    @keyframes spin {
+      0% { transform: rotate(0deg); } /* Define a rotação inicial */
+      100% { transform: rotate(360deg); } /* Define a rotação final */
+    }
+  </style>
 {% endblock %}
 
 {% block 'js'%} 
+
+  <script src="{% static 'js/meusJS/manifestos/mainManifestos.js' %}"></script>
+
+  <script src="{% static 'js/meusJS/manifestos/statusManif.js' %}"></script>
+  <script src="{% static 'js/meusJS/manifestos/novoManifesto.js' %}"></script>
+  <script src="{% static 'js/meusJS/manifestos/excluiManifesto.js' %}"></script>
+  <script src="{% static 'js/meusJS/manifestos/btnSalvaManifesto.js' %}"></script>  
+  <script src="{% static 'js/meusJS/manifestos/barraDadosManifesto.js' %}"></script>
+
+  <script src="{% static 'js/meusJS/manifestos/txtCpfMotorista.js' %}"></script>
+  <script src="{% static 'js/meusJS/manifestos/btnBuscaMotorista.js' %}"></script>
+  <script src="{% static 'js/meusJS/manifestos/btnCriaMotorista.js' %}"></script>
+  <script src="{% static 'js/meusJS/manifestos/tableMotoristasManifesto.js' %}"></script>
+  <script src="{% static 'js/meusJS/manifestos/txtPlacaVeiculo.js' %}"></script>
+  <script src="{% static 'js/meusJS/manifestos/txtPlacaCarretaPrincipal.js' %}"></script>
+  <script src="{% static 'js/meusJS/manifestos/txtPlacaCarretaSecundaria.js' %}"></script>
+  <script src="{% static 'js/meusJS/manifestos/cmbEmissorManifesto.js' %}"></script>
+  <script src="{% static 'js/meusJS/manifestos/cmbTipoDocumento.js' %}"></script>
+  <script src="{% static 'js/meusJS/manifestos/cmbTipomanifesto.js' %}"></script>
+  <script src="{% static 'js/meusJS/manifestos/tableManifesto.js' %}"></script>
+
+  <script src="{% static 'js/meusJS/manifestos/btnPrintManifesto.js' %}"></script>
+  <script src="{% static 'js/meusJS/manifestos/btnDeletemanifesto.js' %}"></script>
+  <script src="{% static 'js/meusJS/manifestos/btnAddDocumento.js' %}"></script>
+
+
+  <script src="{% static 'js/meusJS/manifestos/btnEncerrarMdfe.js' %}"></script>
+  <script src="{% static 'js/meusJS/manifestos/btnEnviarSefaz.js' %}"></script>
+  <script src="{% static 'js/meusJS/manifestos/btnPrintDamdfe.js' %}"></script>
+  <script src="{% static 'js/meusJS/manifestos/btnCancelarMdfe.js' %}"></script>
+  <script src="{% static 'js/meusJS/manifestos/btnAverbar.js' %}"></script>
+
+
 
 {% endblock %}
