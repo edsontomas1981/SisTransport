@@ -55,9 +55,19 @@ from operacional.views.veiculos.read_veiculo_por_placa import read_veiculo_placa
 
 from operacional.views.manifesto.manifesto import manifesto
 
+from operacional.views.manifesto.manifesto import manifesto
+
+from operacional.views.ocorrencias_manifesto.get_ocorrencia_id import get_ocorrencia_manifesto_by_id
+from operacional.views.ocorrencias_manifesto.get_ocorrencias_manifesto import get_ocorrencias_manifesto
+
+from operacional.views.tipo_manifesto.get_tipo_manifesto import get_tipo_manifesto_by_id
+from operacional.views.tipo_manifesto.get_tipos_manifesto import get_tipos_manifesto
+
 from operacional.views.cte.cria_cte import create_cte
 from operacional.views.cte.delete_cte import delete_cte
 from operacional.views.cte.read_cte import read_cte_by_dtc
+from operacional.views.cte.get_cte_by_dtc import get_cte_by_dtc
+
 
 
 

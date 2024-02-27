@@ -177,7 +177,7 @@ const popula_tbody_paginacao = (divParaNavegacao, id_tbody, dados, botoes = {}, 
  *   }
  * });
  */
-const popula_tbody = (id_tbody, dicionario_dados, botoes = {}) => {
+const popula_tbody = (id_tbody, dicionario_dados, botoes = {},inicioChebox=true) => {
   // Obtém a referência ao elemento tbody da tabela
   var tbody = document.getElementById(id_tbody);
 
@@ -188,14 +188,15 @@ const popula_tbody = (id_tbody, dicionario_dados, botoes = {}) => {
   dicionario_dados.forEach(element => {
     var tr = document.createElement("tr");
     tr.setAttribute('data-id', element.id);
-
-    // Adiciona o checkbox como o primeiro campo
-    var tdCheckbox = document.createElement("td");
-    var checkbox = document.createElement("input");
-    checkbox.type = "checkbox";
-    checkbox.name = "selecao";
-    tdCheckbox.appendChild(checkbox);
-    tr.appendChild(tdCheckbox);
+    if(inicioChebox){
+      // Adiciona o checkbox como o primeiro campo
+      var tdCheckbox = document.createElement("td");
+      var checkbox = document.createElement("input");
+      checkbox.type = "checkbox";
+      checkbox.name = "selecao";
+      tdCheckbox.appendChild(checkbox);
+      tr.appendChild(tdCheckbox);
+    }
 
     // Loop através do dicionário de dados para criar as células <td> dinamicamente
     for (const chave in element) {

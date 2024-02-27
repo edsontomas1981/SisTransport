@@ -39,6 +39,7 @@ class Cte (models.Model):
 
     def to_dict(self):
         return {
+            'id':self.id,
             'dtc_fk': self.dtc_fk.to_dict() if self.dtc_fk else None,
             'totalFrete': self.total_frete,
             'freteCalculado': self.frete_calculado,

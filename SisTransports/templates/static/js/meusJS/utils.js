@@ -422,7 +422,7 @@ const validarCamposObrigatorios = (dados, camposObrigatorios) => {
 
 };
 
-const obterDadosDoFormulario = (formularioId, camposObrigatorios) => {
+const obterDadosDoFormulario = (formularioId, camposObrigatorios=[]) => {
   const formulario = document.getElementById(formularioId);
   let dados = {};
 
