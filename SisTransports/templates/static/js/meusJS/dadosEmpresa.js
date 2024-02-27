@@ -14,7 +14,6 @@ const dadosEmissor = ()=>{
               }]
 }
 
-
 const carregaEmissoresPorId = (idDesejado) => {
     // Obtém os dados do emissor usando a função dadosEmissor
     var emissores = dadosEmissor();
@@ -30,3 +29,15 @@ const carregaEmissoresPorId = (idDesejado) => {
     return filialEmissora
 
 }
+
+const popularSelectEmissor = (idSelect) => {
+    const selectBox = document.getElementById(idSelect);
+    const dados = dadosEmissor();
+    
+    dados.forEach(dado => {
+        const option = document.createElement('option');
+        option.value = dado.id;
+        option.text = `${dado.siglaFilial} - ${dado.razao}`;
+        selectBox.appendChild(option);
+    });
+};

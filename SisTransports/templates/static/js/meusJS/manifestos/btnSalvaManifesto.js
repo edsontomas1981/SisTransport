@@ -1,2 +1,1 @@
-alert("btn Salva Manifestos")
 
