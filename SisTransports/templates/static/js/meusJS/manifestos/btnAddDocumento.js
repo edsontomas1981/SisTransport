@@ -2,13 +2,13 @@ let btnAddDocumento = document.getElementById('btnAddDocumento')
 let numDcto = document.getElementById('numeroDocumento')
 let listaDocumentos = []
 
-const btnRemoveDocumento = (element)=>{
-    listaDocumentos=removerDocumentoLista(listaDocumentos,element)
-    popula_tbody('tableDtcManifesto',listaDocumentos,botoes,false)
+const removerDocumentoPorId=(id)=> {
+    listaDocumentos = listaDocumentos.filter(item => item.id != id); 
+    popula_tbody('tableDtcManifesto', listaDocumentos, botoesManifesto, false);
 }
 
 let botoesManifesto={
-    excluir: {
+    excluir: { 
         classe: "btn-danger text-white rounded",
         texto: 'Apagar',
         callback: removerDocumentoPorId
@@ -17,7 +17,7 @@ let botoesManifesto={
 
 btnAddDocumento.addEventListener('click', async () => {
     let response = await connEndpoint('/operacional/get_cte_dtc/', {'idDtc': numDcto.value});
-    console.log(response);
+    
 
     const documento = prepareDataToTableManifesto(response);
     if (!listaDocumentos.some(item => item.id === documento.id)) {
@@ -41,9 +41,6 @@ const prepareDataToTableManifesto = (response)=>{
         }
 }
 
-const removerDocumentoPorId=(id)=> {
-    listaDocumentos = listaDocumentos.filter(item => item.id != id); 
-    popula_tbody('tableDtcManifesto', listaDocumentos, botoesManifesto, false);
-}
+
 
 

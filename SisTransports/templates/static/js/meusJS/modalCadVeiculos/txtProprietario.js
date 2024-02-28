@@ -12,7 +12,7 @@ document.addEventListener('DOMContentLoaded',()=>{
 const buscaProprietario = async(cnpj)=>{
     url='/operacional/read_proprietario/'
     let dados = {'cnpj_cpf':cnpj}
-    resposta = await connEndpoint(url,dados)
+    let resposta = await connEndpoint(url,dados)
     console.log(resposta)
     return resposta.dados.parceiro_fk.raz_soc
 }

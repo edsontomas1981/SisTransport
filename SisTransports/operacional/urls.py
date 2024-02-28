@@ -28,6 +28,10 @@ urlpatterns = [
     path('get_ocorrencia_manifesto_id/',viewsOperacional.get_ocorrencia_manifesto_by_id,name='get_ocorrencia_manifesto_by_id'),
     path('get_ocorrencias_manifesto/',viewsOperacional.get_ocorrencias_manifesto,name='get_ocorrencias_manifesto'),
 
+    path('get_tipos_documentos/',viewsOperacional.get_tipos_documentos_manifesto ,name='get_tipos_documentos_manifesto'),
+    path('get_tipos_documentos_by_id/',viewsOperacional.get_tipo_documento_manifesto_by_id,name='get_tipo_documento_manifesto_by_id'),
+
+
     path('entrada_nfs/',viewsOperacional.entrada_nfs,name='entrada_nfs'),
 
     path('motorista/',viewsOperacional.motorista,name='motorista'),    

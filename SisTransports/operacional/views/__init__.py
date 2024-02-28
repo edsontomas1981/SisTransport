@@ -63,6 +63,10 @@ from operacional.views.ocorrencias_manifesto.get_ocorrencias_manifesto import ge
 from operacional.views.tipo_manifesto.get_tipo_manifesto import get_tipo_manifesto_by_id
 from operacional.views.tipo_manifesto.get_tipos_manifesto import get_tipos_manifesto
 
+from operacional.views.tipo_documento_manifesto.get_tipo_documento_by_id import get_tipo_documento_manifesto_by_id
+
+from operacional.views.tipo_documento_manifesto.get_tipos_documentos import get_tipos_documentos_manifesto
+
 from operacional.views.cte.cria_cte import create_cte
 from operacional.views.cte.delete_cte import delete_cte
 from operacional.views.cte.read_cte import read_cte_by_dtc

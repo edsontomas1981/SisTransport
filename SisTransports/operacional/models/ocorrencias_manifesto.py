@@ -12,7 +12,7 @@ class Ocorrencia_manifesto(models.Model):
     def to_dict(self):
         return {
             'id': self.id,
-            'tipo_veiculo': self.ocorrencia,
+            'tipo_ocorrencia': self.ocorrencia,
             }
     
     def __str__(self) -> str:
