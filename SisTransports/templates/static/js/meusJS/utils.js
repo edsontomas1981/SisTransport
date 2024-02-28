@@ -497,3 +497,9 @@ const formataData=(dataString)=>{
 }
 
 
+const pegarTextoSelect=(idSelect)=>{
+  var selectElement = document.getElementById(idSelect);
+  var selectedText = selectElement.options[selectElement.selectedIndex].text;
+  return selectedText
+}
+

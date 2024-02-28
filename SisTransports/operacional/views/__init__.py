@@ -71,6 +71,10 @@ from operacional.views.cte.cria_cte import create_cte
 from operacional.views.cte.delete_cte import delete_cte
 from operacional.views.cte.read_cte import read_cte_by_dtc
 from operacional.views.cte.get_cte_by_dtc import get_cte_by_dtc
+from operacional.views.cte.get_cte_chave_nfe import get_cte_chave_nfe
+
+from operacional.views.cte.get_cte_id import get_cte_id
+
 
 
 

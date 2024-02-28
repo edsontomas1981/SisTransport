@@ -2,6 +2,8 @@ from django.db import models
 from django.conf import settings
 from operacional.models.cte import Cte as Mdl_cte
 from django.core.exceptions import ObjectDoesNotExist
+from operacional.models.nota_fiscal import Nota_fiscal
+
 
 
 class Cte():
@@ -88,4 +90,41 @@ class Cte():
             return cte_obj
         except ObjectDoesNotExist:
             return None
+        
+    def get_cte_id  (self, idCte):
+        """
+        Retorna um objeto Cte com base no campo id.
+        
+        Argumentos:
+        id (int): Id do Cte.
+
+        Retorna:
+        Cte ou None: O objeto Cte correspondente ao id, se encontrado, caso contrário, retorna None.
+        """
+        try:
+            
+            cte_obj = Mdl_cte.objects.get(id=idCte)
+            return cte_obj
+        except ObjectDoesNotExist:
+            return None
+        
+
+    def get_cte_chave_acesso_nfe(self,chave_acesso_nf):
+        try:
+            # 1. Encontrar a Nota_fiscal pela chave de acesso fornecida
+            nota_fiscal = Nota_fiscal.objects.get(chave_acesso=chave_acesso_nf)
+            # 2. A partir da Nota_fiscal, encontrar o Dtc associado
+            dtc_associado = nota_fiscal.dtc_fk_id
+
+            if dtc_associado:
+                # 3. Com o Dtc, encontrar o Cte associado a ele
+                cte_associado = self.get_cte_by_dtc(dtc_associado)
+                return cte_associado
+            else:
+                # Se não houver Dtc associado à Nota_fiscal
+                return None
+        except Nota_fiscal.DoesNotExist:
+            # Se a Nota_fiscal não for encontrada
+            return None
+
 
