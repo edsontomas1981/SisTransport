@@ -9,6 +9,7 @@ from operacional.models.motoristas import Motorista
 from operacional.models.proprietario import Proprietario
 from operacional.models.veiculos import Veiculo
 from operacional.models.tipo_documento import Tipo_Documento
+from operacional.models.manifesto import Manifesto
 
 
 
