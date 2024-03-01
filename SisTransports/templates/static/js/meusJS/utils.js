@@ -330,7 +330,7 @@ const populaRotaGeral= (response,idCmbRotas,textoFirstOpt='Selecione')=>{
   data= response.rotas
   var selectbox = $('#'+idCmbRotas);
   selectbox.find('option').remove();
-  selectbox.append(`<option value="0">${textoFirstOpt}</option>`);
+  selectbox.append(`<option value>${textoFirstOpt}</option>`);
   $.each(data, function (i, d) {
       selectbox.append('<option value="' + d.id+ '">' + d.nome + '</option>');
   });

@@ -1,9 +1,6 @@
 var btnAddMotorista = document.getElementById('btnAdicionaMotorista')
 var listaMotoristas = []
 
-var deleteMoto = document.getElementById('btnBuscaMotorista')
-
-
 const btnRemoveMotorista = (element)=>{
     listaMotoristas=removerMotoristaLista(listaMotoristas,element)
     popula_tbody('tbodyMotorista',listaMotoristas,botoes,false)
