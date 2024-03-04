@@ -58,6 +58,11 @@ urlpatterns = [
     path('read_veiculo_placa/',viewsOperacional.read_veiculo_placa,name='read_veiculo_placa'),
 
     path('manifesto/',viewsOperacional.manifesto,name='manifesto'),
+    path('create_manifesto/',viewsOperacional.create_manifesto,name='create_manifesto'),
+
+    path('get_emissor/',viewsOperacional.get_emissor,name='get_emissor'),
+    path('get_emissores/',viewsOperacional.get_emissores,name='get_emissores'),
+
 
 
     path('read_rotas/',viewsOperacional.readRota,name='read_rotas'),

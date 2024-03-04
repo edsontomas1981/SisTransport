@@ -17,6 +17,7 @@ class Cotacao:
     def adiciona_cte_cotacao(self,cte):
         self.cotacao.cotaca_aplicada_no_cte_fk = cte
         self.cotacao.save()
+        return 200
 
     def readCotacao(self, id):
         if ClsCotacao.objects.filter(id=id).exists():

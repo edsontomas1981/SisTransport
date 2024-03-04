@@ -1,17 +1,20 @@
-const dadosEmissor = ()=>{
-    return [{'id':1,
-            'siglaFilial':'São Paulo(SAO)',
-            'cnpj':'23926683000299',
-            'razao':'Serafim Sao Paulo',
-            'endereco':'Rua Nova Veneza , 172',
-            'aliquota':12
-             },{'id':2,
-             'siglaFilial':'Teresina(THE)',
-             'cnpj':'23926683000108',
-             'razao':'Serafim Teresina',
-             'endereco':'Rua Nova Veneza , 172',
-             'aliquota':7
-              }]
+const dadosEmissor = async()=>{
+    let dadosEmissor = await connEndpoint('/operacional/get_emissores/', {});
+    return dadosEmissor.emissores
+
+    // return [{'id':1,
+    //         'siglaFilial':'São Paulo(SAO)',
+    //         'cnpj':'23926683000299',
+    //         'razao':'Serafim Sao Paulo',
+    //         'endereco':'Rua Nova Veneza , 172',
+    //         'aliquota':12
+    //          },{'id':2,
+    //          'siglaFilial':'Teresina(THE)',
+    //          'cnpj':'23926683000108',
+    //          'razao':'Serafim Teresina',
+    //          'endereco':'Rua Nova Veneza , 172',
+    //          'aliquota':7
+    //           }]
 }
 
 const carregaEmissoresPorId = (idDesejado) => {
@@ -30,10 +33,12 @@ const carregaEmissoresPorId = (idDesejado) => {
 
 }
 
-const popularSelectEmissor = (idSelect) => {
+const popularSelectEmissor = async (idSelect) => {
     const selectBox = document.getElementById(idSelect);
-    const dados = dadosEmissor();
-    
+    const dados = await dadosEmissor();
+
+    console.log(dados)
+
     dados.forEach(dado => {
         const option = document.createElement('option');
         option.value = dado.id;

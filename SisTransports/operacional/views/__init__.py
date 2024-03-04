@@ -54,8 +54,8 @@ from operacional.views.veiculos.dados_cadastro import dados_cadatro_veiculo
 from operacional.views.veiculos.read_veiculo_por_placa import read_veiculo_placa
 
 from operacional.views.manifesto.manifesto import manifesto
+from operacional.views.manifesto.create_manifesto import create_manifesto
 
-from operacional.views.manifesto.manifesto import manifesto
 
 from operacional.views.ocorrencias_manifesto.get_ocorrencia_id import get_ocorrencia_manifesto_by_id
 from operacional.views.ocorrencias_manifesto.get_ocorrencias_manifesto import get_ocorrencias_manifesto
@@ -74,6 +74,9 @@ from operacional.views.cte.get_cte_by_dtc import get_cte_by_dtc
 from operacional.views.cte.get_cte_chave_nfe import get_cte_chave_nfe
 
 from operacional.views.cte.get_cte_id import get_cte_id
+
+from operacional.views.emissores.get_emissor import get_emissor
+from operacional.views.emissores.get_emissores import get_emissores
 
 
 

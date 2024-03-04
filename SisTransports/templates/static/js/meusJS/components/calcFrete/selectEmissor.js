@@ -3,10 +3,10 @@ selectEmissorCte.addEventListener('change', () => {
     limpaFreteCte();
 });
 
-const carregaEmissores = () => {
+const carregaEmissores = async () => {
     // Obtém os dados do emissor usando a função dadosEmissor
 
-    var emissores = dadosEmissor();
+    var emissores = await dadosEmissor();
     
     // Limpa o conteúdo atual do select
     while (selectEmissorCte.firstChild) {

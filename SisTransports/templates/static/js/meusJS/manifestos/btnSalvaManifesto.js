@@ -1,8 +1,10 @@
 
 let btnSalvaManifesto = document.getElementById('btnSalvaManifesto')
 
-btnSalvaManifesto.addEventListener('click',()=>{
+btnSalvaManifesto.addEventListener('click',async ()=>{
     let dados = geraDadosManifesto()
 
-    console.log(dados)
+    response = await connEndpoint('/operacional/create_manifesto/', dados);
+
+    console.log(response)
 })

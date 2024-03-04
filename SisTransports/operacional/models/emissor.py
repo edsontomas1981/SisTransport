@@ -12,7 +12,9 @@ class Emissor (models.Model):
     telefone = models.CharField(max_length=20)
     email = models.EmailField()
     inscricao_estadual = models.CharField(max_length=20)
-    regime_tributario = models.CharField(max_length=50)    
+    regime_tributario = models.CharField(max_length=50)   
+    aliquota = models.IntegerField(default=7)   
+    sigla_filial =  models.CharField(max_length=20,null=True)
     # Informações de usuário e data/hora
     usuario_cadastro = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.SET_NULL, null=True, related_name='criador_emissor')
     usuario_ultima_atualizacao = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.SET_NULL, null=True, related_name='atualizador_emissor')
@@ -21,9 +23,10 @@ class Emissor (models.Model):
 
     def to_dict(self):
         return {
-            'nome': self.nome,
+            'id':self.id,
+            'razao': self.nome,
             'cnpj': self.cnpj,
-            'endereco': self.endereco_fk.to_dict(),  # Supondo que a classe Enderecos tenha um método to_dict
+            'endereco': self.endereco_fk.to_dict() if self.endereco_fk.to_dict() else None,
             'telefone': self.telefone,
             'email': self.email,
             'inscricao_estadual': self.inscricao_estadual,
@@ -32,4 +35,12 @@ class Emissor (models.Model):
             'usuario_ultima_atualizacao': self.usuario_ultima_atualizacao.id if self.usuario_ultima_atualizacao else None,
             'data_cadastro': self.data_cadastro.isoformat() if self.data_cadastro else None,
             'data_ultima_atualizacao': self.data_ultima_atualizacao.isoformat(),
+            'siglaFilial':self.sigla_filial,
+            'aliquota':self.aliquota,
+
         }
+    
+    def __str__(self):
+        return self.nome
+    
+    
