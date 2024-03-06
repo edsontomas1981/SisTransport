@@ -16,7 +16,6 @@ class ManifestoManager:
             'averbacao': data.get('averbacao'),
             'liberacao': data.get('liberacao'),
             'observacao': data.get('observacao'),
-
         }
 
     @classmethod
@@ -24,8 +23,18 @@ class ManifestoManager:
         dados_comuns = cls._carregar_dados_comuns(data)
         dados_comuns['usuario_cadastro']= data.get('usuario_cadastro')
         dados_comuns['data_cadastro']=str(timezone.now())
-        print(dados_comuns['data_cadastro'])
+
+        motoristas_data = data.get('motoristas', [])
+        veiculos_data = data.get('veiculos', [])
+
         manifesto = Manifesto.objects.create(**dados_comuns)
+
+        # Salvando motoristas associados ao manifesto
+        manifesto.motoristas.set(motoristas_data)
+
+        # Salvando veiculos associados ao manifesto
+        manifesto.veiculos.set(veiculos_data)        
+
         return manifesto
 
     @classmethod
@@ -46,7 +55,8 @@ class ManifestoManager:
             setattr(manifesto, field, value)
         manifesto.save()
         return manifesto
-
+    
+    
     @classmethod
     def deletar_manifesto(cls, manifesto_id):
         manifesto = Manifesto.objects.get(id=manifesto_id)

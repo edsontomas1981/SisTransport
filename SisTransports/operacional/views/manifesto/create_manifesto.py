@@ -30,9 +30,9 @@ def create_manifesto(request):
     
     dados = prepare_data(data)
     data
-    ManifestoManager.criar_manifesto(dados)
-    
-    return JsonResponse({'status': 200})
+    manifesto = ManifestoManager.criar_manifesto(dados)
+
+    return JsonResponse({'status': 200,'manifesto':manifesto.to_dict()})
 
 
 def prepara_lista_de_motoristas(lista_motoristas):
@@ -94,14 +94,3 @@ def prepare_data(data):
             'usuario_cadastro':data.get("usuario_cadastro"),
 
             }
-
-'''
-    "veiculos": [
-        {
-            "id": "AWY1749",
-            "modelo": "Voyage",
-            "proprietario": "SERAFIM TRAN..."
-        }
-    ],
-}
-'''
