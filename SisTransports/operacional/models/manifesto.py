@@ -48,6 +48,7 @@ class Manifesto (models.Model):
         veiculos_data = [veiculo.to_dict() for veiculo in self.veiculos.all()]
         dtc_data = [dtc.to_dict() for dtc in self.dtc.all()]
         return {
+            'id':self.id,
             'emissor_fk':emissor_data,
             'data_previsão_inicio':self.data_previsão_inicio,
             'data_previsão_chegada':self.data_previsão_chegada,

@@ -1,6 +1,7 @@
 let txtCpf = document.getElementById('cpfMotorista')
 
 txtCpf.addEventListener('blur',async()=>{
+    alert(txtCpf.value)
     if (txtCpf.value != ''){
         if (validateDocumentNumber(txtCpf.value)){
             limpaMotorista()
@@ -31,6 +32,7 @@ const populaMotorista = (motorista)=>{
     limpaMotorista()
     document.getElementById('cpfMotorista').value=motorista.parceiro_fk.cnpj_cpf
     document.getElementById('nomeMotorista').value=motorista.parceiro_fk.raz_soc
+    console.log(motorista.data_nascimento)
     document.getElementById('dataNascimento').value=formataData(motorista.data_nascimento)
     document.getElementById('dtToxicologico').value=formataData(motorista.validade_toxicologico)
     document.getElementById('filiacaoPai').value=motorista.filiacao_pai

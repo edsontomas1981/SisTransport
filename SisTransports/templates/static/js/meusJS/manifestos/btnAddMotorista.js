@@ -1,10 +1,6 @@
 var btnAddMotorista = document.getElementById('btnAdicionaMotorista')
 var listaMotoristas = []
 
-const btnRemoveMotorista = (element)=>{
-    listaMotoristas=removerMotoristaLista(listaMotoristas,element)
-    popula_tbody('tbodyMotorista',listaMotoristas,botoes,false)
-}
 
 let botoes={
     excluir: {
@@ -15,7 +11,6 @@ let botoes={
   };
 
 btnAddMotorista.addEventListener('click',()=>{
-
 
     let cpfMotorista = document.getElementById('cpfMotoristaManifesto')
     let nomeMotorista = document.getElementById('nomeMotoristaManifesto')
@@ -41,33 +36,20 @@ const limpaMotorista = ()=>{
 
 // Função para adicionar um motorista à lista, verificando se o CPF já existe
 const adicionarMotoristaNaLista=(listaMotoristas, novoCPF, novoNome)=> {
+
+    console.log('o que vc veio parar aqui')
     // Verifica se o CPF já está na lista
     const cpfExistente = listaMotoristas.find(motorista => motorista.id === novoCPF);
     
     // Se o CPF já existe, exibe uma mensagem e não adiciona o motorista novamente
     if (cpfExistente) {
-        console.log(`O motorista com CPF ${novoCPF} já está na lista.`);
+        msgAlerta(`O motorista com CPF ${novoCPF} já está cadastrado.`);
     } else {
         // Caso contrário, adiciona o novo motorista à lista
         listaMotoristas.push({ 'id': novoCPF, 'nome': novoNome });
-        console.log(`Motorista com CPF ${novoCPF} adicionado com sucesso.`);
     }
 }
 
-// Função para remover um motorista da lista com base no CPF
-const removerMotoristaLista = (listaMotoristas, cpf)=> {
-    // Filtra a lista para excluir o motorista com o CPF especificado
-    const novaListaMotoristas = listaMotoristas.filter(motorista => motorista.id !== cpf);
-    
-    // Verifica se algum motorista foi removido
-    if (novaListaMotoristas.length === listaMotoristas.length) {
-        console.log(`Nenhum motorista encontrado com o CPF ${cpf}.`);
-    } else {
-        console.log(`Motorista com CPF ${cpf} removido com sucesso.`);
-    }
-
-    return novaListaMotoristas;
-}
 
 
 

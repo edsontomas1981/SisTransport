@@ -1,11 +1,11 @@
-let placa = document.getElementById('placaPrincipal')
+let placaPrincipalManifesto = document.getElementById('placaPrincipal')
 let proprietarioPrincipal = document.getElementById('proprietarioPrincipal')
 let modeloPrincipal = document.getElementById('modeloPrincipal')
 
 
-placa.addEventListener('blur',async()=>{
-    if(placa.value != "" && placa.value.length ==7){
-        let data = {'placa':placa.value}
+placaPrincipalManifesto.addEventListener('blur',async()=>{
+    if(placaPrincipalManifesto.value != "" && placaPrincipalManifesto.value.length ==7){
+        let data = {'placa':placaPrincipalManifesto.value}
         let conexao = new Conexao('/operacional/read_veiculo_placa/', data);
         const result = await conexao.sendPostRequest();
         console.log(result)
@@ -15,7 +15,7 @@ placa.addEventListener('blur',async()=>{
             modeloPrincipal.value = result.veiculo.modelo
         }else{
             msgErro('Veículo não localizado')
-            placa.value = ""
+            placaPrincipalManifesto.value = ""
             proprietarioPrincipal.value = ""
             modeloPrincipal.value = ""
         }

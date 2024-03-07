@@ -42,7 +42,6 @@ const geraDadosManifesto = () => {
         dadosManifesto[campo] = document.getElementById(campo).value.trim();
     }
     existemCamposVazios = validarCamposObrigatorios(dadosManifesto,obrigatorios)
-    console.log(existemCamposVazios)
     if(existemCamposVazios.length !=0 ){
             return null
         }else{

@@ -64,25 +64,34 @@
             </div>
           </li> 
 
-          <li>
+          <!-- <li>
             <button class="form-control btn btn-success p-1 btn-lg mt-3" id="enviarSefaz" style="border-radius: 30px;">
               <i class="fas fa-spinner spinner"></i><span class="ml-2">Em carregamento</span>
             </button>
-          </li>   
-        </ul>
+          </li> -->
+          
+          <li>
+            <div class="input-group">
+              <input type="button" class="form-control" placeholder="Nº Manifesto" id="idDeBuscaManifesto" style="height: 42px !important; width: 80px !important; margin-top: 18px !important; margin-left: 10px !important;">            
+              <button type="button" class="btn btn-primary btn-rounded btn-icon" id="btnBuscarManifesto" style="margin-top: 18px !important;">            
+                <i class="fa fa-search" aria-hidden="true"></i>
+              </button>
+            </div>
+          </li>
+      </ul>
 
       </div>
       <div class="col-sm-12 mb-3">
         <table class="table table-striped table-sm">
           <thead>
             <tr class="thead-padrao">
-              <th scope="col" class="border-end"><span>Data Saída : </span> <span>17/10/2007</span></th>
-              <th scope="col" class="border-end"><span>Prev. Chegada : </span> <span>17/10/2007</span></th>
-              <th scope="col" class="border-end"><span>Rota : </span> <span>SAO X THE</span></th>
-              <th scope="col" class="border-end"><span>Motorista : </span> <span>Edson Tomas da Silva</span> </th>
-              <th scope="col" class="border-end"><span>Placa : </span> <span>AWY1749</span></th>
-              <th scope="col" class="border-end"><span>Número de Documentos : </span> <span>141</span></th>
-              <th scope="col" class="border-end"><span>Manifesto Nº : </span> <span>999999</span></th>
+              <th scope="col" class="border-end"><span>Data Saída : </span> <span id="dtSaida"></span></th>
+              <th scope="col" class="border-end"><span>Prev. Chegada : </span> <span id="prevChegada"></span></th>
+              <th scope="col" class="border-end"><span>Rota : </span> <span id="origemDestino"></span></th>
+              <th scope="col" class="border-end"><span>Motorista : </span> <span id="motoristaPrincipal"></span></th>
+              <th scope="col" class="border-end"><span>Placa : </span> <span id="spanPlacaPrincipal"></span></th>
+              <th scope="col" class="border-end"><span>Número de Documentos : </span> <span id="spanQtdeDocumentos"></span></th>
+              <th scope="col" class="border-end"><span>Manifesto Nº : </span> <span id="spanNumManifesto"></span></th>
             </tr>
           </thead>
         </table>
@@ -140,14 +149,14 @@
   <script src="{% static 'js/meusJS/manifestos/barraDadosManifesto.js' %}"></script>
 
   <script src="{% static 'js/meusJS/manifestos/txtCpfMotorista.js' %}"></script>
+  <script src="{% static 'js/meusJS/manifestos/btnRemoveMotorista.js' %}"></script>
   <script src="{% static 'js/meusJS/manifestos/btnAddMotorista.js' %}"></script>
-  <script src="{% static 'js/meusJS/manifestos/btnBuscaMotorista.js' %}"></script>
   <script src="{% static 'js/meusJS/manifestos/btnCriaMotorista.js' %}"></script>
   <script src="{% static 'js/meusJS/manifestos/tableMotoristasManifesto.js' %}"></script>
   <script src="{% static 'js/meusJS/manifestos/txtPlacaVeiculo.js' %}"></script>
   <script src="{% static 'js/meusJS/manifestos/btnAddVeiculo.js' %}"></script>
-  <!-- <script src="{% static 'js/meusJS/manifestos/txtPlacaCarretaPrincipal.js' %}"></script>
-  <script src="{% static 'js/meusJS/manifestos/txtPlacaCarretaSecundaria.js' %}"></script> -->
+  <script src="{% static 'js/meusJS/manifestos/btnBuscaManifesto.js' %}"></script>
+  <!-- <script src="{% static 'js/meusJS/manifestos/txtPlacaCarretaSecundaria.js' %}"></script> -->
   <script src="{% static 'js/meusJS/manifestos/cmbEmissorManifesto.js' %}"></script>
   <script src="{% static 'js/meusJS/manifestos/cmbTipoDocumento.js' %}"></script>
   <script src="{% static 'js/meusJS/manifestos/cmbTipomanifesto.js' %}"></script>

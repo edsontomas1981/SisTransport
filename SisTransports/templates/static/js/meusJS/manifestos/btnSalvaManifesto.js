@@ -6,5 +6,5 @@ btnSalvaManifesto.addEventListener('click',async ()=>{
 
     response = await connEndpoint('/operacional/create_manifesto/', dados);
 
-    console.log(response)
+    populaDadosBarraManifesto(response)
 })

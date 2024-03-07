@@ -299,6 +299,7 @@ const getDadosForm=(formularioId)=>{
 }
 
 const formataDataPtBr = (dataString)=>{
+  
   const dataObj = new Date(dataString);
   // Usando 'pt-BR' para obter o formato brasileiro
   const formatoBrasileiro = new Intl.DateTimeFormat('pt-BR', {
