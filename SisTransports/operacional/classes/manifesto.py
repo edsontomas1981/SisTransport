@@ -46,7 +46,14 @@ class ManifestoManager:
 
     @classmethod
     def obter_manifesto_por_id(cls, manifesto_id):
-        return Manifesto.objects.get(id=manifesto_id)
+        try:
+            # Retornar o manifesto
+            return Manifesto.objects.get(id=int(manifesto_id))
+        except Manifesto.DoesNotExist:
+            raise ValueError("Manifesto com o ID {} não encontrado".format(manifesto_id))
+        except ValueError:
+            raise ValueError("O manifesto_id deve ser um número inteiro")
+
 
     @classmethod
     def atualizar_manifesto(cls, manifesto_id, **kwargs):

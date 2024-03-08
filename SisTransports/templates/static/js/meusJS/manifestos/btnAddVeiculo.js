@@ -31,7 +31,7 @@ const limpaVeiculos = ()=>{
 }
 
 const adicionarVeiculosNaLista = (listaVeiculos, novaPlaca, novoModelo, novoProprietario) => {
-    const placaExistente = listaVeiculos.find(veiculo => veiculo.id === novaPlaca);
+    const placaExistente = listaVeiculos.find(listaVeiculos => listaVeiculos.id === novaPlaca);
     
     if (placaExistente) {
         console.log(`Veiculo de placa ${novaPlaca} já está na lista.`);
@@ -39,5 +39,3 @@ const adicionarVeiculosNaLista = (listaVeiculos, novaPlaca, novoModelo, novoProp
         listaVeiculos.push({ 'id': novaPlaca, 'modelo': novoModelo, 'proprietario': novoProprietario });
     }
 }
-
-

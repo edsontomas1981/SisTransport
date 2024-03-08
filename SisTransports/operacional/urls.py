@@ -59,11 +59,10 @@ urlpatterns = [
 
     path('manifesto/',viewsOperacional.manifesto,name='manifesto'),
     path('create_manifesto/',viewsOperacional.create_manifesto,name='create_manifesto'),
+    path('get_manifesto_by_num/',viewsOperacional.manifesto_by_num,name='manifesto_by_num'),
 
     path('get_emissor/',viewsOperacional.get_emissor,name='get_emissor'),
     path('get_emissores/',viewsOperacional.get_emissores,name='get_emissores'),
-
-
 
     path('read_rotas/',viewsOperacional.readRota,name='read_rotas'),
     path('rotas/',viewsOperacional.rotas,name='rotas'),

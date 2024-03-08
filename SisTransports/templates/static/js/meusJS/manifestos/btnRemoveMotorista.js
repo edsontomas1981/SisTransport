@@ -4,14 +4,14 @@ const btnRemoveMotorista = (cpfMotorista)=>{
     popula_tbody('tbodyMotorista',listaMotoristas,botoes,false)
 }
 
-const removerVeiculoLista = (listaVeiculos, placa)=> {
-    const novaListaVeiculos = listaVeiculos.filter(listaVeiculos => listaVeiculos.id !== placa);
+const removerMotoristaLista = (listaMotoristas, cpf)=> {
+    const novaListaMotorista = listaMotoristas.filter(listaMotoristas => listaMotoristas.id !== cpf);
     
-    if (novaListaVeiculos.length === listaVeiculos.length) {
-        console.log(`Nenhum veiculo encontrado com o placa ${placa}.`);
+    if (novaListaMotorista.length === listaMotoristas.length) {
+        console.log(`Nenhum veiculo encontrado com o cpf ${cpf}.`);
     } else {
-        console.log(`Placa ${placa} removido com sucesso.`);
+        console.log(`cpf ${cpf} removido com sucesso.`);
     }
 
-    return novaListaVeiculos;
+    return novaListaMotorista;
 }
