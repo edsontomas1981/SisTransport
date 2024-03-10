@@ -1,6 +1,6 @@
-const dadosEmissor = async()=>{
-    let dadosEmissor = await connEndpoint('/operacional/get_emissores/', {});
-    return dadosEmissor.emissores
+const getDadosEmissor = async()=>{
+    let dadosEmissores = await connEndpoint('/operacional/get_emissores/', {});
+    return dadosEmissores.emissores
 
     // return [{'id':1,
     //         'siglaFilial':'São Paulo(SAO)',
@@ -19,7 +19,7 @@ const dadosEmissor = async()=>{
 
 const carregaEmissoresPorId = (idDesejado) => {
     // Obtém os dados do emissor usando a função dadosEmissor
-    var emissores = dadosEmissor();
+    var emissores = getDadosEmissor();
     let filialEmissora = {}
     // Itera sobre os dados do emissor e adiciona opções ao select
     emissores.forEach((element) => {
@@ -35,7 +35,7 @@ const carregaEmissoresPorId = (idDesejado) => {
 
 const popularSelectEmissor = async (idSelect) => {
     const selectBox = document.getElementById(idSelect);
-    const dados = await dadosEmissor();
+    const dados = await getDadosEmissor();
 
     console.log(dados)
 

@@ -1,6 +1,5 @@
 from django.db import models
 from django.conf import settings
-from datetime import datetime
 from django.utils import timezone
 
 from operacional.models.emissor import Emissor
@@ -11,7 +10,7 @@ from operacional.models.ocorrencias_manifesto import Ocorrencia_manifesto
 from operacional.models.tipo_documento import Tipo_Documento
 from operacional.models.dtc import Dtc
 
-class Manifesto (models.Model):
+class Manifesto(models.Model):
     emissor_fk = models.ForeignKey(Emissor, on_delete=models.CASCADE)
     data_previsão_inicio = models.DateTimeField(null=True)
     data_previsão_chegada = models.DateTimeField(null=True)
@@ -24,7 +23,7 @@ class Manifesto (models.Model):
     motoristas = models.ManyToManyField(Motorista)
     veiculos = models.ManyToManyField(Veiculo)
     observacao = models.TextField(null=True)
-    dtc = models.ManyToManyField(Dtc,through='DtcManifesto')
+    dtc = models.ManyToManyField(Dtc, through='DtcManifesto')
     
     usuario_cadastro = models.ForeignKey(
         settings.AUTH_USER_MODEL,
@@ -42,30 +41,29 @@ class Manifesto (models.Model):
     data_ultima_atualizacao = models.DateTimeField(default=timezone.now)  
 
     def to_dict(self):
-        data_cadastro_datetime = datetime.strptime(self.data_cadastro, '%Y-%m-%d %H:%M:%S.%f%z') if self.data_cadastro else None
         emissor_data = self.emissor_fk.to_dict() if self.emissor_fk else None
         motoristas_data = [motorista.to_dict() for motorista in self.motoristas.all()]
         veiculos_data = [veiculo.to_dict() for veiculo in self.veiculos.all()]
         dtc_data = [dtc.to_dict() for dtc in self.dtc.all()]
         return {
-            'id':self.id,
-            'emissor_fk':emissor_data,
-            'data_previsão_inicio':self.data_previsão_inicio,
-            'data_previsão_chegada':self.data_previsão_chegada,
-            'rota_fk':self.rota_fk.to_dict(),
-            'frete_carreteiro':self.frete_carreteiro,
-            'frete_adiantamento':self.frete_adiantamento,
-            'lacres':self.lacres,
-            'averbacao':self.averbacao,
-            'liberacao':self.liberacao,
-            'motoristas':motoristas_data,
-            'veiculos':veiculos_data,
-            'observacao':self.observacao,
+            'id': self.id,
+            'emissor_fk': emissor_data,
+            'data_previsão_inicio': self.data_previsão_inicio.isoformat() if self.data_previsão_inicio else None,
+            'data_previsão_chegada': self.data_previsão_chegada.isoformat() if self.data_previsão_chegada else None,
+            'rota_fk': self.rota_fk.to_dict(),
+            'frete_carreteiro': self.frete_carreteiro,
+            'frete_adiantamento': self.frete_adiantamento,
+            'lacres': self.lacres,
+            'averbacao': self.averbacao,
+            'liberacao': self.liberacao,
+            'motoristas': motoristas_data,
+            'veiculos': veiculos_data,
+            'observacao': self.observacao,
             'usuario_cadastro': self.usuario_cadastro.id if self.usuario_cadastro else None,
             'usuario_ultima_atualizacao': self.usuario_ultima_atualizacao.id if self.usuario_ultima_atualizacao else None,
-            'data_cadastro': data_cadastro_datetime.isoformat() if data_cadastro_datetime else None,
+            'data_cadastro': self.data_cadastro.isoformat() if self.data_cadastro else None,
             'data_ultima_atualizacao': self.data_ultima_atualizacao.isoformat(),
-            'dtc':dtc_data
+            'dtc': dtc_data
         }
 
 class DtcManifesto(models.Model):

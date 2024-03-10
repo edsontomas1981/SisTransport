@@ -53,7 +53,7 @@ const geraDadosManifesto = () => {
                 return null;
             }
 
-                // Verifica se as listas de motoristas e veículos não estão vazias
+            // Verifica se as listas de motoristas e veículos não estão vazias
             if ( listaVeiculos.length === 0) {
                 msgErro('É necessário informar ao menos um veículo.');
                 document.getElementById('placaPrincipal').classList.add('campo-vazio');
@@ -66,4 +66,31 @@ const geraDadosManifesto = () => {
             return dadosManifesto;
         }
 };
+
+const populaDadosManifesto= (response)=>{
+    console.log(formataData(response.data_previsão_inicio))
+    document.getElementById('emissorMdfe').value=response.emissor_fk.id
+    document.getElementById('dtInicioManif').value=response.data_previsão_inicio
+    document.getElementById('dtPrevisaoChegada').value=response.data_previsão_chegada
+    document.getElementById('rotasManifesto').value=response.rota_fk.id
+    document.getElementById('freteCarreteiro').value=response.frete_carreteiro
+    document.getElementById('adiantamentoCarreteiro').value=response.frete_adiantamento
+    document.getElementById('lacresManifesto').value=response.lacres
+    document.getElementById('averbacaoManifesto').value=response.averbacao
+    document.getElementById('liberacaoMotorista').value=response.liberacao
+}
+
+const limpaDadosManifesto= ()=>{
+    document.getElementById('emissorMdfe').selectedIndex = 0;
+    document.getElementById('dtInicioManif').value=""
+    document.getElementById('dtPrevisaoChegada').value=""
+    document.getElementById('rotasManifesto').selectedIndex = 0;
+    document.getElementById('freteCarreteiro').value=""
+    document.getElementById('adiantamentoCarreteiro').value=""
+    document.getElementById('lacresManifesto').value=""
+    document.getElementById('averbacaoManifesto').value=""
+    document.getElementById('liberacaoMotorista').value=""
+}
+
+
 

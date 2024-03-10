@@ -1,4 +1,7 @@
 const populaDadosBarraManifesto=(dados)=>{
+
+    // console.log(dados)
+
     populaDtInicioBarraManifesto(dados.manifesto.data_previsão_inicio)
     populaPrevChegadaBarraManifesto(dados.manifesto.data_previsão_chegada)
     populaRotaBarraManifesto(dados.manifesto.rota_fk.nome)
@@ -7,24 +10,51 @@ const populaDadosBarraManifesto=(dados)=>{
     populaQtdeDocumentosBarraManifesto(15)
     populaNumManifestoBarraManifesto(dados.manifesto.id)
 }
-const populaDtInicioBarraManifesto=(dataInicio)=>{
-    document.getElementById('dtSaida').textContent = formataDataPtBr(dataInicio)
+const populaDtInicioBarraManifesto = (dataInicio = '') => {
+    const element = document.getElementById('dtSaida');
+    if (element && dataInicio) {
+        element.textContent = formataDataPtBr(dataInicio);
+    }
 }
-const populaPrevChegadaBarraManifesto=(prevChegada)=>{
-    document.getElementById('prevChegada').textContent = formataDataPtBr(prevChegada)
+
+const populaPrevChegadaBarraManifesto = (prevChegada = '') => {
+    const element = document.getElementById('prevChegada');
+    if (element && prevChegada) {
+        element.textContent = formataDataPtBr(prevChegada);
+    }
 }
-const populaRotaBarraManifesto=(origemDestino)=>{
-    document.getElementById('origemDestino').textContent = origemDestino
+
+const populaRotaBarraManifesto = (origemDestino = '') => {
+    const element = document.getElementById('origemDestino');
+    if (element && origemDestino) {
+        element.textContent = origemDestino;
+    }
 }
-const populaMotoristaBarraManifesto=(motoristaPrincipal)=>{
-    document.getElementById('motoristaPrincipal').textContent = motoristaPrincipal
+
+const populaMotoristaBarraManifesto = (motoristaPrincipal = '') => {
+    const element = document.getElementById('motoristaPrincipal');
+    if (element && motoristaPrincipal) {
+        element.textContent = motoristaPrincipal;
+    }
 }
-const populaPlacaBarraManifesto=(spanPlacaPrincipal)=>{
-    document.getElementById('spanPlacaPrincipal').textContent = spanPlacaPrincipal
+
+const populaPlacaBarraManifesto = (spanPlacaPrincipal = '') => {
+    const element = document.getElementById('spanPlacaPrincipal');
+    if (element && spanPlacaPrincipal) {
+        element.textContent = spanPlacaPrincipal;
+    }
 }
-const populaQtdeDocumentosBarraManifesto=(spanQtdeDocumentos)=>{
-    document.getElementById('spanQtdeDocumentos').textContent = spanQtdeDocumentos
+
+const populaQtdeDocumentosBarraManifesto = (spanQtdeDocumentos = '') => {
+    const element = document.getElementById('spanQtdeDocumentos');
+    if (element && spanQtdeDocumentos) {
+        element.textContent = spanQtdeDocumentos;
+    }
 }
-const populaNumManifestoBarraManifesto=(spanNumManifesto)=>{
-    document.getElementById('spanNumManifesto').textContent = spanNumManifesto
+
+const populaNumManifestoBarraManifesto = (spanNumManifesto = '') => {
+    const element = document.getElementById('spanNumManifesto');
+    if (element && spanNumManifesto) {
+        element.textContent = spanNumManifesto;
+    }
 }

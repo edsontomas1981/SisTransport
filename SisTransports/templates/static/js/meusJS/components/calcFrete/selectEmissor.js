@@ -6,7 +6,7 @@ selectEmissorCte.addEventListener('change', () => {
 const carregaEmissores = async () => {
     // Obtém os dados do emissor usando a função dadosEmissor
 
-    var emissores = await dadosEmissor();
+    var emissores = await getDadosEmissor();
     
     // Limpa o conteúdo atual do select
     while (selectEmissorCte.firstChild) {

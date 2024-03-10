@@ -1,14 +1,14 @@
-let txtCpf = document.getElementById('cpfMotorista')
+let txtCpfVeiculo = document.getElementById('cpfMotorista')
 
-txtCpf.addEventListener('blur',async()=>{
-    alert(txtCpf.value)
-    if (txtCpf.value != ''){
-        if (validateDocumentNumber(txtCpf.value)){
-            limpaMotorista()
-            let response = await buscarParceiro(txtCpf.value)
+txtCpfVeiculo.addEventListener('blur',async()=>{
+    alert(txtCpfVeiculo.value)
+    if (txtCpfVeiculo.value != ''){
+        if (validateDocumentNumber(txtCpfVeiculo.value)){
+            limpaMotoristaVeiculo()
+            let response = await buscarParceiro(txtCpfVeiculo.value)
             if (response.status == 200){
                 document.getElementById('nomeMotorista').value = response.parceiro.raz_soc
-                response= await connEndpoint('/operacional/read_motorista/', {'cpfMotorista':txtCpf.value})
+                response= await connEndpoint('/operacional/read_motorista/', {'cpfMotorista':txtCpfVeiculo.value})
                 if (response.status >= 200 && response.status < 300 ){
                     console.log(response.motorista)
                     populaMotorista(response.motorista)
@@ -29,10 +29,9 @@ const buscarParceiro = async(cnpj)=>{
 }
 
 const populaMotorista = (motorista)=>{
-    limpaMotorista()
+    limpaMotoristaVeiculo()
     document.getElementById('cpfMotorista').value=motorista.parceiro_fk.cnpj_cpf
     document.getElementById('nomeMotorista').value=motorista.parceiro_fk.raz_soc
-    console.log(motorista.data_nascimento)
     document.getElementById('dataNascimento').value=formataData(motorista.data_nascimento)
     document.getElementById('dtToxicologico').value=formataData(motorista.validade_toxicologico)
     document.getElementById('filiacaoPai').value=motorista.filiacao_pai
@@ -48,7 +47,7 @@ const populaMotorista = (motorista)=>{
     document.getElementById('registroHabilitacao').value=motorista.numero_registro_cnh
 }
 
-const limpaMotorista=()=>{
+const limpaMotoristaVeiculo=()=>{
 
     document.getElementById('dataNascimento').value=''
     document.getElementById('dtToxicologico').value=''
@@ -72,11 +71,11 @@ const limpaCnpjENomeMotorista=()=>{
 
 
 document.getElementById('btnLimpaMotorista').addEventListener('click',()=>{
-    limpaMotorista();
+    limpaMotoristaVeiculo();
     limpaCnpjENomeMotorista();
 })
 
 document.getElementById('btnCloseMotorista').addEventListener('click',()=>{
-    limpaMotorista();
+    limpaMotoristaVeiculo();
     limpaCnpjENomeMotorista();
 })
