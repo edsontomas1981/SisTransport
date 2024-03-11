@@ -8,7 +8,7 @@ let botoes={
         texto: 'Apagar',
         callback: btnRemoveMotorista
       }
-  };
+  };    
 
 btnAddMotorista.addEventListener('click',()=>{
 

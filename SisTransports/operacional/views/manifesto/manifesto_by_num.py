@@ -8,7 +8,7 @@ from operacional.classes.manifesto import ManifestoManager
 from parceiros.classes.parceiros import Parceiros
 
 @login_required(login_url='/auth/entrar/')
-@require_http_methods(["POST", "GET"])
+@require_http_methods(["POST"])
 def manifesto_by_num(request):
     """
     Retorna um manifesto com base no número do manifesto fornecido.

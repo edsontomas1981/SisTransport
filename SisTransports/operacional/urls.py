@@ -60,6 +60,10 @@ urlpatterns = [
     path('manifesto/',viewsOperacional.manifesto,name='manifesto'),
     path('create_manifesto/',viewsOperacional.create_manifesto,name='create_manifesto'),
     path('get_manifesto_by_num/',viewsOperacional.manifesto_by_num,name='manifesto_by_num'),
+    path('add_motorista_manifesto/',viewsOperacional.add_motorista_manifesto,name='add_motorista_manifesto'),
+    path('add_veiculo_manifesto/',viewsOperacional.add_veiculo_manifesto,name='add_veiculo_manifesto'),
+    path('del_veiculo_manifesto/',viewsOperacional.del_veiculo_manifesto,name='del_veiculo_manifesto'),
+    path('del_motorista_manifesto/',viewsOperacional.del_motorista_manifesto,name='del_motorista_manifesto'),
 
     path('get_emissor/',viewsOperacional.get_emissor,name='get_emissor'),
     path('get_emissores/',viewsOperacional.get_emissores,name='get_emissores'),

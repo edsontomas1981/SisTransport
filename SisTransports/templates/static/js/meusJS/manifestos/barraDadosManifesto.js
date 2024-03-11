@@ -1,13 +1,14 @@
 const populaDadosBarraManifesto=(dados)=>{
 
-    // console.log(dados)
+    console.log(dados)
+    console.log(dados.manifesto.dtc.length)
 
     populaDtInicioBarraManifesto(dados.manifesto.data_previsão_inicio)
     populaPrevChegadaBarraManifesto(dados.manifesto.data_previsão_chegada)
     populaRotaBarraManifesto(dados.manifesto.rota_fk.nome)
     populaMotoristaBarraManifesto(dados.manifesto.motoristas[0].parceiro_fk.raz_soc)
     populaPlacaBarraManifesto(dados.manifesto.veiculos[0].placa)
-    populaQtdeDocumentosBarraManifesto(15)
+    populaQtdeDocumentosBarraManifesto(parseInt(dados.manifesto.dtc.length))
     populaNumManifestoBarraManifesto(dados.manifesto.id)
 }
 const populaDtInicioBarraManifesto = (dataInicio = '') => {
@@ -45,9 +46,11 @@ const populaPlacaBarraManifesto = (spanPlacaPrincipal = '') => {
     }
 }
 
-const populaQtdeDocumentosBarraManifesto = (spanQtdeDocumentos = '') => {
+const populaQtdeDocumentosBarraManifesto = (spanQtdeDocumentos=0) => {
     const element = document.getElementById('spanQtdeDocumentos');
-    if (element && spanQtdeDocumentos) {
+    if (spanQtdeDocumentos) {
+        element.textContent = spanQtdeDocumentos;
+    }else{
         element.textContent = spanQtdeDocumentos;
     }
 }

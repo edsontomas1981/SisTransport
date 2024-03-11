@@ -70,8 +70,8 @@ const geraDadosManifesto = () => {
 const populaDadosManifesto= (response)=>{
     console.log(formataData(response.data_previsão_inicio))
     document.getElementById('emissorMdfe').value=response.emissor_fk.id
-    document.getElementById('dtInicioManif').value=response.data_previsão_inicio
-    document.getElementById('dtPrevisaoChegada').value=response.data_previsão_chegada
+    document.getElementById('dtInicioManif').value=formataData(response.data_previsão_inicio)
+    document.getElementById('dtPrevisaoChegada').value=formataData(response.data_previsão_chegada)
     document.getElementById('rotasManifesto').value=response.rota_fk.id
     document.getElementById('freteCarreteiro').value=response.frete_carreteiro
     document.getElementById('adiantamentoCarreteiro').value=response.frete_adiantamento
