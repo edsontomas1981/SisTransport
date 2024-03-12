@@ -10,12 +10,17 @@ let botoes={
       }
   };    
 
-btnAddMotorista.addEventListener('click',()=>{
+btnAddMotorista.addEventListener('click',async ()=>{
 
     let cpfMotorista = document.getElementById('cpfMotoristaManifesto')
     let nomeMotorista = document.getElementById('nomeMotoristaManifesto')
+    let idManifesto = document.getElementById('spanNumManifesto')
+    
 
     let nome = nomeMotorista.value.replace(/\s/g, '');
+
+    let response  = await connEndpoint('/operacional/add_motorista_manifesto/', {'cpfMotorista':cpfMotorista.value,
+                                                                                'idManifesto':idManifesto.textContent});
 
     if (nome != ""){
         // listaMotoristas.push({'cpf':cpfMotorista.value,'nome':nomeMotorista.value})
@@ -25,7 +30,6 @@ btnAddMotorista.addEventListener('click',()=>{
         msgErro('É necessário selecionar um motorista')
     }
 
-    limpaMotorista()
 
 })
 

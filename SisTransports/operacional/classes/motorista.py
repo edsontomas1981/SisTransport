@@ -56,7 +56,9 @@ class MotoristaManager:
         """
         if not Motorista.objects.filter(parceiro_fk__cnpj_cpf=cpf_motorista).exists():
             return None
+        
         self.obj_motorista = Motorista.objects.get(parceiro_fk__cnpj_cpf=cpf_motorista)
+        
 
     def create_motorista(self, dados):
         """

@@ -23,19 +23,24 @@ class ManifestoManager:
         dados_comuns = cls._carregar_dados_comuns(data)
         dados_comuns['usuario_cadastro']= data.get('usuario_cadastro')
         dados_comuns['data_cadastro']=str(timezone.now())
-
-        motoristas_data = data.get('motoristas', [])
-        veiculos_data = data.get('veiculos', [])
-
         manifesto = Manifesto.objects.create(**dados_comuns)
-
-        # Salvando motoristas associados ao manifesto
-        manifesto.motoristas.set(motoristas_data)
-
-        # Salvando veiculos associados ao manifesto
-        manifesto.veiculos.set(veiculos_data)        
-
         return manifesto
+    
+    @classmethod
+    def add_motorista(cls,data):
+
+        motorista = data.get('motorista')
+        manifesto = data.get('manifesto')
+        # Salvando motoristas associados ao manifesto
+        manifesto.motoristas.add(motorista)
+
+
+    # @classmethod
+    # def add_veiculo(cls,data):
+    #     motorista = data.get('motorista')
+    #     manifesto = data.get('manifesto')
+    #     # Salvando motoristas associados ao manifesto
+    #     manifesto.motoristas.set(motorista)    
 
     @classmethod
     def cria_ou_atualiza(cls, manifesto_id=None, **kwargs):
@@ -48,7 +53,10 @@ class ManifestoManager:
     def obter_manifesto_por_id(cls, manifesto_id):
         try:
             # Retornar o manifesto
-            return Manifesto.objects.get(id=int(manifesto_id))
+            if Manifesto.objects.get(id=int(manifesto_id)):
+                return Manifesto.objects.get(id=int(manifesto_id))
+            else:
+                return None
         except Manifesto.DoesNotExist:
             raise ValueError("Manifesto com o ID {} não encontrado".format(manifesto_id))
         except ValueError:

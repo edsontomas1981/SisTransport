@@ -2,10 +2,7 @@ from django.http import JsonResponse
 from django.views.decorators.http import require_http_methods
 from django.contrib.auth.decorators import login_required
 import json
-
-from Classes.utils import string_para_data, toFloat
 from operacional.classes.manifesto import ManifestoManager
-from parceiros.classes.parceiros import Parceiros
 
 @login_required(login_url='/auth/entrar/')
 @require_http_methods(["POST"])
@@ -25,12 +22,12 @@ def manifesto_by_num(request):
         data = json.loads(request.body.decode('utf-8'))
         num_manifesto = data.get('numManifesto')
         if not num_manifesto:
-            return JsonResponse({'status': 400, 'error': 'Número do manifesto não fornecido.'}, status=400)
+            return JsonResponse({'status': 400, 'error': 'Número do manifesto não fornecido.'})
         
         manifesto = ManifestoManager.obter_manifesto_por_id(num_manifesto)
         if manifesto is None:
-            return JsonResponse({'status': 404, 'error': 'Manifesto não encontrado.'}, status=404)
+            return JsonResponse({'status': 404, 'error': 'Manifesto não encontrado.'})
         
         return JsonResponse({'status': 200, 'manifesto': manifesto.to_dict()})
     except Exception as e:
-        return JsonResponse({'status': 500, 'error': 'Ocorreu um erro ao processar a solicitação.'}, status=500)
+        return JsonResponse({'status': 500, 'error': 'Ocorreu um erro ao processar a solicitação.'})
