@@ -1,17 +1,24 @@
 const btnRemoveMotorista = (cpfMotorista)=>{
-    let numManifesto = document.getElementById('spanNumManifesto')
-    listaMotoristas=removerMotoristaLista(listaMotoristas,cpfMotorista)
-    popula_tbody('tbodyMotorista',listaMotoristas,botoes,false)
+    let cpfMotorista = document.getElementById('cpfMotoristaManifesto')
+    let idManifesto = document.getElementById('spanNumManifesto')
+
+    listaMotoristas=removerMotoristaLista(cpfMotorista,idManifesto)
+    // popula_tbody('tbodyMotorista',listaMotoristas,botoes,false)
 }
 
-const removerMotoristaLista = (listaMotoristas, cpf)=> {
-    const novaListaMotorista = listaMotoristas.filter(listaMotoristas => listaMotoristas.id !== cpf);
-    
-    if (novaListaMotorista.length === listaMotoristas.length) {
-        console.log(`Nenhum veiculo encontrado com o cpf ${cpf}.`);
-    } else {
-        console.log(`cpf ${cpf} removido com sucesso.`);
-    }
+const removerMotoristaLista = async(cpfMotorista, idManifesto)=> {
 
-    return novaListaMotorista;
+    let response  = await connEndpoint('/operacional/del_motorista_manifesto/', {'cpfMotorista':cpfMotorista,
+                                                                                'idManifesto':idManifesto});
+    console.log(response)
+
+    // const novaListaMotorista = listaMotoristas.filter(listaMotoristas => listaMotoristas.id !== cpf);
+    
+    // if (novaListaMotorista.length === listaMotoristas.length) {
+    //     console.log(`Nenhum veiculo encontrado com o cpf ${cpf}.`);
+    // } else {
+    //     console.log(`cpf ${cpf} removido com sucesso.`);
+    // }
+
+    // return novaListaMotorista;
 }

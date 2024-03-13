@@ -1,14 +1,16 @@
 var btnAddMotorista = document.getElementById('btnAdicionaMotorista')
 var listaMotoristas = []
 
-
-let botoes={
-    excluir: {
-        classe: "btn-danger text-white",
-        texto: 'Apagar',
-        callback: btnRemoveMotorista
-      }
-  };    
+const populaTbodyMotorista = (motoristas)=>{
+    let botoes={
+        excluir: {
+            classe: "btn-danger text-white",
+            texto: 'Apagar',
+            callback: btnRemoveMotorista
+          }
+      };    
+    popula_tbody('tbodyMotorista',motoristas,botoes,false)
+}
 
 btnAddMotorista.addEventListener('click',async ()=>{
 
@@ -16,22 +18,26 @@ btnAddMotorista.addEventListener('click',async ()=>{
     let nomeMotorista = document.getElementById('nomeMotoristaManifesto')
     let idManifesto = document.getElementById('spanNumManifesto')
     
-
-    let nome = nomeMotorista.value.replace(/\s/g, '');
-
     let response  = await connEndpoint('/operacional/add_motorista_manifesto/', {'cpfMotorista':cpfMotorista.value,
                                                                                 'idManifesto':idManifesto.textContent});
 
-    if (nome != ""){
-        // listaMotoristas.push({'cpf':cpfMotorista.value,'nome':nomeMotorista.value})
-        adicionarMotoristaNaLista(listaMotoristas,cpfMotorista.value,truncateString(nomeMotorista.value,12))
-        popula_tbody('tbodyMotorista',listaMotoristas,botoes,false)
-    }else{
-        msgErro('É necessário selecionar um motorista')
-    }
+    console.log(response.motoristas)
 
+    populaTbodyMotorista(response.motoristas)
+
+    // popula_tbody('tbodyMotorista',dadosParaTbodyMotoristas(response.motoristas),botoes,false)
+
+
+    // if (nome != ""){
+    //     // listaMotoristas.push({'cpf':cpfMotorista.value,'nome':nomeMotorista.value})
+    //     adicionarMotoristaNaLista(listaMotoristas,cpfMotorista.value,truncateString(nomeMotorista.value,12))
+    //     popula_tbody('tbodyMotorista',listaMotoristas,botoes,false)
+    // }else{
+    //     msgErro('É necessário selecionar um motorista')
+    // }
 
 })
+
 
 const limpaMotorista = ()=>{
     document.getElementById('cpfMotoristaManifesto').value = ''
@@ -41,7 +47,6 @@ const limpaMotorista = ()=>{
 // Função para adicionar um motorista à lista, verificando se o CPF já existe
 const adicionarMotoristaNaLista=(listaMotoristas, novoCPF, novoNome)=> {
 
-    console.log('o que vc veio parar aqui')
     // Verifica se o CPF já está na lista
     const cpfExistente = listaMotoristas.find(motorista => motorista.id === novoCPF);
     

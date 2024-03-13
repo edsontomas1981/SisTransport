@@ -67,17 +67,16 @@ const geraDadosManifesto = () => {
         }
 };
 
-const populaDadosManifesto= (response)=>{
-    console.log(formataData(response.data_previsão_inicio))
-    document.getElementById('emissorMdfe').value=response.emissor_fk.id
-    document.getElementById('dtInicioManif').value=formataData(response.data_previsão_inicio)
-    document.getElementById('dtPrevisaoChegada').value=formataData(response.data_previsão_chegada)
-    document.getElementById('rotasManifesto').value=response.rota_fk.id
-    document.getElementById('freteCarreteiro').value=response.frete_carreteiro
-    document.getElementById('adiantamentoCarreteiro').value=response.frete_adiantamento
-    document.getElementById('lacresManifesto').value=response.lacres
-    document.getElementById('averbacaoManifesto').value=response.averbacao
-    document.getElementById('liberacaoMotorista').value=response.liberacao
+const populaDadosManifesto = (response) => {
+    document.getElementById('emissorMdfe').value = response.emissor_fk ? response.emissor_fk.id : '';
+    document.getElementById('dtInicioManif').value = response.data_previsão_inicio ? formataData(response.data_previsão_inicio) : '';
+    document.getElementById('dtPrevisaoChegada').value = response.data_previsão_chegada ? formataData(response.data_previsão_chegada) : '';
+    document.getElementById('rotasManifesto').value = response.rota_fk ? response.rota_fk.id : '';
+    document.getElementById('freteCarreteiro').value = response.frete_carreteiro ? response.frete_carreteiro : '';
+    document.getElementById('adiantamentoCarreteiro').value = response.frete_adiantamento ? response.frete_adiantamento : '';
+    document.getElementById('lacresManifesto').value = response.lacres ? response.lacres : '';
+    document.getElementById('averbacaoManifesto').value = response.averbacao ? response.averbacao : '';
+    document.getElementById('liberacaoMotorista').value = response.liberacao ? response.liberacao : '';
 }
 
 const limpaDadosManifesto= ()=>{
@@ -90,6 +89,14 @@ const limpaDadosManifesto= ()=>{
     document.getElementById('lacresManifesto').value=""
     document.getElementById('averbacaoManifesto').value=""
     document.getElementById('liberacaoMotorista').value=""
+}
+
+const dadosParaTbodyMotoristas = (motoristas)=>{
+    let dadosMotoristas = []
+    motoristas.forEach(motorista => {
+        dadosMotoristas.push({'id':motorista.parceiro_fk.cnpj_cpf,'nome':motorista.parceiro_fk.cnpj_cpf})
+    });
+    return dadosMotoristas
 }
 
 

@@ -1,8 +1,4 @@
 const populaDadosBarraManifesto=(dados)=>{
-
-    console.log(dados)
-    console.log(dados.manifesto.dtc.length)
-
     populaDtInicioBarraManifesto(dados.manifesto.data_previsão_inicio)
     populaPrevChegadaBarraManifesto(dados.manifesto.data_previsão_chegada)
     populaRotaBarraManifesto(dados.manifesto.rota_fk.nome)
@@ -11,6 +7,7 @@ const populaDadosBarraManifesto=(dados)=>{
     populaQtdeDocumentosBarraManifesto(parseInt(dados.manifesto.dtc.length))
     populaNumManifestoBarraManifesto(dados.manifesto.id)
 }
+
 const populaDtInicioBarraManifesto = (dataInicio = '') => {
     const element = document.getElementById('dtSaida');
     if (element && dataInicio) {

@@ -21,7 +21,9 @@ def del_motorista_manifesto (request):
                        'dtPrevisaoChegada','rotasManifesto',
                        'motoristas','veiculos']
         
-    # data = json.loads(request.body.decode('utf-8'))
-    # data['usuario_cadastro'] = request.user
+    data = json.loads(request.body.decode('utf-8'))
+    data['usuario_cadastro'] = request.user
+
+    print(data)
 
     return JsonResponse({'status': 'del_motorista_manifesto'})

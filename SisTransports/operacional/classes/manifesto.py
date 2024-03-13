@@ -1,6 +1,18 @@
 from operacional.models.manifesto import Manifesto
 from django.utils import timezone
 
+class ManifestoError(Exception):
+    """Exceção base para erros relacionados ao manifesto."""
+
+class BadRequestError(ManifestoError):
+    """Exceção para erros de solicitação inválida (código HTTP 400)."""
+
+class NotFoundError(ManifestoError):
+    """Exceção para erros de recurso não encontrado (código HTTP 404)."""
+
+class InternalServerError(ManifestoError):
+    """Exceção para erros internos do servidor (código HTTP 500)."""
+
 
 class ManifestoManager:
     @classmethod
@@ -27,20 +39,53 @@ class ManifestoManager:
         return manifesto
     
     @classmethod
-    def add_motorista(cls,data):
+    def add_motorista(cls, data):
+        """
+        Adiciona um motorista a um manifesto.
 
+        Args:
+            cls (class): A classe que chama este método.
+            data (dict): Um dicionário contendo os dados necessários para adicionar um motorista a um manifesto.
+                - 'motorista': O objeto do motorista a ser adicionado.
+                - 'manifesto': O objeto do manifesto ao qual o motorista será associado.
+
+        Raises:
+            TypeError: Se 'data' não for um dicionário.
+            KeyError: Se 'motorista' ou 'manifesto' não estiverem presentes em 'data'.
+            ValueError: Se 'motorista' ou 'manifesto' forem None.
+
+        Returns:
+            int: O código de status HTTP 200 indicando que a operação foi bem-sucedida.
+        """
+        # Verifica se 'data' é um dicionário
+        if not isinstance(data, dict):
+            raise TypeError("O argumento 'data' deve ser um dicionário.")
+
+        # Obtém o motorista e o manifesto de 'data'
+        motorista = data.get('motorista')
+        manifesto = data.get('manifesto')
+
+        # Verifica se 'motorista' e 'manifesto' estão presentes em 'data'
+        if motorista is None or manifesto is None:
+            raise KeyError("Os dados 'motorista' e 'manifesto' são obrigatórios.")
+
+        # Verifica se 'motorista' e 'manifesto' não são None
+        if motorista is None or manifesto is None:
+            raise ValueError("Os objetos 'motorista' e 'manifesto' não podem ser None.")
+
+        # Salvando motoristas associados ao manifesto
+        manifesto.motoristas.add(motorista)
+        
+        # Retornando código de status HTTP 200
+        return 200
+
+
+    @classmethod
+    def add_veiculo(cls,data):
         motorista = data.get('motorista')
         manifesto = data.get('manifesto')
         # Salvando motoristas associados ao manifesto
-        manifesto.motoristas.add(motorista)
-
-
-    # @classmethod
-    # def add_veiculo(cls,data):
-    #     motorista = data.get('motorista')
-    #     manifesto = data.get('manifesto')
-    #     # Salvando motoristas associados ao manifesto
-    #     manifesto.motoristas.set(motorista)    
+        manifesto.motoristas.set(motorista)    
 
     @classmethod
     def cria_ou_atualiza(cls, manifesto_id=None, **kwargs):
@@ -76,3 +121,26 @@ class ManifestoManager:
     def deletar_manifesto(cls, manifesto_id):
         manifesto = Manifesto.objects.get(id=manifesto_id)
         manifesto.delete()
+
+
+    @classmethod
+    def obter_motoristas_manifesto(cls, manifesto_id):
+        """
+        Obtém todos os motoristas relacionados a um manifesto.
+
+        Args:
+            manifesto_id (int): O ID do manifesto do qual os motoristas serão obtidos.
+
+        Returns:
+            list: Uma lista contendo os objetos de motorista relacionados ao manifesto.
+        """
+        try:
+            # Obtém o manifesto pelo ID
+            manifesto = Manifesto.objects.get(id=manifesto_id)
+
+            # Obtém todos os motoristas relacionados ao manifesto
+            motoristas = manifesto.motoristas.all()
+
+            return list(motoristas)
+        except Manifesto.DoesNotExist:
+            raise NotFoundError(f"Manifesto com o ID {manifesto_id} não encontrado.")
