@@ -1,17 +1,6 @@
 var btnAddMotorista = document.getElementById('btnAdicionaMotorista')
 var listaMotoristas = []
 
-const populaTbodyMotorista = (motoristas)=>{
-    let botoes={
-        excluir: {
-            classe: "btn-danger text-white",
-            texto: 'Apagar',
-            callback: btnRemoveMotorista
-          }
-      };    
-    popula_tbody('tbodyMotorista',motoristas,botoes,false)
-}
-
 btnAddMotorista.addEventListener('click',async ()=>{
 
     let cpfMotorista = document.getElementById('cpfMotoristaManifesto')

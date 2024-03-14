@@ -1,16 +1,10 @@
-const btnRemoveMotorista = (cpfMotorista)=>{
-    let cpfMotorista = document.getElementById('cpfMotoristaManifesto')
-    let idManifesto = document.getElementById('spanNumManifesto')
 
-    listaMotoristas=removerMotoristaLista(cpfMotorista,idManifesto)
-    // popula_tbody('tbodyMotorista',listaMotoristas,botoes,false)
-}
 
 const removerMotoristaLista = async(cpfMotorista, idManifesto)=> {
 
-    let response  = await connEndpoint('/operacional/del_motorista_manifesto/', {'cpfMotorista':cpfMotorista,
-                                                                                'idManifesto':idManifesto});
-    console.log(response)
+    // let response  = await connEndpoint('/operacional/del_motorista_manifesto/', {'cpfMotorista':cpfMotorista,
+    //                                                                             'idManifesto':idManifesto});
+    // console.log(response)
 
     // const novaListaMotorista = listaMotoristas.filter(listaMotoristas => listaMotoristas.id !== cpf);
     

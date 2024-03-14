@@ -1,18 +1,21 @@
-let txtNumManifesto=document.getElementById('txtIdBuscaManifesto')
-let btnBuscaManifesto = document.getElementById('btnBuscarManifestoId')
+document.addEventListener('DOMContentLoaded',()=>{
+  let txtNumManifesto=document.getElementById('txtIdBuscaManifesto')
+  let btnBuscaManifesto = document.getElementById('btnBuscarManifestoId')
 
-btnBuscaManifesto.addEventListener('click',async()=>{
-  let response  = await connEndpoint('/operacional/get_manifesto_by_num/', {'numManifesto':txtNumManifesto.value});
+  btnBuscaManifesto.addEventListener('click',async()=>{
+    let response  = await connEndpoint('/operacional/get_manifesto_by_num/', {'numManifesto':txtNumManifesto.value});
 
-  if(response.status==200){
-    console.log(response)
-    populaDadosManifesto(response.manifesto)
-    populaDadosBarraManifesto(response)
-    popula_tbody('tbodyMotorista',dadosParaTbodyMotoristas(response.manifesto.motoristas),botoesMotorista,false)
+    if(response.status==200){
+      populaDadosManifesto(response.manifesto)
+      populaDadosBarraManifesto(response)
+      populaTbodyMotorista(response.manifesto.motoristas)
+      // popula_tbody('tbodyMotorista',dadosParaTbodyMotoristas(response.manifesto.motoristas),botoes,false)
 
-  }else{
-    msgErro("Manifesto não localizado")
-  }
+    }else{
+      msgErro("Manifesto não localizado")
+    }
+  })
 })
+
 
 

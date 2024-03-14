@@ -67,6 +67,36 @@ const geraDadosManifesto = () => {
         }
 };
 
+
+const dadosParaTbodyMotoristas = (motoristas)=>{
+    let dadosMotoristas = []
+    motoristas.forEach(motorista => {
+        dadosMotoristas.push({'id':motorista.parceiro_fk.cnpj_cpf,'nome':truncateString(motorista.parceiro_fk.raz_soc,12)})
+    });
+    return dadosMotoristas
+}
+
+const btnRemoveMotorista = async (cpfMotorista)=>{
+    let idManifesto = document.getElementById('spanNumManifesto')
+    // removerMotoristaLista(cpfMotorista,idManifesto)
+    let response = await connEndpoint('/operacional/del_motorista_manifesto/',{'idManifesto':idManifesto.textContent,'cpfMotorista':cpfMotorista})
+    console.log(response)
+    // popula_tbody('tbodyMotorista',listaMotoristas,botoes,false)
+}
+
+const populaTbodyMotorista = (motoristas)=>{
+    let botoes={
+        excluir: {
+            classe: "btn btn-danger text-white",
+            texto: 'Apagar',
+            callback: btnRemoveMotorista
+          }
+      };    
+
+    popula_tbody('tbodyMotorista',dadosParaTbodyMotoristas(motoristas),botoes,false)
+
+}
+
 const populaDadosManifesto = (response) => {
     document.getElementById('emissorMdfe').value = response.emissor_fk ? response.emissor_fk.id : '';
     document.getElementById('dtInicioManif').value = response.data_previsão_inicio ? formataData(response.data_previsão_inicio) : '';
@@ -89,14 +119,6 @@ const limpaDadosManifesto= ()=>{
     document.getElementById('lacresManifesto').value=""
     document.getElementById('averbacaoManifesto').value=""
     document.getElementById('liberacaoMotorista').value=""
-}
-
-const dadosParaTbodyMotoristas = (motoristas)=>{
-    let dadosMotoristas = []
-    motoristas.forEach(motorista => {
-        dadosMotoristas.push({'id':motorista.parceiro_fk.cnpj_cpf,'nome':motorista.parceiro_fk.cnpj_cpf})
-    });
-    return dadosMotoristas
 }
 
 

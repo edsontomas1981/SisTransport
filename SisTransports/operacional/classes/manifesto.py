@@ -1,5 +1,6 @@
 from operacional.models.manifesto import Manifesto
 from django.utils import timezone
+from operacional.classes.motorista import MotoristaManager as Motorista
 
 class ManifestoError(Exception):
     """Exceção base para erros relacionados ao manifesto."""
@@ -144,3 +145,34 @@ class ManifestoManager:
             return list(motoristas)
         except Manifesto.DoesNotExist:
             raise NotFoundError(f"Manifesto com o ID {manifesto_id} não encontrado.")
+
+    @classmethod
+    def deletar_motorista_do_manifesto(cls, manifesto_id, cpf_motorista):
+        """
+        Exclui um motorista do manifesto pelo CPF do motorista.
+
+        Args:
+            manifesto_id (int): O ID do manifesto do qual o motorista será excluído.
+            cpf_motorista (str): O CPF do motorista a ser excluído.
+
+        Raises:
+            NotFoundError: Se o manifesto com o ID especificado não for encontrado.
+            NotFoundError: Se o motorista com o CPF especificado não estiver associado ao manifesto.
+        """
+        try:
+            # Obtém o manifesto pelo ID
+            manifesto = Manifesto.objects.get(id=manifesto_id)
+
+            # Obtém o motorista pelo CPF
+            motorista = Motorista()
+            motorista.read_motorista_by_cpf(cpf_motorista)
+            
+            if motorista.obj_motorista not in manifesto.motoristas.all():
+                raise NotFoundError(f"Motorista com CPF {cpf_motorista} não está associado ao manifesto {manifesto_id}.")
+
+            # Remove o motorista do manifesto
+            manifesto.motoristas.remove(motorista.obj_motorista.id)
+
+            return 200
+        except:
+            return 404

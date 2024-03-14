@@ -24,6 +24,14 @@ def del_motorista_manifesto (request):
     data = json.loads(request.body.decode('utf-8'))
     data['usuario_cadastro'] = request.user
 
-    print(data)
+    print(ManifestoManager.deletar_motorista_do_manifesto(data.get('idManifesto'),data.get('cpfMotorista')))
+    
+    lista_motoristas = ManifestoManager.obter_motoristas_manifesto(data.get('idManifesto'))
 
-    return JsonResponse({'status': 'del_motorista_manifesto'})
+    motoristas = []
+
+    for motorista in lista_motoristas:
+        motoristas.append(motorista.to_dict())
+
+    return JsonResponse({'status':200, 'motoristas':motoristas })
+    # return JsonResponse({'status':200, 'motoristas':'motoristas' })
