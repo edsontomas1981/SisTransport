@@ -2,29 +2,31 @@ var btnAddMotorista = document.getElementById('btnAdicionaMotorista')
 var listaMotoristas = []
 
 btnAddMotorista.addEventListener('click',async ()=>{
-
     let cpfMotorista = document.getElementById('cpfMotoristaManifesto')
-    let nomeMotorista = document.getElementById('nomeMotoristaManifesto')
     let idManifesto = document.getElementById('spanNumManifesto')
-    
-    let response  = await connEndpoint('/operacional/add_motorista_manifesto/', {'cpfMotorista':cpfMotorista.value,
-                                                                                'idManifesto':idManifesto.textContent});
 
-    console.log(response.motoristas)
+    if(cpfMotorista.value.trim() == '' ){
+        msgAviso("Por favor, selecione um motorista antes de prosseguir.")
+        return
+    }
 
-    populaTbodyMotorista(response.motoristas)
+    if(idManifesto.textContent == ''){
+        msgAviso("Para adicionar um motorista, é necessário primeiro salvar ou selecionar um manifesto.")
+    }else{
 
-    // popula_tbody('tbodyMotorista',dadosParaTbodyMotoristas(response.motoristas),botoes,false)
+        let response  = await connEndpoint('/operacional/add_motorista_manifesto/', {'cpfMotorista':cpfMotorista.value,
+                                                                                    'idManifesto':idManifesto.textContent});
+        populaTbodyMotorista(response.motoristas)
 
-
-    // if (nome != ""){
-    //     // listaMotoristas.push({'cpf':cpfMotorista.value,'nome':nomeMotorista.value})
-    //     adicionarMotoristaNaLista(listaMotoristas,cpfMotorista.value,truncateString(nomeMotorista.value,12))
-    //     popula_tbody('tbodyMotorista',listaMotoristas,botoes,false)
-    // }else{
-    //     msgErro('É necessário selecionar um motorista')
-    // }
-
+        switch (response.status) {
+            case 200:
+                msgOk('Motorista cadastrado com sucesso!')
+                break;
+            default:
+                break;
+        }
+        limpaMotorista();
+    }
 })
 
 

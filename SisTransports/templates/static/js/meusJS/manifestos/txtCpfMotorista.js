@@ -16,6 +16,8 @@ motorista.addEventListener('blur',async()=>{
             }
         }else{
             msgErro('CPF inválido')
+            nomeMotorista.value = ""
+            motorista.value = ""
         }
     }
 })

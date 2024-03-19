@@ -9,18 +9,17 @@ let botoesVeiculo={
       }
   };
 
-btnAddVeiculo.addEventListener('click',()=>{
-    let placaManifesto = document.getElementById('placaPrincipal')
-    let modelo = document.getElementById('modeloPrincipal')
-    let proprietario = document.getElementById('proprietarioPrincipal')
-    let nomeProp = proprietario.value.replace(/\s/g, '');
+btnAddVeiculo.addEventListener('click', async ()=>{
 
-    if (nomeProp != ""){
-        adicionarVeiculosNaLista(listaVeiculos,placaManifesto.value,truncateString(modelo.value,12),truncateString(proprietario.value,12))
-        popula_tbody('tbodyVeiculos',listaVeiculos,botoesVeiculo,false)
-    }else{
-        msgErro('É necessário selecionar uma placa')
+    let placaManifesto = document.getElementById('placaPrincipal')
+    let idManifesto = document.getElementById('spanNumManifesto')
+    let response  = await connEndpoint('/operacional/add_veiculo_manifesto/', {'placa':placaManifesto.value,
+                                                                                'idManifesto':idManifesto.textContent});
+    if(response.status != 200){
+        msgAviso()
+        return
     }
+    populaVeiculosManifesto(response.veiculos)
     limpaVeiculos(listaVeiculos)    
 })
 
@@ -30,12 +29,6 @@ const limpaVeiculos = ()=>{
     document.getElementById('proprietarioPrincipal').value = ''
 }
 
-const adicionarVeiculosNaLista = (listaVeiculos, novaPlaca, novoModelo, novoProprietario) => {
-    const placaExistente = listaVeiculos.find(listaVeiculos => listaVeiculos.id === novaPlaca);
-    
-    if (placaExistente) {
-        console.log(`Veiculo de placa ${novaPlaca} já está na lista.`);
-    } else {
-        listaVeiculos.push({ 'id': novaPlaca, 'modelo': novoModelo, 'proprietario': novoProprietario });
-    }
+const enviaDadosEndpointVeiculos= ()=>{
+
 }

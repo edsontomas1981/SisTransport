@@ -1,6 +1,7 @@
 from operacional.models.manifesto import Manifesto
 from django.utils import timezone
 from operacional.classes.motorista import MotoristaManager as Motorista
+from operacional.classes.veiculo import VeiculoManager as Veiculo
 
 class ManifestoError(Exception):
     """Exceção base para erros relacionados ao manifesto."""
@@ -58,8 +59,11 @@ class ManifestoManager:
         Returns:
             int: O código de status HTTP 200 indicando que a operação foi bem-sucedida.
         """
+
+        
         # Verifica se 'data' é um dicionário
         if not isinstance(data, dict):
+            print(data)
             raise TypeError("O argumento 'data' deve ser um dicionário.")
 
         # Obtém o motorista e o manifesto de 'data'
@@ -80,13 +84,6 @@ class ManifestoManager:
         # Retornando código de status HTTP 200
         return 200
 
-
-    @classmethod
-    def add_veiculo(cls,data):
-        motorista = data.get('motorista')
-        manifesto = data.get('manifesto')
-        # Salvando motoristas associados ao manifesto
-        manifesto.motoristas.set(motorista)    
 
     @classmethod
     def cria_ou_atualiza(cls, manifesto_id=None, **kwargs):
@@ -176,3 +173,117 @@ class ManifestoManager:
             return 200
         except:
             return 404
+
+    @classmethod
+    def obter_veiculos_manifesto(cls, manifesto_id):
+        """
+        Obtém todos os veículos relacionados a um manifesto.
+
+        Args:
+            manifesto_id (int): O ID do manifesto do qual os veículos serão obtidos.
+
+        Returns:
+            list: Uma lista contendo os objetos de veículo relacionados ao manifesto.
+        """
+        try:
+            # Obtém o manifesto pelo ID
+            manifesto = Manifesto.objects.get(id=manifesto_id)
+
+            # Obtém todos os veículos relacionados ao manifesto
+            veiculos = manifesto.veiculos.all()
+
+            return list(veiculos)
+        except Manifesto.DoesNotExist:
+            raise NotFoundError(f"Manifesto com o ID {manifesto_id} não encontrado.")
+
+    
+    @classmethod
+    def obter_lista_veiculos(cls, manifesto_id):
+        """
+        Obtém a lista de veículos associados a um manifesto.
+
+        Args:
+            manifesto_id (int): O ID do manifesto do qual os veículos serão obtidos.
+
+        Returns:
+            list: Uma lista contendo os veículos associados ao manifesto, representados como dicionários.
+            Retorna 404 se o manifesto com o ID especificado não for encontrado.
+
+        Raises:
+            ManifestoError: Se ocorrer um erro ao obter os veículos associados ao manifesto.
+        """
+        try:
+            veiculos = cls.obter_veiculos_manifesto(manifesto_id)
+            return [veiculo.to_dict() for veiculo in veiculos]
+        except NotFoundError:
+            return 404
+        except Exception as e:
+            raise ManifestoError(f"Erro ao obter a lista de veículos para o manifesto {manifesto_id}: {e}")
+
+    @classmethod
+    def adicionar_veiculo_manifesto(cls, manifesto_id, veiculo_placa):
+        """
+        Adiciona um veículo a um manifesto.
+
+        Args:
+            manifesto_id (int): O ID do manifesto ao qual o veículo será adicionado.
+            veiculo_id (int): O ID do veículo a ser adicionado ao manifesto.
+
+        Returns:
+            int: O código de status HTTP 200 indicando que a operação foi bem-sucedida.
+
+        Raises:
+            NotFoundError: Se o manifesto com o ID especificado não for encontrado.
+            NotFoundError: Se o veículo com o ID especificado não for encontrado.
+            ManifestoError: Se ocorrer um erro ao adicionar o veículo ao manifesto.
+        """
+        try:
+            veiculo = Veiculo()
+
+            veiculo = veiculo.get_veiculo_placa(veiculo_placa)
+
+            manifesto =cls.obter_manifesto_por_id(manifesto_id)
+            
+            manifesto.veiculos.add(veiculo)
+
+            return 200
+        except:
+            return 400
+
+    @classmethod
+    def remover_veiculo_manifesto(cls, manifesto_id, veiculo_placa):
+        """
+        Remove um veículo de um manifesto.
+
+        Args:
+            manifesto_id (int): O ID do manifesto do qual o veículo será removido.
+            veiculo_placa (str): A placa do veículo a ser removido do manifesto.
+
+        Returns:
+            int: O código de status HTTP 200 indicando que a operação foi bem-sucedida.
+
+        Raises:
+            NotFoundError: Se o manifesto com o ID especificado não for encontrado.
+            NotFoundError: Se o veículo com a placa especificada não for encontrado no manifesto.
+            ManifestoError: Se ocorrer um erro ao remover o veículo do manifesto.
+        """
+        try:
+            veiculo = Veiculo()
+
+            veiculo = veiculo.get_veiculo_placa(veiculo_placa)
+
+            manifesto = cls.obter_manifesto_por_id(manifesto_id)
+            
+            if veiculo not in manifesto.veiculos.all():
+                raise NotFoundError(f"Veículo com placa {veiculo_placa} não está associado ao manifesto {manifesto_id}.")
+
+            manifesto.veiculos.remove(veiculo)
+
+            return 200
+        except:
+            return 400
+
+
+
+
+

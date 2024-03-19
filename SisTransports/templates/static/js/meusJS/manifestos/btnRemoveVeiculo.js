@@ -1,16 +1,5 @@
-const btnRemoveVeiculos = (placa)=>{
-    listaVeiculos=btnRemoveVeiculosLista(listaVeiculos,placa)
-    popula_tbody('tbodyVeiculos',listaVeiculos,botoesVeiculo,false)
-}
-
-const btnRemoveVeiculosLista = (listaVeiculos, placa)=> {
-    const novaListaVeiculos = listaVeiculos.filter(listaVeiculos => listaVeiculos.id !== placa);
-    
-    if (novaListaVeiculos.length === listaVeiculos.length) {
-        console.log(`Nenhum veiculo encontrado com o cpf ${placa}.`);
-    } else {
-        console.log(`cpf ${placa} removido com sucesso.`);
-    }
-
-    return novaListaVeiculos;
+const btnRemoveVeiculos = async(placa)=>{
+    let idManifesto = document.getElementById('spanNumManifesto')
+    let response = await connEndpoint('/operacional/del_veiculo_manifesto/',{'placa':placa,'idManifesto':idManifesto.textContent})
+    populaTbodyVeiculos(response.veiculos)
 }

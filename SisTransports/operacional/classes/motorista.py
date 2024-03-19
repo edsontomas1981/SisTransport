@@ -58,6 +58,31 @@ class MotoristaManager:
             return None
         
         self.obj_motorista = Motorista.objects.get(parceiro_fk__cnpj_cpf=cpf_motorista)
+    
+    @classmethod
+    def read_motoristas(cls):
+        """
+        Retorna todos os motoristas cadastrados.
+
+        Retorna:
+        - Lista contendo todos os motoristas cadastrados, ou None se não houver motoristas cadastrados.
+        """
+        return Motorista.objects.all()  # Assumindo que Motorista é o modelo Django para os motoristas
+
+    @classmethod
+    def lista_todos_motoristas(cls):
+        """
+        Retorna uma lista de todos os motoristas cadastrados.
+
+        Retorna:
+        - Lista contendo os dados de todos os motoristas cadastrados, representados como dicionários.
+        """
+        motoristas = cls.read_motoristas()
+        
+        if motoristas is None:
+            return []
+
+        return [motorista.to_dict() for motorista in motoristas if hasattr(motorista, 'to_dict') and callable(getattr(motorista, 'to_dict'))]
         
 
     def create_motorista(self, dados):

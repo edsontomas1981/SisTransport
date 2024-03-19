@@ -2,8 +2,14 @@ const populaDadosBarraManifesto=(dados)=>{
     populaDtInicioBarraManifesto(dados.manifesto.data_previsão_inicio)
     populaPrevChegadaBarraManifesto(dados.manifesto.data_previsão_chegada)
     populaRotaBarraManifesto(dados.manifesto.rota_fk.nome)
-    populaMotoristaBarraManifesto(dados.manifesto.motoristas[0].parceiro_fk.raz_soc)
-    populaPlacaBarraManifesto(dados.manifesto.veiculos[0].placa)
+    let primeiroMotorista = dados.manifesto.motoristas[0]?.parceiro_fk?.raz_soc
+    if (primeiroMotorista){
+        populaMotoristaBarraManifesto(dados.manifesto.motoristas[0].parceiro_fk.raz_soc)
+    }
+    let placaPrincipalBarraManifesto = dados.manifesto.veiculos[0]?.placa
+    if(placaPrincipalBarraManifesto){
+        populaPlacaBarraManifesto(placaPrincipalBarraManifesto)
+    }
     populaQtdeDocumentosBarraManifesto(parseInt(dados.manifesto.dtc.length))
     populaNumManifestoBarraManifesto(dados.manifesto.id)
 }
@@ -29,10 +35,15 @@ const populaRotaBarraManifesto = (origemDestino = '') => {
     }
 }
 
-const populaMotoristaBarraManifesto = (motoristaPrincipal = '') => {
+const populaMotoristaBarraManifesto = (motoristaPrincipal='') => {
+
+    console.log(motoristaPrincipal)
+
     const element = document.getElementById('motoristaPrincipal');
     if (element && motoristaPrincipal) {
         element.textContent = motoristaPrincipal;
+    }else{
+        element.textContent = 'motoristaPrincipal';
     }
 }
 

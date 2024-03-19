@@ -56,12 +56,14 @@ urlpatterns = [
     path('create_veiculo/',viewsOperacional.create_veiculo, name='create_veiculo'),
     path('dados_combos_veiculos/',viewsOperacional.dados_cadatro_veiculo, name='cad_veiculo'),
     path('read_veiculo_placa/',viewsOperacional.read_veiculo_placa,name='read_veiculo_placa'),
+    path('read_veiculos/',viewsOperacional.read_veiculos,name='read_veiculos'),
 
     path('manifesto/',viewsOperacional.manifesto,name='manifesto'),
     path('create_manifesto/',viewsOperacional.create_manifesto,name='create_manifesto'),
     path('get_manifesto_by_num/',viewsOperacional.manifesto_by_num,name='manifesto_by_num'),
     path('add_motorista_manifesto/',viewsOperacional.add_motorista_manifesto,name='add_motorista_manifesto'),
     path('add_veiculo_manifesto/',viewsOperacional.add_veiculo_manifesto,name='add_veiculo_manifesto'),
+    path('obter_veiculos_manifesto/',viewsOperacional.obter_veiculos_manifesto,name='obter_veiculos_manifesto'),
     path('del_veiculo_manifesto/',viewsOperacional.del_veiculo_manifesto,name='del_veiculo_manifesto'),
     path('del_motorista_manifesto/',viewsOperacional.del_motorista_manifesto,name='del_motorista_manifesto'),
 

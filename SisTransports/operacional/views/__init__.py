@@ -52,6 +52,7 @@ from operacional.views.motoristas.update_motorista import update_motorista
 from operacional.views.veiculos.create_veiculo import create_veiculo
 from operacional.views.veiculos.dados_cadastro import dados_cadatro_veiculo
 from operacional.views.veiculos.read_veiculo_por_placa import read_veiculo_placa
+from operacional.views.veiculos.read_veiculos import read_veiculos
 
 from operacional.views.manifesto.manifesto import manifesto
 from operacional.views.manifesto.create_manifesto import create_manifesto
@@ -60,7 +61,7 @@ from operacional.views.manifesto.add_motorista_manifesto import add_motorista_ma
 from operacional.views.manifesto.add_veiculo_manifesto import add_veiculo_manifesto
 from operacional.views.manifesto.del_motorista_manifesto import del_motorista_manifesto
 from operacional.views.manifesto.del_veiculo_manifesto import del_veiculo_manifesto
-
+from operacional.views.manifesto.obter_veiculos_manifesto import obter_veiculos_manifesto
 
 from operacional.views.ocorrencias_manifesto.get_ocorrencia_id import get_ocorrencia_manifesto_by_id
 from operacional.views.ocorrencias_manifesto.get_ocorrencias_manifesto import get_ocorrencias_manifesto

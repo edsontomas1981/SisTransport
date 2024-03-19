@@ -18,8 +18,7 @@ from operacional.classes.manifesto import ManifestoManager
 @require_http_methods(["POST","GET"])
 def create_manifesto(request):
     required_fields = ['emissorMdfe','dtInicioManif',
-                       'dtPrevisaoChegada','rotasManifesto',
-                       'motoristas','veiculos']
+                       'dtPrevisaoChegada','rotasManifesto']
         
     data = json.loads(request.body.decode('utf-8'))
     data['usuario_cadastro'] = request.user
@@ -29,49 +28,9 @@ def create_manifesto(request):
             return JsonResponse({'status': 422, 'error': f'O campo {field} é obrigatório.'})
     
     dados = prepare_data(data)
-    data
     manifesto = ManifestoManager.criar_manifesto(dados)
 
     return JsonResponse({'status': 200,'manifesto':manifesto.to_dict()})
-
-
-def prepara_lista_de_motoristas(lista_motoristas):
-    """
-    Prepara uma lista de dicionários de motoristas para uma lista de objetos Motorista.
-
-    Args:
-        lista_motoristas (list): Lista de dicionários contendo informações dos motoristas.
-
-    Returns:
-        list: Lista de objetos Motorista.
-    """
-    motorista_manager = MotoristaManager()
-    lista_preparada = []
-
-    for motorista_info in lista_motoristas:
-        cpf = motorista_info.get('id')
-        motorista_manager.read_motorista_by_cpf(cpf)
-        lista_preparada.append(motorista_manager.obj_motorista)
-    
-    return lista_preparada
-
-def prepara_lista_de_veiculos(lista_veiculos):
-    """
-    Prepara uma lista de dicionários de motoristas para uma lista de objetos veiculos
-
-    Args:
-        lista_veiculos (list): Lista de dicionários contendo informações dos veiculos.
-
-    Returns:
-        list: Lista de objetos veiculos
-    """
-    lista_preparada = []
-
-    for veiculo_info in lista_veiculos:
-        placa = veiculo_info.get('id')
-        lista_preparada.append(VeiculoManager.get_veiculo_placa(placa))
-
-    return lista_preparada
 
 def prepare_data(data):
     rota = Rota()
@@ -81,8 +40,6 @@ def prepare_data(data):
     return {
             'emissor_fk':EmissorManager.get_emissores_por_id(data.get('emissorMdfe')),
             'rota_fk':rota.rota,
-            'motoristas':prepara_lista_de_motoristas(data.get('motoristas')),
-            'veiculos':prepara_lista_de_veiculos(data.get('veiculos')),
             'data_previsão_inicio':string_para_data(data.get("dtInicioManif")),
             'data_previsão_chegada':string_para_data(data.get("dtPrevisaoChegada")),
             'frete_carreteiro':toFloat(data.get("freteCarreteiro")),

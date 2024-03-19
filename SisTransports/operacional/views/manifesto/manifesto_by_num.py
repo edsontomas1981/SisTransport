@@ -25,9 +25,11 @@ def manifesto_by_num(request):
             return JsonResponse({'status': 400, 'error': 'Número do manifesto não fornecido.'})
         
         manifesto = ManifestoManager.obter_manifesto_por_id(num_manifesto)
+        veiculos = ManifestoManager.obter_lista_veiculos(num_manifesto)
+
         if manifesto is None:
             return JsonResponse({'status': 404, 'error': 'Manifesto não encontrado.'})
         
-        return JsonResponse({'status': 200, 'manifesto': manifesto.to_dict()})
+        return JsonResponse({'status': 200, 'manifesto': manifesto.to_dict(),'veiculos':veiculos})
     except Exception as e:
         return JsonResponse({'status': 500, 'error': 'Ocorreu um erro ao processar a solicitação.'})

@@ -21,7 +21,12 @@ def add_veiculo_manifesto (request):
                        'dtPrevisaoChegada','rotasManifesto',
                        'motoristas','veiculos']
         
-    # data = json.loads(request.body.decode('utf-8'))
-    # data['usuario_cadastro'] = request.user
+    data = json.loads(request.body.decode('utf-8'))
+    data['usuario_cadastro'] = request.user
 
-    return JsonResponse({'status': 'add_veiculo_manifesto'})
+    ManifestoManager.adicionar_veiculo_manifesto(data.get('idManifesto'),data.get('placa'))
+
+    veiculos = ManifestoManager.obter_lista_veiculos(data.get('idManifesto'))
+
+
+    return JsonResponse({'status':200,'veiculos':veiculos})

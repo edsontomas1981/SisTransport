@@ -1,6 +1,10 @@
 from django.db import models
 from django.conf import settings
 from django.utils import timezone
+from datetime import datetime
+from dateutil import parser
+
+
 
 from operacional.models.emissor import Emissor
 from operacional.models.rota import Rota
@@ -40,11 +44,16 @@ class Manifesto(models.Model):
     data_cadastro = models.DateTimeField(null=True)
     data_ultima_atualizacao = models.DateTimeField(default=timezone.now)  
 
+
     def to_dict(self):
         emissor_data = self.emissor_fk.to_dict() if self.emissor_fk else None
         motoristas_data = [motorista.to_dict() for motorista in self.motoristas.all()]
         veiculos_data = [veiculo.to_dict() for veiculo in self.veiculos.all()]
         dtc_data = [dtc.to_dict() for dtc in self.dtc.all()]
+
+        # Convertendo a data de cadastro para datetime, se for uma string
+        data_cadastro = parser.parse(self.data_cadastro) if isinstance(self.data_cadastro, str) else self.data_cadastro
+
         return {
             'id': self.id,
             'emissor_fk': emissor_data,
@@ -61,10 +70,11 @@ class Manifesto(models.Model):
             'observacao': self.observacao,
             'usuario_cadastro': self.usuario_cadastro.id if self.usuario_cadastro else None,
             'usuario_ultima_atualizacao': self.usuario_ultima_atualizacao.id if self.usuario_ultima_atualizacao else None,
-            'data_cadastro': self.data_cadastro.isoformat() if self.data_cadastro else None,
+            'data_cadastro': data_cadastro.isoformat() if data_cadastro else None,
             'data_ultima_atualizacao': self.data_ultima_atualizacao.isoformat(),
             'dtc': dtc_data
         }
+
 
 class DtcManifesto(models.Model):
     manifesto = models.ForeignKey(Manifesto, on_delete=models.CASCADE)

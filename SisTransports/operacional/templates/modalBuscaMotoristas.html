@@ -1,0 +1,49 @@
+<form id="frmBuscaMotorista">
+    <div class="modal" id="mdlBuscaMotoristas" tabindex="-1" data-bs-backdrop="static"
+        data-bs-keyboard="false">
+        <div class="modal-dialog modal-lg modal-altura">
+          <div class="modal-content">
+            <div class="modal-header cabecalho-modal-parceiro">
+            <h5 class="modal-title">Selecione um Motorista</h5>
+                <div>
+                <div class="input-group mb-2" align="right">
+                  <button type="button" class="btn btn-secondary btn-rounded btn-icon" id="btnLimpaBusca" align="right">            
+                    <i class="ti-write"></i>
+                  </button>
+                  <button type="button" class="btn btn-danger btn-rounded btn-icon" id="btnCloseBusca" onclick="closeModal()" align="right">
+                    <i class="ti-close"></i>
+                  </button>
+                </div>
+              </div>  
+            </div>
+            <div class="modal-body">
+                <div class="input-group form-group form-floating pt-1">
+                    <input type="text" class="form-control small  form-control-sm" id="nomeMotorista" name="nomeMotorista" placeholder="Nome Motorista" aria-label="Search" aria-describedby="basic-addon2">
+                    <label class="text-secondary" for="nomeMotorista">Nome Motorista:</label>
+                    <div class="input-group-append">
+                      <a class="btn btn-primary" id="btnBuscarMotoristas" style="display: flex; justify-content: center; align-items: center;" >
+                        <i class="fa fa-search"></i>   
+                      </a>
+                    </div>
+                </div>
+
+                <table class="mt-1" style="width: 100%;border-radius: 10px;background-color: #4B49AC;color: white;border-radius: 5px; padding: 3px;">
+                    <thead>
+                      <tr>
+                        <th class="select-checkbox">CPF</th>
+                        <th class="">Nome</th>
+                        <th class=""></th>
+                      </tr>
+                    </thead>
+                    <tbody class="border" id="tbodyBuscaMotorista" style="width: 100%;border-radius: 10px;background-color:whitesmoke;color: black;">
+                    </tbody>
+                </table>    
+
+                <div id="paginacaoBuscaMotorista"></div>
+
+            </div>
+          </div>
+        </div>
+    </div>
+  </form>
+  

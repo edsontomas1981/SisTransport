@@ -36,6 +36,15 @@ class VeiculoManager:
         """
         return Veiculo.objects.all()
 
+    @classmethod
+    def lista_todos_veiculos(cls):
+        veiculos = cls.get_all_veiculos()
+        lista_veiculos = []
+        for veiculo in veiculos:
+            lista_veiculos.append(veiculo.to_dict())
+        return lista_veiculos
+
+
     
     @classmethod
     def get_veiculos_by_proprietario_cnpj(cls, cnpj):

@@ -27,10 +27,7 @@ const geraDadosManifesto = () => {
     // Verifique se os campos obrigatórios estão preenchidos
     const obrigatorios = ['emissorMdfe', 'dtInicioManif', 'dtPrevisaoChegada', 'rotasManifesto'];
 
-    const dadosManifesto = {
-        motoristas: listaMotoristas,
-        veiculos: listaVeiculos
-    };
+    const dadosManifesto = {};
     document.getElementById('cpfMotoristaManifesto').classList.remove('campo-vazio');
     document.getElementById('nomeMotoristaManifesto').classList.remove('campo-vazio');
     document.getElementById('placaPrincipal').classList.remove('campo-vazio');
@@ -41,28 +38,12 @@ const geraDadosManifesto = () => {
     for (const campo of dados) {
         dadosManifesto[campo] = document.getElementById(campo).value.trim();
     }
+
+    console.log()
     existemCamposVazios = validarCamposObrigatorios(dadosManifesto,obrigatorios)
     if(existemCamposVazios.length !=0 ){
             return null
         }else{
-            // Verifica se as listas de motoristas e veículos não estão vazias
-            if (listaMotoristas.length === 0 ) {
-                msgErro('É necessário informar ao menos um motorista.');
-                document.getElementById('cpfMotoristaManifesto').classList.add('campo-vazio');
-                document.getElementById('nomeMotoristaManifesto').classList.add('campo-vazio');
-                return null;
-            }
-
-            // Verifica se as listas de motoristas e veículos não estão vazias
-            if ( listaVeiculos.length === 0) {
-                msgErro('É necessário informar ao menos um veículo.');
-                document.getElementById('placaPrincipal').classList.add('campo-vazio');
-                document.getElementById('modeloPrincipal').classList.add('campo-vazio');
-                document.getElementById('proprietarioPrincipal').classList.add('campo-vazio');
-            
-                return null;
-            }
-            
             return dadosManifesto;
         }
 };
@@ -80,8 +61,13 @@ const btnRemoveMotorista = async (cpfMotorista)=>{
     let idManifesto = document.getElementById('spanNumManifesto')
     // removerMotoristaLista(cpfMotorista,idManifesto)
     let response = await connEndpoint('/operacional/del_motorista_manifesto/',{'idManifesto':idManifesto.textContent,'cpfMotorista':cpfMotorista})
-    console.log(response)
-    // popula_tbody('tbodyMotorista',listaMotoristas,botoes,false)
+    if (response.status == 200){
+        populaTbodyMotorista(response.motoristas)
+        msgOk('O motorista foi removido do manifesto com sucesso.')
+    }else{
+        msgErro('Não foi possível excluir o motorista do manifesto. Verifique sua conexão com a internet e tente novamente.')
+    }
+    
 }
 
 const populaTbodyMotorista = (motoristas)=>{
@@ -121,5 +107,35 @@ const limpaDadosManifesto= ()=>{
     document.getElementById('liberacaoMotorista').value=""
 }
 
+const populaVeiculosManifesto=(dadosVeiculos)=>{
+    populaTbodyVeiculos(dadosVeiculos)
+}
+
+const obtemVeiculosManifesto=async(idManifesto)=>{
+    let response = await connEndpoint('/operacional/obter_veiculos_manifesto/',{'idManifesto':idManifesto})
+    return response
+}
+
+
+const populaTbodyVeiculos = (veiculos)=>{
+    let botoes={
+        excluir: {
+            classe: "btn btn-danger text-white",
+            texto: 'Apagar',
+            callback: btnRemoveVeiculos
+          }
+      };    
+
+    popula_tbody('tbodyVeiculos',dadosParaTbodyVeiculos(veiculos),botoes,false)
+
+}
+
+const dadosParaTbodyVeiculos = (veiculos)=>{
+    let dadosVeiculos = []
+    veiculos.forEach(veiculo => {
+        dadosVeiculos.push({'id':veiculo.placa,'modelo':truncateString(veiculo.modelo,12),'proprietario':truncateString(veiculo.proprietario_fk.parceiro_fk.raz_soc,12)})
+    });
+    return dadosVeiculos
+}
 
 
