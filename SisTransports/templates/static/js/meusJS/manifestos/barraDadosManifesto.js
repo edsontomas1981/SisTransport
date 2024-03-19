@@ -14,6 +14,16 @@ const populaDadosBarraManifesto=(dados)=>{
     populaNumManifestoBarraManifesto(dados.manifesto.id)
 }
 
+const limpaBarraManifesto = ()=>{
+    document.getElementById('dtSaida').textContent=''
+    document.getElementById('prevChegada').textContent=''
+    document.getElementById('origemDestino').textContent=''
+    document.getElementById('motoristaPrincipal').textContent=''
+    document.getElementById('spanPlacaPrincipal').textContent=''
+    document.getElementById('spanQtdeDocumentos').textContent=''
+    document.getElementById('spanNumManifesto').textContent=''
+}
+
 const populaDtInicioBarraManifesto = (dataInicio = '') => {
     const element = document.getElementById('dtSaida');
     if (element && dataInicio) {

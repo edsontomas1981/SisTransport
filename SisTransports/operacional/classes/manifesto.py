@@ -41,6 +41,14 @@ class ManifestoManager:
         return manifesto
     
     @classmethod
+    def atualizar_manifesto(cls, manifesto_id, **kwargs):
+        manifesto = cls.obter_manifesto_por_id(manifesto_id)
+        for field, value in kwargs.items():
+            setattr(manifesto, field, value)
+        manifesto.save()
+        return manifesto
+    
+    @classmethod
     def add_motorista(cls, data):
         """
         Adiciona um motorista a um manifesto.
@@ -107,17 +115,8 @@ class ManifestoManager:
 
 
     @classmethod
-    def atualizar_manifesto(cls, manifesto_id, **kwargs):
-        manifesto = Manifesto.objects.get(id=manifesto_id)
-        for field, value in kwargs.items():
-            setattr(manifesto, field, value)
-        manifesto.save()
-        return manifesto
-    
-    
-    @classmethod
     def deletar_manifesto(cls, manifesto_id):
-        manifesto = Manifesto.objects.get(id=manifesto_id)
+        manifesto = cls.obter_manifesto_por_id(manifesto_id)
         manifesto.delete()
 
 

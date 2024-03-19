@@ -26,11 +26,21 @@ def create_manifesto(request):
     for field in required_fields:
         if field not in data or data[field] == '':
             return JsonResponse({'status': 422, 'error': f'O campo {field} é obrigatório.'})
-    
-    dados = prepare_data(data)
-    manifesto = ManifestoManager.criar_manifesto(dados)
 
-    return JsonResponse({'status': 200,'manifesto':manifesto.to_dict()})
+    if data.get('idManifesto'):
+        dados = prepare_data(data)
+        dados['usuario_ultima_atualizacao']= request.user
+        print(data['idManifesto'])
+        manifesto = ManifestoManager.atualizar_manifesto(data.get('idManifesto'),**dados)
+        return JsonResponse({'status': 201,'manifesto':manifesto.to_dict()})
+
+    else:
+        dados = prepare_data(data)
+        dados['usuario_cadastro']= request.user
+        manifesto = ManifestoManager.criar_manifesto(dados)
+        return JsonResponse({'status': 200,'manifesto':manifesto.to_dict()})
+    
+
 
 def prepare_data(data):
     rota = Rota()
@@ -48,6 +58,4 @@ def prepare_data(data):
             'averbacao':data.get("averbacaoManifesto"),
             'liberacao':data.get("liberacaoMotorista"),
             'observacao':data.get("txtObservacao"),
-            'usuario_cadastro':data.get("usuario_cadastro"),
-
             }

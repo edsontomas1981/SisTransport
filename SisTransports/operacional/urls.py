@@ -66,6 +66,7 @@ urlpatterns = [
     path('obter_veiculos_manifesto/',viewsOperacional.obter_veiculos_manifesto,name='obter_veiculos_manifesto'),
     path('del_veiculo_manifesto/',viewsOperacional.del_veiculo_manifesto,name='del_veiculo_manifesto'),
     path('del_motorista_manifesto/',viewsOperacional.del_motorista_manifesto,name='del_motorista_manifesto'),
+    path('delete_manifesto/',viewsOperacional.delete_manifesto,name='delete_manifesto'),
 
     path('get_emissor/',viewsOperacional.get_emissor,name='get_emissor'),
     path('get_emissores/',viewsOperacional.get_emissores,name='get_emissores'),

@@ -62,6 +62,8 @@ from operacional.views.manifesto.add_veiculo_manifesto import add_veiculo_manife
 from operacional.views.manifesto.del_motorista_manifesto import del_motorista_manifesto
 from operacional.views.manifesto.del_veiculo_manifesto import del_veiculo_manifesto
 from operacional.views.manifesto.obter_veiculos_manifesto import obter_veiculos_manifesto
+from operacional.views.manifesto.delete_manifesto import delete_manifesto
+
 
 from operacional.views.ocorrencias_manifesto.get_ocorrencia_id import get_ocorrencia_manifesto_by_id
 from operacional.views.ocorrencias_manifesto.get_ocorrencias_manifesto import get_ocorrencias_manifesto
