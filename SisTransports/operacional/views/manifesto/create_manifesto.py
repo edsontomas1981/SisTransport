@@ -15,7 +15,7 @@ from operacional.classes.veiculo import VeiculoManager
 from operacional.classes.manifesto import ManifestoManager
 
 @login_required(login_url='/auth/entrar/')
-@require_http_methods(["POST","GET"])
+@require_http_methods(["POST"])
 def create_manifesto(request):
     required_fields = ['emissorMdfe','dtInicioManif',
                        'dtPrevisaoChegada','rotasManifesto']

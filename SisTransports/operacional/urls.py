@@ -67,6 +67,10 @@ urlpatterns = [
     path('del_veiculo_manifesto/',viewsOperacional.del_veiculo_manifesto,name='del_veiculo_manifesto'),
     path('del_motorista_manifesto/',viewsOperacional.del_motorista_manifesto,name='del_motorista_manifesto'),
     path('delete_manifesto/',viewsOperacional.delete_manifesto,name='delete_manifesto'),
+    path('add_dtc_manifesto/',viewsOperacional.add_dtc_manifesto,name='add_dtc_manifesto'),
+    path('delete_dtc_manifesto/',viewsOperacional.delete_dtc_manifesto,name='delete_manifesto'),
+
+
 
     path('get_emissor/',viewsOperacional.get_emissor,name='get_emissor'),
     path('get_emissores/',viewsOperacional.get_emissores,name='get_emissores'),

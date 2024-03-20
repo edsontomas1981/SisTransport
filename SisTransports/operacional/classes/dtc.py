@@ -99,6 +99,32 @@ class Dtc:
                 return 200
         except:
             return 300
+    
+    @classmethod
+    def obter_dtc_id(cls, idDtc):
+        """
+        Obtém um objeto ClsDtc pelo seu ID.
+
+        Args:
+            idDtc (int): O ID do ClsDtc a ser obtido.
+
+        Returns:
+            ClsDtc: O objeto ClsDtc correspondente ao ID fornecido.
+
+        Raises:
+            ClsDtc.DoesNotExist: Se o objeto ClsDtc com o ID fornecido não existir.
+            ValueError: Se o ID fornecido não for um inteiro positivo.
+        """
+        # if not isinstance(idDtc, int) or idDtc <= 0:
+        #     raise ValueError("O ID deve ser um inteiro positivo.")
+
+        try:
+            return ClsDtc.objects.get(id=int(idDtc))
+        except ClsDtc.DoesNotExist:
+            raise ClsDtc.DoesNotExist(f"Não foi possível encontrar ClsDtc com ID {idDtc}.")
+        
+
+
             
    
     def deleteRota(self,idRota):

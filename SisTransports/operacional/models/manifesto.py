@@ -24,10 +24,11 @@ class Manifesto(models.Model):
     lacres = models.CharField(max_length=100, null=True)
     averbacao = models.CharField(max_length=20, null=True)
     liberacao = models.CharField(max_length=20, null=True)
+    ocorrencia_fk = models.ForeignKey(Ocorrencia_manifesto, on_delete=models.CASCADE,null=True)
     motoristas = models.ManyToManyField(Motorista)
     veiculos = models.ManyToManyField(Veiculo)
     observacao = models.TextField(null=True)
-    dtc = models.ManyToManyField(Dtc, through='DtcManifesto')
+    dtc = models.ManyToManyField(Dtc)
     
     usuario_cadastro = models.ForeignKey(
         settings.AUTH_USER_MODEL,
