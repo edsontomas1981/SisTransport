@@ -12,20 +12,33 @@ from operacional.classes.emissores import EmissorManager
 from operacional.classes.rotas import Rota
 from operacional.classes.manifesto import ManifestoManager
 
+from django.db import IntegrityError
+
 @login_required(login_url='/auth/entrar/')
 @require_http_methods(["POST","GET"])
 def add_dtc_manifesto(request):
-    required_fields = ['emissorMdfe','dtInicioManif',
-                       'dtPrevisaoChegada','rotasManifesto']
+    required_fields = ['idDtc','idManifesto','ocorrencia_id']
+    # dados = {'idDtc':192,'idManifesto':44,'ocorrencia_id':2}
 
-    dados = {'idDtc':192,'idManifesto':44,'ocorrencia_id':1}
-    ManifestoManager.add_documento_manifesto(dados)
+    try:
+        dados = json.loads(request.body)
 
-    print(ManifestoManager.obtem_documentos_manifesto(44))
-
-    return JsonResponse({'status': 'add dtc'})
+        print(dados)
+        # Verifica se todos os campos obrigatórios estão presentes
+    #     if all(field in dados for field in required_fields):
+    #         # Adicione aqui a lógica para adicionar o dtc_manifesto
+    #         ManifestoManager.add_documento_manifesto(dados)
+    #         return JsonResponse({'status': 'add dtc'})
+    #     else:
+        return JsonResponse({'error': 'Campos obrigatórios faltando'})
+    # except IntegrityError:
+    #     return JsonResponse({'error': 'Registro duplicado'})
+    except Exception as e:
+        return JsonResponse({'error': str(e)}, status=500)
 
     # data = json.loads(request.body.decode('utf-8'))
+
+
     # data['usuario_cadastro'] = request.user
 
     # for field in required_fields:

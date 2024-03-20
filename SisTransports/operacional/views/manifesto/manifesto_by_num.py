@@ -18,18 +18,20 @@ def manifesto_by_num(request):
     - status 400: Retorna um JSON com a mensagem de erro caso o número do manifesto não seja fornecido ou seja inválido.
     - status 404: Retorna um JSON com a mensagem de erro caso o manifesto não seja encontrado.
     """
-    try:
-        data = json.loads(request.body.decode('utf-8'))
-        num_manifesto = data.get('numManifesto')
-        if not num_manifesto:
-            return JsonResponse({'status': 400, 'error': 'Número do manifesto não fornecido.'})
-        
-        manifesto = ManifestoManager.obter_manifesto_por_id(num_manifesto)
-        veiculos = ManifestoManager.obter_lista_veiculos(num_manifesto)
+    # try:
+    data = json.loads(request.body.decode('utf-8'))
+    num_manifesto = data.get('numManifesto')
 
-        if manifesto is None:
-            return JsonResponse({'status': 404, 'error': 'Manifesto não encontrado.'})
-        
-        return JsonResponse({'status': 200, 'manifesto': manifesto.to_dict(),'veiculos':veiculos})
-    except Exception as e:
-        return JsonResponse({'status': 500, 'error': 'Ocorreu um erro ao processar a solicitação.'})
+    if not num_manifesto:
+        return JsonResponse({'status': 400, 'error': 'Número do manifesto não fornecido.'})
+
+
+    manifesto = ManifestoManager.obter_manifesto_por_id(num_manifesto)
+    veiculos = ManifestoManager.obter_lista_veiculos(num_manifesto)
+
+    if manifesto is None:
+        return JsonResponse({'status': 404, 'error': 'Manifesto não encontrado.'})
+
+    return JsonResponse({'status': 200, 'manifesto': manifesto.to_dict(),'veiculos':veiculos})
+    # except Exception as e:
+    #     return JsonResponse({'status': 500, 'error': 'Ocorreu um erro ao processar a solicitação.'})

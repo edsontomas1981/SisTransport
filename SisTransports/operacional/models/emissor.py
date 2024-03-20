@@ -37,7 +37,6 @@ class Emissor (models.Model):
             'data_ultima_atualizacao': self.data_ultima_atualizacao.isoformat(),
             'siglaFilial':self.sigla_filial,
             'aliquota':self.aliquota,
-
         }
     
     def __str__(self):

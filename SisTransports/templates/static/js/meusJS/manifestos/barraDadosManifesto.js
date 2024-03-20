@@ -10,7 +10,7 @@ const populaDadosBarraManifesto=(dados)=>{
     if(placaPrincipalBarraManifesto){
         populaPlacaBarraManifesto(placaPrincipalBarraManifesto)
     }
-    populaQtdeDocumentosBarraManifesto(parseInt(dados.manifesto.dtc.length))
+    // populaQtdeDocumentosBarraManifesto(parseInt(dados.manifesto.dtc.length))
     populaNumManifestoBarraManifesto(dados.manifesto.id)
 }
 

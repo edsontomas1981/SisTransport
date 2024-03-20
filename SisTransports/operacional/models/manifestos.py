@@ -4,8 +4,6 @@ from django.utils import timezone
 from datetime import datetime
 from dateutil import parser
 
-
-
 from operacional.models.emissor import Emissor
 from operacional.models.rota import Rota
 from operacional.models.motoristas import Motorista
@@ -24,12 +22,11 @@ class Manifesto(models.Model):
     lacres = models.CharField(max_length=100, null=True)
     averbacao = models.CharField(max_length=20, null=True)
     liberacao = models.CharField(max_length=20, null=True)
-    ocorrencia_fk = models.ForeignKey(Ocorrencia_manifesto, on_delete=models.CASCADE,null=True)
+    ocorrencia_fk = models.ForeignKey(Ocorrencia_manifesto, on_delete=models.CASCADE, null=True)
     motoristas = models.ManyToManyField(Motorista)
     veiculos = models.ManyToManyField(Veiculo)
     observacao = models.TextField(null=True)
-    dtc = models.ManyToManyField(Dtc)
-    
+
     usuario_cadastro = models.ForeignKey(
         settings.AUTH_USER_MODEL,
         on_delete=models.SET_NULL,
@@ -45,12 +42,10 @@ class Manifesto(models.Model):
     data_cadastro = models.DateTimeField(null=True)
     data_ultima_atualizacao = models.DateTimeField(default=timezone.now)  
 
-
     def to_dict(self):
         emissor_data = self.emissor_fk.to_dict() if self.emissor_fk else None
         motoristas_data = [motorista.to_dict() for motorista in self.motoristas.all()]
         veiculos_data = [veiculo.to_dict() for veiculo in self.veiculos.all()]
-        dtc_data = [dtc.to_dict() for dtc in self.dtc.all()]
 
         # Convertendo a data de cadastro para datetime, se for uma string
         data_cadastro = parser.parse(self.data_cadastro) if isinstance(self.data_cadastro, str) else self.data_cadastro
@@ -73,12 +68,7 @@ class Manifesto(models.Model):
             'usuario_ultima_atualizacao': self.usuario_ultima_atualizacao.id if self.usuario_ultima_atualizacao else None,
             'data_cadastro': data_cadastro.isoformat() if data_cadastro else None,
             'data_ultima_atualizacao': self.data_ultima_atualizacao.isoformat(),
-            'dtc': dtc_data
         }
 
 
-class DtcManifesto(models.Model):
-    manifesto = models.ForeignKey(Manifesto, on_delete=models.CASCADE)
-    dtc_fk = models.ForeignKey(Dtc, on_delete=models.CASCADE)
-    # Adicione os campos extras que você deseja
-    tipo_manifesto = models.ForeignKey(Ocorrencia_manifesto, on_delete=models.CASCADE)
+

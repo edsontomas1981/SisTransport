@@ -10,7 +10,6 @@ document.addEventListener('DOMContentLoaded',()=>{
       populaDadosBarraManifesto(response)
       populaTbodyMotorista(response.manifesto.motoristas)
       populaVeiculosManifesto(response.veiculos)
-
     }else{
       msgErro("Manifesto não localizado")
     }

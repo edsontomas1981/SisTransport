@@ -1,10 +1,11 @@
-from operacional.models.manifesto import Manifesto
+from operacional.models.manifestos import Manifesto
 from django.utils import timezone
 from operacional.classes.motorista import MotoristaManager as Motorista
 from operacional.classes.veiculo import VeiculoManager as Veiculo
 from operacional.classes.dtc import Dtc
 from operacional.classes.ocorrencias_manifesto import Ocorrencia_manifesto
-from operacional.models.manifesto import DtcManifesto
+from operacional.models.dtc_manifestos import DtcManifesto
+
 class ManifestoError(Exception):
     """Exceção base para erros relacionados ao manifesto."""
 
@@ -287,6 +288,7 @@ class ManifestoManager:
             
     @classmethod
     def add_documento_manifesto(cls, dados):
+        
         # Obter o manifesto pelo ID fornecido
         manifesto = cls.obter_manifesto_por_id(dados.get('idManifesto'))
 
@@ -298,13 +300,10 @@ class ManifestoManager:
 
         # Criar um novo DtcManifesto
         dtc_manifesto = DtcManifesto.objects.create(
-            manifesto=manifesto,
-            dtc_fk=dtc,
-            tipo_manifesto=tipo_manifesto
+                                dtc_fk=dtc,
+                                manifesto_fk=manifesto,
+                                ocorrencia_manifesto_fk=tipo_manifesto
         )
-
-        # Associar o novo DtcManifesto ao manifesto
-        manifesto.dtc.add(dtc_manifesto)
 
         return dtc_manifesto
 

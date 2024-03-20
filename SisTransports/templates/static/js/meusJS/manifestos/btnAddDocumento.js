@@ -1,5 +1,4 @@
 let btnAddDocumento = document.getElementById('btnAddDocumento')
-let numDcto = document.getElementById('numeroDocumento')
 let listaDocumentos = []
 
 const removerDocumentoPorId=(id)=> {
@@ -16,7 +15,17 @@ let botoesManifesto={
   };
 
 btnAddDocumento.addEventListener('click', async () => {
-    let response = await getDocumento()
+
+    // let response = await getDocumento()
+    let numDcto = document.getElementById('numeroDocumento')
+    let idManifesto = document.getElementById('spanNumManifesto')
+    let idTipoDocumento = document.getElementById('cmbTipoDocumento').value
+    let cmbTipoManifesto = document.getElementById('cmbTipoManifesto').value
+
+    let respostaDocumento = await connEndpoint('/operacional/add_dtc_manifesto/', {'idTipoDocumento': idTipoDocumento,
+                                                                                    'idCte': numDcto.value,
+                                                                                    'idManifesto':idManifesto.textContent,
+                                                                                    'cmbTipoManifesto':cmbTipoManifesto});
 
     if (numDcto.value.trim() == '') {
         msgAviso("Por favor, informe um número de documento.");
@@ -35,12 +44,14 @@ btnAddDocumento.addEventListener('click', async () => {
 
     if (response.status == 200){
         const documento = prepareDataToTableManifesto(response);
-        if (!listaDocumentos.some(item => item.id === documento.id)) {
-            listaDocumentos.push(documento);
-            popula_tbody('tableDtcManifesto', listaDocumentos, botoesManifesto, false);
-        } else {
-            msgAviso("Este documento já foi adicionado anteriormente.");
-        }
+
+
+        // if (!listaDocumentos.some(item => item.id === documento.id)) {
+        //     listaDocumentos.push(documento);
+        //     popula_tbody('tableDtcManifesto', listaDocumentos, botoesManifesto, false);
+        // } else {
+        //     msgAviso("Este documento já foi adicionado anteriormente.");
+        // }
     }else{
         msgErro('Não foi possível encontrar o documento. Verifique se os dados estão corretos e tente novamente.')
     }
