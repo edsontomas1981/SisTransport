@@ -1,3 +1,4 @@
+from django.http import HttpResponse, HttpResponseBadRequest, HttpResponseNotFound
 from operacional.models.manifestos import Manifesto
 from django.utils import timezone
 from operacional.classes.motorista import MotoristaManager as Motorista
@@ -288,24 +289,45 @@ class ManifestoManager:
             
     @classmethod
     def add_documento_manifesto(cls, dados):
-        
+        """
+        Adiciona um novo documento de manifesto.
+
+        Parâmetros:
+            dados (dict): Um dicionário contendo as informações necessárias para adicionar o documento de manifesto.
+                        Deve conter as seguintes chaves:
+                        - 'idManifesto': ID do manifesto associado ao documento.
+                        - 'idDtc': ID do Dtc associado ao documento.
+                        - 'ocorrencia_id': ID da ocorrência de manifesto associada ao documento.
+
+        Retorna:
+            HttpResponse: Um objeto HttpResponse com o código de status HTTP apropriado.
+
+        """
+        # try:
+        print(dados)
         # Obter o manifesto pelo ID fornecido
-        manifesto = cls.obter_manifesto_por_id(dados.get('idManifesto'))
-
+        manifesto = cls.obter_manifesto_por_id(int(dados.get('idManifesto')))
         # Obter o Dtc pelo ID fornecido
-        dtc = Dtc.obter_dtc_id(dados.get('idDtc'))
-
+        dtc = Dtc.obter_dtc_id(int(dados.get('idDtc')))
         # Obter a ocorrência de manifesto pelo ID fornecido
-        tipo_manifesto = Ocorrencia_manifesto.get_ocorrencia_id(dados.get('ocorrencia_id'))
+        tipo_manifesto = Ocorrencia_manifesto.get_ocorrencia_id(int(dados.get('ocorrencia_id')))
 
         # Criar um novo DtcManifesto
         dtc_manifesto = DtcManifesto.objects.create(
-                                dtc_fk=dtc,
-                                manifesto_fk=manifesto,
-                                ocorrencia_manifesto_fk=tipo_manifesto
+                            dtc_fk=dtc,
+                            manifesto_fk=manifesto,
+                            ocorrencia_manifesto_fk=tipo_manifesto
         )
 
-        return dtc_manifesto
+        return HttpResponse(status=201)  # Retorna HTTP 201 Created
+        # except ValueError as ve:
+        #     return HttpResponseBadRequest("Erro ao adicionar documento de manifesto: {}".format(ve))
+        # except Manifesto.DoesNotExist:
+        #     return HttpResponseNotFound("Manifesto não encontrado com o ID fornecido.")
+        # except Dtc.DoesNotExist:
+        #     return HttpResponseNotFound("Dtc não encontrado com o ID fornecido.")
+        # except Ocorrencia_manifesto.DoesNotExist:
+        #     return HttpResponseNotFound("Ocorrência de manifesto não encontrada com o ID fornecido.")
 
     @classmethod
     def obtem_documentos_manifesto(cls,idManifesto):

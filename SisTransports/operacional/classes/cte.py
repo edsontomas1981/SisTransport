@@ -102,9 +102,25 @@ class Cte():
         Cte ou None: O objeto Cte correspondente ao id, se encontrado, caso contrário, retorna None.
         """
         try:
-            
-            cte_obj = Mdl_cte.objects.get(id=idCte)
+            cte_obj = Mdl_cte.objects.filter(id=idCte)
             return cte_obj
+        except ObjectDoesNotExist:
+            return None
+        
+    @classmethod
+    def obtem_cte_id(cls,idCte):
+        """
+        Retorna um objeto Cte com base no campo id.
+        
+        Argumentos:
+        id (int): Id do Cte.
+
+        Retorna:
+        Cte ou None: O objeto Cte correspondente ao id, se encontrado, caso contrário, retorna None.
+        """
+        try:
+            print(type(Mdl_cte.objects.get(id=idCte)))
+            return Mdl_cte.objects.get(id=idCte)
         except ObjectDoesNotExist:
             return None
         

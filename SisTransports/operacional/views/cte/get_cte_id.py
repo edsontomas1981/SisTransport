@@ -12,7 +12,6 @@ def get_cte_id(request):
         data = json.loads(request.body.decode('utf-8'))
         cte_instance = Cte()
         cte_by_id=cte_instance.get_cte_id(data.get('idCte'))
-        print(cte_by_id.to_dict())
         return JsonResponse({'status': 200,'cte':cte_by_id.to_dict()})
     except ValidationError as ve:
         return JsonResponse({'status': 400, 'error': f'Erro de validação: {str(ve)}'})
