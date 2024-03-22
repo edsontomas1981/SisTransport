@@ -1,4 +1,5 @@
 from django.http import HttpResponse, HttpResponseBadRequest, HttpResponseNotFound
+from django.db import IntegrityError
 from operacional.models.manifestos import Manifesto
 from django.utils import timezone
 from operacional.classes.motorista import MotoristaManager as Motorista
@@ -303,36 +304,57 @@ class ManifestoManager:
             HttpResponse: Um objeto HttpResponse com o código de status HTTP apropriado.
 
         """
-        # try:
-        print(dados)
-        # Obter o manifesto pelo ID fornecido
-        manifesto = cls.obter_manifesto_por_id(int(dados.get('idManifesto')))
-        # Obter o Dtc pelo ID fornecido
-        dtc = Dtc.obter_dtc_id(int(dados.get('idDtc')))
-        # Obter a ocorrência de manifesto pelo ID fornecido
-        tipo_manifesto = Ocorrencia_manifesto.get_ocorrencia_id(int(dados.get('ocorrencia_id')))
+        try:
+            # Obter o manifesto pelo ID fornecido
+            manifesto = cls.obter_manifesto_por_id(int(dados.get('idManifesto')))
+            # Obter o Dtc pelo ID fornecido
+            dtc = Dtc.obter_dtc_id(int(dados.get('idDtc')))
+            # Obter a ocorrência de manifesto pelo ID fornecido
+            tipo_manifesto = Ocorrencia_manifesto.get_ocorrencia_id(int(dados.get('ocorrencia_id')))
 
-        # Criar um novo DtcManifesto
-        dtc_manifesto = DtcManifesto.objects.create(
-                            dtc_fk=dtc,
-                            manifesto_fk=manifesto,
-                            ocorrencia_manifesto_fk=tipo_manifesto
-        )
+            # Criar um novo DtcManifesto
+            dtc_manifesto = DtcManifesto.objects.create(
+                                dtc_fk=dtc,
+                                manifesto_fk=manifesto,
+                                ocorrencia_manifesto_fk=tipo_manifesto
+            )
 
-        return HttpResponse(status=201)  # Retorna HTTP 201 Created
-        # except ValueError as ve:
-        #     return HttpResponseBadRequest("Erro ao adicionar documento de manifesto: {}".format(ve))
-        # except Manifesto.DoesNotExist:
-        #     return HttpResponseNotFound("Manifesto não encontrado com o ID fornecido.")
-        # except Dtc.DoesNotExist:
-        #     return HttpResponseNotFound("Dtc não encontrado com o ID fornecido.")
-        # except Ocorrencia_manifesto.DoesNotExist:
-        #     return HttpResponseNotFound("Ocorrência de manifesto não encontrada com o ID fornecido.")
+            return HttpResponse(status=201)  # Retorna HTTP 201 Created
+        except ValueError as ve:
+            return HttpResponseBadRequest("Erro ao adicionar documento de manifesto: {}".format(ve))
+        except IntegrityError:
+            return HttpResponse(status=409, content="Registro duplicado")
+        except Manifesto.DoesNotExist:
+            return HttpResponseNotFound("Manifesto não encontrado com o ID fornecido.")
+        except Dtc.DoesNotExist:
+            return HttpResponseNotFound("Dtc não encontrado com o ID fornecido.")
+        except Ocorrencia_manifesto.DoesNotExist:
+            return HttpResponseNotFound("Ocorrência de manifesto não encontrada com o ID fornecido.")
 
     @classmethod
-    def obtem_documentos_manifesto(cls,idManifesto):
-        manifesto = cls.obter_manifesto_por_id(idManifesto)
-        return manifesto.dtc
+    def obtem_documentos_manifesto(cls, id_manifesto):
+        """
+        Obtém os documentos relacionados a um manifesto.
+
+        Args:
+            id_manifesto (int): O ID do manifesto.
+
+        Returns:
+            list: Uma lista de dicionários representando os documentos relacionados ao manifesto.
+
+        Raises:
+            Manifesto.DoesNotExist: Se o manifesto com o ID especificado não existir.
+        """
+        try:
+            registros = DtcManifesto.objects.filter(manifesto_fk_id=id_manifesto)
+            return [registro.to_dict() for registro in registros]
+        except Manifesto.DoesNotExist:
+            raise Manifesto.DoesNotExist("Manifesto com o ID especificado não encontrado")
+
+    # @classmethod
+    # def obtem_documentos_manifesto(cls,idManifesto):
+    #     manifesto = cls.obter_manifesto_por_id(idManifesto)
+    #     return manifesto.dtc
 
 
 

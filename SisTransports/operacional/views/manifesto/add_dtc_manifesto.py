@@ -6,16 +6,13 @@ import json
 from operacional.classes.manifesto import ManifestoManager
 from operacional.classes.cte import Cte
 
-
-
 @login_required(login_url='/auth/entrar/')
 @require_http_methods(["POST","GET"])
 def add_dtc_manifesto(request):
     required_fields = ['idDcto','idManifesto','cmbTipoManifesto','idTipoDocumento']
-
+    
     try:
         data = json.loads(request.body)
-        print(data)
         for field in required_fields:
             if field not in data or data[field] == '':
                 return JsonResponse({'status': 422, 'error': f'O campo {field} é obrigatório.'})
@@ -23,7 +20,8 @@ def add_dtc_manifesto(request):
         if int(data.get('idTipoDocumento')) == 1:
             cte = Cte.obtem_cte_id(data.get('idDcto'))
             dados = prepare_data(data,cte.dtc_fk.id)
-            ManifestoManager.add_documento_manifesto(dados)
+            resposta = ManifestoManager.add_documento_manifesto(dados)
+            ManifestoManager.obtem_documentos_manifesto(data.get('idManifesto'))
 
         # busca pelo chave nfe
         elif data.get('idTipoDocumento') == 2:
@@ -38,7 +36,8 @@ def add_dtc_manifesto(request):
         elif data.get('idTipoDocumento') == 4:
             print('chave cte')
 
-        return JsonResponse({'status': 200})
+        return JsonResponse({'status': resposta.status_code})
+
     except IntegrityError:
         return JsonResponse({'status':409,'error': 'Registro duplicado'})
     except Exception as e:
