@@ -46,9 +46,6 @@ const populaRotaBarraManifesto = (origemDestino = '') => {
 }
 
 const populaMotoristaBarraManifesto = (motoristaPrincipal='') => {
-
-    console.log(motoristaPrincipal)
-
     const element = document.getElementById('motoristaPrincipal');
     if (element && motoristaPrincipal) {
         element.textContent = motoristaPrincipal;

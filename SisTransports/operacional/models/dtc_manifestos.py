@@ -30,16 +30,20 @@ class DtcManifesto(models.Model):
     data_ultima_atualizacao = models.DateTimeField(default=timezone.now)  
 
     def to_dict(self):
+        data_cadastro_iso = self.data_cadastro.isoformat() if self.data_cadastro else None
+        data_ultima_atualizacao_iso = self.data_ultima_atualizacao.isoformat() if self.data_ultima_atualizacao else None
+        
         return {
             'id': self.id,
-            'dtc_fk_id': self.dtc_fk_id,
-            'manifesto_fk_id': self.manifesto_fk_id,
-            'ocorrencia_manifesto_fk_id': self.ocorrencia_manifesto_fk_id,
-            'usuario_cadastro_id': self.usuario_cadastro_id,
-            'usuario_ultima_atualizacao_id': self.usuario_ultima_atualizacao_id,
-            'data_cadastro': self.data_cadastro.isoformat() if self.data_cadastro else None,
-            'data_ultima_atualizacao': self.data_ultima_atualizacao.isoformat(),
+            'dtc_fk': self.dtc_fk.to_dict() if self.dtc_fk else None,
+            'manifesto_fk': self.manifesto_fk.to_dict() if self.manifesto_fk else None,
+            'ocorrencia_manifesto_fk': self.ocorrencia_manifesto_fk.to_dict() if self.ocorrencia_manifesto_fk else None,
+            'usuario_cadastro': self.usuario_cadastro,
+            'usuario_ultima_atualizacao': self.usuario_ultima_atualizacao,
+            'data_cadastro': data_cadastro_iso,
+            'data_ultima_atualizacao': data_ultima_atualizacao_iso,
         }
+
     
     class Meta:
         unique_together = ('dtc_fk', 'manifesto_fk', 'ocorrencia_manifesto_fk')

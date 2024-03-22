@@ -90,6 +90,22 @@ class Cte():
             return cte_obj
         except ObjectDoesNotExist:
             return None
+    
+    @classmethod
+    def obtem_cte_by_dtc(cls, dtc_fk):
+        """
+        Retorna um objeto Cte com base no campo dtc_fk.
+        
+        Argumentos:
+        dtc_fk (int): A chave estrangeira para procurar o Cte.
+
+        Retorna:
+        Cte ou None: O objeto Cte correspondente ao dtc_fk, se encontrado, caso contrário, retorna None.
+        """
+        try:
+            return Mdl_cte.objects.get(dtc_fk=dtc_fk)
+        except ObjectDoesNotExist:
+            return None
         
     def get_cte_id  (self, idCte):
         """

@@ -11,37 +11,40 @@ from operacional.classes.cte import Cte
 def add_dtc_manifesto(request):
     required_fields = ['idDcto','idManifesto','cmbTipoManifesto','idTipoDocumento']
     
-    try:
-        data = json.loads(request.body)
-        for field in required_fields:
-            if field not in data or data[field] == '':
-                return JsonResponse({'status': 422, 'error': f'O campo {field} é obrigatório.'})
-        # busca pelo cte
-        if int(data.get('idTipoDocumento')) == 1:
-            cte = Cte.obtem_cte_id(data.get('idDcto'))
+    # try:
+    data = json.loads(request.body)
+    for field in required_fields:
+        if field not in data or data[field] == '':
+            return JsonResponse({'status': 422, 'error': f'O campo {field} é obrigatório.'})
+    # busca pelo cte
+    if int(data.get('idTipoDocumento')) == 1:
+        cte = Cte.obtem_cte_id(data.get('idDcto'))
+        if cte:
             dados = prepare_data(data,cte.dtc_fk.id)
             resposta = ManifestoManager.add_documento_manifesto(dados)
-            ManifestoManager.obtem_documentos_manifesto(data.get('idManifesto'))
+            documentos=ManifestoManager.obtem_documentos_manifesto(data.get('idManifesto'))
+        else:
+            return JsonResponse({'status': 422,'erro':'Documento não localizado'})
 
-        # busca pelo chave nfe
-        elif data.get('idTipoDocumento') == 2:
-            print('chave nfe')
+    # busca pelo chave nfe
+    elif data.get('idTipoDocumento') == 2:
+        print('chave nfe')  
 
 
-        # busca pelo numero Dtc
-        elif data.get('idTipoDocumento') == 3:
-            print('dtc')
+    # busca pelo numero Dtc
+    elif data.get('idTipoDocumento') == 3:
+        print('dtc')
 
-        # busca pelo chave cte
-        elif data.get('idTipoDocumento') == 4:
-            print('chave cte')
+    # busca pelo chave cte
+    elif data.get('idTipoDocumento') == 4:
+        print('chave cte')
 
-        return JsonResponse({'status': resposta.status_code})
+    return JsonResponse({'status': resposta.status_code,'documentos':documentos})
 
-    except IntegrityError:
-        return JsonResponse({'status':409,'error': 'Registro duplicado'})
-    except Exception as e:
-        return JsonResponse({'error': str(e)}, status=500)
+    # except IntegrityError:
+    #     return JsonResponse({'status':409,'error': 'Registro duplicado'})
+    # except Exception as e:
+    #     return JsonResponse({'error': str(e)}, status=500)
 
 def prepare_data(data,id_dtc):
     return {

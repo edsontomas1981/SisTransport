@@ -7,6 +7,7 @@ from operacional.classes.veiculo import VeiculoManager as Veiculo
 from operacional.classes.dtc import Dtc
 from operacional.classes.ocorrencias_manifesto import Ocorrencia_manifesto
 from operacional.models.dtc_manifestos import DtcManifesto
+from operacional.classes.cte import Cte
 
 class ManifestoError(Exception):
     """Exceção base para erros relacionados ao manifesto."""
@@ -330,31 +331,32 @@ class ManifestoManager:
             return HttpResponseNotFound("Dtc não encontrado com o ID fornecido.")
         except Ocorrencia_manifesto.DoesNotExist:
             return HttpResponseNotFound("Ocorrência de manifesto não encontrada com o ID fornecido.")
-
+ 
     @classmethod
     def obtem_documentos_manifesto(cls, id_manifesto):
         """
-        Obtém os documentos relacionados a um manifesto.
+        Obtém os documentos associados a um manifesto com o ID especificado.
 
         Args:
-            id_manifesto (int): O ID do manifesto.
+            id_manifesto (int): O ID do manifesto para o qual os documentos devem ser obtidos.
 
         Returns:
-            list: Uma lista de dicionários representando os documentos relacionados ao manifesto.
+            list: Uma lista de dicionários contendo os dados dos documentos associados ao manifesto.
+                Cada dicionário contém os dados do documento e, se disponível, os dados do Conhecimento de Transporte Eletrônico (CT-e) associado.
 
         Raises:
-            Manifesto.DoesNotExist: Se o manifesto com o ID especificado não existir.
+            Manifesto.DoesNotExist: Se não for encontrado nenhum manifesto com o ID especificado.
         """
         try:
             registros = DtcManifesto.objects.filter(manifesto_fk_id=id_manifesto)
-            return [registro.to_dict() for registro in registros]
+            return [{
+                'cte': Cte.obtem_cte_by_dtc(regist.dtc_fk.id).to_dict(),
+                **regist.to_dict()
+            } for regist in registros]
+
         except Manifesto.DoesNotExist:
             raise Manifesto.DoesNotExist("Manifesto com o ID especificado não encontrado")
 
-    # @classmethod
-    # def obtem_documentos_manifesto(cls,idManifesto):
-    #     manifesto = cls.obter_manifesto_por_id(idManifesto)
-    #     return manifesto.dtc
 
 
 

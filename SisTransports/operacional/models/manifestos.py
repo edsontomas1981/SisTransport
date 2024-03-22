@@ -26,7 +26,7 @@ class Manifesto(models.Model):
     motoristas = models.ManyToManyField(Motorista)
     veiculos = models.ManyToManyField(Veiculo)
     observacao = models.TextField(null=True)
-
+ 
     usuario_cadastro = models.ForeignKey(
         settings.AUTH_USER_MODEL,
         on_delete=models.SET_NULL,

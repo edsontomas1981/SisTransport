@@ -16,6 +16,7 @@ btnAddMotorista.addEventListener('click',async ()=>{
 
         let response  = await connEndpoint('/operacional/add_motorista_manifesto/', {'cpfMotorista':cpfMotorista.value,
                                                                                     'idManifesto':idManifesto.textContent});
+
         populaTbodyMotorista(response.motoristas)
 
         switch (response.status) {

@@ -37,29 +37,20 @@ btnAddDocumento.addEventListener('click', async () => {
         return;
     }
 
-    alert(numDcto.value)
-
-    let respostaDocumento = await connEndpoint('/operacional/add_dtc_manifesto/', {'idTipoDocumento': idTipoDocumento,
+    let response = await connEndpoint('/operacional/add_dtc_manifesto/', {'idTipoDocumento': idTipoDocumento,
                                                                                     'idDcto': numDcto.value,
                                                                                     'idManifesto':idManifesto.textContent,
                                                                                     'cmbTipoManifesto':cmbTipoManifesto});
 
-    alert(respostaDocumento.status)
+    console.log(response)
+    if (parseInt(response.status) != 422){
+        const documento = prepareDataToTableManifesto(response.documentos);
 
+        popula_tbody('tableDtcManifesto', documento, botoesManifesto, false);
 
-    // if (response.status == 200){
-    //     const documento = prepareDataToTableManifesto(response);
-
-
-    //     // if (!listaDocumentos.some(item => item.id === documento.id)) {
-    //     //     listaDocumentos.push(documento);
-    //     //     popula_tbody('tableDtcManifesto', listaDocumentos, botoesManifesto, false);
-    //     // } else {
-    //     //     msgAviso("Este documento já foi adicionado anteriormente.");
-    //     // }
-    // }else{
-    //     msgErro('Não foi possível encontrar o documento. Verifique se os dados estão corretos e tente novamente.')
-    // }
+    }else{
+        msgErro('Não foi possível encontrar o documento. Verifique se os dados estão corretos e tente novamente.')
+    }
 
 });
 
@@ -86,15 +77,20 @@ const getDocumento = async()=>{
 
 
 const prepareDataToTableManifesto = (response)=>{
-    return{'id':response.cte.dtc_fk.id,'cte':response.cte.id,
-            'remetente':truncateString(response.cte.dtc_fk.remetente.raz_soc,20),
-            'destinatario':truncateString(response.cte.dtc_fk.destinatario.raz_soc,20),
-            'ocorencia':pegarTextoSelect('cmbTipoManifesto'),
-            'dtsaida':'17/10/2007',
-            'origem':truncateString(response.cte.dtc_fk.remetente.endereco_fk.cidade,10) + ' - ' + response.cte.dtc_fk.remetente.endereco_fk.uf,
-            'destino':truncateString(response.cte.dtc_fk.destinatario.endereco_fk.cidade,8)+ ' - ' + response.cte.dtc_fk.destinatario.endereco_fk.uf,
+    let dados = []
+    response.forEach(element => {
+        dados.push({'id':element.dtc_fk.id,
+                    'cte':element.cte.id,
+                    'remetente':truncateString(element.cte.dtc_fk.remetente.raz_soc,20),
+                    'destinatario':truncateString(element.cte.dtc_fk.destinatario.raz_soc,20),
+                    'ocorrencia':element.ocorrencia_manifesto_fk.tipo_ocorrencia,
+                    'dtsaida':formataDataPtBr(element.manifesto_fk.data_previsão_inicio),
+                    'origem':truncateString(element.cte.dtc_fk.remetente.endereco_fk.cidade,10) + ' - ' + element.cte.dtc_fk.remetente.endereco_fk.uf,
+                    'destino':truncateString(element.cte.dtc_fk.destinatario.endereco_fk.cidade,8)+ ' - ' + element.cte.dtc_fk.destinatario.endereco_fk.uf,
+                    })
+    });
 
-        }
+    return dados
 }
 
 
