@@ -3,13 +3,18 @@ document.getElementById('btnLimpaManifesto').addEventListener('click',()=>{
     limpaBarraManifesto()
     limpaTbodyMotoristas()
     limpaTbodyVeiculos()
+    limpaTbodyDocumentos()
     document.getElementById('txtIdBuscaManifesto').value = ""
 })
 
 const limpaTbodyMotoristas = ()=>{
-    document.getElementById("tbodyMotorista").innerHTML = "";
+    limpa_tabelas("tbodyMotorista")
 }
 
 const limpaTbodyVeiculos = ()=>{
-    document.getElementById("tbodyVeiculos").innerHTML = "";
+    limpa_tabelas("tbodyVeiculos")
+}
+
+const limpaTbodyDocumentos = ()=>{
+    limpa_tabelas("tableDtcManifesto")
 }

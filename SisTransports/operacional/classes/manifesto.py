@@ -319,7 +319,6 @@ class ManifestoManager:
                                 manifesto_fk=manifesto,
                                 ocorrencia_manifesto_fk=tipo_manifesto
             )
-
             return HttpResponse(status=201)  # Retorna HTTP 201 Created
         except ValueError as ve:
             return HttpResponseBadRequest("Erro ao adicionar documento de manifesto: {}".format(ve))
@@ -350,12 +349,13 @@ class ManifestoManager:
         try:
             registros = DtcManifesto.objects.filter(manifesto_fk_id=id_manifesto)
             return [{
-                'cte': Cte.obtem_cte_by_dtc(regist.dtc_fk.id).to_dict(),
-                **regist.to_dict()
-            } for regist in registros]
+                'cte': Cte.obtem_cte_by_dtc(registro.dtc_fk.id).to_dict(),
+                **registro.to_dict()
+            } for registro in registros]
 
         except Manifesto.DoesNotExist:
-            raise Manifesto.DoesNotExist("Manifesto com o ID especificado não encontrado")
+            return None
+            # raise Manifesto.DoesNotExist("Manifesto com o ID especificado não encontrado")
 
 
 

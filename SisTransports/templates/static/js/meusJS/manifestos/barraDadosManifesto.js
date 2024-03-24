@@ -1,7 +1,9 @@
 const populaDadosBarraManifesto=(dados)=>{
+    limpaBarraManifesto()
     populaDtInicioBarraManifesto(dados.manifesto.data_previsão_inicio)
     populaPrevChegadaBarraManifesto(dados.manifesto.data_previsão_chegada)
     populaRotaBarraManifesto(dados.manifesto.rota_fk.nome)
+    populaQtdeDocumentosBarraManifesto(dados.documentos.length)
     let primeiroMotorista = dados.manifesto.motoristas[0]?.parceiro_fk?.raz_soc
     if (primeiroMotorista){
         populaMotoristaBarraManifesto(dados.manifesto.motoristas[0].parceiro_fk.raz_soc)
@@ -10,7 +12,6 @@ const populaDadosBarraManifesto=(dados)=>{
     if(placaPrincipalBarraManifesto){
         populaPlacaBarraManifesto(placaPrincipalBarraManifesto)
     }
-    // populaQtdeDocumentosBarraManifesto(parseInt(dados.manifesto.dtc.length))
     populaNumManifestoBarraManifesto(dados.manifesto.id)
 }
 

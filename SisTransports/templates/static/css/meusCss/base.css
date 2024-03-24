@@ -68,3 +68,26 @@
     background-color: #ffe6e6; /* ou outra cor de fundo desejada */
 }
   
+.loader {
+    position: absolute;
+    z-index: 9999;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    /* background-color: rgba(235, 235, 235, 0.5); */
+}
+
+.spinner-border{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    height: 100px;
+    width: 100px;
+}
+
+@keyframes spin {
+    to {
+        transform: rotate(360deg);
+    }
+}

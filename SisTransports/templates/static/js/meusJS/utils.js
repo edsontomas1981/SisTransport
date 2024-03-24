@@ -1,37 +1,49 @@
 class Conexao {
-    constructor(url,data){
-        this.url=url
-        this.data=data
-    }
+  constructor(url,data){
+      this.url=url
+      this.data=data
+      this.loadingElement = document.getElementById('loading'); // Elemento de loading
+  }
 
-    getCSRFToken() {
-        const cookieValue = document.cookie.match(/(^|;)csrftoken=([^;]*)/)[2];
-        return cookieValue;
-      }
-    
-      async sendPostRequest() {
-        this.csrfToken=this.getCSRFToken()
-        try {
+  showLoading() {
+      this.loadingElement.style.display = 'block'; // Mostra o loading
+  }
+
+  hideLoading() {
+      this.loadingElement.style.display = 'none'; // Esconde o loading
+  }
+
+  getCSRFToken() {
+      const cookieValue = document.cookie.match(/(^|;)csrftoken=([^;]*)/)[2];
+      return cookieValue;
+  }
+
+  async sendPostRequest() {
+      this.csrfToken=this.getCSRFToken()
+      try {
+          this.showLoading(); // Mostra o loading antes de fazer a requisição
           const response = await fetch(this.url, {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-              "X-CSRFToken": this.csrfToken,
-            },
-            body: JSON.stringify(this.data),
+              method: "POST",
+              headers: {
+                  "Content-Type": "application/json",
+                  "X-CSRFToken": this.csrfToken,
+              },
+              body: JSON.stringify(this.data),
           });
-    
+
           if (!response.ok) {
-            throw new Error(`HTTP error! status: ${response.status}`);
+              throw new Error(`HTTP error! status: ${response.status}`);
           }
-    
+
           const result = await response.json();
           return result;
-        } catch (error) {
+      } catch (error) {
           console.error(error);
-          msgErro("Erro interno!" + error);
-        }
+          alert("Erro interno!" + error);
+      } finally {
+          this.hideLoading(); // Esconde o loading após a requisição, mesmo se der erro
       }
+  }
 }
 
 function conectaBackEnd(dados, callback,...idComponente) {

@@ -16,12 +16,12 @@ let botoesManifesto={
 
 btnAddDocumento.addEventListener('click', async () => {
 
-    // let response = await getDocumento()
     let numDcto = document.getElementById('numeroDocumento')
     let idManifesto = document.getElementById('spanNumManifesto')
     let idTipoDocumento = document.getElementById('cmbTipoDocumento').value
     let cmbTipoManifesto = document.getElementById('cmbTipoManifesto').value
-    
+
+        
     if (numDcto.value.trim() == '') {
         msgAviso("Por favor, informe um número de documento.");
         return;
@@ -42,18 +42,18 @@ btnAddDocumento.addEventListener('click', async () => {
                                                                                     'idManifesto':idManifesto.textContent,
                                                                                     'cmbTipoManifesto':cmbTipoManifesto});
 
-    console.log(response)
     if (parseInt(response.status) != 422){
-        const documento = prepareDataToTableManifesto(response.documentos);
-
-        popula_tbody('tableDtcManifesto', documento, botoesManifesto, false);
+        populaTbodyDocumentos(response.documentos)
 
     }else{
         msgErro('Não foi possível encontrar o documento. Verifique se os dados estão corretos e tente novamente.')
     }
-
 });
 
+const populaTbodyDocumentos =(response)=>{
+    const documento = prepareDataToTableManifesto(response);
+    popula_tbody('tableDtcManifesto', documento, botoesManifesto, false);
+}
 
 const getDocumento = async()=>{
     let response
