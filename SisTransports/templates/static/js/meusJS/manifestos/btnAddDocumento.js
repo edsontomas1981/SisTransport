@@ -1,10 +1,25 @@
 let btnAddDocumento = document.getElementById('btnAddDocumento')
 let listaDocumentos = []
 
-const removerDocumentoPorId=(id)=> {
-    listaDocumentos = listaDocumentos.filter(item => item.id != id); 
-    popula_tbody('tableDtcManifesto', listaDocumentos, botoesManifesto, false);
+const removerDocumentoPorId=async(id)=> {
+    alert(id)
 }
+
+const obterValorPeloNome = (nome) => {
+    // Obtém o elemento select
+    const select = document.getElementById('cmbTipoManifesto');
+    
+    // Itera sobre as opções para encontrar a opção com o nome fornecido
+    for (let i = 0; i < select.options.length; i++) {
+        if (select.options[i].text === nome) {
+            // Retorna o valor da opção encontrada
+            return select.options[i].value;
+        }
+    }
+    
+    // Retorna null se o nome da opção não for encontrado
+    return null;
+};
 
 let botoesManifesto={
     excluir: { 
@@ -92,6 +107,8 @@ const prepareDataToTableManifesto = (response)=>{
 
     return dados
 }
+
+
 
 
 

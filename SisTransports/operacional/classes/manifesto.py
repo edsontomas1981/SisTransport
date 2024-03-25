@@ -355,7 +355,35 @@ class ManifestoManager:
 
         except Manifesto.DoesNotExist:
             return None
-            # raise Manifesto.DoesNotExist("Manifesto com o ID especificado não encontrado")
+        
+    @classmethod
+    def remove_documento_manifesto(cls, dtc_id, manifesto_id, ocorrencia_manifesto_id):
+        """
+        Remove um registro da tabela DtcManifesto baseado nas chaves fornecidas.
+
+        Args:
+            dtc_fk (int): O ID da Dtc associada ao registro a ser removido.
+            manifesto_fk (int): O ID do Manifesto associado ao registro a ser removido.
+            ocorrencia_manifesto_fk (int): O ID da OcorrenciaManifesto associada ao registro a ser removido.
+
+        Returns:
+            bool: Retorna True se o registro foi encontrado e removido com sucesso, 
+                False se o registro não foi encontrado ou não pôde ser removido.
+        """
+        try:
+            manifesto_fk = cls.obter_manifesto_por_id(manifesto_id)
+            dtc_fk = Dtc.obter_dtc_id(dtc_id)
+            # Obter a ocorrência de manifesto pelo ID fornecido
+            ocorrencia_manifesto_fk = Ocorrencia_manifesto.get_ocorrencia_id(int(dados.get('ocorrencia_id')))
+            # Tenta encontrar o objeto com as chaves fornecidas
+            obj = cls.objects.get(dtc_fk=dtc_fk, manifesto_fk=manifesto_fk, ocorrencia_manifesto_fk=ocorrencia_manifesto_fk)
+            # Se encontrado, exclui o objeto
+            obj.delete()
+            return True  # Retorna True para indicar que o registro foi removido com sucesso
+        except cls.DoesNotExist:
+            # Se o objeto não for encontrado, retorna False
+            return False  # Retorna False para indicar que o registro não foi encontrado ou não pôde ser removido
+
 
 
 
