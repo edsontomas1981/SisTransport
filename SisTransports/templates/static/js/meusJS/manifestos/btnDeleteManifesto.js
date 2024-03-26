@@ -13,6 +13,8 @@ btnDeleteManifesto.addEventListener('click', async () => {
                     limpaBarraManifesto()
                     limpaTbodyMotoristas()
                     limpaTbodyVeiculos()
+                    limpaDadosDocumentos()
+                    limpaTbodyDocumentos()
                     document.getElementById('txtIdBuscaManifesto').value = ""
                     break;
                 default:

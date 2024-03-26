@@ -46,5 +46,5 @@ class DtcManifesto(models.Model):
 
     
     class Meta:
-        unique_together = ('dtc_fk', 'manifesto_fk', 'ocorrencia_manifesto_fk')
+        unique_together = ('dtc_fk','manifesto_fk')
 

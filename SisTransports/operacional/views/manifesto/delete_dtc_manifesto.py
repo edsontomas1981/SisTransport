@@ -1,17 +1,8 @@
-from parceiros.classes.parceiros import Parceiros
-from Classes.utils import string_para_data
 from django.http import JsonResponse
 from django.views.decorators.http import require_http_methods
 from django.contrib.auth.decorators import login_required
 import json
 
-from Classes.utils import string_para_data
-from Classes.utils import toFloat
-
-from operacional.classes.emissores import EmissorManager
-from operacional.classes.rotas import Rota
-from operacional.classes.motorista import MotoristaManager
-from operacional.classes.veiculo import VeiculoManager
 from operacional.classes.manifesto import ManifestoManager
 import json
 
@@ -21,4 +12,10 @@ def delete_dtc_manifesto(request):
     required_fields = ['idDtc','idManif']
     data = json.loads(request.body.decode('utf-8'))
 
-    return JsonResponse({'status': 'delete dtc'})
+    response = ManifestoManager.remove_documento_manifesto(data.get('idDtc'),data.get('idManifesto'))
+    print(response)
+    if response.status_code == 200:
+        documentos = ManifestoManager.obtem_documentos_manifesto(data.get('idManifesto'))
+        return JsonResponse({'status':response.status_code,'documentos':documentos})
+
+    return JsonResponse({'status':response.status_code})

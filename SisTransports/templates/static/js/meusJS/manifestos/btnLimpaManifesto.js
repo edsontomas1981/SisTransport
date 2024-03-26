@@ -3,6 +3,7 @@ document.getElementById('btnLimpaManifesto').addEventListener('click',()=>{
     limpaBarraManifesto()
     limpaTbodyMotoristas()
     limpaTbodyVeiculos()
+    limpaDadosDocumentos()
     limpaTbodyDocumentos()
     document.getElementById('txtIdBuscaManifesto').value = ""
 })
@@ -17,4 +18,10 @@ const limpaTbodyVeiculos = ()=>{
 
 const limpaTbodyDocumentos = ()=>{
     limpa_tabelas("tableDtcManifesto")
+}
+
+const limpaDadosDocumentos = ()=>{
+    document.getElementById('cmbTipoManifesto').value = ""
+    document.getElementById('cmbTipoDocumento').value = ""
+    document.getElementById('numeroDocumento').value = ""
 }

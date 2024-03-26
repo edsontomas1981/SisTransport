@@ -7,6 +7,7 @@ document.addEventListener('DOMContentLoaded',()=>{
     limpaBarraManifesto()
     limpaTbodyMotoristas()
     limpaTbodyVeiculos()
+    limpaDadosDocumentos()
     limpaTbodyDocumentos()
     let response  = await connEndpoint('/operacional/get_manifesto_by_num/', {'numManifesto':txtNumManifesto.value});
     if(response.status==200){

@@ -357,32 +357,28 @@ class ManifestoManager:
             return None
         
     @classmethod
-    def remove_documento_manifesto(cls, dtc_id, manifesto_id, ocorrencia_manifesto_id):
+    def remove_documento_manifesto(cls, dtc_fk, manifesto_fk):
         """
-        Remove um registro da tabela DtcManifesto baseado nas chaves fornecidas.
+        Exclui registros de DtcManifesto com base nos valores fornecidos de dtc_fk e manifesto_fk.
 
         Args:
-            dtc_fk (int): O ID da Dtc associada ao registro a ser removido.
-            manifesto_fk (int): O ID do Manifesto associado ao registro a ser removido.
-            ocorrencia_manifesto_fk (int): O ID da OcorrenciaManifesto associada ao registro a ser removido.
+            dtc_fk (int): O valor de dtc_fk para os registros a serem excluídos.
+            manifesto_fk (int): O valor de manifesto_fk para os registros a serem excluídos.
 
         Returns:
-            bool: Retorna True se o registro foi encontrado e removido com sucesso, 
-                False se o registro não foi encontrado ou não pôde ser removido.
+            int: O número de registros excluídos.
+
+        Raises:
+            ValueError: Se dtc_fk ou manifesto_fk forem None.
         """
-        try:
-            manifesto_fk = cls.obter_manifesto_por_id(manifesto_id)
-            dtc_fk = Dtc.obter_dtc_id(dtc_id)
-            # Obter a ocorrência de manifesto pelo ID fornecido
-            ocorrencia_manifesto_fk = Ocorrencia_manifesto.get_ocorrencia_id(int(dados.get('ocorrencia_id')))
-            # Tenta encontrar o objeto com as chaves fornecidas
-            obj = cls.objects.get(dtc_fk=dtc_fk, manifesto_fk=manifesto_fk, ocorrencia_manifesto_fk=ocorrencia_manifesto_fk)
-            # Se encontrado, exclui o objeto
-            obj.delete()
-            return True  # Retorna True para indicar que o registro foi removido com sucesso
-        except cls.DoesNotExist:
-            # Se o objeto não for encontrado, retorna False
-            return False  # Retorna False para indicar que o registro não foi encontrado ou não pôde ser removido
+        # Verificações de tipo e valor
+        if dtc_fk is None or manifesto_fk is None:
+            return HttpResponse(status=404)
+
+        # Exclui registros com base nos valores fornecidos
+        DtcManifesto.objects.filter(dtc_fk=dtc_fk, manifesto_fk=manifesto_fk).delete()
+        
+        return  HttpResponse(status=200)
 
 
 

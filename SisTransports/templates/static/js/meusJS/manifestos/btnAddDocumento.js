@@ -2,24 +2,10 @@ let btnAddDocumento = document.getElementById('btnAddDocumento')
 let listaDocumentos = []
 
 const removerDocumentoPorId=async(id)=> {
-    alert(id)
+    let idManifesto = document.getElementById('spanNumManifesto')
+    let response  = await connEndpoint('/operacional/delete_dtc_manifesto/', {'idDtc':id,'idManifesto':idManifesto.textContent});
+    populaTbodyDocumentos(response.documentos)
 }
-
-const obterValorPeloNome = (nome) => {
-    // Obtém o elemento select
-    const select = document.getElementById('cmbTipoManifesto');
-    
-    // Itera sobre as opções para encontrar a opção com o nome fornecido
-    for (let i = 0; i < select.options.length; i++) {
-        if (select.options[i].text === nome) {
-            // Retorna o valor da opção encontrada
-            return select.options[i].value;
-        }
-    }
-    
-    // Retorna null se o nome da opção não for encontrado
-    return null;
-};
 
 let botoesManifesto={
     excluir: { 
@@ -59,7 +45,8 @@ btnAddDocumento.addEventListener('click', async () => {
 
     if (parseInt(response.status) != 422){
         populaTbodyDocumentos(response.documentos)
-
+        document.getElementById('numeroDocumento').value = ""
+        document.getElementById('numeroDocumento').focus()
     }else{
         msgErro('Não foi possível encontrar o documento. Verifique se os dados estão corretos e tente novamente.')
     }
