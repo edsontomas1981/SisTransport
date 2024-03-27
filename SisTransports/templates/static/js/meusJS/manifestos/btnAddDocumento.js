@@ -42,7 +42,6 @@ btnAddDocumento.addEventListener('click', async () => {
                                                                                     'idDcto': numDcto.value,
                                                                                     'idManifesto':idManifesto.textContent,
                                                                                     'cmbTipoManifesto':cmbTipoManifesto});
-
     if (parseInt(response.status) != 422){
         populaTbodyDocumentos(response.documentos)
         document.getElementById('numeroDocumento').value = ""
@@ -78,22 +77,22 @@ const getDocumento = async()=>{
 }
 
 
-const prepareDataToTableManifesto = (response)=>{
-    let dados = []
-    response.forEach(element => {
-        dados.push({'id':element.dtc_fk.id,
-                    'cte':element.cte.id,
-                    'remetente':truncateString(element.cte.dtc_fk.remetente.raz_soc,20),
-                    'destinatario':truncateString(element.cte.dtc_fk.destinatario.raz_soc,20),
-                    'ocorrencia':element.ocorrencia_manifesto_fk.tipo_ocorrencia,
-                    'dtsaida':formataDataPtBr(element.manifesto_fk.data_previsão_inicio),
-                    'origem':truncateString(element.cte.dtc_fk.remetente.endereco_fk.cidade,10) + ' - ' + element.cte.dtc_fk.remetente.endereco_fk.uf,
-                    'destino':truncateString(element.cte.dtc_fk.destinatario.endereco_fk.cidade,8)+ ' - ' + element.cte.dtc_fk.destinatario.endereco_fk.uf,
-                    })
+const prepareDataToTableManifesto = (response) => {
+    return response.map(element => {
+        const data = {
+            id: element.dtc_fk?.id || '',
+            cte: element.cte?.id || '',
+            remetente: truncateString(element.dtc_fk?.remetente?.raz_soc, 20) || '',
+            destinatario: truncateString(element.dtc_fk?.destinatario?.raz_soc, 20) || '',
+            ocorrencia: element.ocorrencia_manifesto_fk?.tipo_ocorrencia || '',
+            dtsaida: element.manifesto_fk ? formataDataPtBr(element.manifesto_fk.data_previsão_inicio) : '',
+            origem: truncateString(element.dtc_fk?.remetente?.endereco_fk?.cidade, 10) + ' - ' + (element.cte?.dtc_fk?.remetente?.endereco_fk?.uf || ''),
+            destino: truncateString(element.dtc_fk?.destinatario?.endereco_fk?.cidade, 8) + ' - ' + (element.cte?.dtc_fk?.destinatario?.endereco_fk?.uf || '')
+        };
+        return data;
     });
-
-    return dados
 }
+
 
 
 

@@ -348,11 +348,14 @@ class ManifestoManager:
         """
         try:
             registros = DtcManifesto.objects.filter(manifesto_fk_id=id_manifesto)
-            return [{
-                'cte': Cte.obtem_cte_by_dtc(registro.dtc_fk.id).to_dict(),
-                **registro.to_dict()
-            } for registro in registros]
-
+            documentos = []
+            for registro in registros:
+                cte = Cte.obtem_cte_by_dtc(registro.dtc_fk.id)
+                registro_dict = registro.to_dict()  # Supondo que você tenha um método to_dict() que converte o objeto em um dicionário
+                if cte:
+                    registro_dict['cte'] = cte.to_dict()
+                documentos.append(registro_dict)
+            return documentos   
         except Manifesto.DoesNotExist:
             return None
         

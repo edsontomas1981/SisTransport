@@ -14,8 +14,7 @@ class Dtc (models.Model):
     tomador_fk=models.ForeignKey(Parceiros, on_delete=models.CASCADE,related_name='tomadoDtc', null=True)
     tipoFrete=models.IntegerField(default=2)
     rota_fk=models.ForeignKey(Rota, on_delete=models.CASCADE,related_name='rotaDtc',null=True)
-    # Relação ForeignKey com o Cte
-
+    
     # Informações de usuário e data/hora
     usuario_cadastro = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.SET_NULL, null=True, related_name='criador_dtc')
     usuario_ultima_atualizacao = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.SET_NULL, null=True, related_name='atualizador_frete_dtc')

@@ -4,8 +4,6 @@ from operacional.models.cte import Cte as Mdl_cte
 from django.core.exceptions import ObjectDoesNotExist
 from operacional.models.nota_fiscal import Nota_fiscal
 
-
-
 class Cte():
     def __init__ (self):
         self.obj_cte = Mdl_cte()
@@ -137,6 +135,22 @@ class Cte():
         try:
             print(type(Mdl_cte.objects.get(id=idCte)))
             return Mdl_cte.objects.get(id=idCte)
+        except ObjectDoesNotExist:
+            return None
+
+    @classmethod
+    def obtem_cte_chave_cte(cls,chave_cte):
+        """
+        Retorna um objeto Cte com base no campo chave_cte.
+        
+        Argumentos:
+        chave_cte (int): Chave de acesso fornecida pelo sefaz.
+
+        Retorna:
+        Cte ou None: O objeto Cte correspondente ao id, se encontrado, caso contrário, retorna None.
+        """
+        try:
+            return Mdl_cte.objects.get(chave_cte=chave_cte)
         except ObjectDoesNotExist:
             return None
         

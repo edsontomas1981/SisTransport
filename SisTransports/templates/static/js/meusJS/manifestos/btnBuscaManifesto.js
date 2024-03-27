@@ -10,6 +10,7 @@ document.addEventListener('DOMContentLoaded',()=>{
     limpaDadosDocumentos()
     limpaTbodyDocumentos()
     let response  = await connEndpoint('/operacional/get_manifesto_by_num/', {'numManifesto':txtNumManifesto.value});
+    console.log(response)
     if(response.status==200){
       populaDadosManifesto(response.manifesto)
       populaDadosBarraManifesto(response)
@@ -17,7 +18,7 @@ document.addEventListener('DOMContentLoaded',()=>{
       populaVeiculosManifesto(response.veiculos)
       populaTbodyDocumentos(response.documentos)
     }else{
-      msgErro("Manifesto não localizado")
+      msgErro("Não foi possível localizar o manifesto solicitado. Por favor, verifique os dados e tente novamente.")
     }
   })
 })
