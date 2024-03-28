@@ -26,9 +26,9 @@ class Dtc:
             elif int(filtrar) == 3:  # Em rota
                     registros = registros.filter(coleta_fk__status=int(filtrar))
                 
-            print(rota_id)
-            if int(rota_id) != 0:  # Se não for "Todos"
-                registros = registros.filter(rota_fk__id=int(rota_id))
+            if rota_id.strip():  # Verifica se rota_id não está vazio
+                if int(rota_id) != 0:  # Se não for "Todos"
+                    registros = registros.filter(rota_fk__id=int(rota_id))
 
             # Adicione mais condições conforme necessário para outros filtros
 

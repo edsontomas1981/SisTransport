@@ -315,12 +315,12 @@ const populaRelatTabelas= async () => {
     let botoes={
         alterar: {
             classe: "btn-primary text-white",
-            texto: '<i class="fa fa-print" aria-hidden="true"></i>',
+            texto: '<i class="fa fa-search" aria-hidden="true"></i>',
             callback: mostrarTabela
           },
         excluir: {
             classe: "btn-danger text-white",
-            texto: '<i class="fa fa-print" aria-hidden="true"></i>',
+            texto: '<i class="fa fa-trash" aria-hidden="true"></i>',
             callback: excluirTabelas
           }
       };

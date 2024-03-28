@@ -37,7 +37,7 @@ function populaTabela(response) {
 const mostrarTabela=async (idTabela)=> {
     resultado = await conexaTabelas('/comercial/readTabela/', {'id': idTabela});
     populaTabela(resultado)
-    $('#mdlTabFrete').modal('show');
+    openModal('mdlTabFrete')
 }
 
 const populaTabelaRotas=(response)=>{

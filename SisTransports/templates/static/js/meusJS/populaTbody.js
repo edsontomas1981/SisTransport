@@ -46,7 +46,7 @@ const createPaginationButton = (iconClass, page, totalPages, isActive = false, d
  * @param {number} [paginaAtual=1] - O número da página atual (padrão é 1).
  * @param {number} [itensPorPagina=10] - O número de itens a serem exibidos por página (padrão é 10).
  */
-const popula_tbody_paginacao = (divParaNavegacao, id_tbody, dados, botoes = {}, paginaAtual = 1, itensPorPagina = 10,checkbox=true) => {
+const popula_tbody_paginacao = (divParaNavegacao, id_tbody, dados, botoes = {}, paginaAtual = 1, itensPorPagina = 10,addCheckbox = true) => {
 
   // Calcula o índice inicial e final dos dados a serem exibidos na página atual
 
@@ -64,7 +64,7 @@ const popula_tbody_paginacao = (divParaNavegacao, id_tbody, dados, botoes = {}, 
   dadosPaginados.forEach(element => {
     var tr = document.createElement("tr");
     tr.setAttribute('data-id', element.id);
-    if (checkbox){
+    if (addCheckbox){
       // Adiciona o checkbox como o primeiro campo
       var tdCheckbox = document.createElement("td");
       var checkbox = document.createElement("input");
@@ -74,8 +74,7 @@ const popula_tbody_paginacao = (divParaNavegacao, id_tbody, dados, botoes = {}, 
       tr.appendChild(tdCheckbox);
     }
 
-  
-    // Loop através do dicionário de dados para criar as células <td> dinamicamente
+      // Loop através do dicionário de dados para criar as células <td> dinamicamente
     for (const chave in element) {
       if (element.hasOwnProperty(chave)) {
         var td = document.createElement("td");
