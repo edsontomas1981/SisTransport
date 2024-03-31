@@ -59,11 +59,13 @@ class Dtc:
             self.dtc.consignatario_fk=None
         if dados['rota'] : 
             self.dtc.rota_fk=dados['rota']            
-        self.dtc.save()
     
     def createDtc(self,dados):
         try:
             self.salvaOuAlteraDtc(dados)
+            self.dtc.data_cadastro = datetime.now()
+            self.dtc.save()
+
         except:
             return 300
     
@@ -122,11 +124,8 @@ class Dtc:
             return ClsDtc.objects.get(id=int(idDtc))
         except ClsDtc.DoesNotExist:
             raise ClsDtc.DoesNotExist(f"Não foi possível encontrar ClsDtc com ID {idDtc}.")
-        
 
 
-            
-   
     def deleteRota(self,idRota):
         pass
     

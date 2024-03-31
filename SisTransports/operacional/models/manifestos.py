@@ -11,12 +11,14 @@ from operacional.models.veiculos import Veiculo
 from operacional.models.ocorrencias_manifesto import Ocorrencia_manifesto
 from operacional.models.tipo_documento import Tipo_Documento
 from operacional.models.dtc import Dtc
+from operacional.models.contrato_frete import Contrato
 
 class Manifesto(models.Model):
     emissor_fk = models.ForeignKey(Emissor, on_delete=models.CASCADE)
     data_previsão_inicio = models.DateTimeField(null=True)
     data_previsão_chegada = models.DateTimeField(null=True)
     rota_fk =  models.ForeignKey(Rota, on_delete=models.CASCADE)
+    contrato_fk =  models.ForeignKey(Contrato, on_delete=models.CASCADE,null=True)
     frete_carreteiro = models.DecimalField(max_digits=10, decimal_places=2, null=True)
     frete_adiantamento = models.DecimalField(max_digits=10, decimal_places=2, null=True)
     lacres = models.CharField(max_length=100, null=True)

@@ -24,8 +24,6 @@ def del_motorista_manifesto (request):
     data = json.loads(request.body.decode('utf-8'))
     data['usuario_cadastro'] = request.user
 
-    print(ManifestoManager.deletar_motorista_do_manifesto(data.get('idManifesto'),data.get('cpfMotorista')))
-    
     lista_motoristas = ManifestoManager.obter_motoristas_manifesto(data.get('idManifesto'))
 
     motoristas = []

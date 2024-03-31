@@ -1,11 +1,12 @@
+<form id="contratoFrete" >
 <div class="row pl-4">
     <div class="form-floating mb-3 col-sm-2 pl-2">
-        <input type="text" class="form-control" id="numeroCartaFrete" placeholder="Nº Contrato de Frete" disabled>
+        <input type="text" class="form-control" id="idContrato" placeholder="Nº Contrato de Frete" disabled>
         <label class="ml-2" for="floatingInput">Nº Contrato</label>
     </div>
 
     <div class="form-floating mb-3 col-sm-2 pl-2">
-        <input type="text" class="form-control" id="freteContratado" placeholder="Frete Contratado" disabled>
+        <input type="text" class="form-control credito" id="freteContratado" placeholder="Frete Contratado" onchange="somaContrato()" disabled>
         <label class="ml-2" for="floatingInput">Frete Contratado</label>
     </div>
 
@@ -20,9 +21,9 @@
     </div>
 
     <div class="input-group col-sm-3 ">
-        <a class="btn btn-primary btn-sm" id="btnAddDocumento" style="color: white !important; display: flex; justify-content: center; align-items: center; height: 60px;"><i class="fa fa-plus mr-2" aria-hidden="true"></i> Gerar</a>
-        <a class="btn btn-success btn-sm" id="btnPrintManifesto" style="color: white !important; display: flex; justify-content: center; align-items: center; height: 60px;"><i class="fa fa-print mr-2" aria-hidden="true"></i>Imprimir</a>
-        <a class="btn btn-danger btn-sm" id="btnPrintManifesto" style="color: white !important; display: flex; justify-content: center; align-items: center; height: 60px;"><i class="fa fa-print mr-2" aria-hidden="true"></i>Excluir</a>
+        <a class="btn btn-primary btn-sm" id="btnGerarContrato" style="color: white !important; display: flex; justify-content: center; align-items: center; height: 60px;"><i class="fa fa-plus mr-2" aria-hidden="true"></i> Gerar</a>
+        <a class="btn btn-success btn-sm" id="btnPrintContrato" style="color: white !important; display: flex; justify-content: center; align-items: center; height: 60px;"><i class="fa fa-print mr-2" aria-hidden="true"></i>Imprimir</a>
+        <a class="btn btn-danger btn-sm" id="btnExcluirContrato" style="color: white !important; display: flex; justify-content: center; align-items: center; height: 60px;"><i class="fa fa-eraser" aria-hidden="true"></i>Excluir</a>
     </div>
 </div>
 <div class="row pl-4">
@@ -93,7 +94,7 @@
 
         <div class="form-floating mb-3 col-sm-12  pl-0">
             <input type="text" class="form-control" id="freteAPagar" placeholder="Valor Coleta" disabled>
-            <label class="ml-2 text-primary" for="freteAPagar">Frete á pagar </label>
+            <label class="ml-2 text-primary" for="freteAPagar">Frete a pagar </label>
         </div>
     </div>
 
@@ -103,8 +104,5 @@
             <label for="contratoObs">Observações</label>
         </div>
     </div>
-
-
-      
-
 </div>
+</form>

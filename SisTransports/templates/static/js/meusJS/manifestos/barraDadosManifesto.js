@@ -3,7 +3,7 @@ const populaDadosBarraManifesto=(dados)=>{
     populaDtInicioBarraManifesto(dados.manifesto.data_previsão_inicio)
     populaPrevChegadaBarraManifesto(dados.manifesto.data_previsão_chegada)
     populaRotaBarraManifesto(dados.manifesto.rota_fk.nome)
-    populaQtdeDocumentosBarraManifesto(dados.documentos.length)
+    populaQtdeDocumentosBarraManifesto(dados.documentos ? dados.documentos.length : 0);
     let primeiroMotorista = dados.manifesto.motoristas[0]?.parceiro_fk?.raz_soc
     if (primeiroMotorista){
         populaMotoristaBarraManifesto(dados.manifesto.motoristas[0].parceiro_fk.raz_soc)

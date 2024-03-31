@@ -4,6 +4,7 @@ const somaContrato = ()=>{
 
     document.getElementById('freteBruto').value=creditos
     document.getElementById('totalDescontos').value=debitos
+    document.getElementById('freteAPagar').value=creditos-debitos
 }
 
 function somarValoresFormulario(classeFormulario) {

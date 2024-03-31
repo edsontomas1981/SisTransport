@@ -89,6 +89,7 @@ const populaDadosManifesto = (response) => {
     document.getElementById('dtPrevisaoChegada').value = response.data_previsão_chegada ? formataData(response.data_previsão_chegada) : '';
     document.getElementById('rotasManifesto').value = response.rota_fk ? response.rota_fk.id : '';
     document.getElementById('freteCarreteiro').value = response.frete_carreteiro ? response.frete_carreteiro : '';
+    document.getElementById('freteContratado').value = response.frete_carreteiro ? response.frete_carreteiro : '';
     document.getElementById('adiantamentoCarreteiro').value = response.frete_adiantamento ? response.frete_adiantamento : '';
     document.getElementById('lacresManifesto').value = response.lacres ? response.lacres : '';
     document.getElementById('averbacaoManifesto').value = response.averbacao ? response.averbacao : '';
@@ -101,6 +102,7 @@ const limpaDadosManifesto= ()=>{
     document.getElementById('dtPrevisaoChegada').value=""
     document.getElementById('rotasManifesto').selectedIndex = 0;
     document.getElementById('freteCarreteiro').value=""
+    document.getElementById('freteContratado').value=""
     document.getElementById('adiantamentoCarreteiro').value=""
     document.getElementById('lacresManifesto').value=""
     document.getElementById('averbacaoManifesto').value=""
@@ -137,5 +139,6 @@ const dadosParaTbodyVeiculos = (veiculos)=>{
     });
     return dadosVeiculos
 }
+
 
 

@@ -274,7 +274,7 @@ $('#excluiDtc').on('click', async (e) => {
     let numPedido = $('#numPed').val();
     let msg = `Tem certeza que deseja excluir o DTC de número ${numPedido}?`;
   
-    let confirmacaoExclusao = await confirmacao(msg);
+    let confirmacaoExclusao = await msgConfirmacao(msg); 
   
     if (confirmacaoExclusao) {
       excluiDtc(numPedido);

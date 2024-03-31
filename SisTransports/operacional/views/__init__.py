@@ -86,6 +86,14 @@ from operacional.views.cte.get_cte_id import get_cte_id
 from operacional.views.emissores.get_emissor import get_emissor
 from operacional.views.emissores.get_emissores import get_emissores
 
+from operacional.views.contrato_frete.create_update_contrato import create_update_contrato
+from operacional.views.contrato_frete.delete_contrato import delete_contrato
+from operacional.views.contrato_frete.read_contrato_manifesto import read_contrato_manifesto
+from operacional.views.contrato_frete.read_contrato_motorista import read_contrato_motorista
+from operacional.views.contrato_frete.read_contrato_proprietario import read_contrato_proprietario
+
+
+
 
 
 

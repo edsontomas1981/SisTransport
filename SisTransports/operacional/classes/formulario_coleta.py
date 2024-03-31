@@ -140,7 +140,7 @@ def imprimir_documento(coletas):
         """
 
         remetente = f"""
-            <h6>Remetente: {coleta['remetente']['raz_soc'][:25]}</h6>
+            <h6>Remetente: {coleta.get('remetente', {}).get('raz_soc', 'Não Informado')[:25]}</h6>
             <p class="remetente-destinatario"> {coleta['coleta']['rua']}, {coleta['coleta']['numero']} <br/></p>
             <p class="remetente-destinatario"> {coleta['coleta']['bairro']} {coleta['coleta']['complemento']}<br/></p>
             <p class="remetente-destinatario"> {coleta['coleta']['cidade']},{coleta['coleta']['uf']} Cep : {coleta['coleta']['cep']} <br/></p>                        
@@ -148,11 +148,12 @@ def imprimir_documento(coletas):
         """
 
         destinatario = f"""
-                        <h6>Destinatário : {coleta['destinatario']['raz_soc'][:25]}</h6>
-                        <p class="remetente-destinatario"> {coleta['destinatario']['endereco_fk']['logradouro']}, {coleta['destinatario']['endereco_fk']['numero']}<br/></p>
-                        <p class="remetente-destinatario"> {coleta['destinatario']['endereco_fk']['bairro']}<br/></p>
-                        <p class="remetente-destinatario"> {coleta['destinatario']['endereco_fk']['cidade']}- {coleta['destinatario']['endereco_fk']['uf']} Cep :{coleta['destinatario']['endereco_fk']['cep']}</p>
+            <h6>Destinatário : {coleta.get('destinatario', {}).get('raz_soc', 'Não Informado')[:25]}</h6>
+            <p class="remetente-destinatario"> {coleta.get('destinatario', {}).get('endereco_fk', {}).get('logradouro', 'Não Informado')}, {coleta.get('destinatario', {}).get('endereco_fk', {}).get('numero', '')}<br/></p>
+            <p class="remetente-destinatario"> {coleta.get('destinatario', {}).get('endereco_fk', {}).get('bairro', 'Não Informado')}<br/></p>
+            <p class="remetente-destinatario"> {coleta.get('destinatario', {}).get('endereco_fk', {}).get('cidade', 'Não Informado')}- {coleta.get('destinatario', {}).get('endereco_fk', {}).get('uf', 'Não Informado')} Cep :{coleta.get('destinatario', {}).get('endereco_fk', {}).get('cep', '')}</p>
         """
+
 
         dados_gerais = f"""
             <h6 class="titulo">Dados da carga : </h6>

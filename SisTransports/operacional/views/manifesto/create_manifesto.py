@@ -30,15 +30,16 @@ def create_manifesto(request):
     if data.get('idManifesto'):
         dados = prepare_data(data)
         dados['usuario_ultima_atualizacao']= request.user
-        print(data['idManifesto'])
         manifesto = ManifestoManager.atualizar_manifesto(data.get('idManifesto'),**dados)
-        return JsonResponse({'status': 201,'manifesto':manifesto.to_dict()})
+        dcto_manifesto = ManifestoManager.obtem_documentos_manifesto(manifesto.id)
+        return JsonResponse({'status': 201,'manifesto':manifesto.to_dict(),'documentos':dcto_manifesto})
 
     else:
         dados = prepare_data(data)
         dados['usuario_cadastro']= request.user
         manifesto = ManifestoManager.criar_manifesto(dados)
-        return JsonResponse({'status': 200,'manifesto':manifesto.to_dict()})
+        dcto_manifesto = ManifestoManager.obtem_documentos_manifesto(manifesto.id)
+        return JsonResponse({'status': 200,'manifesto':manifesto.to_dict(),'documentos':dcto_manifesto})
     
 
 

@@ -70,7 +70,11 @@ urlpatterns = [
     path('add_dtc_manifesto/',viewsOperacional.add_dtc_manifesto,name='add_dtc_manifesto'),
     path('delete_dtc_manifesto/',viewsOperacional.delete_dtc_manifesto,name='delete_manifesto'),
 
-
+    path('create_update_contrato/',viewsOperacional.create_update_contrato,name='create_update_contrato'),
+    path('delete_contrato/',viewsOperacional.delete_contrato,name='delete_contrato'),
+    path('read_contrato_manifesto/',viewsOperacional.read_contrato_manifesto,name='read_contrato_manifesto'),
+    path('read_contrato_motorista/',viewsOperacional.read_contrato_motorista,name='read_contrato_motorista'),    
+    path('read_contrato_proprietario/',viewsOperacional.read_contrato_proprietario,name='read_contrato_proprietario'),
 
     path('get_emissor/',viewsOperacional.get_emissor,name='get_emissor'),
     path('get_emissores/',viewsOperacional.get_emissores,name='get_emissores'),
