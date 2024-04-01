@@ -18,7 +18,7 @@ class Manifesto(models.Model):
     data_previsão_inicio = models.DateTimeField(null=True)
     data_previsão_chegada = models.DateTimeField(null=True)
     rota_fk =  models.ForeignKey(Rota, on_delete=models.CASCADE)
-    contrato_fk =  models.ForeignKey(Contrato, on_delete=models.CASCADE,null=True)
+    contrato_fk = models.ForeignKey(Contrato, on_delete=models.SET_NULL, null=True)
     frete_carreteiro = models.DecimalField(max_digits=10, decimal_places=2, null=True)
     frete_adiantamento = models.DecimalField(max_digits=10, decimal_places=2, null=True)
     lacres = models.CharField(max_length=100, null=True)
@@ -48,7 +48,7 @@ class Manifesto(models.Model):
         emissor_data = self.emissor_fk.to_dict() if self.emissor_fk else None
         motoristas_data = [motorista.to_dict() for motorista in self.motoristas.all()]
         veiculos_data = [veiculo.to_dict() for veiculo in self.veiculos.all()]
-
+        contrato_fk = self.contrato_fk.to_dict() if self.contrato_fk else None
         # Convertendo a data de cadastro para datetime, se for uma string
         data_cadastro = parser.parse(self.data_cadastro) if isinstance(self.data_cadastro, str) else self.data_cadastro
 
@@ -62,10 +62,11 @@ class Manifesto(models.Model):
             'frete_adiantamento': self.frete_adiantamento,
             'lacres': self.lacres,
             'averbacao': self.averbacao,
-            'liberacao': self.liberacao,
+            'liberacao': self.liberacao,    
             'motoristas': motoristas_data,
             'veiculos': veiculos_data,
             'observacao': self.observacao,
+            'contrato_fk': contrato_fk,
             'usuario_cadastro': self.usuario_cadastro.id if self.usuario_cadastro else None,
             'usuario_ultima_atualizacao': self.usuario_ultima_atualizacao.id if self.usuario_ultima_atualizacao else None,
             'data_cadastro': data_cadastro.isoformat() if data_cadastro else None,

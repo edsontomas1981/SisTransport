@@ -39,7 +39,6 @@ const geraDadosManifesto = () => {
         dadosManifesto[campo] = document.getElementById(campo).value.trim();
     }
 
-    console.log()
     existemCamposVazios = validarCamposObrigatorios(dadosManifesto,obrigatorios)
     if(existemCamposVazios.length !=0 ){
             return null
@@ -138,6 +137,46 @@ const dadosParaTbodyVeiculos = (veiculos)=>{
         dadosVeiculos.push({'id':veiculo.placa,'modelo':truncateString(veiculo.modelo,12),'proprietario':truncateString(veiculo.proprietario_fk.parceiro_fk.raz_soc,12)})
     });
     return dadosVeiculos
+}
+
+const populaContratoFrete= (response)=>{
+    document.getElementById('idContrato').value = response.id
+    document.getElementById('freteContratado').value = response.frete_contratado
+    document.getElementById('dataEmissaoContrato').value = formataData(response.data_emissao_contrato)
+    document.getElementById('numeroCiot').value = response.numero_ciot
+    document.getElementById('valorPedagio').value = response.valor_pedagio
+    document.getElementById('irRetido').value = response.ir_retido
+    document.getElementById('inss').value = response.inss
+    document.getElementById('valorColeta').value = response.valor_coleta
+    document.getElementById('iss').value = response.iss
+    document.getElementById('sestSenat').value = response.sest_senat
+    document.getElementById('outrosCreditos').value = response.outros_creditos
+    document.getElementById('adiantamento').value = response.adiantamento
+    document.getElementById('outrosDescontos').value = response.outros_descontos
+    document.getElementById('freteBruto').value = response.frete_bruto
+    document.getElementById('totalDescontos').value = response.total_descontos
+    document.getElementById('contratoObs').value = response.contrato_obs
+    document.getElementById('freteAPagar').value = response.frete_a_pagar
+}
+
+const limpaContratoFrete= (response)=>{
+    document.getElementById('idContrato').value = ""
+    // document.getElementById('freteContratado').value = ""
+    document.getElementById('dataEmissaoContrato').value = ""
+    document.getElementById('numeroCiot').value = ""
+    document.getElementById('valorPedagio').value = ""
+    document.getElementById('irRetido').value = ""
+    document.getElementById('inss').value = ""
+    document.getElementById('valorColeta').value = ""
+    document.getElementById('iss').value = ""
+    document.getElementById('sestSenat').value = ""
+    document.getElementById('outrosCreditos').value = ""
+    document.getElementById('adiantamento').value = ""
+    document.getElementById('outrosDescontos').value = ""
+    document.getElementById('freteBruto').value = ""
+    document.getElementById('totalDescontos').value = ""
+    document.getElementById('contratoObs').value = ""
+    document.getElementById('freteAPagar').value = ""
 }
 
 

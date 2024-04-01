@@ -27,33 +27,34 @@ def create_update_contrato(request):
     Um objeto JSON com a chave 'status' indicando o status da operação.
 
     """
-    # try:
-    # Campos obrigatórios para criação ou atualização do contrato
-    required_fields = ['freteContratado', 'freteAPagar']
+    try:
+        # Campos obrigatórios para criação ou atualização do contrato
+        required_fields = ['freteContratado', 'freteAPagar']
 
-    # Carrega os dados da requisição
-    data = json.loads(request.body.decode('utf-8'))
+        # Carrega os dados da requisição
+        data = json.loads(request.body.decode('utf-8'))
 
-    # Verifica se os campos obrigatórios estão presentes nos dados da requisição
-    for field in required_fields:
-        if field not in data:
-            return HttpResponseBadRequest(f"Campo '{field}' é obrigatório")
+        # Verifica se os campos obrigatórios estão presentes nos dados da requisição
+        for field in required_fields:
+            if field not in data:
+                return HttpResponseBadRequest(f"Campo '{field}' é obrigatório")
 
-    # Adiciona o usuário logado como responsável pelo cadastro
-    data['usuario_cadastro'] = request.user
+        # Adiciona o usuário logado como responsável pelo cadastro
+        data['usuario_cadastro'] = request.user
 
-    # Prepara os dados para criar ou atualizar o contrato
-    dados = preparar_dados(data)
+        # Prepara os dados para criar ou atualizar o contrato
+        dados = preparar_dados(data)
 
-    # Verifica se há um número de carta frete para decidir entre criar ou atualizar o contrato
-    if dados.get("id_contrato"):
-        contrato = ContratoManager.atualizar_contrato(dados.get("id_contrato"), dados)
-    else:
-        contrato = ContratoManager.criar_contrato(dados)
+        # Verifica se há um número de carta frete para decidir entre criar ou atualizar o contrato
+        if dados.get("id_contrato"):
+            contrato = ContratoManager.atualizar_contrato(dados.get("id_contrato"), dados)
+        else:
+            contrato = ContratoManager.criar_contrato(dados)
+            ContratoManager.add_contrato_manifesto(dados.get('id_manifesto'),contrato.id)
 
-    return JsonResponse({'status': 200,"contrato":contrato.to_dict()})
-    # except Exception as e:
-    #     return HttpResponseBadRequest(f"Erro ao processar a requisição: {e}")
+        return JsonResponse({'status': 200,"contrato":contrato.to_dict()})
+    except Exception as e:
+        return HttpResponseBadRequest(f"Erro ao processar a requisição: {e}")
 
 def preparar_dados(dados):
     dados_preparados = {
@@ -75,6 +76,7 @@ def preparar_dados(dados):
         "frete_a_pagar": float(dados.get("freteAPagar", 0)) if dados.get("freteAPagar") else 0,
         "contrato_obs": dados.get("contratoObs", ""),
         "usuario":dados.get("usuario_cadastro", ""), 
+        "id_manifesto":dados.get("idManifesto","")
     }
     return dados_preparados
 

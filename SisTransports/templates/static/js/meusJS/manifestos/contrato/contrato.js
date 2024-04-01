@@ -17,3 +17,5 @@ function somarValoresFormulario(classeFormulario) {
     });
     return total;
 }
+
+

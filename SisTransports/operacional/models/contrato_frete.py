@@ -3,6 +3,7 @@ from django.db import models
 from django.conf import settings
 from datetime import datetime
 from django.utils import timezone
+from Classes.utils import dprint
 
 class Contrato(models.Model):
     frete_contratado = models.DecimalField(max_digits=10, decimal_places=2, blank=True, null=True)
@@ -48,7 +49,6 @@ class Contrato(models.Model):
             'frete_a_pagar': self.frete_a_pagar,
             'contrato_obs': self.contrato_obs,
             'usuario_cadastro': self.usuario_cadastro.to_dict(),
-            'data_cadastro':self.data_cadastro.isoformat() if self.data_cadastro else None,
-            # 'data_cadastro': self.data_cadastro.strftime('%Y-%m-%d %H:%M:%S') if self.data_cadastro else None,
+            'data_cadastro': self.data_cadastro if self.data_cadastro else None,
         }
 

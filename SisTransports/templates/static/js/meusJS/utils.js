@@ -372,7 +372,7 @@ const msgOk = (msg)=>{
     icon: 'success',
     title: msg,
     showConfirmButton: false,
-    timer: 2000
+    timer: 1500
   })
 }
 
@@ -382,7 +382,7 @@ const msgErro = (msg)=>{
     icon: 'error',
     title: msg,
     showConfirmButton: false,
-    timer: 2000
+    timer: 3000
   })
 }
 
@@ -392,7 +392,7 @@ const msgAviso = (msg)=>{
     icon: "warning",
     title: msg,
     showConfirmButton: false,
-    timer: 1500
+    timer: 3000
   });
 }
 const obterValorElemento = (elemento) => {

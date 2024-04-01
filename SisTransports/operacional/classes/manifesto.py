@@ -382,6 +382,7 @@ class ManifestoManager:
         DtcManifesto.objects.filter(dtc_fk=dtc_fk, manifesto_fk=manifesto_fk).delete()
         
         return  HttpResponse(status=200)
+    
 
 
 

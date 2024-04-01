@@ -1,8 +1,13 @@
 {% extends 'base.html' %}
-
 {% load static %}
 
+{% block 'cabecalho' %}
+  <!-- JsPdf -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.5.3/jspdf.debug.js" integrity="sha384-NaWTHo/8YCBYJ59830LTz/P4aQZK1sS0SneOgAvhsIl3zBu8r9RevNg5lHCHAuQ/" crossorigin="anonymous"></script>
+  
+{% endblock %}
 {% block 'conteudo' %}
+
 <div class="row">
     <div class="ml-0 col-sm-12 col-12">
       <div class="col-sm-12">

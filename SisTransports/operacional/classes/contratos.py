@@ -3,6 +3,7 @@ from django.db import IntegrityError
 from django.utils import timezone
 
 from operacional.models.contrato_frete import Contrato
+from operacional.classes.manifesto import ManifestoManager
 
 class ContratoError(Exception):
     """Exceção base para erros relacionados ao manifesto."""
@@ -44,6 +45,7 @@ class ContratoManager:
         dados_comuns['usuario_cadastro']= data.get('usuario')
         dados_comuns['data_cadastro']=str(timezone.now())
         contrato = Contrato.objects.create(**dados_comuns)
+
         return contrato
 
     @classmethod
@@ -76,4 +78,35 @@ class ContratoManager:
             raise ValueError("Contrato com o ID {} não encontrado".format(contrato_id))
         except ValueError:
             raise ValueError("O contrato_id deve ser um número inteiro")    
+        
+    @classmethod
+    def add_contrato_manifesto(cls, id_manifesto, id_contrato):
+        """
+        Associa um contrato a um manifesto.
+
+        Parâmetros:
+            id_manifesto (int): O ID do manifesto ao qual o contrato será associado.
+            id_contrato (int): O ID do contrato que será associado ao manifesto.
+
+        Exceções:
+            ValueError: Levantada se o manifesto ou o contrato não forem encontrados com os IDs fornecidos.
+        """
+        # Verifica se o manifesto existe
+        manifesto = ManifestoManager.obter_manifesto_por_id(id_manifesto)
+        if manifesto is None:
+            raise ValueError("Manifesto não encontrado com o ID fornecido.")
+
+        # Verifica se o contrato existe
+        contrato = cls.obter_contrato_por_id(id_contrato)
+        if contrato is None:
+            raise ValueError("Contrato não encontrado com o ID fornecido.")
+
+        # Associa o contrato ao manifesto e salva
+        manifesto.contrato_fk = contrato
+        manifesto.save()
+        
+    @classmethod
+    def delete_contrato(cls,id_contrato):
+        contrato = cls.obter_contrato_por_id(id_contrato)
+        contrato.delete()
 
