@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gerar PDF no Frontend</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.5.3/jspdf.debug.js" integrity="sha384-NaWTHo/8YCBYJ59830LTz/P4aQZK1sS0SneOgAvhsIl3zBu8r9RevNg5lHCHAuQ/" crossorigin="anonymous"></script>
+</head>
+<body>
+    <button id="btnPrintContrato">Gerar PDF</button>
+
+    <script>
+
+        
+        /* Uma folha padrão A4 tem dimensões de 210 mm x 297 mm. 
+           Para converter estas dimensões para unidades de medida utilizadas no jsPDF, 
+           podemos assumir que 1 mm é aproximadamente equivalente a 2,8346 unidades no jsPDF 
+           (isto pode variar dependendo da configuração do documento, mas é uma aproximação razoável para muitos casos). 
+           Portanto, as dimensões da folha A4 em unidades jsPDF seriam aproximadamente 595 unidades na horizontal (210 mm * 2,8346) 
+           e 841 unidades na vertical (297 mm * 2,8346).
+
+           Então, uma folha A4 teria aproximadamente 595 pontos na horizontal 
+           e 841 pontos na vertical em um documento jsPDF, com origem no canto superior esquerdo.
+        */
+
+        let btnPrintContrato = document.getElementById('btnPrintContrato');
+
+        btnPrintContrato.addEventListener('click', () => {
+            gerarPDF();
+        });
+
+        const gerarPDF=()=> {
+            const doc = new jsPDF();
+
+            const jsonDados = {
+                id:152,
+                data:'17/10/2007',
+                origem:"São Paulo - SP",
+                destino:"Teresina - PI",
+
+                contratante:"Empresa de Teste Testando ME",
+                cnpjContratante:"99.999.999/9999-99",
+                foneContratante:"(11)96926-2277",
+                ruaContratante:"Rua Nova Veneza",
+                numeroContratante:172,
+                bairroContratante:"Cumbica",
+                cidadeContratante:"Guarulhos",
+                ufContratante:"SP",
+
+                contratado:"Sandra Mara Pereira da Silva",
+                cpfCnpjContratado:"999.999.999-99",
+                foneContratado:"(11)97956-5219",
+                ruaContratado:"Rua Branquinha",
+                numeroContratado:"424 Bl H Apto 24",
+                bairroContratado:"Pq Brasilia",
+                cidadeContratado:"Guarulhos",
+                ufContratado:"SP",
+
+                motorista:"Edson Tomas da Silva",
+                cpfMotorista:"999.999.999-99",
+                foneMotorista:"(11)97956-5219",
+                ruaMotorista:"Rua Branquinha",
+                numeroMotorista:"424 Bl H Apto 24",
+                bairroMotorista:"Pq Brasilia",
+                cidadeMotorista:"Guarulhos",
+                ufMotorista:"SP",
+
+                freteContratado:15000.00,
+
+                irFonte:3.99,
+                inss:3.99,
+                pedagio:3.99,
+                pedagio:3.99,
+                pedagio:3.99,
+                sestSenat:3.99,
+                totalDescontos:3.99,
+                adiantamento:3.99,
+                saldoAReceber:3.99,
+
+                placa:"AWY1749",
+                marca:"Scania",
+                modelo:"R124",
+                cor:"Branca",
+                ano:"2024",
+
+                previsaoDeChegada:"15/12/2024",
+
+            }
+
+            let y = 10;      
+            var x = 10; // coordenada x do canto superior esquerdo
+
+            // Cabeçalho
+            // Definir as dimensões do retângulo
+            var width = 196; // largura do retângulo
+            var height = 7; // altura do retângulo
+
+            // Desenhar o retângulo
+            doc.rect(x, y, width, height);
+            doc.setFontSize(11); // Altere o tamanho conforme necessário
+            doc.text(`Contrato de Frete Nº: ${jsonDados.id}`, x+3,15);
+            doc.text(`Data : ${jsonDados.data}`, 170,15);
+
+            // doc.rect(x, y+10, width, height);
+            doc.line(10, 20, 205, 20); // As coordenadas são (x1, y1, x2, y2)
+            doc.text(`Origem: ${jsonDados.origem}`, x+3,26);
+            doc.text(`Destino : ${jsonDados.destino}`, 150,26);
+            doc.line(10, 30, 205, 30); // As coordenadas são (x1, y1, x2, y2)
+
+            // Contratante
+            doc.rect(x, y+23, width, height);
+            doc.text(`Contratante: ${jsonDados.contratante} | CNPJ : ${jsonDados.cnpjContratante}`, x+3,38);
+            doc.setFontSize(10); // Altere o tamanho conforme necessário
+            doc.text(`Endereço : ${jsonDados.ruaContratante}, ${jsonDados.numeroContratante}`, x+3,45);
+            doc.text(`Endereço : ${jsonDados.bairroContratante} - ${jsonDados.cidadeContratante}- ${jsonDados.ufContratante}`, x+3,52);
+            doc.text(`Telefone : ${jsonDados.foneContratante}`, x+3,59);
+
+            // Contratado
+            doc.rect(x, y+50, width, height);
+            doc.setFontSize(11); // Altere o tamanho conforme necessário
+            doc.text(`Contratado: ${jsonDados.contratado} | CNPJ/CPF : ${jsonDados.cpfCnpjContratado}`, x+3,65);
+            doc.setFontSize(10); // Altere o tamanho conforme necessário
+            doc.text(`Endereço : ${jsonDados.ruaContratado}, ${jsonDados.numeroContratado}`, x+3,72);
+            doc.text(`Endereço : ${jsonDados.bairroContratado} - ${jsonDados.cidadeContratado}- ${jsonDados.ufContratado}`, x+3,79);
+            doc.text(`Telefone : ${jsonDados.foneContratado}`, x+3,86);
+
+            // Motorista
+            doc.rect(x, y+78, width, height);
+            doc.setFontSize(11); // Altere o tamanho conforme necessário
+            doc.text(`Motorista: ${jsonDados.motorista}  | CNPJ/CPF : ${jsonDados.cpfMotorista}`, x+3,93);
+            doc.setFontSize(10); // Altere o tamanho conforme necessário
+            doc.text(`Endereço : ${jsonDados.ruaMotorista}, ${jsonDados.numeroMotorista}`, x+3,100);
+            doc.text(`Endereço : ${jsonDados.bairroMotorista} - ${jsonDados.cidadeMotorista}- ${jsonDados.ufMotorista}`, x+3,107);
+            doc.text(`Telefone : ${jsonDados.foneMotorista}`, x+3,114);
+
+            // Dados do Frete 
+            doc.rect(x, y+107, width/2, height);
+            doc.setFontSize(11); // Altere o tamanho conforme necessário
+            doc.text(`Frete Contratado : R$ ${jsonDados.freteContratado}`, x+3,122);
+            doc.setFontSize(10); // Altere o tamanho conforme necessário
+            doc.text(`Ir Fonte : ${jsonDados.irFonte}`, x+3,129);
+            doc.text(`INSS : ${jsonDados.inss}`, x+3,136);
+            doc.text(`Pedágio : ${jsonDados.pedagio}`, x+3,143);
+            doc.text(`ISS : ${jsonDados.pedagio}`, x+3,150);
+            doc.text(`Pedágio : ${jsonDados.pedagio}`, x+3,157);
+            doc.text(`Sest/Senat : ${jsonDados.sestSenat}`, x+3,164);
+            doc.text(`Total descontos : ${jsonDados.totalDescontos}`, x+3,171);
+            doc.text(`Adiantamento : ${jsonDados.adiantamento}`, x+3,178);
+            doc.text(`Saldo a receber : ${jsonDados.saldoAReceber}`, x+3,185);
+
+            // Dados Veiculo
+            doc.rect(108, y+107, width/2, height);
+            doc.setFontSize(11); // Altere o tamanho conforme necessário
+            doc.text(`Frete Contratado : R$ ${jsonDados.freteContratado}`, 111,122);
+            doc.setFontSize(10); // Altere o tamanho conforme necessário
+            doc.text(`Placa : ${jsonDados.placa}`, 111,129);
+            doc.text(`Marca : ${jsonDados.marca}`, 111,136);
+            doc.text(`Modelo : ${jsonDados.modelo}`, 111,143);
+            doc.text(`Cor : ${jsonDados.cor}`, 111,150);
+            doc.text(`Ano : ${jsonDados.ano}`, 111,157);
+
+            // Dados Veiculo
+            doc.rect(x, y+180, width, height);
+            doc.setFontSize(11); // Altere o tamanho conforme necessário
+            doc.text(`Observações : `, x+3,195);
+            doc.setFontSize(9); // Altere o tamanho conforme necessário
+            doc.text(`qq observação so serve de teste`, x+3,202);
+
+            // Defina a fonte como negrito
+            doc.setFont("helvetica", "bold");
+            doc.text(`Previsão de chegada ${jsonDados.previsaoDeChegada}`, x+3,210);
+            doc.setFont("helvetica", "normal");
+
+
+            // doc.line(x, 255, 110, 255); // As coordenadas são (x1, y1, x2, y2)
+            // doc.setFontSize(11); // Altere o tamanho conforme necessário
+            
+
+            // Largura e altura da folha A4
+            const larguraA4 = 210; // Supondo que a largura seja em milímetros
+            const alturaA4 = 297;  // Supondo que a altura seja em milímetros
+
+            // Definindo as coordenadas e dimensões do primeiro retângulo (lado esquerdo)
+            const rect1X = 10;
+            const rect1Y = 10;
+            const rect1Width = larguraA4 / 2 - 15;
+            const rect1Height = alturaA4 - 20;
+
+            // Adicionando o primeiro retângulo ao documento
+            // doc.rect(rect1X, rect1Y, rect1Width, rect1Height);
+
+            // Definindo as coordenadas e dimensões do segundo retângulo (lado direito)
+            const rect2X = larguraA4 / 2 + 5;
+            const rect2Y = 10;
+            const rect2Width = larguraA4 / 2 - 15;
+            const rect2Height = alturaA4 - 20;
+
+            // Adicionando o segundo retângulo ao documento
+            // doc.rect(rect2X, rect2Y, rect2Width, rect2Height);
+
+            // Definindo o tamanho da fonte para o texto
+            doc.setFontSize(11);
+
+            // Adicionando o texto sobre o recibo referente ao adiantamento
+            const mascaraData = "___/___/_____";
+            const mascaraAssinatura = "_______________________";
+
+            // Adicionando texto ao primeiro retângulo
+            doc.text("Declaro que recebi o adiantamento na data:", rect1X + 3, rect1Y + 215);
+            doc.text(mascaraData, rect1X + 3, rect1Y + 225);
+            doc.text(mascaraAssinatura, rect1X + 33, rect1Y + 225);
+            doc.text("Motorista/Proprietario", rect1X + 35, rect1Y + 235);
+            doc.text('Data', rect1X + 3, rect1Y + 235);
+
+            // Adicionando texto ao segundo retângulo
+            doc.text("Declaro que recebi o saldo de frete na data:", rect2X + 3, rect2Y + 215);
+            doc.text(mascaraData, rect2X + 3, rect2Y + 225);
+            doc.text(mascaraAssinatura, rect2X + 33, rect2Y + 225);
+            doc.text("Motorista/Proprietario", rect2X + 35, rect2Y + 235);
+            doc.text('Data', rect2X + 3, rect2Y + 235);
+
+
+            doc.text(mascaraData, rect1X + 3, rect1Y + 265);
+            doc.text(mascaraAssinatura, rect1X + 33, rect1Y + 265);
+            doc.text(`Contratante`, rect1X + 35, rect1Y + 275);
+            doc.text('Data', rect1X + 3, rect1Y + 275);
+
+            doc.text(mascaraData, rect2X + 3, rect2Y + 265);
+            doc.text(mascaraAssinatura, rect2X + 33, rect2Y + 265);
+            doc.text(`Contratante`, rect2X + 35, rect2Y + 275);
+            doc.text('Data', rect2X + 3, rect2Y + 275);
+
+
+            // Gerar Blob a partir do PDF
+            const pdfBlob = doc.output("bloburl");
+
+            // Abrir o PDF em outra aba
+            window.open(pdfBlob, "_blank");
+        }
+    </script>
+</body>
+</html>
