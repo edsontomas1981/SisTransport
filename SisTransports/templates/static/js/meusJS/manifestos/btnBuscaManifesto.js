@@ -11,7 +11,6 @@ document.addEventListener('DOMContentLoaded',()=>{
     limpaTbodyDocumentos()
     limpaContratoFrete()
     let response  = await connEndpoint('/operacional/get_manifesto_by_num/', {'numManifesto':txtNumManifesto.value});
-    console.log(response)
     if(response.status==200){
       populaDadosManifesto(response.manifesto)
       populaDadosBarraManifesto(response)
