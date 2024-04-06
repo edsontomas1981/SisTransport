@@ -21,7 +21,23 @@
 
     <div class="input-group col-sm-3 ">
       <a class="btn btn-primary btn-sm" id="btnAddDocumento" style="color: white !important; display: flex; justify-content: center; align-items: center; height: 60px;"><i class="fa fa-plus" aria-hidden="true"></i></a>
-      <a class="btn btn-success btn-sm" id="btnPrintManifesto" style="color: white !important; display: flex; justify-content: center; align-items: center; height: 60px;"><i class="fa fa-print" aria-hidden="true"></i></a>
+      <a class="btn btn-success btn-sm" id="btnPrintManifesto" data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight" aria-controls="offcanvasRight" style="color: white !important; display: flex; justify-content: center; align-items: center; height: 60px;"><i class="fa fa-print" aria-hidden="true"></i></a>
+    </div>
+
+    <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasRight" aria-labelledby="offcanvasRightLabel">
+      <div class="offcanvas-header">
+        <h5 id="offcanvasRightLabel">Opções de impressão</h5>
+        <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+      </div>
+      <div class="offcanvas-body">
+        <div class="sidebar-bg-options" id="sidebar-light-theme">
+          <div class="img-ss rounded-circle bg-light border mr-3">
+            <a class="btn btn-primary btn-impressao" id="gerarPdfComFrete">Gerar PDF com Valor do Frete</a>
+            <a class="btn btn-primary btn-impressao" id="gerarPdfSemFrete">Gerar PDF sem Valor do Frete</a>
+            <a class="btn btn-primary btn-impressao" id="gerarPdfRomaneio">Gerar PDF de Romaneio</a>
+          </div>
+        </div>      
+      </div>
     </div>
     
     <div class="col-sm-12">

@@ -91,3 +91,14 @@
         transform: rotate(360deg);
     }
 }
+
+.btn-impressao{
+    color: white !important;
+    font-weight: bold; 
+    display: flex; 
+    justify-content: center; 
+    align-items: center; 
+    height: 50px; 
+    width: 350px; 
+    margin-bottom: 10px;
+}

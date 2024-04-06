@@ -1,7 +1,7 @@
 let btnPrintContrato = document.getElementById('btnPrintContrato')
 
 btnPrintContrato.addEventListener('click',()=>{
-    gerarPDF(carregaJsonDados())
+    gerarPdfContrato(carregaJsonDados())
 })
 const carregaJsonDados = async()=>{
     let spanNumManifesto=document.getElementById('spanNumManifesto')
@@ -43,6 +43,7 @@ const carregaJsonDados = async()=>{
     
         irFonte:response.manifesto.contrato_fk.ir_retido,
         inss:response.manifesto.contrato_fk.inss,
+        iss:response.manifesto.contrato_fk.iss,
         pedagio:response.manifesto.contrato_fk.valor_pedagio,
         sestSenat:response.manifesto.contrato_fk.sest_senat,
         totalDescontos:response.manifesto.contrato_fk.total_descontos,
@@ -62,7 +63,10 @@ const carregaJsonDados = async()=>{
 }
 
 
-const gerarPDF=(jsonDados)=> {
+const gerarPdfContrato=async (dados)=> {
+
+    let jsonDados = await dados
+
     const doc = new jsPDF();
 
     let y = 10;      
@@ -119,12 +123,12 @@ const gerarPDF=(jsonDados)=> {
     doc.text(`Ir Fonte : ${jsonDados.irFonte}`, x+3,129);
     doc.text(`INSS : ${jsonDados.inss}`, x+3,136);
     doc.text(`Pedágio : ${jsonDados.pedagio}`, x+3,143);
-    doc.text(`ISS : ${jsonDados.pedagio}`, x+3,150);
-    doc.text(`Pedágio : ${jsonDados.pedagio}`, x+3,157);
-    doc.text(`Sest/Senat : ${jsonDados.sestSenat}`, x+3,164);
-    doc.text(`Total descontos : ${jsonDados.totalDescontos}`, x+3,171);
-    doc.text(`Adiantamento : ${jsonDados.adiantamento}`, x+3,178);
-    doc.text(`Saldo a receber : ${jsonDados.saldoAReceber}`, x+3,185);
+    doc.text(`ISS : ${jsonDados.iss}`, x+3,150);
+    doc.text(`Sest/Senat : ${jsonDados.sestSenat}`, x+3,157);
+    doc.text(`Total descontos : ${jsonDados.totalDescontos}`, x+3,164);
+    doc.text(`Adiantamento : ${jsonDados.adiantamento}`, x+3,171);
+    doc.rect(x, y+163, width/2, height);
+    doc.text(`Saldo a receber : ${jsonDados.saldoAReceber}`, x+3,178);
 
     // Dados Veiculo
     doc.rect(108, y+107, width/2, height);
