@@ -14,11 +14,23 @@ btnGerarPdfRomaneio.addEventListener("click",()=>{
 
 const geraPdfRomaneio = () => {
 
+    const jsonDados = {
+        numManifesto:125,
+        motorista:"Edson Tomas da Silva",
+        principalPlaca:"AWY1749",
+        secundariaPlaca:"AWY1750",
+        emissor:"Empresa de Teste Ltda",
+        cnpj:"99.999.999/9999-99",
+        enderecoEmissor:"Rua Nova Veneza",
+        numEmissor:"172",
+        complementoEmissor:"Anexo 1",
+        bairroEmissor:"Cumbica",
+        cidadeEmissor:"Guarulhos",
+        ufEmissor:"SP",
+    }
+
     // Criar instância do objeto jsPDF
     const doc = new jsPDF();
-
-    // URL da imagem que você deseja inserir
-    let imageUrl = 'logo.png';
 
     // Dimensões do retângulo
     const rectWidth = doc.internal.pageSize.getWidth()/3 //100;
@@ -33,109 +45,325 @@ const geraPdfRomaneio = () => {
     const rectLeftX = 10; // Alinhado à esquerda, com uma margem de 10 unidades
 
 
-    // Função para carregar uma imagem
-    function loadImage(url, callback) {
-        var image = new Image();
-        image.onload = function() {
-            callback(image);
-        };
-        image.src = url;
+    doc.setFontSize(16)
+    doc.text(`${jsonDados.emissor}`,5,5)
+    doc.setFontSize(12)
+    doc.text(`${jsonDados.cnpj}`,5,10)
+    doc.setFontSize(10)
+    if(jsonDados.complementoEmissor){
+        doc.text(`${jsonDados.enderecoEmissor}, ${jsonDados.numEmissor} , ${jsonDados.complementoEmissor} , ${jsonDados.bairroEmissor}`,5,15)
+    }else{
+        doc.text(`${jsonDados.enderecoEmissor}, ${jsonDados.numEmissor} , ${jsonDados.bairroEmissor}`,5,15)
+    }
+    doc.text(`${jsonDados.enderecoEmissor}, ${jsonDados.numEmissor}`,5,20)
+
+
+
+
+    // Função para calcular a largura do texto
+    function getTextWidth(text, fontSize) {
+        doc.setFontSize(fontSize);
+        return doc.getTextWidth(text);
     }
 
-    // Carregar a imagem e inseri-la no documento PDF
-    loadImage(imageUrl, function(image) {
-        // Dimensões do retângulo
-        const rectImgWidth = 45;
-        const rectImgHeight = 30;
-        const rectImgX = 5;
-        const rectImgY = 5;
+    // Calcular a largura do texto
+    let textWidth = getTextWidth(`Romaneio nº : ${jsonDados.numManifesto}`, 25);
 
-        // Calcular a escala para ajustar a imagem ao retângulo
-        var scale = Math.min(rectImgWidth / image.width, rectImgHeight / image.height);
+    // Calcular a posição X para centralizar o texto
+    let textX = (pageWidth - textWidth) / 2;
 
-        // Calcular as novas dimensões da imagem
-        var newWidth = image.width * scale;
-        var newHeight = image.height * scale;
+    doc.text(`Romaneio nº : ${jsonDados.numManifesto}`, textX, 32);
 
-        // Calcular coordenadas X e Y para centralizar a imagem dentro do retângulo
-        var x = rectImgX + (rectImgWidth - newWidth) / 2; // Centraliza horizontalmente dentro do retângulo
-        var y = rectImgY + (rectImgHeight - newHeight) / 2; // Centraliza verticalmente dentro do retângulo
+    textWidth = getTextWidth(`Motorista : ${jsonDados.motorista}`, 12);
+    textX = (pageWidth - textWidth) - 10;
+    doc.text(`Motorista : ${jsonDados.motorista}`, 5, 38);
 
-        // Insira o retângulo
-        doc.rect(rectImgX, rectImgY, rectImgWidth, rectImgHeight);
+    if(jsonDados.secundariaPlaca){
+        textWidth = getTextWidth(`Placa : ${jsonDados.principalPlaca} Carreta : ${jsonDados.secundariaPlaca}`, 12);
+        textX = (pageWidth - textWidth) - 10;
+        doc.text(`Placa : ${jsonDados.principalPlaca} Carreta : ${jsonDados.secundariaPlaca}`, textX, 38);
+    }else{
+        textWidth = getTextWidth(`Placa : ${jsonDados.principalPlaca}`, 12);
+        textX = (pageWidth - textWidth) - 10;
+        doc.text(`Placa : ${jsonDados.principalPlaca}`, textX, 38);
+    }
 
-        // Insira a imagem dentro do retângulo
-        doc.addImage(image, 'JPG', x, y, newWidth, newHeight);
+   
+    let xDados = 5
+    let yDados = 50
+    doc.setFontSize(9)
+    dados.forEach(e => {
+        const alturaNecessaria = 40; // Defina a altura necessária para os dados de cada item
+        let alturaDocumento = doc.internal.pageSize.getHeight();
+
+        if ((yDados+alturaNecessaria)>alturaDocumento) {
+            doc.addPage();
+            xDados = 5
+            yDados = 15
+        }
+
+        doc.line(xDados-2, yDados-7, 202, yDados-7);
+        doc.text(`DTC Nº ${e.dtcNum}`,xDados,yDados)
+        yDados += 5
+        doc.text(`Tomador : ${e.tomador}       Fone : ${e.fone}`,xDados,yDados)
+        yDados += 5
+        if(e.complemento){
+            doc.text(`Endereço : ${e.logradouro}, ${e.numLogradouro} , - ${e.complemento} - ${e.bairro} `,xDados,yDados)
+        }else{
+            doc.text(`Endereço : ${e.logradouro}, ${e.numLogradouro}  - ${e.bairro} `,xDados,yDados)
+        }
+        yDados += 5
+        doc.text(`Nf's : ${e.notasFiscais} | Volumes : ${e.volume} |  Peso : ${e.peso}`,xDados,yDados)
+
+        yDados += 5
+        doc.text(`Horário de chegada : ______:______ | Horário de saída : ______:______`,xDados,yDados);
+        
+        doc.rect(rectRightX+15, yDados-25, rectWidth-15, rectHeight);
+        doc.text(`Carimbo ou Assinatura`,rectRightX+16,yDados-20);
+
+        // Adicionando o texto sobre o recibo referente ao adiantamento
+        const mascaraData = "______/______/________";
+        
+        doc.text(mascaraData, rectRightX+16, yDados);
+        
+        yDados += 15;
+    
+        });
 
         // Gerar Blob a partir do PDF
         const pdfBlob = doc.output("bloburl");
 
         // Abrir o PDF em outra aba
         window.open(pdfBlob, "_blank");
-    });
 
-    doc.rect(rectX-10, 5, rectWidth-10, rectHeight);
-
-    doc.rect(rectRightX, 5, rectWidth, rectHeight);
 };
 
-        // const jsonManifesto={
-        //     numManifesto:15,
-        //     emissor:"Serafim Transportes de Cargas Ltda",
-        //     enderecoOrigem:"Rua Nove Veneza",
-        //     numOrigem:"172",
-        //     bairroOrigem:"Cumbica",
-        //     cidadeOrigem:"Guarulhos",
-        //     ufOrigem:"SP",
-        //     destinatario:"Serafim Transportes de Cargas Ltda",
-        //     enderecoDestinatario:"Rua Nova Veneza",
-        //     numDestinatario:"179",
-        //     bairroDestinatario:"Teste",
-        //     cidadeDestinatario:"Teresina",
-        //     ufDestinatario:"PI",
-        //     dataSaida:"17/10/2007",
-    
-        //     veiculo:"AWY1749",
-        //     carreta:"AES5762",
-        //     motorista:"Edson Tomas da Silva",
-        //     cpfMotorista: "307.843.158-41",
-        //     foneMotorista:"11-96926-2277",
-        //     liberacaoMotorista:"624446",
-        //     lacres:"10/20/30/40/50/60/70/80/90/100"
-        // };
 
 
+let dados = [
+    {
+        dtcNum:1,tomador:"Serafim Transportes de Cargas Ltda",logradouro:"Rua Nova Veneza",
+        fone:"(11)96926-2277",numLogradouro:172,
+        complemento:"Anexo 1",
+        bairro:"Cid Indl Satélite de Sao Paulo",
+        cidade:"Guarulhos",
+        uf:"SP",
+        notasFiscais:"10/20/30",
+        volume:10,
+        peso:120,
+    },
+ {
+    dtcNum:2,tomador:"Serafim Transportes de Cargas Ltda",logradouro:"Rua Nova Veneza",
+    fone:"(11)96926-2277",numLogradouro:172,
+    complemento:"Anexo 1",
+    bairro:"Cid Indl Satélite de Sao Paulo",
+    cidade:"Guarulhos",
+    uf:"SP",
+    notasFiscais:"10/20/30",
+    volume:10,
+    peso:120,
+  },
+  {
+    dtcNum:3,tomador:"Serafim Transportes de Cargas Ltda",logradouro:"Rua Nova Veneza",
+    fone:"(11)96926-2277",numLogradouro:172,
+    complemento:"Anexo 1",
+    bairro:"Cid Indl Satélite de Sao Paulo",
+    cidade:"Guarulhos",
+    uf:"SP",
+    notasFiscais:"10/20/30",
+    volume:10,
+    peso:120,
+  },
+  {
+    dtcNum:4,tomador:"Serafim Transportes de Cargas Ltda",logradouro:"Rua Nova Veneza",
+    fone:"(11)96926-2277",numLogradouro:172,
+    complemento:"Anexo 1",
+    bairro:"Cid Indl Satélite de Sao Paulo",
+    cidade:"Guarulhos",
+    uf:"SP",
+    notasFiscais:"10/20/30",
+    volume:10,
+    peso:120,
+  },    
+  {
+    dtcNum:5,tomador:"Serafim Transportes de Cargas Ltda",logradouro:"Rua Nova Veneza",
+    fone:"(11)96926-2277",numLogradouro:172,
+    complemento:"Anexo 1",
+    bairro:"Cid Indl Satélite de Sao Paulo",
+    cidade:"Guarulhos",
+    uf:"SP",
+    notasFiscais:"10/20/30",
+    volume:10,
+    peso:120,
+},
+{
+    dtcNum:6,tomador:"Serafim Transportes de Cargas Ltda",logradouro:"Rua Nova Veneza",
+    fone:"(11)96926-2277",numLogradouro:172,
+    complemento:"Anexo 1",
+    bairro:"Cid Indl Satélite de Sao Paulo",
+    cidade:"Guarulhos",
+    uf:"SP",
+    notasFiscais:"10/20/30",
+    volume:10,
+    peso:120,
+},
+{
+    dtcNum:7,tomador:"Serafim Transportes de Cargas Ltda",logradouro:"Rua Nova Veneza",
+    fone:"(11)96926-2277",numLogradouro:172,
+    complemento:"Anexo 1",
+    bairro:"Cid Indl Satélite de Sao Paulo",
+    cidade:"Guarulhos",
+    uf:"SP",
+    notasFiscais:"10/20/30",
+    volume:10,
+    peso:120,
+},
+{
+    dtcNum:8,tomador:"Serafim Transportes de Cargas Ltda",logradouro:"Rua Nova Veneza",
+    fone:"(11)96926-2277",numLogradouro:172,
+    complemento:"Anexo 1",
+    bairro:"Cid Indl Satélite de Sao Paulo",
+    cidade:"Guarulhos",
+    uf:"SP",
+    notasFiscais:"10/20/30",
+    volume:10,
+    peso:120,
+},      
+
+{
+    dtcNum:9,tomador:"Serafim Transportes de Cargas Ltda",logradouro:"Rua Nova Veneza",
+    fone:"(11)96926-2277",numLogradouro:172,
+    complemento:"Anexo 1",
+    bairro:"Cid Indl Satélite de Sao Paulo",
+    cidade:"Guarulhos",
+    uf:"SP",
+    notasFiscais:"10/20/30",
+    volume:10,
+    peso:120,
+},
+{
+dtcNum:10,tomador:"Serafim Transportes de Cargas Ltda",logradouro:"Rua Nova Veneza",
+fone:"(11)96926-2277",numLogradouro:172,
+complemento:"Anexo 1",
+bairro:"Cid Indl Satélite de Sao Paulo",
+cidade:"Guarulhos",
+uf:"SP",
+notasFiscais:"10/20/30",
+volume:10,
+peso:120,
+},
+{
+dtcNum:11,tomador:"Serafim Transportes de Cargas Ltda",logradouro:"Rua Nova Veneza",
+fone:"(11)96926-2277",numLogradouro:172,
+complemento:"Anexo 1",
+bairro:"Cid Indl Satélite de Sao Paulo",
+cidade:"Guarulhos",
+uf:"SP",
+notasFiscais:"10/20/30",
+volume:10,
+peso:120,
+},
+{
+dtcNum:12,tomador:"Serafim Transportes de Cargas Ltda",logradouro:"Rua Nova Veneza",
+fone:"(11)96926-2277",numLogradouro:172,
+complemento:"Anexo 1",
+bairro:"Cid Indl Satélite de Sao Paulo",
+cidade:"Guarulhos",
+uf:"SP",
+notasFiscais:"10/20/30",
+volume:10,
+peso:120,
+},      
+
+{
+    dtcNum:13,tomador:"Serafim Transportes de Cargas Ltda",logradouro:"Rua Nova Veneza",
+    fone:"(11)96926-2277",numLogradouro:172,
+    complemento:"Anexo 1",
+    bairro:"Cid Indl Satélite de Sao Paulo",
+    cidade:"Guarulhos",
+    uf:"SP",
+    notasFiscais:"10/20/30",
+    volume:10,
+    peso:120,
+},
+{
+dtcNum:14,tomador:"Serafim Transportes de Cargas Ltda",logradouro:"Rua Nova Veneza",
+fone:"(11)96926-2277",numLogradouro:172,
+complemento:"Anexo 1",
+bairro:"Cid Indl Satélite de Sao Paulo",
+cidade:"Guarulhos",
+uf:"SP",
+notasFiscais:"10/20/30",
+volume:10,
+peso:120,
+},
+{
+dtcNum:15,tomador:"Serafim Transportes de Cargas Ltda",logradouro:"Rua Nova Veneza",
+fone:"(11)96926-2277",numLogradouro:172,
+complemento:"Anexo 1",
+bairro:"Cid Indl Satélite de Sao Paulo",
+cidade:"Guarulhos",
+uf:"SP",
+notasFiscais:"10/20/30",
+volume:10,
+peso:120,
+},
+{
+dtcNum:16,tomador:"Serafim Transportes de Cargas Ltda",logradouro:"Rua Nova Veneza",
+fone:"(11)96926-2277",numLogradouro:172,
+complemento:"Anexo 1",
+bairro:"Cid Indl Satélite de Sao Paulo",
+cidade:"Guarulhos",
+uf:"SP",
+notasFiscais:"10/20/30",
+volume:10,
+peso:120,
+},      
+
+{
+    dtcNum:17,tomador:"Serafim Transportes de Cargas Ltda",logradouro:"Rua Nova Veneza",
+    fone:"(11)96926-2277",numLogradouro:172,
+    complemento:"Anexo 1",
+    bairro:"Cid Indl Satélite de Sao Paulo",
+    cidade:"Guarulhos",
+    uf:"SP",
+    notasFiscais:"10/20/30",
+    volume:10,
+    peso:120,
+},
+{
+dtcNum:18,tomador:"Serafim Transportes de Cargas Ltda",logradouro:"Rua Nova Veneza",
+fone:"(11)96926-2277",numLogradouro:172,
+complemento:"Anexo 1",
+bairro:"Cid Indl Satélite de Sao Paulo",
+cidade:"Guarulhos",
+uf:"SP",
+notasFiscais:"10/20/30",
+volume:10,
+peso:120,
+},
+{
+dtcNum:19,tomador:"Serafim Transportes de Cargas Ltda",logradouro:"Rua Nova Veneza",
+fone:"(11)96926-2277",numLogradouro:172,
+complemento:"Anexo 1",
+bairro:"Cid Indl Satélite de Sao Paulo",
+cidade:"Guarulhos",
+uf:"SP",
+notasFiscais:"10/20/30",
+volume:10,
+peso:120,
+},
+{
+dtcNum:20,tomador:"Serafim Transportes de Cargas Ltda",logradouro:"Rua Nova Veneza",
+fone:"(11)96926-2277",numLogradouro:172,
+complemento:"Anexo 1",
+bairro:"Cid Indl Satélite de Sao Paulo",
+cidade:"Guarulhos",
+uf:"SP",
+notasFiscais:"10/20/30",
+volume:10,
+peso:120,
+},      
 
 
-        // // Definir coordenadas iniciais da tabela
-        // // let x = 5;
-        // // let y = 7;
-
-        // // Definir altura das linhas
-        // const lineHeight = 7;
-
-        // // Função para adicionar títulos da tabela
-        // const adicionarTitulos = () => {
-        //     // for (let i = 0; i < titulosTabelaSemFrete.length; i++) {
-        //     //     const titulo = titulosTabelaSemFrete[i];
-        //     //     const larguraColuna = largurasColunasSemFrete[i];
-
-        //     //     // Adicionar retângulo colorido para o título
-        //     //     doc.setFillColor(corTituloSemFrete);
-        //     //     doc.rect(x, y, larguraColuna, lineHeight, 'F');
-
-        //     //     // Adicionar texto do título dentro da célula
-        //     //     doc.setTextColor(255, 255, 255); // Cor branca para texto do título
-        //     //     doc.text(titulo, x + 2, y + 5); // Ajuste de margem para o texto
-
-        //     //     // Atualizar posição x para a próxima coluna
-        //     //     x += larguraColuna;
-        //     // }
-        //     // // Atualizar coordenada y para a próxima linha
-        //     // y += lineHeight; // Ajuste de margem para a próxima linha
-        // };
-
-        // // Adicionar títulos da tabela
-        // adicionarTitulos();
-
-        // // doc.text(`Lacres ${jsonManifesto.lacres}`, 7, y + 5); // Ajuste de margem para o texto
+]
