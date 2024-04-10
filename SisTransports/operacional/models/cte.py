@@ -3,6 +3,7 @@ from django.conf import settings
 from datetime import datetime
 from comercial.models.tabelaFrete import TabelaFrete
 from operacional.models.dtc import Dtc
+from operacional.classes.nota_fiscal import Nota_fiscal_CRUD
 
 class Cte (models.Model):
     origem_cte = models.CharField(max_length=5, null=True)
@@ -39,6 +40,7 @@ class Cte (models.Model):
 
 
     def to_dict(self):
+
         return {
             'id':self.id,
             'dtc_fk': self.dtc_fk.to_dict() if self.dtc_fk else None,

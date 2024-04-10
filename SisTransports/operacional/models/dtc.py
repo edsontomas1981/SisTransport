@@ -32,6 +32,10 @@ class Dtc (models.Model):
             'data_ultima_atualizacao': self.data_ultima_atualizacao.strftime('%Y-%m-%d %H:%M:%S') if self.data_ultima_atualizacao else None,
         }
 
+        # Incluir notas fiscais associadas ao Dtc
+        notas_fiscais = [nf.to_dict() for nf in self.notas_fiscais.all()]
+        dtc['notas_fiscais'] = notas_fiscais
+
         related_objects = {
             'tomador_fk': 'tomador',
             'remetente_fk': 'remetente',

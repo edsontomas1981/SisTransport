@@ -4,7 +4,13 @@ let listaDocumentos = []
 const removerDocumentoPorId=async(id)=> {
     let idManifesto = document.getElementById('spanNumManifesto')
     let response  = await connEndpoint('/operacional/delete_dtc_manifesto/', {'idDtc':id,'idManifesto':idManifesto.textContent});
-    populaTbodyDocumentos(response.documentos)
+    if(response.status == 200)
+    {
+        populaTbodyDocumentos(response.documentos)
+        populaQtdeDocumentosBarraManifesto(response.documentos.length)
+    }else{
+        msgErro("Não foi possível excluir o registro.")
+    }
 }
 
 let botoesManifesto={
@@ -44,6 +50,7 @@ btnAddDocumento.addEventListener('click', async () => {
                                                                                     'cmbTipoManifesto':cmbTipoManifesto});
     if (parseInt(response.status) != 422){
         populaTbodyDocumentos(response.documentos)
+        populaQtdeDocumentosBarraManifesto(response.documentos.length)
         document.getElementById('numeroDocumento').value = ""
         document.getElementById('numeroDocumento').focus()
     }else{

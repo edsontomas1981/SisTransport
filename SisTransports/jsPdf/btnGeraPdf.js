@@ -1,18 +1,31 @@
 let btnGerarPdfRomaneio = document.getElementById("gerarPdfSemFrete");
 
-const corTituloSemFrete = "#404040"; // Cor para os títulos
-const corParSemFrete = "#CCCCCC"; // Cor para linhas pares
-const corImparSemFrete = "#FFFFFF"; // Cor para linhas ímpares
-const largurasColunasSemFrete = [70,70,70]; // Largura das colunas em ordem
-const titulosTabelaSemFrete = ["Dtc", "Cte", "Remetente", "Destinatário",
-                       "Destino","Nf's","Vols","Peso","Cubagem",
-                        "Valor NF","Tipo Frete"];
-
-btnGerarPdfRomaneio.addEventListener("click",()=>{
-    geraPdfRomaneio();
+btnGerarPdfRomaneio.addEventListener("click",async()=>{
+    let idManifesto = document.getElementById('spanNumManifesto').textContent
+    let response  = await connEndpoint('/operacional/get_manifesto_by_num/', {'numManifesto':idManifesto});
+    console.log(response.documentos)
+    // geraPdfRomaneio();
 })                        
 
 const geraPdfRomaneio = async() => {
+
+    const jsonDados = {
+        numManifesto:125,
+        motorista:"Edson Tomas",
+        principalPlaca:"AWY1749",
+        secundariaPlaca:"AWY1750",
+        emissor:"Empresa de Teste Ltda",
+        cnpj:"30.784.315/0008-41",
+        inscrEmissor:"320799190",
+        enderecoEmissor:"Rua Nova Veneza",
+        numEmissor:"172",
+        complementoEmissor:"Anexo 1",
+        bairroEmissor:"Cumbica",
+        cidadeEmissor:"Guarulhos",
+        ufEmissor:"SP",
+        foneEmissor:"(11)96926-2277"
+    }
+    
     const doc = new jsPDF();
     
     // URL da imagem que você deseja inserir
@@ -21,17 +34,8 @@ const geraPdfRomaneio = async() => {
     const rectWidth = 30;
     const rectHeight = 25;
 
-
     // Dimensões do retângulo
-
     const pageWidth = doc.internal.pageSize.getWidth();
-    const pageHeight = doc.internal.pageSize.getHeight();
-
-    // Calcular a escala para ajustar a imagem ao retângulo
-    var scale = Math.min(rectWidth / imageUrl.width, rectHeight / imageUrl.height);
-
-    const rectX = (pageWidth - rectWidth) / 2; // Centraliza horizontalmente
-    const rectY = (pageHeight - rectHeight) / 2; // Centraliza verticalmente
 
     const rectRightX = pageWidth - rectWidth - 10; // Alinhado à direita, com uma margem de 10 unidades
     const rectLeftX = 10; // Alinhado à esquerda, com uma margem de 10 unidades
@@ -45,25 +49,6 @@ const geraPdfRomaneio = async() => {
             reader.onerror = reject;
             reader.readAsDataURL(blob);
         });
-
-        
-    }
-
-    const jsonDados = {
-        numManifesto:125,
-        motorista:"Edson Tomas da Silva",
-        principalPlaca:"AWY1749",
-        secundariaPlaca:"AWY1750",
-        emissor:"Empresa de Teste Ltda",
-        cnpj:"30.784.315/0008-41",
-        inscrEmissor:"320799190",
-        enderecoEmissor:"Rua Nova Veneza",
-        numEmissor:"172",
-        complementoEmissor:"Anexo 1",
-        bairroEmissor:"Cumbica",
-        cidadeEmissor:"Guarulhos",
-        ufEmissor:"SP",
-        foneEmissor:"(11)96926-2277"
     }
 
     let base64Image = await toBase64(imageUrl);
@@ -88,68 +73,87 @@ const geraPdfRomaneio = async() => {
     let x = (rectWidth - newWidth) / 2;
     let y = (rectHeight - newHeight) / 2;
 
-    // Desenha o retângulo
-    // doc.rect(5, 5, rectWidth, rectHeight);
-
-    // Insira a imagem dentro do retângulo
-    doc.addImage(base64Image, 'JPEG', 3 + x, 3 + y, newWidth, newHeight);
-
-    
-
-    doc.setFontSize(16)
-    doc.text(`${jsonDados.emissor}`,40,5)
-    doc.setFontSize(10)
-    doc.text(`Cnpj ${jsonDados.cnpj} Inscrição Estadual ${jsonDados.inscrEmissor}`,40,10)
-
-    if(jsonDados.complementoEmissor){
-        doc.text(`${jsonDados.enderecoEmissor}, ${jsonDados.numEmissor} , ${jsonDados.complementoEmissor} , ${jsonDados.bairroEmissor}`,40,15)
-    }else{
-        doc.text(`${jsonDados.enderecoEmissor}, ${jsonDados.numEmissor} , ${jsonDados.bairroEmissor}`,40,15)
-    }
-    doc.text(`${jsonDados.cidadeEmissor}-${jsonDados.ufEmissor} | ${jsonDados.foneEmissor}`,40,20)
-
     // Função para calcular a largura do texto
     function getTextWidth(text, fontSize) {
         doc.setFontSize(fontSize);
         return doc.getTextWidth(text);
     }
 
+const addTitulo = ()=>{    // Insira a imagem dentro do retângulo
+    doc.addImage(base64Image, 'JPEG', 3 + x, 3 + y, newWidth, newHeight);
+
+    doc.setFontSize(16)
+    doc.text(`${jsonDados.emissor}`,40,10)
+    doc.setFontSize(10)
+    doc.text(`Cnpj ${jsonDados.cnpj} Inscrição Estadual ${jsonDados.inscrEmissor}`,40,15)
+
+    if(jsonDados.complementoEmissor){
+        doc.text(`${jsonDados.enderecoEmissor}, ${jsonDados.numEmissor} , ${jsonDados.complementoEmissor} , ${jsonDados.bairroEmissor}`,40,20)
+    }else{
+        doc.text(`${jsonDados.enderecoEmissor}, ${jsonDados.numEmissor} , ${jsonDados.bairroEmissor}`,40,20)
+    }
+    doc.text(`${jsonDados.cidadeEmissor}-${jsonDados.ufEmissor} | ${jsonDados.foneEmissor}`,40,25)
+
     // Calcular a largura do texto
-    let textWidth = getTextWidth(`Romaneio nº : ${jsonDados.numManifesto}`, 25);
+    let textWidth = getTextWidth(`Romaneio nº : ${jsonDados.numManifesto}`, 12);
 
     // Calcular a posição X para centralizar o texto
     let textX = (pageWidth - textWidth) / 2;
 
-    doc.text(`Romaneio nº : ${jsonDados.numManifesto}`, textX, 32);
+    doc.text(`Romaneio nº : ${jsonDados.numManifesto}`, rectRightX, 10);
 
-    textWidth = getTextWidth(`Motorista : ${jsonDados.motorista}`, 12);
-    textX = (pageWidth - textWidth) - 10;
-    doc.text(`Motorista : ${jsonDados.motorista}`, 5, 38);
+    // Calcular o comprimento do texto
+    let textoMotorista = `Nome Motorista: ${jsonDados.motorista}`
 
+    let alinhaDireita = 207-getTextWidth(textoMotorista,10) 
+    // Desenhar o texto
+    doc.setFontSize(9);
+    doc.line(2, 35, 205, 35);
+    doc.text(`Nome Motorista: ${jsonDados.motorista}`, alinhaDireita, 40);}
+
+    let tamanhoTextWidth
     if(jsonDados.secundariaPlaca){
-        textWidth = getTextWidth(`Placa : ${jsonDados.principalPlaca} Carreta : ${jsonDados.secundariaPlaca}`, 12);
-        textX = (pageWidth - textWidth) - 10;
-        doc.text(`Placa : ${jsonDados.principalPlaca} Carreta : ${jsonDados.secundariaPlaca}`, textX, 38);
+        let tamanhoTextWidth = getTextWidth(`Placa : ${jsonDados.principalPlaca} 
+                                Carreta : ${jsonDados.secundariaPlaca}`, 10);
+        textX = (pageWidth - tamanhoTextWidth) - 10;
+        doc.text(`Placa : ${jsonDados.principalPlaca} 
+Carreta : ${jsonDados.secundariaPlaca}`, rectRightX, 15);
     }else{
-        textWidth = getTextWidth(`Placa : ${jsonDados.principalPlaca}`, 12);
-        textX = (pageWidth - textWidth) - 10;
-        doc.text(`Placa : ${jsonDados.principalPlaca}`, textX, 38);
+        tamanhoTextWidth = getTextWidth(`Placa : ${jsonDados.principalPlaca}`, 10);
+        textX = (pageWidth - tamanhoTextWidth) - 10;
+        doc.text(`Placa : ${jsonDados.principalPlaca}`, rectRightX, 38);
     }
+
+    addTitulo();
 
     let xDados = 5
     let yDados = 50
-    doc.setFontSize(9)
+    doc.setFontSize(9)    
     dados.forEach(e => {
-        const alturaNecessaria = 40; // Defina a altura necessária para os dados de cada item
+        const alturaNecessaria = 35; // Defina a altura necessária para os dados de cada item
         let alturaDocumento = doc.internal.pageSize.getHeight();
 
         if ((yDados+alturaNecessaria)>alturaDocumento) {
             doc.addPage();
+            addTitulo();
+            let tamanhoTextWidth
+            if(jsonDados.secundariaPlaca){
+                let tamanhoTextWidth = getTextWidth(`Placa : ${jsonDados.principalPlaca} 
+                                        Carreta : ${jsonDados.secundariaPlaca}`, 10);
+                textX = (pageWidth - tamanhoTextWidth) - 10;
+                doc.text(`Placa : ${jsonDados.principalPlaca}\nCarreta : ${jsonDados.secundariaPlaca}`, rectRightX, 15);
+            }else{
+                tamanhoTextWidth = getTextWidth(`Placa : ${jsonDados.principalPlaca}`, 10);
+                textX = (pageWidth - tamanhoTextWidth) - 10;
+                doc.text(`Placa : ${jsonDados.principalPlaca}`, rectRightX, 38);
+            }
+
+            doc.setFontSize(9)
             xDados = 5
-            yDados = 15
+            yDados = 50
         }
 
-        doc.line(xDados-2, yDados-7, 202, yDados-7);
+        doc.line(xDados-3, yDados-7, 205, yDados-7);
         doc.text(`DTC Nº ${e.dtcNum}`,xDados,yDados)
         yDados += 5
         doc.text(`Tomador : ${e.tomador}       Fone : ${e.fone}`,xDados,yDados)
@@ -172,10 +176,22 @@ const geraPdfRomaneio = async() => {
         const mascaraData = "______/______/________";
         
         doc.text(mascaraData, rectRightX-7, yDados);
+
         
-        yDados += 15;
+        yDados += 13;
     
         });
+
+
+        var totalPages = doc.internal.getNumberOfPages();
+
+        console.log(totalPages)
+
+        const currentPageInfo = doc.internal.getCurrentPageInfo();
+        const currentPageNumber = currentPageInfo.pageNumber;
+        console.log("Página atual:", currentPageNumber);
+
+        doc.text(`${currentPageNumber}/${totalPages}`,200,12)
 
 
         // Gerar Blob a partir do PDF
@@ -183,7 +199,6 @@ const geraPdfRomaneio = async() => {
 
         // Abrir o PDF em outra aba
         window.open(pdfBlob, "_blank");
-
 };
 
 
@@ -334,84 +349,84 @@ peso:120,
     volume:10,
     peso:120,
 },
-// {
-// dtcNum:14,tomador:"Serafim Transportes de Cargas Ltda",logradouro:"Rua Nova Veneza",
-// fone:"(11)96926-2277",numLogradouro:172,
-// complemento:"Anexo 1",
-// bairro:"Cid Indl Satélite de Sao Paulo",
-// cidade:"Guarulhos",
-// uf:"SP",
-// notasFiscais:"10/20/30",
-// volume:10,
-// peso:120,
-// },
-// {
-// dtcNum:15,tomador:"Serafim Transportes de Cargas Ltda",logradouro:"Rua Nova Veneza",
-// fone:"(11)96926-2277",numLogradouro:172,
-// complemento:"Anexo 1",
-// bairro:"Cid Indl Satélite de Sao Paulo",
-// cidade:"Guarulhos",
-// uf:"SP",
-// notasFiscais:"10/20/30",
-// volume:10,
-// peso:120,
-// },
-// {
-// dtcNum:16,tomador:"Serafim Transportes de Cargas Ltda",logradouro:"Rua Nova Veneza",
-// fone:"(11)96926-2277",numLogradouro:172,
-// complemento:"Anexo 1",
-// bairro:"Cid Indl Satélite de Sao Paulo",
-// cidade:"Guarulhos",
-// uf:"SP",
-// notasFiscais:"10/20/30",
-// volume:10,
-// peso:120,
-// },      
+{
+dtcNum:14,tomador:"Serafim Transportes de Cargas Ltda",logradouro:"Rua Nova Veneza",
+fone:"(11)96926-2277",numLogradouro:172,
+complemento:"Anexo 1",
+bairro:"Cid Indl Satélite de Sao Paulo",
+cidade:"Guarulhos",
+uf:"SP",
+notasFiscais:"10/20/30",
+volume:10,
+peso:120,
+},
+{
+dtcNum:15,tomador:"Serafim Transportes de Cargas Ltda",logradouro:"Rua Nova Veneza",
+fone:"(11)96926-2277",numLogradouro:172,
+complemento:"Anexo 1",
+bairro:"Cid Indl Satélite de Sao Paulo",
+cidade:"Guarulhos",
+uf:"SP",
+notasFiscais:"10/20/30",
+volume:10,
+peso:120,
+},
+{
+dtcNum:16,tomador:"Serafim Transportes de Cargas Ltda",logradouro:"Rua Nova Veneza",
+fone:"(11)96926-2277",numLogradouro:172,
+complemento:"Anexo 1",
+bairro:"Cid Indl Satélite de Sao Paulo",
+cidade:"Guarulhos",
+uf:"SP",
+notasFiscais:"10/20/30",
+volume:10,
+peso:120,
+},      
 
-// {
-//     dtcNum:17,tomador:"Serafim Transportes de Cargas Ltda",logradouro:"Rua Nova Veneza",
-//     fone:"(11)96926-2277",numLogradouro:172,
-//     complemento:"Anexo 1",
-//     bairro:"Cid Indl Satélite de Sao Paulo",
-//     cidade:"Guarulhos",
-//     uf:"SP",
-//     notasFiscais:"10/20/30",
-//     volume:10,
-//     peso:120,
-// },
-// {
-// dtcNum:18,tomador:"Serafim Transportes de Cargas Ltda",logradouro:"Rua Nova Veneza",
-// fone:"(11)96926-2277",numLogradouro:172,
-// complemento:"Anexo 1",
-// bairro:"Cid Indl Satélite de Sao Paulo",
-// cidade:"Guarulhos",
-// uf:"SP",
-// notasFiscais:"10/20/30",
-// volume:10,
-// peso:120,
-// },
-// {
-// dtcNum:19,tomador:"Serafim Transportes de Cargas Ltda",logradouro:"Rua Nova Veneza",
-// fone:"(11)96926-2277",numLogradouro:172,
-// complemento:"Anexo 1",
-// bairro:"Cid Indl Satélite de Sao Paulo",
-// cidade:"Guarulhos",
-// uf:"SP",
-// notasFiscais:"10/20/30",
-// volume:10,
-// peso:120,
-// },
-// {
-// dtcNum:20,tomador:"Serafim Transportes de Cargas Ltda",logradouro:"Rua Nova Veneza",
-// fone:"(11)96926-2277",numLogradouro:172,
-// complemento:"Anexo 1",
-// bairro:"Cid Indl Satélite de Sao Paulo",
-// cidade:"Guarulhos",
-// uf:"SP",
-// notasFiscais:"10/20/30",
-// volume:10,
-// peso:120,
-// },      
+{
+    dtcNum:17,tomador:"Serafim Transportes de Cargas Ltda",logradouro:"Rua Nova Veneza",
+    fone:"(11)96926-2277",numLogradouro:172,
+    complemento:"Anexo 1",
+    bairro:"Cid Indl Satélite de Sao Paulo",
+    cidade:"Guarulhos",
+    uf:"SP",
+    notasFiscais:"10/20/30",
+    volume:10,
+    peso:120,
+},
+{
+dtcNum:18,tomador:"Serafim Transportes de Cargas Ltda",logradouro:"Rua Nova Veneza",
+fone:"(11)96926-2277",numLogradouro:172,
+complemento:"Anexo 1",
+bairro:"Cid Indl Satélite de Sao Paulo",
+cidade:"Guarulhos",
+uf:"SP",
+notasFiscais:"10/20/30",
+volume:10,
+peso:120,
+},
+{
+dtcNum:19,tomador:"Serafim Transportes de Cargas Ltda",logradouro:"Rua Nova Veneza",
+fone:"(11)96926-2277",numLogradouro:172,
+complemento:"Anexo 1",
+bairro:"Cid Indl Satélite de Sao Paulo",
+cidade:"Guarulhos",
+uf:"SP",
+notasFiscais:"10/20/30",
+volume:10,
+peso:120,
+},
+{
+dtcNum:20,tomador:"Serafim Transportes de Cargas Ltda",logradouro:"Rua Nova Veneza",
+fone:"(11)96926-2277",numLogradouro:172,
+complemento:"Anexo 1",
+bairro:"Cid Indl Satélite de Sao Paulo",
+cidade:"Guarulhos",
+uf:"SP",
+notasFiscais:"10/20/30",
+volume:10,
+peso:120,
+},      
 
 
 ]

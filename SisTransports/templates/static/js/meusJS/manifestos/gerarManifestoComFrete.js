@@ -2,38 +2,6 @@ let btnGeraManifestoComFrete = document.getElementById("gerarPdfComFrete")
 
 const dadosTabela = [
     ["455088", "253600", "Mercante Brasil Equipamentos","Serafim Transportes de cargas Ltda","MA-SÃO LUIS","23213/120946/35566","9999","99999","99999","9.999.999,99","99.999,99","CIF"],
-    ["455088", "253601", "Mercante Brasil Equipamentos","Serafim Transportes de cargas Ltda","MA-SÃO LUIS","23213/120946/35566","9999","99999","99999","9.999.999,99","99.999,99","CIF"],
-    ["455088", "253602", "Mercante Brasil Equipamentos","Serafim Transportes de cargas Ltda","MA-SÃO LUIS","23213/120946/35566","9999","99999","99999","9.999.999,99","99.999,99","CIF"],
-    ["455088", "253603", "Mercante Brasil Equipamentos","Serafim Transportes de cargas Ltda","MA-SÃO LUIS","23213/120946/35566","9999","99999","99999","9.999.999,99","99.999,99","CIF"],
-    ["455088", "253604", "Mercante Brasil Equipamentos","Serafim Transportes de cargas Ltda","MA-SÃO LUIS","23213/120946/35566","9999","99999","99999","9.999.999,99","99.999,99","CIF"],
-    ["455088", "253605", "Mercante Brasil Equipamentos","Serafim Transportes de cargas Ltda","MA-SÃO LUIS","23213/120946/35566","9999","99999","99999","9.999.999,99","99.999,99","CIF"],
-    ["455088", "253606", "Mercante Brasil Equipamentos","Serafim Transportes de cargas Ltda","MA-SÃO LUIS","23213/120946/35566","9999","99999","99999","9.999.999,99","99.999,99","CIF"],
-    ["455088", "253607", "Mercante Brasil Equipamentos","Serafim Transportes de cargas Ltda","MA-SÃO LUIS","23213/120946/35566","9999","99999","99999","9.999.999,99","99.999,99","CIF"],
-    ["455088", "253608", "Mercante Brasil Equipamentos","Serafim Transportes de cargas Ltda","MA-SÃO LUIS","23213/120946/35566","9999","99999","99999","9.999.999,99","99.999,99","CIF"],
-    ["455088", "253609", "Mercante Brasil Equipamentos","Serafim Transportes de cargas Ltda","MA-SÃO LUIS","23213/120946/35566","9999","99999","99999","9.999.999,99","99.999,99","CIF"],
-    ["455088", "253610", "Mercante Brasil Equipamentos","Serafim Transportes de cargas Ltda","MA-SÃO LUIS","23213/120946/35566","9999","99999","99999","9.999.999,99","99.999,99","CIF"],
-    ["455088", "253611", "Mercante Brasil Equipamentos","Serafim Transportes de cargas Ltda","MA-SÃO LUIS","23213/120946/35566","9999","99999","99999","9.999.999,99","99.999,99","CIF"],
-    ["455088", "253612", "Mercante Brasil Equipamentos","Serafim Transportes de cargas Ltda","MA-SÃO LUIS","23213/120946/35566","9999","99999","99999","9.999.999,99","99.999,99","CIF"],
-    ["455088", "253613", "Mercante Brasil Equipamentos","Serafim Transportes de cargas Ltda","MA-SÃO LUIS","23213/120946/35566","9999","99999","99999","9.999.999,99","99.999,99","CIF"],
-    ["455088", "253614", "Mercante Brasil Equipamentos","Serafim Transportes de cargas Ltda","MA-SÃO LUIS","23213/120946/35566","9999","99999","99999","9.999.999,99","99.999,99","CIF"],
-    ["455088", "253615", "Mercante Brasil Equipamentos","Serafim Transportes de cargas Ltda","MA-SÃO LUIS","23213/120946/35566","9999","99999","99999","9.999.999,99","99.999,99","CIF"],
-    ["455088", "253616", "Mercante Brasil Equipamentos","Serafim Transportes de cargas Ltda","MA-SÃO LUIS","23213/120946/35566","9999","99999","99999","9.999.999,99","99.999,99","CIF"],
-    ["455088", "253617", "Mercante Brasil Equipamentos","Serafim Transportes de cargas Ltda","MA-SÃO LUIS","23213/120946/35566","9999","99999","99999","9.999.999,99","99.999,99","CIF"],
-    ["455088", "253618", "Mercante Brasil Equipamentos","Serafim Transportes de cargas Ltda","MA-SÃO LUIS","23213/120946/35566","9999","99999","99999","9.999.999,99","99.999,99","CIF"],
-    ["455088", "253619", "Mercante Brasil Equipamentos","Serafim Transportes de cargas Ltda","MA-SÃO LUIS","23213/120946/35566","9999","99999","99999","9.999.999,99","99.999,99","CIF"],
-    ["455088", "253620", "Mercante Brasil Equipamentos","Serafim Transportes de cargas Ltda","MA-SÃO LUIS","23213/120946/35566","9999","99999","99999","9.999.999,99","99.999,99","CIF"],
-    ["455088", "253621", "Mercante Brasil Equipamentos","Serafim Transportes de cargas Ltda","MA-SÃO LUIS","23213/120946/35566","9999","99999","99999","9.999.999,99","99.999,99","CIF"],
-    ["455088", "253622", "Mercante Brasil Equipamentos","Serafim Transportes de cargas Ltda","MA-SÃO LUIS","23213/120946/35566","9999","99999","99999","9.999.999,99","99.999,99","CIF"],
-    ["455088", "253623", "Mercante Brasil Equipamentos","Serafim Transportes de cargas Ltda","MA-SÃO LUIS","23213/120946/35566","9999","99999","99999","9.999.999,99","99.999,99","CIF"],
-    ["455088", "253624", "Mercante Brasil Equipamentos","Serafim Transportes de cargas Ltda","MA-SÃO LUIS","23213/120946/35566","9999","99999","99999","9.999.999,99","99.999,99","CIF"],
-    ["455088", "253625", "Mercante Brasil Equipamentos","Serafim Transportes de cargas Ltda","MA-SÃO LUIS","23213/120946/35566","9999","99999","99999","9.999.999,99","99.999,99","CIF"],
-    ["455088", "253626", "Mercante Brasil Equipamentos","Serafim Transportes de cargas Ltda","MA-SÃO LUIS","23213/120946/35566","9999","99999","99999","9.999.999,99","99.999,99","CIF"],
-    ["455088", "253627", "Mercante Brasil Equipamentos","Serafim Transportes de cargas Ltda","MA-SÃO LUIS","23213/120946/35566","9999","99999","99999","9.999.999,99","99.999,99","CIF"],
-    ["455088", "253628", "Mercante Brasil Equipamentos","Serafim Transportes de cargas Ltda","MA-SÃO LUIS","23213/120946/35566","9999","99999","99999","9.999.999,99","99.999,99","CIF"],
-    ["455088", "253629", "Mercante Brasil Equipamentos","Serafim Transportes de cargas Ltda","MA-SÃO LUIS","23213/120946/35566","9999","99999","99999","9.999.999,99","99.999,99","CIF"],
-    ["455088", "253630", "Mercante Brasil Equipamentos","Serafim Transportes de cargas Ltda","MA-SÃO LUIS","23213/120946/35566","9999","99999","99999","9.999.999,99","99.999,99","CIF"],
-    ["455088", "253631", "Mercante Brasil Equipamentos","Serafim Transportes de cargas Ltda","MA-SÃO LUIS","23213/120946/35566","9999","99999","99999","9.999.999,99","99.999,99","CIF"],
-    ["455088", "253632", "Mercante Brasil Equipamentos","Serafim Transportes de cargas Ltda","MA-SÃO LUIS","23213/120946/35566","9999","99999","99999","9.999.999,99","99.999,99","CIF"],
 ];
 const corTitulo = "#404040"; // Cor para os títulos
 const corPar = "#CCCCCC"; // Cor para linhas pares
@@ -43,9 +11,39 @@ const titulosTabela = ["Dtc", "Cte", "Remetente", "Destinatário",
                        "Destino","Nf's","Vols","Peso","Cubagem",
                         "Valor NF","Frete","Tipo Frete"];
 
-btnGeraManifestoComFrete.addEventListener("click",()=>{
-    gerarPdfComFrete(dadosTabela,titulosTabela,largurasColunas,corTitulo,corPar,corImpar);
+btnGeraManifestoComFrete.addEventListener("click",async()=>{
+    let idManifesto = document.getElementById('spanNumManifesto').textContent
+    let response  = await connEndpoint('/operacional/get_manifesto_by_num/', {'numManifesto':idManifesto});
+    gerarPdfComFrete(preparaImpressaoManifesto(response.documentos),titulosTabela,largurasColunas,corTitulo,corPar,corImpar);
+    
+
 })
+
+const preparaImpressaoManifesto =(response)=>{
+    console.log(response)
+    let dados = []
+    const tipoFrete = (tipo)=>{
+        switch (tipo) {
+            case 1:
+                return "CIF"
+                break;
+
+            case 2:
+                return "FOB"
+                break;
+            default:
+                return "OUTROS";
+        }
+    }
+    response.forEach(e => {
+        dados.push([e.dtc_fk.id+"",e.cte.id+"",e.dtc_fk.remetente.raz_soc,
+        e.dtc_fk.destinatario.raz_soc,`${e.dtc_fk.rota.destinoUf}-${e.dtc_fk.rota.destinoCidade}`,
+            "Null","Null","Null","Null","Null","",tipoFrete(e.tipoFrete)
+            ])
+    });
+
+    return dados
+}
 /**
  * Função para gerar e exibir um PDF com uma tabela.
  * @param {Array} dadosTabela - Array bidimensional contendo os dados da tabela.
