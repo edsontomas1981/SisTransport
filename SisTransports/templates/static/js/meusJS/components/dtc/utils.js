@@ -121,6 +121,7 @@ const populaNfsCalculoCte=async()=>{
  * @returns {string} - Uma string formatada contendo os números das notas fiscais ou intervalos de notas.
  */
 const geraTextoNf = (nfs) => {
+  console.log(nfs)
   let notasFiscais = "";
   const numNfs = nfs.nfs.length;
 
@@ -128,7 +129,7 @@ const geraTextoNf = (nfs) => {
   let prevNumNf = null;
 
   nfs.nfs.forEach((element, index) => {
-    const numNf = parseInt(element.num_nf);
+    const numNf = parseInt(element.num_nf); 
 
     if (startRange === null) {
       startRange = numNf;

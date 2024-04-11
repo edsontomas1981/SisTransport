@@ -21,6 +21,8 @@ btnGeraManifestoComFrete.addEventListener("click",async()=>{
 
 const preparaImpressaoManifesto =(response)=>{
     console.log(response)
+
+
     let dados = []
     const tipoFrete = (tipo)=>{
         switch (tipo) {
@@ -35,12 +37,55 @@ const preparaImpressaoManifesto =(response)=>{
                 return "OUTROS";
         }
     }
+
+    const determinarFonteColetaOuNfs = (e)=>{
+        let volume = 0
+        let peso = 0
+        let cubagem = 0
+        let valorNf = 0
+
+        if(e.dtc_fk.notas_fiscais.length > 0){
+            e.dtc_fk.notas_fiscais.forEach(element => {
+                volume += parseFloat(element.volume)
+                peso += parseFloat(element.peso)
+                cubagem += parseFloat(element.m3)
+                valorNf += parseFloat(element.valor_nf)
+            });
+        }else{
+            console.log('N tem nf')
+        }
+
+        return{"volume":volume+"",
+            "peso":peso+"",
+            "cubagem":cubagem+"",
+            "valorNf":valorNf+""}
+    }
+    // const titulosTabela = ["Dtc", "Cte", "Remetente", "Destinatário",
+    //                    "Destino","Nf's","Vols","Peso","Cubagem",
+    //                     "Valor NF","Frete","Tipo Frete"];
+
+
+
     response.forEach(e => {
-        dados.push([e.dtc_fk.id+"",e.cte.id+"",e.dtc_fk.remetente.raz_soc,
-        e.dtc_fk.destinatario.raz_soc,`${e.dtc_fk.rota.destinoUf}-${e.dtc_fk.rota.destinoCidade}`,
-            "Null","Null","Null","Null","Null","",tipoFrete(e.tipoFrete)
-            ])
-    });
+            const remetente = e.dtc_fk.remetente ? e.dtc_fk.remetente.raz_soc : " ";
+            const destinatario = e.dtc_fk.destinatario ? e.dtc_fk.destinatario.raz_soc : " ";
+            const destino = e.dtc_fk.rota ? `${e.dtc_fk.rota.destinoUf}-${e.dtc_fk.rota.destinoCidade}` : " ";
+            const cteId = e.cte ? e.cte.id +"" : ""; // Verifica se cte existe antes de acessar id
+            const dtcId = e.dtc_fk ? e.dtc_fk.id + "" : ""
+            const freteCte = e.cte ? e.cte.totalFrete +"" : "0.00";
+
+            let nfs = {}
+            nfs.nfs = e.dtc_fk.notas_fiscais
+            let dadosColetaEntrega = determinarFonteColetaOuNfs(e)
+
+            dados.push([
+                dtcId,cteId,remetente,destinatario,destino,
+                truncateString(geraTextoNf(nfs),17),
+                dadosColetaEntrega.volume,dadosColetaEntrega.peso,dadosColetaEntrega.cubagem,dadosColetaEntrega.valorNf,
+                `R$ ${freteCte}`,
+                tipoFrete(e.tipoFrete)
+            ]);
+        });
 
     return dados
 }
