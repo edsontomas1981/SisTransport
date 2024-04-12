@@ -5,14 +5,24 @@ from Classes.utils import verificaCamposObrigatorios,toFloat,checkBox,dprint,dpp
 class Rota:
     def __init__(self):
         self.rota=MdlRota()
-    
-    def salvaRota(self,nome,origemUF,origemCidade,destinoUF,destinoCidade):
-        self.rota.nome=nome
-        self.rota.origemCidade= origemCidade
-        self.rota.origemUf=origemUF
-        self.rota.destinoCidade=destinoCidade
-        self.rota.destinoUf= destinoUF
-        self.rota.save()
+
+    @classmethod
+    def salvaRota(cls, dados):
+
+        nome_rota = dados.get("nome")
+        if MdlRota.objects.filter(nome=nome_rota).exists():
+            return 422
+
+        rota = cls()
+        rota.rota.nome = dados.get("nome")
+        rota.rota.origemCidade = dados.get("origemCidade")
+        rota.rota.origemUf = dados.get("origemUF")
+        rota.rota.destinoCidade = dados.get("destinoCidade")
+        rota.rota.destinoUf = dados.get("destinoUF")
+        rota.rota.endereco_origem_fk = dados.get("enderecoOrigem")
+        rota.rota.endereco_destino_fk = dados.get("enderecoDestino")
+        rota.rota.save()
+        return rota
     
     def readRotas(self):
         rotas=[]

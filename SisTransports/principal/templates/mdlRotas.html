@@ -15,94 +15,74 @@
             <div class="form-floating pl-1 pr-0 col-2 mb-3">
               <input type="text" class="form-control limpa" id="idRota" name="idRota" placeholder="Ex: SAOXRIO" readonly disabled=true value="">
               <label for="nomeRota">Id Rota</label>
-            </div>
+            </div> 
             <div class="form-floating pl-1 pr-0 col-7 mb-3">
               <input type="text" class="form-control limpa" id="nomeRota" name="nomeRota" placeholder="Ex: SAOXRIO">
               <label for="nomeRota">Insira o nome da rota</label>
             </div>
             <div class="pr-0 col-3 mb-3">
-              <button class="btn btn-primary btn-lg" id="inserirRota">Inserir Rota</button>
+              <a class="btn btn-primary btn-lg" id="inserirRota">Inserir Rota</a>
             </div>
-            <div class="form-floating col-2 pl-1">
-              <select class="form-select limpa" id="ufOrigem" name="ufOrigem">
-                <option selected></option>
-                <option value="AC">AC</option>
-                <option value="AL">AL</option>
-                <option value="AP">AP</option>
-                <option value="AM">AM</option>
-                <option value="BA">BA</option>
-                <option value="CE">CE</option>
-                <option value="DF">DF</option>
-                <option value="ES">ES</option>
-                <option value="GO">GO</option>
-                <option value="MA">MA</option>
-                <option value="MT">MT</option>
-                <option value="MS">MS</option>
-                <option value="MG">MG</option>
-                <option value="PA">PA</option>
-                <option value="PB">PB</option>
-                <option value="PR">PR</option>
-                <option value="PE">PE</option>
-                <option value="PI">PI</option>
-                <option value="RJ">RJ</option>
-                <option value="RN">RN</option>
-                <option value="RS">RS</option>
-                <option value="RO">RO</option>
-                <option value="RR">RR</option>
-                <option value="SC">SC</option>
-                <option value="SP">SP</option>
-                <option value="SE">SE</option>
-                <option value="TO">TO</option>
-                <option value="EX">EX</option>                        
-              </select>
-              <label for="ufOrigem">Uf de origem</label>
+            <span class="text-primary">Endereço Origem</span>
+            <div class="form-floating col-1 pl-1 pr-0">
+              <input type="text" class="form-control form-control-sm" id="cepOrigem" placeholder="Cep Origem" style="font-size: 10px !important;">
+              <label for="cepOrigem" style="font-size: 11px !important;">Cep</label>
             </div>
-            <div class="form-floating col-4 pl-1">
-              <select class="form-select" id="cidadeOrigem" name="cidadeOrigem">
-                <option selected></option>
-              </select>
-              <label for="cidadeOrigem">Cidade de origem</label>
+            <div class="form-floating col-3 pl-1">
+              <input type="text" class="form-control form-control-sm" id="logradouroOrigem" placeholder="Logradouro Origem">
+              <label for="logradouroOrigem">Logradouro</label>
             </div>
-            <div class="form-floating col-2 pl-1">
-              <select class="form-select" id="ufDestino" name="ufDestino">
-                <option selected></option>
-                <option value="AC">AC</option>
-                <option value="AL">AL</option>
-                <option value="AP">AP</option>
-                <option value="AM">AM</option>
-                <option value="BA">BA</option>
-                <option value="CE">CE</option>
-                <option value="DF">DF</option>
-                <option value="ES">ES</option>
-                <option value="GO">GO</option>
-                <option value="MA">MA</option>
-                <option value="MT">MT</option>
-                <option value="MS">MS</option>
-                <option value="MG">MG</option>
-                <option value="PA">PA</option>
-                <option value="PB">PB</option>
-                <option value="PR">PR</option>
-                <option value="PE">PE</option>
-                <option value="PI">PI</option>
-                <option value="RJ">RJ</option>
-                <option value="RN">RN</option>
-                <option value="RS">RS</option>
-                <option value="RO">RO</option>
-                <option value="RR">RR</option>
-                <option value="SC">SC</option>
-                <option value="SP">SP</option>
-                <option value="SE">SE</option>
-                <option value="TO">TO</option>
-                <option value="EX">EX</option>                        
-              </select>
-              <label for="ufDestino">Uf de destino</label>
-            </div>
-            <div class="form-floating col-4 pl-1">
-              <select class="form-select" id="cidadeDestino" name="cidadeDestino" >
-                <option selected></option>
-              </select>
-              <label for="cidadeDestino">Cidade de destino</label>
+            <div class="form-floating col-1 pl-1">
+              <input type="text" class="form-control form-control-sm" id="numeroOrigem" placeholder="Logradouro Origem">
+              <label for="numeroOrigem">Número</label>
             </div>            
+            <div class="form-floating col-2 pl-1">
+              <input type="text" class="form-control form-control-sm" id="complementoOrigem" placeholder="Complemento Origem">
+              <label for="complementoOrigem">Complemento</label>
+            </div>
+            <div class="form-floating col-2 pl-1">
+              <input type="text" class="form-control form-control-sm" id="bairroOrigem" placeholder="Bairro Origem">
+              <label for="    ">Bairro</label>
+            </div>
+            <div class="form-floating col-2 pl-1">
+              <input type="text" class="form-control form-control-sm" id="cidadeOrigem" placeholder="Cidade Origem">
+              <label for="cidadeOrigem">Cidade</label>
+            </div>
+            <div class="form-floating col-1 pl-1">
+              <input type="text" class="form-control form-control-sm" id="ufOrigem" placeholder="Uf Origem">
+              <label for="ufOrigem">Uf</label>
+            </div>
+
+            <span class="text-primary mt-1">Endereço Destino</span>
+            <div class="form-floating col-1 pl-1 pr-0">
+              <input type="text" class="form-control form-control-sm " id="cepDestino" placeholder="Cep Destino" style="font-size: 10px !important;">
+              <label for="cepDestino" style="font-size: 11px !important;">Cep</label>
+            </div>
+            <div class="form-floating col-3 pl-1">
+              <input type="text" class="form-control form-control-sm" id="logradouroDestino" placeholder="Logradouro Destino">
+              <label for="logradouroDestino">Logradouro</label>
+            </div>
+            <div class="form-floating col-1 pl-1">
+              <input type="text" class="form-control form-control-sm" id="numeroDestino" placeholder="Logradouro Destino">
+              <label for="numeroDestino">Número</label>
+            </div>            
+            <div class="form-floating col-2 pl-1">
+              <input type="text" class="form-control form-control-sm" id="complementoDestino" placeholder="Complemento Destino">
+              <label for="complementoDestino">Complemento</label>
+            </div>
+            <div class="form-floating col-2 pl-1">
+              <input type="text" class="form-control form-control-sm" id="bairroDestino" placeholder="Bairro Destino">
+              <label for="bairroDestino">Bairro</label>
+            </div>
+            <div class="form-floating col-2 pl-1">
+              <input type="text" class="form-control form-control-sm" id="cidadeDestino" placeholder="Cidade Destino">
+              <label for="cidadeDestino">Cidade</label>
+            </div>
+            <div class="form-floating col-1 pl-1">
+              <input type="text" class="form-control form-control-sm" id="ufDestino" placeholder="Uf Destino">
+              <label for="ufDestino">Uf</label>
+            </div>
+           
             <div class="form-floating pl-1 mt-3 col-4">
               <input type="text" class="form-control" id="idNomeRota" readonly disabled=true>
               <label for="idNomeRota">Rota</label>

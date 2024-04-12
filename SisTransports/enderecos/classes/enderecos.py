@@ -14,6 +14,7 @@ class Enderecos:
         self.endereco.uf=dados['estado']
     
     def createEndereco(self,dados):
+        print(dados)
         try:
             self.dados=dados
             self.createOrUpdate(self.dados)

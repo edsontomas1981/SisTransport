@@ -17,7 +17,6 @@ def createParceiro(request):
             endereco=Enderecos()
             endereco.createEndereco(dados)
             dados['endereco_fk']=endereco.endereco
-            print(dados)
             parceiro=Parceiros()
 
             status=parceiro.createParceiro(dados)

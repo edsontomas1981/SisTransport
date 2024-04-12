@@ -1,8 +1,32 @@
-$('#inserirRota').on('click', function(e) {
-    dados = { 'url': '/rotas/createRota/' }
-    bdRota(dados, populaRota)
-    e.preventDefault();
+$('#inserirRota').on('click', async (e)=> {
+let camposObrigatorios = ["nomeRota","cepOrigem","logradouroOrigem","numeroOrigem",
+                        "bairroOrigem","cidadeOrigem","ufOrigem","cepDestino"
+                        ,"logradouroDestino","numeroDestino","bairroDestino",
+                        "cidadeDestino","ufDestino"]
+    let dados = obterDadosDoFormulario("frmRotas",camposObrigatorios)
+
+    let response  = await connEndpoint('/rotas/createRota/', dados);
+    console.log(response.status)
+    switch (response.status) {
+        case 200:
+            msgOk("A rota foi salva com sucesso.")
+            break;
+        case 422:
+            msgErro("O nome da rota já está em uso. Por favor, escolha outro nome.")
+            break;
+        default:
+            msgErro("Não foi possível concluir a operação. Por favor, tente novamente mais tarde.")
+            break;
+    }
+    
 })
+
+
+const preparaDados = ()=>{
+
+}
+
+
 
 function populaRota(response) {
     $('#idRota').val(response.rota.id)

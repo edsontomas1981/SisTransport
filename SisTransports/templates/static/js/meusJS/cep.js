@@ -13,6 +13,13 @@ $('#btnBuscaCep').on('click', function(e){
     e.preventDefault();
 });
 
+document.getElementById('cepOrigem').addEventListener('blur',()=>{
+    busca_cep('cepOrigem','logradouroOrigem','bairroOrigem','cidadeOrigem','ufOrigem')
+})
+
+document.getElementById('cepDestino').addEventListener('blur',()=>{
+    busca_cep('cepDestino','logradouroDestino','bairroDestino','cidadeDestino','ufDestino')
+})
 
 function meu_callback(conteudo,rua,bairro, cidade, uf) {
     if (!("erro" in conteudo)) {
