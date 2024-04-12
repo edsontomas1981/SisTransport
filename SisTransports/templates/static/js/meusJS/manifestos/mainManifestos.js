@@ -179,5 +179,119 @@ const limpaContratoFrete= (response)=>{
     document.getElementById('freteAPagar').value = ""
 }
 
+const preparaImpressaoManifesto =(response,comFrete=true)=>{
+    let dados = []
+    const tipoFrete = (tipo)=>{
+        switch (tipo) {
+            case 1:
+                return "CIF"
+                break;
+            case 2:
+                return "FOB"
+                break;
+            default:
+                return "OUTROS";
+        }
+    }
+
+    const determinarFonteColetaOuNfs = (e)=>{
+        let volume = 0
+        let peso = 0
+        let cubagem = 0
+        let valorNf = 0
+
+        if(e.dtc_fk.notas_fiscais.length > 0){
+            e.dtc_fk.notas_fiscais.forEach(element => {
+                volume += parseFloat(element.volume)
+                peso += parseFloat(element.peso)
+                cubagem += parseFloat(element.m3)
+                valorNf += parseFloat(element.valor_nf)
+            });
+        }else{
+            volume += parseFloat(e.dtc_fk.coleta.volume)
+            peso += parseFloat(e.dtc_fk.coleta.peso)
+            cubagem += parseFloat(e.dtc_fk.coleta.cubM3)
+            valorNf += parseFloat(e.dtc_fk.coleta.valor)
+        }
+
+        return{"volume":volume+"",
+            "peso":peso+"",
+            "cubagem":cubagem+"",
+            "valorNf":valorNf+""}
+    }
+    if(comFrete){
+            response.forEach(e => {
+            const remetente = e.dtc_fk.remetente ? e.dtc_fk.remetente.raz_soc : " ";
+            const destinatario = e.dtc_fk.destinatario ? e.dtc_fk.destinatario.raz_soc : " ";
+            const destino = e.dtc_fk.rota ? `${e.dtc_fk.rota.destinoUf}-${e.dtc_fk.rota.destinoCidade}` : " ";
+            const cteId = e.cte ? e.cte.id +"" : ""; // Verifica se cte existe antes de acessar id
+            const dtcId = e.dtc_fk ? e.dtc_fk.id + "" : ""
+            const freteCte = e.cte ? e.cte.totalFrete +"" : "0.00";
+
+            let nfs = {}
+            nfs.nfs = e.dtc_fk.notas_fiscais
+            let dadosColetaEntrega = determinarFonteColetaOuNfs(e)
+
+            dados.push([
+                dtcId,cteId,remetente,destinatario,destino,
+                truncateString(geraTextoNf(nfs),17),
+                dadosColetaEntrega.volume,dadosColetaEntrega.peso,dadosColetaEntrega.cubagem,dadosColetaEntrega.valorNf,
+                `R$ ${freteCte}`,
+                tipoFrete(e.dtc_fk.tipoFrete)
+            ]);
+        });
+    }else{
+        response.forEach(e => {
+            const remetente = e.dtc_fk.remetente ? e.dtc_fk.remetente.raz_soc : " ";
+            const destinatario = e.dtc_fk.destinatario ? e.dtc_fk.destinatario.raz_soc : " ";
+            const destino = e.dtc_fk.rota ? `${e.dtc_fk.rota.destinoUf}-${e.dtc_fk.rota.destinoCidade}` : " ";
+            const cteId = e.cte ? e.cte.id +"" : ""; // Verifica se cte existe antes de acessar id
+            const dtcId = e.dtc_fk ? e.dtc_fk.id + "" : ""
+            const freteCte = e.cte ? e.cte.totalFrete +"" : "0.00";
+
+            let nfs = {}
+            nfs.nfs = e.dtc_fk.notas_fiscais
+            let dadosColetaEntrega = determinarFonteColetaOuNfs(e)
+
+            dados.push([
+                dtcId,cteId,remetente,destinatario,destino,
+                truncateString(geraTextoNf(nfs),17),
+                dadosColetaEntrega.volume,dadosColetaEntrega.peso,dadosColetaEntrega.cubagem,dadosColetaEntrega.valorNf,
+                tipoFrete(e.dtc_fk.tipoFrete)
+            ]);
+        });
+    }
+
+    return dados
+}
+
+const cabecalhoManifesto = (response)=>{
+    console.log(response.manifesto)
+    return{
+    numManifesto:response.manifesto.id,
+    emissor:response.manifesto.emissor_fk.razao,
+    enderecoOrigem:response.manifesto.emissor_fk.endereco.logradouro,
+    numOrigem:response.manifesto.emissor_fk.endereco.numero,
+    bairroOrigem:response.manifesto.emissor_fk.endereco.bairro,
+    cidadeOrigem:response.manifesto.emissor_fk.endereco.cidade,
+    ufOrigem:response.manifesto.emissor_fk.endereco.uf,
+
+    destinatario:"Serafim Transportes de Cargas Ltda",
+    enderecoDestinatario:"Rua Nova Veneza",
+    numDestinatario:"179",
+    bairroDestinatario:"Teste",
+    cidadeDestinatario:"Teresina",
+    ufDestinatario:"PI",
+    dataSaida:formataDataPtBr(response.manifesto.data_cadastro),
+
+    veiculo:response.manifesto.veiculos[0].placa,
+    carreta:response.manifesto.veiculos[1] ? response.manifesto.veiculos[1].placa: null ,
+    motorista:response.manifesto.motoristas[0].parceiro_fk.raz_soc,
+    cpfMotorista: response.manifesto.motoristas[0].parceiro_fk.cnpj_cpf,
+    foneMotorista:"11-96926-2277",
+    liberacaoMotorista:response.manifesto.liberacao,
+    lacres:response.manifesto.lacres}
+}
+
 
 

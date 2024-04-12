@@ -1,41 +1,5 @@
 let btnGeraManifestoSemFrete = document.getElementById("gerarPdfSemFrete")
 
-const dadosTabelaSemFrete = [
-    ["455088", "253600", "Mercante Brasil Equipamentos","Serafim Transportes de cargas Ltda","MA-SÃO LUIS","23213/120946/35566","9999","99999","99999","9.999.999,99","CIF"],
-    ["455088", "253601", "Mercante Brasil Equipamentos","Serafim Transportes de cargas Ltda","MA-SÃO LUIS","23213/120946/35566","9999","99999","99999","9.999.999,99","CIF"],
-    ["455088", "253602", "Mercante Brasil Equipamentos","Serafim Transportes de cargas Ltda","MA-SÃO LUIS","23213/120946/35566","9999","99999","99999","9.999.999,99","CIF"],
-    ["455088", "253603", "Mercante Brasil Equipamentos","Serafim Transportes de cargas Ltda","MA-SÃO LUIS","23213/120946/35566","9999","99999","99999","9.999.999,99","CIF"],
-    ["455088", "253604", "Mercante Brasil Equipamentos","Serafim Transportes de cargas Ltda","MA-SÃO LUIS","23213/120946/35566","9999","99999","99999","9.999.999,99","CIF"],
-    ["455088", "253605", "Mercante Brasil Equipamentos","Serafim Transportes de cargas Ltda","MA-SÃO LUIS","23213/120946/35566","9999","99999","99999","9.999.999,99","CIF"],
-    ["455088", "253606", "Mercante Brasil Equipamentos","Serafim Transportes de cargas Ltda","MA-SÃO LUIS","23213/120946/35566","9999","99999","99999","9.999.999,99","CIF"],
-    ["455088", "253607", "Mercante Brasil Equipamentos","Serafim Transportes de cargas Ltda","MA-SÃO LUIS","23213/120946/35566","9999","99999","99999","9.999.999,99","CIF"],
-    ["455088", "253608", "Mercante Brasil Equipamentos","Serafim Transportes de cargas Ltda","MA-SÃO LUIS","23213/120946/35566","9999","99999","99999","9.999.999,99","CIF"],
-    ["455088", "253609", "Mercante Brasil Equipamentos","Serafim Transportes de cargas Ltda","MA-SÃO LUIS","23213/120946/35566","9999","99999","99999","9.999.999,99","CIF"],
-    ["455088", "253610", "Mercante Brasil Equipamentos","Serafim Transportes de cargas Ltda","MA-SÃO LUIS","23213/120946/35566","9999","99999","99999","9.999.999,99","CIF"],
-    ["455088", "253611", "Mercante Brasil Equipamentos","Serafim Transportes de cargas Ltda","MA-SÃO LUIS","23213/120946/35566","9999","99999","99999","9.999.999,99","CIF"],
-    ["455088", "253612", "Mercante Brasil Equipamentos","Serafim Transportes de cargas Ltda","MA-SÃO LUIS","23213/120946/35566","9999","99999","99999","9.999.999,99","CIF"],
-    ["455088", "253613", "Mercante Brasil Equipamentos","Serafim Transportes de cargas Ltda","MA-SÃO LUIS","23213/120946/35566","9999","99999","99999","9.999.999,99","CIF"],
-    ["455088", "253614", "Mercante Brasil Equipamentos","Serafim Transportes de cargas Ltda","MA-SÃO LUIS","23213/120946/35566","9999","99999","99999","9.999.999,99","CIF"],
-    ["455088", "253615", "Mercante Brasil Equipamentos","Serafim Transportes de cargas Ltda","MA-SÃO LUIS","23213/120946/35566","9999","99999","99999","9.999.999,99","CIF"],
-    ["455088", "253616", "Mercante Brasil Equipamentos","Serafim Transportes de cargas Ltda","MA-SÃO LUIS","23213/120946/35566","9999","99999","99999","9.999.999,99","CIF"],
-    ["455088", "253617", "Mercante Brasil Equipamentos","Serafim Transportes de cargas Ltda","MA-SÃO LUIS","23213/120946/35566","9999","99999","99999","9.999.999,99","CIF"],
-    ["455088", "253618", "Mercante Brasil Equipamentos","Serafim Transportes de cargas Ltda","MA-SÃO LUIS","23213/120946/35566","9999","99999","99999","9.999.999,99","CIF"],
-    ["455088", "253619", "Mercante Brasil Equipamentos","Serafim Transportes de cargas Ltda","MA-SÃO LUIS","23213/120946/35566","9999","99999","99999","9.999.999,99","CIF"],
-    ["455088", "253620", "Mercante Brasil Equipamentos","Serafim Transportes de cargas Ltda","MA-SÃO LUIS","23213/120946/35566","9999","99999","99999","9.999.999,99","CIF"],
-    ["455088", "253621", "Mercante Brasil Equipamentos","Serafim Transportes de cargas Ltda","MA-SÃO LUIS","23213/120946/35566","9999","99999","99999","9.999.999,99","CIF"],
-    ["455088", "253622", "Mercante Brasil Equipamentos","Serafim Transportes de cargas Ltda","MA-SÃO LUIS","23213/120946/35566","9999","99999","99999","9.999.999,99","CIF"],
-    ["455088", "253623", "Mercante Brasil Equipamentos","Serafim Transportes de cargas Ltda","MA-SÃO LUIS","23213/120946/35566","9999","99999","99999","9.999.999,99","CIF"],
-    ["455088", "253624", "Mercante Brasil Equipamentos","Serafim Transportes de cargas Ltda","MA-SÃO LUIS","23213/120946/35566","9999","99999","99999","9.999.999,99","CIF"],
-    ["455088", "253625", "Mercante Brasil Equipamentos","Serafim Transportes de cargas Ltda","MA-SÃO LUIS","23213/120946/35566","9999","99999","99999","9.999.999,99","CIF"],
-    ["455088", "253626", "Mercante Brasil Equipamentos","Serafim Transportes de cargas Ltda","MA-SÃO LUIS","23213/120946/35566","9999","99999","99999","9.999.999,99","CIF"],
-    ["455088", "253627", "Mercante Brasil Equipamentos","Serafim Transportes de cargas Ltda","MA-SÃO LUIS","23213/120946/35566","9999","99999","99999","9.999.999,99","CIF"],
-    ["455088", "253628", "Mercante Brasil Equipamentos","Serafim Transportes de cargas Ltda","MA-SÃO LUIS","23213/120946/35566","9999","99999","99999","9.999.999,99","CIF"],
-    ["455088", "253629", "Mercante Brasil Equipamentos","Serafim Transportes de cargas Ltda","MA-SÃO LUIS","23213/120946/35566","9999","99999","99999","9.999.999,99","CIF"],
-    ["455088", "253630", "Mercante Brasil Equipamentos","Serafim Transportes de cargas Ltda","MA-SÃO LUIS","23213/120946/35566","9999","99999","99999","9.999.999,99","CIF"],
-    ["455088", "253631", "Mercante Brasil Equipamentos","Serafim Transportes de cargas Ltda","MA-SÃO LUIS","23213/120946/35566","9999","99999","99999","9.999.999,99","CIF"],
-    ["455088", "253632", "Mercante Brasil Equipamentos","Serafim Transportes de cargas Ltda","MA-SÃO LUIS","23213/120946/35566","9999","99999","99999","9.999.999,99","CIF"],
-];
-
 const corTituloSemFrete = "#404040"; // Cor para os títulos
 const corParSemFrete = "#CCCCCC"; // Cor para linhas pares
 const corImparSemFrete = "#FFFFFF"; // Cor para linhas ímpares
@@ -44,10 +8,14 @@ const titulosTabelaSemFrete = ["Dtc", "Cte", "Remetente", "Destinatário",
                        "Destino","Nf's","Vols","Peso","Cubagem",
                         "Valor NF","Tipo Frete"];
 
-btnGeraManifestoSemFrete.addEventListener("click",()=>{
-    gerarPdfSemFrete(dadosTabelaSemFrete,titulosTabelaSemFrete,largurasColunasSemFrete,corTituloSemFrete,corParSemFrete,corImparSemFrete);
-})                        
-
+btnGeraManifestoSemFrete.addEventListener("click",async()=>{
+    let idManifesto = document.getElementById('spanNumManifesto').textContent
+    let response  = await connEndpoint('/operacional/get_manifesto_by_num/', {'numManifesto':idManifesto});
+    const jsonManifesto= cabecalhoManifesto(response)
+    gerarPdfSemFrete(preparaImpressaoManifesto(response.documentos,false),titulosTabelaSemFrete,
+                                                largurasColunasSemFrete,corTituloSemFrete,
+                                                corParSemFrete,corImparSemFrete,jsonManifesto);
+})             
   /**
  * Função para gerar e exibir um PDF com uma tabela.
  * @param {Array} dadosTabela - Array bidimensional contendo os dados da tabela.
@@ -58,35 +26,12 @@ btnGeraManifestoSemFrete.addEventListener("click",()=>{
  * @param {string} corImpar - Cor das linhas ímpares da tabela.
  */
 const gerarPdfSemFrete = (dadosTabela, titulosTabela, largurasColunas, corTitulo,
-                          corPar, corImpar) => {
+                          corPar, corImpar,jsonManifesto) => {
 
     // Criar instância do objeto jsPDF
     const doc = new jsPDF("landscape");
 
-    const jsonManifesto={
-      numManifesto:15,
-      emissor:"Serafim Transportes de Cargas Ltda",
-      enderecoOrigem:"Rua Nove Veneza",
-      numOrigem:"172",
-      bairroOrigem:"Cumbica",
-      cidadeOrigem:"Guarulhos",
-      ufOrigem:"SP",
-      destinatario:"Serafim Transportes de Cargas Ltda",
-      enderecoDestinatario:"Rua Nova Veneza",
-      numDestinatario:"179",
-      bairroDestinatario:"Teste",
-      cidadeDestinatario:"Teresina",
-      ufDestinatario:"PI",
-      dataSaida:"17/10/2007",
 
-      veiculo:"AWY1749",
-      carreta:"AES5762",
-      motorista:"Edson Tomas da Silva",
-      cpfMotorista: "307.843.158-41",
-      foneMotorista:"11-96926-2277",
-      liberacaoMotorista:"624446",
-      lacres:"10/20/30/40/50/60/70/80/90/100"
-    }
 
     // Definir coordenadas iniciais da tabela
     let x = 5;
