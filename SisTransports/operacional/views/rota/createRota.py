@@ -71,11 +71,11 @@ def createRota(request):
                 return JsonResponse({'status': 422, 'error': f'O campo {field} é obrigatório.'})
 
         # Salvar a rota
-        status = Rota.salvaRota(dados)
-        if status == 422:
+        rota = Rota.salvaRota(dados)
+        if rota == 422:
             return JsonResponse({'status': 422})  # Cadastro efetuado com sucesso    
         
-        return JsonResponse({'status': 200})  # Cadastro efetuado com sucesso
+        return JsonResponse({'status': 200,'dados':rota.rota.to_dict()})  # Cadastro efetuado com sucesso
     except json.JSONDecodeError:
         return JsonResponse({'status': 400, 'error': 'Erro ao decodificar o JSON.'})
     except Exception as e:

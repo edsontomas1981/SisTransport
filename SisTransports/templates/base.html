@@ -115,14 +115,24 @@
         {% include 'rodape.html'%}
     </div>
 
+
     <!-- Js de outras Paginas -->
     {% block 'js'%} {% endblock %}
 
+
+
+
+
+    
+
+
     <!-- plugins:js -->
     <script src="{% static 'js/meusJS/utils.js' %}"></script>
-
-    <script src="{% static 'vendors/js/vendor.bundle.base.js' %}"></script>
-    <!-- endinject -->
+    
+    <script src="{% static 'js/meusJS/tabela.js' %}"></script>
+    <script src="{% static 'js/meusJS/components/tabela/faixas/faixas.js' %}"></script>  
+    <script src="{% static 'js/meusJS/components/tabela/Tabela.js' %}"></script>
+    <script src="{% static 'js/meusJS/components/tabela/salvaTabela.js' %}"></script>
 
     <script src="{% static 'js/meusJS/dadosEmpresa.js' %}"></script>
 
@@ -144,6 +154,9 @@
     <!-- <script src="{% static 'js/Chart.roundedBarCharts.js' %}"></script> -->
 
     <!--Meus Js-->
+
+
+
     <script src="{% static 'js/meusJS/cadastroProprietarios/txtCnpjProp.js' %}"></script>
     <script src="{% static 'js/meusJS/cadastroProprietarios/btnLimpaCnpjProp.js' %}"></script>
     <script src="{% static 'js/meusJS/cadastroProprietarios/btnBuscaProp.js' %}"></script>
@@ -161,12 +174,14 @@
     <script src="{% static 'js/meusJS/cubagem.js' %}"></script>
     <script src="{% static 'js/meusJS/salvarDtc.js' %}"></script>
     <script src="{% static 'js/meusJS/endereco.js' %}"></script>
-    <script src="{% static 'js/meusJS/components/tabela/faixas/faixas.js' %}"></script>  
+    <script src="{% static 'js/meusJS/components/tabela/faixas/faixas.js' %}"></script>
+    
+
+
     <script src="{% static 'js/meusJS/cmbRota.js' %}"></script>
     <script src="{% static 'js/meusJS/components/tabela/anexaParceiro/anexaParceiro.js' %}"></script>
     <script src="{% static 'js/meusJS/components/tabela/mdlTabela.js' %}"></script>
     <script src="{% static 'js/meusJS/parceiro.js' %}"></script>
-    <script src="{% static 'js/meusJS/tabela.js' %}"></script>
     <script src="{% static 'js/meusJS/novoDadosParceiro.js' %}"></script>
     <script src="{% static 'js/meusJS/populaTbody.js' %}"></script>
 
@@ -184,6 +199,8 @@
     <script src="{% static 'js/meusJS/modalVeiculos/btnSalvar.js' %}"></script>
     <script src="{% static 'js/meusJS/modalVeiculos/txtCpf.js' %}"></script>
 
+    <script src="{% static 'vendors/js/vendor.bundle.base.js' %}"></script>
+    <!-- endinject -->
 
 
 </body>

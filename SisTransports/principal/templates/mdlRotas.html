@@ -4,13 +4,25 @@
   <div class="modal" id="mdlRotas" tabindex="-1"data-bs-backdrop="static" 
       data-bs-keyboard="false" aria-labelledby="staticBackdropLabel" 
       aria-hidden="true">
-    <div class="modal-dialog modal-xl" >
+    <div class="modal-dialog modal-xl altura-modal-topo" >
         <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title">Cadastrar Rotas</h5>
-          <button type="button" class="btn-close" onclick="closeModal()"></button>
+        <div class="modal-header" style="padding : 7px 0px 7px 10px !important;">
+          <h5 class="modal-title pt-2">Cadastrar Rotas</h5>
+          <div>
+            <div class="input-group" align="right">
+              <button type="button" class="btn btn-secondary btn-rounded btn-icon" id="btnLimpaRota" align=right>            
+                <i class="ti-write"></i>
+              </button>
+              <button type="button" class="btn btn-success btn-rounded btn-icon" id="inserirRota" align=right>            
+                <i class="ti-save"></i>
+              </button>
+              <button type="button" class="btn btn-danger btn-rounded btn-icon"  onclick="closeModal()" align=right>
+                <i class="ti-close"></i>
+              </button>
+            </div>
+          </div>  
         </div>
-        <div class="modal-body ">
+        <div class="modal-body">
           <div class="row">
             <div class="form-floating pl-1 pr-0 col-2 mb-3">
               <input type="text" class="form-control limpa" id="idRota" name="idRota" placeholder="Ex: SAOXRIO" readonly disabled=true value="">
@@ -20,9 +32,7 @@
               <input type="text" class="form-control limpa" id="nomeRota" name="nomeRota" placeholder="Ex: SAOXRIO">
               <label for="nomeRota">Insira o nome da rota</label>
             </div>
-            <div class="pr-0 col-3 mb-3">
-              <a class="btn btn-primary btn-lg" id="inserirRota">Inserir Rota</a>
-            </div>
+
             <span class="text-primary">Endereço Origem</span>
             <div class="form-floating col-1 pl-1 pr-0">
               <input type="text" class="form-control form-control-sm" id="cepOrigem" placeholder="Cep Origem" style="font-size: 10px !important;">
@@ -42,7 +52,7 @@
             </div>
             <div class="form-floating col-2 pl-1">
               <input type="text" class="form-control form-control-sm" id="bairroOrigem" placeholder="Bairro Origem">
-              <label for="    ">Bairro</label>
+              <label for="bairroOrigem">Bairro</label>
             </div>
             <div class="form-floating col-2 pl-1">
               <input type="text" class="form-control form-control-sm" id="cidadeOrigem" placeholder="Cidade Origem">
@@ -145,10 +155,6 @@
               </table>
             </div>                           
           </div>
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
-          <button type="button" class="btn btn-primary">Salvar</button>
         </div>
       </div>
     </div>

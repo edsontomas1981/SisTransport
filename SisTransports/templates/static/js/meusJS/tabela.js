@@ -14,6 +14,14 @@ function conectaBdGeral(dados, callback) {
         }
     });
 }
+let divPaginaTabelas = document.getElementById("divPaginaTabelas")
+if (divPaginaTabelas){
+    alert('pagina correta')
+    divPaginaTabelas.addEventListener('load',()=>{
+        populaRelatTabelas()
+    })
+}
+
 
 // Eventos
 $(window).load(function() {
@@ -312,6 +320,7 @@ const populaSelectTabelas = (idSelect,dados) => {
 
 }
 const populaRelatTabelas= async () => {
+    console.log("populaRelatTabelas")
     let botoes={
         alterar: {
             classe: "btn-primary text-white",

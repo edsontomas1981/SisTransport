@@ -3,12 +3,13 @@ let camposObrigatorios = ["nomeRota","cepOrigem","logradouroOrigem","numeroOrige
                         "bairroOrigem","cidadeOrigem","ufOrigem","cepDestino"
                         ,"logradouroDestino","numeroDestino","bairroDestino",
                         "cidadeDestino","ufDestino"]
+                        
     let dados = obterDadosDoFormulario("frmRotas",camposObrigatorios)
 
     let response  = await connEndpoint('/rotas/createRota/', dados);
-    console.log(response.status)
     switch (response.status) {
         case 200:
+            populaRota(response)
             msgOk("A rota foi salva com sucesso.")
             break;
         case 422:
@@ -22,15 +23,10 @@ let camposObrigatorios = ["nomeRota","cepOrigem","logradouroOrigem","numeroOrige
 })
 
 
-const preparaDados = ()=>{
-
-}
-
-
-
 function populaRota(response) {
-    $('#idRota').val(response.rota.id)
-    $('#idNomeRota').val(response.rota.nome)
+    console.log(response)
+    $('#idRota').val(response.dados.id)
+    $('#idNomeRota').val(response.dados.nome)
     limpa()
 }
 
