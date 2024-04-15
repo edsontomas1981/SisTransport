@@ -1,0 +1,101 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block 'cabecalho' %}
+<!-- Leaflet Mapas -->
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="" />  
+{% endblock %}
+{% block 'conteudo' %}
+<div class="contrainer">
+    <div class="row">
+        <div class="col-sm-8">
+            <div id="mapaRoteirizacaoColetas" style="height: 500px; display: block;"></div>
+        </div>
+    </div>
+</div>
+
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+<script>
+
+    const geraCoordenadas = ()=>{
+        // Coordenadas aproximadas para São Paulo e Grande São Paulo
+        var saoPauloBounds = {
+            north: -23.356792,
+            south: -24.000071,
+            west: -46.825123,
+            east: -46.365582
+        };
+
+        // Número de linhas e colunas para a grade
+        var rows = 6;
+        var cols = 10;
+
+        // Calcula o intervalo de latitude e longitude
+        var latInterval = (saoPauloBounds.north - saoPauloBounds.south) / rows;
+        var lngInterval = (saoPauloBounds.east - saoPauloBounds.west) / cols;
+
+        // Lista para armazenar as coordenadas geradas
+        var coordenadas = [];
+
+        // Loop para gerar as coordenadas da grade
+        for (var i = 0; i < rows; i++) {
+            for (var j = 0; j < cols; j++) {
+                // Calcula as coordenadas para o ponto na grade
+                var lat = saoPauloBounds.south + latInterval * i + Math.random() * latInterval * 0.8;
+                var lng = saoPauloBounds.west + lngInterval * j + Math.random() * lngInterval * 0.8;
+                coordenadas.push([lat, lng]);
+            }
+        }
+
+        // Exibe as coordenadas geradas
+        return coordenadas ;
+    }
+
+
+    var map = L.map('mapaRoteirizacaoColetas').setView([-23.473147443589152, -46.47311417330458], 10);
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+    }).addTo(map);
+
+    // Array de coordenadas dos marcadores
+    var coordenadasMarcadores = geraCoordenadas()
+
+    var iconeArmazem = L.icon({
+                iconUrl: '{% static "images/mapasIcones/armazem.png" %}',
+                iconSize: [32, 32], // Tamanho do ícone do veículo
+                iconAnchor: [16, 16], // Ponto de ancoragem do ícone
+            });
+
+    var marker = L.marker([-23.473147443589152, -46.47311417330458], {icon: iconeArmazem}).addTo(map);
+
+    // Adiciona cada marcador ao mapa
+    coordenadasMarcadores.forEach(function(coordenadas, index) {
+        // Verifica se é a primeira localização (para o veículo)
+        if (index === 0) {
+            var iconeVeiculo = L.icon({
+                iconUrl: '{% static "images/mapasIcones/caminhao.png" %}',
+                iconSize: [32, 32], // Tamanho do ícone do veículo
+                iconAnchor: [16, 16], // Ponto de ancoragem do ícone
+            });
+            var marker = L.marker(coordenadas, {icon: iconeVeiculo}).addTo(map);
+            // Adiciona evento de clique ao marcador do veículo
+            marker.on('click', function() {
+                alert('Clicou no ícone do veículo!');
+            });
+        } else {
+            var marker = L.marker(coordenadas).addTo(map); // Marcadores normais para outras localizações
+            // Adiciona evento de clique aos marcadores normais
+            marker.on('click', function() {
+                alert('Clicou em um marcador normal!');
+            });
+        }
+    });
+
+
+</script>
+
+{% endblock %}
+
+{% block js %} 
+
+{% endblock %}

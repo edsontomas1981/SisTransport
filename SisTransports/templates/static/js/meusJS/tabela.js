@@ -320,7 +320,6 @@ const populaSelectTabelas = (idSelect,dados) => {
 
 }
 const populaRelatTabelas= async () => {
-    console.log("populaRelatTabelas")
     let botoes={
         alterar: {
             classe: "btn-primary text-white",
@@ -335,8 +334,10 @@ const populaRelatTabelas= async () => {
       };
     let tabelas = await carregaTabelas()
     tabelas = preparaDadosTabelas(tabelas.tabela)
-    popula_tbody_paginacao('paginacaoRelatTabelas','tbodyRelatorioTabelas',tabelas,botoes,1,10)
-    limpaForm()
+    if(document.getElementById("tbodyRelatorioTabelas")){
+        popula_tbody_paginacao('paginacaoRelatTabelas','tbodyRelatorioTabelas',tabelas,botoes,1,10)
+        limpaForm()
+    }
 }
 
 

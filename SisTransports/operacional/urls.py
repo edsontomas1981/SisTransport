@@ -10,6 +10,7 @@ urlpatterns = [
     path('readColetasGeral/',viewsOperacional.read_coletas_geral,name='readColetasGeral'),
     path('printColetas/',viewsOperacional.print_coletas,name='print'),
     path('impressaoColetas/',viewsOperacional.impressao_coletas,name='impressao_coletas'),
+    path('roteirizacao_coletas/',viewsOperacional.roteirizacao_coletas,name='roteirizacao_coletas'),
 
     path('createNf/',viewsOperacional.create_nf,name='createNf'),
     path('readNf/',viewsOperacional.read_nf,name='readNf'),
