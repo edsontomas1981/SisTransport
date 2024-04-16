@@ -4,24 +4,35 @@
 {% block 'cabecalho' %}
 <!-- Leaflet Mapas -->
 <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="" />  
+<title>Leaflet Routing Machine Example</title>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet-routing-machine/3.2.12/leaflet-routing-machine.css" />
 {% endblock %}
 {% block 'conteudo' %}
 <div class="contrainer">
     <div class="row">
+
+        <div class="card">
+              <h1>Roteirização</h1>
+            <div class="card-body">
+                <div id="map" style="height: 500px; display: block;"></div>
+                <!-- <p class="card-text">With supporting text below as a natural lead-in to additional content.</p> -->
+            </div>
+          </div>
         <div class="col-sm-8">
-            <div id="mapaRoteirizacaoColetas" style="height: 500px; display: block;"></div>
         </div>
     </div>
 </div>
 
-<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+<script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet-routing-machine/3.2.12/leaflet-routing-machine.js"></script>
 <script>
 
     const geraCoordenadas = ()=>{
         // Coordenadas aproximadas para São Paulo e Grande São Paulo
         var saoPauloBounds = {
             north: -23.356792,
-            south: -24.000071,
+            south: -23.7452,
             west: -46.825123,
             east: -46.365582
         };
@@ -51,45 +62,100 @@
         return coordenadas ;
     }
 
+    // Inicialize o mapa Leaflet
+    var map = L.map('map').setView([-23.5505, -46.6333], 13); // São Paulo coordinates
 
-    var map = L.map('mapaRoteirizacaoColetas').setView([-23.473147443589152, -46.47311417330458], 10);
+    // Adicione uma camada de mapeamento
     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
         attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
     }).addTo(map);
 
-    // Array de coordenadas dos marcadores
-    var coordenadasMarcadores = geraCoordenadas()
+    // Defina os pontos de partida e chegada
+    var start = L.latLng(-23.5505, -46.6333); // São Paulo coordinates
+    var end = L.latLng(-23.5629, -46.6544); // Another point coordinates
 
-    var iconeArmazem = L.icon({
-                iconUrl: '{% static "images/mapasIcones/armazem.png" %}',
-                iconSize: [32, 32], // Tamanho do ícone do veículo
-                iconAnchor: [16, 16], // Ponto de ancoragem do ícone
-            });
+    // Opções para o cálculo da rota
+    var routeOptions = {
+        waypoints: [
+            start,
+            end
+        ],
+        routeWhileDragging: true
+    };
 
-    var marker = L.marker([-23.473147443589152, -46.47311417330458], {icon: iconeArmazem}).addTo(map);
+    // Calcule a rota e armazene-a em uma variável
+    var routeControl = L.Routing.control(routeOptions);
+    routeControl.addTo(map); // Adicione o controle de roteamento ao mapa
 
-    // Adiciona cada marcador ao mapa
-    coordenadasMarcadores.forEach(function(coordenadas, index) {
-        // Verifica se é a primeira localização (para o veículo)
-        if (index === 0) {
-            var iconeVeiculo = L.icon({
-                iconUrl: '{% static "images/mapasIcones/caminhao.png" %}',
-                iconSize: [32, 32], // Tamanho do ícone do veículo
-                iconAnchor: [16, 16], // Ponto de ancoragem do ícone
-            });
-            var marker = L.marker(coordenadas, {icon: iconeVeiculo}).addTo(map);
-            // Adiciona evento de clique ao marcador do veículo
-            marker.on('click', function() {
-                alert('Clicou no ícone do veículo!');
-            });
+    routeControl.on('routingerror', function(e) {
+        console.error('Erro ao calcular a rota:', e.error);
+    });
+
+    routeControl.route(function(waypoints, routes) {
+        if (routes.length > 0) {
+            // A rota foi calculada com sucesso
+            var route = routes[0]; // Obtenha a primeira rota
+            console.log(route); // Exiba a rota no console
+            // Agora você pode usar a variável 'route' conforme necessário
         } else {
-            var marker = L.marker(coordenadas).addTo(map); // Marcadores normais para outras localizações
-            // Adiciona evento de clique aos marcadores normais
-            marker.on('click', function() {
-                alert('Clicou em um marcador normal!');
-            });
+            console.error('Não foi possível calcular a rota.');
         }
     });
+
+
+
+    // var map = L.map('mapaRoteirizacaoColetas').setView([-23.5505, -46.6333], 13); // São Paulo coordinates
+
+    // L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    //     attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+    // }).addTo(map);
+
+    // var control = L.Routing.control({
+    //     waypoints: [
+    //         L.latLng(-23.5505, -46.6333), // São Paulo coordinates
+    //         L.latLng(-23.5629, -46.6544)  // Another point coordinates
+    //     ],
+    //     routeWhileDragging: true
+    // }).addTo(map);
+
+    // var map = L.map('mapaRoteirizacaoColetas').setView([-23.473147443589152, -46.47311417330458], 10);
+    // L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    //     attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+    // }).addTo(map);
+
+    // // Array de coordenadas dos marcadores
+    // var coordenadasMarcadores = geraCoordenadas()
+
+    // var iconeArmazem = L.icon({
+    //             iconUrl: '{% static "images/mapasIcones/armazem.png" %}',
+    //             iconSize: [40, 40], // Tamanho do ícone do veículo
+    //             iconAnchor: [16, 16], // Ponto de ancoragem do ícone
+    //         });
+
+    // var base = L.marker([-23.473147443589152, -46.47311417330458], {icon: iconeArmazem}).addTo(map);
+
+    // // Adiciona cada marcador ao mapa
+    // coordenadasMarcadores.forEach(function(coordenadas, index) {
+    //     // Verifica se é a primeira localização (para o veículo)
+    //     if (index === 0) {
+    //         var iconeVeiculo = L.icon({
+    //             iconUrl: '{% static "images/mapasIcones/caminhao.png" %}',
+    //             iconSize: [32, 32], // Tamanho do ícone do veículo
+    //             iconAnchor: [16, 16], // Ponto de ancoragem do ícone
+    //         });
+    //         var marker = L.marker(coordenadas, {icon: iconeVeiculo}).addTo(map);
+    //         // Adiciona evento de clique ao marcador do veículo
+    //         marker.on('click', function() {
+    //             alert('Clicou no ícone do veículo!');
+    //         });
+    //     } else {
+    //         var marker = L.marker(coordenadas).addTo(map); // Marcadores normais para outras localizações
+    //         // Adiciona evento de clique aos marcadores normais
+    //         marker.on('click', function() {
+    //             alert('Clicou em um marcador normal!');
+    //         });
+    //     }
+    // });
 
 
 </script>
