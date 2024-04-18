@@ -2,32 +2,52 @@
 {% load static %}
 
 {% block 'cabecalho' %}
-<!-- Leaflet Mapas -->
-<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="" />  
-<title>Leaflet Routing Machine Example</title>
-    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet-routing-machine/3.2.12/leaflet-routing-machine.css" />
+<!-- Google Maps -->
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCj2Tn5LiWlTUgevFKlQ7aUku8ZxYyjyXM"></script>
+
 {% endblock %}
 {% block 'conteudo' %}
-<div class="contrainer">
+<div class="container">
     <div class="row">
-
-        <div class="card">
-              <h1>Roteirização</h1>
-            <div class="card-body">
-                <div id="map" style="height: 500px; display: block;"></div>
-                <!-- <p class="card-text">With supporting text below as a natural lead-in to additional content.</p> -->
+        <div class="col-sm-6 mt-3">
+          <div id="map" style="height: 500px;width: 1000px; display: block; border-radius: 10px;"></div>
+        </div>        
+    </div>
+    <!-- Button trigger modal -->
+    <button type="button" class="btn btn-primary" onclick="openModal('mdlMapa')" style="border-radius: 10px !important;">
+        Launch demo modal
+    </button>
+    
+    <div class="modal altura-modal-topo" id="mdlMapa" tabindex="-1" data-bs-backdrop="static"
+    data-bs-keyboard="false" aria-labelledby="staticBackdropLabel" 
+    aria-hidden="true">
+    <div class="modal-dialog modal-lg modal-dialog-scrollable margin-topo-modal" >  
+      <div class="modal-content">
+        <div class="modal-header cabecalho-modal-parceiro">
+          <h5 class="modal-title">Mapas Coletas</h5>
+          <div>
+            <div class="input-group" align="right">
+              <button type="button" class="btn btn-secondary btn-rounded btn-icon" id="btnLimpaParceiros" align=right>            
+                <i class="ti-write"></i>
+              </button>
+              <button type="button" class="btn btn-success btn-rounded btn-icon" id="salvaParceiro" align=right>            
+                <i class="ti-save"></i>
+              </button>
+              <button type="button" class="btn btn-danger btn-rounded btn-icon" id="btnClose" onclick="closeModal()" align=right>
+                <i class="ti-close"></i>
+              </button>
             </div>
-          </div>
-        <div class="col-sm-8">
+          </div>  
+        </div>
+        <div class="corpo-modal-parceiros modal-body">
+            <div id="map" style="height: 500px; display: block;"></div>
         </div>
     </div>
+  </div>
+
+
 </div>
-
-<script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet-routing-machine/3.2.12/leaflet-routing-machine.js"></script>
 <script>
-
     const geraCoordenadas = ()=>{
         // Coordenadas aproximadas para São Paulo e Grande São Paulo
         var saoPauloBounds = {
@@ -62,102 +82,41 @@
         return coordenadas ;
     }
 
-    // Inicialize o mapa Leaflet
-    var map = L.map('map').setView([-23.5505, -46.6333], 13); // São Paulo coordinates
+    function initMap() {
+    // Coordenadas iniciais
+    var myLatLng = { lat: -23.47337308, lng: -46.47320867 };
 
-    // Adicione uma camada de mapeamento
-    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-        attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-    }).addTo(map);
+    // Cria um novo mapa do Google
+    var map = new google.maps.Map(document.getElementById('map'), {
+        center: myLatLng,
+        zoom: 10.3 // Ajuste o zoom conforme necessário
+    });
 
-    // Defina os pontos de partida e chegada
-    var start = L.latLng(-23.5505, -46.6333); // São Paulo coordinates
-    var end = L.latLng(-23.5629, -46.6544); // Another point coordinates
+    // Obtém as coordenadas geradas pela função geraCoordenadas
+    var coordenadasGeradas = geraCoordenadas();
 
-    // Opções para o cálculo da rota
-    var routeOptions = {
-        waypoints: [
-            start,
-            end
-        ],
-        routeWhileDragging: true
+    // Define o tamanho do ícone do marcador
+    var iconSize = {
+        width: 20, // Largura desejada em pixels
+        height: 20 // Altura desejada em pixels
     };
 
-    // Calcule a rota e armazene-a em uma variável
-    var routeControl = L.Routing.control(routeOptions);
-    routeControl.addTo(map); // Adicione o controle de roteamento ao mapa
-
-    routeControl.on('routingerror', function(e) {
-        console.error('Erro ao calcular a rota:', e.error);
+    // Adiciona marcadores para cada conjunto de coordenadas
+    coordenadasGeradas.forEach(function(coordenadas) {
+        var marker = new google.maps.Marker({
+            position: { lat: coordenadas[0], lng: coordenadas[1] },
+            map: map,
+            icon: {
+                url:"{% static 'images/mapasIcones/localizacaoVermelho.png' %}", // URL do ícone do marcador
+                scaledSize: new google.maps.Size(iconSize.width, iconSize.height) // Tamanho do ícone escalado
+            }
+        });
     });
-
-    routeControl.route(function(waypoints, routes) {
-        if (routes.length > 0) {
-            // A rota foi calculada com sucesso
-            var route = routes[0]; // Obtenha a primeira rota
-            console.log(route); // Exiba a rota no console
-            // Agora você pode usar a variável 'route' conforme necessário
-        } else {
-            console.error('Não foi possível calcular a rota.');
-        }
-    });
+}
 
 
-
-    // var map = L.map('mapaRoteirizacaoColetas').setView([-23.5505, -46.6333], 13); // São Paulo coordinates
-
-    // L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-    //     attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-    // }).addTo(map);
-
-    // var control = L.Routing.control({
-    //     waypoints: [
-    //         L.latLng(-23.5505, -46.6333), // São Paulo coordinates
-    //         L.latLng(-23.5629, -46.6544)  // Another point coordinates
-    //     ],
-    //     routeWhileDragging: true
-    // }).addTo(map);
-
-    // var map = L.map('mapaRoteirizacaoColetas').setView([-23.473147443589152, -46.47311417330458], 10);
-    // L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-    //     attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-    // }).addTo(map);
-
-    // // Array de coordenadas dos marcadores
-    // var coordenadasMarcadores = geraCoordenadas()
-
-    // var iconeArmazem = L.icon({
-    //             iconUrl: '{% static "images/mapasIcones/armazem.png" %}',
-    //             iconSize: [40, 40], // Tamanho do ícone do veículo
-    //             iconAnchor: [16, 16], // Ponto de ancoragem do ícone
-    //         });
-
-    // var base = L.marker([-23.473147443589152, -46.47311417330458], {icon: iconeArmazem}).addTo(map);
-
-    // // Adiciona cada marcador ao mapa
-    // coordenadasMarcadores.forEach(function(coordenadas, index) {
-    //     // Verifica se é a primeira localização (para o veículo)
-    //     if (index === 0) {
-    //         var iconeVeiculo = L.icon({
-    //             iconUrl: '{% static "images/mapasIcones/caminhao.png" %}',
-    //             iconSize: [32, 32], // Tamanho do ícone do veículo
-    //             iconAnchor: [16, 16], // Ponto de ancoragem do ícone
-    //         });
-    //         var marker = L.marker(coordenadas, {icon: iconeVeiculo}).addTo(map);
-    //         // Adiciona evento de clique ao marcador do veículo
-    //         marker.on('click', function() {
-    //             alert('Clicou no ícone do veículo!');
-    //         });
-    //     } else {
-    //         var marker = L.marker(coordenadas).addTo(map); // Marcadores normais para outras localizações
-    //         // Adiciona evento de clique aos marcadores normais
-    //         marker.on('click', function() {
-    //             alert('Clicou em um marcador normal!');
-    //         });
-    //     }
-    // });
-
-
+        // Chame a função initMap quando a página for carregada
+        google.maps.event.addDomListener(window, 'load', initMap);
 </script>
 
 {% endblock %}
