@@ -5,6 +5,14 @@
 <!-- Google Maps -->
 <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCj2Tn5LiWlTUgevFKlQ7aUku8ZxYyjyXM"></script>
 
+<!--  -->
+
+<script src="https://unpkg.com/@popperjs/core@2"></script>
+<script src="https://unpkg.com/tippy.js@6"></script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+
+
 {% endblock %}
 {% block 'conteudo' %}
 <div>
@@ -125,6 +133,19 @@
       </div>
     </div>
 </div>
+
+<button class="btn btn-primary" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasBottom" aria-controls="offcanvasBottom">Toggle bottom offcanvas</button>
+
+<div class="offcanvas offcanvas-bottom" tabindex="-1" id="offcanvasBottom" aria-labelledby="offcanvasBottomLabel">
+  <div class="offcanvas-header">
+    <h5 class="offcanvas-title" id="offcanvasBottomLabel">Offcanvas bottom</h5>
+    <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+  </div>
+  <div class="offcanvas-body small">
+    ...
+  </div>
+</div>
+
 <script>
     const geraCoordenadas = ()=>{
         // Coordenadas aproximadas para São Paulo e Grande São Paulo
@@ -152,7 +173,8 @@
                 // Calcula as coordenadas para o ponto na grade
                 var lat = saoPauloBounds.south + latInterval * i + Math.random() * latInterval * 0.8;
                 var lng = saoPauloBounds.west + lngInterval * j + Math.random() * lngInterval * 0.8;
-                coordenadas.push([lat, lng]);
+                var status = Math.floor(Math.random() * (4 - 1)) + 1
+                coordenadas.push([lat, lng,status]);
             }
         }
 
@@ -161,65 +183,145 @@
     }
 
     function initMap() {
-    // Coordenadas iniciais
-    var myLatLng = { lat: -23.47337308, lng: -46.47320867 };
+      // Coordenadas iniciais
+      let myLatLng = { lat: -23.47337308, lng: -46.47320867 };
+      let iconeVermelho = "{% static 'images/mapasIcones/localizacaoVermelho.png' %}"
+      let iconeAzul = "{% static 'images/mapasIcones/localizacaoAzul.png' %}"
+      let iconeVerde = "{% static 'images/mapasIcones/localizacaoVerde.png' %}"
+      let armazem = "{% static 'images/mapasIcones/armazem.png' %}"
+      var iconSize = {
+        width: 20, // Largura desejada em pixels
+        height: 20 // Altura desejada em pixels
+      };
 
-    // Cria um novo mapa do Google
-    var map = new google.maps.Map(document.getElementById('map'), {
-        center: myLatLng,
-        zoom: 10.3 // Ajuste o zoom conforme necessário
-    });
+      // Cria um novo mapa do Google
+      var map = new google.maps.Map(document.getElementById('map'), {
+          center: myLatLng,
+          zoom: 10.3 // Ajuste o zoom conforme necessário
+      });
 
-    // Quando o mapa estiver pronto, execute o código dentro desta função
-    google.maps.event.addListenerOnce(map, 'tilesloaded', function() {
-        // Obtém as coordenadas geradas pela função geraCoordenadas
-        var coordenadasGeradas = geraCoordenadas();
-
-        // Adiciona uma div para cada conjunto de coordenadas
-        coordenadasGeradas.forEach(function(coordenadas) {
-            // Converte as coordenadas geográficas em coordenadas de pixel
-            var pixelPosition = latLngToPixel(coordenadas[0], coordenadas[1], map);
-
-            // Cria a div com a classe e o texto desejados
-            var div = document.createElement('div');
-            div.className = 'badge badge-success'; // Classe da div
-            div.innerHTML = 'Completed'; // Texto da div
-
-            // Estilo da div
-            div.style.position = 'absolute'; // Posição absoluta
-            div.style.left = (pixelPosition.x - 10) + 'px'; // Ajuste de posição X para centralizar
-            div.style.top = (pixelPosition.y - 10) + 'px'; // Ajuste de posição Y para centralizar
-
-            // Adiciona a div ao mapa
-            map.getDiv().appendChild(div);
+      
+        const addMarker = (latitude, longitude, icone, callback) => {
+            var marker = new google.maps.Marker({
+                position: { lat: latitude, lng: longitude },
+                map: map,
+                icon: {
+                    url: icone,
+                    scaledSize: new google.maps.Size(iconSize.width, iconSize.height)
+                }
         });
+
+        // Adiciona um ouvinte de evento de clique ao marcador
+        marker.addListener('click', function() {
+            // Executa o callback dinâmico
+            if (typeof callback === 'function') {
+                callback();
+            }
+        });
+    };
+
+    const minhaFuncao = ()=>{
+      alert("minhaFuncao")
+    }
+
+
+    const minhaFuncao2 = () => {
+      // let msgColetasEntregas = `Nº ${dadosMsg.id} \n
+      //                       Data ${dadosMsg.data} \n
+      //                       Romaneio Nº ${dadosMsg.romaneio}\n
+      //                       Veículo ${dadosMsg.veiculo}\n
+      //                       Motorista ${dadosMsg.motorista}\n
+      //                       Vols ${dadosMsg.volumes} | Peso ${dadosMsg.peso}`
+      const msgInfo = (dadosMsg) => {
+  let tabela = `
+    <table style="width:100%">
+      <tr>
+        <td style="text-align: left;"><strong>Nº:</strong></td>
+        <td style="text-align: left;">${dadosMsg.numero}</td>
+      </tr>
+      <tr>
+        <td style="text-align: left;"><strong>Data:</strong></td>
+        <td style="text-align: left;">${dadosMsg.data}</td>
+      </tr>
+      <tr>
+        <td style="text-align: left;"><strong>Romaneio Nº:</strong></td>
+        <td style="text-align: left;">${dadosMsg.romaneio}</td>
+      </tr>
+      <tr>
+        <td style="text-align: left;"><strong>Veículo:</strong></td>
+        <td style="text-align: left;">${dadosMsg.veiculo}</td>
+      </tr>
+      <tr>
+        <td style="text-align: left;"><strong>Motorista:</strong></td>
+        <td style="text-align: left;">${dadosMsg.motorista}</td>
+      </tr>
+      <tr>
+        <td style="text-align: left;"><strong>Vols:</strong></td>
+        <td style="text-align: left;">${dadosMsg.volumes}</td>
+      </tr>
+      <tr>
+        <td style="text-align: left;"><strong>Peso:</strong></td>
+        <td style="text-align: left;">${dadosMsg.peso}</td>
+      </tr>
+      <tr>
+        <td style="text-align: left;"><strong>Localização:</strong></td>
+        <td style="text-align: left;">${dadosMsg.localizacao}</td>
+      </tr>
+    </table>
+  `;
+
+  Swal.fire({
+    title: dadosMsg.titulo,
+    html: tabela,
+    icon: "info"
+  });
+}
+
+let dadosMsg = {
+  titulo: "Titulo Teste",
+  numero: "459824",
+  data: "17/10/2007",
+  romaneio: "155979",
+  veiculo: "AES-5762",
+  motorista: "Edson Tomas",
+  volumes: "5",
+  peso: "25",
+  localizacao: "Cumbica-Guarulhos-SP"
+};
+
+msgInfo(dadosMsg);
+
+
+
+    };
+
+
+    addMarker(myLatLng.lat,myLatLng.lng,armazem)
+
+    // Obtém as coordenadas geradas pela função geraCoordenadas
+    var coordenadasGeradas = geraCoordenadas();
+    // Adiciona marcadores para cada conjunto de coordenadas
+    coordenadasGeradas.forEach(function(coordenadas) {
+      switch (coordenadas[2]) {
+        case 1:
+          addMarker(coordenadas[0],coordenadas[1],iconeVermelho,minhaFuncao2)
+          break;
+        case 2:
+          addMarker(coordenadas[0],coordenadas[1],iconeVerde,minhaFuncao2)
+          break;
+        case 3:
+          addMarker(coordenadas[0],coordenadas[1],iconeAzul,minhaFuncao2)
+          break;                                
+        default:
+          break;
+      }
     });
+
+
 }
 
-// Função para converter coordenadas de latitude e longitude em coordenadas de pixel
-function latLngToPixel(lat, lng, map) {
-    var scale = Math.pow(2, map.getZoom());
-    var proj = map.getProjection();
-    var bounds = map.getBounds();
-
-    var nw = proj.fromLatLngToPoint(
-        new google.maps.LatLng(
-            bounds.getNorthEast().lat(),
-            bounds.getSouthWest().lng()
-        )
-    );
-
-    var point = proj.fromLatLngToPoint(new google.maps.LatLng(lat, lng));
-    return { x: Math.floor((point.x - nw.x) * scale), y: Math.floor((point.y - nw.y) * scale) };
-}
-
-
-
-
-
-
-        // Chame a função initMap quando a página for carregada
-        google.maps.event.addDomListener(window, 'load', initMap);
+  // Chame a função initMap quando a página for carregada
+  google.maps.event.addDomListener(window, 'load', initMap);
 </script>
 
 {% endblock %}

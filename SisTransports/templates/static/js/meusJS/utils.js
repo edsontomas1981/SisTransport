@@ -376,6 +376,14 @@ const msgOk = (msg)=>{
   })
 }
 
+const msgInfo = (dadosMsg)=>{
+  Swal.fire({
+    title: dadosMsg.titulo,
+    text: dadosMsg.msg,
+    icon: "info"
+  });
+}
+
 const msgErro = (msg)=>{
   Swal.fire({
     position: 'top-end',
