@@ -103,6 +103,25 @@
     margin-bottom: 10px;
 }
 
-.small-font{
-    
+.nav-planejamento-acompanhamento{
+    margin: 0px !important;
+    padding: 0px 10px 0px 0px !important;
+    color: black;
+}
+
+.conteudo-pill-planejamento-acompanhamento{
+    padding: 0px 10px 0px 0px !important;
+}
+
+.mapa-planejamento{
+    height: 420px;
+    border-radius: 10px;
+    padding-top: 0px !important;
+}
+
+
+a.active {
+    background-color: #4b49ac !important;
+    color: whitesmoke !important;
+    font-weight: bold !important;
 }

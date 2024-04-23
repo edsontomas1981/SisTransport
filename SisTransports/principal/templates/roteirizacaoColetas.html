@@ -1,473 +1,433 @@
-{% extends 'base.html' %}
-{% load static %}
+  {% extends 'base.html' %}
+  {% load static %}
 
-{% block 'cabecalho' %}
-<!-- Google Maps -->
-<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCj2Tn5LiWlTUgevFKlQ7aUku8ZxYyjyXM"></script>
+  {% block 'cabecalho' %}
+  <!-- Google Maps -->
+  <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCj2Tn5LiWlTUgevFKlQ7aUku8ZxYyjyXM"></script>
 
-<!--  -->
+  <!--  -->
 
-<script src="https://unpkg.com/@popperjs/core@2"></script>
-<script src="https://unpkg.com/tippy.js@6"></script>
+  <script src="https://unpkg.com/@popperjs/core@2"></script>
+  <script src="https://unpkg.com/tippy.js@6"></script>
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
-{% endblock %}
-{% block 'conteudo' %}
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+  {% endblock %}
+  {% block 'conteudo' %}
 
-<div class="col-md-10 mx-auto">
-  <ul class="nav nav-pills nav-pills-custom" id="pills-tab-custom" role="tablist">
-    <li class="nav-item" role="presentation">
-      <a class="nav-link active" id="pills-home-tab-custom" data-bs-toggle="pill" href="#pills-health" role="tab" aria-controls="pills-home" aria-selected="true">
-        Health
-      </a>
-    </li>
-    <li class="nav-item" role="presentation">
-      <a class="nav-link" id="pills-profile-tab-custom" data-bs-toggle="pill" href="#pills-career" role="tab" aria-controls="pills-profile" aria-selected="false" tabindex="-1">
-        Career
-      </a>
-    </li>
-    <li class="nav-item" role="presentation">
-      <a class="nav-link" id="pills-contact-tab-custom" data-bs-toggle="pill" href="#pills-music" role="tab" aria-controls="pills-contact" aria-selected="false" tabindex="-1">
-        Music
-      </a>
-    </li>
-    <li class="nav-item" role="presentation">
-      <a class="nav-link" id="pills-vibes-tab-custom" data-bs-toggle="pill" href="#pills-vibes" role="tab" aria-controls="pills-contact" aria-selected="false" tabindex="-1">
-        Vibes
-      </a>
-    </li>
-    <li class="nav-item" role="presentation">
-      <a class="nav-link" id="pills-energy-tab-custom" data-bs-toggle="pill" href="#pills-energy" role="tab" aria-controls="pills-contact" aria-selected="false" tabindex="-1">
-        Energy
-      </a>
-    </li>
-  </ul>
-  <div class="tab-content tab-content-custom-pill" id="pills-tabContent-custom">
-    <div class="tab-pane fade show active" id="pills-health" role="tabpanel" aria-labelledby="pills-home-tab-custom">
-      {% include 'abaPredtc.html' %}
-
-    </div>
-    <div class="tab-pane fade" id="pills-career" role="tabpanel" aria-labelledby="pills-profile-tab-custom">
-      <div class="media">
-        <img class="me-3 w-25 rounded" src="../../../assets/images/samples/300X300/10.jpg" alt="sample image">
-        <div class="media-body">
-          <p>I'm thinking two circus clowns dancing. You? Finding a needle in a haystack isn't hard
-            when every straw is
-            computerized. Tell him time is of the essence.
-            Somehow, I doubt that. You have a good heart, Dexter.</p>
-        </div>
+  <div>
+    <ul class="nav nav-pills nav-pills-custom" id="tab-planejamento-acompanhamento" role="tablist" style="padding-bottom: 0px !important;">
+      <li class="nav-item nav-planejamento-acompanhamento" role="presentation">
+        <a class="nav-link active" id="pillColetas" data-bs-toggle="pill" href="#pillConteudoColetas" role="tab" aria-controls="pills-home" aria-selected="true">
+          <span>Coletas</span>
+        </a>
+      </li>
+      <li class="nav-item nav-planejamento-acompanhamento " role="presentation">
+        <a class="nav-link" id="pillEntregas" data-bs-toggle="pill" href="#pillConteudoEntregas" role="tab" aria-controls="pills-profile" aria-selected="false" tabindex="-1">
+          <span>Entregas</span>
+        </a>
+      </li>
+      <li class="nav-item nav-planejamento-acompanhamento" role="presentation">
+        <a class="nav-link" id="pills-contact-tab-custom" data-bs-toggle="pill" href="#pills-music" role="tab" aria-controls="pills-contact" aria-selected="false" tabindex="-1">
+          Music
+        </a>
+      </li>
+      <li class="nav-item nav-planejamento-acompanhamento" role="presentation">
+        <a class="nav-link" id="pills-vibes-tab-custom" data-bs-toggle="pill" href="#pills-vibes" role="tab" aria-controls="pills-contact" aria-selected="false" tabindex="-1">
+          Vibes
+        </a>
+      </li>
+      <li class="nav-item nav-planejamento-acompanhamento" role="presentation">
+        <a class="nav-link" id="pills-energy-tab-custom" data-bs-toggle="pill" href="#pills-energy" role="tab" aria-controls="pills-contact" aria-selected="false" tabindex="-1">
+          Energy
+        </a>
+      </li>
+    </ul>
+    <div class="tab-content tab-content-custom-pill conteudo-pill-planejamento-acompanhamento" id="pills-tabContent-custom">
+      <div class="tab-pane fade show active" id="pillConteudoColetas" role="tabpanel" aria-labelledby="pillColetas">
+        {% include 'abaPredtc.html' %}
       </div>
-    </div>
-    <div class="tab-pane fade" id="pills-music" role="tabpanel" aria-labelledby="pills-contact-tab-custom">
-      <div class="media">
-        <img class="me-3 w-25 rounded" src="../../../assets/images/samples/300x300/14.jpg" alt="sample image">
-        <div class="media-body">
-          <p>
-            I'm really more an apartment person. This man is a knight in shining armor. Oh I beg to
-            differ,
-            I think we have a lot to discuss. After all, you are a client. You all right, Dexter?
-          </p>
-          <p>
-            I'm generally confused most of the time. Cops, another community I'm not part of. You're
-            a killer.
-            I catch killers. Hello, Dexter Morgan.
-          </p>
-        </div>
+      <div class="tab-pane fade" id="pillConteudoEntregas" role="tabpanel" aria-labelledby="pillEntregas">
+        {% include 'mapasEntregas.html' %}
       </div>
-    </div>
-    <div class="tab-pane fade" id="pills-vibes" role="tabpanel" aria-labelledby="pills-vibes-tab-custom">
-      <div class="media">
-        <img class="me-3 w-25 rounded" src="../../../assets/images/samples/300x300/15.jpg" alt="sample image">
-        <div class="media-body">
-          <p>
-            This man is a knight in shining armor. I feel like a jigsaw puzzle missing a piece. And
-            I'm not
-            even sure what the picture should be. Somehow, I doubt that. You have a good heart,
-            Dexter. Keep your mind limber.
-          </p>
-        </div>
+      <div class="tab-pane fade" id="pills-music" role="tabpanel" aria-labelledby="pills-contact-tab-custom">
       </div>
-    </div>
-    <div class="tab-pane fade" id="pills-energy" role="tabpanel" aria-labelledby="pills-energy-tab-custom">
-      <div class="media">
-        <img class="me-3 w-25 rounded" src="../../../assets/images/samples/300x300/11.jpg" alt="sample image">
-        <div class="media-body">
-          <p>
-            Finding a needle in a haystack isn't hard when every straw is computerized. You're a
-            killer. I catch killers.
-            I will not kill my sister. I will not kill my sister. I will not kill my sister.
-            Rorschach would say you have a hard time relating to others.
-          </p>
-        </div>
+      <div class="tab-pane fade" id="pills-vibes" role="tabpanel" aria-labelledby="pills-vibes-tab-custom">
+      </div>
+      <div class="tab-pane fade" id="pills-energy" role="tabpanel" aria-labelledby="pills-energy-tab-custom">
       </div>
     </div>
   </div>
-</div>
 
 
 
-<script>
+  <script>
 
-const empresas = [
-    "Acme Corporation",
-    "Beta Industries",
-    "Delta Enterprises",
-    "Epic Solutions",
-    "Fusion Innovations",
-    "Global Network Inc.",
-    "Horizon Enterprises",
-    "Infinity Technologies",
-    "Jupiter Enterprises",
-    "Keystone Solutions",
-    "Matrix Corporation",
-    "Nexus Industries",
-    "Omega Enterprises",
-    "Phoenix Solutions",
-    "Quantum Innovations",
-    "Redwood Corporation",
-    "Sigma Enterprises",
-    "Titan Industries",
-    "Unity Solutions",
-    "Vanguard Corporation",
-    "Apex Technologies",
-    "Bright Future Inc.",
-    "Crimson Solutions",
-    "Dynamic Enterprises",
-    "Emerald Innovations",
-    "Fortune Enterprises",
-    "Golden Gate Corporation",
-    "Harmony Solutions",
-    "Ivory Industries",
-    "Jubilee Corporation",
-    "Karma Innovations",
-    "Luminous Enterprises",
-    "Majestic Solutions",
-    "Noble Corporation",
-    "Opal Industries",
-    "Prime Solutions",
-    "Quest Enterprises",
-    "Radiant Innovations",
-    "Silverado Corporation",
-    "Trinity Technologies",
-    "Utopia Enterprises",
-    "Vertex Corporation",
-    "Whispering Solutions",
-    "Xenon Innovations",
-    "Yellowstone Enterprises",
-    "Zephyr Corporation",
-    "Alpha Industries",
-    "BrightSky Solutions",
-    "Cerulean Enterprises",
-    "Dynamo Corporation",
-    "Elysian Innovations",
-    "Flare Enterprises",
-    "Galactic Solutions",
-    "Helix Corporation",
-    "Infinite Innovations",
-    "Jade Enterprises",
-    "Krypton Solutions",
-    "Lunar Corporation",
-    "Meridian Innovations",
-    "Neptune Enterprises",
-    "Orbit Solutions",
-    "Polaris Corporation",
-    "Quasar Innovations",
-    "Radiant Enterprises",
-    "Sapphire Solutions",
-    "Tranquil Corporation",
-    "Umbra Innovations",
-    "Vortex Enterprises",
-    "Wavelength Solutions",
-    "Xanadu Corporation",
-    "Zenith Innovations"
-];
+  const empresas = [
+      "Acme Corporation",
+      "Beta Industries",
+      "Delta Enterprises",
+      "Epic Solutions",
+      "Fusion Innovations",
+      "Global Network Inc.",
+      "Horizon Enterprises",
+      "Infinity Technologies",
+      "Jupiter Enterprises",
+      "Keystone Solutions",
+      "Matrix Corporation",
+      "Nexus Industries",
+      "Omega Enterprises",
+      "Phoenix Solutions",
+      "Quantum Innovations",
+      "Redwood Corporation",
+      "Sigma Enterprises",
+      "Titan Industries",
+      "Unity Solutions",
+      "Vanguard Corporation",
+      "Apex Technologies",
+      "Bright Future Inc.",
+      "Crimson Solutions",
+      "Dynamic Enterprises",
+      "Emerald Innovations",
+      "Fortune Enterprises",
+      "Golden Gate Corporation",
+      "Harmony Solutions",
+      "Ivory Industries",
+      "Jubilee Corporation",
+      "Karma Innovations",
+      "Luminous Enterprises",
+      "Majestic Solutions",
+      "Noble Corporation",
+      "Opal Industries",
+      "Prime Solutions",
+      "Quest Enterprises",
+      "Radiant Innovations",
+      "Silverado Corporation",
+      "Trinity Technologies",
+      "Utopia Enterprises",
+      "Vertex Corporation",
+      "Whispering Solutions",
+      "Xenon Innovations",
+      "Yellowstone Enterprises",
+      "Zephyr Corporation",
+      "Alpha Industries",
+      "BrightSky Solutions",
+      "Cerulean Enterprises",
+      "Dynamo Corporation",
+      "Elysian Innovations",
+      "Flare Enterprises",
+      "Galactic Solutions",
+      "Helix Corporation",
+      "Infinite Innovations",
+      "Jade Enterprises",
+      "Krypton Solutions",
+      "Lunar Corporation",
+      "Meridian Innovations",
+      "Neptune Enterprises",
+      "Orbit Solutions",
+      "Polaris Corporation",
+      "Quasar Innovations",
+      "Radiant Enterprises",
+      "Sapphire Solutions",
+      "Tranquil Corporation",
+      "Umbra Innovations",
+      "Vortex Enterprises",
+      "Wavelength Solutions",
+      "Xanadu Corporation",
+      "Zenith Innovations"
+  ];
 
-const nomesMotoristas = [
-    "Carlos Silva",
-    "Ana Oliveira",
-    "Pedro Santos",
-    "Mariana Costa",
-    "José Pereira",
-    "Luana Ferreira",
-    "Rafael Oliveira",
-    "Amanda Souza",
-    "Fernando Rodrigues",
-    "Isabela Almeida",
-    "Gustavo Lima",
-    "Laura Gomes",
-    "Lucas Martins",
-    "Juliana Silva",
-    "Mateus Oliveira",
-    "Beatriz Santos",
-    "Rodrigo Costa",
-    "Gabriela Almeida",
-    "Thiago Silva",
-    "Camila Pereira",
-    "Bruno Oliveira",
-    "Larissa Costa",
-    "Vinícius Rodrigues",
-    "Natalia Souza",
-    "Diego Lima",
-    "Carolina Gomes",
-    "Marcos Almeida",
-    "Tatiane Silva",
-    "Leandro Pereira",
-    "Aline Oliveira",
-    "Ricardo Santos",
-    "Vanessa Costa",
-    "Roberto Rodrigues",
-    "Eduarda Souza",
-    "Renato Lima",
-    "Julia Gomes",
-    "Marcelo Almeida",
-    "Priscila Silva",
-    "Felipe Pereira",
-    "Bianca Oliveira",
-    "Daniel Santos",
-    "Elaine Costa",
-    "Guilherme Rodrigues",
-    "Patrícia Souza",
-    "André Lima",
-    "Letícia Gomes",
-    "Josiane Almeida",
-    "Leonardo Silva",
-    "Renata Pereira",
-    "Vinícius Oliveira",
-    "Fernanda Santos",
-    "Wellington Costa",
-    "Márcia Rodrigues",
-    "Hugo Souza",
-    "Camila Lima",
-    "Thiago Gomes",
-    "Luana Almeida",
-    "Rafael Silva",
-    "Amanda Pereira",
-    "Rodrigo Oliveira",
-    "Carolina Santos",
-    "Lucas Costa"
-];
+  const nomesMotoristas = [
+      "Carlos Silva",
+      "Ana Oliveira",
+      "Pedro Santos",
+      "Mariana Costa",
+      "José Pereira",
+      "Luana Ferreira",
+      "Rafael Oliveira",
+      "Amanda Souza",
+      "Fernando Rodrigues",
+      "Isabela Almeida",
+      "Gustavo Lima",
+      "Laura Gomes",
+      "Lucas Martins",
+      "Juliana Silva",
+      "Mateus Oliveira",
+      "Beatriz Santos",
+      "Rodrigo Costa",
+      "Gabriela Almeida",
+      "Thiago Silva",
+      "Camila Pereira",
+      "Bruno Oliveira",
+      "Larissa Costa",
+      "Vinícius Rodrigues",
+      "Natalia Souza",
+      "Diego Lima",
+      "Carolina Gomes",
+      "Marcos Almeida",
+      "Tatiane Silva",
+      "Leandro Pereira",
+      "Aline Oliveira",
+      "Ricardo Santos",
+      "Vanessa Costa",
+      "Roberto Rodrigues",
+      "Eduarda Souza",
+      "Renato Lima",
+      "Julia Gomes",
+      "Marcelo Almeida",
+      "Priscila Silva",
+      "Felipe Pereira",
+      "Bianca Oliveira",
+      "Daniel Santos",
+      "Elaine Costa",
+      "Guilherme Rodrigues",
+      "Patrícia Souza",
+      "André Lima",
+      "Letícia Gomes",
+      "Josiane Almeida",
+      "Leonardo Silva",
+      "Renata Pereira",
+      "Vinícius Oliveira",
+      "Fernanda Santos",
+      "Wellington Costa",
+      "Márcia Rodrigues",
+      "Hugo Souza",
+      "Camila Lima",
+      "Thiago Gomes",
+      "Luana Almeida",
+      "Rafael Silva",
+      "Amanda Pereira",
+      "Rodrigo Oliveira",
+      "Carolina Santos",
+      "Lucas Costa"
+  ];
 
-const placasVeiculos = [
-    "ABC-1234",
-    "DEF-5678",
-    "GHI-9012",
-    "JKL-3456",
-    "MNO-7890",
-    "PQR-1230",
-    "STU-4560",
-    "VWX-7890",
-    "YZA-0120",
-    "BCD-3450",
-    "EFG-6780",
-    "HIJ-9010",
-    "KLM-2340",
-    "NOP-5670",
-    "QRS-8900",
-    "TUV-1230",
-    "WXY-4560",
-    "ZAB-7890",
-    "CDE-0120",
-    "FGH-3450",
-    "IJK-6780",
-    "LMN-9010",
-    "OPQ-2340",
-    "RST-5670",
-    "UVW-8900",
-];
+  const placasVeiculos = [
+      "ABC-1234",
+      "DEF-5678",
+      "GHI-9012",
+      "JKL-3456",
+      "MNO-7890",
+      "PQR-1230",
+      "STU-4560",
+      "VWX-7890",
+      "YZA-0120",
+      "BCD-3450",
+      "EFG-6780",
+      "HIJ-9010",
+      "KLM-2340",
+      "NOP-5670",
+      "QRS-8900",
+      "TUV-1230",
+      "WXY-4560",
+      "ZAB-7890",
+      "CDE-0120",
+      "FGH-3450",
+      "IJK-6780",
+      "LMN-9010",
+      "OPQ-2340",
+      "RST-5670",
+      "UVW-8900",
+  ];
 
-const bairrosSaoPaulo = [
-    "Moema",
-    "Pinheiros",
-    "Vila Madalena",
-    "Itaim Bibi",
-    "Vila Mariana",
-    "Morumbi",
-    "Jardins",
-    "Perdizes",
-    "Tatuapé",
-    "Campo Belo",
-    "Vila Olímpia",
-    "Brooklin",
-    "Santana",
-    "Higienópolis",
-    "Butantã"
-];
+  const bairrosSaoPaulo = [
+      "Moema",
+      "Pinheiros",
+      "Vila Madalena",
+      "Itaim Bibi",
+      "Vila Mariana",
+      "Morumbi",
+      "Jardins",
+      "Perdizes",
+      "Tatuapé",
+      "Campo Belo",
+      "Vila Olímpia",
+      "Brooklin",
+      "Santana",
+      "Higienópolis",
+      "Butantã"
+  ];
 
 
-    const geraCoordenadas = ()=>{
-        // Coordenadas aproximadas para São Paulo e Grande São Paulo
-        var saoPauloBounds = {
-            north: -23.356792,
-            south: -23.7452,
-            west: -46.825123,
-            east: -46.365582
+      const geraCoordenadas = ()=>{
+          // Coordenadas aproximadas para São Paulo e Grande São Paulo
+          var saoPauloBounds = {
+              north: -23.356792,
+              south: -23.7452,
+              west: -46.825123,
+              east: -46.365582
+          };
+
+          // Número de linhas e colunas para a grade
+          var rows = 6;
+          var cols = 10;
+
+          // Calcula o intervalo de latitude e longitude
+          var latInterval = (saoPauloBounds.north - saoPauloBounds.south) / rows;
+          var lngInterval = (saoPauloBounds.east - saoPauloBounds.west) / cols;
+
+          // Lista para armazenar as coordenadas geradas
+          var coordenadas = [];
+
+          // Loop para gerar as coordenadas da grade
+          for (var i = 0; i < rows; i++) {
+            for (var j = 0; j < cols; j++) {
+                // Calcula as coordenadas para o ponto na grade
+                var lat = saoPauloBounds.south + latInterval * i + Math.random() * latInterval * 0.8;
+                var lng = saoPauloBounds.west + lngInterval * j + Math.random() * lngInterval * 0.8;
+                var status = Math.floor(Math.random() * (4 - 0)) + 1
+                var idNum = Math.floor(Math.random() * (999999 - 1)) + 1
+                var motorista = nomesMotoristas[Math.floor(Math.random() * (15 - 1)) + 1]
+                var placa = placasVeiculos[Math.floor(Math.random() * (10 - 1)) + 1]
+                var bairro = bairrosSaoPaulo[Math.floor(Math.random() * (14 - 0)) + 1]
+                var volumes = Math.floor(Math.random() * (100 - 1)) + 1
+                var peso = Math.random() * (2000 - 0) + 1
+
+                coordenadas.push([lat, lng,status,idNum,motorista,placa,bairro,volumes,peso.toFixed(2)]);
+            }
+          }
+
+          // Exibe as coordenadas geradas
+          return coordenadas ;
+      }
+
+      function initMap() {
+        // Coordenadas iniciais
+        let myLatLng = { lat: -23.47337308, lng: -46.47320867 };
+        let iconeVermelho = "{% static 'images/mapasIcones/pinVermelho.png' %}"
+        let iconeAzul = "{% static 'images/mapasIcones/pinAzul.png' %}"
+        let iconeRoxo = "{% static 'images/mapasIcones/pinRoxo.png' %}"
+        let iconeVerde = "{% static 'images/mapasIcones/pinVerde.png' %}"
+        let iconePreto = "{% static 'images/mapasIcones/pinPreto.png' %}"
+        let armazem = "{% static 'images/mapasIcones/armazem.png' %}"
+        var iconSize = {
+          width: 30, // Largura desejada em pixels
+          height: 30 // Altura desejada em pixels
         };
 
-        // Número de linhas e colunas para a grade
-        var rows = 6;
-        var cols = 10;
+        // Cria um novo mapa do Google
+        var map = new google.maps.Map(document.getElementById('map'), { 
+            center: myLatLng,
+            zoom: 10.3 // Ajuste o zoom conforme necessário
+        });
 
-        // Calcula o intervalo de latitude e longitude
-        var latInterval = (saoPauloBounds.north - saoPauloBounds.south) / rows;
-        var lngInterval = (saoPauloBounds.east - saoPauloBounds.west) / cols;
-
-        // Lista para armazenar as coordenadas geradas
-        var coordenadas = [];
-
-        // Loop para gerar as coordenadas da grade
-        for (var i = 0; i < rows; i++) {
-          for (var j = 0; j < cols; j++) {
-              // Calcula as coordenadas para o ponto na grade
-              var lat = saoPauloBounds.south + latInterval * i + Math.random() * latInterval * 0.8;
-              var lng = saoPauloBounds.west + lngInterval * j + Math.random() * lngInterval * 0.8;
-              var status = Math.floor(Math.random() * (4 - 0)) + 1
-              var idNum = Math.floor(Math.random() * (999999 - 1)) + 1
-              var motorista = nomesMotoristas[Math.floor(Math.random() * (15 - 1)) + 1]
-              var placa = placasVeiculos[Math.floor(Math.random() * (10 - 1)) + 1]
-              var bairro = bairrosSaoPaulo[Math.floor(Math.random() * (14 - 0)) + 1]
-              var volumes = Math.floor(Math.random() * (100 - 1)) + 1
-              var peso = Math.random() * (2000 - 0) + 1
-
-              coordenadas.push([lat, lng,status,idNum,motorista,placa,bairro,volumes,peso.toFixed(2)]);
-          }
-        }
-
-        // Exibe as coordenadas geradas
-        return coordenadas ;
-    }
-
-    function initMap() {
-      // Coordenadas iniciais
-      let myLatLng = { lat: -23.47337308, lng: -46.47320867 };
-      let iconeVermelho = "{% static 'images/mapasIcones/pinVermelho.png' %}"
-      let iconeAzul = "{% static 'images/mapasIcones/pinAzul.png' %}"
-      let iconeRoxo = "{% static 'images/mapasIcones/pinRoxo.png' %}"
-      let iconeVerde = "{% static 'images/mapasIcones/pinVerde.png' %}"
-      let iconePreto = "{% static 'images/mapasIcones/pinPreto.png' %}"
-      let armazem = "{% static 'images/mapasIcones/armazem.png' %}"
-      var iconSize = {
-        width: 30, // Largura desejada em pixels
-        height: 30 // Altura desejada em pixels
-      };
-
-      // Cria um novo mapa do Google
-      var map = new google.maps.Map(document.getElementById('map'), {
+        // Cria um novo mapa do Google
+        var mapEntregas = new google.maps.Map(document.getElementById('mapEntregas'), {
           center: myLatLng,
           zoom: 10.3 // Ajuste o zoom conforme necessário
-      });
-
-      
-      const addMarker = (latitude, longitude, icone,dados, callback) => {
-        var marker = new google.maps.Marker({
-            position: { lat: latitude, lng: longitude },
-            map: map,
-            icon: {
-                url: icone,
-                scaledSize: new google.maps.Size(iconSize.width, iconSize.height)
-            }
         });
 
-        // Adiciona um ouvinte de evento de clique ao marcador
-        marker.addListener('click', function() {
-            // Executa o callback dinâmico
-            if (typeof callback === 'function') {
-                callback(dados);
-            }
+        
+        const addMarker = (latitude, longitude, icone,dados, callback) => {
+          var marker = new google.maps.Marker({
+              position: { lat: latitude, lng: longitude },
+              map: map,
+              icon: {
+                  url: icone,
+                  scaledSize: new google.maps.Size(iconSize.width, iconSize.height)
+              }
+          });
+
+          // Adiciona um ouvinte de evento de clique ao marcador
+          marker.addListener('click', function() {
+              // Executa o callback dinâmico
+              if (typeof callback === 'function') {
+                  callback(dados);
+              }
+          });
+        };
+
+      const minhaFuncao2 = (dados) => {
+        const msgInfo = () => {
+        let tabela = `
+          <table class="table table-striped table-sm" style="width:100%">
+            <tr>
+              <td style="text-align: left;"><strong>Número:</strong></td>
+              <td style="text-align: left;">${dados[3]}</td>
+            </tr>
+            <tr>
+              <td style="text-align: left;"><strong>Data:</strong></td>
+              <td style="text-align: left;">17/10/2007</td>
+            </tr>
+            <tr>
+              <td style="text-align: left;"><strong>Romaneio:</strong></td>
+              <td style="text-align: left;">${dados[3]}</td>
+            </tr>
+            <tr>
+              <td style="text-align: left;"><strong>Veículo:</strong></td>
+              <td style="text-align: left;">${dados[5]}</td>
+            </tr>
+            <tr>
+              <td style="text-align: left;"><strong>Motorista:</strong></td>
+              <td style="text-align: left;">${dados[4]}</td>
+            </tr>
+            <tr>
+              <td style="text-align: left;"><strong>Volumes:</strong></td>
+              <td style="text-align: left;">${dados[7]}</td>
+            </tr>
+            <tr>
+              <td style="text-align: left;"><strong>Peso:</strong></td>
+              <td style="text-align: left;">${dados[8]}</td>
+            </tr>
+            <tr>
+              <td style="text-align: left;"><strong>Localização:</strong></td>
+              <td style="text-align: left;">${dados[6]}</td>
+            </tr>
+            <tr>
+              <td style="text-align: left;"><strong>Status:</strong></td>
+              <td style="text-align: left;">${dados[9]}</td>
+            </tr>
+          </table>
+        `;
+        
+        Swal.fire({
+          html: tabela,
+          icon: "info",  
+          customClass: {
+          popup: 'small-alert'
+        }
         });
-      };
-
-    const minhaFuncao2 = (dados) => {
-      const msgInfo = () => {
-  let tabela = `
-    <table class="table table-striped table-sm" style="width:100%">
-      <tr>
-        <td style="text-align: left;"><strong>Número:</strong></td>
-        <td style="text-align: left;">${dados[3]}</td>
-      </tr>
-      <tr>
-        <td style="text-align: left;"><strong>Data:</strong></td>
-        <td style="text-align: left;">17/10/2007</td>
-      </tr>
-      <tr>
-        <td style="text-align: left;"><strong>Romaneio:</strong></td>
-        <td style="text-align: left;">${dados[3]}</td>
-      </tr>
-      <tr>
-        <td style="text-align: left;"><strong>Veículo:</strong></td>
-        <td style="text-align: left;">${dados[5]}</td>
-      </tr>
-      <tr>
-        <td style="text-align: left;"><strong>Motorista:</strong></td>
-        <td style="text-align: left;">${dados[4]}</td>
-      </tr>
-      <tr>
-        <td style="text-align: left;"><strong>Volumes:</strong></td>
-        <td style="text-align: left;">${dados[7]}</td>
-      </tr>
-      <tr>
-        <td style="text-align: left;"><strong>Peso:</strong></td>
-        <td style="text-align: left;">${dados[8]}</td>
-      </tr>
-      <tr>
-        <td style="text-align: left;"><strong>Localização:</strong></td>
-        <td style="text-align: left;">${dados[6]}</td>
-      </tr>
-      <tr>
-        <td style="text-align: left;"><strong>Status:</strong></td>
-        <td style="text-align: left;">${dados[9]}</td>
-      </tr>
-    </table>
-  `;
-  
-  Swal.fire({
-    html: tabela,
-    icon: "info",  
-    customClass: {
-    popup: 'small-alert'
-  }
-  });
-}
-
-  msgInfo();
-  };
-
-  addMarker(myLatLng.lat,myLatLng.lng,armazem)
-  // Obtém as coordenadas geradas pela função geraCoordenadas
-  var coordenadasGeradas = geraCoordenadas();
-    // Adiciona marcadores para cada conjunto de coordenadas
-    coordenadasGeradas.forEach(function(coordenadas) {
-      switch (coordenadas[2]) {
-        case 1:
-          coordenadas.push('<div class="badge badge-warning">Em rota</div>')
-          addMarker(coordenadas[0],coordenadas[1],iconeRoxo,coordenadas,minhaFuncao2)
-
-          break;
-        case 2:
-        coordenadas.push('<div class="badge badge-danger">Não alocada </div>')
-          addMarker(coordenadas[0],coordenadas[1],iconeVerde,coordenadas,minhaFuncao2)
-          break;
-        case 3:
-          coordenadas.push('<div class="badge badge-info">Em rota</div>')
-          addMarker(coordenadas[0],coordenadas[1],iconeAzul,coordenadas,minhaFuncao2)
-          break;  
-        case 4: 
-        coordenadas.push('<div class="badge badge-primary">Concluída</div>')
-          addMarker(coordenadas[0],coordenadas[1],iconePreto,coordenadas,minhaFuncao2)
-          break;                                       
-        default:
-          break;
       }
-    });
-  }
 
-  // Chame a função initMap quando a página for carregada
-  google.maps.event.addDomListener(window, 'load', initMap);
+    msgInfo();
+    };
+
+    addMarker(myLatLng.lat,myLatLng.lng,armazem)
+    // Obtém as coordenadas geradas pela função geraCoordenadas
+    var coordenadasGeradas = geraCoordenadas();
+      // Adiciona marcadores para cada conjunto de coordenadas
+      coordenadasGeradas.forEach(function(coordenadas) {
+        switch (coordenadas[2]) {
+          case 1:
+            coordenadas.push('<div class="badge badge-warning">Em rota</div>')
+            addMarker(coordenadas[0],coordenadas[1],iconeRoxo,coordenadas,minhaFuncao2)
+
+            break;
+          case 2:
+          coordenadas.push('<div class="badge badge-danger">Não alocada </div>')
+            addMarker(coordenadas[0],coordenadas[1],iconeVerde,coordenadas,minhaFuncao2)
+            break;
+          case 3:
+            coordenadas.push('<div class="badge badge-info">Em rota</div>')
+            addMarker(coordenadas[0],coordenadas[1],iconeAzul,coordenadas,minhaFuncao2)
+            break;  
+          case 4: 
+          coordenadas.push('<div class="badge badge-primary">Concluída</div>')
+            addMarker(coordenadas[0],coordenadas[1],iconePreto,coordenadas,minhaFuncao2)
+            break;                                       
+          default:
+            break;
+        }
+      });
+    }
+
+    // Chame a função initMap quando a página for carregada
+    google.maps.event.addDomListener(window, 'load', initMap);
 
 
-</script>
+  </script>
 
-{% endblock %}
+  {% endblock %}
 
-{% block js %} 
+  {% block js %} 
 
-{% endblock %}
+  {% endblock %}
