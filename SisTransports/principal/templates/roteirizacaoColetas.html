@@ -285,7 +285,6 @@
                 coordenadas.push([lat, lng,status,idNum,motorista,placa,bairro,volumes,peso.toFixed(2)]);
             }
           }
-
           // Exibe as coordenadas geradas
           return coordenadas ;
       }
@@ -293,12 +292,14 @@
       function initMap() {
         // Coordenadas iniciais
         let myLatLng = { lat: -23.47337308, lng: -46.47320867 };
+        let myLatLngEntrega = { lat: -12.9704, lng: -38.5124 };
         let iconeVermelho = "{% static 'images/mapasIcones/pinVermelho.png' %}"
         let iconeAzul = "{% static 'images/mapasIcones/pinAzul.png' %}"
         let iconeRoxo = "{% static 'images/mapasIcones/pinRoxo.png' %}"
         let iconeVerde = "{% static 'images/mapasIcones/pinVerde.png' %}"
         let iconePreto = "{% static 'images/mapasIcones/pinPreto.png' %}"
         let armazem = "{% static 'images/mapasIcones/armazem.png' %}"
+        var coordenadasGeradas = geraCoordenadas();
         var iconSize = {
           width: 30, // Largura desejada em pixels
           height: 30 // Altura desejada em pixels
@@ -312,10 +313,21 @@
 
         // Cria um novo mapa do Google
         var mapEntregas = new google.maps.Map(document.getElementById('mapEntregas'), {
-          center: myLatLng,
+          center: myLatLngEntrega,
           zoom: 10.3 // Ajuste o zoom conforme necessário
         });
 
+        // Função para mudar a localização e o zoom do mapa
+        function mudarLocalizacaoEZoom(latitude, longitude, zoom) {
+          var novaPosicao = new google.maps.LatLng(coordenadasGeradas[5][0],coordenadasGeradas[5][1]);
+          map.setCenter(novaPosicao);
+          map.setZoom(zoom);
+        }
+
+        let btn = document.getElementById("btnMudaTeste");
+        btn.addEventListener("click", () => {
+          mudarLocalizacaoEZoom(-23.47337308, -46.47320867, 13);
+        });
         
         const addMarker = (latitude, longitude, icone,dados, callback) => {
           var marker = new google.maps.Marker({
@@ -336,10 +348,12 @@
           });
         };
 
-      const minhaFuncao2 = (dados) => {
-        const msgInfo = () => {
-        let tabela = `
-          <table class="table table-striped table-sm" style="width:100%">
+const minhaFuncao2 = (dados) => {
+  const msgInfo = () => {
+    let tabela = `
+      <div class="row">
+        <div class="col-sm-6">
+          <table class="table table-striped table-sm" style="width:80%">
             <tr>
               <td style="text-align: left;"><strong>Número:</strong></td>
               <td style="text-align: left;">${dados[3]}</td>
@@ -377,23 +391,33 @@
               <td style="text-align: left;">${dados[9]}</td>
             </tr>
           </table>
-        `;
-        
-        Swal.fire({
-          html: tabela,
-          icon: "info",  
-          customClass: {
-          popup: 'small-alert'
-        }
-        });
-      }
+        </div> 
+        <div class="col-sm-6 pl-2">
+          <select class="form-select">
+            <option>teste</option>
+            <option>teste 1</option>
+          </select>
+        </div>
+      </div>
+    `;
 
-    msgInfo();
-    };
+    // Mostra o popup com a tabela
+    Swal.fire({
+      html: tabela,
+      icon: "info",  
+      customClass: {
+        popup: 'small-alert'
+      }
+    });
+  };
+
+  // Chama a função msgInfo
+  msgInfo();
+};
+
 
     addMarker(myLatLng.lat,myLatLng.lng,armazem)
     // Obtém as coordenadas geradas pela função geraCoordenadas
-    var coordenadasGeradas = geraCoordenadas();
       // Adiciona marcadores para cada conjunto de coordenadas
       coordenadasGeradas.forEach(function(coordenadas) {
         switch (coordenadas[2]) {
