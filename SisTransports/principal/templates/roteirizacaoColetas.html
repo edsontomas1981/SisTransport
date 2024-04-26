@@ -74,6 +74,9 @@
             <div class="col-sm-6" id="acoesColetas">
 
             </div>
+            <div class="col-sm-12" id="botoesColetas">
+
+            </div>
           </div>
         </div>
       </div>
@@ -101,10 +104,12 @@
           height: 30 // Altura desejada em pixels
         };
 
+
+
         // Cria um novo mapa do Google
         var map = new google.maps.Map(document.getElementById('map'), { 
             center: myLatLng,
-            zoom: 10.3 // Ajuste o zoom conforme necessário
+            zoom: 10.3, // Ajuste o zoom conforme necessário
         });
 
         // Cria um novo mapa do Google
@@ -113,6 +118,24 @@
           zoom: 10.3 // Ajuste o zoom conforme necessário
         });
 
+        map.markers = [];
+
+        const removeMarker = (markerId) => {
+            // Verifica se map.markers está definido e possui elementos
+            if (map.markers && map.markers.length > 0) {
+                // Iterar sobre map.markers para encontrar o marcador
+                for (let i = 0; i < map.markers.length; i++) {
+                    if (map.markers[i].id === markerId) {
+                        // Remove o marcador do mapa
+                        map.markers[i].setMap(null);
+                        // Remove o marcador da lista de marcadores
+                        map.markers.splice(i, 1);
+                        break;
+                    }
+                }
+            }
+        };        
+
 
 
         // let btn = document.getElementById("btnMudaTeste");
@@ -120,30 +143,125 @@
         //   mudarLocalizacaoEZoom(-23.47337308, -46.47320867, 13);
         // });
         
-        const addMarker = (latitude, longitude, icone,dados, callback) => {
-          var marker = new google.maps.Marker({
+      const addMarker = (latitude, longitude, icone, dados, id, callback) => {
+          const marker = new google.maps.Marker({
               position: { lat: latitude, lng: longitude },
               map: map,
               icon: {
                   url: icone,
                   scaledSize: new google.maps.Size(iconSize.width, iconSize.height)
-              }
+              },
+              id: id // Atribui um ID único ao marcador
           });
 
-          // Adiciona um ouvinte de evento de clique ao marcador
-          marker.addListener('click', function() {
-              // Executa o callback dinâmico
+          marker.addListener('click', () => {
               if (typeof callback === 'function') {
                   callback(dados);
               }
           });
-        };
+
+          // Adiciona o marcador à lista de marcadores do mapa
+          map.markers.push(marker);
+      };
+
+      function verificarLocalidadesNaRota(origem, destino, localidades) {
+            var directionsService = new google.maps.DirectionsService();
+
+            // Faz a solicitação para calcular a rota entre origem e destino
+            directionsService.route({
+                origin: origem,
+                destination: destino,
+                travelMode: google.maps.TravelMode.DRIVING
+            }, function(result, status) {
+
+                if (status === google.maps.DirectionsStatus.OK) {
+
+                    // Obtém a rota da resposta
+                    var route = result.routes[0];
+
+                    // Itera sobre cada "perna" da rota
+                    route.legs.forEach(function(leg) {
+                        // Itera sobre cada passo da perna (segmento da rota)
+                        leg.steps.forEach(function(step) {
+                            // Itera sobre cada coordenada do passo
+                            step.path.forEach(function(pathCoord) {
+                                // Verifica se cada localidade está próxima o suficiente do caminho da rota
+                                localidades.forEach(function(localidade) {
+                                    var localidadeLatLng = new google.maps.LatLng(localidade[0], localidade[1]);
+                                    var distancia = google.maps.geometry.spherical.computeDistanceBetween(pathCoord, localidadeLatLng);
+
+                                    // Defina aqui uma distância máxima para considerar "na rota" (em metros)
+                                    var distanciaMaxima = 5000; // Por exemplo, 100 metros
+
+                                    if (distancia <= distanciaMaxima) {
+                                        console.log('A localidade', localidade[3], 'está na rota.');
+                                        // Aqui você pode adicionar sua lógica para lidar com a localidade na rota
+                                    }
+                                });
+                            });
+                        });
+                    });
+                } else {
+                    console.error('Erro ao calcular rota:', status);
+                }
+            });
+        }
+
+// // Exemplo de uso:
+// var origem = new google.maps.LatLng(-23.5505, -46.6333); // São Paulo
+// var destino = new google.maps.LatLng(-23.5631, -46.6544); // Exemplo de destino
+// var localidades = [
+//     { lat: -23.5600, lng: -46.6400 }, // Localidade 1
+//     { lat: -23.5550, lng: -46.6450 }, // Localidade 2
+//     { lat: -23.5580, lng: -46.6380 }  // Localidade 3
+// ];
+
+// verificarLocalidadesNaRota(origem, destino, localidades);
+
+
+      function calcularRota(origem, destino) {
+          // Cria uma solicitação para o serviço de direções
+          var directionsService = new google.maps.DirectionsService();
+          var directionsRenderer = new google.maps.DirectionsRenderer();
+
+          // Configura o renderer para exibir a rota no mapa
+          directionsRenderer.setMap(map);
+
+          // Define os pontos de origem e destino para a rota
+          var request = {
+              origin: origem,
+              destination: destino,
+              travelMode: google.maps.TravelMode.DRIVING // Modo de viagem (DRIVING para carro)
+          };
+
+          // Faz a solicitação para calcular a rota
+          directionsService.route(request, function(result, status) {
+              if (status == google.maps.DirectionsStatus.OK) {
+                  // Exibe a rota no mapa usando o renderer
+                  directionsRenderer.setDirections(result);
+              } else {
+                  // Trata o erro caso não seja possível calcular a rota
+                  console.error('Erro ao calcular rota:', status);
+              }
+          });
+      }
+
 
         // Função para mudar a localização e o zoom do mapa
         function mudarLocalizacaoEZoom(latitude, longitude, zoom) {
-          var novaPosicao = new google.maps.LatLng(latitude,longitude);
-          map.setCenter(novaPosicao);
-          map.setZoom(zoom);
+
+            // Exemplo de uso
+            var origem = new google.maps.LatLng(myLatLng);
+            var destino = new google.maps.LatLng(latitude, longitude);
+
+            calcularRota(origem,destino)
+
+            // Chama a função para calcular e exibir a rota no mapa
+            verificarLocalidadesNaRota(origem, destino,coordenadasGeradas);
+
+          // var novaPosicao = new google.maps.LatLng(latitude,longitude);
+          // map.setCenter(novaPosicao);
+          // map.setZoom(zoom);
         }
 
         const teste = (element) => {
@@ -222,7 +340,7 @@ const mostrarInformacoesDetalhadas = (dados) => {
                     <option>Teste 1</option>
                     <option>Teste 2</option>
                   </select>
-                  <button type="button" class="btn btn-primary">
+                  <button type="button" id="addDtcVeiculo" class="btn btn-primary">
                     <i class="fa fa-plus" aria-hidden="true"></i>
                   </button>
                 </div>
@@ -241,20 +359,46 @@ const mostrarInformacoesDetalhadas = (dados) => {
                   <div class="badge badge-warning" style="width:100%">Média</div>
                 </div>
                 `
-    let idColeta = `<span>Pré Dtc Nº ${dados[3]}</span>`
+    
+    let btnGerarIntinerarios = `
+                <div class="btn-group pt-2" role="group" aria-label="Basic example" style="width:100%">
+                  <button type="button" class="btn btn-success">
+                    <i class="fa fa-location-arrow" aria-hidden="true"></i>
+                    Criar itinerário daqui
+                  </button>
+                  
+                  <button type="button" class="btn btn-primary">
+                    <i class="fa fa-map-marker" aria-hidden="true"></i>
+                    Criar itinerário até aqui
+                  </button>
+                </div> `
+    let idColeta = `<span>Pré Dtc Nº : </span><span id="numDocumento"> ${dados[3]}</span>`
     let modalColetaId = document.getElementById("modalColetaId")
     let tabelaColetas = document.getElementById("tabelaColetas")
     let acoesColetas = document.getElementById("acoesColetas")
+    let botoesColetas = document.getElementById("botoesColetas")
     tabelaColetas.innerHTML = tabela
     acoesColetas.innerHTML = acoes
     modalColetaId.innerHTML = idColeta
-    openModal('modalPlanejamentoColetas')
+    botoesColetas.innerHTML = btnGerarIntinerarios
 
+    const btnAddDtcVeiculo = document.getElementById("addDtcVeiculo");
+    btnAddDtcVeiculo.addEventListener('click', () => {
+        removeMarker(dados[3]); // Remove o marcador com base no ID específico
+    });
+
+    openModal('modalPlanejamentoColetas')
   };
+
+
 
   // Chama a função msgInfo
   msgInfo();
+
+
 };
+
+
 
 
 
@@ -267,19 +411,19 @@ const mostrarInformacoesDetalhadas = (dados) => {
         switch (coordenadas[2]) {
           case 1:
             dadosTableColetas.push({id:coordenadas[3],status:'Em Rota',placa:coordenadas[5],dadosAdicionais:{lat:coordenadas[0],lng:coordenadas[1]}})
-            addMarker(coordenadas[0],coordenadas[1],local,coordenadas,mostrarInformacoesDetalhadas)
+            addMarker(coordenadas[0],coordenadas[1],local,coordenadas,coordenadas[3],mostrarInformacoesDetalhadas)
             break;
           case 2:
             dadosTableColetas.push({id:coordenadas[3],status:'Em Trânsito',placa:coordenadas[5],dadosAdicionais:{lat:coordenadas[0],lng:coordenadas[1]}})
-            addMarker(coordenadas[0],coordenadas[1],local,coordenadas,mostrarInformacoesDetalhadas)
+            addMarker(coordenadas[0],coordenadas[1],local,coordenadas,coordenadas[3],mostrarInformacoesDetalhadas)
             break;
           case 3:
             dadosTableColetas.push({id:coordenadas[3],status:'Concluída',placa:coordenadas[5],dadosAdicionais:{lat:coordenadas[0],lng:coordenadas[1]}})
-            addMarker(coordenadas[0],coordenadas[1],local,coordenadas,mostrarInformacoesDetalhadas)
+            addMarker(coordenadas[0],coordenadas[1],local,coordenadas,coordenadas[3],mostrarInformacoesDetalhadas)
             break;  
           case 4: 
             dadosTableColetas.push({id:coordenadas[3],status:'Aguardando',placa:coordenadas[5],dadosAdicionais:{lat:coordenadas[0],lng:coordenadas[1]}})
-            addMarker(coordenadas[0],coordenadas[1],local,coordenadas,mostrarInformacoesDetalhadas)
+            addMarker(coordenadas[0],coordenadas[1],local,coordenadas,coordenadas[3],mostrarInformacoesDetalhadas)
             break;                                       
           default:
             break;
@@ -300,8 +444,6 @@ const mostrarInformacoesDetalhadas = (dados) => {
 
     // Chame a função initMap quando a página for carregada
     google.maps.event.addDomListener(window, 'load', initMap);
-
-
   </script>
 
   {% endblock %}
