@@ -156,7 +156,7 @@ class Parceiro {
   };
 
   populaTabelas = (response) => {
-    popula_tbody_paginacao('paginacaoParceiro','tbodyTabelaParceiro',this.preparaDadosTabelas(response[1]),this.botoes,1,70)
+    popula_tbody_paginacao('paginacaoParceiro','tbodyTabelaParceiro',this.preparaDadosTabelas(response[1]),this.botoes,1,70,true,false)
   };
 
 

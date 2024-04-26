@@ -113,12 +113,7 @@
           zoom: 10.3 // Ajuste o zoom conforme necessário
         });
 
-        // Função para mudar a localização e o zoom do mapa
-        function mudarLocalizacaoEZoom(latitude, longitude, zoom) {
-          var novaPosicao = new google.maps.LatLng(coordenadasGeradas[5][0],coordenadasGeradas[5][1]);
-          map.setCenter(novaPosicao);
-          map.setZoom(zoom);
-        }
+
 
         // let btn = document.getElementById("btnMudaTeste");
         // btn.addEventListener("click", () => {
@@ -143,6 +138,36 @@
               }
           });
         };
+
+        // Função para mudar a localização e o zoom do mapa
+        function mudarLocalizacaoEZoom(latitude, longitude, zoom) {
+          var novaPosicao = new google.maps.LatLng(latitude,longitude);
+          map.setCenter(novaPosicao);
+          map.setZoom(zoom);
+        }
+
+        const teste = (element) => {
+          let elemento = document.getElementById(element+'')
+          // Obtém o valor dos atributos data-lng e data-lat do elemento
+          const lng = elemento.getAttribute('data-lng');
+          const lat = elemento.getAttribute('data-lat');
+
+          // Verifica se os valores foram encontrados e os exibe no console
+          if (lng && lat) {
+            mudarLocalizacaoEZoom(lat,lng,14)
+
+          } else {
+            console.log('Dados de longitude e/ou latitude não encontrados.');
+          }
+        };
+
+        let botoes = {
+                      mostrar: {
+                        classe: "btn-primary text-white",
+                        texto: '<i class="fa fa-eye" aria-hidden="true"></i>',
+                        callback: teste
+                      }
+                    };
 
 const mostrarInformacoesDetalhadas = (dados) => {
   const msgInfo = () => {
@@ -191,11 +216,26 @@ const mostrarInformacoesDetalhadas = (dados) => {
       </div>
     `;
     let acoes = `
-                <b class="pt-2" >Anexar ao Veículo</b>
-                <select class="form-select">
-                  <option>Teste 1</option>
-                  <option>Teste 2</option>
-                </select>
+                <b>Anexar ao Veículo</b>
+                <div class="btn-group" role="group" aria-label="Basic example" style="width:100%">
+                  <select class="form-select">
+                    <option>Teste 1</option>
+                    <option>Teste 2</option>
+                  </select>
+                  <button type="button" class="btn btn-primary">
+                    <i class="fa fa-plus" aria-hidden="true"></i>
+                  </button>
+                </div>
+                <b class="pt-2" >Inserir ocorrência</b>
+                <div class="btn-group" role="group" aria-label="Basic example" style="width:100%">
+                  <select class="form-select">
+                    <option>Teste 1</option>
+                    <option>Teste 2</option>
+                  </select>
+                  <button type="button" class="btn btn-primary">
+                    <i class="fa fa-plus" aria-hidden="true"></i>
+                  </button>
+                </div>
                 <div class="mt-2">
                   <b class="pt-2" >Prioridade</b>
                   <div class="badge badge-warning" style="width:100%">Média</div>
@@ -216,33 +256,45 @@ const mostrarInformacoesDetalhadas = (dados) => {
   msgInfo();
 };
 
+
+
     let dadosTableColetas = []
+    let dadosAdicionais = []
     addMarker(myLatLng.lat,myLatLng.lng,armazem)
     // Obtém as coordenadas geradas pela função geraCoordenadas
       // Adiciona marcadores para cada conjunto de coordenadas
       coordenadasGeradas.forEach(function(coordenadas) {
         switch (coordenadas[2]) {
           case 1:
-            dadosTableColetas.push({id:coordenadas[3],status:'Em Rota',placa:coordenadas[5]})
+            dadosTableColetas.push({id:coordenadas[3],status:'Em Rota',placa:coordenadas[5],dadosAdicionais:{lat:coordenadas[0],lng:coordenadas[1]}})
             addMarker(coordenadas[0],coordenadas[1],local,coordenadas,mostrarInformacoesDetalhadas)
             break;
           case 2:
-          dadosTableColetas.push({id:coordenadas[3],status:'Em Trânsito',placa:coordenadas[5]})
+            dadosTableColetas.push({id:coordenadas[3],status:'Em Trânsito',placa:coordenadas[5],dadosAdicionais:{lat:coordenadas[0],lng:coordenadas[1]}})
             addMarker(coordenadas[0],coordenadas[1],local,coordenadas,mostrarInformacoesDetalhadas)
             break;
           case 3:
-            dadosTableColetas.push({id:coordenadas[3],status:'Concluída',placa:coordenadas[5]})
+            dadosTableColetas.push({id:coordenadas[3],status:'Concluída',placa:coordenadas[5],dadosAdicionais:{lat:coordenadas[0],lng:coordenadas[1]}})
             addMarker(coordenadas[0],coordenadas[1],local,coordenadas,mostrarInformacoesDetalhadas)
             break;  
           case 4: 
-          dadosTableColetas.push({id:coordenadas[3],status:'Aguardando',placa:coordenadas[5]})
+            dadosTableColetas.push({id:coordenadas[3],status:'Aguardando',placa:coordenadas[5],dadosAdicionais:{lat:coordenadas[0],lng:coordenadas[1]}})
             addMarker(coordenadas[0],coordenadas[1],local,coordenadas,mostrarInformacoesDetalhadas)
             break;                                       
           default:
             break;
         }
+        dadosAdicionais.push({lat:coordenadas[0],lng:coordenadas[1]})
       });
-      popula_tbody_paginacao('paginacaoPlanejamento','infoPlanejamentoColetas',dadosTableColetas,false,1,9999,false)
+      popula_tbody_paginacao('paginacaoPlanejamento',
+                             'infoPlanejamentoColetas',
+                             dadosTableColetas,
+                             botoes,
+                             1,
+                             9999,
+                             false,
+                             dadosAdicionais
+                            )
     }
 
 

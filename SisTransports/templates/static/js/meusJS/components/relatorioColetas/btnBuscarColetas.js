@@ -78,7 +78,7 @@ btnBuscarColetas.addEventListener('click', async () => {
   const dados = await getColetasPorData()
   const cmbQtdePorPagina = document.getElementById('qtdePorPagina');
   const qtdePorPagina = cmbQtdePorPagina.options[cmbQtdePorPagina.selectedIndex].textContent;
-  popula_tbody_paginacao("navegacaoPaginacao","relatorioColetas",preparaDadosTbody(dados), botoes, 1, qtdePorPagina); 
+  popula_tbody_paginacao("navegacaoPaginacao","relatorioColetas",preparaDadosTbody(dados), botoes, 1, qtdePorPagina,true,false); 
 });
 
 

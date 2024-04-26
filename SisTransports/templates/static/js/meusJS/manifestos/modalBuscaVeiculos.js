@@ -29,7 +29,7 @@ const populaTbodyBuscaVeiculos = (dados)=>{
             callback: selecionaVeiculo
           }
         }
-    popula_tbody_paginacao('paginacaoBuscaVeiculo','tbodyBuscaVeiculo',dados,botoes,1,10,false)
+    popula_tbody_paginacao('paginacaoBuscaVeiculo','tbodyBuscaVeiculo',dados,botoes,1,10,false,false)
 }
 
 const preparaDadosTbodyBuscaVeiculo=(response)=>{

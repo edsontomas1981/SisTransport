@@ -335,7 +335,7 @@ const populaRelatTabelas= async () => {
     let tabelas = await carregaTabelas()
     tabelas = preparaDadosTabelas(tabelas.tabela)
     if(document.getElementById("tbodyRelatorioTabelas")){
-        popula_tbody_paginacao('paginacaoRelatTabelas','tbodyRelatorioTabelas',tabelas,botoes,1,10)
+        popula_tbody_paginacao('paginacaoRelatTabelas','tbodyRelatorioTabelas',tabelas,botoes,1,10,true,false)
         limpaForm()
     }
 }

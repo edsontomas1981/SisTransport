@@ -28,7 +28,7 @@ const createPaginationButton = (iconClass, page, totalPages, isActive = false, d
   if (page > 0 && page <= totalPages) {
     a.addEventListener("click", function () {
       // Certifique-se de que 'dados' e 'botoes' estejam no escopo correto
-      popula_tbody_paginacao(divParaNavegacao, idTbody, dados, botoes, page,itensPorPagina);
+      popula_tbody_paginacao(divParaNavegacao, idTbody, dados, botoes, page,itensPorPagina,true,false);
     });
   }
 
@@ -46,10 +46,9 @@ const createPaginationButton = (iconClass, page, totalPages, isActive = false, d
  * @param {number} [paginaAtual=1] - O número da página atual (padrão é 1).
  * @param {number} [itensPorPagina=10] - O número de itens a serem exibidos por página (padrão é 10).
  */
-const popula_tbody_paginacao = (divParaNavegacao, id_tbody, dados, botoes = {}, paginaAtual = 1, itensPorPagina = 10,addCheckbox = true) => {
+const popula_tbody_paginacao = (divParaNavegacao, id_tbody, dados, botoes = {}, paginaAtual = 1, itensPorPagina = 10,addCheckbox = true,dadosAdicionais = false) => {
 
   // Calcula o índice inicial e final dos dados a serem exibidos na página atual
-
   const startIndex = (paginaAtual - 1) * itensPorPagina;
   const endIndex = startIndex + itensPorPagina;
 
@@ -61,7 +60,7 @@ const popula_tbody_paginacao = (divParaNavegacao, id_tbody, dados, botoes = {}, 
   // Limpa o conteúdo atual da tabela
   limpa_tabelas(id_tbody);
 
-  dadosPaginados.forEach(element => {
+  dadosPaginados.forEach(element => { 
     var tr = document.createElement("tr");
     tr.setAttribute('data-id', element.id);
     if (addCheckbox){
@@ -74,11 +73,20 @@ const popula_tbody_paginacao = (divParaNavegacao, id_tbody, dados, botoes = {}, 
       tr.appendChild(tdCheckbox);
     }
 
-      // Loop através do dicionário de dados para criar as células <td> dinamicamente
+    // Loop através do dicionário de dados para criar as células <td> dinamicamente
     for (const chave in element) {
       if (element.hasOwnProperty(chave)) {
         var td = document.createElement("td");
-        td.textContent = element[chave];
+
+        // Verificar se o valor associado à chave é um objeto (hashTable)
+        if (typeof element[chave] === 'object' && element[chave] !== null) {
+          // Se for um objeto, você pode adicionar a lógica desejada aqui
+          // td.textContent = 'É uma hashTable';
+        } else {
+          // Caso contrário, apenas atribua o valor normalmente
+          td.textContent = element[chave];
+        }
+
         tr.appendChild(td);
       }
     }
@@ -89,6 +97,11 @@ const popula_tbody_paginacao = (divParaNavegacao, id_tbody, dados, botoes = {}, 
         var tdBotao = document.createElement("td");
         var btn = document.createElement("a");
         btn.setAttribute('data-id', element.id);
+
+        Object.entries(element.dadosAdicionais).forEach(([key, value]) => {
+          btn.setAttribute('data-'+key, value);
+          // Aqui você pode fazer o que precisar com cada chave e valor
+        });
         btn.id = element.id;
         btn.className = "btn btn-sm " + botoes[nomeBotao].classe;
         btn.innerHTML = botoes[nomeBotao].texto;
@@ -100,12 +113,10 @@ const popula_tbody_paginacao = (divParaNavegacao, id_tbody, dados, botoes = {}, 
             botoes[nomeBotao].callback(element.id);
           };
         }
-  
         tdBotao.appendChild(btn);
         tr.appendChild(tdBotao);
       }
     }
-  
     tbody.appendChild(tr);
   });
   
@@ -230,7 +241,6 @@ const popula_tbody = (id_tbody, dicionario_dados, botoes = {},inicioChebox=true)
         tr.appendChild(tdBotao);
       }
     }
-
     tbody.appendChild(tr);
   });
 };
