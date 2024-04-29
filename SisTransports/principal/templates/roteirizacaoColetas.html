@@ -87,8 +87,9 @@
     <script src="{% static 'js/meusJS/planejamentoAcompanhamento/planejamentoAcompanhamento.js' %}"></script>
     <script src="{% static 'js/meusJS/planejamentoAcompanhamento/initMap.js' %}"></script>
     <script src="{% static 'js/meusJS/planejamentoAcompanhamento/quadTree.js' %}"></script>
-
-
+    <script src="{% static 'js/meusJS/utils.js' %}"></script>
+    <script src="{% static 'js/meusJS/modalCadVeiculos/txtProprietario.js' %}"></script>
+    <script src="{% static 'js/meusJS/planejamentoAcompanhamento/verificarLocalidadesNaRota.js' %}"></script>
   {% endblock %}
   <script>
       function initMap() {
@@ -229,45 +230,53 @@
           quadtree.insert({ x: coordenada[0], y:coordenada[1] });
         });
 
+
+
+
+
+
+      // verificarLocalidadesNaRota(origem, destino);
+
+
         // console.log(quadtree)
 
-        const verificarLocalidadesNaRota = (origem, destino, mapa) => {
-          const directionsService = new google.maps.DirectionsService();
+      //   const verificarLocalidadesNaRota = (origem, destino, mapa) => {
+      //     const directionsService = new google.maps.DirectionsService();
 
-          directionsService.route({
-              origin: origem,
-              destination: destino,
-              travelMode: google.maps.TravelMode.DRIVING
-          }, (result, status) => {
-              if (status === google.maps.DirectionsStatus.OK) {
-                  const routeCoordinates = [];
+      //     directionsService.route({
+      //         origin: origem,
+      //         destination: destino,
+      //         travelMode: google.maps.TravelMode.DRIVING
+      //     }, (result, status) => {
+      //         if (status === google.maps.DirectionsStatus.OK) {
+      //             const routeCoordinates = [];
 
-                  result.routes[0].legs.forEach((leg) => {
-                      leg.steps.forEach((step) => {
-                          step.path.forEach((pathCoord) => {
-                              routeCoordinates.push(pathCoord);
-                          });
-                      });
-                  });
+      //             result.routes[0].legs.forEach((leg) => {
+      //                 leg.steps.forEach((step) => {
+      //                     step.path.forEach((pathCoord) => {
+      //                         routeCoordinates.push(pathCoord);
+      //                     });
+      //                 });
+      //             });
 
-                  // Consulta localidades próximas usando a QuadTree
-                  routeCoordinates.forEach((routeCoord) => {
-                      const proximidadeRange = new Rectangle(routeCoord.lat(), routeCoord.lng(), -46.825123,-23.356792); // Defina a área de consulta em torno do ponto da rota
-                      const localidadesProximas = quadtree.queryRange(proximidadeRange);
+      //             // Consulta localidades próximas usando a QuadTree
+      //             routeCoordinates.forEach((routeCoord) => {
+      //                 const proximidadeRange = new Rectangle(routeCoord.lat(), routeCoord.lng(), -46.825123,-23.356792); // Defina a área de consulta em torno do ponto da rota
+      //                 const localidadesProximas = quadtree.queryRange(proximidadeRange);
 
-                      console.log(localidadesProximas)
+      //                 console.log(localidadesProximas)
 
-                      // Lógica para lidar com localidades próximas
-                      localidadesProximas.forEach((localidade) => {
-                          console.log('A localidade', localidade.id, 'está na rota.');
-                          // Adicione sua lógica aqui para manipular as localidades na rota
-                      });
-                  });
-              } else {
-                  console.error('Erro ao calcular rota:', status);
-              }
-          });
-      };
+      //                 // Lógica para lidar com localidades próximas
+      //                 localidadesProximas.forEach((localidade) => {
+      //                     console.log('A localidade', localidade.id, 'está na rota.');
+      //                     // Adicione sua lógica aqui para manipular as localidades na rota
+      //                 });
+      //             });
+      //         } else {
+      //             console.error('Erro ao calcular rota:', status);
+      //         }
+      //     });
+      // };
 
         // const verificarLocalidadesNaRota = (origem, destino, localidades, mapa) => {
         //     // Obter a rota entre origem e destino

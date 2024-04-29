@@ -11,6 +11,9 @@ urlpatterns = [
     path('printColetas/',viewsOperacional.print_coletas,name='print'),
     path('impressaoColetas/',viewsOperacional.impressao_coletas,name='impressao_coletas'),
     path('roteirizacao_coletas/',viewsOperacional.roteirizacao_coletas,name='roteirizacao_coletas'),
+    
+    path('api/directions/', viewsOperacional.proxy_openrouteservice, name='proxy_openrouteservice'),
+
 
     path('createNf/',viewsOperacional.create_nf,name='createNf'),
     path('readNf/',viewsOperacional.read_nf,name='readNf'),

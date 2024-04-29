@@ -27,6 +27,8 @@ from operacional.views.coleta.impressao_coletas import impressao_coletas
 from operacional.views.coleta.print_coletas import print_coletas
 from operacional.views.coleta.roteirizacao_coletas import roteirizacao_coletas
 
+from operacional.views.roteirizacao.proxy_openrouteservice import proxy_openrouteservice
+
 from operacional.views.nf.create_nf import create_nf
 from operacional.views.nf.read_nf import read_nf
 from operacional.views.nf.update_nf import update_nf
