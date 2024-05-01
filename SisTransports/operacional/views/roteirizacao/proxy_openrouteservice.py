@@ -23,41 +23,32 @@ def proxy_openrouteservice(request):
         # # Fazer a solicitação GET para a API do OpenRouteService
         response = requests.get(api_url, params=params)
 
-
-        print(response.status_code)
-
         # Verificar se a solicitação foi bem-sucedida
         if response.status_code == 200:
             response_data = response.json()
 
-        #     # Extrair coordenadas da rota
-        #     route_coordinates = []
-        #     if 'features' in response_data and len(response_data['features']) > 0:
-        #         # Iterar sobre as coordenadas da rota
-        #         for coord in response_data['features'][0]['geometry']['coordinates']:
-        #             # Adicionar coordenadas à lista de pontos da rota
-        #             route_coordinates.append((coord[1], coord[0]))  # Inverter lat/long para (lat, long)
+            # Extrair coordenadas da rota
+            route_coordinates = []
 
-            # # Lista de localidades (exemplo)
-            # localidades = [
-            #     {'nome': 'Localidade A', 'coordenadas': [-23.74480992840554, -46.821601416176605]},
-            #     {'nome': 'Localidade B', 'coordenadas': [-23.74480992840557, -46.821601416176607]},
-            #     {'nome': 'Localidade C', 'coordenadas': [-23.74480992840560, -46.821601416176700]}
-            #     # Adicione mais localidades conforme necessário
-            # ]
+            if 'features' in response_data and len(response_data['features']) > 0:
+                # Iterar sobre as coordenadas da rota
+                for coord in response_data['features'][0]['geometry']['coordinates']:
+                    # Adicionar coordenadas à lista de pontos da rota
+                    route_coordinates.append((coord[1], coord[0]))  # Inverter lat/long para (lat, long)
 
-            # # Verificar quais localidades estão próximas à rota
-            # localidades_na_rota = []
-            # for localidade in localidades:
-            #     for coord in route_coordinates:
-            #         # Calcular distância entre coordenadas (exemplo: distância euclidiana)
-            #         distance = ((localidade['coordenadas'][0] - coord[0])**2 + (localidade['coordenadas'][1] - coord[1])**2)**0.5
-            #         if distance < 0.01:  # Exemplo de distância limite (ajuste conforme necessário)
-            #             localidades_na_rota.append(localidade['nome'])
-            #             break  # Parar a verificação se a localidade estiver na rota
+            # Verificar quais localidades estão próximas à rota
+            localidades_na_rota = []
+            for localidade in data.get('localidades'):
+                for coord in route_coordinates:
+                    # Calcular distância entre coordenadas (exemplo: distância euclidiana)
+                    distance = ((localidade[0] - coord[0])**2 + (localidade[1] - coord[1])**2)**0.5
+                    if distance < 0.02:  # Exemplo de distância limite (ajuste conforme necessário)
+                        print(distance)
+                        localidades_na_rota.append(localidade[3])
+                        break  # Parar a verificação se a localidade estiver na rota
 
             # Retornar localidades na rota como uma resposta JSON
-        return JsonResponse({'localidades_na_rota':' localidades_na_rota'})
+        return JsonResponse({'localidades_na_rota':localidades_na_rota,'rota':route_coordinates})
 
         # else:
         #     # Se a solicitação não foi bem-sucedida, retornar erro

@@ -219,12 +219,5 @@ const geraCoordenadas = ()=>{
           coordenadas.push([lat, lng,status,idNum,motorista,placa,bairro,volumes,peso.toFixed(2)]);
       }
     }
-    console.log(coordenadas)
     return coordenadas ;
-}
-
-
-const geraQuadTree = ()=>{
- const range = new Rectangle(-46.8, -23.75, -46.7, -23.65); // Área de consulta em latitudes e longitudes
- print(range)
 }
