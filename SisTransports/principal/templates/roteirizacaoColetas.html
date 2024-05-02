@@ -82,6 +82,35 @@
       </div>
     </div>
   </div>
+  
+  <!-- Modal -->
+  <div class="modal fade" id="modalRotasColetas" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="modalColetaId">Modal title</h5>
+          <button type="button" class="btn-close" onclick="closeModal()"></button>
+        </div>
+        <div class="modal-body">
+          <div class="row">
+            <div class="col-sm-6" id="rotasColetas">
+              <div id="paginacaoRotasColetas" style="display: none;">
+              </div>
+              <table class="table table-striped table-sm">
+                <thead>
+                  <tr>Coleta</tr>
+                  <tr>Bairro</tr>
+                </thead>
+                <tbody id="tbodyRotasColetas">
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  </div>
   {% block js %} 
     <script src="{% static 'js/meusJS/utils.js' %}"></script>
     <script src="{% static 'js/meusJS/planejamentoAcompanhamento/gerarDados.js' %}"></script>

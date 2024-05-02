@@ -1,7 +1,28 @@
-const verificarLocalidadesNaRota = async(origem,destino,coordenadas,mapa) => {
-    let response  = await connEndpoint('/operacional/api/directions/', {'start':origem,'end':destino,'localidades':coordenadas});
-    console.log(response.localidades_na_rota)
-    imprimirRotaNoMapa(response.rota,mapa)
+// Exemplo de uso das funções
+const verificarLocalidadesNaRota = async (origem, destino, coordenadas, mapa) => {
+    try {
+        const response = await connEndpoint('/operacional/api/directions/', { 'start': origem, 'end': destino, 'localidades': coordenadas });
+        console.log(response.localidades_na_rota)
+        switch (response.status) {
+            case 200:
+                let rotas =[]
+                response.localidades_na_rota.forEach(element => {
+                    rotas.push({dtc:element})
+                    removeMarker(mapa,element)
+                });
+                imprimirRotaNoMapa(response.rota, mapa,11.3);
+                popula_tbody('tbodyRotasColetas',rotas,{},false)                
+                openModal('modalRotasColetas')
+                break;
+            default:
+                msgErro("Não foi possível gerar a rota.");
+                break;
+        }
+    } catch (error) {
+        console.error('Erro ao buscar direções:', error);
+        // Em caso de erro, remova a rota do mapa
+        removerRotaDoMapa(mapa);
+    }
 };
 
 // Função para calcular a distância entre dois pontos em graus (usando fórmula simples de distância euclidiana)
@@ -11,11 +32,34 @@ const calcularDistanciaEntrePontos = (coord1, coord2) => {
     return Math.sqrt(dx * dx + dy * dy);
 };
 
-const imprimirRotaNoMapa=(routeCoordinates,mapa)=>{
-    console.log("ok")
-     // Cria um objeto de polyline com as coordenadas da rota
-     var polyline = L.polyline(routeCoordinates, {color: 'red'}).addTo(mapa);
+const imprimirRotaNoMapa = (routeCoordinates, mapa, zoomLevel = 12) => {
+    // Primeiro, remova qualquer rota existente no mapa
+    removerRotaDoMapa(mapa);
 
-     // Ajusta a visão do mapa para mostrar toda a rota
-     mapa.fitBounds(polyline.getBounds());
-}
+    // Crie uma nova polyline com as coordenadas da rota
+    const polyline = L.polyline(routeCoordinates, { color: 'red' });
+
+    // Adicione a nova polyline ao mapa
+    polyline.addTo(mapa);
+
+    // Ajuste a visão do mapa para mostrar toda a rota
+    mapa.fitBounds(polyline.getBounds());
+
+    // Verifique se o mapa está em um zoom maior que o desejado
+    if (mapa.getZoom() > zoomLevel) {
+        // Diminua o zoom para o nível especificado
+        mapa.setZoom(zoomLevel);
+    }
+
+    // Defina a nova polyline como a polyline atual no mapa
+    mapa.currentPolyline = polyline;
+};
+
+
+// Função para remover a polyline atual do mapa
+const removerRotaDoMapa = (mapa) => {
+    if (mapa.currentPolyline) {
+        mapa.removeLayer(mapa.currentPolyline);
+        mapa.currentPolyline = null;
+    }
+};

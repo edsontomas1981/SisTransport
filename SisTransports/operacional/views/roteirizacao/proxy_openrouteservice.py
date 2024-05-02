@@ -7,7 +7,7 @@ import requests
 @login_required(login_url='/auth/entrar/')
 @require_http_methods(["POST"])
 def proxy_openrouteservice(request):
-    # try:
+    try:
         # Obter os dados da solicitação POST
         data = json.loads(request.body.decode('utf-8'))
         # https://api.openrouteservice.org/v2/directions/driving-car
@@ -22,6 +22,8 @@ def proxy_openrouteservice(request):
 
         # # Fazer a solicitação GET para a API do OpenRouteService
         response = requests.get(api_url, params=params)
+
+        print(data.get('start'),data.get('end'))
 
         # Verificar se a solicitação foi bem-sucedida
         if response.status_code == 200:
@@ -42,21 +44,23 @@ def proxy_openrouteservice(request):
                 for coord in route_coordinates:
                     # Calcular distância entre coordenadas (exemplo: distância euclidiana)
                     distance = ((localidade[0] - coord[0])**2 + (localidade[1] - coord[1])**2)**0.5
-                    if distance < 0.02:  # Exemplo de distância limite (ajuste conforme necessário)
-                        print(distance)
+                    if distance < 0.05:  # Exemplo de distância limite (ajuste conforme necessário)
                         localidades_na_rota.append(localidade[3])
                         break  # Parar a verificação se a localidade estiver na rota
 
-            # Retornar localidades na rota como uma resposta JSON
-        return JsonResponse({'localidades_na_rota':localidades_na_rota,'rota':route_coordinates})
+        else:
+            print(response.status_code)
+            # Se a solicitação não foi bem-sucedida, retornar erro
+            return JsonResponse({'msg': 'Falha ao obter rota do OpenRouteService', 'status':404})
+        
+        # Retornar localidades na rota como uma resposta JSON
+        print(localidades_na_rota)
+        return JsonResponse({'localidades_na_rota':localidades_na_rota,'rota':route_coordinates,'status':200})
 
-        # else:
-        #     # Se a solicitação não foi bem-sucedida, retornar erro
-        #     return JsonResponse({'error': 'Falha ao obter rota do OpenRouteService'}, status=response.status_code)
-
-    # except Exception as e:
-    #     # Tratar qualquer exceção que possa ocorrer durante a solicitação
-    #     error_message = str(e)
-    #     return JsonResponse({'error': error_message}, status=500)
+    except Exception as e:
+        print(response.status_code)
+        # Tratar qualquer exceção que possa ocorrer durante a solicitação
+        error_message = str(e)
+        return JsonResponse({'error': error_message,'status':500})
 
 
