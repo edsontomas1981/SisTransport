@@ -1,6 +1,6 @@
 // Exemplo de uso das funções
 const verificarLocalidadesNaRota = async (origem, destino, coordenadas, mapa) => {
-    try {
+    // try {
         const response = await connEndpoint('/operacional/api/directions/', { 'start': origem, 'end': destino, 'localidades': coordenadas });
         console.log(response.localidades_na_rota)
         switch (response.status) {
@@ -8,21 +8,28 @@ const verificarLocalidadesNaRota = async (origem, destino, coordenadas, mapa) =>
                 let rotas =[]
                 response.localidades_na_rota.forEach(element => {
                     rotas.push({dtc:element})
-                    removeMarker(mapa,element)
+                    // removeMarker(mapa,element)
                 });
+                var botoesColetas = {
+                    mostrar: {
+                      classe: "btn-primary text-white",
+                      texto: '<i class="fa fa-eye" aria-hidden="true"></i>',
+                      callback: (elementId) => acaoBotaoGerarRota(elementId, mapaColetas) // Passando mapaColetas como argumento
+                    }
+                  };
                 imprimirRotaNoMapa(response.rota, mapa,11.3);
-                popula_tbody('tbodyRotasColetas',rotas,{},false)                
+                popula_tbody_paginacao('divPaginacao', 'tbodyRotasColetas', rotas, {}, 1, 9999, true, false);
                 openModal('modalRotasColetas')
                 break;
             default:
                 msgErro("Não foi possível gerar a rota.");
                 break;
         }
-    } catch (error) {
-        console.error('Erro ao buscar direções:', error);
-        // Em caso de erro, remova a rota do mapa
-        removerRotaDoMapa(mapa);
-    }
+    // } catch (error) {
+    //     console.error('Erro ao buscar direções:', error);
+    //     // Em caso de erro, remova a rota do mapa
+    //     removerRotaDoMapa(mapa);
+    // }
 };
 
 // Função para calcular a distância entre dois pontos em graus (usando fórmula simples de distância euclidiana)

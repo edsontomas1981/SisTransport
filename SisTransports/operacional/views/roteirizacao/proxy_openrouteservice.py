@@ -49,16 +49,13 @@ def proxy_openrouteservice(request):
                         break  # Parar a verificação se a localidade estiver na rota
 
         else:
-            print(response.status_code)
             # Se a solicitação não foi bem-sucedida, retornar erro
             return JsonResponse({'msg': 'Falha ao obter rota do OpenRouteService', 'status':404})
         
         # Retornar localidades na rota como uma resposta JSON
-        print(localidades_na_rota)
         return JsonResponse({'localidades_na_rota':localidades_na_rota,'rota':route_coordinates,'status':200})
 
     except Exception as e:
-        print(response.status_code)
         # Tratar qualquer exceção que possa ocorrer durante a solicitação
         error_message = str(e)
         return JsonResponse({'error': error_message,'status':500})
