@@ -65,7 +65,58 @@ const removeMarker = (map, markerId) => {
 };
 
 
+function createPerimeter(latitude, longitude, radiusInMeters, map) {
+    // Criar um círculo com o centro nas coordenadas especificadas e o raio em graus
+    const circle = L.circle([latitude, longitude], {
+        radius: radiusInMeters * 1000, // Converter o raio de metros para quilômetros
+        color: 'red', // Cor do contorno do círculo
+        fillColor: 'red', // Cor de preenchimento do círculo
+        fillOpacity: 0.5 // Opacidade do preenchimento do círculo
+    }).addTo(map); // Adiciona o círculo ao mapa Leaflet
 
+    // Ajustar o mapa para exibir o círculo completamente
+    map.fitBounds(circle.getBounds());
+
+    // Retornar o objeto do círculo (perímetro) para referência posterior
+    return circle;
+}
+
+
+// const createPerimeter = (lat, lng, radiusInMeters, mapa,zoomLevel = 10.3) => {
+//     // Converter o raio em graus de latitude/longitude (aproximado)
+//     const radiusInDegrees = radiusInMeters / 111300; // Aproximadamente 111300 metros por grau
+
+//     // // Calcular os vértices do polígono
+//     // const vertices = [];
+//     // const numVertices = 80; // Número de vértices (aumentar para aumentar a suavidade do círculo)
+
+//     // for (let i = 0; i < numVertices; i++) {
+//     //     const angle = (i / numVertices) * 2 * Math.PI;
+//     //     const vertexLat = parseFloat(lat) + radiusInDegrees * Math.cos(angle);
+//     //     const vertexLng = parseFloat(lng) + radiusInDegrees * Math.sin(angle);
+//     //     vertices.push([vertexLat, vertexLng]);
+//     // }
+
+//     // // Criar o polígono no mapa
+//     // const perimeter = L.polygon(vertices, { color: 'red' });
+
+//     // perimeter.addTo(mapa)
+
+//     var circle = L.circle([lat, lng], {
+//         radius: radiusInDegrees
+//     }).addTo(mapa); // Adiciona o círculo ao mapa
+
+//     mapa.fitBounds(circle.getBounds());
+
+//     // Verifique se o mapa está em um zoom maior que o desejado
+//     if (mapa.getZoom() > zoomLevel) {
+//         // Diminua o zoom para o nível especificado
+//         mapa.setZoom(zoomLevel);
+//     }
+
+//     // Retornar o objeto do perímetro (polígono)
+//     // return perimeter;
+// };
 
 
 // const initMapColetas= ()=>{
@@ -115,4 +166,7 @@ const removeMarker = (map, markerId) => {
 //     markers.push(marker);
 //     return marker
 // };
+
+
+
 

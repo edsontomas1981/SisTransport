@@ -1,8 +1,22 @@
+// Definição global da função preparaDadosPerimetro
+function preparaDadosPerimetro(element) {
+    let mapa = document.getElementById('map')
+    const latitude = element.getAttribute('data-lat');
+    const longitude = element.getAttribute('data-lng');
+    console.log(mapa)
+    closeModal()
+    createPerimeter(latitude,longitude,5,mapa)
+
+}
+
 document.addEventListener("DOMContentLoaded",()=>{
+
     var coordenadasGeradas = geraCoordenadas();
     var coordsOrigem = { lat: -23.47337308, lng: -46.47320867 };
+    // A função preparaDadosPerimetro agora recebe o elemento clicado como parâmetro
 
     const mostrarInformacoesDetalhadas = (dados,mapaColetas) => {
+
         let tabela = `
         <div class="row">
             <div class="col-sm-6">
@@ -63,7 +77,7 @@ document.addEventListener("DOMContentLoaded",()=>{
                     <select class="form-select">
                         <option>Teste 1</option>
                         <option>Teste 2</option>
-                    </select>
+                    </select> 
                     <button type="button" class="btn btn-primary">
                         <i class="fa fa-plus" aria-hidden="true"></i>
                     </button>
@@ -74,20 +88,21 @@ document.addEventListener("DOMContentLoaded",()=>{
                     </div>
                     `
         let btnGerarIntinerarios = `
-                                <div class="btn-group pt-2" role="group" aria-label="Basic example" style="width:100%">
-                                    <button type="button" class="btn btn-success">
-                                    <i class="fa fa-location-arrow" aria-hidden="true"></i>
-                                    Origem
-                                    </button>
-                                    <button type="button" class="btn btn-warning">
-                                    <i class="fa fa-map-signs" aria-hidden="true"></i>
-                                    Perímetro
-                                    </button>
-                                    <button type="button" class="btn btn-primary">
-                                    <i class="fa fa-map-marker" aria-hidden="true"></i>
-                                    Destino
-                                    </button>
-                                </div>`
+                                    <div class="btn-group pt-2" role="group" aria-label="Basic example" style="width:100%">
+                                        <button type="button" class="btn btn-success">
+                                            <i class="fa fa-location-arrow" aria-hidden="true"></i>
+                                            Origem
+                                        </button>
+                                        <button type="button" class="btn btn-warning" data-lat="${dados[0]}" data-lng="${dados[1]}" onclick="preparaDadosPerimetro(this)">
+                                            <i class="fa fa-map-signs" aria-hidden="true"></i>
+                                            Perímetro
+                                        </button>
+                                        <button type="button" class="btn btn-primary">
+                                            <i class="fa fa-map-marker" aria-hidden="true"></i>
+                                            Destino
+                                        </button>
+                                    </div>
+                                    `;
         let idColeta = `<span>Pré Dtc Nº : </span><span id="numDocumento"> ${dados[3]}</span>`
         let modalColetaId = document.getElementById("modalColetaId")
         let tabelaColetas = document.getElementById("tabelaColetas")
@@ -97,13 +112,16 @@ document.addEventListener("DOMContentLoaded",()=>{
         acoesColetas.innerHTML = acoes
         modalColetaId.innerHTML = idColeta
         botoesColetas.innerHTML = btnGerarIntinerarios
+
         const btnAddDtcVeiculo = document.getElementById("addDtcVeiculo");
         btnAddDtcVeiculo.addEventListener('click', () => {
             removeMarker(mapaColetas, dados[3]); // Passa a referência ao mapa e o ID do marcador
         });
-
         openModal('modalPlanejamentoColetas')
+
     };
+
+
 
 
 
@@ -175,8 +193,9 @@ const iniciaMapaColetas=(coordenadas,coordsOrigem)=>{
         // Exemplo de uso
         var origem = `${coordsOrigem.lng},${coordsOrigem.lat}`;
         var destino = `${lng},${lat}`;
+        var coords = [lat,lng]
 
-        verificarLocalidadesNaRota(origem,destino,coordenadasGeradas,mapaColetas)
+        verificarLocalidadesNaRota(origem,destino,coordenadasGeradas,mapaColetas,coords)
 
         // var novaPosicao = new google.maps.LatLng(latitude,longitude);
         // mapa.setCenter(novaPosicao);

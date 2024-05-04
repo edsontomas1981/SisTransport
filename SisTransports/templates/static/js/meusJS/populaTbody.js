@@ -46,9 +46,9 @@ const createPaginationButton = (iconClass, page, totalPages, isActive = false, d
  * @param {number} [paginaAtual=1] - O número da página atual (padrão é 1).
  * @param {number} [itensPorPagina=10] - O número de itens a serem exibidos por página (padrão é 10).
  */
-const popula_tbody_paginacao = (divParaNavegacao, id_tbody, dados, botoes = {}, paginaAtual = 1, itensPorPagina = 10,addCheckbox = true,dadosAdicionais = false) => {
+const popula_tbody_paginacao = async (divParaNavegacao, id_tbody, dados, botoes = {}, paginaAtual = 1, itensPorPagina = 10,addCheckbox = true,dadosAdicionais = false) => {
     console.log('Rotas:', dados);
-    console.log('Botoes Coletas:', botoesColetas);
+    console.log('Botoes Coletas:', botoes);
 
   // Calcula o índice inicial e final dos dados a serem exibidos na página atual
   const startIndex = (paginaAtual - 1) * itensPorPagina;
