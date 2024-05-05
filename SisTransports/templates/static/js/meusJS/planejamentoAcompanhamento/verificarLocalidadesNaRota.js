@@ -4,7 +4,7 @@ const verificarLocalidadesNaRota = async (origem, destino, coordenadas, mapa,coo
         const response = await connEndpoint('/operacional/api/directions/', { 'start': origem, 'end': destino, 'localidades': coordenadas });
         switch (response.status) {
             case 200:
-                createPerimeter(coords[0],coords[1],5,mapa)
+                mapa.currentCircle = createPerimeter(coords[0],coords[1],5,mapa)
                 // let rotas =[]
                 // response.localidades_na_rota.forEach(element => {
                 //     rotas.push({dtc:element})
@@ -19,6 +19,7 @@ const verificarLocalidadesNaRota = async (origem, destino, coordenadas, mapa,coo
                 //          }
                 //        }
                 //     }
+
                 // imprimirRotaNoMapa(response.rota, mapa,11.3);
                 // popula_tbody('tbodyRotasColetas', rotas, btnColetasRota, 1, 9999, true);
                 // openModal('modalRotasColetas')
@@ -67,8 +68,8 @@ const imprimirRotaNoMapa = (routeCoordinates, mapa, zoomLevel = 12) => {
 
 // Função para remover a polyline atual do mapa
 const removerRotaDoMapa = (mapa) => {
-    if (mapa.currentPolyline) {
-        mapa.removeLayer(mapa.currentPolyline);
-        mapa.currentPolyline = null;
+    if (mapa.currentCircle) {
+        mapa.removeLayer(mapa.currentCircle); // Remove o círculo do mapa
+        mapa.currentCircle = null; // Limpa a referência ao círculo no objeto do mapa
     }
 };
