@@ -4,25 +4,24 @@ const verificarLocalidadesNaRota = async (origem, destino, coordenadas, mapa,coo
         const response = await connEndpoint('/operacional/api/directions/', { 'start': origem, 'end': destino, 'localidades': coordenadas });
         switch (response.status) {
             case 200:
-                mapa.currentCircle = createPerimeter(coords[0],coords[1],5,mapa)
-                // let rotas =[]
-                // response.localidades_na_rota.forEach(element => {
-                //     rotas.push({dtc:element})
-                //     // removeMarker(mapa,element)
-                // });
-                // let btnColetasRota = {
-                //        editar: {
-                //          classe: 'btn-primary',
-                //          texto: 'Editar',
-                //          callback: function(id) {
-                //            console.log('Botão Editar clicado para o ID:', id);
-                //          }
-                //        }
-                //     }
+                let rotas =[]
+                response.localidades_na_rota.forEach(element => {
+                    rotas.push({dtc:element})
+                    // removeMarker(mapa,element)
+                });
+                let btnColetasRota = {
+                       editar: {
+                         classe: 'btn-primary',
+                         texto: 'Editar',
+                         callback: function(id) {
+                           console.log('Botão Editar clicado para o ID:', id);
+                         }
+                       }
+                    }
 
-                // imprimirRotaNoMapa(response.rota, mapa,11.3);
-                // popula_tbody('tbodyRotasColetas', rotas, btnColetasRota, 1, 9999, true);
-                // openModal('modalRotasColetas')
+                imprimirRotaNoMapa(response.rota, mapa,11.3);
+                popula_tbody('tbodyRotasColetas', rotas, btnColetasRota, 1, 9999, true);
+                openModal('modalRotasColetas')
                 break;
             default:
                 msgErro("Não foi possível gerar a rota.");
