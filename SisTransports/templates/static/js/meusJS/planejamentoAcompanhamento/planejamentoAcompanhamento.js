@@ -1,113 +1,209 @@
-    // Função para mostrar informações detalhadas
-    function mostrarInformacoesDetalhadas(dados) {
-        // Implemente a lógica para exibir informações detalhadas
-        let tabela = `
-        <div class="row">
-            <div class="col-sm-6">
-            <table class="table table-striped table-sm" style="width:80%">
-                <tr>
-                <td style="text-align: left;"><strong>Número:</strong></td>
-                <td style="text-align: left;">${dados.idDtc}</td>
-                </tr>
-                <tr>
-                <td style="text-align: left;"><strong>Data:</strong></td>
-                <td style="text-align: left;">17/10/2007</td>
-                </tr>
-                <tr>
-                <td style="text-align: left;"><strong>Romaneio:</strong></td>
-                <td style="text-align: left;">${dados.status}</td>
-                </tr>
-                <tr>
-                <td style="text-align: left;"><strong>Veículo:</strong></td>
-                <td style="text-align: left;">${dados.placa}</td>
-                </tr>
-                <tr>
-                <td style="text-align: left;"><strong>Motorista:</strong></td>
-                <td style="text-align: left;">${dados.motorista}</td>
-                </tr>
-                <tr>
-                <td style="text-align: left;"><strong>Volumes:</strong></td>
-                <td style="text-align: left;">${dados.volumes}</td>
-                </tr>
-                <tr>
-                <td style="text-align: left;"><strong>Peso:</strong></td>
-                <td style="text-align: left;">${dados.peso}</td>
-                </tr>
-                <tr>
-                <td style="text-align: left;"><strong>Localização:</strong></td>
-                <td style="text-align: left;">${dados.bairro}</td>
-                </tr>
-                <tr>
-                <td style="text-align: left;"><strong>Status:</strong></td>
-                <td style="text-align: left;">${dados.status}</td>
-                </tr>
-            </table>
-            </div> 
-        </div>
-        `;
-        let acoes = `
-                    <b>Anexar ao Veículo</b>
-                    <div class="btn-group" role="group" aria-label="Basic example" style="width:100%">
-                    <select class="form-select">
-                        <option>Teste 1</option>
-                        <option>Teste 2</option>
-                    </select>
-                    <button type="button" id="addDtcVeiculo" class="btn btn-primary">
-                        <i class="fa fa-plus" aria-hidden="true"></i>
-                    </button>
-                    </div>
-                    <b class="pt-2" >Inserir ocorrência</b>
-                    <div class="btn-group" role="group" aria-label="Basic example" style="width:100%">
-                    <select class="form-select">
-                        <option>Teste 1</option>
-                        <option>Teste 2</option>
-                    </select> 
-                    <button type="button" class="btn btn-primary">
-                        <i class="fa fa-plus" aria-hidden="true"></i>
-                    </button>
-                    </div>
-                    <div class="mt-2">
-                    <b class="pt-2" >Prioridade</b>
-                    <div class="badge badge-warning" style="width:100%">Média</div>
-                    </div>
-                    `
-        let btnGerarIntinerarios = `
-                                    <div class="btn-group pt-2" role="group" aria-label="Basic example" style="width:100%">
-                                        <button type="button" class="btn btn-success">
-                                            <i class="fa fa-location-arrow" aria-hidden="true"></i>
-                                            Origem
-                                        </button>
-                                        <button type="button" class="btn btn-warning" data-lat="${dados[0]}" data-lng="${dados[1]}" onclick="preparaDadosPerimetro(this)">
-                                            <i class="fa fa-map-signs" aria-hidden="true"></i>
-                                            Perímetro
-                                        </button>
-                                        <button type="button" class="btn btn-primary">
-                                            <i class="fa fa-map-marker" aria-hidden="true"></i>
-                                            Destino
-                                        </button>
-                                    </div>
-                                    `;
-        let idColeta = `<span>Pré Dtc Nº : </span><span id="numDocumento"> ${dados.idDtc}</span>`
-        let modalColetaId = document.getElementById("modalColetaId")
-        let tabelaColetas = document.getElementById("tabelaColetas")
-        let acoesColetas = document.getElementById("acoesColetas")
-        let botoesColetas = document.getElementById("botoesColetas")
-        tabelaColetas.innerHTML = tabela
-        acoesColetas.innerHTML = acoes
-        modalColetaId.innerHTML = idColeta
-        botoesColetas.innerHTML = btnGerarIntinerarios
-    
-        const btnAddDtcVeiculo = document.getElementById("addDtcVeiculo");
-        btnAddDtcVeiculo.addEventListener('click', () => {
-            removeMarker(mapaColetas, dados[3]); // Passa a referência ao mapa e o ID do marcador
-        });
-        openModal('modalPlanejamentoColetas')
+var matriz = {lat:-23.47337308, lng:-46.47320867}
+
+function preparaDadosPerimetro(element,mapa) {
+    const latitude = parseFloat(element.getAttribute('data-lat'));
+    const longitude = parseFloat(element.getAttribute('data-lng'));
+    // const dadosString = element.getAttribute('data-dados');
+    // const dados = JSON.parse(dadosString);
+
+    // console.log('dados.mapa:', dados);
+
+    console.log('dados.mapa:',mapa);
+
+    mapa.adicionarCirculo(latitude, longitude, 5000,"red",'');
+    closeModal(); // Função para fechar modal (não definida aqui)
+}
+
+const gerarRotaOrigemDestino= async (element,mapa)=> {
+    const latitude = parseFloat(element.getAttribute('data-lat'));
+    const longitude = parseFloat(element.getAttribute('data-lng'));
+    const origem = `${matriz.lng},${matriz.lat}`;
+    const destino = `${longitude},${latitude}`;
+
+    const response = await connEndpoint('/operacional/api/directions/', { 'start': origem, 'end': destino, 'localidades': {} });
+
+    mapa.imprimirRota(response.rota,10.3)
+
+    closeModal(); // Função para fechar modal (não definida aqui)
+}
+
+
+
+// Função para mostrar informações detalhadas
+const mostrarInformacoesDetalhadas=(dados,mapa)=> {
+    console.log(dados.mapa)
+    // Implemente a lógica para exibir informações detalhadas
+    let tabela = `
+    <div class="row">
+        <div class="col-sm-6">
+        <table class="table table-striped table-sm" style="width:80%">
+            <tr>
+            <td style="text-align: left;"><strong>Número:</strong></td>
+            <td style="text-align: left;">${dados.idDtc}</td>
+            </tr>
+            <tr>
+            <td style="text-align: left;"><strong>Data:</strong></td>
+            <td style="text-align: left;">17/10/2007</td>
+            </tr>
+            <tr>
+            <td style="text-align: left;"><strong>Romaneio:</strong></td>
+            <td style="text-align: left;">${dados.status}</td>
+            </tr>
+            <tr>
+            <td style="text-align: left;"><strong>Veículo:</strong></td>
+            <td style="text-align: left;">${dados.placa}</td>
+            </tr>
+            <tr>
+            <td style="text-align: left;"><strong>Motorista:</strong></td>
+            <td style="text-align: left;">${dados.motorista}</td>
+            </tr>
+            <tr>
+            <td style="text-align: left;"><strong>Volumes:</strong></td>
+            <td style="text-align: left;">${dados.volumes}</td>
+            </tr>
+            <tr>
+            <td style="text-align: left;"><strong>Peso:</strong></td>
+            <td style="text-align: left;">${dados.peso}</td>
+            </tr>
+            <tr>
+            <td style="text-align: left;"><strong>Localização:</strong></td>
+            <td style="text-align: left;">${dados.bairro}</td>
+            </tr>
+            <tr>
+            <td style="text-align: left;"><strong>Status:</strong></td>
+            <td style="text-align: left;">${dados.status}</td>
+            </tr>
+        </table>
+        </div> 
+    </div>
+    `;
+    let acoes = `
+                <b>Anexar ao Veículo</b>
+                <div class="btn-group" role="group" aria-label="Basic example" style="width:100%">
+                <select class="form-select">
+                    <option>Teste 1</option>
+                    <option>Teste 2</option>
+                </select>
+                <button type="button" id="addDtcVeiculo" class="btn btn-primary">
+                    <i class="fa fa-plus" aria-hidden="true"></i>
+                </button>
+                </div>
+                <b class="pt-2" >Inserir ocorrência</b>
+                <div class="btn-group" role="group" aria-label="Basic example" style="width:100%">
+                <select class="form-select">
+                    <option>Teste 1</option>
+                    <option>Teste 2</option>
+                </select> 
+                <button type="button" class="btn btn-primary">
+                    <i class="fa fa-plus" aria-hidden="true"></i>
+                </button>
+                </div>
+                <div class="mt-2">
+                <b class="pt-2" >Prioridade</b>
+                <div class="badge badge-warning" style="width:100%">Média</div>
+                </div>
+                `
+    let btnGerarIntinerarios = `
+                                <div class="btn-group pt-2" role="group" aria-label="Basic example" style="width:100%">
+                                    <button type="button" class="btn btn-success" data-lat="${dados.lat}" data-lng="${dados.lng}"  onclick="gerarRota()">
+                                        <i class="fa fa-location-arrow" aria-hidden="true"></i>
+                                        Origem
+                                    </button>
+                                    <button type="button" class="btn btn-warning" data-lat="${dados.lat}" data-lng="${dados.lng}" onclick="preparaDadosPerimetro(this,mapa)">
+                                        <i class="fa fa-map-signs" aria-hidden="true"></i>
+                                        Perímetro
+                                    </button>
+                                    <button type="button" class="btn btn-primary" data-lat="${dados.lat}" data-lng="${dados.lng}" >
+                                        <i class="fa fa-map-marker" aria-hidden="true"></i>
+                                        Destino
+                                    </button>
+                                </div>
+                                `;
+    let idColeta = `<span>Pré Dtc Nº : </span><span id="numDocumento"> ${dados.idDtc}</span>`
+    let modalColetaId = document.getElementById("modalColetaId")
+    let tabelaColetas = document.getElementById("tabelaColetas")
+    let acoesColetas = document.getElementById("acoesColetas")
+    let botoesColetas = document.getElementById("botoesColetas")
+    tabelaColetas.innerHTML = tabela
+    acoesColetas.innerHTML = acoes
+    modalColetaId.innerHTML = idColeta
+    // botoesColetas.innerHTML = btnGerarIntinerarios
+
+    // Exemplo de adicionar um botão dinamicamente com um evento de clique
+    const btnGeraPerimetro = document.createElement('button');
+    btnGeraPerimetro.textContent = 'Perímetro';
+
+    // Adiciona o ícone usando Font Awesome (ou substitua pela sua biblioteca de ícones preferida)
+    var iconElement = document.createElement('i');
+    iconElement.classList.add('fa', 'fa-map-signs', 'me-2'); // Classes do Font Awesome para o ícone
+    btnGeraPerimetro.appendChild(iconElement); // Adiciona o ícone ao botão
+
+    btnGeraPerimetro.className = 'btn btn-warning';
+    btnGeraPerimetro.dataset.lat = dados.lat;
+    btnGeraPerimetro.dataset.lng = dados.lng;
+    btnGeraPerimetro.addEventListener('click', () => {
+        preparaDadosPerimetro(btnGeraPerimetro,dados.mapa);
+    });
+    // Exemplo de adicionar um botão dinamicamente com um evento de clique
+    const btnGeraRotaDaqui = document.createElement('button');
+    btnGeraRotaDaqui.textContent = 'Origem';
+
+    // Adiciona o ícone usando Font Awesome (ou substitua pela sua biblioteca de ícones preferida)
+    iconElement = document.createElement('i');
+    iconElement.classList.add('fa', 'fa-location-arrow', 'me-2'); // Classes do Font Awesome para o ícone
+
+    btnGeraRotaDaqui.appendChild(iconElement); // Adiciona o ícone ao botão
+
+    btnGeraRotaDaqui.className = 'btn btn-danger';
+    btnGeraRotaDaqui.dataset.lat = dados.lat;
+    btnGeraRotaDaqui.dataset.lng = dados.lng;
+    btnGeraRotaDaqui.addEventListener('click', () => {
+        gerarRotaOrigemDestino(btnGeraRotaDaqui,dados.mapa);
+    });
+
+    // Exemplo de adicionar um botão dinamicamente com um evento de clique
+    const btnGeraAteDaqui = document.createElement('button');
+    btnGeraAteDaqui.textContent = 'Destino';
+    // Adiciona o ícone usando Font Awesome (ou substitua pela sua biblioteca de ícones preferida)
+    iconElement = document.createElement('i');
+    iconElement.classList.add('fa', 'fa-map-marker', 'me-2'); // Classes do Font Awesome para o ícone
+
+    btnGeraAteDaqui.appendChild(iconElement); // Adiciona o ícone ao botão
+
+    btnGeraAteDaqui.className = 'btn btn-success';
+    btnGeraAteDaqui.dataset.lat = dados.lat;
+    btnGeraAteDaqui.dataset.lng = dados.lng;
+    btnGeraAteDaqui.addEventListener('click', () => {
+        preparaDadosPerimetro(btnGeraAteDaqui,dados.mapa);
+    });
+    // Adicionar o botão ao elemento pai no DOM
+    const containerBotoes = document.getElementById("botoesColetas")
+
+    // Limpa todos os elementos filhos do container
+    while (containerBotoes.firstChild) {
+        containerBotoes.removeChild(containerBotoes.firstChild);
     }
+
+    containerBotoes.appendChild(btnGeraRotaDaqui);
+    containerBotoes.appendChild(btnGeraPerimetro);
+    containerBotoes.appendChild(btnGeraAteDaqui);
+
+
+
+    openModal('modalPlanejamentoColetas')
+}
+
+const adicionaMarcadoresMapa = (dados)=>{
+    console.log(dados.mapa)
+    dados.dados.forEach(e => {
+        let dadosAdicionais = {lat:e[0],lng:e[1],idDtc:e[3],motorista:e[4],placa:e[6],bairro:e[6],volumes:e[7],peso:e[8],mapa:dados.mapa}
+        dados.mapa.adicionarMarcadorComIcone(e[0],e[1],e[6],dados.icone,dados.iconeSize,e[3],dadosAdicionais)
+    });
+}
 // Exemplo de uso da classe MapaLeaflet
 document.addEventListener('DOMContentLoaded', async() => {
     const dados = geraCoordenadas()
-
-    console.log(dados)
+    const polygonCoordinates = geraDadosPoligonoZmrc()
 
     const iconeVermelho = '../../static/images/mapasIcones/pinVermelho.png'
     const iconeAzul = "../../static/images/mapasIcones/pinAzul.png"
@@ -118,14 +214,11 @@ document.addEventListener('DOMContentLoaded', async() => {
     const local = "../../static/images/mapasIcones/loja.png"
     const iconeSize= [20, 20] // [largura, altura] do ícone em pixels
 
-
     const mapa = new MapaLeaflet('map', -23.47337308, -46.47320867,10.3);
-
-    dados.forEach(e => {
-        let dadosAdicionais = {lat:e[0],lng:e[1],idDtc:e[3],motorista:e[4],placa:e[6],bairro:e[6],volumes:e[7],peso:e[8]}
-        mapa.adicionarMarcadorComIcone(e[0],e[1],e[6],local,iconeSize,e[3],dadosAdicionais)
-    });
-
+    
+    let dadosMarcadores = {mapa:mapa,dados:dados,icone:local,iconeSize:iconeSize}
+    adicionaMarcadoresMapa(dadosMarcadores)
+    mapa.adicionarPoligonoFromData(polygonCoordinates);
 
     mapa.adicionarCirculo(-23.47337308,-46.47320867,5000,"blue",'perimetro')
     mapa.adicionarMarcador(-22.9068, -43.1729, 'Rio de Janeiro');
@@ -133,17 +226,17 @@ document.addEventListener('DOMContentLoaded', async() => {
 
     mapa.adicionarMarcadorComIcone(-23.47337308,-46.47320867,"Matriz",armazem,iconeSize,1)
 
-    var origem = `${rota[0][1]},${rota[0][0]}`;
-    var destino = `${rota[1][1]},${rota[1][0]}`;
+    // var origem = `${rota[0][1]},${rota[0][0]}`;
+    // var destino = `${rota[1][1]},${rota[1][0]}`;
 
-    const response = await connEndpoint('/operacional/api/directions/', { 'start': origem, 'end': destino, 'localidades': [] });
+    // const response = await connEndpoint('/operacional/api/directions/', { 'start': origem, 'end': destino, 'localidades': [] });
 
-    mapa.imprimirRota(response.rota);
+    // mapa.imprimirRota(response.rota);
 
     // Exemplo de como remover um marcador pelo ID (indice) atribuído
     setTimeout(() => {
-        mapa.removerMarcadorPelaInfo(1);
-        mapa.removerCirculo()
+        // mapa.removerMarcadorPelaInfo(1);
+        // mapa.removerCirculo()
         }, 5000);
 });
 
@@ -230,15 +323,7 @@ document.addEventListener('DOMContentLoaded', async() => {
 
 
 
-//     // Função para preparar dados e criar perímetro
-//     function preparaDadosPerimetro(element) {
-//         const latitude = parseFloat(element.getAttribute('data-lat'));
-//         const longitude = parseFloat(element.getAttribute('data-lng'));
 
-//         closeModal(); // Função para fechar modal (não definida aqui)
-
-//         createPerimeter(latitude, longitude, 5);
-//     }
 
 //     var coordenadasGeradas = geraCoordenadas();
 

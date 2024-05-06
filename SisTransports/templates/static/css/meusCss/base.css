@@ -113,10 +113,12 @@
     padding: 0px 10px 0px 0px !important;
 }
 
-.mapa-planejamento{
-    height: 420px;
+.mapa-planejamento {
+    height: 95vh !important; /* 100% da altura da viewport (tela) */
+    width: 100vw !important; /* 100% da largura da viewport (tela) */
     border-radius: 10px;
-    padding-top: 0px !important;
+    padding: 0; /* Remover todo o padding */
+    margin: 0; /* Remover qualquer margem para ocupar toda a tela */
 }
 
 

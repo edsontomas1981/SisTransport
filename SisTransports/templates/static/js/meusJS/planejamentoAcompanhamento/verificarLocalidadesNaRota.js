@@ -1,7 +1,7 @@
 // Exemplo de uso das funções
 const verificarLocalidadesNaRota = async (origem, destino, coordenadas, mapa,coords) => {
     try {
-        const response = await connEndpoint('/operacional/api/directions/', { 'start': origem, 'end': destino, 'localidades': coordenadas });
+        const response = await connEndpoint('/operacional/api/directions/', { 'start': origem, 'end': destino, 'localidades': coordenadas});
         switch (response.status) {
             case 200:
                 let rotas =[]
@@ -19,7 +19,7 @@ const verificarLocalidadesNaRota = async (origem, destino, coordenadas, mapa,coo
                        }
                     }
 
-                imprimirRotaNoMapa(response.rota, mapa,11.3);
+                imprimirRotaNoMapa(response.rota, mapa,10.3);
                 popula_tbody('tbodyRotasColetas', rotas, btnColetasRota, 1, 9999, true);
                 openModal('modalRotasColetas')
                 break;
@@ -42,6 +42,10 @@ const calcularDistanciaEntrePontos = (coord1, coord2) => {
 };
 
 const imprimirRotaNoMapa = (routeCoordinates, mapa, zoomLevel = 12) => {
+    if (!routeCoordinates || routeCoordinates.length === 0) {
+        console.error('Coordenadas da rota inválidas.');
+        return;
+    }
     // Primeiro, remova qualquer rota existente no mapa
     removerRotaDoMapa(mapa);
 

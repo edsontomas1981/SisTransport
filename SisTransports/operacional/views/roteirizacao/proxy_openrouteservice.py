@@ -20,7 +20,8 @@ def proxy_openrouteservice(request):
             # Outros parâmetros da API, se necessário
         }
 
-        print(type(data.get('start')))
+        print(data.get("start"))
+        print(data.get("end"))
         # # Fazer a solicitação GET para a API do OpenRouteService
         response = requests.get(api_url, params=params)
 
@@ -52,6 +53,7 @@ def proxy_openrouteservice(request):
             return JsonResponse({'msg': 'Falha ao obter rota do OpenRouteService', 'status':404})
         
         # Retornar localidades na rota como uma resposta JSON
+        print(route_coordinates)
         return JsonResponse({'localidades_na_rota':localidades_na_rota,'rota':route_coordinates,'status':200})
 
     except Exception as e:

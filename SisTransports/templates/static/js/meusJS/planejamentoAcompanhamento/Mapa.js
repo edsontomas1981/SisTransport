@@ -17,6 +17,47 @@ class MapaLeaflet {
 
     }
 
+    adicionarPoligonoFromData(data) {
+        // Verifica se há geometrias no objeto de dados
+        if (data.geometries && Array.isArray(data.geometries) && data.geometries.length > 0) {
+            const geometry = data.geometries[0]; // Assume apenas uma geometria por enquanto
+
+            // Verifica se há vértices na geometria
+            if (geometry.vertices && Array.isArray(geometry.vertices) && geometry.vertices.length > 0) {
+                const polygonCoordinates = geometry.vertices.map(vertex => [vertex.latitude, vertex.longitude]);
+
+                // Remove o polígono atual, se existir
+                this.removerPoligono();
+
+                // Cria um polígono com as coordenadas fornecidas
+                const polygon = L.polygon(polygonCoordinates, {
+                    color: 'black', // Cor da linha do polígono
+                    fillColor: 'gray', // Cor de preenchimento do polígono
+                    fillOpacity: 0.2 // Opacidade do preenchimento do polígono
+                }).addTo(this.map);
+
+                // Ajusta a visualização do mapa para mostrar todo o polígono
+                // this.map.fitBounds(polygon.getBounds());
+
+                // Define o polígono criado como o polígono atual no mapa
+                this.currentPolygon = polygon;
+            } else {
+                console.error('Erro: Não foram encontrados vértices na geometria.');
+            }
+        } else {
+            console.error('Erro: Não foram encontradas geometrias válidas nos dados.');
+        }
+    }
+
+    removerPoligono() {
+        // Verifica se há um polígono atualmente adicionado ao mapa
+        if (this.currentPolygon) {
+            // Remove o polígono do mapa
+            this.map.removeLayer(this.currentPolygon);
+            this.currentPolygon = null; // Limpa a referência ao polígono
+        }
+    }
+
     adicionarMarcadorComIcone(latitude, longitude, popupContent, iconUrl, iconSize, idDtc,dadosAdicionais) {
         // Crie um ícone personalizado
         const customIcon = L.icon({
@@ -40,7 +81,7 @@ class MapaLeaflet {
         // Adicione um evento de clique ao marcador para abrir o modal
         marker.on('click', () => {
             // Defina o conteúdo do modal
-            mostrarInformacoesDetalhadas(marker.dados)
+            mostrarInformacoesDetalhadas(marker.dados,this.map)
 
             // const modalBody = document.getElementById('modalBody'); // Substitua 'modalBody' pelo ID do corpo do seu modal
             // modalBody.innerHTML = modalContent;
