@@ -15,14 +15,85 @@
   {% block 'conteudo' %}
   <div id="map" class="mapa-planejamento pr-4"></div>
 
-  <div class="form-floating" id="filial">
-    <select class="form-select" id="selectFilial" aria-label="Floating label select example">
-      <option selected>Selecione</option>
-      <option value="1">SAO</option>
-      <option value="2">SSA</option>
-      <option value="3">POA</option>
-    </select>
-    <label for="selectFilial">Selecione uma Filial</label>
+  <div  id="filial">
+    <div class="row">
+      <div class="col-sm-2 form-floating">
+        <select class="form-select" id="selectFilial" aria-label="Floating label select example">
+          <option selected>Selecione</option>
+          <option value="1" data-lat="-23.47337308" data-lng="-46.47320867">SAO</option>
+          <option value="2" data-lat="-12.9704" data-lng="-38.5124">SSA</option>
+          <option value="3" data-lat="-30.0277" data-lng="-51.2287">POA</option>
+        </select>
+        <label class="ml-2" for="selectFilial">Selecione uma Filial</label>
+      </div>
+      <div class="col-sm-1">
+          <button type="button" class="btn btn-warning btn-rounded btn-icon class btn-limpar-mapa">
+          <i class="ti-reload btn-icon-prepend" aria-hidden="true"></i>
+        </button>
+      </div>
+      <div class="col-sm-1">
+        <button type="button" class="btn btn-info btn-rounded btn-icon class btn-offcanvas-top">
+          <i class="fa fa-truck" aria-hidden="true"></i>
+        </button>
+      </div>
+
+      <div class="col-sm-1">
+        <button type="button" class="btn btn-success btn-rounded btn-icon class btn-offcanvas-left" data-bs-toggle="offcanvas" href="#offcanvasExample2" role="button" aria-controls="offcanvasExample">
+          <i class="fa fa-truck" aria-hidden="true"></i>
+        </button>
+      </div>
+
+      <div class="col-sm-1">
+        <button type="button" class="btn btn-danger btn-rounded btn-icon class btn-offcanvas-bottom" data-bs-toggle="offcanvas" href="#offcanvasExample" role="button" aria-controls="offcanvasExample">
+          <i class="fa fa-truck" aria-hidden="true"></i>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- offcanvas -->
+  <div class="offcanvas offcanvas-start" tabindex="-1" id="offcanvasExample" aria-labelledby="offcanvasExampleLabel">
+    <div class="offcanvas-header">
+      <h5 class="offcanvas-title" id="offcanvasExampleLabel">Offcanvas</h5>
+      <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+    </div>
+    <div class="offcanvas-body">
+      <div>
+        Some text as placeholder. In real life you can have the elements you have chosen. Like, text, images, lists, etc.
+      </div>
+      <div class="dropdown mt-3">
+        <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown">
+          1
+        </button>
+        <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+          <li><a class="dropdown-item" href="#">Action</a></li>
+          <li><a class="dropdown-item" href="#">Another action</a></li>
+          <li><a class="dropdown-item" href="#">Something else here</a></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <div class="offcanvas offcanvas-start" tabindex="-1" id="offcanvasExample2" aria-labelledby="offcanvasExampleLabel">
+    <div class="offcanvas-header">
+      <h5 class="offcanvas-title" id="offcanvasExampleLabel">Offcanvas</h5>
+      <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+    </div>
+    <div class="offcanvas-body">
+      <div>
+        Some text as placeholder. In real life you can have the elements you have chosen. Like, text, images, lists, etc.
+      </div>
+      <div class="dropdown mt-3">
+        <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown">
+          2
+        </button>
+        <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+          <li><a class="dropdown-item" href="#">Action</a></li>
+          <li><a class="dropdown-item" href="#">Another action</a></li>
+          <li><a class="dropdown-item" href="#">Something else here</a></li>
+        </ul>
+      </div>
+    </div>
   </div>
 
   <!-- Modal -->

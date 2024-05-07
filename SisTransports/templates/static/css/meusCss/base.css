@@ -123,13 +123,47 @@
 
 #filial {
     position: absolute;
-    width: 200px;
+    width: 95vw !important; /* 95% da largura da viewport (tela) */
     top: 10px; /* Posição inicial do select */
     left: 150px; /* Posição inicial do select */
     z-index: 1000; /* Para sobrepor o mapa */
     transition: top 0.3s ease, left 0.3s ease; /* Adiciona transição suave */
 }
+.btn-limpar-mapa {
+    position: fixed;
+    bottom: 20px !important;
+    right: 30px !important;
+    font-weight: bold;
+    font-size: larger;
+    z-index: 1000; /* Para sobrepor outros elementos */
+}
 
+.btn-offcanvas-top {
+    position: fixed;
+    bottom: 70px !important;
+    right: 30px !important;
+    font-weight: bold;
+    font-size: larger;
+    z-index: 1000; /* Para sobrepor outros elementos */
+}
+
+.btn-offcanvas-left {
+    position: fixed;
+    bottom: 120px !important;
+    right: 30px !important;
+    font-weight: bold;
+    font-size: larger;
+    z-index: 1000; /* Para sobrepor outros elementos */
+}
+
+.btn-offcanvas-bottom {
+    position: fixed;
+    bottom: 170px !important;
+    right: 30px !important;
+    font-weight: bold;
+    font-size: larger;
+    z-index: 1000; /* Para sobrepor outros elementos */
+}
 
 a.active {
     background-color: #4b49ac !important;

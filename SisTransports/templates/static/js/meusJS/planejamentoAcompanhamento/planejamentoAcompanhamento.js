@@ -3,12 +3,7 @@ var matriz = {lat:-23.47337308, lng:-46.47320867}
 function preparaDadosPerimetro(element,mapa) {
     const latitude = parseFloat(element.getAttribute('data-lat'));
     const longitude = parseFloat(element.getAttribute('data-lng'));
-    // const dadosString = element.getAttribute('data-dados');
-    // const dados = JSON.parse(dadosString);
-
-    // console.log('dados.mapa:', dados);
-
-    console.log('dados.mapa:',mapa);
+    
 
     mapa.adicionarCirculo(latitude, longitude, 5000,"red",'');
     closeModal(); // Função para fechar modal (não definida aqui)
@@ -19,9 +14,12 @@ const gerarRotaOrigemDestino= async (element,mapa)=> {
     const longitude = parseFloat(element.getAttribute('data-lng'));
     const origem = `${matriz.lng},${matriz.lat}`;
     const destino = `${longitude},${latitude}`;
-
+    
     const response = await connEndpoint('/operacional/api/directions/', { 'start': origem, 'end': destino, 'localidades': {} });
-
+    mapa.removerCirculo()
+    if(mapa.currentPolyline){
+        mapa.removerRota()  
+    }
     mapa.imprimirRota(response.rota,10.3)
 
     closeModal(); // Função para fechar modal (não definida aqui)
@@ -203,13 +201,14 @@ const adicionaMarcadoresMapa = (dados)=>{
 document.addEventListener('DOMContentLoaded', async() => {
     const dados = geraCoordenadas()
     const polygonCoordinates = geraDadosPoligonoZmrc()
-    const minianelviario = geraMiniAnelViario()
+    // const minianelviario = geraMiniAnelViario()
  
     const iconeVermelho = '../../static/images/mapasIcones/pinVermelho.png'
     const iconeAzul = "../../static/images/mapasIcones/pinAzul.png"
     const iconeRoxo = "../../static/images/mapasIcones/pinRoxo.png"
     const iconeVerde = "../../static/images/mapasIcones/pinVerde.png"
     const iconePreto = "../../static/images/mapasIcones/pinPreto.png"
+    const caminhao = "../../static/images/mapasIcones/caminhao2.png"
     const armazem = "../../static/images/mapasIcones/armazem.png"
     const local = "../../static/images/mapasIcones/loja.png"
     const iconeSize= [20, 20] // [largura, altura] do ícone em pixels
@@ -218,12 +217,14 @@ document.addEventListener('DOMContentLoaded', async() => {
     
     let dadosMarcadores = {mapa:mapa,dados:dados,icone:local,iconeSize:iconeSize}
     adicionaMarcadoresMapa(dadosMarcadores)
+    let dadosVeiculos = gerarLocalizacoesNaGrandeSP()
+
+    console.log(dadosVeiculos)
+    dadosMarcadores = {mapa:mapa,dados:dadosVeiculos,icone:caminhao,iconeSize:[30, 30]}
+    adicionaMarcadoresMapa(dadosMarcadores)
+
     mapa.adicionarPoligonoFromData(polygonCoordinates,'red');
 
-    // mapa.adicionarPoligonoFromData(minianelviario,'red');
-
-
-    // mapa.adicionarCirculo(-23.47337308,-46.47320867,5000,"blue",'perimetro')
     mapa.adicionarMarcador(-22.9068, -43.1729, 'Rio de Janeiro');
     mapa.adicionarMarcador(-22.9035, -43.2096, 'Copacabana');
 
@@ -241,8 +242,17 @@ document.addEventListener('DOMContentLoaded', async() => {
         // mapa.removerMarcadorPelaInfo(1);
         // mapa.removerCirculo()
         }, 5000);
-    document.getElementById('selectFilial').addEventListener('change',()=>{
-        mapa.alterarCentroDoMapa(-22.9068, -43.1729)
+    var selectFilial = document.getElementById('selectFilial')
+    selectFilial.addEventListener('change',()=>{
+
+        // Obtém a opção selecionada atualmente
+        var selectedOption = selectFilial.options[selectFilial.selectedIndex];
+
+        // Obtém os valores de latitude e longitude da opção selecionada
+        var selectedLat = parseFloat(selectedOption.getAttribute('data-lat'));
+        var selectedLng = parseFloat(selectedOption.getAttribute('data-lng'));
+
+        mapa.alterarCentroDoMapa(selectedLat, selectedLng)
     })
 });
 
