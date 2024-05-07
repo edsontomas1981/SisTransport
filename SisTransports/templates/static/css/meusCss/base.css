@@ -114,11 +114,20 @@
 }
 
 .mapa-planejamento {
-    height: 95vh !important; /* 100% da altura da viewport (tela) */
-    width: 100vw !important; /* 100% da largura da viewport (tela) */
+    height: 90vh !important; /* 95% da altura da viewport (tela) */
+    width: 95vw !important; /* 95% da largura da viewport (tela) */
     border-radius: 10px;
     padding: 0; /* Remover todo o padding */
     margin: 0; /* Remover qualquer margem para ocupar toda a tela */
+}
+
+#filial {
+    position: absolute;
+    width: 200px;
+    top: 10px; /* Posição inicial do select */
+    left: 150px; /* Posição inicial do select */
+    z-index: 1000; /* Para sobrepor o mapa */
+    transition: top 0.3s ease, left 0.3s ease; /* Adiciona transição suave */
 }
 
 

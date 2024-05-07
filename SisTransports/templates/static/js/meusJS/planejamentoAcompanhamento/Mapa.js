@@ -6,18 +6,14 @@ class MapaLeaflet {
         L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
             attribution: '&copy; OpenStreetMap contributors'
         }).addTo(this.map);
-        
 
         // Inicializa um array vazio para armazenar os marcadores adicionados ao mapa
         this.markers = [];
-
         this.currentPolyline = null; // Referência para a polyline atual no mapa
-
         this.currentMarkers = []; // Array para manter referências aos marcadores adicionados
-
     }
 
-    adicionarPoligonoFromData(data) {
+    adicionarPoligonoFromData(data,cor) {
         // Verifica se há geometrias no objeto de dados
         if (data.geometries && Array.isArray(data.geometries) && data.geometries.length > 0) {
             const geometry = data.geometries[0]; // Assume apenas uma geometria por enquanto
@@ -31,8 +27,8 @@ class MapaLeaflet {
 
                 // Cria um polígono com as coordenadas fornecidas
                 const polygon = L.polygon(polygonCoordinates, {
-                    color: 'black', // Cor da linha do polígono
-                    fillColor: 'gray', // Cor de preenchimento do polígono
+                    color: cor, // Cor da linha do polígono
+                    fillColor: cor, // Cor de preenchimento do polígono
                     fillOpacity: 0.2 // Opacidade do preenchimento do polígono
                 }).addTo(this.map);
 
@@ -186,6 +182,18 @@ class MapaLeaflet {
         if (this.currentPolyline) {
             this.map.removeLayer(this.currentPolyline); // Remove a polyline do mapa
             this.currentPolyline = null; // Limpa a referência à polyline no objeto do mapa
+        }
+    }
+
+
+    // Método para alterar o centro do mapa
+    alterarCentroDoMapa(latitude, longitude) {
+        // Verifica se a latitude e longitude são válidas
+        if (latitude !== undefined && longitude !== undefined) {
+            // Atualiza o centro do mapa com as novas coordenadas
+            this.map.setView([latitude, longitude]);
+        } else {
+            console.error('Erro: Latitude ou longitude inválida.');
         }
     }
 }

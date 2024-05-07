@@ -194,7 +194,6 @@ const mostrarInformacoesDetalhadas=(dados,mapa)=> {
 }
 
 const adicionaMarcadoresMapa = (dados)=>{
-    console.log(dados.mapa)
     dados.dados.forEach(e => {
         let dadosAdicionais = {lat:e[0],lng:e[1],idDtc:e[3],motorista:e[4],placa:e[6],bairro:e[6],volumes:e[7],peso:e[8],mapa:dados.mapa}
         dados.mapa.adicionarMarcadorComIcone(e[0],e[1],e[6],dados.icone,dados.iconeSize,e[3],dadosAdicionais)
@@ -204,7 +203,8 @@ const adicionaMarcadoresMapa = (dados)=>{
 document.addEventListener('DOMContentLoaded', async() => {
     const dados = geraCoordenadas()
     const polygonCoordinates = geraDadosPoligonoZmrc()
-
+    const minianelviario = geraMiniAnelViario()
+ 
     const iconeVermelho = '../../static/images/mapasIcones/pinVermelho.png'
     const iconeAzul = "../../static/images/mapasIcones/pinAzul.png"
     const iconeRoxo = "../../static/images/mapasIcones/pinRoxo.png"
@@ -218,9 +218,12 @@ document.addEventListener('DOMContentLoaded', async() => {
     
     let dadosMarcadores = {mapa:mapa,dados:dados,icone:local,iconeSize:iconeSize}
     adicionaMarcadoresMapa(dadosMarcadores)
-    mapa.adicionarPoligonoFromData(polygonCoordinates);
+    mapa.adicionarPoligonoFromData(polygonCoordinates,'red');
 
-    mapa.adicionarCirculo(-23.47337308,-46.47320867,5000,"blue",'perimetro')
+    // mapa.adicionarPoligonoFromData(minianelviario,'red');
+
+
+    // mapa.adicionarCirculo(-23.47337308,-46.47320867,5000,"blue",'perimetro')
     mapa.adicionarMarcador(-22.9068, -43.1729, 'Rio de Janeiro');
     mapa.adicionarMarcador(-22.9035, -43.2096, 'Copacabana');
 
@@ -238,6 +241,9 @@ document.addEventListener('DOMContentLoaded', async() => {
         // mapa.removerMarcadorPelaInfo(1);
         // mapa.removerCirculo()
         }, 5000);
+    document.getElementById('selectFilial').addEventListener('change',()=>{
+        mapa.alterarCentroDoMapa(-22.9068, -43.1729)
+    })
 });
 
 

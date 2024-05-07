@@ -13,52 +13,17 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
   {% endblock %}
   {% block 'conteudo' %}
-  <div id="map" class="mapa-planejamento"></div>
+  <div id="map" class="mapa-planejamento pr-4"></div>
 
-<!-- 
-  <div>
-    <ul class="nav nav-pills nav-pills-custom" id="tab-planejamento-acompanhamento" role="tablist" style="padding-bottom: 0px !important;">
-      <li class="nav-item nav-planejamento-acompanhamento" role="presentation">
-        <a class="nav-link active" id="pillColetas" data-bs-toggle="pill" href="#pillConteudoColetas" role="tab" aria-controls="pills-home" aria-selected="true">
-          <span>Coletas</span>
-        </a>
-      </li>
-      <li class="nav-item nav-planejamento-acompanhamento " role="presentation">
-        <a class="nav-link" id="pillEntregas" data-bs-toggle="pill" href="#pillConteudoEntregas" role="tab" aria-controls="pills-profile" aria-selected="false" tabindex="-1">
-          <span>Entregas</span>
-        </a>
-      </li>
-      <li class="nav-item nav-planejamento-acompanhamento" role="presentation">
-        <a class="nav-link" id="pills-contact-tab-custom" data-bs-toggle="pill" href="#pills-music" role="tab" aria-controls="pills-contact" aria-selected="false" tabindex="-1">
-          Music
-        </a>
-      </li>
-      <li class="nav-item nav-planejamento-acompanhamento" role="presentation">
-        <a class="nav-link" id="pills-vibes-tab-custom" data-bs-toggle="pill" href="#pills-vibes" role="tab" aria-controls="pills-contact" aria-selected="false" tabindex="-1">
-          Vibes
-        </a>
-      </li>
-      <li class="nav-item nav-planejamento-acompanhamento" role="presentation">
-        <a class="nav-link" id="pills-energy-tab-custom" data-bs-toggle="pill" href="#pills-energy" role="tab" aria-controls="pills-contact" aria-selected="false" tabindex="-1">
-          Energy
-        </a>
-      </li>
-    </ul>
-    <div class="tab-content tab-content-custom-pill conteudo-pill-planejamento-acompanhamento" id="pills-tabContent-custom">
-      <div class="tab-pane fade show active" id="pillConteudoColetas" role="tabpanel" aria-labelledby="pillColetas">
-        {% include 'abaPredtc.html' %}
-      </div>
-      <div class="tab-pane fade" id="pillConteudoEntregas" role="tabpanel" aria-labelledby="pillEntregas">
-        {% include 'mapasEntregas.html' %}
-      </div>
-      <div class="tab-pane fade" id="pills-music" role="tabpanel" aria-labelledby="pills-contact-tab-custom">
-      </div>
-      <div class="tab-pane fade" id="pills-vibes" role="tabpanel" aria-labelledby="pills-vibes-tab-custom">
-      </div>
-      <div class="tab-pane fade" id="pills-energy" role="tabpanel" aria-labelledby="pills-energy-tab-custom">
-      </div>
-    </div>
-  </div> -->
+  <div class="form-floating" id="filial">
+    <select class="form-select" id="selectFilial" aria-label="Floating label select example">
+      <option selected>Selecione</option>
+      <option value="1">SAO</option>
+      <option value="2">SSA</option>
+      <option value="3">POA</option>
+    </select>
+    <label for="selectFilial">Selecione uma Filial</label>
+  </div>
 
   <!-- Modal -->
   <div class="modal fade" id="modalPlanejamentoColetas" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
@@ -84,37 +49,7 @@
       </div>
     </div>
   </div>
-  
-  <!-- Modal -->
-  <div class="modal fade" id="modalRotasColetas" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-    <div class="modal-dialog">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="modalColetaId">Modal title</h5>
-          <button type="button" class="btn-close" onclick="closeModal()"></button>
-        </div>
-        <div class="modal-body">
-          <div class="row">
-            <div class="col-sm-6" id="rotasColetas">
-              <div id="paginacaoRotasColetas" style="display: none;">
-              </div>
-              <table class="table table-striped table-sm">
-                <thead>
-                  <tr></tr>
-                  <tr>Coleta</tr>
-                  <tr>Bairro</tr>
-                  <tr></tr>
-                </thead>
-                <tbody id="tbodyRotasColetas">
-                </tbody>
-              </table>
-            </div>
-            <div id="divPaginacao" style="display: none;"></div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
+ 
   </div>
   {% block js %} 
     <script src="{% static 'js/meusJS/utils.js' %}"></script>
@@ -126,7 +61,6 @@
     <script src="{% static 'js/meusJS/planejamentoAcompanhamento/gerarPerimetro.js' %}"></script>
     <script src="{% static 'js/meusJS/planejamentoAcompanhamento/planejamentoAcompanhamento.js' %}"></script>
     <script src="{% static 'js/meusJS/planejamentoAcompanhamento/Mapa.js' %}"></script>
-
   {% endblock %}
 
   {% endblock %}
