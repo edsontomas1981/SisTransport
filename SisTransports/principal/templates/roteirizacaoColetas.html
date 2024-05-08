@@ -27,7 +27,7 @@
         <label class="ml-2" for="selectFilial">Selecione uma Filial</label>
       </div>
       <div class="col-sm-1">
-          <button type="button" class="btn btn-warning btn-rounded btn-icon class btn-limpar-mapa">
+          <button type="button" class="btn btn-warning btn-rounded btn-icon class btn-limpar-mapa" id="btnResetMapa">
           <i class="ti-reload btn-icon-prepend" aria-hidden="true"></i>
         </button>
       </div>
@@ -120,18 +120,33 @@
       </div>
     </div>
   </div>
+
+  <div class="modal fade" id="modalPlanejamentoVeiculos" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="modalColetaId">Modal title</h5>
+          <button type="button" class="btn-close" onclick="closeModal()"></button>
+        </div>
+        <div class="modal-body">
+          <div class="row">
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
  
   </div>
   {% block js %} 
     <script src="{% static 'js/meusJS/utils.js' %}"></script>
     <script src="{% static 'js/meusJS/planejamentoAcompanhamento/gerarDados.js' %}"></script>
     <script src="{% static 'js/meusJS/planejamentoAcompanhamento/initMap.js' %}"></script>
-    <script src="{% static 'js/meusJS/planejamentoAcompanhamento/quadTree.js' %}"></script>
     <script src="{% static 'js/meusJS/modalCadVeiculos/txtProprietario.js' %}"></script>
     <script src="{% static 'js/meusJS/planejamentoAcompanhamento/verificarLocalidadesNaRota.js' %}"></script>
-    <script src="{% static 'js/meusJS/planejamentoAcompanhamento/gerarPerimetro.js' %}"></script>
     <script src="{% static 'js/meusJS/planejamentoAcompanhamento/planejamentoAcompanhamento.js' %}"></script>
     <script src="{% static 'js/meusJS/planejamentoAcompanhamento/Mapa.js' %}"></script>
+    <script src="{% static 'js/meusJS/planejamentoAcompanhamento/botoesMapa.js' %}"></script>
+
   {% endblock %}
 
   {% endblock %}

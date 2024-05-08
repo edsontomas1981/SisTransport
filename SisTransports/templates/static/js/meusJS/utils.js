@@ -375,6 +375,11 @@ const msgOk = (msg)=>{
     timer: 1500
   })
 }
+const msgAlerta = (msg)=>{
+  Swal.fire(msg);
+}
+
+
 
 const msgInfo = (dadosMsg)=>{
   Swal.fire({

@@ -11,6 +11,7 @@ class MapaLeaflet {
         this.markers = [];
         this.currentPolyline = null; // Referência para a polyline atual no mapa
         this.currentMarkers = []; // Array para manter referências aos marcadores adicionados
+        this.zoom = zoom
     }
 
     adicionarPoligonoFromData(data,cor) {
@@ -68,7 +69,7 @@ class MapaLeaflet {
         marker.dados=dadosAdicionais
 
         // Adicione o conteúdo do popup ao marcador
-        marker.bindPopup(popupContent);
+        // marker.bindPopup(popupContent);
 
         // Adicione as informações personalizadas ao marcador
         marker.idDtc = idDtc;
@@ -155,7 +156,7 @@ class MapaLeaflet {
         }
     }
 
-    imprimirRota(routeCoordinates, zoomLevel = 12) {
+    imprimirRota(routeCoordinates) {
         // Primeiro, remova qualquer rota existente no mapa
         this.removerRota();
 
@@ -168,11 +169,11 @@ class MapaLeaflet {
         // Ajuste a visão do mapa para mostrar toda a rota
         this.map.fitBounds(polyline.getBounds());
 
-        // Verifique se o mapa está em um zoom maior que o desejado
-        if (this.map.getZoom() > zoomLevel) {
-            // Diminua o zoom para o nível especificado
-            this.map.setZoom(zoomLevel);
-        }
+        // // Verifique se o mapa está em um zoom maior que o desejado
+        // if (this.map.getZoom() > zoomLevel) {
+        //     // Diminua o zoom para o nível especificado
+        //     this.map.setZoom(zoomLevel);
+        // }
 
         // Defina a nova polyline como a polyline atual no mapa
         this.currentPolyline = polyline;
@@ -186,15 +187,17 @@ class MapaLeaflet {
     }
 
 
-    // Método para alterar o centro do mapa
-    alterarCentroDoMapa(latitude, longitude) {
-        // Verifica se a latitude e longitude são válidas
-        if (latitude !== undefined && longitude !== undefined) {
+    alterarCentroDoMapa(latitude, longitude,zoomLevel = 10.3) {
+        // Verifica se as coordenadas de latitude e longitude são válidas e numéricas
+        if (typeof latitude === 'number' && typeof longitude === 'number' && !isNaN(latitude) && !isNaN(longitude)) {
             // Atualiza o centro do mapa com as novas coordenadas
             this.map.setView([latitude, longitude]);
+            console.log(`Centro do mapa alterado para (${latitude}, ${longitude}).`);
         } else {
-            console.error('Erro: Latitude ou longitude inválida.');
+            // Registra um erro se as coordenadas não forem válidas
+            console.error('Erro ao alterar o centro do mapa: Coordenadas inválidas.');
         }
+        this.map.setZoom(this.zoom);
     }
 }
 

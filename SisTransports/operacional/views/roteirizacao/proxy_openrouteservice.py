@@ -53,7 +53,6 @@ def proxy_openrouteservice(request):
             return JsonResponse({'msg': 'Falha ao obter rota do OpenRouteService', 'status':404})
         
         # Retornar localidades na rota como uma resposta JSON
-        print(route_coordinates)
         return JsonResponse({'localidades_na_rota':localidades_na_rota,'rota':route_coordinates,'status':200})
 
     except Exception as e:
