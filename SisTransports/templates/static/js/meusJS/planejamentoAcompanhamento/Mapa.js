@@ -54,7 +54,7 @@ class MapaLeaflet {
         }
     }
 
-    adicionarMarcadorComIcone(latitude, longitude, popupContent, iconUrl, iconSize, idDtc,dadosAdicionais) {
+    adicionarMarcadorComIcone(latitude, longitude, popupContent, iconUrl, iconSize, idDtc,dadosAdicionais,callback) {
         // Crie um ícone personalizado
         const customIcon = L.icon({
             iconUrl: iconUrl,
@@ -77,7 +77,7 @@ class MapaLeaflet {
         // Adicione um evento de clique ao marcador para abrir o modal
         marker.on('click', () => {
             // Defina o conteúdo do modal
-            mostrarInformacoesDetalhadas(marker.dados,this.map)
+            callback(marker.dados,this.map)
 
             // const modalBody = document.getElementById('modalBody'); // Substitua 'modalBody' pelo ID do corpo do seu modal
             // modalBody.innerHTML = modalContent;

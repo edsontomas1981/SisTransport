@@ -1,19 +1,68 @@
 var matriz = {lat:-23.47337308, lng:-46.47320867}
+var semaforo = {origem:{lat:null,lng:null,idDtc:null},
+                destino:{lat:null,lng:null,idDtc:null}}
+
+var mapa
 
 function preparaDadosPerimetro(element,mapa) {
     const latitude = parseFloat(element.getAttribute('data-lat'));
     const longitude = parseFloat(element.getAttribute('data-lng'));
-    
-
     mapa.adicionarCirculo(latitude, longitude, 5000,"red",'');
     closeModal(); // Função para fechar modal (não definida aqui)
+}
+
+const selecionaOrigem =(element)=> {
+    const latitude = parseFloat(element.getAttribute('data-lat'));
+    const longitude = parseFloat(element.getAttribute('data-lng'));
+    const idDtc = element.getAttribute('data-id');
+    semaforo.origem.lat = latitude
+    semaforo.origem.lng = longitude
+    semaforo.origem.idDtc = idDtc
+
+    closeModal(); // Função para fechar modal (não definida aqui)
+}
+
+const selecionaDestino =(element)=> {
+    semaforo.destino.lat = element.lat
+    semaforo.destino.lng = element.lng
+    semaforo.destino.idDtc = element.idDtc
+    closeModal(); // Função para fechar modal (não definida aqui)
+}
+
+const limpaSemaforo = ()=>{
+    semaforo.destino.lat = null
+    semaforo.destino.lng = null
+    semaforo.destino.idDtc = null
+
+    semaforo.origem.lat = null
+    semaforo.origem.lng = null
+    semaforo.origem.idDtc = null
+}
+
+const verificaSemaforo = async(dados)=>{
+    if (! semaforo.origem.idDtc){
+        mostrarInformacoesDetalhadas(dados,mapa)
+    }else{
+        selecionaDestino(dados)
+        let origem = `${semaforo.origem.lng},${semaforo.origem.lat}`;
+        let destino = `${semaforo.destino.lng},${semaforo.destino.lat}`;
+        const response = await connEndpoint('/operacional/api/directions/', { 'start': origem, 'end': destino, 'localidades': {} });
+        limpaSemaforo()
+
+        console.log(mapa)
+        // if(mapa.currentPolyline){
+        //     mapa.removerRota()  
+        // }
+       
+        mapa.imprimirRota(response.rota,10.3)
+    }
 }
 
 const gerarRotaOrigemDestino= async (element,mapa)=> {
     const latitude = parseFloat(element.getAttribute('data-lat'));
     const longitude = parseFloat(element.getAttribute('data-lng'));
-    const origem = `${matriz.lng},${matriz.lat}`;
-    const destino = `${longitude},${latitude}`;
+    let origem = `${matriz.lng},${matriz.lat}`;
+    let destino = `${longitude},${latitude}`;
     
     const response = await connEndpoint('/operacional/api/directions/', { 'start': origem, 'end': destino, 'localidades': {} });
     mapa.removerCirculo()
@@ -29,7 +78,6 @@ const gerarRotaOrigemDestino= async (element,mapa)=> {
 
 // Função para mostrar informações detalhadas
 const mostrarInformacoesDetalhadas=(dados,mapa)=> {
-    console.log(dados.mapa)
     // Implemente a lógica para exibir informações detalhadas
     let tabela = `
     <div class="row">
@@ -158,7 +206,6 @@ const mostrarInformacoesDetalhadas=(dados,mapa)=> {
     btnGeraRotaDaqui.addEventListener('click', () => {
         gerarRotaOrigemDestino(btnGeraRotaDaqui,dados.mapa);
     });
-
     // Exemplo de adicionar um botão dinamicamente com um evento de clique
     const btnGeraAteDaqui = document.createElement('button');
     btnGeraAteDaqui.textContent = 'Destino';
@@ -171,8 +218,10 @@ const mostrarInformacoesDetalhadas=(dados,mapa)=> {
     btnGeraAteDaqui.className = 'btn btn-success';
     btnGeraAteDaqui.dataset.lat = dados.lat;
     btnGeraAteDaqui.dataset.lng = dados.lng;
+    btnGeraAteDaqui.dataset.id = dados.idDtc
+
     btnGeraAteDaqui.addEventListener('click', () => {
-        preparaDadosPerimetro(btnGeraAteDaqui,dados.mapa);
+        selecionaOrigem(btnGeraAteDaqui,mapa);
     });
     // Adicionar o botão ao elemento pai no DOM
     const containerBotoes = document.getElementById("botoesColetas")
@@ -186,22 +235,19 @@ const mostrarInformacoesDetalhadas=(dados,mapa)=> {
     containerBotoes.appendChild(btnGeraPerimetro);
     containerBotoes.appendChild(btnGeraAteDaqui);
 
-
-
     openModal('modalPlanejamentoColetas')
 }
 
 const adicionaMarcadoresMapa = (dados)=>{
     dados.dados.forEach(e => {
         let dadosAdicionais = {lat:e[0],lng:e[1],idDtc:e[3],motorista:e[4],placa:e[6],bairro:e[6],volumes:e[7],peso:e[8],mapa:dados.mapa}
-        dados.mapa.adicionarMarcadorComIcone(e[0],e[1],e[6],dados.icone,dados.iconeSize,e[3],dadosAdicionais)
+        dados.mapa.adicionarMarcadorComIcone(e[0],e[1],e[6],dados.icone,dados.iconeSize,e[3],dadosAdicionais,verificaSemaforo)
     });
 }
 // Exemplo de uso da classe MapaLeaflet
 document.addEventListener('DOMContentLoaded', async() => {
     const dados = geraCoordenadas()
     const polygonCoordinates = geraDadosPoligonoZmrc()
-    // const minianelviario = geraMiniAnelViario()
  
     const iconeVermelho = '../../static/images/mapasIcones/pinVermelho.png'
     const iconeAzul = "../../static/images/mapasIcones/pinAzul.png"
@@ -213,29 +259,21 @@ document.addEventListener('DOMContentLoaded', async() => {
     const local = "../../static/images/mapasIcones/loja.png"
     const iconeSize= [20, 20] // [largura, altura] do ícone em pixels
 
-    const mapa = new MapaLeaflet('map', -23.47337308, -46.47320867,10.3);
+    mapa = new MapaLeaflet('map', -23.47337308, -46.47320867,10.3);
     
     let dadosMarcadores = {mapa:mapa,dados:dados,icone:local,iconeSize:iconeSize}
     adicionaMarcadoresMapa(dadosMarcadores)
     let dadosVeiculos = gerarLocalizacoesNaGrandeSP()
 
-    console.log(dadosVeiculos)
     dadosMarcadores = {mapa:mapa,dados:dadosVeiculos,icone:caminhao,iconeSize:[30, 30]}
     adicionaMarcadoresMapa(dadosMarcadores)
 
     mapa.adicionarPoligonoFromData(polygonCoordinates,'red');
 
-    mapa.adicionarMarcador(-22.9068, -43.1729, 'Rio de Janeiro');
+    mapa.adicionarMarcador(-22.9068, -43.1729, 'Rio de Janeiro',);
     mapa.adicionarMarcador(-22.9035, -43.2096, 'Copacabana');
 
-    mapa.adicionarMarcadorComIcone(-23.47337308,-46.47320867,"Matriz",armazem,iconeSize,1)
-
-    // var origem = `${rota[0][1]},${rota[0][0]}`;
-    // var destino = `${rota[1][1]},${rota[1][0]}`;
-
-    // const response = await connEndpoint('/operacional/api/directions/', { 'start': origem, 'end': destino, 'localidades': [] });
-
-    // mapa.imprimirRota(response.rota);
+    mapa.adicionarMarcadorComIcone(-23.47337308,-46.47320867,"Matriz",armazem,iconeSize,1,verificaSemaforo)
 
     // Exemplo de como remover um marcador pelo ID (indice) atribuído
     setTimeout(() => {
