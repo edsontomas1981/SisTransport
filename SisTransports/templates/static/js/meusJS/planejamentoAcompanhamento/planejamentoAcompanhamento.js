@@ -3,6 +3,14 @@ var matriz = {lat:-23.47337308, lng:-46.47320867}
 var semaforo = {origem:{lat:null,lng:null,idDtc:null},
                 destino:{lat:null,lng:null,idDtc:null}}
 
+const limpaContainers = (container)=>{
+        let divContainer = document.getElementById(container)
+        // Limpa todos os elementos filhos do container
+        while (divContainer.firstChild) {
+            divContainer.removeChild(divContainer.firstChild);
+        }
+}
+
 const criaPerimetro=(element)=> {
     const latitude = parseFloat(element.getAttribute('data-lat'));
     const longitude = parseFloat(element.getAttribute('data-lng'));
@@ -74,7 +82,30 @@ const gerarRotaOrigemDestino= async (element,mapa)=> {
     closeModal(); // Função para fechar modal (não definida aqui)
 }
 
-const constroeModalVeiculosPlanejamento=()=>{
+const constroeModalVeiculosPlanejamento=(element)=>{
+    let containerTituloModalVeiculos = document.getElementById("modalVeiculoId")
+    limpaContainers("modalVeiculoId")
+    let titulo = document.createElement('h4');
+    titulo.textContent = `Motorista: ${element.motorista}`
+    containerTituloModalVeiculos.appendChild(titulo)
+    let subTitulo = document.createElement('h5');
+    subTitulo.textContent = `Placa: ${element.placa}`
+    containerTituloModalVeiculos.appendChild(subTitulo)
+
+    let botoes = {
+        mostrar: {
+          classe: "btn-success text-white",
+          texto: '<i class="fa fa-print" aria-hidden="true"></i>',
+          // callback: abrirMdlTabela
+        },
+        excluir: {
+            classe: "btn-danger text-white",
+            texto: '<i class="fa fa-print" aria-hidden="true"></i>',
+            // callback: abrirMdlTabela
+          }
+      };
+
+    popula_tbody("tbodyDocumentos",element.dados,botoes,false)
     openModal('modalPlanejamentoVeiculos')
 }
 
@@ -214,10 +245,7 @@ const mostrarInformacoesDetalhadas=(dados)=> {
     // Adicionar o botão ao elemento pai no DOM
     const containerBotoes = document.getElementById("botoesColetas")
 
-    // Limpa todos os elementos filhos do container
-    while (containerBotoes.firstChild) {
-        containerBotoes.removeChild(containerBotoes.firstChild);
-    }
+    limpaContainers("botoesColetas")
 
     containerBotoes.appendChild(btnGeraRotaDaqui);
     containerBotoes.appendChild(btnGeraPerimetro);
@@ -226,12 +254,38 @@ const mostrarInformacoesDetalhadas=(dados)=> {
     openModal('modalPlanejamentoColetas')
 }
 
-const adicionaMarcadoresMapa = (dados)=>{
-    dados.dados.forEach(e => {
-        let dadosAdicionais = {lat:e[0],lng:e[1],idDtc:e[3],motorista:e[4],placa:e[6],bairro:e[6],volumes:e[7],peso:e[8],mapa:dados.mapa}
-        dados.mapa.adicionarMarcadorComIcone(e[0],e[1],e[6],dados.icone,dados.iconeSize,e[3],dadosAdicionais,dados.callback)
+const geraDadosAdicionais = (dados, mapeamento) => {
+    // Inicializa um objeto vazio para armazenar os dados adicionais
+    let dadosAdicionais = [];
+
+    // Percorre cada elemento nos dados
+    dados.forEach(e => {
+        let dadosItem = {};
+
+        // Para cada chave no mapeamento, atribui o valor correspondente do elemento
+        Object.keys(mapeamento).forEach(key => {
+            // Verifica se o índice especificado no mapeamento existe no elemento atual
+            if (e[mapeamento[key]] !== undefined) {
+                dadosItem[key] = e[mapeamento[key]]; // Atribui o valor ao campo correspondente
+            }
+        });
+
+        // Adiciona o item de dados processado à lista de dados adicionais
+        dadosAdicionais.push(dadosItem);
+    });
+
+    return dadosAdicionais;
+};
+
+const adicionaMarcadoresMapa = (dados,dadosAdicionais)=>{
+    dados.dados.forEach((e , idx) => {
+        mapa.adicionarMarcadorComIcone(e[0],e[1],e[6],dados.icone,dados.iconeSize,e[3],dadosAdicionais[idx],dados.callback)
     });
 }
+
+
+
+
 // Exemplo de uso da classe MapaLeaflet
 document.addEventListener('DOMContentLoaded', async() => {
     const dados = geraCoordenadas()
@@ -250,11 +304,33 @@ document.addEventListener('DOMContentLoaded', async() => {
     mapa = new MapaLeaflet('map', -23.47337308, -46.47320867,10.3);
     
     let dadosMarcadores = {mapa:mapa,dados:dados,icone:local,iconeSize:iconeSize,callback:verificaSemaforo}
-    adicionaMarcadoresMapa(dadosMarcadores)
-    let dadosVeiculos = gerarLocalizacoesNaGrandeSP()
+    // lat:e[0],lng:e[1],idDtc:e[3],motorista:e[4],placa:e[6],bairro:e[6],volumes:e[7],peso:e[8]
+    let mapeamento = {
+        lat: 0,
+        lng: 1,
+        motorista: 4,
+        idDtc: 3,
+        placa: 5,
+        bairro: 6,
+        volumes: 7,
+        peso: 8
+    };
+    let dadosAdicionais = geraDadosAdicionais(dados,mapeamento)
+    adicionaMarcadoresMapa(dadosMarcadores,dadosAdicionais)
+    
+    let dadosVeiculos = gerarDadosCompletosNaGrandeSP()
+    mapeamento = {
+        lat: 0,
+        lng: 1,
+        motorista: 2,
+        placa: 3,
+        qtdeDctos: 4,
+        dados:5
+    };
 
-    dadosMarcadores = {mapa:mapa,dados:dadosVeiculos,icone:caminhao,iconeSize:[30, 30],callback:constroeModalVeiculosPlanejamento}
-    adicionaMarcadoresMapa(dadosMarcadores)
+    dadosAdicionais = geraDadosAdicionais(dadosVeiculos,mapeamento)
+    dadosMarcadores = {dados:dadosVeiculos,icone:caminhao,iconeSize:[30, 30],callback:constroeModalVeiculosPlanejamento}
+    adicionaMarcadoresMapa(dadosMarcadores,dadosAdicionais)
 
     mapa.adicionarPoligonoFromData(polygonCoordinates,'black');
 

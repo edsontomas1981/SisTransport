@@ -4400,31 +4400,78 @@ return {
 
 }
 
-// Função para gerar 10 localizações aleatórias dentro da Grande São Paulo
-function gerarLocalizacoesNaGrandeSP() {
-    // Definindo faixas aproximadas de latitude e longitude para a Grande São Paulo
-    const minLat = -24.0;   // Latitude mínima
-    const maxLat = -23.3;   // Latitude máxima
-    const minLng = -46.8;   // Longitude mínima
-    const maxLng = -46.3;   // Longitude máxima
+// Função para gerar nomes de motorista aleatórios
+function gerarNomeMotorista() {
+    const nomes = ['João', 'Maria', 'Carlos', 'Ana', 'Pedro', 'Laura', 'José', 'Camila', 'Fernando', 'Gabriela'];
+    const sobrenomes = ['Silva', 'Santos', 'Oliveira', 'Souza', 'Pereira', 'Rodrigues', 'Almeida', 'Costa', 'Martins', 'Lima'];
+
+    const nomeAleatorio = nomes[Math.floor(Math.random() * nomes.length)];
+    const sobrenomeAleatorio = sobrenomes[Math.floor(Math.random() * sobrenomes.length)];
+
+    return `${nomeAleatorio} ${sobrenomeAleatorio}`;
+}
+
+// Função para gerar placas no formato AAA-9A99
+function gerarPlacaVeiculo() {
+    const letras = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+    const numeros = '0123456789';
+
+    const placa = `${letras.charAt(Math.floor(Math.random() * letras.length))}${letras.charAt(Math.floor(Math.random() * letras.length))}${letras.charAt(Math.floor(Math.random() * letras.length))}-` +
+                 `${numeros.charAt(Math.floor(Math.random() * numeros.length))}${letras.charAt(Math.floor(Math.random() * letras.length))}${numeros.charAt(Math.floor(Math.random() * numeros.length))}${numeros.charAt(Math.floor(Math.random() * numeros.length))}`;
+
+    return placa;
+}
+
+// Função para gerar uma quantidade aleatória de documentos
+function gerarQuantidadeDocumentos() {
+    return Math.floor(Math.random() * (10 - 1 + 1)) + 1; // Números entre 1 e 10
+}
+
+function gerarHashTable() {
+    var registros = [];
+    const numRegistros = Math.floor(Math.random() * (15 - 5 + 1)) + 5; // Entre 5 e 15 registros
+
+    for (let i = 0; i < numRegistros; i++) {
+        const id = Math.floor(Math.random() * (999999 - 100000 + 1)) + 100000; // Números entre 100000 e 999999
+        const quantidade = Math.floor(Math.random() * (100 - 1 + 1)) + 1; // Números entre 1 e 100
+        const peso = Math.random() * (100 - 1) + 1; // Números entre 1 e 100 (peso em kg)
+        const valor = Math.random() * (1000 - 10) + 10; // Números entre 10 e 1000 (valor em reais)
+
+        registros.push({idDtc:id, quantidade:quantidade, peso:peso, valor:valor });
+    }
+
+    return registros; // Retorna os dados como uma string JSON
+}
+
+
+// Função principal para gerar dados completos
+function gerarDadosCompletosNaGrandeSP() {
+    const minLat = -24.0;
+    const maxLat = -23.3;
+    const minLng = -46.8;
+    const maxLng = -46.3;
   
-    const localizacoes = [];
+    const dadosCompletos = [];
   
-    // Gerar 10 localizações aleatórias
-    for (let i = 0; i < 10; i++) {
-      // Gerar latitude aleatória dentro da faixa especificada
-      const latitude = Math.random() * (maxLat - minLat) + minLat;
+    for (let i = 0; i <= 15; i++) {
+        const latitude = Math.random() * (maxLat - minLat) + minLat;
+        const longitude = Math.random() * (maxLng - minLng) + minLng;
   
-      // Gerar longitude aleatória dentro da faixa especificada
-      const longitude = Math.random() * (maxLng - minLng) + minLng;
+        const roundedLatitude = parseFloat(latitude.toFixed(6));
+        const roundedLongitude = parseFloat(longitude.toFixed(6));
+
+        const motorista = gerarNomeMotorista();
+        const placa = gerarPlacaVeiculo();
+        const quantidadeDocumentos = gerarQuantidadeDocumentos();
+        const hashtable = gerarHashTable();
   
-      // Arredondar os valores para uma quantidade razoável de casas decimais
-      const roundedLatitude = parseFloat(latitude.toFixed(6));
-      const roundedLongitude = parseFloat(longitude.toFixed(6));
-  
-      // Adicionar a localização gerada ao array de localizações
-      localizacoes.push([roundedLatitude,roundedLongitude]);
+        dadosCompletos.push([roundedLatitude, roundedLongitude,
+            motorista,
+            placa,
+            quantidadeDocumentos,
+            hashtable
+        ]);
     }
   
-    return localizacoes;
-  }
+    return dadosCompletos;
+}

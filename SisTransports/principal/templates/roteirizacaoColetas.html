@@ -122,14 +122,30 @@
   </div>
 
   <div class="modal fade" id="modalPlanejamentoVeiculos" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-    <div class="modal-dialog">
+    <div class="modal-dialog modal-lg">
       <div class="modal-content">
         <div class="modal-header">
-          <h5 class="modal-title" id="modalColetaId">Modal title</h5>
+          <h5 class="modal-title" id="modalVeiculoId"></h5>
           <button type="button" class="btn-close" onclick="closeModal()"></button>
         </div>
         <div class="modal-body">
           <div class="row">
+            <div>
+              <table class="table table-striped table-sm tabela-planejamento-veiculos" >
+                <thead>
+                  <th>Nº</th>
+                  <th>Qtde</th>
+                  <th>Peso</th>
+                  <th>R$</th>
+                  <th></th>
+                  <th></th>
+                </thead>
+                <tbody id="tbodyDocumentos">
+
+                </tbody>
+              </table>
+
+            </div>
           </div>
         </div>
       </div>

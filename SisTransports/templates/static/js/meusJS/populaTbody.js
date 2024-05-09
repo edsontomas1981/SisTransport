@@ -191,11 +191,14 @@ const popula_tbody_paginacao = async (divParaNavegacao, id_tbody, dados, botoes 
  * });
  */
 const popula_tbody = (id_tbody, dicionario_dados, botoes = {},inicioChebox=true) => {
+  console.log(dicionario_dados)
+
   // Obtém a referência ao elemento tbody da tabela
   var tbody = document.getElementById(id_tbody);
 
   // Limpa o conteúdo atual da tabela
   limpa_tabelas(id_tbody);
+
 
   // Itera sobre os dados para criar linhas na tabela
   dicionario_dados.forEach(element => {
@@ -226,19 +229,18 @@ const popula_tbody = (id_tbody, dicionario_dados, botoes = {},inicioChebox=true)
         var tdBotao = document.createElement("td");
         var btn = document.createElement("a");
         btn.setAttribute('data-id', element.id);
-        btn.id = 'btn_' + nomeBotao + element.id;
+
+        btn.id = element.id;
         btn.className = "btn btn-sm " + botoes[nomeBotao].classe;
-        btn.textContent = botoes[nomeBotao].texto;
-
-        // Adiciona evento de clique ao botão
-        btn.addEventListener('click', function (event) {
-          const id = event.target.getAttribute('data-id');
-          // Chama a função de callback do botão correspondente
-          if (botoes[nomeBotao].callback) {
-            botoes[nomeBotao].callback(id);
-          }
-        });
-
+        btn.innerHTML = botoes[nomeBotao].texto;
+  
+        if (botoes[nomeBotao].callback) {
+          // Use uma função anônima para passar o ID
+          btn.onclick = function() {
+            // Chame a função de callback passando o ID
+            botoes[nomeBotao].callback(element.id);
+          };
+        }
         tdBotao.appendChild(btn);
         tr.appendChild(tdBotao);
       }
