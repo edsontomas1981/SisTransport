@@ -67,7 +67,7 @@ const verificaSemaforo = async(dados)=>{
     }
 }
 
-const gerarRotaOrigemDestino= async (element,mapa)=> {
+const gerarRotaOrigemDestino= async (element)=> {
     const latitude = parseFloat(element.getAttribute('data-lat'));
     const longitude = parseFloat(element.getAttribute('data-lng'));
     let origem = `${matriz.lng},${matriz.lat}`;
@@ -82,32 +82,7 @@ const gerarRotaOrigemDestino= async (element,mapa)=> {
     closeModal(); // Função para fechar modal (não definida aqui)
 }
 
-const constroeModalVeiculosPlanejamento=(element)=>{
-    let containerTituloModalVeiculos = document.getElementById("modalVeiculoId")
-    limpaContainers("modalVeiculoId")
-    let titulo = document.createElement('h4');
-    titulo.textContent = `Motorista: ${element.motorista}`
-    containerTituloModalVeiculos.appendChild(titulo)
-    let subTitulo = document.createElement('h5');
-    subTitulo.textContent = `Placa: ${element.placa}`
-    containerTituloModalVeiculos.appendChild(subTitulo)
 
-    let botoes = {
-        mostrar: {
-          classe: "btn-success text-white",
-          texto: '<i class="fa fa-print" aria-hidden="true"></i>',
-          // callback: abrirMdlTabela
-        },
-        excluir: {
-            classe: "btn-danger text-white",
-            texto: '<i class="fa fa-print" aria-hidden="true"></i>',
-            // callback: abrirMdlTabela
-          }
-      };
-
-    popula_tbody("tbodyDocumentos",element.dados,botoes,false)
-    openModal('modalPlanejamentoVeiculos')
-}
 
 
 // Função para mostrar informações detalhadas

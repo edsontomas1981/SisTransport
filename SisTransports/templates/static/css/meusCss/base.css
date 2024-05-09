@@ -173,6 +173,17 @@ a.active {
 
 /* Estilos para a tabela com altura máxima e rolagem vertical */
 .tabela-planejamento-veiculos {
-    max-height: 150px; /* Defina a altura máxima desejada */
-    overflow-y: scroll !important; /* Habilita a rolagem vertical quando o conteúdo excede a altura máxima */
+    max-height: 30px !important; /* Defina aqui a altura máxima desejada */
+    overflow-y: auto !important; /* Habilita a rolagem vertical quando o conteúdo excede a altura máxima */
+    border: 1px solid #ddd !important; /* Adiciona uma borda para separar visualmente o contêiner */
+    border-radius: 5px !important; /* Borda arredondada para o contêiner */
+    padding: 10px !important; /* Espaçamento interno */
+}
+
+.table-container {
+    max-height: 300px; /* Defina aqui a altura máxima desejada */
+    overflow-y: auto; /* Habilita a rolagem vertical quando o conteúdo excede a altura máxima */
+    border: 1px solid #ddd; /* Adiciona uma borda para separar visualmente o contêiner */
+    border-radius: 5px; /* Borda arredondada para o contêiner */
+    padding: 10px; /* Espaçamento interno */
 }
