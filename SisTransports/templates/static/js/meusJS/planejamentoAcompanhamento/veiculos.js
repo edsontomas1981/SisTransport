@@ -1,7 +1,7 @@
 let btnSelecionaLocaisVeiculo = document.getElementById('btnSelecionarLocais')
 btnSelecionaLocaisVeiculo.addEventListener('click',()=>{
 
-    let subTituloElement = document.getElementById('placa'); // Obter o elemento pelo ID
+    let subTituloElement = document.getElementById('subTitulo'); // Obter o elemento pelo ID
     const placa = subTituloElement.getAttribute('data-id');
 
     if (subTituloElement) {
