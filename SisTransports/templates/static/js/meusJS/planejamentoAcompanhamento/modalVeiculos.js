@@ -6,7 +6,11 @@ const constroeModalVeiculosPlanejamento=(element)=>{
 
     containerTituloModalVeiculos.appendChild(titulo)
     let subTitulo = document.createElement('h5');
-    subTitulo.textContent = `Placa: ${element.placa}`
+    let placa  = element.placa
+    subTitulo.id = 'subTitulo'
+    subTitulo.dataset.id = placa
+    subTitulo.textContent = `Placa: ${placa}`
+    
     containerTituloModalVeiculos.appendChild(subTitulo)
 
     let botoes = {

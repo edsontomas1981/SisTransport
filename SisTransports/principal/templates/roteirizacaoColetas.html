@@ -125,8 +125,19 @@
     <div class="modal-dialog modal-lg">
       <div class="modal-content">
         <div class="modal-header">
-          <h5 class="modal-title" id="modalVeiculoId"></h5>
-          <button type="button" class="btn-close" onclick="closeModal()"></button>
+          <div class="col-sm-10">
+            <h5 class="modal-title" id="modalVeiculoId"></h5>
+          </div>  
+          <div class="col-sm-2">
+            <div class="input-group" style="display: flex; justify-items: right;">
+              <button type="button" class="btn btn-success btn-rounded btn-icon" id="btnSelecionarLocais" align=right>            
+                <i class="fa fa-map" aria-hidden="true"></i>
+              </button>
+              <button type="button" class="btn btn-danger btn-rounded btn-icon" id="btnClose" onclick="closeModal()" align=right>
+                <i class="ti-close"></i>
+              </button>
+            </div>
+          </div>
         </div>
         <div class="modal-body">
           <div class="row">
@@ -160,7 +171,12 @@
     <script src="{% static 'js/meusJS/planejamentoAcompanhamento/initMap.js' %}"></script>
     <script src="{% static 'js/meusJS/modalCadVeiculos/txtProprietario.js' %}"></script>
     <script src="{% static 'js/meusJS/planejamentoAcompanhamento/verificarLocalidadesNaRota.js' %}"></script>
+    <script src="{% static 'js/meusJS/planejamentoAcompanhamento/locais.js' %}"></script>
     <script src="{% static 'js/meusJS/planejamentoAcompanhamento/modalVeiculos.js' %}"></script>
+    <script src="{% static 'js/meusJS/planejamentoAcompanhamento/veiculos.js' %}"></script>
+    <script src="{% static 'js/meusJS/planejamentoAcompanhamento/rotas.js' %}"></script>
+
+
 
     <script src="{% static 'js/meusJS/planejamentoAcompanhamento/planejamentoAcompanhamento.js' %}"></script>
     <script src="{% static 'js/meusJS/planejamentoAcompanhamento/Mapa.js' %}"></script>
