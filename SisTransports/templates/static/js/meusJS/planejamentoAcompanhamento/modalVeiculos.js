@@ -1,6 +1,4 @@
-const testeWebsocket = () => {
   var socket = new WebSocket('ws://127.0.0.1:8000/operacional/ws/some_url/');
-  
   socket.onopen = function(event) {
       console.log('Conexão WebSocket aberta.');
 
@@ -25,47 +23,22 @@ const testeWebsocket = () => {
       console.error('Erro na conexão WebSocket:', error);
   };
 
-  socket.send('Opa Testando')
-};
+// Função para enviar mensagem ao servidor WebSocket
+function sendMessage(message = 'get_active_users') {
+    var usuario = 'teste';       // Substitua pelo identificador do seu usuário
+    var destinatario = 'edson';  // Substitua pelo identificador do destinatário (quem receberá a mensagem)
 
-
-function enviarMensagemWebSocket(mensagem = 'sei la enviando qq coisa') {
-  // URL do WebSocket
-  var websocketURL = 'ws://127.0.0.1:8000/operacional/ws/some_url/';
-
-  // Criação da instância WebSocket
-  var socket = new WebSocket(websocketURL);
-
-  // Evento de abertura da conexão WebSocket
-  socket.onopen = function(event) {
-      console.log('Conexão WebSocket aberta.');
-
-      // Aguarda um curto período de tempo antes de enviar dados
-      setTimeout(() => {
-          socket.send(JSON.stringify({
-              'message': mensagem
-          }));
-      }, 1000); // Delay de 1 segundo (1000 milissegundos)
-  };
-
-  // Evento de recebimento de mensagem WebSocket
-  socket.onmessage = function(event) {
-      var data = JSON.parse(event.data);
-      console.log('Mensagem recebida:', data.message);
-  };
-
-  // Evento de fechamento da conexão WebSocket
-  socket.onclose = function(event) {
-      console.log('Conexão WebSocket fechada.');
-  };
-
-  // Evento de erro na conexão WebSocket
-  socket.onerror = function(error) {
-      console.error('Erro na conexão WebSocket:', error);
-  };
-
-  // Envio de mensagem diretamente na função (opcional)
-  // socket.send('Opa Testando');
+    // Verificar se a variável 'socket' está definida e é uma instância válida de WebSocket
+    if (socket.readyState === WebSocket.OPEN) {
+        // Enviar mensagem ao servidor WebSocket
+        socket.send(JSON.stringify({
+            'message': message,
+            'usuario': usuario,
+            'destinatario': destinatario
+        }));
+    } else {
+        console.error('Erro: Conexão WebSocket não está aberta.');
+    }
 }
 
 
@@ -88,12 +61,12 @@ const constroeModalVeiculosPlanejamento = (element) => {
       mostrar: {
           classe: "btn-success text-white",
           texto: '<i class="fa fa-print" aria-hidden="true"></i>',
-          callback: testeWebsocket
+          callback: sendMessage
       },
       excluir: {
           classe: "btn-danger text-white",
           texto: '<i class="fa fa-print" aria-hidden="true"></i>',
-          callback: enviarMensagemWebSocket
+        //   callback: enviarMensagemWebSocket
       }
   };
 
