@@ -95,10 +95,4 @@ from operacional.views.contrato_frete.read_contrato_manifesto import read_contra
 from operacional.views.contrato_frete.read_contrato_motorista import read_contrato_motorista
 from operacional.views.contrato_frete.read_contrato_proprietario import read_contrato_proprietario
 
-
-
-
-
-
-
-
+from operacional.views.roteirizacao import routing

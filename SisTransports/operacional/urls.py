@@ -1,5 +1,7 @@
-from django.urls import path
+from django.urls import path ,include
 from operacional import views as viewsOperacional
+# from operacional.views.roteirizacao import routing
+
 
 urlpatterns = [
     path('',viewsOperacional.operacional,name='operacional'),
@@ -86,4 +88,6 @@ urlpatterns = [
     path('read_rotas/',viewsOperacional.readRota,name='read_rotas'),
     path('rotas/',viewsOperacional.rotas,name='rotas'),
 
+    # Inclua as rotas WebSocket 
+    path('ws/', include(viewsOperacional.routing.websocket_urlpatterns)),
     ]

@@ -55,7 +55,7 @@ class MapaLeaflet {
         }
     }
 
-    adicionarMarcadorComIcone(latitude, longitude, popupContent, iconUrl, iconSize, idDtc,dadosAdicionais,callback) {
+    adicionarMarcadorComIcone(latitude, longitude, popupContent, iconUrl, iconSize, id,dadosAdicionais,callback) {
         // Crie um ícone personalizado
         const customIcon = L.icon({
             iconUrl: iconUrl,
@@ -72,7 +72,14 @@ class MapaLeaflet {
         // marker.bindPopup(popupContent);
 
         // Adicione as informações personalizadas ao marcador
-        marker.idDtc = idDtc;
+        if(marker.dados.placa){
+            marker.placa = marker.dados.placa;
+        }
+        if(marker.dados.idDtc){
+            marker.idDtc =marker.dados.idDtc;
+        }
+
+              
 
 
         // Adicione um evento de clique ao marcador para abrir o modal
@@ -94,6 +101,53 @@ class MapaLeaflet {
         return marker;
     }
 
+    selecionarMarcador(campo,valor) {
+        console.log(campo + ':' + "valor")
+        // Encontre o marcador correspondente ao valor e campo fornecidos
+        const selectedMarker = this.currentMarkers.find(marker => {
+            if (campo == 'id') {
+                // Busca por ID
+                return marker.dados.id == valor;
+            } else if (campo == 'placa') {
+                // Busca por placa
+                return marker.placa == valor;
+            } else if (campo == 'idDtc') {
+                // Busca por ID Dtc
+                return marker.idDtc == valor;
+            } else {
+                // Campo não reconhecido
+                return false;
+            }
+        });
+    
+        // Verifique se o marcador foi encontrado
+        if (selectedMarker) {
+            // Abra o popup do marcador (caso deseje exibir o popup automaticamente ao selecionar)
+            selectedMarker.openPopup();
+    
+            // Retorne o marcador selecionado
+            return selectedMarker;
+        } else {
+            // Se nenhum marcador correspondente for encontrado, retorne null ou lide com o caso de não encontrar o marcador de acordo com sua lógica
+            return null;
+        }
+    }
+
+    // Método para alterar o ícone de um marcador existente
+    alterarIconeDoMarcador(marker, iconUrl, iconSize) {
+        // Crie um novo ícone personalizado com o URL e tamanho fornecidos
+        const novoIcone = L.icon({
+            iconUrl: iconUrl,
+            iconSize: iconSize // [largura, altura] em pixels
+        });
+
+        // Altere o ícone do marcador para o novo ícone criado
+        marker.setIcon(novoIcone);
+
+        // Retorne o marcador atualizado
+        return marker;
+    }
+    
     removerMarcadorPelaInfo(idDtc) {
         const index = this.currentMarkers.findIndex(marker => marker.idDtc === idDtc);
         if (index !== -1) {
@@ -198,6 +252,30 @@ class MapaLeaflet {
             console.error('Erro ao alterar o centro do mapa: Coordenadas inválidas.');
         }
         this.map.setZoom(this.zoom);
+    }
+
+    // Método para alterar a localização (latitude e longitude) de um marcador existente
+    alterarLocalizacaoDoMarcador(marker, novaLatitude, novaLongitude) {
+        // Verifica se o marcador e as novas coordenadas são válidos
+        if (marker && typeof novaLatitude === 'number' && typeof novaLongitude === 'number' && !isNaN(novaLatitude) && !isNaN(novaLongitude)) {
+            // Obtém a posição atual do marcador
+            const currentPosition = marker.getLatLng();
+
+            // Verifica se as novas coordenadas são diferentes da posição atual
+            if (currentPosition.lat !== novaLatitude || currentPosition.lng !== novaLongitude) {
+                // Define as novas coordenadas para o marcador
+                marker.setLatLng([novaLatitude, novaLongitude]);
+
+                // Atualiza a posição do marcador no mapa
+                marker.update();
+                
+                console.log(`Localização do marcador alterada para (${novaLatitude}, ${novaLongitude}).`);
+            } else {
+                console.log('O marcador já está na nova localização especificada.');
+            }
+        } else {
+            console.error('Erro ao alterar a localização do marcador: Parâmetros inválidos.');
+        }
     }
 }
 

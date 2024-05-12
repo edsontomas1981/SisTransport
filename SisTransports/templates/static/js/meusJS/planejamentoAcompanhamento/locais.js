@@ -1,3 +1,60 @@
+const selecionaLocal = (dados)=>{
+    listaLocais.push({idDtc:dados.idDtc,volumes:dados.volumes,peso:dados.peso})
+    exibirLocaisSelecionados(listaLocais)
+}
+
+const exibirLocaisSelecionados = async (dados)=> {
+
+    // Criar tabela HTML
+    const table = document.createElement('table');
+    table.classList.add('table', 'table-striped', 'table-sm'); // Adicione mais de uma classe à tabela
+  
+    table.innerHTML = `
+      <thead>
+        <tr>
+          <th>Id</th>
+          <th>Volumes</th>
+          <th>Peso</th>
+        </tr>
+      </thead>
+      <tbody>
+        ${dados.map((dado, index) => `
+          <tr>
+            <td>${dado.idDtc}</td>
+            <td>${dado.volumes}</td>
+            <td>${dado.peso}</td>
+            <td><button class="btn btn-primary text-white form-control-sm" onclick="selecionarCotacao(${index})">Add</button></td>
+          </tr>
+        `).join('')}
+      </tbody>
+    `;
+
+    if (dados.length>0){
+        // Opções do alerta
+        const options = {
+        title: 'Selecione uma Cotação',
+        html: table,
+        showCancelButton: true,
+        cancelButtonText: 'Voltar',
+        showConfirmButton: true, // Oculta o botão de confirmação
+        confirmButtonText:'Selecionar',
+        footer: '' // Remove o rodapé que contém os botões padrão
+      };
+    
+        // Exibe o alerta
+        Swal.fire(options).then((result) => {
+        if (result.isConfirmed) {
+            const selectedCotacao = dados[result.value];
+            listaLocais.forEach(element => {
+                let marcador = mapa.selecionarMarcador('idDtc',element.idDtc)
+                mapa.alterarIconeDoMarcador(marcador,iconePreto,iconeSize)
+            });
+            stateMapa.estado=null
+            listaLocais = []
+        }
+        });
+    }
+  }
 
 
 const limpaSemaforo = ()=>{
