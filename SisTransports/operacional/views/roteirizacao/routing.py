@@ -1,10 +1,10 @@
 from channels.routing import ProtocolTypeRouter, URLRouter
 from channels.auth import AuthMiddlewareStack
 from django.urls import path, re_path
-from .consumers import MyConsumer
+from .consumers import Mapa
 
 websocket_urlpatterns = [
-    re_path(r"some_url/", MyConsumer.as_asgi()),
+    re_path(r"some_url/", Mapa.as_asgi()),
     # Adicione outras URLs WebSocket aqui, se necessário
 ]
 

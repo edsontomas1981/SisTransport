@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title></title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+  </head>
+  <body>
+    BBB2B22
+    <input type="text" class="form-control" name="" value="" id="idTeste">
+    <input type="text" class="form-control" name="" value="" id="txtTeste">
+    <a class="btn btn-primary" id="teste">enviar</a>
+    <a class="btn btn-primary" id="conecta">conecta</a>
+  </body>
+  <script type="text/javascript">
+    var id = 'BBB2B22'
+    // URL do WebSocket
+    var websocketURL = `ws://127.0.0.1:8000/operacional/ws/some_url/?id=${id}`;
+
+    // Criação da instância WebSocket
+    var socket = new WebSocket(websocketURL);
+
+   socket.onopen = function(event) {
+       console.log('Conexão WebSocket aberta.');
+
+         // Aguarda um curto período de tempo antes de enviar dados
+         setTimeout(() => {
+             socket.send(JSON.stringify({
+                 'message': 'Olá, servidor WebSocket!'
+             }));
+         }, 1000); // Delay de 1 segundo (1000 milissegundos)
+     };
+
+     // Evento de recebimento de mensagem WebSocket
+     socket.onmessage = function(event) {
+         var data = JSON.parse(event.data);
+         console.log('Mensagem recebida:', data.message);
+     };
+
+     // Evento de fechamento da conexão WebSocket
+     socket.onclose = function(event) {
+         console.log('Conexão WebSocket fechada.');
+     };
+
+     // Evento de erro na conexão WebSocket
+     socket.onerror = function(error) {
+         console.error('Erro na conexão WebSocket:', error);
+     };
+
+     // Função para enviar mensagem ao servidor WebSocket
+    function sendMessage(message='qq mensagem') {
+        var usuario = 'edson'; // Substitua pelo identificador do seu usuário
+        var destinatario = 'teste'; // Substitua pelo identificador do destinatário (quem receberá a mensagem)
+
+        // Enviar mensagem ao servidor WebSocket
+        socket.send(JSON.stringify({
+            'message': message,
+            'usuario': usuario,
+            // 'destinatario': 'OOO0O00'
+        }));
+    }
+
+    const getLocation = ()=>{
+      // Verifica se o navegador suporta Geolocation
+      if (navigator.geolocation) {
+          // Obtém a localização do usuário
+          navigator.geolocation.getCurrentPosition(function(position) {
+              // Extrai a latitude e longitude da posição atual
+              const latitude = position.coords.latitude;
+              const longitude = position.coords.longitude;
+
+              // Faça o que desejar com os valores de latitude e longitude
+              console.log('Latitude:', latitude);
+              console.log('Longitude:', longitude);
+        })
+      }
+    }
+
+    document.getElementById('teste').addEventListener("click",(mensagem = 'Olá Teste')=>{
+      getLocation()
+      sendMessage(document.getElementById('txtTeste').value)
+    })
+    document.getElementById('conecta').addEventListener("click",(mensagem = 'Olá Teste')=>{
+      connWs(document.getElementById('idTeste').value)
+    })
+  </script>
+</html>

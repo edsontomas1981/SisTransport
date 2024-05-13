@@ -183,6 +183,1156 @@ const bairrosSaoPaulo = [
     "Butantã"
 ];
 
+const geraDadosVeiculos = ()=>{
+    return [
+        [
+            -23.705132,
+            -46.759991,
+            "Gabriela Santos",
+            "BEA-4G17",
+            8,
+            [
+                {
+                    "idDtc": 179978,
+                    "quantidade": 81,
+                    "peso": 73.22676490658363,
+                    "valor": 45.539992506528314,
+                    "status": "A Caminho"
+                },
+                {
+                    "idDtc": 319535,
+                    "quantidade": 30,
+                    "peso": 28.560570068821487,
+                    "valor": 119.75552843676353,
+                    "status": "A Caminho"
+                },
+                {
+                    "idDtc": 473064,
+                    "quantidade": 2,
+                    "peso": 92.29574911930935,
+                    "valor": 651.5586280948552,
+                    "status": "Efetuada"
+                },
+                {
+                    "idDtc": 641049,
+                    "quantidade": 47,
+                    "peso": 11.416457186657553,
+                    "valor": 228.55490799830676,
+                    "status": "A Caminho"
+                },
+                {
+                    "idDtc": 406490,
+                    "quantidade": 7,
+                    "peso": 15.643283275071946,
+                    "valor": 876.1259537910905,
+                    "status": "Na Rota"
+                },
+                {
+                    "idDtc": 123191,
+                    "quantidade": 41,
+                    "peso": 89.36049617315871,
+                    "valor": 20.585965606679775,
+                    "status": "Na Rota"
+                },
+                {
+                    "idDtc": 569765,
+                    "quantidade": 25,
+                    "peso": 50.8102081661463,
+                    "valor": 481.68767638618533,
+                    "status": "Na Rota"
+                },
+                {
+                    "idDtc": 253699,
+                    "quantidade": 24,
+                    "peso": 26.686434851566165,
+                    "valor": 183.47823727848245,
+                    "status": "Efetuada"
+                },
+                {
+                    "idDtc": 693571,
+                    "quantidade": 27,
+                    "peso": 30.477044570621093,
+                    "valor": 866.6143482634088,
+                    "status": "A Caminho"
+                },
+                {
+                    "idDtc": 607373,
+                    "quantidade": 68,
+                    "peso": 56.61643836293972,
+                    "valor": 507.0834334850918,
+                    "status": "Efetuada"
+                },
+                {
+                    "idDtc": 238687,
+                    "quantidade": 87,
+                    "peso": 88.44304913663728,
+                    "valor": 184.12258062131278,
+                    "status": "Na Rota"
+                },
+                {
+                    "idDtc": 114164,
+                    "quantidade": 80,
+                    "peso": 74.97726745454452,
+                    "valor": 889.7467526295072,
+                    "status": "A Caminho"
+                },
+                {
+                    "idDtc": 980701,
+                    "quantidade": 94,
+                    "peso": 14.536209101650275,
+                    "valor": 749.61937169705,
+                    "status": "Efetuada"
+                },
+                {
+                    "idDtc": 503395,
+                    "quantidade": 23,
+                    "peso": 81.95339566037858,
+                    "valor": 288.55630066338284,
+                    "status": "Na Rota"
+                },
+                {
+                    "idDtc": 349263,
+                    "quantidade": 46,
+                    "peso": 84.40770824663826,
+                    "valor": 448.32033326137054,
+                    "status": "Na Rota"
+                }
+            ]
+        ],
+        [
+            -23.585404,
+            -46.644217,
+            "Ana Oliveira",
+            "DDE-7D35",
+            5,
+            [
+                {
+                    "idDtc": 112293,
+                    "quantidade": 66,
+                    "peso": 62.48737496700665,
+                    "valor": 126.0274453298366,
+                    "status": "A Caminho"
+                },
+                {
+                    "idDtc": 629715,
+                    "quantidade": 65,
+                    "peso": 6.694839979052392,
+                    "valor": 781.1753050348739,
+                    "status": "A Caminho"
+                },
+                {
+                    "idDtc": 141900,
+                    "quantidade": 62,
+                    "peso": 97.37595173691126,
+                    "valor": 77.56666886573586,
+                    "status": "A Caminho"
+                },
+                {
+                    "idDtc": 651652,
+                    "quantidade": 52,
+                    "peso": 46.80885181062041,
+                    "valor": 365.7946640946988,
+                    "status": "A Caminho"
+                },
+                {
+                    "idDtc": 581804,
+                    "quantidade": 67,
+                    "peso": 3.094511989090513,
+                    "valor": 594.5818055143657,
+                    "status": "Efetuada"
+                },
+                {
+                    "idDtc": 655457,
+                    "quantidade": 33,
+                    "peso": 97.89372585024209,
+                    "valor": 227.99588829121114,
+                    "status": "Efetuada"
+                },
+                {
+                    "idDtc": 126164,
+                    "quantidade": 54,
+                    "peso": 54.662667358766065,
+                    "valor": 65.79712057933543,
+                    "status": "Na Rota"
+                },
+                {
+                    "idDtc": 682139,
+                    "quantidade": 23,
+                    "peso": 68.37999703042006,
+                    "valor": 802.4266255421526,
+                    "status": "A Caminho"
+                }
+            ]
+        ],
+        [
+            -23.810745,
+            -46.766945,
+            "Gabriela Lima",
+            "GFE-2D50",
+            5,
+            [
+                {
+                    "idDtc": 537146,
+                    "quantidade": 52,
+                    "peso": 11.262974688104729,
+                    "valor": 496.297634852208,
+                    "status": "Na Rota"
+                },
+                {
+                    "idDtc": 721416,
+                    "quantidade": 39,
+                    "peso": 24.13907598058857,
+                    "valor": 362.2461646118635,
+                    "status": "Efetuada"
+                },
+                {
+                    "idDtc": 831135,
+                    "quantidade": 75,
+                    "peso": 88.73557215856354,
+                    "valor": 743.5667917133085,
+                    "status": "Efetuada"
+                },
+                {
+                    "idDtc": 692517,
+                    "quantidade": 9,
+                    "peso": 25.66713431665024,
+                    "valor": 258.3523687348611,
+                    "status": "Na Rota"
+                },
+                {
+                    "idDtc": 455337,
+                    "quantidade": 32,
+                    "peso": 99.15396758711591,
+                    "valor": 59.85844522597978,
+                    "status": "Na Rota"
+                },
+                {
+                    "idDtc": 614178,
+                    "quantidade": 61,
+                    "peso": 18.40349014606994,
+                    "valor": 386.02271140368794,
+                    "status": "A Caminho"
+                }
+            ]
+        ],
+        [
+            -23.749641,
+            -46.392575,
+            "José Martins",
+            "FFD-3G97",
+            10,
+            [
+                {
+                    "idDtc": 264997,
+                    "quantidade": 54,
+                    "peso": 61.01276224707052,
+                    "valor": 715.4013699420401,
+                    "status": "Na Rota"
+                },
+                {
+                    "idDtc": 943786,
+                    "quantidade": 84,
+                    "peso": 24.858168790610723,
+                    "valor": 340.9905269334802,
+                    "status": "A Caminho"
+                },
+                {
+                    "idDtc": 685199,
+                    "quantidade": 59,
+                    "peso": 57.20909625220477,
+                    "valor": 532.7562878018174,
+                    "status": "Efetuada"
+                },
+                {
+                    "idDtc": 181633,
+                    "quantidade": 49,
+                    "peso": 94.15289238400635,
+                    "valor": 410.6378067337867,
+                    "status": "A Caminho"
+                },
+                {
+                    "idDtc": 761166,
+                    "quantidade": 89,
+                    "peso": 93.87902252004655,
+                    "valor": 594.603673792881,
+                    "status": "Na Rota"
+                },
+                {
+                    "idDtc": 506559,
+                    "quantidade": 40,
+                    "peso": 40.43591171293078,
+                    "valor": 465.66822723646527,
+                    "status": "Na Rota"
+                },
+                {
+                    "idDtc": 258711,
+                    "quantidade": 86,
+                    "peso": 68.56706793532231,
+                    "valor": 494.3818793533445,
+                    "status": "Na Rota"
+                },
+                {
+                    "idDtc": 594886,
+                    "quantidade": 41,
+                    "peso": 4.269901086166104,
+                    "valor": 480.7641173303134,
+                    "status": "A Caminho"
+                },
+                {
+                    "idDtc": 434824,
+                    "quantidade": 14,
+                    "peso": 72.08042143938178,
+                    "valor": 992.7194493550239,
+                    "status": "Na Rota"
+                },
+                {
+                    "idDtc": 265621,
+                    "quantidade": 35,
+                    "peso": 2.527242375116111,
+                    "valor": 362.5611516406895,
+                    "status": "A Caminho"
+                },
+                {
+                    "idDtc": 224573,
+                    "quantidade": 48,
+                    "peso": 81.88270256869983,
+                    "valor": 467.77405586963533,
+                    "status": "Na Rota"
+                },
+                {
+                    "idDtc": 512471,
+                    "quantidade": 56,
+                    "peso": 69.89756952765173,
+                    "valor": 546.5801383661294,
+                    "status": "Efetuada"
+                },
+                {
+                    "idDtc": 361313,
+                    "quantidade": 35,
+                    "peso": 98.88199870271579,
+                    "valor": 573.2149083147541,
+                    "status": "Efetuada"
+                },
+                {
+                    "idDtc": 324299,
+                    "quantidade": 17,
+                    "peso": 53.4101573840715,
+                    "valor": 413.0277556327083,
+                    "status": "Na Rota"
+                }
+            ]
+        ],
+        [
+            -23.95349,
+            -46.618021,
+            "Laura Rodrigues",
+            "AEB-3B38",
+            8,
+            [
+                {
+                    "idDtc": 900201,
+                    "quantidade": 81,
+                    "peso": 45.80620074079218,
+                    "valor": 657.5665068768949,
+                    "status": "A Caminho"
+                },
+                {
+                    "idDtc": 520653,
+                    "quantidade": 71,
+                    "peso": 26.648364637827815,
+                    "valor": 301.4927671992192,
+                    "status": "Na Rota"
+                },
+                {
+                    "idDtc": 548890,
+                    "quantidade": 30,
+                    "peso": 47.46822434657391,
+                    "valor": 861.1774263477495,
+                    "status": "A Caminho"
+                },
+                {
+                    "idDtc": 351619,
+                    "quantidade": 75,
+                    "peso": 52.90846537686612,
+                    "valor": 509.66471458679086,
+                    "status": "Na Rota"
+                },
+                {
+                    "idDtc": 921459,
+                    "quantidade": 85,
+                    "peso": 22.210694289112766,
+                    "valor": 705.5621249670227,
+                    "status": "Efetuada"
+                },
+                {
+                    "idDtc": 198951,
+                    "quantidade": 78,
+                    "peso": 15.291634669462917,
+                    "valor": 207.91859356476235,
+                    "status": "Na Rota"
+                },
+                {
+                    "idDtc": 921325,
+                    "quantidade": 75,
+                    "peso": 21.167479437990306,
+                    "valor": 188.80261973909612,
+                    "status": "Efetuada"
+                },
+                {
+                    "idDtc": 333438,
+                    "quantidade": 63,
+                    "peso": 79.91340444656565,
+                    "valor": 731.7373336533482,
+                    "status": "A Caminho"
+                },
+                {
+                    "idDtc": 128710,
+                    "quantidade": 45,
+                    "peso": 47.062454704961034,
+                    "valor": 836.0608741224838,
+                    "status": "A Caminho"
+                },
+                {
+                    "idDtc": 437694,
+                    "quantidade": 29,
+                    "peso": 75.58199310597642,
+                    "valor": 53.5540710273968,
+                    "status": "Na Rota"
+                },
+                {
+                    "idDtc": 296932,
+                    "quantidade": 71,
+                    "peso": 20.83959650198801,
+                    "valor": 504.49051651352835,
+                    "status": "A Caminho"
+                }
+            ]
+        ],
+        [
+            -23.572409,
+            -46.353858,
+            "Carlos Almeida",
+            "CGD-9B07",
+            9,
+            [
+                {
+                    "idDtc": 462368,
+                    "quantidade": 95,
+                    "peso": 77.25805453240915,
+                    "valor": 764.1178437629383,
+                    "status": "Na Rota"
+                },
+                {
+                    "idDtc": 177558,
+                    "quantidade": 27,
+                    "peso": 44.936210675746025,
+                    "valor": 851.664294849116,
+                    "status": "Efetuada"
+                },
+                {
+                    "idDtc": 521542,
+                    "quantidade": 26,
+                    "peso": 74.0666951102082,
+                    "valor": 364.9757408171003,
+                    "status": "Na Rota"
+                },
+                {
+                    "idDtc": 142356,
+                    "quantidade": 18,
+                    "peso": 37.5616004642416,
+                    "valor": 389.44212293868395,
+                    "status": "A Caminho"
+                },
+                {
+                    "idDtc": 163003,
+                    "quantidade": 66,
+                    "peso": 42.402318769404715,
+                    "valor": 549.5688738916582,
+                    "status": "Na Rota"
+                },
+                {
+                    "idDtc": 120857,
+                    "quantidade": 1,
+                    "peso": 93.98211379585302,
+                    "valor": 825.7798442578024,
+                    "status": "A Caminho"
+                },
+                {
+                    "idDtc": 156223,
+                    "quantidade": 49,
+                    "peso": 63.98297895136083,
+                    "valor": 787.9138996620052,
+                    "status": "A Caminho"
+                },
+                {
+                    "idDtc": 396178,
+                    "quantidade": 58,
+                    "peso": 63.71413053477509,
+                    "valor": 819.257828905943,
+                    "status": "A Caminho"
+                },
+                {
+                    "idDtc": 427342,
+                    "quantidade": 89,
+                    "peso": 37.525447566815465,
+                    "valor": 426.92995317593596,
+                    "status": "A Caminho"
+                },
+                {
+                    "idDtc": 898693,
+                    "quantidade": 61,
+                    "peso": 75.46500047831393,
+                    "valor": 94.19846150876165,
+                    "status": "Efetuada"
+                }
+            ]
+        ],
+        [
+            -23.685667,
+            -46.547962,
+            "Fernando Silva",
+            "CFC-0G40",
+            8,
+            [
+                {
+                    "idDtc": 527421,
+                    "quantidade": 89,
+                    "peso": 20.91008727043043,
+                    "valor": 428.6029536299478,
+                    "status": "Na Rota"
+                },
+                {
+                    "idDtc": 286342,
+                    "quantidade": 99,
+                    "peso": 87.856339213008,
+                    "valor": 26.88012875095329,
+                    "status": "Na Rota"
+                },
+                {
+                    "idDtc": 179564,
+                    "quantidade": 55,
+                    "peso": 50.74356510765438,
+                    "valor": 860.4615225924716,
+                    "status": "Efetuada"
+                },
+                {
+                    "idDtc": 419310,
+                    "quantidade": 82,
+                    "peso": 39.984903010828134,
+                    "valor": 594.5604695238745,
+                    "status": "Efetuada"
+                },
+                {
+                    "idDtc": 326812,
+                    "quantidade": 92,
+                    "peso": 78.74653532174175,
+                    "valor": 963.1139422847593,
+                    "status": "Na Rota"
+                },
+                {
+                    "idDtc": 740344,
+                    "quantidade": 62,
+                    "peso": 11.425051295682772,
+                    "valor": 439.4948986484661,
+                    "status": "Na Rota"
+                }
+            ]
+        ],
+        [
+            -23.936255,
+            -46.398804,
+            "Fernando Souza",
+            "ECD-4G29",
+            6,
+            [
+                {
+                    "idDtc": 252786,
+                    "quantidade": 94,
+                    "peso": 66.74716114484985,
+                    "valor": 19.864028011739983,
+                    "status": "A Caminho"
+                },
+                {
+                    "idDtc": 985840,
+                    "quantidade": 21,
+                    "peso": 53.13899768258337,
+                    "valor": 491.5477876723601,
+                    "status": "Na Rota"
+                },
+                {
+                    "idDtc": 689018,
+                    "quantidade": 37,
+                    "peso": 90.5282597975675,
+                    "valor": 502.7000539283407,
+                    "status": "Na Rota"
+                },
+                {
+                    "idDtc": 533017,
+                    "quantidade": 81,
+                    "peso": 85.87962511492265,
+                    "valor": 806.9179471602483,
+                    "status": "A Caminho"
+                },
+                {
+                    "idDtc": 944919,
+                    "quantidade": 60,
+                    "peso": 11.260550680490473,
+                    "valor": 566.576181726681,
+                    "status": "Na Rota"
+                },
+                {
+                    "idDtc": 992742,
+                    "quantidade": 10,
+                    "peso": 50.6952053610592,
+                    "valor": 354.46125362856446,
+                    "status": "A Caminho"
+                },
+                {
+                    "idDtc": 292697,
+                    "quantidade": 65,
+                    "peso": 84.37894016010874,
+                    "valor": 67.36385002762908,
+                    "status": "Efetuada"
+                },
+                {
+                    "idDtc": 671082,
+                    "quantidade": 78,
+                    "peso": 99.35539719836619,
+                    "valor": 609.4821159565604,
+                    "status": "Na Rota"
+                },
+                {
+                    "idDtc": 701051,
+                    "quantidade": 27,
+                    "peso": 20.861159652955422,
+                    "valor": 959.8732693187392,
+                    "status": "A Caminho"
+                },
+                {
+                    "idDtc": 711122,
+                    "quantidade": 63,
+                    "peso": 29.30254752768207,
+                    "valor": 616.7551203781229,
+                    "status": "Efetuada"
+                }
+            ]
+        ],
+        [
+            -23.561861,
+            -46.534639,
+            "Laura Rodrigues",
+            "EDC-6F13",
+            7,
+            [
+                {
+                    "idDtc": 698251,
+                    "quantidade": 20,
+                    "peso": 14.748835017601335,
+                    "valor": 527.001070465715,
+                    "status": "A Caminho"
+                },
+                {
+                    "idDtc": 700986,
+                    "quantidade": 82,
+                    "peso": 32.12067697773431,
+                    "valor": 782.937148053327,
+                    "status": "Efetuada"
+                },
+                {
+                    "idDtc": 334828,
+                    "quantidade": 94,
+                    "peso": 35.71927799219007,
+                    "valor": 798.6428931598582,
+                    "status": "Efetuada"
+                },
+                {
+                    "idDtc": 614767,
+                    "quantidade": 26,
+                    "peso": 61.900004566927144,
+                    "valor": 765.4634956213215,
+                    "status": "A Caminho"
+                },
+                {
+                    "idDtc": 203149,
+                    "quantidade": 80,
+                    "peso": 1.158507045717165,
+                    "valor": 476.74511305064175,
+                    "status": "A Caminho"
+                }
+            ]
+        ],
+        [
+            -23.720005,
+            -46.640766,
+            "José Costa",
+            "CGG-7G13",
+            1,
+            [
+                {
+                    "idDtc": 806453,
+                    "quantidade": 20,
+                    "peso": 12.440835925300101,
+                    "valor": 488.39345228783185,
+                    "status": "Na Rota"
+                },
+                {
+                    "idDtc": 433507,
+                    "quantidade": 89,
+                    "peso": 61.254366069566395,
+                    "valor": 652.2743528932081,
+                    "status": "Efetuada"
+                },
+                {
+                    "idDtc": 854320,
+                    "quantidade": 96,
+                    "peso": 78.16305259209118,
+                    "valor": 535.5890787206215,
+                    "status": "Efetuada"
+                },
+                {
+                    "idDtc": 633131,
+                    "quantidade": 41,
+                    "peso": 85.06027574691585,
+                    "valor": 151.26736418139768,
+                    "status": "A Caminho"
+                },
+                {
+                    "idDtc": 334342,
+                    "quantidade": 100,
+                    "peso": 35.833565195891886,
+                    "valor": 456.7305935230263,
+                    "status": "Na Rota"
+                },
+                {
+                    "idDtc": 509149,
+                    "quantidade": 66,
+                    "peso": 61.83887170230706,
+                    "valor": 810.7005293824566,
+                    "status": "A Caminho"
+                },
+                {
+                    "idDtc": 565536,
+                    "quantidade": 92,
+                    "peso": 12.10645019041111,
+                    "valor": 412.62459047222853,
+                    "status": "Efetuada"
+                },
+                {
+                    "idDtc": 726637,
+                    "quantidade": 17,
+                    "peso": 32.60674939831875,
+                    "valor": 639.155676665662,
+                    "status": "Efetuada"
+                },
+                {
+                    "idDtc": 290413,
+                    "quantidade": 17,
+                    "peso": 43.13393830519144,
+                    "valor": 746.2374146186111,
+                    "status": "Na Rota"
+                },
+                {
+                    "idDtc": 696760,
+                    "quantidade": 49,
+                    "peso": 35.05308957651821,
+                    "valor": 769.2555981373522,
+                    "status": "Efetuada"
+                },
+                {
+                    "idDtc": 912661,
+                    "quantidade": 35,
+                    "peso": 56.70434256068963,
+                    "valor": 402.6620527170627,
+                    "status": "Efetuada"
+                }
+            ]
+        ],
+        [
+            -23.741429,
+            -46.753072,
+            "João Rodrigues",
+            "EFC-1C51",
+            7,
+            [
+                {
+                    "idDtc": 641587,
+                    "quantidade": 73,
+                    "peso": 84.33848016311265,
+                    "valor": 655.006322472258,
+                    "status": "Na Rota"
+                },
+                {
+                    "idDtc": 350365,
+                    "quantidade": 30,
+                    "peso": 64.60137510600532,
+                    "valor": 697.309183604804,
+                    "status": "A Caminho"
+                },
+                {
+                    "idDtc": 509735,
+                    "quantidade": 96,
+                    "peso": 89.89446350878022,
+                    "valor": 30.178236164329707,
+                    "status": "Efetuada"
+                },
+                {
+                    "idDtc": 451481,
+                    "quantidade": 90,
+                    "peso": 12.667387783917714,
+                    "valor": 206.99298103941254,
+                    "status": "Efetuada"
+                },
+                {
+                    "idDtc": 744464,
+                    "quantidade": 93,
+                    "peso": 40.92166812073726,
+                    "valor": 615.1676478768139,
+                    "status": "Na Rota"
+                },
+                {
+                    "idDtc": 121884,
+                    "quantidade": 77,
+                    "peso": 98.31677081358504,
+                    "valor": 938.1988532844458,
+                    "status": "Na Rota"
+                },
+                {
+                    "idDtc": 146310,
+                    "quantidade": 6,
+                    "peso": 5.0167747753398455,
+                    "valor": 898.0391475684784,
+                    "status": "A Caminho"
+                },
+                {
+                    "idDtc": 662938,
+                    "quantidade": 91,
+                    "peso": 86.41956765239453,
+                    "valor": 600.7218169871118,
+                    "status": "A Caminho"
+                }
+            ]
+        ],
+        [
+            -23.420752,
+            -46.793064,
+            "Fernando Silva",
+            "GDB-7B18",
+            4,
+            [
+                {
+                    "idDtc": 912355,
+                    "quantidade": 37,
+                    "peso": 8.01832521589263,
+                    "valor": 455.55200246380844,
+                    "status": "Na Rota"
+                },
+                {
+                    "idDtc": 573871,
+                    "quantidade": 86,
+                    "peso": 38.18759903897699,
+                    "valor": 424.0568247033492,
+                    "status": "A Caminho"
+                },
+                {
+                    "idDtc": 106392,
+                    "quantidade": 69,
+                    "peso": 79.99229080112231,
+                    "valor": 394.7162485680785,
+                    "status": "Na Rota"
+                },
+                {
+                    "idDtc": 991874,
+                    "quantidade": 51,
+                    "peso": 63.140478163671716,
+                    "valor": 334.1185866392724,
+                    "status": "Na Rota"
+                },
+                {
+                    "idDtc": 546069,
+                    "quantidade": 42,
+                    "peso": 55.98936459136127,
+                    "valor": 997.5600072784666,
+                    "status": "A Caminho"
+                },
+                {
+                    "idDtc": 401716,
+                    "quantidade": 99,
+                    "peso": 48.7972694284756,
+                    "valor": 991.0349984838688,
+                    "status": "Efetuada"
+                }
+            ]
+        ],
+        [
+            -23.431801,
+            -46.408101,
+            "José Martins",
+            "AAG-3D41",
+            9,
+            [
+                {
+                    "idDtc": 298981,
+                    "quantidade": 73,
+                    "peso": 85.76251573861923,
+                    "valor": 971.579169563965,
+                    "status": "Na Rota"
+                },
+                {
+                    "idDtc": 973471,
+                    "quantidade": 58,
+                    "peso": 10.44273821847278,
+                    "valor": 261.5919861955192,
+                    "status": "A Caminho"
+                },
+                {
+                    "idDtc": 440918,
+                    "quantidade": 44,
+                    "peso": 80.07922545979879,
+                    "valor": 128.9081954009169,
+                    "status": "Na Rota"
+                },
+                {
+                    "idDtc": 519304,
+                    "quantidade": 63,
+                    "peso": 34.56703530562451,
+                    "valor": 747.7402818813459,
+                    "status": "Efetuada"
+                },
+                {
+                    "idDtc": 774592,
+                    "quantidade": 69,
+                    "peso": 87.36659908914649,
+                    "valor": 352.7237280105366,
+                    "status": "Na Rota"
+                },
+                {
+                    "idDtc": 170355,
+                    "quantidade": 65,
+                    "peso": 55.43040723140015,
+                    "valor": 193.02827117547463,
+                    "status": "Efetuada"
+                }
+            ]
+        ],
+        [
+            -23.80953,
+            -46.367866,
+            "Laura Souza",
+            "BGA-6G86",
+            3,
+            [
+                {
+                    "idDtc": 648138,
+                    "quantidade": 94,
+                    "peso": 93.60509193140021,
+                    "valor": 436.4666387743283,
+                    "status": "A Caminho"
+                },
+                {
+                    "idDtc": 251048,
+                    "quantidade": 55,
+                    "peso": 28.42923675519028,
+                    "valor": 341.8032976679647,
+                    "status": "A Caminho"
+                },
+                {
+                    "idDtc": 964095,
+                    "quantidade": 28,
+                    "peso": 50.75643000936851,
+                    "valor": 27.143975078660972,
+                    "status": "A Caminho"
+                },
+                {
+                    "idDtc": 581243,
+                    "quantidade": 100,
+                    "peso": 72.75243521589036,
+                    "valor": 80.96307176084693,
+                    "status": "Na Rota"
+                },
+                {
+                    "idDtc": 570272,
+                    "quantidade": 6,
+                    "peso": 63.5665119548488,
+                    "valor": 147.61625968238405,
+                    "status": "Efetuada"
+                },
+                {
+                    "idDtc": 866497,
+                    "quantidade": 79,
+                    "peso": 3.9475158570333972,
+                    "valor": 255.2592008537277,
+                    "status": "A Caminho"
+                },
+                {
+                    "idDtc": 229483,
+                    "quantidade": 10,
+                    "peso": 35.75386240516927,
+                    "valor": 836.0090401687681,
+                    "status": "A Caminho"
+                },
+                {
+                    "idDtc": 230562,
+                    "quantidade": 58,
+                    "peso": 34.970835823483306,
+                    "valor": 773.5306675996552,
+                    "status": "A Caminho"
+                }
+            ]
+        ],
+        [
+            -23.796802,
+            -46.623139,
+            "José Almeida",
+            "FDE-6F19",
+            3,
+            [
+                {
+                    "idDtc": 243766,
+                    "quantidade": 12,
+                    "peso": 39.01749714621408,
+                    "valor": 854.296399691104,
+                    "status": "Na Rota"
+                },
+                {
+                    "idDtc": 277107,
+                    "quantidade": 19,
+                    "peso": 31.23983336482946,
+                    "valor": 366.0622768432673,
+                    "status": "Na Rota"
+                },
+                {
+                    "idDtc": 862969,
+                    "quantidade": 61,
+                    "peso": 12.047830067048832,
+                    "valor": 253.50862692953214,
+                    "status": "Na Rota"
+                },
+                {
+                    "idDtc": 320962,
+                    "quantidade": 75,
+                    "peso": 7.303187161455751,
+                    "valor": 373.7563734666645,
+                    "status": "Na Rota"
+                },
+                {
+                    "idDtc": 298492,
+                    "quantidade": 46,
+                    "peso": 53.706477261436746,
+                    "valor": 417.644801927214,
+                    "status": "Na Rota"
+                },
+                {
+                    "idDtc": 932967,
+                    "quantidade": 47,
+                    "peso": 6.350576213106992,
+                    "valor": 291.01643543814185,
+                    "status": "A Caminho"
+                },
+                {
+                    "idDtc": 672521,
+                    "quantidade": 48,
+                    "peso": 29.83020343166751,
+                    "valor": 349.14889670368524,
+                    "status": "Na Rota"
+                },
+                {
+                    "idDtc": 853327,
+                    "quantidade": 17,
+                    "peso": 65.00414059581945,
+                    "valor": 352.7817539550793,
+                    "status": "A Caminho"
+                },
+                {
+                    "idDtc": 432909,
+                    "quantidade": 38,
+                    "peso": 70.66023504513856,
+                    "valor": 384.1003170388474,
+                    "status": "A Caminho"
+                },
+                {
+                    "idDtc": 560115,
+                    "quantidade": 59,
+                    "peso": 61.77462590172019,
+                    "valor": 655.6673251879545,
+                    "status": "Efetuada"
+                },
+                {
+                    "idDtc": 284246,
+                    "quantidade": 31,
+                    "peso": 21.169673609880192,
+                    "valor": 433.4721482639802,
+                    "status": "Na Rota"
+                }
+            ]
+        ],
+        [
+            -23.5522,
+            -46.774424,
+            "Laura Almeida",
+            "FAE-8B77",
+            6,
+            [
+                {
+                    "idDtc": 919519,
+                    "quantidade": 26,
+                    "peso": 80.53991305300352,
+                    "valor": 125.53465340694059,
+                    "status": "A Caminho"
+                },
+                {
+                    "idDtc": 842165,
+                    "quantidade": 96,
+                    "peso": 95.78352671082875,
+                    "valor": 826.8891685973215,
+                    "status": "A Caminho"
+                },
+                {
+                    "idDtc": 649151,
+                    "quantidade": 72,
+                    "peso": 37.07146600810338,
+                    "valor": 693.0913654938804,
+                    "status": "A Caminho"
+                },
+                {
+                    "idDtc": 792904,
+                    "quantidade": 42,
+                    "peso": 22.421461970177045,
+                    "valor": 45.43753625029865,
+                    "status": "A Caminho"
+                },
+                {
+                    "idDtc": 542886,
+                    "quantidade": 6,
+                    "peso": 73.88687552897487,
+                    "valor": 949.0666400292126,
+                    "status": "Efetuada"
+                },
+                {
+                    "idDtc": 525712,
+                    "quantidade": 20,
+                    "peso": 5.417646294889064,
+                    "valor": 246.55685773480567,
+                    "status": "Efetuada"
+                },
+                {
+                    "idDtc": 724848,
+                    "quantidade": 11,
+                    "peso": 84.48067371900775,
+                    "valor": 391.2362228260677,
+                    "status": "A Caminho"
+                },
+                {
+                    "idDtc": 471080,
+                    "quantidade": 35,
+                    "peso": 8.971980772077208,
+                    "valor": 504.3221330363453,
+                    "status": "A Caminho"
+                }
+            ]
+        ]
+    ]
+}
+
 
 const geraCoordenadas = ()=>{
     return[

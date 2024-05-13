@@ -88,6 +88,12 @@ TEMPLATES = [
 WSGI_APPLICATION = 'SisTransports.wsgi.application'
 ASGI_APPLICATION = 'SisTransports.asgi.application'
 
+CHANNEL_LAYERS = {
+    'default': {
+        'BACKEND': 'channels.layers.InMemoryChannelLayer',  # Escolha o backend apropriado
+    },
+}
+
 # Database
 # https://docs.djangoproject.com/en/4.0/ref/settings/#databases
 

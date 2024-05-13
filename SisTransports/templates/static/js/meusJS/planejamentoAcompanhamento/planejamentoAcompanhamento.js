@@ -26,6 +26,45 @@ const limpaContainers = (container)=>{
         }
 }
 
+const getLatLngStringToData = (locationString)=>{
+    // Dividir a string com base na vírgula para separar os valores de latitude e longitude
+    var parts = locationString.split(',');
+
+    // Inicializar variáveis para armazenar os valores de latitude e longitude
+    var lat = null;
+    var lng = null;
+
+    // Iterar sobre as partes divididas
+    parts.forEach(function(part) {
+        // Verificar se a parte contém a substring 'lat:'
+        if (part.includes('lat:')) {
+            // Extrair o valor de latitude após 'lat:'
+            lat = parseFloat(part.split('lat:')[1]);
+        } 
+        // Verificar se a parte contém a substring 'lng:'
+        else if (part.includes('lng:')) {
+            // Extrair o valor de longitude após 'lng:'
+            lng = parseFloat(part.split('lng:')[1]);
+        }
+    });
+
+    // Verificar se foram extraídos valores válidos de latitude e longitude
+    if (lat !== null && lng !== null) {
+        // Criar objeto JSON com os dados de latitude e longitude
+        var jsonData = {
+            "latitude": lat,
+            "longitude": lng
+        };
+
+        // Converter objeto JSON em uma string JSON
+        var jsonString = JSON.stringify(jsonData);
+        return jsonData
+    } else {
+        console.error('Não foi possível extrair os dados de latitude e longitude da string.');
+    }
+
+}
+
 const resetState = ()=>{
     stateMapa.estado = null
 }
@@ -78,8 +117,51 @@ const adicionaMarcadoresMapa = (dados,dadosAdicionais)=>{
     });
 }
 
+const connWs =()=>{
+    var id = 'mapa'
+    var socket = new WebSocket(`ws://127.0.0.1:8000/operacional/ws/some_url/?id=${id}`);
+    socket.onopen = function(event) {
+        // Aguarda um curto período de tempo antes de enviar dados
+        setTimeout(() => {
+            socket.send(JSON.stringify({
+                'message': 'Olá, servidor WebSocket!'
+            }));
+        }, 1000); // Delay de 1 segundo (1000 milissegundos)
+    };
+  
+    socket.onmessage = function(event) {
+        console.log((event.data))
+        var data = JSON.parse(event.data);
+        // Utilizar expressão regular para extrair lat e lng
+        var regex = /lat:(-?\d+\.\d+),lng:(-?\d+\.\d+)/;
+        var match = event.data.match(regex);
+        if (match) {
+            // Extrair lat e lng dos grupos correspondentes na expressão regular
+            var lat = parseFloat(match[1]); // Valor da latitude
+            var lng = parseFloat(match[2]); // Valor da longitude
+        }
+        console.log('Mensagem recebida:', data.message);
+        var loc = getLatLngStringToData(data.message)
+        let placaMarcador=mapa.selecionarMarcador('placa','AAG-3D41')
+        console.log(loc )
+        placaMarcador.dados.lat = loc.latitude
+        placaMarcador.dados.lng = loc.longitude
+        mapa.alterarLocalizacaoDoMarcador(placaMarcador,placaMarcador.dados.lat,placaMarcador.dados.lng)
+
+    };
+  
+    socket.onclose = function(event) {
+        console.log('Conexão WebSocket fechada.');
+    };
+  
+    socket.onerror = function(error) {
+        console.error('Erro na conexão WebSocket:', error);
+    };
+}
+
 // Exemplo de uso da classe MapaLeaflet
 document.addEventListener('DOMContentLoaded', async() => {
+    connWs()
     const dados = geraCoordenadas()
     const polygonCoordinates = geraDadosPoligonoZmrc()
 
@@ -92,9 +174,11 @@ document.addEventListener('DOMContentLoaded', async() => {
 
     adicionaMarcadoresMapa(dadosMarcadores,dadosAdicionais)
     
-    let dadosVeiculos = gerarDadosCompletosNaGrandeSP()
+    let dadosVeiculos = geraDadosVeiculos()
     mapeamento = {lat: 0,lng: 1,motorista: 2,placa: 3,qtdeDctos: 4,dados:5};
     dadosAdicionais = geraDadosAdicionais(dadosVeiculos,mapeamento)
+
+    console.log(dadosAdicionais)
     dadosMarcadores = {dados:dadosVeiculos,icone:caminhao,iconeSize:[30, 30],callback:constroeModalVeiculosPlanejamento}
     adicionaMarcadoresMapa(dadosMarcadores,dadosAdicionais)
 
