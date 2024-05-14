@@ -96,3 +96,6 @@ from operacional.views.contrato_frete.read_contrato_motorista import read_contra
 from operacional.views.contrato_frete.read_contrato_proprietario import read_contrato_proprietario
 
 from operacional.views.roteirizacao import routing
+
+from operacional.views.appMotorista.get_documentos import get_documentos
+
