@@ -92,5 +92,6 @@ urlpatterns = [
     path('ws/', include(viewsOperacional.routing.websocket_urlpatterns)),
 
     path('api/get_documentos/',viewsOperacional.get_documentos,name='get_documentos_app_moto' ),
+    path('api/login_motorista/',viewsOperacional.login_app_motorista,name='login' ),
 
     ]

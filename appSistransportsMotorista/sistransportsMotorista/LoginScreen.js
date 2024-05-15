@@ -1,16 +1,37 @@
 import React, { useState } from 'react';
-import { View, Text, TextInput, Button, StyleSheet, Alert } from 'react-native';
+import { View, TextInput, Button, Alert, StyleSheet, Text } from 'react-native';
 
 const LoginScreen = ({ navigation }) => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
 
-  const handleLogin = () => {
-    // Lógica de autenticação (substitua pela sua lógica real)
-    if (username === '123' && password === '123') {
-      navigation.replace('Main');
-    } else {
-      Alert.alert('Erro', 'Nome de usuário ou senha incorretos');
+  const handleLogin = async () => {
+    try {
+      const response = await fetch('http://192.168.15.42:8000/appMotoristas/login_app/', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          username: username,
+          password: password,
+        }),
+      });
+
+      const data = await response.json();
+
+      if (response.ok) {
+        // Login bem-sucedido
+        Alert.alert('Sucesso', data.message);
+        // Redireciona para a tela MainScreen após o login bem-sucedido
+        navigation.navigate('Main');
+      } else {
+        // Login falhou
+        Alert.alert('Erro', data.error);
+      }
+    } catch (error) {
+      console.error('Erro ao fazer login:', error);
+      Alert.alert('Erro', 'Falha ao fazer login');
     }
   };
 
@@ -30,7 +51,7 @@ const LoginScreen = ({ navigation }) => {
         onChangeText={setPassword}
         secureTextEntry
       />
-      <Button title="Entrar" onPress={handleLogin} style={styles.botao} />
+      <Button title="Login" onPress={handleLogin} />
     </View>
   );
 };
@@ -40,7 +61,7 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    padding: 10,
+    padding: 20,
     backgroundColor: '#f5f5f5',
   },
   title: {
@@ -50,15 +71,10 @@ const styles = StyleSheet.create({
   input: {
     width: '100%',
     padding: 10,
-    marginVertical: 7,
+    marginBottom: 10,
     borderWidth: 1,
     borderColor: '#ccc',
-    borderRadius: 20,
-    backgroundColor: '#fff',
-  },
-  botao: {
-    width: '100%',
-    padding: 10,
+    borderRadius: 5,
     backgroundColor: '#fff',
   },
 });

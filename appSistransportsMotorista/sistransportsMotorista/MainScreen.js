@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { View, Text, ScrollView, TouchableOpacity, Image, StyleSheet, ActivityIndicator } from 'react-native';
 import { FontAwesome5 } from '@expo/vector-icons'; // Importe o componente FontAwesome5 da biblioteca react-native-vector-icons
 import { fetchData } from './apiService'; // Importe a função de serviço
+import { getLocationAndSend } from './locationService'
 
 const MainScreen = ({ navigation }) => {
   const [infoArray, setInfoArray] = useState([]); // Inicializa como um array vazio
@@ -47,8 +48,10 @@ const MainScreen = ({ navigation }) => {
     <ScrollView style={styles.container}>
       {/* Exibindo a imagem antes do título */}
       <View style={styles.headerContainer}>
-        <Image source={require('./assets/favicon.png')} style={styles.logo} />
-        <Text style={styles.title}>SISTRANSPORTS</Text>
+        <Text style={styles.title}>Placa: AAA-1A11</Text>
+      </View>
+      <View style={styles.headerContainer}>
+        <Text style={styles.title}>Motorista: Edson Tomas da Silva</Text>
       </View>
       {infoArray.map((item) => (
         <TouchableOpacity
@@ -63,18 +66,34 @@ const MainScreen = ({ navigation }) => {
           <Text style={styles.cardDescription}>UF: {item.uf}</Text>
           <View style={styles.buttonContainer}>
             <TouchableOpacity
-              style={styles.button}
-              onPress={() => navigation.navigate('Signature', { cardData: item })}
-            >
-              <FontAwesome5 name="pen" size={20} color="#ffffff" />
-              <Text style={styles.buttonText}>Assinatura</Text>
-            </TouchableOpacity>
-            <TouchableOpacity
-              style={styles.button}
+              style={styles.buttonBarcode}
               onPress={() => navigation.navigate('BarcodeScanner')}
             >
               <FontAwesome5 name="barcode" size={20} color="#ffffff" />
-              <Text style={styles.buttonText}>Código de Barras</Text>
+              <Text style={styles.buttonText}></Text>
+            </TouchableOpacity>
+
+            <TouchableOpacity
+              style={styles.buttonAssinatura}
+              onPress={() => navigation.navigate('Signature', { cardData: item })}
+            >
+              <FontAwesome5 name="pen" size={20} color="#ffffff" />
+              <Text style={styles.buttonText}></Text>
+            </TouchableOpacity>
+
+            <TouchableOpacity
+              style={styles.buttonMapa}
+              onPress={ getLocationAndSend }
+            >
+              <FontAwesome5 name="map" size={20} color="#ffffff" />
+              <Text style={styles.buttonText}></Text>
+            </TouchableOpacity>
+            <TouchableOpacity
+              style={styles.buttonMapa}
+              onPress={() => navigation.navigate('BarcodeScanner')}
+            >
+              <FontAwesome5 name="pin" size={20} color="#ffffff" />
+              <Text style={styles.buttonText}></Text>
             </TouchableOpacity>
           </View>
         </TouchableOpacity>
@@ -95,6 +114,7 @@ const styles = StyleSheet.create({
     padding: 16,
     backgroundColor: '#f5f5f5',
   },
+
   loadingContainer: {
     flex: 1,
     justifyContent: 'center',
@@ -106,11 +126,11 @@ const styles = StyleSheet.create({
     marginBottom: 0,
   },
   logo: {
-    width: 50,
-    height: 50,
+    width: 400,
+    height: 100,
   },
   title: {
-    fontSize: 24,
+    fontSize: 16,
     fontWeight: 'bold',
     textAlign: 'center',
   },
@@ -138,9 +158,23 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     marginTop: 10,
   },
-  button: {
+  buttonMapa: {
     flexDirection: 'row',
-    backgroundColor: '#007bff',
+    backgroundColor: '#46c35f',
+    padding: 10,
+    borderRadius: 5,
+    alignItems: 'center',
+  },
+  buttonAssinatura: {
+    flexDirection: 'row',
+    backgroundColor: '#4B49AC',
+    padding: 10,
+    borderRadius: 5,
+    alignItems: 'center',
+  },
+  buttonBarcode: {
+    flexDirection: 'row',
+    backgroundColor: '#248AFD',
     padding: 10,
     borderRadius: 5,
     alignItems: 'center',
@@ -153,7 +187,7 @@ const styles = StyleSheet.create({
     backgroundColor: 'red',
     padding: 15,
     borderRadius: 5,
-    marginTop: 20,
+    marginBottom: 30,
     alignItems: 'center',
   },
   logoutButtonText: {

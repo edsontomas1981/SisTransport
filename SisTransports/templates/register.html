@@ -1,47 +1,46 @@
 
 {% load static %}
+
+{% load static %}
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-br">
 
 <head>
   <!-- Required meta tags -->
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  <title>Skydash Admin</title>
+  <title>SisTransport</title>
   <!-- plugins:css -->
   <link rel="stylesheet" href="{% static 'vendors/feather/feather.css' %}">
   <link rel="stylesheet" href="{% static 'vendors/ti-icons/css/themify-icons.css' %}">
-  <link rel="stylesheet" href="{% static 'vendors/css/vendor.bundle.base.css'%}">
+  <link rel="stylesheet" href="{% static 'vendors/css/vendor.bundle.base.css' %}">
   <!-- endinject -->
   <!-- Plugin css for this page -->
   <!-- End plugin css for this page -->
   <!-- inject:css -->
   <link rel="stylesheet" href="{% static 'css/vertical-layout-light/style.css'%}">
   <!-- endinject -->
-  <link rel="shortcut icon" href="{% static 'images/favicon.png '%}" />
+  <link rel="shortcut icon" href="{% static 'images/favicon.png'%}"/>
 </head>
-
 <body>
-  <div class="container-scroller">
+  <div class="container-scroller rounded">
     <div class="container-fluid page-body-wrapper full-page-wrapper">
       <div class="content-wrapper d-flex align-items-center auth px-0">
-        <div class="row w-100 mx-0">
+        <div class="row w-100">
           <div class="col-lg-4 mx-auto">
-            <div class="text-center">
-              <h1 class="h4 text-gray-900 mb-4">Bem vindo !</h1>
-                {% if messages %}
-                    {% for message in messages %}
-                        <div class="alert {{message.tags}}">
-                            {{message}}
-                        </div>
-                    {% endfor %}
-                {% endif %}
-            </div>
-            <div class="auth-form-light text-left py-5 px-4 px-sm-5">
-              <div class="brand-logo">
-                <img src="{% static 'images/Logotipo.png'%}" alt="logo">
+            <div class="auth-form-light text-left py-1 px-4 px-sm-5">
+              <div>
+                <img src="{% static 'images/logo.png' %}" class="img-fluid rounded float-start" alt="logo">
               </div>
-              
+              <h4 class="text-center">Olá! vamos começar ?</h4>
+              {% if messages %}
+                {% for message in messages %}
+                    <div class="alert {{message.tags}}">
+                        {{message}}
+                    </div>
+                {% endfor %}
+              {% endif %}
+              <h6 class="font-weight-light text-center">Faça login para continuar.</h6>
               <form class="pt-3" method="POST" action={% url 'registrar' %} >
                 {% csrf_token %}
                 <div class="form-group">
@@ -70,17 +69,18 @@
   </div>
   <!-- container-scroller -->
   <!-- plugins:js -->
-  <script src="{% static 'vendors/js/vendor.bundle.base.js'%}"></script>
+  <script src="{% static 'vendors/js/vendor.bundle.base.js' %}"></script>
   <!-- endinject -->
   <!-- Plugin js for this page -->
   <!-- End plugin js for this page -->
   <!-- inject:js -->
-  <script src="{% static 'js/off-canvas.js'%}"></script>
-  <script src="{% static 'js/hoverable-collapse.js'%}"></script>
-  <script src="{% static 'js/template.js'%}"></script>
-  <script src="{% static 'js/settings.js'%}"></script>
-  <script src="{% static 'js/todolist.js'%}"></script>
+  <script src="{% static 'js/off-canvas.js' %}"></script>
+  <script src="{% static 'js/hoverable-collapse.js' %}"></script>
+  <script src="{% static 'js/template.js' %}"></script>
+  <script src="{% static 'js/settings.js' %}"></script>
+  <script src="{% static 'js/todolist.js' %}"></script>
   <!-- endinject -->
 </body>
 
 </html>
+

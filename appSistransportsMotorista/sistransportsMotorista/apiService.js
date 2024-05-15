@@ -10,7 +10,6 @@ export const fetchData = async (url, setData, setLoading) => {
     setData(data)
     // console.log('Data fetched successfully:', data);
 
-    // Verifique se os dados são um array
     if (Array.isArray(data)) {
       setData(data);
     } else {

@@ -6,7 +6,7 @@ from Classes.senha import Senha
 
 def registrar_usuario(request):
     if request.method == "GET" :
-        if request.user.is_authenticated:
+        if not request.user.is_authenticated:
             return render(request,'register.html',)
         else: 
             return redirect('/')
