@@ -4,13 +4,11 @@ import json
 from django.views.decorators.http import require_http_methods
 from django.views.decorators.csrf import csrf_exempt
 
-
 @csrf_exempt
 @require_http_methods(["POST","GET"])
 def login_app_motorista(request):
     try:
         data = json.loads(request.body)
-        print(data)
         username = data.get('username')
         password = data.get('password')
 
