@@ -8,4 +8,5 @@ from appMotoristas.views.login_app import login_app_motorista
 urlpatterns = [
      path('get_dados/',get_documentos,name='get_documentos'),
      path('login_app/',login_app_motorista,name='login_app_motoristas'),
+     path('cadastra_usuario_motorista/',login_app_motorista,name='cadastra_usuario_motorista/'),
 ]
