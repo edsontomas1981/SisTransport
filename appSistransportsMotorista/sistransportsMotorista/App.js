@@ -1,81 +1,137 @@
-import * as React from 'react';
+import React, { useEffect } from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
-import { View, Image, StyleSheet } from 'react-native';
+import { Image, StyleSheet, TouchableOpacity } from 'react-native';
+import * as TaskManager from 'expo-task-manager';
+import * as Location from 'expo-location';
+import * as BackgroundFetch from 'expo-background-fetch';
 import LoginScreen from './LoginScreen';
 import MainScreen from './MainScreen';
 import SignatureScreen from './SignatureScreen';
-import BarcodeScannerScreen from './BarcodeScannerScreen'; // Importe a nova tela
+import BarcodeScannerScreen from './BarcodeScannerScreen';
+import DrawerDadosMotorista from './Drawer';
+import PhotoCaptureScreen from './Comprovantes.js';
+
+const LOCATION_TASK_NAME = 'background-location-task';
+const LOG_TASK_NAME = 'background-log-task';
+
+// Define the background task for location updates
+TaskManager.defineTask(LOCATION_TASK_NAME, ({ data, error }) => {
+  if (error) {
+    console.error("TaskManager error:", error);
+    return;
+  }
+  if (data) {
+    const { locations } = data;
+    console.log(`Received new locations at ${new Date().toLocaleTimeString()}:`, locations);
+    // Aqui você pode enviar as localizações para o servidor ou realizar outra tarefa
+    // sendLocationToServer(locations);
+  }
+});
+
+// Define a background task for logging
+TaskManager.defineTask(LOG_TASK_NAME, () => {
+  try {
+    console.log(`Log every 30 seconds at ${new Date().toLocaleTimeString()}`);
+    return BackgroundFetch.Result.NewData;
+  } catch (error) {
+    console.error('Error in background log task:', error);
+    return BackgroundFetch.Result.Failed;
+  }
+});
 
 const Stack = createStackNavigator();
 
 const App = () => {
+  useEffect(() => {
+    const startBackgroundUpdate = async () => {
+      const { status } = await Location.requestForegroundPermissionsAsync();
+      if (status === 'granted') {
+        const backgroundStatus = await Location.requestBackgroundPermissionsAsync();
+        if (backgroundStatus.status === 'granted') {
+          await Location.startLocationUpdatesAsync(LOCATION_TASK_NAME, {
+            accuracy: Location.Accuracy.High,
+            distanceInterval: 0, // Defina como 0 para obter atualizações com base no intervalo de tempo
+            deferredUpdatesInterval: 30000, // Intervalo de tempo em milissegundos (30 segundos)
+            showsBackgroundLocationIndicator: true, // Mostra um indicador de localização em background (apenas iOS)
+          });
+          console.log('Background location tracking started.');
+        } else {
+          console.error("Background location permission not granted");
+        }
+      } else {
+        console.error("Foreground location permission not granted");
+      }
+    };
+
+    const startBackgroundLogTask = async () => {
+      const backgroundFetchStatus = await BackgroundFetch.getStatusAsync();
+      if (backgroundFetchStatus === BackgroundFetch.Status.Restricted || backgroundFetchStatus === BackgroundFetch.Status.Denied) {
+        console.error("Background fetch is disabled.");
+        return;
+      }
+
+      await BackgroundFetch.registerTaskAsync(LOG_TASK_NAME, {
+        minimumInterval: 30, // 30 seconds
+        stopOnTerminate: false,
+        startOnBoot: true,
+      });
+      console.log('Background log task registered.');
+    };
+
+    startBackgroundUpdate();
+    startBackgroundLogTask();
+  }, []);
+
+  const renderMenuButton = (navigation) => (
+    <TouchableOpacity style={styles.menuButton} onPress={() => navigation.openDrawer()}>
+      <Image
+        source={require('./assets/menu_hamburguer.png')}
+        style={styles.menuIcon}
+        resizeMode="contain"
+      />
+    </TouchableOpacity>
+  );
+
   return (
     <NavigationContainer>
       <Stack.Navigator initialRouteName="Login">
         <Stack.Screen
           name="Login"
           component={LoginScreen}
-          options={{
-            headerTitle: () => (
-              <View style={styles.headerTitleContainer}>
-                <Image
-                  source={require('./assets/logo.png')}
-                  style={styles.logo}
-                  resizeMode="contain"
-                />
-              </View>
-            ),
-            headerTitleAlign: 'left',
-          }}
+          options={({ navigation }) => ({
+            headerLeft: () => renderMenuButton(navigation),
+            headerTitleAlign: 'center',
+          })}
         />
         <Stack.Screen
           name="Main"
           component={MainScreen}
-          options={{
-            headerTitle: () => (
-              <View style={styles.headerTitleContainer}>
-                <Image
-                  source={require('./assets/logo.png')}
-                  style={styles.logo}
-                  resizeMode="contain"
-                />
-              </View>
-            ),
-            headerTitleAlign: 'left',
-          }}
+          options={({ navigation }) => ({
+            headerLeft: () => renderMenuButton(navigation),
+            headerTitle: 'Main Screen',
+            headerTitleAlign: 'center',
+          })}
         />
         <Stack.Screen
           name="Signature"
           component={SignatureScreen}
           options={{
-            headerTitle: () => (
-              <View style={styles.headerTitleContainer}>
-                <Image
-                  source={require('./assets/logo.png')}
-                  style={styles.logo}
-                  resizeMode="contain"
-                />
-              </View>
-            ),
-            headerTitleAlign: 'left',
+            headerTitle: 'Signature',
+            headerTitleAlign: 'center',
           }}
         />
         <Stack.Screen
           name="BarcodeScanner"
           component={BarcodeScannerScreen}
           options={{
-            headerTitle: () => (
-              <View style={styles.headerTitleContainer}>
-                <Image
-                  source={require('./assets/logo.png')}
-                  style={styles.logo}
-                  resizeMode="contain"
-                />
-              </View>
-            ),
-            headerTitleAlign: 'left',
+            headerTitle: 'Barcode Scanner',
+            headerTitleAlign: 'center',
           }}
+        />
+        <Stack.Screen
+          name="PhotoCapture"
+          component={PhotoCaptureScreen}
         />
       </Stack.Navigator>
     </NavigationContainer>
@@ -83,15 +139,12 @@ const App = () => {
 };
 
 const styles = StyleSheet.create({
-  headerTitleContainer: {
-    flex: 0,
-    flexDirection: 'row',
-    justifyContent: 'flex-start',
-    alignItems: 'left',
+  menuButton: {
+    marginLeft: 16,
   },
-  logo: {
-    width: 400,  // Ajuste a largura conforme necessário
-    height: 200,  // Ajuste a altura conforme necessário
+  menuIcon: {
+    width: 24,
+    height: 24,
   },
 });
 

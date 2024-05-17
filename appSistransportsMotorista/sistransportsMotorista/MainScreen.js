@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, ScrollView, TouchableOpacity, Image, StyleSheet, ActivityIndicator } from 'react-native';
-import { FontAwesome5 } from '@expo/vector-icons'; // Importe o componente FontAwesome5 da biblioteca react-native-vector-icons
-import { fetchData } from './apiService'; // Importe a função de serviço
-import { getLocationAndSend } from './locationService'
+import { View, ScrollView, StyleSheet, Alert } from 'react-native';
+import { Text, Card, Button, ActivityIndicator, Title } from 'react-native-paper';
+import { launchCamera } from 'react-native-image-picker';
+import { fetchData } from './apiService';
+import { getLocationAndSend } from './locationService';
 
 const MainScreen = ({ navigation }) => {
-  const [infoArray, setInfoArray] = useState([]); // Inicializa como um array vazio
+  const [infoArray, setInfoArray] = useState([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -16,7 +17,6 @@ const MainScreen = ({ navigation }) => {
   const handleData = (data) => {
     try {
       if (data && Array.isArray(data.dados)) {
-        // Mapeia os dados recebidos para o formato esperado nos cards
         const transformedData = data.dados.map((item) => ({
           idDtc: item.idDtc,
           razao_social: item.razao_social,
@@ -36,74 +36,85 @@ const MainScreen = ({ navigation }) => {
     }
   };
 
+  const handlePhotoCapture = async (itemId) => {
+    const options = {
+      mediaType: 'photo',
+      includeBase64: true,
+    };
+
+    launchCamera(options, async (response) => {
+      if (response.didCancel) {
+        Alert.alert('Captura cancelada');
+      } else if (response.errorCode) {
+        Alert.alert('Erro ao capturar a foto', response.errorMessage);
+      } else {
+        try {
+          const base64Image = response.assets[0].base64;
+          const res = await fetch('http://192.168.15.42:8000/operacional/api/upload_foto/', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+              id: itemId,
+              image: base64Image,
+            }),
+          });
+          const data = await res.json();
+          if (res.ok) {
+            Alert.alert('Sucesso', 'Foto enviada com sucesso!');
+          } else {
+            Alert.alert('Erro', data.error || 'Erro ao enviar a foto');
+          }
+        } catch (error) {
+          console.error('Erro ao enviar a foto:', error);
+          Alert.alert('Erro', 'Falha ao enviar a foto');
+        }
+      }
+    });
+  };
+
   if (loading) {
     return (
       <View style={styles.loadingContainer}>
-        <ActivityIndicator size="large" color="#0000ff" />
+        <ActivityIndicator animating={true} size="large" />
       </View>
     );
   }
 
   return (
     <ScrollView style={styles.container}>
-      {/* Exibindo a imagem antes do título */}
-      <View style={styles.headerContainer}>
-        <Text style={styles.title}>Placa: AAA-1A11</Text>
-      </View>
-      <View style={styles.headerContainer}>
-        <Text style={styles.title}>Motorista: Edson Tomas da Silva</Text>
-      </View>
       {infoArray.map((item) => (
-        <TouchableOpacity
-          key={item.idDtc}
-          style={styles.card}
-          onPress={() => navigation.navigate('Signature', { cardData: item })}
-        >
-          <Text style={styles.cardTitle}>{item.razao_social}</Text>
-          <Text style={styles.cardDescription}>Endereço: {item.endereco}</Text>
-          <Text style={styles.cardDescription}>Bairro: {item.bairro}</Text>
-          <Text style={styles.cardDescription}>Cidade: {item.cidade}</Text>
-          <Text style={styles.cardDescription}>UF: {item.uf}</Text>
-          <View style={styles.buttonContainer}>
-            <TouchableOpacity
-              style={styles.buttonBarcode}
-              onPress={() => navigation.navigate('BarcodeScanner')}
-            >
-              <FontAwesome5 name="barcode" size={20} color="#ffffff" />
-              <Text style={styles.buttonText}></Text>
-            </TouchableOpacity>
-
-            <TouchableOpacity
-              style={styles.buttonAssinatura}
-              onPress={() => navigation.navigate('Signature', { cardData: item })}
-            >
-              <FontAwesome5 name="pen" size={20} color="#ffffff" />
-              <Text style={styles.buttonText}></Text>
-            </TouchableOpacity>
-
-            <TouchableOpacity
-              style={styles.buttonMapa}
-              onPress={ getLocationAndSend }
-            >
-              <FontAwesome5 name="map" size={20} color="#ffffff" />
-              <Text style={styles.buttonText}></Text>
-            </TouchableOpacity>
-            <TouchableOpacity
-              style={styles.buttonMapa}
-              onPress={() => navigation.navigate('BarcodeScanner')}
-            >
-              <FontAwesome5 name="pin" size={20} color="#ffffff" />
-              <Text style={styles.buttonText}></Text>
-            </TouchableOpacity>
-          </View>
-        </TouchableOpacity>
+        <Card key={item.idDtc} style={styles.card} onPress={() => navigation.navigate('Signature', { cardData: item })}>
+          <Card.Content>
+            <Title>{item.razao_social}</Title>
+            <Text>Endereço: {item.endereco}</Text>
+            <Text>Bairro: {item.bairro}</Text>
+            <Text>Cidade: {item.cidade}</Text>
+            <Text>UF: {item.uf}</Text>
+          </Card.Content>
+          <Card.Actions>
+            <Button icon="barcode" mode="contained" onPress={() => navigation.navigate('BarcodeScanner')}>
+              Scan
+            </Button>
+            <Button icon="pen" mode="contained" onPress={() => navigation.navigate('Signature', { cardData: item })}>
+              Sign
+            </Button>
+            <Button icon="map" mode="contained" onPress={getLocationAndSend}>
+              Locate
+            </Button>
+            <Button icon="map-marker" mode="contained" onPress={() => navigation.navigate('BarcodeScanner')}>
+              Marker
+            </Button>
+            <Button icon="camera" mode="contained" onPress={() => navigation.navigate('PhotoCapture')}>
+              Take Photo
+            </Button>
+          </Card.Actions>
+        </Card>
       ))}
-      <TouchableOpacity
-        style={styles.logoutButton}
-        onPress={() => navigation.replace('Login')}
-      >
-        <Text style={styles.logoutButtonText}>Logout</Text>
-      </TouchableOpacity>
+      <Button mode="contained" onPress={() => navigation.replace('Login')} style={styles.logoutButton}>
+        Logout
+      </Button>
     </ScrollView>
   );
 };
@@ -114,85 +125,18 @@ const styles = StyleSheet.create({
     padding: 16,
     backgroundColor: '#f5f5f5',
   },
-
   loadingContainer: {
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
   },
-  headerContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    marginBottom: 0,
-  },
-  logo: {
-    width: 400,
-    height: 100,
-  },
-  title: {
-    fontSize: 16,
-    fontWeight: 'bold',
-    textAlign: 'center',
-  },
   card: {
-    backgroundColor: '#fff',
-    padding: 20,
     marginVertical: 10,
-    borderRadius: 10,
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.1,
-    shadowRadius: 5,
-    elevation: 3,
-  },
-  cardTitle: {
-    fontSize: 18,
-    fontWeight: 'bold',
-  },
-  cardDescription: {
-    fontSize: 14,
-    marginTop: 5,
-  },
-  buttonContainer: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    marginTop: 10,
-  },
-  buttonMapa: {
-    flexDirection: 'row',
-    backgroundColor: '#46c35f',
-    padding: 10,
-    borderRadius: 5,
-    alignItems: 'center',
-  },
-  buttonAssinatura: {
-    flexDirection: 'row',
-    backgroundColor: '#4B49AC',
-    padding: 10,
-    borderRadius: 5,
-    alignItems: 'center',
-  },
-  buttonBarcode: {
-    flexDirection: 'row',
-    backgroundColor: '#248AFD',
-    padding: 10,
-    borderRadius: 5,
-    alignItems: 'center',
-  },
-  buttonText: {
-    color: '#ffffff',
-    marginLeft: 5,
   },
   logoutButton: {
+    marginTop: 20,
     backgroundColor: 'red',
-    padding: 15,
-    borderRadius: 5,
     marginBottom: 30,
-    alignItems: 'center',
-  },
-  logoutButtonText: {
-    color: '#ffffff',
-    fontSize: 16,
   },
 });
 
