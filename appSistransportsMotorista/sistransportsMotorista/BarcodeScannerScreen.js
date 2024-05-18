@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, Button, StyleSheet, Alert } from 'react-native';
-import { BarCodeScanner } from 'expo-barcode-scanner';
+import { View, Text, Button, StyleSheet, Alert, Image } from 'react-native';
+import { Camera } from 'expo-camera';
 
 const BarcodeScannerScreen = ({ navigation }) => {
   const [hasPermission, setHasPermission] = useState(null);
@@ -8,15 +8,18 @@ const BarcodeScannerScreen = ({ navigation }) => {
 
   useEffect(() => {
     (async () => {
-      const { status } = await BarCodeScanner.requestPermissionsAsync();
+      const { status } = await Camera.requestPermissionsAsync();
       setHasPermission(status === 'granted');
     })();
   }, []);
 
   const handleBarCodeScanned = ({ type, data }) => {
     setScanned(true);
-    Alert.alert(`Código de barras lido: ${data}`);
-    // Você pode processar os dados aqui e/ou navegar para outra tela
+    Alert.alert(
+      'Código de Barras Escaneado',
+      `Tipo: ${type}\nConteúdo: ${data}`,
+      [{ text: 'OK', onPress: () => setScanned(false) }]
+    );
   };
 
   if (hasPermission === null) {
@@ -28,14 +31,12 @@ const BarcodeScannerScreen = ({ navigation }) => {
 
   return (
     <View style={styles.container}>
-      <BarCodeScanner
+      <Camera
+        style={styles.camera}
+        type={Camera.Constants.Type.back}
         onBarCodeScanned={scanned ? undefined : handleBarCodeScanned}
-        style={StyleSheet.absoluteFillObject}
       />
-      {scanned && (
-        <Button title="Escanear Novamente" onPress={() => setScanned(false)} />
-      )}
-      <Button title="Voltar" onPress={() => navigation.goBack()} />
+      {scanned && <Button title={'Escanear Novamente'} onPress={() => setScanned(false)} />}
     </View>
   );
 };
@@ -43,8 +44,10 @@ const BarcodeScannerScreen = ({ navigation }) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
+    flexDirection: 'column',
+  },
+  camera: {
+    flex: 1,
   },
 });
 

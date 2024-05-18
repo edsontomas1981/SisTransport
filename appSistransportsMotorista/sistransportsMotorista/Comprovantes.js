@@ -5,7 +5,8 @@ import { Camera } from 'expo-camera';
 const PhotoCaptureScreen = ({ navigation }) => {
   const [hasPermission, setHasPermission] = useState(null);
   const [capturedImage, setCapturedImage] = useState(null);
-  const cameraRef = useRef(null); // Referência para a câmera
+  const [cameraReady, setCameraReady] = useState(false);
+  const cameraRef = useRef(null);
 
   useEffect(() => {
     (async () => {
@@ -14,11 +15,15 @@ const PhotoCaptureScreen = ({ navigation }) => {
     })();
   }, []);
 
+  const handleCameraReady = () => {
+    setCameraReady(true);
+  };
+
   const handlePhotoCapture = async () => {
-    if (hasPermission === true && cameraRef.current) {
+    if (hasPermission === true && cameraReady && cameraRef.current) {
       try {
         const photo = await cameraRef.current.takePictureAsync({ base64: true });
-        setCapturedImage(photo.uri); // Armazena a URI da imagem
+        setCapturedImage(photo.uri);
 
         // Lógica para enviar a imagem para o servidor (já presente no seu código)
         try {
@@ -31,6 +36,9 @@ const PhotoCaptureScreen = ({ navigation }) => {
         console.error('Erro ao tirar a foto:', error);
         Alert.alert('Erro', 'Ocorreu um erro ao tirar a foto.');
       }
+    } else {
+      console.log('Permissão negada ou câmera não está pronta.');
+      Alert.alert('Erro', 'A câmera não está pronta ou a permissão foi negada.');
     }
   };
 
@@ -43,15 +51,14 @@ const PhotoCaptureScreen = ({ navigation }) => {
 
   return (
     <View style={styles.container}>
-      {/* Exibe a câmera */}
-      <Camera style={StyleSheet.absoluteFillObject} ref={cameraRef} />
-
-      {/* Exibe a imagem capturada se capturedImage tiver um valor */}
+      <Camera
+        style={StyleSheet.absoluteFillObject}
+        ref={cameraRef}
+        onCameraReady={handleCameraReady}
+      />
       {capturedImage && (
         <Image source={{ uri: capturedImage }} style={styles.capturedImage} />
       )}
-
-      {/* Botões para tirar foto e voltar */}
       <View style={styles.buttonContainer}>
         <Button title="Tirar Foto" onPress={handlePhotoCapture} />
         {capturedImage && (
@@ -71,12 +78,15 @@ const styles = StyleSheet.create({
   capturedImage: {
     width: 200,
     height: 200,
+    position: 'absolute',
+    top: 10,
   },
   buttonContainer: {
-    flexDirection: 'row', // Alinha os botões horizontalmente
-    justifyContent: 'space-around', // Espaço igual entre os botões
+    flexDirection: 'row',
+    justifyContent: 'space-around',
     width: '80%',
-    marginTop: 20,
+    position: 'absolute',
+    bottom: 20,
   },
 });
 

@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
-import { Image, StyleSheet, TouchableOpacity } from 'react-native';
+import { Image, StyleSheet, TouchableOpacity, LogBox } from 'react-native';
 import * as TaskManager from 'expo-task-manager';
 import * as Location from 'expo-location';
 import * as BackgroundFetch from 'expo-background-fetch';
@@ -15,7 +15,35 @@ import PhotoCaptureScreen from './Comprovantes.js';
 const LOCATION_TASK_NAME = 'background-location-task';
 const LOG_TASK_NAME = 'background-log-task';
 
-// Define the background task for location updates
+// Ignora avisos irrelevantes para focar nos logs importantes
+LogBox.ignoreLogs(['Setting a timer']);
+
+// Define uma função para enviar logs para a API
+const sendLogToAPI = async () => {
+  try {
+    const response = await fetch('https://sua-api-url.com/logs', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        message: `Log every 30 seconds at ${new Date().toLocaleTimeString()}`,
+      }),
+    });
+    if (response.ok) {
+      console.log('Log sent to API successfully');
+      return BackgroundFetch.Result.NewData;
+    } else {
+      console.error('Failed to send log to API');
+      return BackgroundFetch.Result.Failed;
+    }
+  } catch (error) {
+    console.error('Error sending log to API:', error);
+    return BackgroundFetch.Result.Failed;
+  }
+};
+
+// Define a background task for location updates
 TaskManager.defineTask(LOCATION_TASK_NAME, ({ data, error }) => {
   if (error) {
     console.error("TaskManager error:", error);
@@ -24,20 +52,12 @@ TaskManager.defineTask(LOCATION_TASK_NAME, ({ data, error }) => {
   if (data) {
     const { locations } = data;
     console.log(`Received new locations at ${new Date().toLocaleTimeString()}:`, locations);
-    // Aqui você pode enviar as localizações para o servidor ou realizar outra tarefa
-    // sendLocationToServer(locations);
   }
 });
 
 // Define a background task for logging
-TaskManager.defineTask(LOG_TASK_NAME, () => {
-  try {
-    console.log(`Log every 30 seconds at ${new Date().toLocaleTimeString()}`);
-    return BackgroundFetch.Result.NewData;
-  } catch (error) {
-    console.error('Error in background log task:', error);
-    return BackgroundFetch.Result.Failed;
-  }
+TaskManager.defineTask(LOG_TASK_NAME, async () => {
+  return await sendLogToAPI();
 });
 
 const Stack = createStackNavigator();
@@ -65,18 +85,27 @@ const App = () => {
     };
 
     const startBackgroundLogTask = async () => {
-      const backgroundFetchStatus = await BackgroundFetch.getStatusAsync();
-      if (backgroundFetchStatus === BackgroundFetch.Status.Restricted || backgroundFetchStatus === BackgroundFetch.Status.Denied) {
-        console.error("Background fetch is disabled.");
-        return;
-      }
+      try {
+        const backgroundFetchStatus = await BackgroundFetch.getStatusAsync();
+        console.log(`Background fetch status: ${backgroundFetchStatus}`);
 
-      await BackgroundFetch.registerTaskAsync(LOG_TASK_NAME, {
-        minimumInterval: 30, // 30 seconds
-        stopOnTerminate: false,
-        startOnBoot: true,
-      });
-      console.log('Background log task registered.');
+        if (
+          backgroundFetchStatus === BackgroundFetch.Status.Restricted ||
+          backgroundFetchStatus === BackgroundFetch.Status.Denied
+        ) {
+          console.error("Background fetch is disabled.");
+          return;
+        }
+
+        await BackgroundFetch.registerTaskAsync(LOG_TASK_NAME, {
+          minimumInterval: 30, // 30 seconds
+          stopOnTerminate: false,
+          startOnBoot: true,
+        });
+        console.log('Background log task registered.');
+      } catch (error) {
+        console.error('Error registering background log task:', error);
+      }
     };
 
     startBackgroundUpdate();
@@ -129,10 +158,7 @@ const App = () => {
             headerTitleAlign: 'center',
           }}
         />
-        <Stack.Screen
-          name="PhotoCapture"
-          component={PhotoCaptureScreen}
-        />
+        <Stack.Screen name="PhotoCapture" component={PhotoCaptureScreen} />
       </Stack.Navigator>
     </NavigationContainer>
   );

@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { View, ScrollView, StyleSheet, Alert } from 'react-native';
 import { Text, Card, Button, ActivityIndicator, Title } from 'react-native-paper';
-import { launchCamera } from 'react-native-image-picker';
 import { fetchData } from './apiService';
 import { getLocationAndSend } from './locationService';
 
@@ -15,63 +14,21 @@ const MainScreen = ({ navigation }) => {
   }, []);
 
   const handleData = (data) => {
-    try {
-      if (data && Array.isArray(data.dados)) {
-        const transformedData = data.dados.map((item) => ({
-          idDtc: item.idDtc,
-          razao_social: item.razao_social,
-          endereco: item.endereco,
-          bairro: item.bairro,
-          cidade: item.cidade,
-          uf: item.uf,
-        }));
-        setInfoArray(transformedData);
-        setLoading(false);
-      } else {
-        throw new Error('Dados inválidos recebidos da API');
-      }
-    } catch (error) {
-      console.error('Erro ao processar os dados:', error);
+    if (data && Array.isArray(data.dados)) {
+      const transformedData = data.dados.map((item) => ({
+        idDtc: item.idDtc,
+        razao_social: item.razao_social,
+        endereco: item.endereco,
+        bairro: item.bairro,
+        cidade: item.cidade,
+        uf: item.uf,
+      }));
+      setInfoArray(transformedData);
+      setLoading(false);
+    } else {
+      console.error('Dados inválidos recebidos da API');
       setLoading(false);
     }
-  };
-
-  const handlePhotoCapture = async (itemId) => {
-    const options = {
-      mediaType: 'photo',
-      includeBase64: true,
-    };
-
-    launchCamera(options, async (response) => {
-      if (response.didCancel) {
-        Alert.alert('Captura cancelada');
-      } else if (response.errorCode) {
-        Alert.alert('Erro ao capturar a foto', response.errorMessage);
-      } else {
-        try {
-          const base64Image = response.assets[0].base64;
-          const res = await fetch('http://192.168.15.42:8000/operacional/api/upload_foto/', {
-            method: 'POST',
-            headers: {
-              'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({
-              id: itemId,
-              image: base64Image,
-            }),
-          });
-          const data = await res.json();
-          if (res.ok) {
-            Alert.alert('Sucesso', 'Foto enviada com sucesso!');
-          } else {
-            Alert.alert('Erro', data.error || 'Erro ao enviar a foto');
-          }
-        } catch (error) {
-          console.error('Erro ao enviar a foto:', error);
-          Alert.alert('Erro', 'Falha ao enviar a foto');
-        }
-      }
-    });
   };
 
   if (loading) {
@@ -94,21 +51,41 @@ const MainScreen = ({ navigation }) => {
             <Text>UF: {item.uf}</Text>
           </Card.Content>
           <Card.Actions>
-            <Button icon="barcode" mode="contained" onPress={() => navigation.navigate('BarcodeScanner')}>
-              Scan
-            </Button>
-            <Button icon="pen" mode="contained" onPress={() => navigation.navigate('Signature', { cardData: item })}>
-              Sign
-            </Button>
-            <Button icon="map" mode="contained" onPress={getLocationAndSend}>
-              Locate
-            </Button>
-            <Button icon="map-marker" mode="contained" onPress={() => navigation.navigate('BarcodeScanner')}>
-              Marker
-            </Button>
-            <Button icon="camera" mode="contained" onPress={() => navigation.navigate('PhotoCapture')}>
-              Take Photo
-            </Button>
+            <Button
+              icon="barcode"
+              mode="contained"
+              onPress={() => navigation.navigate('BarcodeScanner')}
+              contentStyle={{ flexDirection: 'row-reverse' }}
+              labelStyle={{ width: 0 }}
+            />
+            <Button
+              icon="pen"
+              mode="contained"
+              onPress={() => navigation.navigate('Signature', { cardData: item })}
+              contentStyle={{ flexDirection: 'row-reverse' }}
+              labelStyle={{ width: 0 }}
+            />
+            <Button
+              icon="map"
+              mode="contained"
+              onPress={getLocationAndSend}
+              contentStyle={{ flexDirection: 'row-reverse' }}
+              labelStyle={{ width: 0 }}
+            />
+            <Button
+              icon="map-marker"
+              mode="contained"
+              onPress={() => navigation.navigate('BarcodeScanner')}
+              contentStyle={{ flexDirection: 'row-reverse' }}
+              labelStyle={{ width: 0 }}
+            />
+            <Button
+              icon="camera"
+              mode="contained"
+              onPress={() => navigation.navigate('PhotoCapture')}
+              contentStyle={{ flexDirection: 'row-reverse' }}
+              labelStyle={{ width: 0 }}
+            />
           </Card.Actions>
         </Card>
       ))}
