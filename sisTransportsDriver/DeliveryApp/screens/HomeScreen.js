@@ -16,13 +16,12 @@ export default function HomeScreen({ navigation }) {
     { "idDtc": 451859, "razao_social": "Iota Ventures", "endereco": "Avenida Brasil", "bairro": "Vila Brasil", "cidade": "Brasília", "uf": "DF", "latitude": -15.7939, "longitude": -47.8828 },
     { "idDtc": 451860, "razao_social": "Kappa Solutions", "endereco": "Rua da Esperança", "bairro": "Esperança", "cidade": "Recife", "uf": "PE", "latitude": -8.0476, "longitude": -34.877 },
     { "idDtc": 451861, "razao_social": "Lambda Enterprises", "endereco": "Avenida das Américas", "bairro": "Barra da Tijuca", "cidade": "Rio de Janeiro", "uf": "RJ", "latitude": -22.9707, "longitude": -43.1822 }
-]
+  ]
 
   const openMap = (latitude, longitude) => {
     const url = `https://www.google.com/maps/dir/?api=1&destination=${latitude},${longitude}`;
     Linking.openURL(url).catch(err => console.error('Error opening map:', err));
   };
-
 
   return (
     <ScrollView style={styles.container}>
@@ -33,10 +32,10 @@ export default function HomeScreen({ navigation }) {
           <Text>{delivery.bairro}</Text>
           <Text>{delivery.cidade} - {delivery.uf}</Text>
           <View style={styles.viewMiniBtns}>
-            <TouchableOpacity style={styles.miniBtns} onPress={() => navigation.navigate('Signature', { delivery })}>
+            <TouchableOpacity style={styles.miniBtns} onPress={() => navigation.navigate('Coleta de assinatura', { delivery })}>
               <Icon name="edit" size={35} color="#302b2d" />
             </TouchableOpacity>
-            <TouchableOpacity style={styles.miniBtnsMeio} onPress={() => navigation.navigate('Photo', { delivery })} >
+            <TouchableOpacity style={styles.miniBtnsMeio} onPress={() => navigation.navigate('Comprovantes de entrega', { delivery })} >
               <Icon name="camera" size={35} color="#302b2d" />
             </TouchableOpacity>
             <TouchableOpacity style={styles.miniBtnsMeio} onPress={() => openMap(delivery.latitude, delivery.longitude)}>
@@ -52,7 +51,7 @@ export default function HomeScreen({ navigation }) {
         </View>
       ))}
     </ScrollView>
-);
+  );
 }
 
 const styles = StyleSheet.create({

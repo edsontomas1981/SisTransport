@@ -18,8 +18,8 @@ function HomeStack() {
   return (
     <Stack.Navigator>
       <Stack.Screen name="Home" component={HomeScreen} />
-      <Stack.Screen name="Signature" component={SignatureScreen} />
-      <Stack.Screen name="Photo" component={PhotoScreen} />
+      <Stack.Screen name="Coleta de assinatura" component={SignatureScreen} />
+      <Stack.Screen name="Comprovantes de entrega" component={PhotoScreen} />
       <Stack.Screen name="Barcode" component={BarcodeScreen} />
     </Stack.Navigator>
   );
