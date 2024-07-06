@@ -16,12 +16,10 @@ function conectaBdGeral(dados, callback) {
 }
 let divPaginaTabelas = document.getElementById("divPaginaTabelas")
 if (divPaginaTabelas){
-    alert('pagina correta')
     divPaginaTabelas.addEventListener('load',()=>{
         populaRelatTabelas()
     })
 }
-
 
 // Eventos
 $(window).load(function() {

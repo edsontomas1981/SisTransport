@@ -1,20 +1,21 @@
 let btnGeraManifestoComFrete = document.getElementById("gerarPdfComFrete")
 
 const dadosTabela = [
-    ["455088", "253600", "Mercante Brasil Equipamentos","Serafim Transportes de cargas Ltda","MA-SÃO LUIS","23213/120946/35566","9999","99999","99999","9.999.999,99","99.999,99","CIF"],
-];
-const corTitulo = "#404040"; // Cor para os títulos
-const corPar = "#CCCCCC"; // Cor para linhas pares
-const corImpar = "#FFFFFF"; // Cor para linhas ímpares
-const largurasColunas = [15, 15, 35,35,29,36,18,18,20,22,20,22]; // Largura das colunas em ordem
-const titulosTabela = ["Dtc", "Cte", "Remetente", "Destinatário",
+    ["455088", "253600", "Mercante Brasil Equipamentos","Serafim Transportes de cargas Ltda","MA-SÃO LUIS","23213/120946/35566","9999","99999","99999","9.999.999,99","99.999,99","CIF"],];
+    const corTitulo = "#404040"; // Cor para os títulos
+    const corPar = "#CCCCCC"; // Cor para linhas pares
+    const corImpar = "#FFFFFF"; // Cor para linhas ímpares
+    const largurasColunas = [15, 15, 35,35,29,36,18,18,20,22,20,22]; // Largura das colunas em ordem
+    const titulosTabela = ["Dtc", "Cte", "Remetente", "Destinatário",
                        "Destino","Nf's","Vols","Peso","Cubagem",
                         "Valor NF","Frete","Tipo Frete"];
 
 btnGeraManifestoComFrete.addEventListener("click",async()=>{
     let idManifesto = document.getElementById('spanNumManifesto').textContent
     let response  = await connEndpoint('/operacional/get_manifesto_by_num/', {'numManifesto':idManifesto});
-    gerarPdfComFrete(preparaImpressaoManifesto(response.documentos),titulosTabela,largurasColunas,corTitulo,corPar,corImpar);
+    console.log(response)
+    gerarPdfComFrete(preparaImpressaoManifesto(response.documentos),titulosTabela,largurasColunas,corTitulo,corPar,corImpar,response.manifesto);
+
 })
 
 
@@ -28,26 +29,27 @@ btnGeraManifestoComFrete.addEventListener("click",async()=>{
  * @param {string} corImpar - Cor das linhas ímpares da tabela.
  */
 const gerarPdfComFrete = (dadosTabela, titulosTabela, largurasColunas, corTitulo,
-                  corPar, corImpar) => {
+                  corPar, corImpar,dadosManifesto) => {
+
 
     // Criar instância do objeto jsPDF
     const doc = new jsPDF("landscape");
 
     const jsonManifesto={
-      numManifesto:15,
-      emissor:"Serafim Transportes de Cargas Ltda",
-      enderecoOrigem:"Rua Nove Veneza",
-      numOrigem:"172",
-      bairroOrigem:"Cumbica",
-      cidadeOrigem:"Guarulhos",
-      ufOrigem:"SP",
+      numManifesto:dadosManifesto.id,
+      emissor:dadosManifesto.emissor_fk.razao,
+      enderecoOrigem:dadosManifesto.emissor_fk.endereco.logradouro,
+      numOrigem:dadosManifesto.emissor_fk.endereco.numero,
+      bairroOrigem:dadosManifesto.emissor_fk.endereco.bairro,
+      cidadeOrigem:dadosManifesto.emissor_fk.endereco.cidade,
+      ufOrigem:dadosManifesto.emissor_fk.endereco.uf,
       destinatario:"Serafim Transportes de Cargas Ltda",
       enderecoDestinatario:"Rua Nova Veneza",
       numDestinatario:"179",
       bairroDestinatario:"Teste",
       cidadeDestinatario:"Teresina",
       ufDestinatario:"PI",
-      dataSaida:"17/10/2007",
+      dataSaida:formataDataPtBr(dadosManifesto.data_previsão_inicio),
 
       veiculo:"AWY1749",
       carreta:"AES5762",

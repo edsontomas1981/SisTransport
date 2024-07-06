@@ -47,9 +47,6 @@ const createPaginationButton = (iconClass, page, totalPages, isActive = false, d
  * @param {number} [itensPorPagina=10] - O número de itens a serem exibidos por página (padrão é 10).
  */
 const popula_tbody_paginacao = async (divParaNavegacao, id_tbody, dados, botoes = {}, paginaAtual = 1, itensPorPagina = 10,addCheckbox = true,dadosAdicionais = false) => {
-    console.log('Rotas:', dados);
-    console.log('Botoes Coletas:', botoes);
-
   // Calcula o índice inicial e final dos dados a serem exibidos na página atual
   const startIndex = (paginaAtual - 1) * itensPorPagina;
   const endIndex = startIndex + itensPorPagina;
@@ -100,10 +97,10 @@ const popula_tbody_paginacao = async (divParaNavegacao, id_tbody, dados, botoes 
         var btn = document.createElement("a");
         btn.setAttribute('data-id', element.id);
 
-        Object.entries(element.dadosAdicionais).forEach(([key, value]) => {
-          btn.setAttribute('data-'+key, value);
-          // Aqui você pode fazer o que precisar com cada chave e valor
-        });
+        // Object.entries(element.dadosAdicionais).forEach(([key, value]) => {
+        //   btn.setAttribute('data-'+key, value);
+        //   // Aqui você pode fazer o que precisar com cada chave e valor
+        // });
         btn.id = element.id;
         btn.className = "btn btn-sm " + botoes[nomeBotao].classe;
         btn.innerHTML = botoes[nomeBotao].texto;
