@@ -10,14 +10,18 @@ class Rota (models.Model):
     destinoUf=models.CharField(max_length=2)
     endereco_destino_fk=models.ForeignKey(Enderecos, on_delete=models.CASCADE,null=True,related_name="endereco_destino_fk")
     
+
+    
     def to_dict(self):
         return{'id':self.id,
                'nome':self.nome,
                'origemCidade': self.origemCidade,
                'origemUf':self.origemUf,
                'destinoCidade': self.destinoCidade,
-               'destinoUf':self.destinoUf
-               }
+               'destinoUf':self.destinoUf,
+               'enderecoDestino': self.endereco_destino_fk.to_dict() if self.endereco_destino_fk is not None else "Não Informado",
+               'enderecoOrigem': self.endereco_origem_fk.to_dict() if self.endereco_origem_fk is not None else "Não Informado"
+}
         
     
     

@@ -1,3 +1,74 @@
+function calcularTotais(dados) {
+    return dados.reduce((totais, item) => {
+      totais.volume += parseFloat(item.volume) || 0;
+      totais.peso += parseFloat(item.peso) || 0;
+      totais.m3 += parseFloat(item.m3) || 0;
+      totais.valor_nf += parseFloat(item.valor_nf) || 0;
+      totais.num_nf += item.num_nf ? item.num_nf + ',' : '';
+      return totais;
+    }, { volume: 0, peso: 0, m3: 0, valor_nf: 0 ,num_nf:''});
+  }
+const handlerDadosRomaneio = async()=>{
+    let dadosRomaneio = []
+    let idManifesto = document.getElementById('spanNumManifesto').textContent
+    let response  = await connEndpoint('/operacional/get_manifesto_by_num/', {'numManifesto':idManifesto});
+
+    console.log(response)
+    response.documentos.forEach(e => {
+        let parceiro = {} 
+        switch (e.ocorrencia_manifesto_fk. id) {
+            case 1:
+              parceiro.razSocial = e.dtc_fk.destinatario?.raz_soc || '';
+              parceiro.logradouro = e.dtc_fk.coleta?.rua || '';
+              parceiro.num = e.dtc_fk.coleta?.numero || '';
+              parceiro.complemento = e.dtc_fk.coleta?.complemento || '';
+              parceiro.bairro = e.dtc_fk.coleta?.bairro || '';
+              parceiro.cidade = e.dtc_fk.coleta?.cidade || '';
+              parceiro.uf = e.dtc_fk.coleta?.uf || '';
+              parceiro.volumes = e.dtc_fk.coleta?.volume || '';
+              parceiro.notasFiscais = e.dtc_fk.coleta?.notaFiscal || '';
+              parceiro.peso = e.dtc_fk.coleta?.peso || '';
+              parceiro.contato = e.dtc_fk.coleta?.contato || '';
+              break;
+            case 2:
+              let totais = calcularTotais(e.cte?.notas_fiscais || []);
+              parceiro.razSocial = e.dtc_fk.remetente?.raz_soc || '';
+              parceiro.logradouro = e.dtc_fk.remetente?.endereco_fk?.logradouro || '';
+              parceiro.num = e.dtc_fk.remetente?.endereco_fk?.numero || '';
+              parceiro.complemento = e.dtc_fk.remetente?.endereco_fk?.complemento || '';
+              parceiro.bairro = e.dtc_fk.remetente?.endereco_fk?.bairro || '';
+              parceiro.cidade = e.dtc_fk.remetente?.endereco_fk?.cidade || '';
+              parceiro.uf = e.dtc_fk.remetente?.endereco_fk?.uf || '';
+              parceiro.volumes = totais.volume || 0;
+              parceiro.notasFiscais = totais.num_nf || '';
+              parceiro.peso = totais.peso || 0;
+              parceiro.contato = '';
+              break;
+            default:
+              break;
+          }
+
+        dadosRomaneio.push(
+            {
+            dtcNum:e.dtc_fk.id,
+            razSoc:parceiro.razSocial,
+            logradouro:parceiro.logradouro,
+            fone:parceiro.contato,
+            numLogradouro:parceiro.num,
+            complemento:parceiro.complemento,
+            bairro:parceiro.bairro,
+            cidade:parceiro.cidade,
+            uf:parceiro.uf,
+            notasFiscais:parceiro.notasFiscais,
+            volume:parceiro.volumes,
+            peso:parceiro.peso,
+        }
+    )
+    });
+
+    return dadosRomaneio
+}
+
 let btnGeraRomaneio = document.getElementById("gerarPdfRomaneio")
 
 btnGeraRomaneio.addEventListener("click",()=>{
@@ -126,7 +197,10 @@ Carreta : ${jsonDados.secundariaPlaca}`, rectRightX, 15);
     let xDados = 5
     let yDados = 50
     doc.setFontSize(9)    
-    dados.forEach(e => {
+
+    let dadosRomaneio = await handlerDadosRomaneio()
+
+    dadosRomaneio.forEach(e => {
         const alturaNecessaria = 35; // Defina a altura necessária para os dados de cada item
         let alturaDocumento = doc.internal.pageSize.getHeight();
 
@@ -153,7 +227,7 @@ Carreta : ${jsonDados.secundariaPlaca}`, rectRightX, 15);
         doc.line(xDados-3, yDados-7, 205, yDados-7);
         doc.text(`DTC Nº ${e.dtcNum}`,xDados,yDados)
         yDados += 5
-        doc.text(`Tomador : ${e.tomador}       Fone : ${e.fone}`,xDados,yDados)
+        doc.text(`Razão Social : ${e.razSoc}       Fone : ${e.fone}`,xDados,yDados)
         yDados += 5
         if(e.complemento){
             doc.text(`Endereço : ${e.logradouro}, ${e.numLogradouro} , - ${e.complemento} - ${e.bairro} `,xDados,yDados)
@@ -182,11 +256,8 @@ Carreta : ${jsonDados.secundariaPlaca}`, rectRightX, 15);
 
         var totalPages = doc.internal.getNumberOfPages();
 
-        console.log(totalPages)
-
         const currentPageInfo = doc.internal.getCurrentPageInfo();
         const currentPageNumber = currentPageInfo.pageNumber;
-        console.log("Página atual:", currentPageNumber);
 
         doc.text(`${currentPageNumber}/${totalPages}`,200,12)
 
@@ -200,230 +271,4 @@ Carreta : ${jsonDados.secundariaPlaca}`, rectRightX, 15);
 
 
 
-let dados = [
-    {
-        dtcNum:1,tomador:"Serafim Transportes de Cargas Ltda",logradouro:"Rua Nova Veneza",
-        fone:"(11)96926-2277",numLogradouro:172,
-        complemento:"Anexo 1",
-        bairro:"Cid Indl Satélite de Sao Paulo",
-        cidade:"Guarulhos",
-        uf:"SP",
-        notasFiscais:"10/20/30",
-        volume:10,
-        peso:120,
-    },
- {
-    dtcNum:2,tomador:"Serafim Transportes de Cargas Ltda",logradouro:"Rua Nova Veneza",
-    fone:"(11)96926-2277",numLogradouro:172,
-    complemento:"Anexo 1",
-    bairro:"Cid Indl Satélite de Sao Paulo",
-    cidade:"Guarulhos",
-    uf:"SP",
-    notasFiscais:"10/20/30",
-    volume:10,
-    peso:120,
-  },
-  {
-    dtcNum:3,tomador:"Serafim Transportes de Cargas Ltda",logradouro:"Rua Nova Veneza",
-    fone:"(11)96926-2277",numLogradouro:172,
-    complemento:"Anexo 1",
-    bairro:"Cid Indl Satélite de Sao Paulo",
-    cidade:"Guarulhos",
-    uf:"SP",
-    notasFiscais:"10/20/30",
-    volume:10,
-    peso:120,
-  },
-  {
-    dtcNum:4,tomador:"Serafim Transportes de Cargas Ltda",logradouro:"Rua Nova Veneza",
-    fone:"(11)96926-2277",numLogradouro:172,
-    complemento:"Anexo 1",
-    bairro:"Cid Indl Satélite de Sao Paulo",
-    cidade:"Guarulhos",
-    uf:"SP",
-    notasFiscais:"10/20/30",
-    volume:10,
-    peso:120,
-  },    
-  {
-    dtcNum:5,tomador:"Serafim Transportes de Cargas Ltda",logradouro:"Rua Nova Veneza",
-    fone:"(11)96926-2277",numLogradouro:172,
-    complemento:"Anexo 1",
-    bairro:"Cid Indl Satélite de Sao Paulo",
-    cidade:"Guarulhos",
-    uf:"SP",
-    notasFiscais:"10/20/30",
-    volume:10,
-    peso:120,
-},
-{
-    dtcNum:6,tomador:"Serafim Transportes de Cargas Ltda",logradouro:"Rua Nova Veneza",
-    fone:"(11)96926-2277",numLogradouro:172,
-    complemento:"Anexo 1",
-    bairro:"Cid Indl Satélite de Sao Paulo",
-    cidade:"Guarulhos",
-    uf:"SP",
-    notasFiscais:"10/20/30",
-    volume:10,
-    peso:120,
-},
-{
-    dtcNum:7,tomador:"Serafim Transportes de Cargas Ltda",logradouro:"Rua Nova Veneza",
-    fone:"(11)96926-2277",numLogradouro:172,
-    complemento:"Anexo 1",
-    bairro:"Cid Indl Satélite de Sao Paulo",
-    cidade:"Guarulhos",
-    uf:"SP",
-    notasFiscais:"10/20/30",
-    volume:10,
-    peso:120,
-},
-{
-    dtcNum:8,tomador:"Serafim Transportes de Cargas Ltda",logradouro:"Rua Nova Veneza",
-    fone:"(11)96926-2277",numLogradouro:172,
-    complemento:"Anexo 1",
-    bairro:"Cid Indl Satélite de Sao Paulo",
-    cidade:"Guarulhos",
-    uf:"SP",
-    notasFiscais:"10/20/30",
-    volume:10,
-    peso:120,
-},      
 
-{
-    dtcNum:9,tomador:"Serafim Transportes de Cargas Ltda",logradouro:"Rua Nova Veneza",
-    fone:"(11)96926-2277",numLogradouro:172,
-    complemento:"Anexo 1",
-    bairro:"Cid Indl Satélite de Sao Paulo",
-    cidade:"Guarulhos",
-    uf:"SP",
-    notasFiscais:"10/20/30",
-    volume:10,
-    peso:120,
-},
-{
-dtcNum:10,tomador:"Serafim Transportes de Cargas Ltda",logradouro:"Rua Nova Veneza",
-fone:"(11)96926-2277",numLogradouro:172,
-complemento:"Anexo 1",
-bairro:"Cid Indl Satélite de Sao Paulo",
-cidade:"Guarulhos",
-uf:"SP",
-notasFiscais:"10/20/30",
-volume:10,
-peso:120,
-},
-{
-dtcNum:11,tomador:"Serafim Transportes de Cargas Ltda",logradouro:"Rua Nova Veneza",
-fone:"(11)96926-2277",numLogradouro:172,
-complemento:"Anexo 1",
-bairro:"Cid Indl Satélite de Sao Paulo",
-cidade:"Guarulhos",
-uf:"SP",
-notasFiscais:"10/20/30",
-volume:10,
-peso:120,
-},
-{
-dtcNum:12,tomador:"Serafim Transportes de Cargas Ltda",logradouro:"Rua Nova Veneza",
-fone:"(11)96926-2277",numLogradouro:172,
-complemento:"Anexo 1",
-bairro:"Cid Indl Satélite de Sao Paulo",
-cidade:"Guarulhos",
-uf:"SP",
-notasFiscais:"10/20/30",
-volume:10,
-peso:120,
-},      
-
-{
-    dtcNum:13,tomador:"Serafim Transportes de Cargas Ltda",logradouro:"Rua Nova Veneza",
-    fone:"(11)96926-2277",numLogradouro:172,
-    complemento:"Anexo 1",
-    bairro:"Cid Indl Satélite de Sao Paulo",
-    cidade:"Guarulhos",
-    uf:"SP",
-    notasFiscais:"10/20/30",
-    volume:10,
-    peso:120,
-},
-{
-dtcNum:14,tomador:"Serafim Transportes de Cargas Ltda",logradouro:"Rua Nova Veneza",
-fone:"(11)96926-2277",numLogradouro:172,
-complemento:"Anexo 1",
-bairro:"Cid Indl Satélite de Sao Paulo",
-cidade:"Guarulhos",
-uf:"SP",
-notasFiscais:"10/20/30",
-volume:10,
-peso:120,
-},
-{
-dtcNum:15,tomador:"Serafim Transportes de Cargas Ltda",logradouro:"Rua Nova Veneza",
-fone:"(11)96926-2277",numLogradouro:172,
-complemento:"Anexo 1",
-bairro:"Cid Indl Satélite de Sao Paulo",
-cidade:"Guarulhos",
-uf:"SP",
-notasFiscais:"10/20/30",
-volume:10,
-peso:120,
-},
-{
-dtcNum:16,tomador:"Serafim Transportes de Cargas Ltda",logradouro:"Rua Nova Veneza",
-fone:"(11)96926-2277",numLogradouro:172,
-complemento:"Anexo 1",
-bairro:"Cid Indl Satélite de Sao Paulo",
-cidade:"Guarulhos",
-uf:"SP",
-notasFiscais:"10/20/30",
-volume:10,
-peso:120,
-},      
-
-{
-    dtcNum:17,tomador:"Serafim Transportes de Cargas Ltda",logradouro:"Rua Nova Veneza",
-    fone:"(11)96926-2277",numLogradouro:172,
-    complemento:"Anexo 1",
-    bairro:"Cid Indl Satélite de Sao Paulo",
-    cidade:"Guarulhos",
-    uf:"SP",
-    notasFiscais:"10/20/30",
-    volume:10,
-    peso:120,
-},
-{
-dtcNum:18,tomador:"Serafim Transportes de Cargas Ltda",logradouro:"Rua Nova Veneza",
-fone:"(11)96926-2277",numLogradouro:172,
-complemento:"Anexo 1",
-bairro:"Cid Indl Satélite de Sao Paulo",
-cidade:"Guarulhos",
-uf:"SP",
-notasFiscais:"10/20/30",
-volume:10,
-peso:120,
-},
-{
-dtcNum:19,tomador:"Serafim Transportes de Cargas Ltda",logradouro:"Rua Nova Veneza",
-fone:"(11)96926-2277",numLogradouro:172,
-complemento:"Anexo 1",
-bairro:"Cid Indl Satélite de Sao Paulo",
-cidade:"Guarulhos",
-uf:"SP",
-notasFiscais:"10/20/30",
-volume:10,
-peso:120,
-},
-{
-dtcNum:20,tomador:"Serafim Transportes de Cargas Ltda",logradouro:"Rua Nova Veneza",
-fone:"(11)96926-2277",numLogradouro:172,
-complemento:"Anexo 1",
-bairro:"Cid Indl Satélite de Sao Paulo",
-cidade:"Guarulhos",
-uf:"SP",
-notasFiscais:"10/20/30",
-volume:10,
-peso:120,
-},      
-
-
-]

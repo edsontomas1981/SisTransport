@@ -1,7 +1,5 @@
 let btnGeraManifestoComFrete = document.getElementById("gerarPdfComFrete")
 
-const dadosTabela = [
-    ["455088", "253600", "Mercante Brasil Equipamentos","Serafim Transportes de cargas Ltda","MA-SÃO LUIS","23213/120946/35566","9999","99999","99999","9.999.999,99","99.999,99","CIF"],];
     const corTitulo = "#404040"; // Cor para os títulos
     const corPar = "#CCCCCC"; // Cor para linhas pares
     const corImpar = "#FFFFFF"; // Cor para linhas ímpares
@@ -10,13 +8,12 @@ const dadosTabela = [
                        "Destino","Nf's","Vols","Peso","Cubagem",
                         "Valor NF","Frete","Tipo Frete"];
 
-btnGeraManifestoComFrete.addEventListener("click",async()=>{
-    let idManifesto = document.getElementById('spanNumManifesto').textContent
-    let response  = await connEndpoint('/operacional/get_manifesto_by_num/', {'numManifesto':idManifesto});
-    console.log(response)
-    gerarPdfComFrete(preparaImpressaoManifesto(response.documentos),titulosTabela,largurasColunas,corTitulo,corPar,corImpar,response.manifesto);
+    btnGeraManifestoComFrete.addEventListener("click",async()=>{
+        let idManifesto = document.getElementById('spanNumManifesto').textContent
+        let response  = await connEndpoint('/operacional/get_manifesto_by_num/', {'numManifesto':idManifesto});
+        gerarPdfComFrete(preparaImpressaoManifesto(response.documentos),titulosTabela,largurasColunas,corTitulo,corPar,corImpar,response.manifesto);
 
-})
+    })
 
 
 /**
@@ -35,30 +32,30 @@ const gerarPdfComFrete = (dadosTabela, titulosTabela, largurasColunas, corTitulo
     // Criar instância do objeto jsPDF
     const doc = new jsPDF("landscape");
 
-    const jsonManifesto={
-      numManifesto:dadosManifesto.id,
-      emissor:dadosManifesto.emissor_fk.razao,
-      enderecoOrigem:dadosManifesto.emissor_fk.endereco.logradouro,
-      numOrigem:dadosManifesto.emissor_fk.endereco.numero,
-      bairroOrigem:dadosManifesto.emissor_fk.endereco.bairro,
-      cidadeOrigem:dadosManifesto.emissor_fk.endereco.cidade,
-      ufOrigem:dadosManifesto.emissor_fk.endereco.uf,
-      destinatario:"Serafim Transportes de Cargas Ltda",
-      enderecoDestinatario:"Rua Nova Veneza",
-      numDestinatario:"179",
-      bairroDestinatario:"Teste",
-      cidadeDestinatario:"Teresina",
-      ufDestinatario:"PI",
-      dataSaida:formataDataPtBr(dadosManifesto.data_previsão_inicio),
-
-      veiculo:"AWY1749",
-      carreta:"AES5762",
-      motorista:"Edson Tomas da Silva",
-      cpfMotorista: "307.843.158-41",
-      foneMotorista:"11-96926-2277",
-      liberacaoMotorista:"624446",
-      lacres:"10/20/30/40/50/60/70/80/90/100"
-    }
+    const jsonManifesto = {
+        numManifesto: dadosManifesto?.id || '',
+        emissor: dadosManifesto?.emissor_fk?.razao || '',
+        enderecoOrigem: dadosManifesto?.emissor_fk?.endereco?.logradouro || '',
+        numOrigem: dadosManifesto?.emissor_fk?.endereco?.numero || '',
+        bairroOrigem: dadosManifesto?.emissor_fk?.endereco?.bairro || '',
+        cidadeOrigem: dadosManifesto?.emissor_fk?.endereco?.cidade || '',
+        ufOrigem: dadosManifesto?.emissor_fk?.endereco?.uf || '',
+        enderecoDestinatario: dadosManifesto?.rota_fk?.enderecoDestino?.logradouro || '',
+        numDestinatario: dadosManifesto?.rota_fk?.enderecoDestino?.numero || '',
+        bairroDestinatario: dadosManifesto?.rota_fk?.enderecoDestino?.bairro || '',
+        cidadeDestinatario: dadosManifesto?.rota_fk?.enderecoDestino?.cidade || '',
+        ufDestinatario: dadosManifesto?.rota_fk?.enderecoDestino?.uf || '',
+        dataSaida: dadosManifesto?.data_previsão_inicio ? formataDataPtBr(dadosManifesto.data_previsão_inicio) : '',
+        veiculo: dadosManifesto?.veiculos?.[0]?.placa || '',
+        carreta: dadosManifesto?.veiculos?.length > 1 ? dadosManifesto.veiculos[1]?.placa || '' : '',
+        motorista: dadosManifesto?.motoristas?.[0]?.parceiro_fk?.raz_soc || '',
+        cpfMotorista: dadosManifesto?.motoristas?.[0]?.parceiro_fk?.cnpj_cpf || '',
+        foneMotorista: '',  // Não há verificação para foneMotorista; mantenha vazio se não há dados
+        liberacaoMotorista: dadosManifesto.liberacao,
+        lacres: dadosManifesto.lacres,
+        averbacao:dadosManifesto.averbacao,
+      };
+      
 
     // Definir coordenadas iniciais da tabela
     let x = 5;
@@ -87,12 +84,12 @@ const gerarPdfComFrete = (dadosTabela, titulosTabela, largurasColunas, corTitulo
         doc.text(` Data Saída : ${jsonManifesto.dataSaida} `, x+240,12);//${jsonManifesto.dataSaida}
 
         doc.text(`Origem :${jsonManifesto.emissor} Endereço ${jsonManifesto.enderecoOrigem} Nº: ${jsonManifesto.numOrigem},${jsonManifesto.bairroOrigem},${jsonManifesto.cidadeOrigem}-${jsonManifesto.ufOrigem}`, x+3,19);
-        doc.text(`Destino : ${jsonManifesto.destinatario} Endereço ${jsonManifesto.enderecoDestinatario} Nº: ${jsonManifesto.numDestinatario},${jsonManifesto.bairroDestinatario},${jsonManifesto.cidadeDestinatario}-${jsonManifesto.ufDestinatario}  `, x+3,26);
+        doc.text(` Endereço ${jsonManifesto.enderecoDestinatario} Nº: ${jsonManifesto.numDestinatario},${jsonManifesto.bairroDestinatario},${jsonManifesto.cidadeDestinatario}-${jsonManifesto.ufDestinatario}  `, x+3,26);
 
         doc.setFontSize(10);
         doc.setFont("helvetica", "normal");
         doc.rect(x, 30, width, height/3);
-        doc.text(`Motorista : ${jsonManifesto.motorista} | CPF :  ${jsonManifesto.cpfMotorista} | Fone Nº: ${jsonManifesto.foneMotorista} | Liberação : ${jsonManifesto.liberacaoMotorista}`, x+3,35);
+        doc.text(`Motorista : ${jsonManifesto.motorista} | CPF :  ${jsonManifesto.cpfMotorista} | Liberação : ${jsonManifesto.liberacaoMotorista} | Averbação: ${jsonManifesto.averbacao}  `, x+3,35);
 
         doc.setFontSize(11);
         doc.setFont("helvetica", "bold");

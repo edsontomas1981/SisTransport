@@ -266,7 +266,6 @@ const preparaImpressaoManifesto =(response,comFrete=true)=>{
 }
 
 const cabecalhoManifesto = (response)=>{
-    console.log(response.manifesto)
     return{
     numManifesto:response.manifesto.id,
     emissor:response.manifesto.emissor_fk.razao,
