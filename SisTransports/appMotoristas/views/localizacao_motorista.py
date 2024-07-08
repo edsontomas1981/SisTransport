@@ -8,8 +8,6 @@ import json
 @require_http_methods(["POST","GET"])
 def localizacao_motorista(request):
     try:
-        print('acionado')
-
         return JsonResponse({'dados':200})
    
     except ValidationError as ve:

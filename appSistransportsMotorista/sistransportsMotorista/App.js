@@ -21,7 +21,7 @@ LogBox.ignoreLogs(['Setting a timer']);
 // Define uma função para enviar logs para a API
 const sendLogToAPI = async () => {
   try {
-    const response = await fetch('https://sua-api-url.com/logs', {
+    const response = await fetch('http://sistransportslog.tech/logs', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',

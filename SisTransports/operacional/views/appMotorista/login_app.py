@@ -10,12 +10,9 @@ from django.views.decorators.csrf import csrf_exempt
 def login_app_motorista(request):
     try:
         data = json.loads(request.body)
-        print(data)
         username = data.get('username')
         password = data.get('password')
-
         user = authenticate(username=username, password=password)
-
         if user is not None:
             login(request, user)
             return JsonResponse({'message': 'ok'})

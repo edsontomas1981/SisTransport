@@ -8,12 +8,33 @@ function calcularTotais(dados) {
       return totais;
     }, { volume: 0, peso: 0, m3: 0, valor_nf: 0 ,num_nf:''});
   }
+
+const jsonDadosCabecalhoRomaneio = {}
+
+const geraDadosEmissor = (dados)=>{
+    jsonDadosCabecalhoRomaneio.numManifesto = dados?.manifesto?.id ?? ''; // Verificação adicionada
+    jsonDadosCabecalhoRomaneio.motorista = dados?.manifesto?.motoristas?.[0]?.parceiro_fk?.raz_soc ?? ''; // Verificações adicionadas
+    jsonDadosCabecalhoRomaneio.principalPlaca = dados?.manifesto?.veiculos?.[0]?.placa ?? ''; // Verificações adicionadas
+    jsonDadosCabecalhoRomaneio.secundariaPlaca = dados?.manifesto?.veiculos?.length > 1 ? (dados?.manifesto?.veiculos?.[1]?.placa ?? '') : ''; // Verificações adicionadas
+    jsonDadosCabecalhoRomaneio.emissor = dados?.manifesto?.emissor_fk?.razao ?? ''; // Verificações adicionadas
+    jsonDadosCabecalhoRomaneio.cnpj = dados?.manifesto?.emissor_fk?.cnpj ?? ''; // Verificações adicionadas
+    jsonDadosCabecalhoRomaneio.inscrEmissor = dados?.manifesto?.emissor_fk?.inscricao_estadual ?? ''; // Verificações adicionadas
+    jsonDadosCabecalhoRomaneio.enderecoEmissor = dados?.manifesto?.emissor_fk?.endereco?.logradouro ?? ''; // Verificações adicionadas
+    jsonDadosCabecalhoRomaneio.numEmissor = dados?.manifesto?.emissor_fk?.endereco?.numero ?? ''; // Verificações adicionadas
+    jsonDadosCabecalhoRomaneio.complementoEmissor = dados?.manifesto?.emissor_fk?.endereco?.complemento ?? ''; // Verificações adicionadas
+    jsonDadosCabecalhoRomaneio.bairroEmissor = truncateString((dados?.manifesto?.emissor_fk?.endereco?.bairro ?? ''),33); // Verificações adicionadas
+    jsonDadosCabecalhoRomaneio.cidadeEmissor = dados?.manifesto?.emissor_fk?.endereco?.cidade ?? ''; // Verificações adicionadas
+    jsonDadosCabecalhoRomaneio.ufEmissor = dados?.manifesto?.emissor_fk?.endereco?.uf ?? ''; // Verificações adicionadas
+    jsonDadosCabecalhoRomaneio.foneEmissor = dados?.manifesto?.emissor_fk?.telefone ?? ''; // Verificações adicionadas
+    
+}
 const handlerDadosRomaneio = async()=>{
     let dadosRomaneio = []
     let idManifesto = document.getElementById('spanNumManifesto').textContent
     let response  = await connEndpoint('/operacional/get_manifesto_by_num/', {'numManifesto':idManifesto});
 
-    console.log(response)
+    geraDadosEmissor(response)
+
     response.documentos.forEach(e => {
         let parceiro = {} 
         switch (e.ocorrencia_manifesto_fk. id) {
@@ -77,23 +98,6 @@ btnGeraRomaneio.addEventListener("click",()=>{
 
 const geraPdfRomaneio = async() => {
 
-    const jsonDados = {
-        numManifesto:125,
-        motorista:"Edson Tomas",
-        principalPlaca:"AWY1749",
-        secundariaPlaca:"AWY1750",
-        emissor:"Empresa de Teste Ltda",
-        cnpj:"30.784.315/0008-41",
-        inscrEmissor:"320799190",
-        enderecoEmissor:"Rua Nova Veneza",
-        numEmissor:"172",
-        complementoEmissor:"Anexo 1",
-        bairroEmissor:"Cumbica",
-        cidadeEmissor:"Guarulhos",
-        ufEmissor:"SP",
-        foneEmissor:"(11)96926-2277"
-    }
-    
     const doc = new jsPDF();
     
     // URL da imagem que você deseja inserir
@@ -151,45 +155,47 @@ const addTitulo = ()=>{    // Insira a imagem dentro do retângulo
     doc.addImage(base64Image, 'JPEG', 3 + x, 3 + y, newWidth, newHeight);
 
     doc.setFontSize(16)
-    doc.text(`${jsonDados.emissor}`,40,10)
+    doc.text(`${jsonDadosCabecalhoRomaneio.emissor}`,40,10)
     doc.setFontSize(10)
-    doc.text(`Cnpj ${jsonDados.cnpj} Inscrição Estadual ${jsonDados.inscrEmissor}`,40,15)
+    doc.text(`Cnpj ${jsonDadosCabecalhoRomaneio.cnpj} Inscrição Estadual ${jsonDadosCabecalhoRomaneio.inscrEmissor}`,40,15)
 
-    if(jsonDados.complementoEmissor){
-        doc.text(`${jsonDados.enderecoEmissor}, ${jsonDados.numEmissor} , ${jsonDados.complementoEmissor} , ${jsonDados.bairroEmissor}`,40,20)
+    if(jsonDadosCabecalhoRomaneio.complementoEmissor){
+        doc.text(`${jsonDadosCabecalhoRomaneio.enderecoEmissor}, ${jsonDadosCabecalhoRomaneio.numEmissor} , ${jsonDadosCabecalhoRomaneio.complementoEmissor} , ${jsonDadosCabecalhoRomaneio.bairroEmissor}`,40,20)
     }else{
-        doc.text(`${jsonDados.enderecoEmissor}, ${jsonDados.numEmissor} , ${jsonDados.bairroEmissor}`,40,20)
+        doc.text(`${jsonDadosCabecalhoRomaneio.enderecoEmissor}, ${jsonDadosCabecalhoRomaneio.numEmissor} , ${jsonDadosCabecalhoRomaneio.bairroEmissor}`,40,20)
     }
-    doc.text(`${jsonDados.cidadeEmissor}-${jsonDados.ufEmissor} | ${jsonDados.foneEmissor}`,40,25)
+    doc.text(`${jsonDadosCabecalhoRomaneio.cidadeEmissor}-${jsonDadosCabecalhoRomaneio.ufEmissor} | ${jsonDadosCabecalhoRomaneio.foneEmissor}`,40,25)
 
     // Calcular a largura do texto
-    let textWidth = getTextWidth(`Romaneio nº : ${jsonDados.numManifesto}`, 12);
+    let textWidth = getTextWidth(`Romaneio nº : ${jsonDadosCabecalhoRomaneio.numManifesto}`, 12);
 
     // Calcular a posição X para centralizar o texto
     let textX = (pageWidth - textWidth) / 2;
 
-    doc.text(`Romaneio nº : ${jsonDados.numManifesto}`, rectRightX, 10);
+    doc.text(`Romaneio nº : ${jsonDadosCabecalhoRomaneio.numManifesto}`, rectRightX, 10);
 
     // Calcular o comprimento do texto
-    let textoMotorista = `Nome Motorista: ${jsonDados.motorista}`
+    let textoMotorista = `Nome Motorista: ${jsonDadosCabecalhoRomaneio.motorista}`
 
     let alinhaDireita = 207-getTextWidth(textoMotorista,10) 
     // Desenhar o texto
     doc.setFontSize(9);
-    doc.line(2, 35, 205, 35);
-    doc.text(`Nome Motorista: ${jsonDados.motorista}`, alinhaDireita, 40);}
-
+    doc.line(2, 33, 205, 33);
+    doc.text(`Nome Motorista: ${jsonDadosCabecalhoRomaneio.motorista}`, alinhaDireita, 41);}
+    
+    let dadosRomaneio = await handlerDadosRomaneio()
     let tamanhoTextWidth
-    if(jsonDados.secundariaPlaca){
-        let tamanhoTextWidth = getTextWidth(`Placa : ${jsonDados.principalPlaca} 
-                                Carreta : ${jsonDados.secundariaPlaca}`, 10);
+
+    if(jsonDadosCabecalhoRomaneio.secundariaPlaca){
+        let tamanhoTextWidth = getTextWidth(`Placa : ${jsonDadosCabecalhoRomaneio.principalPlaca} 
+Carreta : ${jsonDadosCabecalhoRomaneio.secundariaPlaca}`, 9);
         textX = (pageWidth - tamanhoTextWidth) - 10;
-        doc.text(`Placa : ${jsonDados.principalPlaca} 
-Carreta : ${jsonDados.secundariaPlaca}`, rectRightX, 15);
+        doc.text(`Placa : ${jsonDadosCabecalhoRomaneio.principalPlaca} 
+Carreta : ${jsonDadosCabecalhoRomaneio.secundariaPlaca}`, rectRightX, 15);
     }else{
-        tamanhoTextWidth = getTextWidth(`Placa : ${jsonDados.principalPlaca}`, 10);
+        tamanhoTextWidth = getTextWidth(`Placa : ${jsonDadosCabecalhoRomaneio.principalPlaca}`, 9);
         textX = (pageWidth - tamanhoTextWidth) - 10;
-        doc.text(`Placa : ${jsonDados.principalPlaca}`, rectRightX, 38);
+        doc.text(`Placa : ${jsonDadosCabecalhoRomaneio.principalPlaca}`, rectRightX, 15);
     }
 
     addTitulo();
@@ -198,7 +204,6 @@ Carreta : ${jsonDados.secundariaPlaca}`, rectRightX, 15);
     let yDados = 50
     doc.setFontSize(9)    
 
-    let dadosRomaneio = await handlerDadosRomaneio()
 
     dadosRomaneio.forEach(e => {
         const alturaNecessaria = 35; // Defina a altura necessária para os dados de cada item
@@ -208,15 +213,15 @@ Carreta : ${jsonDados.secundariaPlaca}`, rectRightX, 15);
             doc.addPage();
             addTitulo();
             let tamanhoTextWidth
-            if(jsonDados.secundariaPlaca){
-                let tamanhoTextWidth = getTextWidth(`Placa : ${jsonDados.principalPlaca} 
-                                        Carreta : ${jsonDados.secundariaPlaca}`, 10);
+            if(jsonDadosCabecalhoRomaneio.secundariaPlaca){
+                let tamanhoTextWidth = getTextWidth(`Placa : ${jsonDadosCabecalhoRomaneio.principalPlaca} 
+                                        Carreta : ${jsonDadosCabecalhoRomaneio.secundariaPlaca}`, 10);
                 textX = (pageWidth - tamanhoTextWidth) - 10;
-                doc.text(`Placa : ${jsonDados.principalPlaca}\nCarreta : ${jsonDados.secundariaPlaca}`, rectRightX, 15);
+                doc.text(`Placa : ${jsonDadosCabecalhoRomaneio.principalPlaca}\nCarreta : ${jsonDadosCabecalhoRomaneio.secundariaPlaca}`, rectRightX, 15);
             }else{
-                tamanhoTextWidth = getTextWidth(`Placa : ${jsonDados.principalPlaca}`, 10);
+                tamanhoTextWidth = getTextWidth(`Placa : ${jsonDadosCabecalhoRomaneio.principalPlaca}`, 10);
                 textX = (pageWidth - tamanhoTextWidth) - 10;
-                doc.text(`Placa : ${jsonDados.principalPlaca}`, rectRightX, 38);
+                doc.text(`Placa : ${jsonDadosCabecalhoRomaneio.principalPlaca}`, rectRightX, 37.5);
             }
 
             doc.setFontSize(9)
@@ -253,13 +258,12 @@ Carreta : ${jsonDados.secundariaPlaca}`, rectRightX, 15);
     
         });
 
-
         var totalPages = doc.internal.getNumberOfPages();
 
         const currentPageInfo = doc.internal.getCurrentPageInfo();
         const currentPageNumber = currentPageInfo.pageNumber;
 
-        doc.text(`${currentPageNumber}/${totalPages}`,200,12)
+        doc.text(`${currentPageNumber}/${totalPages}`,200,295)
 
 
         // Gerar Blob a partir do PDF

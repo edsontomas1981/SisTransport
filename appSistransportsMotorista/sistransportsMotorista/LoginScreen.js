@@ -8,7 +8,7 @@ const LoginScreen = ({ navigation }) => {
 
   const handleLogin = async () => {
     try {
-      const response = await fetch('http://192.168.15.42:8000/appMotoristas/login_app/', {
+      const response = await fetch('http://sistransportslog.tech/appMotoristas/login_app/', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
