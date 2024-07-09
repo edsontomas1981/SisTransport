@@ -85,6 +85,7 @@ $('#cnpjMdl').on('blur',function(e){
 // Botoes fechar
 $('#btnFechar').on('click', function(e) {
     $('#mdlCadParceiros').modal('hide'); 
+    limpaModalParceiroCnpj()
     closeModal();
     e.preventDefault();
 })
@@ -179,3 +180,8 @@ const validarDtc = () => {
     return verificaCampos
 
 }
+
+document.getElementById('mdlCadParceiros').addEventListener('hide.bs.modal', function () {
+    // Limpa os campos do formulário dentro do modal
+    limpaModalParceiroCnpj()
+});

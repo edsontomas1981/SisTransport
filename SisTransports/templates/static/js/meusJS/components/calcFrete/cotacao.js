@@ -1,9 +1,7 @@
 var cotacoes
 
 const exibirCotacoes = async ()=> {
-
     cotacoes = await carregaCotacoes()
-
     // Criar tabela HTML
     const table = document.createElement('table');
     table.classList.add('table', 'table-striped', 'table-sm'); // Adicione mais de uma classe à tabela

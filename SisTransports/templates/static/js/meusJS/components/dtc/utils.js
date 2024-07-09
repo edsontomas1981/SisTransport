@@ -40,6 +40,7 @@ tabs.forEach(tab => {
                     populaCalculoCte(cte.cte)
                   }else{
                     await preDtcSemCalculo()
+                    
                     exibirCotacoes()
                     populaTotaisNaTabelaNfCte()
                   }
