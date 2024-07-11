@@ -1,100 +1,153 @@
-let btnImprimirCotacao = document.getElementById('btnImprimirCotacao')
+let btnImprimirCotacao = document.getElementById('btnImprimirCotacao');
+if (btnImprimirCotacao) {
+    btnImprimirCotacao.addEventListener('click', generatePDF);
+} else {
+    console.error('Elemento "btnImprimirCotacao" não encontrado');
+}
 
-btnImprimirCotacao.addEventListener('click',generatePDF)
+const jsonDadosCabecalhoRomaneio = {}
 
-async function generatePDF() {
+const geraDadosEmissor = (dados)=>{
+  jsonDadosCabecalhoRomaneio.numManifesto = dados?.manifesto?.id ?? ''; // Verificação adicionada
+  jsonDadosCabecalhoRomaneio.motorista = dados?.manifesto?.motoristas?.[0]?.parceiro_fk?.raz_soc ?? ''; // Verificações adicionadas
+  jsonDadosCabecalhoRomaneio.principalPlaca = dados?.manifesto?.veiculos?.[0]?.placa ?? ''; // Verificações adicionadas
+  jsonDadosCabecalhoRomaneio.secundariaPlaca = dados?.manifesto?.veiculos?.length > 1 ? (dados?.manifesto?.veiculos?.[1]?.placa ?? '') : ''; // Verificações adicionadas
+  jsonDadosCabecalhoRomaneio.emissor = dados?.manifesto?.emissor_fk?.razao ?? ''; // Verificações adicionadas
+  jsonDadosCabecalhoRomaneio.cnpj = dados?.manifesto?.emissor_fk?.cnpj ?? ''; // Verificações adicionadas
+  jsonDadosCabecalhoRomaneio.inscrEmissor = dados?.manifesto?.emissor_fk?.inscricao_estadual ?? ''; // Verificações adicionadas
+  jsonDadosCabecalhoRomaneio.enderecoEmissor = dados?.manifesto?.emissor_fk?.endereco?.logradouro ?? ''; // Verificações adicionadas
+  jsonDadosCabecalhoRomaneio.numEmissor = dados?.manifesto?.emissor_fk?.endereco?.numero ?? ''; // Verificações adicionadas
+  jsonDadosCabecalhoRomaneio.complementoEmissor = dados?.manifesto?.emissor_fk?.endereco?.complemento ?? ''; // Verificações adicionadas
+  jsonDadosCabecalhoRomaneio.bairroEmissor = truncateString((dados?.manifesto?.emissor_fk?.endereco?.bairro ?? ''),33); // Verificações adicionadas
+  jsonDadosCabecalhoRomaneio.cidadeEmissor = dados?.manifesto?.emissor_fk?.endereco?.cidade ?? ''; // Verificações adicionadas
+  jsonDadosCabecalhoRomaneio.ufEmissor = dados?.manifesto?.emissor_fk?.endereco?.uf ?? ''; // Verificações adicionadas
+    jsonDadosCabecalhoRomaneio.foneEmissor = dados?.manifesto?.emissor_fk?.telefone ?? ''; // Verificações adicionadas
+}
+
+function addTextWithLabel(doc, label, text, x, y) {
+    doc.setFont(undefined, 'bold');
+    doc.text(label, x, y);
+    doc.setFont(undefined, 'normal');
+    doc.text(text, x + 40, y);
+}
+
+function alinhaTextoDireita(doc, text, startY, fontSize = 12) {
+  // Define a fonte e o tamanho da fonte
+  doc.setFontSize(fontSize);
+  
+  // Obtenha a largura da página
+  const pageWidth = doc.internal.pageSize.getWidth();
+  
+  // Obtenha a largura do texto
+  const textWidth = doc.getTextWidth(text);
+  
+  // Calcule a posição X para alinhar o texto à direita
+  const startX = pageWidth - textWidth;
+  
+  // Adicione o texto ao documento na posição calculada
+  doc.text(text, startX-10, startY);
+}
+
+
+async function generatePDF () {
     const { jsPDF } = window.jspdf;
-
-    if (!jsPDF) {
-        console.error('Failed to load jsPDF library');
-        return;
-    }
-
     const doc = new jsPDF();
 
-    // Logo da empresa em base64
-    // const logoBase64 = 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAA...'; // Insira aqui o logo em base64
+    geraDadosEmissor({})
 
-    // Adiciona o logo da empresa
-    // doc.addImage(logoBase64, 'PNG', 10, 10, 50, 30); // (imagem, formato, x, y, largura, altura)
+    // URL da imagem que você deseja inserir
+    let imageUrl = "/static/images/emissorImages/logo.png";
 
-    // Cabeçalho da empresa
-    doc.setFontSize(14);
-    doc.text("Nortecargas", 70, 20);
-    doc.setFontSize(10);
-    doc.text("Cotacao: 20839 (08/07/2024)", 70, 30);
-    doc.text("Rota: S.Paulo - Bacabal - Calculado Ate PEDREIRAS (MA)", 70, 40);
+    const rectWidth = 30;
+    const rectHeight = 25;
 
-    // Linha separadora
-    doc.setLineWidth(0.5);
-    doc.line(10, 45, 200, 45);
+    // Dimensões do retângulo
+    const pageWidth = doc.internal.pageSize.getWidth();
 
-    // Dados do cliente
-    doc.setFontSize(12);
-    doc.text("Contato Cliente: 10.548.925/0001-25", 10, 60);
-    doc.text("Nome: TIQUINHO BABY IND E COM ART TEXTEIS INFA", 10, 70);
-    doc.text("Fone: RUA ADELINO PECHUTTI, 535,", 10, 80);
-    doc.text("Email: JD. ALTO DO OURO VERDE", 10, 90);
-    doc.text("Cep: 14955000 BORBOREMA - SP", 10, 100);
-    doc.text("Fone:", 10, 110);
+    const rectRightX = pageWidth - rectWidth - 10; // Alinhado à direita, com uma margem de 10 unidades
+    const rectLeftX = 10; // Alinhado à esquerda, com uma margem de 10 unidades
 
-    // Linha separadora
-    doc.line(10, 115, 200, 115);
+    const toBase64 = async(url)=> {
+      let response = await fetch(url);
+      let blob = await response.blob();
+      return new Promise((resolve, reject) => {
+          let reader = new FileReader();
+          reader.onloadend = () => resolve(reader.result);
+          reader.onerror = reject;
+          reader.readAsDataURL(blob);
+      });
+    }
 
-    // Dados das notas fiscais
-    doc.setFontSize(12);
-    doc.text("Mercadoria", 10, 130);
-    doc.text("Volumes", 50, 130);
-    doc.text("m3", 70, 130);
-    doc.text("Peso", 90, 130);
-    doc.text("Peso Fat(Kgs)", 110, 130);
-    doc.text("Valor NF", 150, 130);
+    let base64Image = await toBase64(imageUrl);
 
-    doc.text("7", 50, 140);
-    doc.text("2,438", 70, 140);
-    doc.text("83,000", 90, 140);
-    doc.text("731,000", 110, 140);
-    doc.text("2.626,08", 150, 140);
+    // Calculando novas dimensões da imagem
+    let newWidth = rectWidth;
+    let newHeight = rectHeight;
 
-    // Linha separadora
-    doc.line(10, 145, 200, 145);
+    // Verifica se a largura da imagem é maior que a largura do retângulo
+    if (newWidth > rectWidth) {
+        newHeight = (newHeight * rectWidth) / newWidth;
+        newWidth = rectWidth;
+    }
 
-    // Informações adicionais
-    doc.text("Frete", 10, 160);
-    doc.text("Peso", 30, 160);
-    doc.text("Advalorem", 50, 160);
-    doc.text("Despacho", 70, 160);
-    doc.text("GRIS", 90, 160);
-    doc.text("Pedagio", 110, 160);
-    doc.text("Outros", 130, 160);
+    // Verifica se a altura da imagem é maior que a altura do retângulo
+    if (newHeight > rectHeight) {
+        newWidth = (newWidth * rectHeight) / newHeight;
+        newHeight = rectHeight;
+    }
 
-    doc.text("1.079,77", 10, 170);
-    doc.text("0,00", 30, 170);
-    doc.text("0,00", 50, 170);
-    doc.text("0,00", 70, 170);
-    doc.text("0.00", 90, 170);
-    doc.text("0,00", 110, 170);
+    // Calcula a posição para centralizar a imagem no retângulo
+    let x = (rectWidth - newWidth) / 2;
+    let y = (rectHeight - newHeight) / 2;
 
-    // Linha separadora
-    doc.line(10, 175, 200, 175);
+    // Função para calcular a largura do texto
+    function getTextWidth(text, fontSize) {
+        doc.setFontSize(fontSize);
+        return doc.getTextWidth(text);
+    }
 
-    // Base de cálculo e ICMS
-    doc.text("Base.Calc", 10, 190);
-    doc.text("Aliq", 50, 190);
-    doc.text("ICMS", 70, 190);
-    doc.text("Total", 110, 190);
+const addTitulo = ()=>{    // Insira a imagem dentro do retângulo
+    doc.addImage(base64Image, 'JPEG', 3 + x, 3 + y, newWidth, newHeight);
 
-    doc.text("1.079,77", 10, 200);
-    doc.text("7", 50, 200);
-    doc.text("75,58", 70, 200);
-    doc.text("1.079,77", 110, 200);
+    doc.setFontSize(16)
+    doc.text(`${jsonDadosCabecalhoRomaneio.emissor}`,40,10)
+    doc.setFontSize(10)
+    doc.text(`Cnpj ${jsonDadosCabecalhoRomaneio.cnpj} Inscrição Estadual ${jsonDadosCabecalhoRomaneio.inscrEmissor}`,40,15)
 
-    // Linha separadora
-    doc.line(10, 205, 200, 205);
+    if(jsonDadosCabecalhoRomaneio.complementoEmissor){
+        doc.text(`${jsonDadosCabecalhoRomaneio.enderecoEmissor}, ${jsonDadosCabecalhoRomaneio.numEmissor} , ${jsonDadosCabecalhoRomaneio.complementoEmissor} , ${jsonDadosCabecalhoRomaneio.bairroEmissor}`,40,20)
+    }else{
+        doc.text(`${jsonDadosCabecalhoRomaneio.enderecoEmissor}, ${jsonDadosCabecalhoRomaneio.numEmissor} , ${jsonDadosCabecalhoRomaneio.bairroEmissor}`,40,20)
+    }
+    doc.text(`${jsonDadosCabecalhoRomaneio.cidadeEmissor}-${jsonDadosCabecalhoRomaneio.ufEmissor} | ${jsonDadosCabecalhoRomaneio.foneEmissor}`,40,25)
 
-    // Observações
-    doc.text("Observacoes:", 10, 220);
+    // Calcular a largura do texto
+    let textWidth = getTextWidth(`Romaneio nº : ${jsonDadosCabecalhoRomaneio.numManifesto}`, 12);
 
-    // Abrir PDF em uma nova aba
-    doc.output('dataurlnewwindow');
+    // Calcular a posição X para centralizar o texto
+    let textX = (pageWidth - textWidth) / 2;
+
+    doc.text(`Cotação nº : ${jsonDadosCabecalhoRomaneio.numManifesto}`, rectRightX, 10);
+
+    // Calcular o comprimento do texto
+    let textoMotorista = `Nome Motorista: ${jsonDadosCabecalhoRomaneio.motorista}`
+
+    let alinhaDireita = 207-getTextWidth(textoMotorista,10) 
+    // Desenhar o texto
+    doc.setFontSize(9);
+    doc.line(2, 33, 205, 33);
+    doc.text(`Nome Motorista: ${jsonDadosCabecalhoRomaneio.motorista}`, alinhaDireita, 41);}
+    
+    // let dadosRomaneio = await handlerDadosRomaneio()
+    let tamanhoTextWidth
+    addTitulo();
+
+
+
+    // Gerar Blob a partir do PDF
+    const pdfBlob = doc.output("bloburl");
+
+    // Abrir o PDF em outra aba
+    window.open(pdfBlob, "_blank");
 }
+
