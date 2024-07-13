@@ -5,6 +5,8 @@ if (btnImprimirCotacao) {
     console.error('Elemento "btnImprimirCotacao" não encontrado');
 }
 
+
+
 const jsonDadosCabecalhoRomaneio = {}
 
 const geraDadosEmissor = (dados)=>{
@@ -21,7 +23,7 @@ const geraDadosEmissor = (dados)=>{
   jsonDadosCabecalhoRomaneio.bairroEmissor = truncateString((dados?.manifesto?.emissor_fk?.endereco?.bairro ?? ''),33); // Verificações adicionadas
   jsonDadosCabecalhoRomaneio.cidadeEmissor = dados?.manifesto?.emissor_fk?.endereco?.cidade ?? ''; // Verificações adicionadas
   jsonDadosCabecalhoRomaneio.ufEmissor = dados?.manifesto?.emissor_fk?.endereco?.uf ?? ''; // Verificações adicionadas
-    jsonDadosCabecalhoRomaneio.foneEmissor = dados?.manifesto?.emissor_fk?.telefone ?? ''; // Verificações adicionadas
+  jsonDadosCabecalhoRomaneio.foneEmissor = dados?.manifesto?.emissor_fk?.telefone ?? ''; // Verificações adicionadas
 }
 
 function addTextWithLabel(doc, label, text, x, y) {

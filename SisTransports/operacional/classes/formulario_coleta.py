@@ -1,4 +1,7 @@
-from datetime import datetime
+def imprimir_documento():
+    pass
+
+'''from datetime import datetime
 import webbrowser
 from django.conf import settings
 from weasyprint import HTML
@@ -253,5 +256,5 @@ if __name__ == "__main__":
     # Este bloco será executado somente quando o script for executado diretamente.
     # Pode ser útil para testes ou execução independente.
     pdf_filename = imprimir_documento()
-    print(f"PDF gerado com sucesso: {pdf_filename}")
+    print(f"PDF gerado com sucesso: {pdf_filename}")'''
 

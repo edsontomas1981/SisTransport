@@ -19,15 +19,16 @@ let camposObrigatorios = ["nomeRota","cepOrigem","logradouroOrigem","numeroOrige
             msgErro("Não foi possível concluir a operação. Por favor, tente novamente mais tarde.")
             break;
     }
-    
 })
 
 
 function populaRota(response) {
-    console.log(response)
-    $('#idRota').val(response.dados.id)
-    $('#idNomeRota').val(response.dados.nome)
-    limpa()
+  if (response.dados && response.dados.id) {
+    $('#idRota').val(response.dados.id);
+    $('#idNomeRota').val(response.dados.nome);
+  }
+  limpa();
+
 }
 
 function limpa() {
