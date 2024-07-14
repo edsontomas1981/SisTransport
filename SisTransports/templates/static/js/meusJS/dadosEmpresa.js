@@ -14,9 +14,7 @@ const carregaEmissoresPorId = (idDesejado) => {
             filialEmissora = element
         }
     });
-
     return filialEmissora
-
 }
 
 const popularSelectEmissor = async (idSelect) => {

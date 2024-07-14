@@ -1,29 +1,82 @@
 let btnImprimirCotacao = document.getElementById('btnImprimirCotacao');
 if (btnImprimirCotacao) {
-    btnImprimirCotacao.addEventListener('click', generatePDF);
+	btnImprimirCotacao.addEventListener('click', async ()=>{
+		let idDtc = document.getElementById('numDtc')
+		if(idDtc.value ==''){
+			msgErro('É Necessário selecionar um Dtc válido')
+		}else{
+			let response  = await connEndpoint('/comercial/cotacao/readCotacao/', {'idDtc': idDtc.value});
+			if (response.status == 200){
+				geraDadosImpressao(response.cotacao.dtc)
+				generatePDF()
+			}
+		}
+	});
 } else {
-    console.error('Elemento "btnImprimirCotacao" não encontrado');
+	console.error('Elemento "btnImprimirCotacao" não encontrado');
 }
-
 
 
 const jsonDadosCabecalhoRomaneio = {}
 
-const geraDadosEmissor = (dados)=>{
-  jsonDadosCabecalhoRomaneio.numManifesto = dados?.manifesto?.id ?? ''; // Verificação adicionada
-  jsonDadosCabecalhoRomaneio.motorista = dados?.manifesto?.motoristas?.[0]?.parceiro_fk?.raz_soc ?? ''; // Verificações adicionadas
-  jsonDadosCabecalhoRomaneio.principalPlaca = dados?.manifesto?.veiculos?.[0]?.placa ?? ''; // Verificações adicionadas
-  jsonDadosCabecalhoRomaneio.secundariaPlaca = dados?.manifesto?.veiculos?.length > 1 ? (dados?.manifesto?.veiculos?.[1]?.placa ?? '') : ''; // Verificações adicionadas
-  jsonDadosCabecalhoRomaneio.emissor = dados?.manifesto?.emissor_fk?.razao ?? ''; // Verificações adicionadas
-  jsonDadosCabecalhoRomaneio.cnpj = dados?.manifesto?.emissor_fk?.cnpj ?? ''; // Verificações adicionadas
-  jsonDadosCabecalhoRomaneio.inscrEmissor = dados?.manifesto?.emissor_fk?.inscricao_estadual ?? ''; // Verificações adicionadas
-  jsonDadosCabecalhoRomaneio.enderecoEmissor = dados?.manifesto?.emissor_fk?.endereco?.logradouro ?? ''; // Verificações adicionadas
-  jsonDadosCabecalhoRomaneio.numEmissor = dados?.manifesto?.emissor_fk?.endereco?.numero ?? ''; // Verificações adicionadas
-  jsonDadosCabecalhoRomaneio.complementoEmissor = dados?.manifesto?.emissor_fk?.endereco?.complemento ?? ''; // Verificações adicionadas
-  jsonDadosCabecalhoRomaneio.bairroEmissor = truncateString((dados?.manifesto?.emissor_fk?.endereco?.bairro ?? ''),33); // Verificações adicionadas
-  jsonDadosCabecalhoRomaneio.cidadeEmissor = dados?.manifesto?.emissor_fk?.endereco?.cidade ?? ''; // Verificações adicionadas
-  jsonDadosCabecalhoRomaneio.ufEmissor = dados?.manifesto?.emissor_fk?.endereco?.uf ?? ''; // Verificações adicionadas
-  jsonDadosCabecalhoRomaneio.foneEmissor = dados?.manifesto?.emissor_fk?.telefone ?? ''; // Verificações adicionadas
+const geraDadosImpressao = (dados) => {
+
+	// Additional data mappings
+  jsonDadosCabecalhoRomaneio.freteMinimo = dados?.cotacao?.tabela?.freteMinimo ?? ''; 
+  jsonDadosCabecalhoRomaneio.descricao = dados?.cotacao?.tabela?.descricao ?? '';
+  jsonDadosCabecalhoRomaneio.icmsIncluso = dados?.cotacao?.tabela?.icmsIncluso ?? ''; 
+  jsonDadosCabecalhoRomaneio.bloqueada = dados?.cotacao?.tabela?.bloqueada ?? ''; 
+  jsonDadosCabecalhoRomaneio.frete = dados?.cotacao?.tabela?.frete ?? ''; 
+  jsonDadosCabecalhoRomaneio.tipoCalculo = dados?.cotacao?.tabela?.tipoCalculo ?? ''; 
+  jsonDadosCabecalhoRomaneio.adValor = dados?.cotacao?.tabela?.adValor ?? ''; 
+  jsonDadosCabecalhoRomaneio.gris = dados?.cotacao?.tabela?.gris ?? ''; 
+  jsonDadosCabecalhoRomaneio.despacho = dados?.cotacao?.tabela?.despacho ?? ''; 
+  jsonDadosCabecalhoRomaneio.outros = dados?.cotacao?.tabela?.outros ?? ''; 
+  jsonDadosCabecalhoRomaneio.pedagio = dados?.cotacao?.tabela?.pedagio ?? ''; 
+  jsonDadosCabecalhoRomaneio.tipoPedagio = dados?.cotacao?.tabela?.tipoPedagio ?? ''; 
+  jsonDadosCabecalhoRomaneio.cubagem = dados?.cotacao?.tabela?.cubagem ?? ''; 
+  jsonDadosCabecalhoRomaneio.fatorCubagem = dados?.cotacao?.tabela?.fatorCubagem ?? ''; 
+  jsonDadosCabecalhoRomaneio.tipoTabela = dados?.cotacao?.tabela?.tipoTabela ?? ''; 
+  jsonDadosCabecalhoRomaneio.aliquotaIcms = dados?.cotacao?.tabela?.aliquotaIcms ?? ''; 
+
+  jsonDadosCabecalhoRomaneio.idDtc = dados?.dtc?.id ?? '';
+  jsonDadosCabecalhoRomaneio.tipoFrete = dados?.dtc?.tipoFrete ?? '';
+  jsonDadosCabecalhoRomaneio.usuarioCadastro = dados?.dtc?.usuario_cadastro ?? '';
+  jsonDadosCabecalhoRomaneio.usuarioUltimaAtualizacao = dados?.dtc?.usuario_ultima_atualizacao ?? '';
+  jsonDadosCabecalhoRomaneio.dataCadastro = dados?.dtc?.data_cadastro ?? '';
+  jsonDadosCabecalhoRomaneio.dataUltimaAtualizacao = dados?.dtc?.data_ultima_atualizacao ?? '';
+  jsonDadosCabecalhoRomaneio.notasFiscais = dados?.dtc?.notas_fiscais ?? [];
+  jsonDadosCabecalhoRomaneio.tomador = dados?.dtc?.tomador ?? {};
+  jsonDadosCabecalhoRomaneio.remetente = dados?.dtc?.remetente ?? {};
+  jsonDadosCabecalhoRomaneio.destinatario = dados?.dtc?.destinatario ?? {};
+  jsonDadosCabecalhoRomaneio.coleta = dados?.dtc?.coleta ?? {};
+  jsonDadosCabecalhoRomaneio.rota = dados?.dtc?.rota ?? {};
+
+  jsonDadosCabecalhoRomaneio.idCotacao = dados?.cotacao?.id ?? '';
+  jsonDadosCabecalhoRomaneio.numNf = dados?.cotacao?.numNf ?? '';
+  jsonDadosCabecalhoRomaneio.peso = dados?.cotacao?.peso ?? '';
+  jsonDadosCabecalhoRomaneio.qtde = dados?.cotacao?.qtde ?? '';
+  jsonDadosCabecalhoRomaneio.pesoFaturado = dados?.cotacao?.pesoFaturado ?? '';
+  jsonDadosCabecalhoRomaneio.vlrNf = dados?.cotacao?.vlrNf ?? '';
+  jsonDadosCabecalhoRomaneio.vlrColeta = dados?.cotacao?.vlrColeta ?? '';
+  jsonDadosCabecalhoRomaneio.m3 = dados?.cotacao?.m3 ?? '';
+  jsonDadosCabecalhoRomaneio.tipoMercadoria = dados?.cotacao?.tipoMercadoria ?? '';
+  jsonDadosCabecalhoRomaneio.formaDeCalculo = dados?.cotacao?.formaDeCalculo ?? '';
+  jsonDadosCabecalhoRomaneio.totalFrete = dados?.cotacao?.totalFrete ?? '';
+  jsonDadosCabecalhoRomaneio.freteValor = dados?.cotacao?.freteValor ?? '';
+  jsonDadosCabecalhoRomaneio.adValor = dados?.cotacao?.adValor ?? '';
+  jsonDadosCabecalhoRomaneio.gris = dados?.cotacao?.gris ?? '';
+  jsonDadosCabecalhoRomaneio.despacho = dados?.cotacao?.despacho ?? '';
+  jsonDadosCabecalhoRomaneio.outros = dados?.cotacao?.outros ?? '';
+  jsonDadosCabecalhoRomaneio.pedagio = dados?.cotacao?.pedagio ?? '';
+  jsonDadosCabecalhoRomaneio.baseDeCalculo = dados?.cotacao?.baseDeCalculo ?? '';
+  jsonDadosCabecalhoRomaneio.aliquota = dados?.cotacao?.aliquota ?? '';
+  jsonDadosCabecalhoRomaneio.icmsRS = dados?.cotacao?.icmsRS ?? '';
+  jsonDadosCabecalhoRomaneio.icmsIncluso = dados?.cotacao?.icmsIncluso ?? '';
+  jsonDadosCabecalhoRomaneio.nome = dados?.cotacao?.nome ?? '';
+  jsonDadosCabecalhoRomaneio.observacao = dados?.cotacao?.observacao ?? '';
+  jsonDadosCabecalhoRomaneio.contato = dados?.cotacao?.contato ?? '';
+  jsonDadosCabecalhoRomaneio.usuario = dados?.cotacao?.usuario ?? '';
 }
 
 function addTextWithLabel(doc, label, text, x, y) {
@@ -55,9 +108,7 @@ async function generatePDF () {
     const { jsPDF } = window.jspdf;
     const doc = new jsPDF();
 
-    geraDadosEmissor({})
-
-    // URL da imagem que você deseja inserir
+		// URL da imagem que você deseja inserir
     let imageUrl = "/static/images/emissorImages/logo.png";
 
     const rectWidth = 30;

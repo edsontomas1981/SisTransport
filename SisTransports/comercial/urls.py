@@ -36,6 +36,4 @@ urlpatterns = [
     path('cotacao/updateCotacao/',viewsComercial.updateCotacao,name='updateCotacao'),
     path('cotacao/deleteCotacao/',viewsComercial.deleteCotacao,name='deleteCotacao'),
     path('cotacao/readCotacaoCnpj/',viewsComercial.read_cotacao_cnpj,name='read_cotacao_cnpj'),
-
-
 ]

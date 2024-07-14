@@ -162,5 +162,20 @@ class Cotacao:
             # Lide com outros erros inesperados
             return {"error": str(e)}
 
+    @staticmethod
+    def selectCotacaoByDtc(dtc_id):
+        try:
+            # Verificar se existe uma cotação com o Dtc fornecido
+            if ClsCotacao.objects.filter(dtc_fk_id=dtc_id).exists():
+                cotacao = ClsCotacao.objects.get(dtc_fk_id=dtc_id)
+                return {'status': 200, 'cotacao': cotacao.toDict()}
+            else:
+                return {'status': 404, 'mensagem': 'Cotação não encontrada para este Dtc'}
+        except ClsCotacao.DoesNotExist:
+            return {'status': 404, 'mensagem': 'Cotação não encontrada para este Dtc'}
+        except Exception as e:
+            return {'status': 400, 'mensagem': f'Erro ao buscar cotação: {str(e)}'}    
+
+
 
         
