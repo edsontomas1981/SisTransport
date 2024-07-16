@@ -20,8 +20,7 @@ if (btnImprimirCotacao) {
 const jsonDadosCabecalhoRomaneio = {}
 
 const geraDadosImpressao = (dados) => {
-
-	// Additional data mappings
+  // Additional data mappings
   jsonDadosCabecalhoRomaneio.freteMinimo = dados?.cotacao?.tabela?.freteMinimo ?? ''; 
   jsonDadosCabecalhoRomaneio.descricao = dados?.cotacao?.tabela?.descricao ?? '';
   jsonDadosCabecalhoRomaneio.icmsIncluso = dados?.cotacao?.tabela?.icmsIncluso ?? ''; 
@@ -159,48 +158,17 @@ async function generatePDF () {
         return doc.getTextWidth(text);
     }
 
-const addTitulo = ()=>{    // Insira a imagem dentro do retângulo
+  const addTitulo = ()=>{    // Insira a imagem dentro do retângulo
     doc.addImage(base64Image, 'JPEG', 3 + x, 3 + y, newWidth, newHeight);
+    alinhaTextoDireita(doc,`Cotação nº : ${150}`,16,15)
+  }
 
-    doc.setFontSize(16)
-    doc.text(`${jsonDadosCabecalhoRomaneio.emissor}`,40,10)
-    doc.setFontSize(10)
-    doc.text(`Cnpj ${jsonDadosCabecalhoRomaneio.cnpj} Inscrição Estadual ${jsonDadosCabecalhoRomaneio.inscrEmissor}`,40,15)
+  let tamanhoTextWidth
+  addTitulo();
+  // Gerar Blob a partir do PDF
+  const pdfBlob = doc.output("bloburl");
 
-    if(jsonDadosCabecalhoRomaneio.complementoEmissor){
-        doc.text(`${jsonDadosCabecalhoRomaneio.enderecoEmissor}, ${jsonDadosCabecalhoRomaneio.numEmissor} , ${jsonDadosCabecalhoRomaneio.complementoEmissor} , ${jsonDadosCabecalhoRomaneio.bairroEmissor}`,40,20)
-    }else{
-        doc.text(`${jsonDadosCabecalhoRomaneio.enderecoEmissor}, ${jsonDadosCabecalhoRomaneio.numEmissor} , ${jsonDadosCabecalhoRomaneio.bairroEmissor}`,40,20)
-    }
-    doc.text(`${jsonDadosCabecalhoRomaneio.cidadeEmissor}-${jsonDadosCabecalhoRomaneio.ufEmissor} | ${jsonDadosCabecalhoRomaneio.foneEmissor}`,40,25)
-
-    // Calcular a largura do texto
-    let textWidth = getTextWidth(`Romaneio nº : ${jsonDadosCabecalhoRomaneio.numManifesto}`, 12);
-
-    // Calcular a posição X para centralizar o texto
-    let textX = (pageWidth - textWidth) / 2;
-
-    doc.text(`Cotação nº : ${jsonDadosCabecalhoRomaneio.numManifesto}`, rectRightX, 10);
-
-    // Calcular o comprimento do texto
-    let textoMotorista = `Nome Motorista: ${jsonDadosCabecalhoRomaneio.motorista}`
-
-    let alinhaDireita = 207-getTextWidth(textoMotorista,10) 
-    // Desenhar o texto
-    doc.setFontSize(9);
-    doc.line(2, 33, 205, 33);
-    doc.text(`Nome Motorista: ${jsonDadosCabecalhoRomaneio.motorista}`, alinhaDireita, 41);}
-    
-    // let dadosRomaneio = await handlerDadosRomaneio()
-    let tamanhoTextWidth
-    addTitulo();
-
-
-
-    // Gerar Blob a partir do PDF
-    const pdfBlob = doc.output("bloburl");
-
-    // Abrir o PDF em outra aba
-    window.open(pdfBlob, "_blank");
+  // Abrir o PDF em outra aba
+  window.open(pdfBlob, "_blank");
 }
 
