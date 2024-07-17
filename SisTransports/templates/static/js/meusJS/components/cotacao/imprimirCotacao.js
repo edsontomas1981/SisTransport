@@ -7,7 +7,7 @@ if (btnImprimirCotacao) {
 		}else{
 			let response  = await connEndpoint('/comercial/cotacao/readCotacao/', {'idDtc': idDtc.value});
 			if (response.status == 200){
-				geraDadosImpressao(response.cotacao.dtc)
+				geraDadosImpressao(response.cotacao.cotacao.dtc)
 				generatePDF()
 			}
 		}
@@ -20,6 +20,7 @@ if (btnImprimirCotacao) {
 const jsonDadosCabecalhoRomaneio = {}
 
 const geraDadosImpressao = (dados) => {
+  console.log(dados)
   // Additional data mappings
   jsonDadosCabecalhoRomaneio.freteMinimo = dados?.cotacao?.tabela?.freteMinimo ?? ''; 
   jsonDadosCabecalhoRomaneio.descricao = dados?.cotacao?.tabela?.descricao ?? '';
@@ -38,18 +39,18 @@ const geraDadosImpressao = (dados) => {
   jsonDadosCabecalhoRomaneio.tipoTabela = dados?.cotacao?.tabela?.tipoTabela ?? ''; 
   jsonDadosCabecalhoRomaneio.aliquotaIcms = dados?.cotacao?.tabela?.aliquotaIcms ?? ''; 
 
-  jsonDadosCabecalhoRomaneio.idDtc = dados?.dtc?.id ?? '';
-  jsonDadosCabecalhoRomaneio.tipoFrete = dados?.dtc?.tipoFrete ?? '';
-  jsonDadosCabecalhoRomaneio.usuarioCadastro = dados?.dtc?.usuario_cadastro ?? '';
-  jsonDadosCabecalhoRomaneio.usuarioUltimaAtualizacao = dados?.dtc?.usuario_ultima_atualizacao ?? '';
-  jsonDadosCabecalhoRomaneio.dataCadastro = dados?.dtc?.data_cadastro ?? '';
-  jsonDadosCabecalhoRomaneio.dataUltimaAtualizacao = dados?.dtc?.data_ultima_atualizacao ?? '';
-  jsonDadosCabecalhoRomaneio.notasFiscais = dados?.dtc?.notas_fiscais ?? [];
-  jsonDadosCabecalhoRomaneio.tomador = dados?.dtc?.tomador ?? {};
-  jsonDadosCabecalhoRomaneio.remetente = dados?.dtc?.remetente ?? {};
-  jsonDadosCabecalhoRomaneio.destinatario = dados?.dtc?.destinatario ?? {};
-  jsonDadosCabecalhoRomaneio.coleta = dados?.dtc?.coleta ?? {};
-  jsonDadosCabecalhoRomaneio.rota = dados?.dtc?.rota ?? {};
+  jsonDadosCabecalhoRomaneio.idDtc = dados?.id ?? '';
+  jsonDadosCabecalhoRomaneio.tipoFrete = dados?.tipoFrete ?? '';
+  jsonDadosCabecalhoRomaneio.usuarioCadastro = dados?.usuario_cadastro ?? '';
+  jsonDadosCabecalhoRomaneio.usuarioUltimaAtualizacao = dados?.usuario_ultima_atualizacao ?? '';
+  jsonDadosCabecalhoRomaneio.dataCadastro = dados?.data_cadastro ?? '';
+  jsonDadosCabecalhoRomaneio.dataUltimaAtualizacao = dados?.data_ultima_atualizacao ?? '';
+  jsonDadosCabecalhoRomaneio.notasFiscais = dados?.notas_fiscais ?? [];
+  jsonDadosCabecalhoRomaneio.tomador = dados?.tomador ?? {};
+  jsonDadosCabecalhoRomaneio.remetente = dados?.remetente ?? {};
+  jsonDadosCabecalhoRomaneio.destinatario = dados?.destinatario ?? {};
+  jsonDadosCabecalhoRomaneio.coleta = dados?.coleta ?? {};
+  jsonDadosCabecalhoRomaneio.rota = dados?.rota ?? {};
 
   jsonDadosCabecalhoRomaneio.idCotacao = dados?.cotacao?.id ?? '';
   jsonDadosCabecalhoRomaneio.numNf = dados?.cotacao?.numNf ?? '';
@@ -101,6 +102,59 @@ function alinhaTextoDireita(doc, text, startY, fontSize = 12) {
   // Adicione o texto ao documento na posição calculada
   doc.text(text, startX-10, startY);
 }
+
+function alinhaTextoEsquerda(doc, text, startY, fontSize = 12) {
+  // Define a fonte e o tamanho da fonte
+  doc.setFontSize(fontSize);
+  
+  // Obtenha a largura da página
+  const pageWidth = doc.internal.pageSize.getWidth();
+  
+  // Defina a metade da largura da página
+  const halfPageWidth = pageWidth / 2;
+  
+  // Obtenha a largura do texto
+  const textWidth = doc.getTextWidth(text);
+  
+  // Verifique se o texto ultrapassa a metade da página
+  if (textWidth > halfPageWidth) {
+      console.error("O texto é muito longo e ultrapassa a metade da página.");
+      return;
+  }
+  
+  // Defina a posição X para alinhar o texto à esquerda (começa em 10 unidades do lado esquerdo da página)
+  const startX = 10;
+  
+  // Adicione o texto ao documento na posição calculada
+  doc.text(text, startX, startY);
+}
+
+function alinhaTextoMeioParaDireita(doc, text, startY, fontSize = 12) {
+  // Define a fonte e o tamanho da fonte
+  doc.setFontSize(fontSize);
+  
+  // Obtenha a largura da página
+  const pageWidth = doc.internal.pageSize.getWidth();
+  
+  // Defina a metade da largura da página
+  const halfPageWidth = pageWidth / 2;
+  
+  // Obtenha a largura do texto
+  const textWidth = doc.getTextWidth(text);
+  
+  // Verifique se o texto cabe na metade direita da página
+  if (textWidth > (pageWidth - halfPageWidth)) {
+      console.error("O texto é muito longo e ultrapassa a metade direita da página.");
+      return;
+  }
+  
+  // Defina a posição X para alinhar o texto a partir da metade da página
+  const startX = halfPageWidth;
+
+  // Adicione o texto ao documento na posição calculada
+  doc.text(text, startX, startY);
+}
+
 
 
 async function generatePDF () {
@@ -160,11 +214,46 @@ async function generatePDF () {
 
   const addTitulo = ()=>{    // Insira a imagem dentro do retângulo
     doc.addImage(base64Image, 'JPEG', 3 + x, 3 + y, newWidth, newHeight);
-    alinhaTextoDireita(doc,`Cotação nº : ${150}`,16,15)
+    alinhaTextoDireita(doc,`Cotação nº : ${jsonDadosCabecalhoRomaneio.idDtc}`,16,15)
   }
 
   let tamanhoTextWidth
   addTitulo();
+  doc.setFontSize(12);
+  alinhaTextoEsquerda(doc,`Tomador : ${truncateString(jsonDadosCabecalhoRomaneio.tomador.raz_soc,30)} `, 35, 11);
+  alinhaTextoMeioParaDireita(doc,`Tomador : ${jsonDadosCabecalhoRomaneio.tomador.raz_soc} `, 35, 11);
+  
+
+  
+  // Set table options
+  const options = {
+    startY: 50, // Adjust the height where the table starts
+    startX:3,
+    styles: {
+        fillColor: [220, 220, 220], // Change table color (RGB)
+      textColor: [0 , 0 ,0], // Change text color
+        fontSize: 12
+    },
+    headStyles: {
+        fillColor: [120, 120, 120] // Change header color
+    }
+  };
+
+  // Define the columns and rows for the table
+  const columns = ["ID", "Name", "Country"];
+  const rows = [
+      [1, "John Doe", "USA"],
+      [2, "Anna Smith", "Canada"],
+      [3, "Peter Johnson", "UK"],
+  ];
+
+  // Add the table to the PDF
+  doc.autoTable({
+      head: [columns],
+      body: rows,
+      //... sao spreads operators (operadores que pegam um array e espalham aqui dentro)
+      ...options
+  });
   // Gerar Blob a partir do PDF
   const pdfBlob = doc.output("bloburl");
 
