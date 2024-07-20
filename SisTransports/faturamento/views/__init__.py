@@ -1,2 +1,3 @@
-from faturamento.views.faturamento import faturamento
+from faturamento.views.gerar_faturas import gerar_faturas
+from faturamento.views.relatorio_faturas import relatorio_faturas
 from faturamento.views.calculaFrete import calculaFrete

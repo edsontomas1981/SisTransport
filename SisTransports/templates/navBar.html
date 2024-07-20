@@ -204,6 +204,160 @@
                     </div>
                 </li>
                 <li class="nav-item">
+                    <a class="nav-link" href="#" id="navbarDropdown2" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Financeiro</a>
+                    <div class="dropdown-menu" id="dropdown-menu2" aria-labelledby="navbarDropdown2">
+                        <div class="container">
+                            <div class="row">
+                                <!-- Faturamento Automático -->
+                                <div class="row d-flex tab">
+                                    <div class="row d-flex">
+                                        <div class="input-group-append">
+                                            <div class="fa-icon text-center">
+                                                <span class="fa fa-cogs icone-menu"></span>
+                                            </div>
+                                            <div class="d-flex flex-column">
+                                                <a class="dropdown-item" onclick="openModal('mdlFaturamentoAutomatico')">
+                                                    <h6 class="mb-0">Faturamento Automático</h6>
+                                                    <small class="text-muted">Agrupa CTe's não faturados por tomador de serviço</small>
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- Faturamento Manual -->
+                                <div class="row d-flex tab">
+                                    <div class="row d-flex">
+                                        <div class="input-group-append">
+                                            <div class="fa-icon text-center">
+                                                <span class="fa fa-hand-paper icone-menu"></span>
+                                            </div>
+                                            <div class="d-flex flex-column">
+                                                <a class="dropdown-item" href="/financeiro/faturamentoManual/">
+                                                    <h6 class="mb-0">Faturamento Manual</h6>
+                                                    <small class="text-muted">Seleção manual de CTe's por tomador de serviço</small>
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- Faturamento por Período -->
+                                <div class="row d-flex tab">
+                                    <div class="row d-flex">
+                                        <div class="input-group-append">
+                                            <div class="fa-icon text-center">
+                                                <span class="fa fa-calendar icone-menu"></span>
+                                            </div>
+                                            <div class="d-flex flex-column">
+                                                <a class="dropdown-item" href="/financeiro/faturamentoPeriodo/">
+                                                    <h6 class="mb-0">Faturamento por Período</h6>
+                                                    <small class="text-muted">Faturar CTe's em períodos específicos</small>
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- Faturamento por Tipo de Serviço -->
+                                <!-- <div class="row d-flex tab">
+                                    <div class="row d-flex">
+                                        <div class="input-group-append">
+                                            <div class="fa-icon text-center">
+                                                <span class="fa fa-list-ul icone-menu"></span>
+                                            </div>
+                                            <div class="d-flex flex-column">
+                                                <a class="dropdown-item" href="/financeiro/faturamentoTipoServico/">
+                                                    <h6 class="mb-0">Faturamento por Tipo de Serviço</h6>
+                                                    <small class="text-muted">Faturar por tipo de serviço prestado</small>
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div> -->
+                                <!-- Pré-Visualização de Fatura -->
+                                <div class="row d-flex tab">
+                                    <div class="row d-flex">
+                                        <div class="input-group-append">
+                                            <div class="fa-icon text-center">
+                                                <span class="fa fa-eye icone-menu"></span>
+                                            </div>
+                                            <div class="d-flex flex-column">
+                                                <a class="dropdown-item" href="/financeiro/preVisualizacaoFatura/">
+                                                    <h6 class="mb-0">Pré-Visualização de Fatura</h6>
+                                                    <small class="text-muted">Revisar faturas antes da emissão</small>
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- Histórico de Faturamento -->
+                                <div class="row d-flex tab">
+                                    <div class="row d-flex">
+                                        <div class="input-group-append">
+                                            <div class="fa-icon text-center">
+                                                <span class="fa fa-history icone-menu"><i class="fa fa-area-chart icone-menu" aria-hidden="true"></i>
+                                                </span>
+                                            </div>
+                                            <div class="d-flex flex-column">
+                                                <a class="dropdown-item" href="/financeiro/historicoFaturamento/">
+                                                    <h6 class="mb-0">Histórico de Faturamento</h6>
+                                                    <small class="text-muted">Consultar histórico de faturas emitidas</small>
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- Relatórios Customizáveis -->
+                                <div class="row d-flex tab">
+                                    <div class="row d-flex">
+                                        <div class="input-group-append">
+                                            <div class="fa-icon text-center">
+                                                <span class="ti-pie-chart icone-menu"></span>
+                                            </div>
+                                            <div class="d-flex flex-column">
+                                                <a class="dropdown-item" href="/financeiro/relatoriosCustomizaveis/">
+                                                    <h6 class="mb-0">Relatórios</h6>
+                                                    <small class="text-muted">Gerar relatórios de faturamento</small>
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- Integração com Pagamentos -->
+                                <!-- <div class="row d-flex tab">
+                                    <div class="row d-flex">
+                                        <div class="input-group-append">
+                                            <div class="fa-icon text-center">
+                                                <span class="fa fa-credit-card icone-menu"></span>
+                                            </div>
+                                            <div class="d-flex flex-column">
+                                                <a class="dropdown-item" href="/financeiro/integracaoPagamentos/">
+                                                    <h6 class="mb-0">Integração com Pagamentos</h6>
+                                                    <small class="text-muted">Facilitar cobrança e acompanhamento de recebíveis</small>
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div> -->
+                                <!-- Notificações e Alertas -->
+                                <!-- <div class="row d-flex tab">
+                                    <div class="row d-flex">
+                                        <div class="input-group-append">
+                                            <div class="fa-icon text-center">
+                                                <span class="fa fa-bell icone-menu"></span>
+                                            </div>
+                                            <div class="d-flex flex-column">
+                                                <a class="dropdown-item" href="/financeiro/notificacoesAlertas/">
+                                                    <h6 class="mb-0">Notificações e Alertas</h6>
+                                                    <small class="text-muted">Lembrar sobre faturas e CTe's pendentes</small>
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div> -->
+                            </div>
+                        </div>
+                    </div>
+                </li>                
+                <li class="nav-item">
                     <a class="nav-link" href="#" id="navbarDropdown2" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Relatórios</a>
                     <div class="dropdown-menu" id="dropdown-menu2" aria-labelledby="navbarDropdown2">
                         <div class="container">
@@ -242,6 +396,7 @@
                         </div>
                     </div>
                 </li>
+
                 <li class="nav-item">
                     <a class="nav-link" href="#" id="navbarDropdown3" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Impressão</a>
                     <div class="dropdown-menu" id="dropdown-menu3" aria-labelledby="navbarDropdown3">

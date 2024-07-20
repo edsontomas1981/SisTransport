@@ -1,82 +1,75 @@
 let btnImprimirCotacao = document.getElementById('btnImprimirCotacao');
 if (btnImprimirCotacao) {
-	btnImprimirCotacao.addEventListener('click', async ()=>{
-		let idDtc = document.getElementById('numDtc')
-		if(idDtc.value ==''){
-			msgErro('É Necessário selecionar um Dtc válido')
-		}else{
-			let response  = await connEndpoint('/comercial/cotacao/readCotacao/', {'idDtc': idDtc.value});
-			if (response.status == 200){
-				geraDadosImpressao(response.cotacao.cotacao.dtc)
-				generatePDF()
-			}
-		}
-	});
+  btnImprimirCotacao.addEventListener('click', async () => {
+      let idDtc = document.getElementById('numDtc');
+      if (idDtc.value === '') {
+          msgErro('Por favor, selecione um Dtc válido.');
+      } else {
+          let response = await connEndpoint('/comercial/cotacao/readCotacao/', { 'idDtc': idDtc.value });
+
+          switch (response.status) {
+              case 200:
+                  geraDadosImpressao(response.cotacao.cotacao);
+                  generatePDF();
+                  break;
+              case 400:
+                  msgErro('Não há cotação disponível para impressão.');
+                  break;
+              default:
+                  msgErro('Erro desconhecido ao processar a solicitação.');
+                  break;
+          }
+      }
+  });
 } else {
-	console.error('Elemento "btnImprimirCotacao" não encontrado');
+  console.error('Elemento "btnImprimirCotacao" não encontrado.');
 }
 
 
 const jsonDadosCabecalhoRomaneio = {}
 
-const geraDadosImpressao = (dados) => {
-  console.log(dados)
-  // Additional data mappings
-  jsonDadosCabecalhoRomaneio.freteMinimo = dados?.cotacao?.tabela?.freteMinimo ?? ''; 
-  jsonDadosCabecalhoRomaneio.descricao = dados?.cotacao?.tabela?.descricao ?? '';
-  jsonDadosCabecalhoRomaneio.icmsIncluso = dados?.cotacao?.tabela?.icmsIncluso ?? ''; 
-  jsonDadosCabecalhoRomaneio.bloqueada = dados?.cotacao?.tabela?.bloqueada ?? ''; 
-  jsonDadosCabecalhoRomaneio.frete = dados?.cotacao?.tabela?.frete ?? ''; 
-  jsonDadosCabecalhoRomaneio.tipoCalculo = dados?.cotacao?.tabela?.tipoCalculo ?? ''; 
-  jsonDadosCabecalhoRomaneio.adValor = dados?.cotacao?.tabela?.adValor ?? ''; 
-  jsonDadosCabecalhoRomaneio.gris = dados?.cotacao?.tabela?.gris ?? ''; 
-  jsonDadosCabecalhoRomaneio.despacho = dados?.cotacao?.tabela?.despacho ?? ''; 
-  jsonDadosCabecalhoRomaneio.outros = dados?.cotacao?.tabela?.outros ?? ''; 
-  jsonDadosCabecalhoRomaneio.pedagio = dados?.cotacao?.tabela?.pedagio ?? ''; 
-  jsonDadosCabecalhoRomaneio.tipoPedagio = dados?.cotacao?.tabela?.tipoPedagio ?? ''; 
-  jsonDadosCabecalhoRomaneio.cubagem = dados?.cotacao?.tabela?.cubagem ?? ''; 
-  jsonDadosCabecalhoRomaneio.fatorCubagem = dados?.cotacao?.tabela?.fatorCubagem ?? ''; 
-  jsonDadosCabecalhoRomaneio.tipoTabela = dados?.cotacao?.tabela?.tipoTabela ?? ''; 
-  jsonDadosCabecalhoRomaneio.aliquotaIcms = dados?.cotacao?.tabela?.aliquotaIcms ?? ''; 
 
-  jsonDadosCabecalhoRomaneio.idDtc = dados?.id ?? '';
+
+const geraDadosImpressao = (dados) => {
+
+  jsonDadosCabecalhoRomaneio.solicitante = dados?.solicitante ?? '';
+  jsonDadosCabecalhoRomaneio.contato = dados?.contato ?? '';
+
+  jsonDadosCabecalhoRomaneio.idDtc = dados?.dtc?.id ?? '';
   jsonDadosCabecalhoRomaneio.tipoFrete = dados?.tipoFrete ?? '';
   jsonDadosCabecalhoRomaneio.usuarioCadastro = dados?.usuario_cadastro ?? '';
   jsonDadosCabecalhoRomaneio.usuarioUltimaAtualizacao = dados?.usuario_ultima_atualizacao ?? '';
   jsonDadosCabecalhoRomaneio.dataCadastro = dados?.data_cadastro ?? '';
   jsonDadosCabecalhoRomaneio.dataUltimaAtualizacao = dados?.data_ultima_atualizacao ?? '';
   jsonDadosCabecalhoRomaneio.notasFiscais = dados?.notas_fiscais ?? [];
-  jsonDadosCabecalhoRomaneio.tomador = dados?.tomador ?? {};
+  jsonDadosCabecalhoRomaneio.tomador = dados?.dtc?.tomador ?? {};
   jsonDadosCabecalhoRomaneio.remetente = dados?.remetente ?? {};
   jsonDadosCabecalhoRomaneio.destinatario = dados?.destinatario ?? {};
   jsonDadosCabecalhoRomaneio.coleta = dados?.coleta ?? {};
   jsonDadosCabecalhoRomaneio.rota = dados?.rota ?? {};
 
-  jsonDadosCabecalhoRomaneio.idCotacao = dados?.cotacao?.id ?? '';
-  jsonDadosCabecalhoRomaneio.numNf = dados?.cotacao?.numNf ?? '';
-  jsonDadosCabecalhoRomaneio.peso = dados?.cotacao?.peso ?? '';
-  jsonDadosCabecalhoRomaneio.qtde = dados?.cotacao?.qtde ?? '';
-  jsonDadosCabecalhoRomaneio.pesoFaturado = dados?.cotacao?.pesoFaturado ?? '';
-  jsonDadosCabecalhoRomaneio.vlrNf = dados?.cotacao?.vlrNf ?? '';
-  jsonDadosCabecalhoRomaneio.vlrColeta = dados?.cotacao?.vlrColeta ?? '';
-  jsonDadosCabecalhoRomaneio.m3 = dados?.cotacao?.m3 ?? '';
-  jsonDadosCabecalhoRomaneio.tipoMercadoria = dados?.cotacao?.tipoMercadoria ?? '';
-  jsonDadosCabecalhoRomaneio.formaDeCalculo = dados?.cotacao?.formaDeCalculo ?? '';
-  jsonDadosCabecalhoRomaneio.totalFrete = dados?.cotacao?.totalFrete ?? '';
-  jsonDadosCabecalhoRomaneio.freteValor = dados?.cotacao?.freteValor ?? '';
-  jsonDadosCabecalhoRomaneio.adValor = dados?.cotacao?.adValor ?? '';
-  jsonDadosCabecalhoRomaneio.gris = dados?.cotacao?.gris ?? '';
-  jsonDadosCabecalhoRomaneio.despacho = dados?.cotacao?.despacho ?? '';
-  jsonDadosCabecalhoRomaneio.outros = dados?.cotacao?.outros ?? '';
-  jsonDadosCabecalhoRomaneio.pedagio = dados?.cotacao?.pedagio ?? '';
-  jsonDadosCabecalhoRomaneio.baseDeCalculo = dados?.cotacao?.baseDeCalculo ?? '';
-  jsonDadosCabecalhoRomaneio.aliquota = dados?.cotacao?.aliquota ?? '';
-  jsonDadosCabecalhoRomaneio.icmsRS = dados?.cotacao?.icmsRS ?? '';
-  jsonDadosCabecalhoRomaneio.icmsIncluso = dados?.cotacao?.icmsIncluso ?? '';
-  jsonDadosCabecalhoRomaneio.nome = dados?.cotacao?.nome ?? '';
-  jsonDadosCabecalhoRomaneio.observacao = dados?.cotacao?.observacao ?? '';
-  jsonDadosCabecalhoRomaneio.contato = dados?.cotacao?.contato ?? '';
-  jsonDadosCabecalhoRomaneio.usuario = dados?.cotacao?.usuario ?? '';
+  jsonDadosCabecalhoRomaneio.peso = dados?.peso ?? '';
+  jsonDadosCabecalhoRomaneio.qtde = dados?.qtde ?? '';
+  jsonDadosCabecalhoRomaneio.pesoFaturado = dados?.pesoFaturado ?? '';
+  jsonDadosCabecalhoRomaneio.vlrNf = dados?.vlrNf ?? '';
+  jsonDadosCabecalhoRomaneio.vlrColeta = dados?.vlrColeta ?? '';
+  jsonDadosCabecalhoRomaneio.m3 = dados?.m3 ?? '';
+  jsonDadosCabecalhoRomaneio.tipoMercadoria = dados?.tipoMercadoria ?? '';
+  jsonDadosCabecalhoRomaneio.formaDeCalculo = dados?.formaDeCalculo ?? '';
+  jsonDadosCabecalhoRomaneio.totalFrete = dados?.totalFrete ?? '';
+  jsonDadosCabecalhoRomaneio.freteValor = dados?.freteValor ?? '';
+  jsonDadosCabecalhoRomaneio.adValor = dados?.adValor ?? '';
+  jsonDadosCabecalhoRomaneio.gris = dados?.gris ?? '';
+  jsonDadosCabecalhoRomaneio.despacho = dados?.despacho ?? '';
+  jsonDadosCabecalhoRomaneio.outros = dados?.outros ?? '';
+  jsonDadosCabecalhoRomaneio.pedagio = dados?.pedagio ?? '';
+  jsonDadosCabecalhoRomaneio.baseDeCalculo = dados?.baseDeCalculo ?? '';
+  jsonDadosCabecalhoRomaneio.aliquota = dados?.aliquota ?? '';
+  jsonDadosCabecalhoRomaneio.icmsRS = dados?.icmsRS ?? '';
+  jsonDadosCabecalhoRomaneio.icmsIncluso = dados?.icmsIncluso ?? '';
+  jsonDadosCabecalhoRomaneio.nome = dados?.nome ?? '';
+  jsonDadosCabecalhoRomaneio.observacao = dados?.observacao ?? '';
+  jsonDadosCabecalhoRomaneio.usuario = dados?.usuario ?? '';
 }
 
 function addTextWithLabel(doc, label, text, x, y) {
@@ -100,7 +93,7 @@ function alinhaTextoDireita(doc, text, startY, fontSize = 12) {
   const startX = pageWidth - textWidth;
   
   // Adicione o texto ao documento na posição calculada
-  doc.text(text, startX-10, startY);
+  doc.text(text, startX-15, startY);
 }
 
 function alinhaTextoEsquerda(doc, text, startY, fontSize = 12) {
@@ -123,7 +116,7 @@ function alinhaTextoEsquerda(doc, text, startY, fontSize = 12) {
   }
   
   // Defina a posição X para alinhar o texto à esquerda (começa em 10 unidades do lado esquerdo da página)
-  const startX = 10;
+  const startX = 15;
   
   // Adicione o texto ao documento na posição calculada
   doc.text(text, startX, startY);
@@ -213,38 +206,47 @@ async function generatePDF () {
     }
 
   const addTitulo = ()=>{    // Insira a imagem dentro do retângulo
-    doc.addImage(base64Image, 'JPEG', 3 + x, 3 + y, newWidth, newHeight);
+    doc.addImage(base64Image, 'JPEG', 12 + x, 3 + y, newWidth, newHeight);
     alinhaTextoDireita(doc,`Cotação nº : ${jsonDadosCabecalhoRomaneio.idDtc}`,16,15)
   }
 
   let tamanhoTextWidth
   addTitulo();
   doc.setFontSize(12);
-  alinhaTextoEsquerda(doc,`Tomador : ${truncateString(jsonDadosCabecalhoRomaneio.tomador.raz_soc,30)} `, 35, 11);
-  alinhaTextoMeioParaDireita(doc,`Tomador : ${jsonDadosCabecalhoRomaneio.tomador.raz_soc} `, 35, 11);
-  
+  alinhaTextoEsquerda(doc,`TOMADOR : ${truncateString(jsonDadosCabecalhoRomaneio.tomador.raz_soc,30)} `, 35, 9);
+  alinhaTextoEsquerda(doc,`ENDEREÇO : ${truncateString(jsonDadosCabecalhoRomaneio.tomador.endereco_fk.logradouro,30)} Nº ${truncateString(jsonDadosCabecalhoRomaneio.tomador.endereco_fk.numero,30)}  `, 40, 9);
+  alinhaTextoEsquerda(doc,`BAIRRO : ${truncateString(jsonDadosCabecalhoRomaneio.tomador.endereco_fk.bairro,30)} `, 45, 9);
+  alinhaTextoEsquerda(doc,`CIDADE : ${truncateString(jsonDadosCabecalhoRomaneio.tomador.endereco_fk.cidade,30)} UF ${truncateString(jsonDadosCabecalhoRomaneio.tomador.endereco_fk.uf,30)}`, 50, 9);
 
-  
+  alinhaTextoDireita(doc,`SOLICITANTE : ${jsonDadosCabecalhoRomaneio.solicitante} `, 35, 9);
+  alinhaTextoDireita(doc,`CONTATO : ${jsonDadosCabecalhoRomaneio.contato} `, 40, 9);
   // Set table options
-  const options = {
-    startY: 50, // Adjust the height where the table starts
+  var options = {
+    startY: 70, // Adjust the height where the table starts
     startX:3,
     styles: {
         fillColor: [220, 220, 220], // Change table color (RGB)
       textColor: [0 , 0 ,0], // Change text color
-        fontSize: 12
+        fontSize: 11
     },
     headStyles: {
-        fillColor: [120, 120, 120] // Change header color
+        fillColor: [120, 120, 120], // Change header color
+        fontSize: 10
+
     }
   };
 
+  // Tabela com dados mercadoria
+  doc.text("DADOS DA MERCADORIA : ", 15, 65);
   // Define the columns and rows for the table
-  const columns = ["ID", "Name", "Country"];
+  const columns = ["MERCADORIA", "VOLUMES", "PESO","PESO FAT","VALOR NF R$"];
   const rows = [
-      [1, "John Doe", "USA"],
-      [2, "Anna Smith", "Canada"],
-      [3, "Peter Johnson", "UK"],
+      [jsonDadosCabecalhoRomaneio.tipoMercadoria,
+        jsonDadosCabecalhoRomaneio.qtde,
+        jsonDadosCabecalhoRomaneio.peso,
+        jsonDadosCabecalhoRomaneio.pesoFaturado,
+        formatarMoeda(jsonDadosCabecalhoRomaneio.vlrNf)
+      ],
   ];
 
   // Add the table to the PDF
@@ -254,6 +256,84 @@ async function generatePDF () {
       //... sao spreads operators (operadores que pegam um array e espalham aqui dentro)
       ...options
   });
+
+  // Tabela com dados mercadoria
+  options = {
+    startY: 100, // Adjust the height where the table starts
+    startX:3,
+    styles: {
+        fillColor: [220, 220, 220], // Change table color (RGB)
+      textColor: [0 , 0 ,0], // Change text color
+        fontSize: 11
+    },
+    headStyles: {
+        fillColor: [120, 120, 120], // Change header color
+        fontSize: 10
+
+    }
+  };
+
+  doc.text("COMPOSIÇÃO DO FRETE : ", 15, 97);
+  // Define the columns and rows for the table
+  const columnsDadosFrete = ["FRETE PESO", "ADVALOREM", "DESPACHO","GRIS","PEDÁGIO","OUTROS"];
+  const rowsDadosFrete = [
+      [formatarMoeda(jsonDadosCabecalhoRomaneio.freteValor),
+       formatarMoeda(jsonDadosCabecalhoRomaneio.adValor),
+       formatarMoeda(jsonDadosCabecalhoRomaneio.despacho),
+       formatarMoeda(jsonDadosCabecalhoRomaneio.gris),
+       formatarMoeda(jsonDadosCabecalhoRomaneio.pedagio),
+       formatarMoeda(jsonDadosCabecalhoRomaneio.outros),
+       formatarMoeda(jsonDadosCabecalhoRomaneio.vlrNf)
+      ],
+  ];
+
+  // Add the table to the PDF
+  doc.autoTable({
+      head: [columnsDadosFrete],
+      body: rowsDadosFrete,
+      //... sao spreads operators (operadores que pegam um array e espalham aqui dentro)
+      ...options
+  });
+
+    // Tabela com dados mercadoria
+    options = {
+      startY: 130, // Adjust the height where the table starts
+      startX:3,
+      styles: {
+          fillColor: [220, 220, 220], // Change table color (RGB)
+        textColor: [0 , 0 ,0], // Change text color
+          fontSize: 11
+      },
+      headStyles: {
+          fillColor: [120, 120, 120], // Change header color
+          fontSize: 10
+  
+      }
+    };
+  
+    doc.text("TOTAIS : ", 15, 127);
+    // Define the columns and rows for the table
+    const columnsTotaisFrete = ["BASE CALC", "ALIQUOTA", "ICMS","TOTAL FRETE"];
+    const rowsTotaisFrete = [
+        [formatarMoeda(jsonDadosCabecalhoRomaneio.baseDeCalculo),
+          formatarMoeda(jsonDadosCabecalhoRomaneio.aliquota),
+          formatarMoeda(jsonDadosCabecalhoRomaneio.icmsRS),
+          formatarMoeda(jsonDadosCabecalhoRomaneio.totalFrete),
+        ],
+    ];
+  
+    // Add the table to the PDF
+    doc.autoTable({
+        head: [columnsTotaisFrete],
+        body: rowsTotaisFrete,
+        //... sao spreads operators (operadores que pegam um array e espalham aqui dentro)
+        ...options
+    });
+    doc.text("OBSERVAÇÕES : ", 15, 157);
+    doc.text(`${jsonDadosCabecalhoRomaneio.observacao}`, 15, 167);
+
+
+
   // Gerar Blob a partir do PDF
   const pdfBlob = doc.output("bloburl");
 

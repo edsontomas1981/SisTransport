@@ -529,3 +529,99 @@ const pegarTextoSelect=(idSelect)=>{
   return selectedText
 }
 
+// Função para formatar um número como moeda brasileira
+function formatarMoeda(numero) {
+  return numero.toLocaleString('pt-BR', {
+      style: 'currency',
+      currency: 'BRL'
+  });
+}
+
+
+// Função para remover a formatação de moeda
+function removerFormatacaoMoeda(valorFormatado) {
+  return parseFloat(valorFormatado.replace(/[^\d,-]/g, '').replace(',', '.'));
+}
+
+
+function numeroPorExtenso(num) {
+  if (isNaN(num)) return "Por favor, insira um número válido.";
+
+  const unidades = ["", "um", "dois", "três", "quatro", "cinco", "seis", "sete", "oito", "nove"];
+  const dezenas = ["", "dez", "vinte", "trinta", "quarenta", "cinquenta", "sessenta", "setenta", "oitenta", "noventa"];
+  const especiais = ["dez", "onze", "doze", "treze", "quatorze", "quinze", "dezesseis", "dezessete", "dezoito", "dezenove"];
+  const centenas = ["", "cento", "duzentos", "trezentos", "quatrocentos", "quinhentos", "seiscentos", "setecentos", "oitocentos", "novecentos"];
+
+  if (num === 0) return "zero";
+  if (num === 100) return "cem";
+
+  let [inteiro, decimal] = num.toString().split(".");
+  inteiro = parseInt(inteiro);
+  decimal = decimal ? parseInt(decimal.padEnd(2, '0')) : 0;
+
+  let extenso = "";
+
+  let milhar = Math.floor(inteiro / 1000);
+  let resto = inteiro % 1000;
+
+  if (milhar > 0) {
+      extenso += converterCentenas(milhar) + " mil ";
+  }
+
+  extenso += converterCentenas(resto);
+
+  if (decimal > 0) {
+      extenso += " e " + converterCentenas(decimal) + " centavos";
+  }
+
+  return extenso.trim();
+
+  function converterCentenas(numero) {
+      let centena = Math.floor(numero / 100);
+      let dezena = Math.floor((numero % 100) / 10);
+      let unidade = numero % 10;
+
+      let result = "";
+
+      if (centena > 0) {
+          result += centenas[centena] + " ";
+      }
+
+      if (dezena === 1 && unidade > 0) {
+          result += especiais[unidade] + " ";
+      } else {
+          if (dezena > 0) {
+              result += dezenas[dezena] + " ";
+          }
+
+          if (unidade > 0) {
+              result += unidades[unidade] + " ";
+          }
+      }
+
+      return result.trim();
+  }
+}
+
+const loadEmissores = async (selectDoEmissor) => {
+  // Obtém os dados do emissor usando a função dadosEmissor
+  let selectEmissor = document.getElementById(selectDoEmissor)
+
+  var emissores = await getDadosEmissor();
+  
+  // Limpa o conteúdo atual do select
+  while (selectEmissor.firstChild) {
+      selectEmissor.removeChild(selectEmissor.firstChild);
+  }
+
+  // Itera sobre os dados do emissor e adiciona opções ao select
+  emissores.forEach((emissor) => {
+      // Cria um elemento option
+      var option = document.createElement('option');
+      // Define os atributos do option com base nos dados do emissor
+      option.value = emissor.id;
+      option.text = emissor.siglaFilial;
+      // Adiciona a opção ao select
+      selectEmissor.appendChild(option);
+  });
+};

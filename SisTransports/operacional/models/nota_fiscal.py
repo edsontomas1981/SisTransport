@@ -4,8 +4,6 @@ from operacional.models.dtc import Dtc
 from django.conf import settings
 from datetime import datetime
 
-
-
 class Nota_fiscal(models.Model):
     chave_acesso = models.CharField(max_length=50)
     num_nf = models.CharField(max_length=20)
@@ -46,6 +44,5 @@ class Nota_fiscal(models.Model):
             'data_ultima_atualizacao': self.data_ultima_atualizacao.strftime('%Y-%m-%d %H:%M:%S') if self.data_ultima_atualizacao else None,
         }
         
-        # Restante do seu código para incluir a relação com Dtc e outras informações...
         
         return nota_fiscal

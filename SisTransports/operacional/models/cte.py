@@ -3,8 +3,7 @@ from django.conf import settings
 from datetime import datetime
 from comercial.models.tabelaFrete import TabelaFrete
 from operacional.models.dtc import Dtc
-from operacional.classes.nota_fiscal import Nota_fiscal_CRUD
-
+from faturamento.models.faturas import Faturas
 class Cte (models.Model):
     origem_cte = models.CharField(max_length=5, null=True)
     destino_cte = models.CharField(max_length=5, null=True)
@@ -37,8 +36,8 @@ class Cte (models.Model):
     usuario_ultima_atualizacao = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.SET_NULL, null=True, related_name='alterou_dtc')
     data_cadastro = models.DateTimeField(null=True)
     data_ultima_atualizacao = models.DateTimeField(null=True)
-
-
+    faturas_fk = models.ForeignKey(Faturas, on_delete=models.CASCADE, related_name='cte_faturas', null=True)
+    
     def to_dict(self):
 
         return {

@@ -76,5 +76,7 @@ class Cotacao(models.Model):
             'observacao': self.observacao,
             'contato': self.contato,
             'usuario': self.usuario_cadastro,
+            'solicitante':self.nome,
+            'contato':self.contato
         }
         return cotacao

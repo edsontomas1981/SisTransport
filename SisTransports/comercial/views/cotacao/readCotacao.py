@@ -30,7 +30,7 @@ def readCotacao(request):
             if id_dtc is None or id_dtc == '':
                 raise ValidationError("Parâmetro 'idDtc' não fornecido.")
 
-            cotacao = Cotacao.selectCotacaoByDtc(id_dtc)
+            cotacao = Cotacao.selectStaticCotacaoByDtc(id_dtc)
             return JsonResponse({'status': 200, 'cotacao': cotacao})
 
         else:

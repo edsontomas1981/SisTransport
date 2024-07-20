@@ -1,0 +1,75 @@
+<form id="frmFaturamentoAutomatico">
+    <div class="modal" id="mdlFaturamentoAutomatico" tabindex="-1" data-bs-backdrop="static"
+        data-bs-keyboard="false">
+        <div class="modal-dialog modal-lg modal-altura">
+          <div class="modal-content">
+            <div class="modal-header cabecalho-modal-parceiro">
+              <div class="col-sm-4">
+                <h5 class="modal-title">Faturamento Automático</h5>
+              </div>
+              
+             <div>
+                <div class="input-group mb-2" align="right">
+                  <button type="button" class="btn btn-secondary btn-rounded btn-icon" id="btnLimpaBuscaVeiculo" align="right">            
+                    <i class="ti-write"></i>
+                  </button>
+                  <button type="button" class="btn btn-warning btn-rounded btn-icon" id="btnLimpaBuscaVeiculo" align="right">            
+                    <i class="ti-printer"></i>
+                  </button>                  
+                  <button type="button" class="btn btn-danger btn-rounded btn-icon" onclick="closeModal()" align="right">
+                      <i class="ti-close"></i>
+                  </button>
+                </div>
+              </div>  
+          </div>
+          <div class="modal-body row" >
+            <div class="mb-2 col-sm-3">
+              <select class="form-select form-control" id="fatAutomaticoEmissor">
+              </select>
+            </div>
+            <div class="mb-2 col-sm-3">
+              <input type="text" class="form-control" placeholder="Dias para o vencimento">
+            </div>
+            <div class="mb-2 col-sm-3">
+              <a class="btn btn-info" id="btnFaturar">            
+                <span class="icone-menu font-weight-bold text-white">Faturar <i class="fa fa-cogs" aria-hidden="true"></i></span>
+              </a>  
+            </div>
+
+
+            <div class="table-responsive">
+              <table class="table table-sm">
+                <thead>
+                  <tr>
+                    <th>Nº Duplicata</th>
+                    <th>Cnpj Tomador</th>
+                    <th>Razão Tomador</th>
+                    <th>Qtde de Documentos</th>
+                    <th>Total</th>
+                    <th>Vencimento</th>
+                    <th></th>
+                    <th></th>
+                    <th></th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>1205</td>
+                    <td>23.926.683/0001-99</td>
+                    <td>Serafim Transportes Ltda</td>
+                    <td>12</td>
+                    <td>R$ 1532,49</td>
+                    <td>25/10/2024</td>
+                    <td><label class="badge badge-danger">Excluir</label></td>
+                    <td><label class="badge badge-warning">Imprimir</label></td>
+                    <td><label class="badge badge-primary">Editar</label></td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+          </div>
+        </div>
+    </div>
+  </form>
+  

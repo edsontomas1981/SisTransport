@@ -18,12 +18,15 @@ def createCotacao (request):
     elif request.method == "POST" :
         user = request.user  # Aqui você obtém o usuário associado à requisição
         data = json.loads(request.body.decode('utf-8'))
-        data['usuario']=user
+
+        dprint(user.username)
+        
+        data['usuario']=user.username
 
         cotacao = Cotacao()
         resposta = cotacao.selectCotacaoByDtc(data['idPreDtc'])
 
-        if resposta['status'] == 200:
+        if resposta.get('status') == 200:
             altera_cotacao(data)
             return JsonResponse({'status': 201})# Altera cotação
         elif resposta['status'] == 404 :
@@ -46,10 +49,10 @@ def altera_cotacao(data):
 
 def prepara_dados(data):
     dtc = Dtc()
-    dtc.readDtc(data['idPreDtc'])
+    dtc.readDtc(data.get('idPreDtc'))
 
     tabela=TabelaFrete()
-    tabela.readTabela(data['tabelaCotacao'])
+    tabela.readTabela(data.get('tabelaCotacao'))
 
     rota=Rota()
     rota.readRota(data['idRota'])

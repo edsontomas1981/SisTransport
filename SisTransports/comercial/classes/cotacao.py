@@ -120,6 +120,7 @@ class Cotacao:
             return listaFaixas
        
     def selectCotacaoByDtc(self, dtc):
+        
         try:
             if ClsCotacao.objects.filter(dtc_fk=dtc).exists():
                 self.cotacao = ClsCotacao.objects.get(dtc_fk=dtc)
@@ -163,9 +164,10 @@ class Cotacao:
             return {"error": str(e)}
 
     @staticmethod
-    def selectCotacaoByDtc(dtc_id):
+    def selectStaticCotacaoByDtc(dtc_id):
         try:
             # Verificar se existe uma cotação com o Dtc fornecido
+
             if ClsCotacao.objects.filter(dtc_fk_id=dtc_id).exists():
                 cotacao = ClsCotacao.objects.get(dtc_fk_id=dtc_id)
                 return {'status': 200, 'cotacao': cotacao.toDict()}
