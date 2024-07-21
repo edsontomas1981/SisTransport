@@ -1,9 +1,11 @@
 from django.utils import timezone
 from django.db.models import Q
 from operacional.models.dtc import Dtc
-from operacional.models.cte import Cte
 from faturamento.models.faturas import Faturas
+from operacional.classes.cte import Cte
 from django.db import transaction
+from Classes.utils import dprint
+
 
 class FaturasManager:
     def __init__(self):
@@ -81,14 +83,31 @@ class FaturasManager:
             # Agrupa os DTCs por tomador
             dtcs_por_tomador = {}
             for dtc in dtcs:
-                tomador = dtc.tomador_fk
+                tomador = dtc.tomador_fk.cnpj_cpf
+                id_dtc = dtc.id
+                cte = Cte.obtem_cte_by_dtc(id_dtc)
                 if tomador not in dtcs_por_tomador:
                     dtcs_por_tomador[tomador] = []
-                dtcs_por_tomador[tomador].append(dtc)
+                dtcs_por_tomador[tomador].append(cte.to_dict())
 
-            # # Cria as faturas e associa os CTEs
-            # faturas_criadas = []
+            faturas_criadas = []
+
+            for pre_fatura in dtcs_por_tomador:
+                cte = dtcs_por_tomador.get(pre_fatura)
+                dprint(cte[0].get('dtc_fk').get('tomador'))
+                valor_total = 0.00
+                qtde_cte = 0
+                for dtc in dtcs_por_tomador.get(pre_fatura):
+                    valor_total += float(dtc.get('totalFrete'))
+                    qtde_cte += 1
+                faturas_criadas.append({cte[0].get('dtc_fk').get('tomador').get('raz_soc'):valor_total,'qtde_cte':qtde_cte})
+
+            for fatura in faturas_criadas:
+                dprint(fatura)
+
+            # Cria as faturas e associa os CTEs
             # for tomador, dtcs_lista in dtcs_por_tomador.items():
+            #     dprint(tomador,dtcs_lista)
             #     # Cria uma nova fatura para o tomador
             #     dados_fatura = {
             #         'emissor_id': dtcs_lista[0].remetente_fk.id,
@@ -100,8 +119,8 @@ class FaturasManager:
             #         'desconto': 0.00,
             #         'data_pagamento': None,
             #     }
-            #     fatura = FaturasManager().create_fatura(dados_fatura)
-            #     faturas_criadas.append(fatura)
+                # fatura = FaturasManager().create_fatura(dados_fatura)
+                # faturas_criadas.append(fatura)
 
                 # # Associa os CTEs da lista de DTCs à nova fatura
                 # for dtc in dtcs_lista:

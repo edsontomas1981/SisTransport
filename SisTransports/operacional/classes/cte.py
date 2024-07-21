@@ -83,7 +83,6 @@ class Cte():
         Cte ou None: O objeto Cte correspondente ao dtc_fk, se encontrado, caso contrário, retorna None.
         """
         try:
-            
             cte_obj = Mdl_cte.objects.get(dtc_fk=dtc_fk)
             return cte_obj
         except ObjectDoesNotExist:

@@ -24,6 +24,23 @@ class Faturas(models.Model):
     # status = models.CharField(max_length=10, choices=STATUS_CHOICES, default='pendente')  # Adicionado campo de status
     observacoes = models.TextField(null=True, blank=True)  # Adicionado campo para observações
 
+    def to_dict(self):
+        return {
+            'id': self.id,
+            'emissor': self.emissor_fk.nome if self.emissor_fk else None,
+            'sacado': self.sacado_fk.nome if self.sacado_fk else None,
+            'numero_fatura': self.numero_fatura,
+            'data_emissao': self.data_emissao.strftime('%Y-%m-%d'),
+            'vencimento': self.vencimento.strftime('%Y-%m-%d'),
+            'valor_total': self.valor_total,
+            'valor_a_pagar': self.valor_a_pagar,
+            'desconto': self.desconto,
+            'impostos': self.impostos,
+            'data_pagamento': self.data_pagamento.strftime('%Y-%m-%d') if self.data_pagamento else None,
+            'forma_pagamento': self.forma_pagamento,
+            'observacoes': self.observacoes,
+        }
+
     def __str__(self):
         return f'Fatura {self.numero_fatura} - {self.sacado_fk}'
 
