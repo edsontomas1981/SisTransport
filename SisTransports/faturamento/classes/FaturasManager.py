@@ -74,7 +74,7 @@ class FaturasManager:
 
     @staticmethod
     @transaction.atomic
-    def selecionar_dtc_com_cte_sem_fatura():
+    def selecionar_dtc_com_cte_sem_fatura(dados):
         try:
             dtcs = Dtc.objects.filter(
                 Q(frete_dtc__isnull=False) & Q(frete_dtc__faturas_fk__isnull=True)
@@ -92,18 +92,32 @@ class FaturasManager:
 
             faturas_criadas = []
 
-            for pre_fatura in dtcs_por_tomador:
-                cte = dtcs_por_tomador.get(pre_fatura)
-                dprint(cte[0].get('dtc_fk').get('tomador'))
+            for i,pre_fatura in enumerate(dtcs_por_tomador):
+                lista_ctes = []
+                ctes = dtcs_por_tomador.get(pre_fatura)
                 valor_total = 0.00
                 qtde_cte = 0
                 for dtc in dtcs_por_tomador.get(pre_fatura):
+                    lista_ctes.append(dtc.get('id'))
                     valor_total += float(dtc.get('totalFrete'))
                     qtde_cte += 1
-                faturas_criadas.append({cte[0].get('dtc_fk').get('tomador').get('raz_soc'):valor_total,'qtde_cte':qtde_cte})
+                
+                faturas_criadas.append(
+                    {'emissor_fk':dados.get('emissor_fk'),
+                     'sacado_fk':ctes[0].get('dtc_fk').get('tomador'),
+                     'data_emissao':dados.get('dt_emissao'),
+                     'vencimento':dados.get('dt_vcto'),
+                     'valor_total':valor_total,
+                     'qtde_cte':qtde_cte,
+                     'desconto':dados.get('emissor_fk'),
+                     'impostos':dados.get('emissor_fk'),
+                     'forma_pagamento':dados.get('emissor_fk'),
+                     'observacoes':dados.get('emissor_fk'),
+                     'cte':lista_ctes,
+                     })
 
-            for fatura in faturas_criadas:
-                dprint(fatura)
+            # for fatura in faturas_criadas:
+            #     dprint(fatura)
 
             # Cria as faturas e associa os CTEs
             # for tomador, dtcs_lista in dtcs_por_tomador.items():
@@ -130,7 +144,7 @@ class FaturasManager:
 
             # return faturas_criadas
 
-            return dtcs_por_tomador
+            return faturas_criadas
 
         except Exception as e:
             print(f"Erro ao selecionar DTCs com CTEs sem fatura: {e}")

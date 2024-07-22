@@ -45,7 +45,24 @@ class Parceiros():
                 return 404
         except Exception as e:
             print(f"Erro ao ler parceiro: {e}")
+            return 500   
+
+    @classmethod
+    def read_parceiro(cls, cnpj):
+        try:
+            if MdlParceiros.objects.filter(cnpj_cpf=cnpj).exists():
+                cls.parceiro = MdlParceiros.objects.filter(cnpj_cpf=cnpj).get()
+                contatos = Contato()
+                tabelas = TabelaFrete()
+                cls.parceiro.tabelasFrete = tabelas.get_tabelas_por_parceiro(cls.parceiro)
+                cls.parceiro.listaContatos = contatos.readContatos(cls.parceiro.id)
+                return cls.parceiro
+            else:
+                return 404
+        except Exception as e:
+            print(f"Erro ao ler parceiro: {e}")
             return 500        
+        
         
 
     def readParceiro(self,cnpj):
