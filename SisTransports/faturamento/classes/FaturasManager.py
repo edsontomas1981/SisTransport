@@ -19,16 +19,16 @@ class FaturasManager:
         self.obj_fatura.valor_total = dados.get('valor_total', 0.0)
         self.obj_fatura.valor_a_pagar = dados.get('valor_a_pagar', 0.0)
         self.obj_fatura.desconto = dados.get('desconto', 0.0)
-        self.obj_fatura.data_pagamento = dados.get('data_pagamento', None)
+        self.obj_fatura.data_pagamento = dados.get('data_pagamento')
 
     def create_fatura(self, dados):
-        try:
+        # try:
             self.save_or_update(dados)
             self.obj_fatura.save()
             return 200
-        except Exception as e:
-            print(f"Erro ao criar fatura: {e}")
-            return 300
+        # except Exception as e:
+        #     print(f"Erro ao criar fatura: {e}")
+        #     return 300
 
     def update_fatura(self, id_fatura, dados):
         try:

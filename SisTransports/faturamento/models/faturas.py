@@ -12,7 +12,6 @@ class Faturas(models.Model):
     
     emissor_fk = models.ForeignKey(Emissor, on_delete=models.CASCADE, null=True, related_name='faturaEmissor')
     sacado_fk = models.ForeignKey(Parceiros, on_delete=models.CASCADE, null=True, related_name='faturaParceiro')
-    numero_fatura = models.CharField(max_length=20, unique=True)  # Adicionado número da fatura
     data_emissao = models.DateField()
     vencimento = models.DateField()
     valor_total = models.FloatField()
@@ -28,8 +27,7 @@ class Faturas(models.Model):
         return {
             'id': self.id,
             'emissor': self.emissor_fk.nome if self.emissor_fk else None,
-            'sacado': self.sacado_fk.nome if self.sacado_fk else None,
-            'numero_fatura': self.numero_fatura,
+            'sacado': self.sacado_fk.raz_soc if self.sacado_fk else None,
             'data_emissao': self.data_emissao.strftime('%Y-%m-%d'),
             'vencimento': self.vencimento.strftime('%Y-%m-%d'),
             'valor_total': self.valor_total,

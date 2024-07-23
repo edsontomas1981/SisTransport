@@ -114,3 +114,15 @@ def string_para_data(data_str):
         return data
     except ValueError:
         print("Formato de data inválido. Utilize o formato 'YYYY-MM-DD'.")
+
+def converte_string_data(data_str):
+    formatos = ['%Y-%m-%d', '%d-%m-%Y', '%m-%d-%Y', '%Y/%m/%d', '%m/%d/%Y', '%d/%m/%Y', '%y/%m/%d']
+
+    for formato in formatos:
+        try:
+            data = datetime.strptime(data_str, formato).date()
+            return data
+        except ValueError:
+            continue
+    print("Formato de data inválido. Utilize um dos formatos suportados: 'YYYY-MM-DD', 'DD-MM-YYYY', 'MM-DD-YYYY', 'YYYY/MM/DD', 'MM/DD/YYYY', 'DD/MM/YYYY', 'YY/MM/DD'.")
+    return None
