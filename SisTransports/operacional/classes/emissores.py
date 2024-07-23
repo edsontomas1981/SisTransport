@@ -8,6 +8,11 @@ class EmissorManager:
     @classmethod
     def get_emissores_por_cnpj(cls, cnpj):
         return Emissor.objects.filter(cnpj=cnpj)
+    
+    @classmethod
+    def get_emissores_por_cnpj(cls, cnpj):
+        emissor = Emissor.objects.filter(cnpj=cnpj)
+        return emissor[0].to_dict()
 
     @classmethod
     def get_emissores_por_id(cls, id):

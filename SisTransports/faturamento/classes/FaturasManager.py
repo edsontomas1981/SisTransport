@@ -105,14 +105,14 @@ class FaturasManager:
                 faturas_criadas.append(
                     {'emissor_fk':dados.get('emissor_fk'),
                      'sacado_fk':ctes[0].get('dtc_fk').get('tomador'),
-                     'data_emissao':dados.get('dt_emissao'),
-                     'vencimento':dados.get('dt_vcto'),
+                     'data_emissao':dados.get('dt_emissao','17/10/07'),
+                     'vencimento':dados.get('dt_vcto','17/10/07'),
                      'valor_total':valor_total,
                      'qtde_cte':qtde_cte,
-                     'desconto':dados.get('emissor_fk'),
-                     'impostos':dados.get('emissor_fk'),
-                     'forma_pagamento':dados.get('emissor_fk'),
-                     'observacoes':dados.get('emissor_fk'),
+                     'desconto':dados.get('desconto',0.00),
+                     'impostos':dados.get('impostos',0.00),
+                     'forma_pagamento':dados.get('forma_pagamento','Faturado'),
+                     'observacoes':dados.get('obs'),
                      'cte':lista_ctes,
                      })
 

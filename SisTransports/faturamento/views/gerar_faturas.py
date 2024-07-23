@@ -21,8 +21,30 @@ def gerar_faturas (request):
 
     for i,fatura in enumerate(pre_faturas):
         parceiro = Parceiros.read_parceiro(fatura.get('sacado_fk').get('cnpj_cpf'))
-        emissor = EmissorManager.get_emissores_por_cnpj('03211528000106')
-        dprint(emissor.items)
+        emissor = EmissorManager.get_emissores_por_cnpj('23926683000109')
+        ctes = fatura.get('cte')
+        sacado = fatura.get('sacado_fk').get('raz_soc')
+
+        print('-----------------------------------------------------------------')
+        print('Fatura Nº : ' + str(i+1))
+        print('Tomador : ' + emissor.get('razao'))
+        print('Sacado : ' + sacado)
+        print('Dt Emissão : ' + str(fatura.get('data_emissao')))
+        print('Vencimento : ' + str(fatura.get('vencimento')))
+        print('Valor : ' + str(fatura.get('valor_total')))
+        print('Descontos : ' + str(fatura.get('desconto')))
+        print('Impostos : ' + str(fatura.get('impostos')))
+        print('Valor Total : ' + str(fatura.get('valor_total')))
+
+
+        for cte in ctes:
+            print(str(Cte.obtem_cte_id(cte)))
+        
+        print('observacoes')
+        print(fatura.get('observacoes','Sem Observações'))
+        
+
+        
         
 
     return JsonResponse({'status': pre_faturas}) 

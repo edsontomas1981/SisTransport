@@ -132,7 +132,6 @@ class Cte():
         Cte ou None: O objeto Cte correspondente ao id, se encontrado, caso contrário, retorna None.
         """
         try:
-            print(type(Mdl_cte.objects.get(id=idCte)))
             return Mdl_cte.objects.get(id=idCte)
         except ObjectDoesNotExist:
             return None
