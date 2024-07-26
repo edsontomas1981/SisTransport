@@ -11,7 +11,7 @@ import json
 
 
 @login_required(login_url='/auth/entrar/')
-@require_http_methods(["GET"])
+@require_http_methods(["POST"])
 def gerar_faturas (request):
     data={'dataEmissao':'17/10/07','vencimento':'17/10/07'}
     # data = json.loads(request.body.decode('utf-8'))
@@ -47,12 +47,11 @@ def gerar_faturas (request):
                'desconto':dados_da_fatura.get('desconto'),
                }
         
-        fatura = FaturasManager()
-        fatura.create_fatura(dados)
+        # fatura = FaturasManager()
+        # fatura.create_fatura(dados)
 
-        lista_faturas.append(fatura.obj_fatura.to_dict())
+        # lista_faturas.append(fatura.obj_fatura.to_dict())
 
-        dprint(fatura.obj_fatura.to_dict())
 
         # for cte in ctes:
         #     print(str(Cte.obtem_cte_id(cte)))
@@ -60,4 +59,4 @@ def gerar_faturas (request):
         # print('observacoes')
         # print(dados_da_fatura.get('observacoes','Sem Observações'))
         
-    return JsonResponse({'status': lista_faturas}) 
+    return JsonResponse({'status': 200,'faturas':lista_faturas}) 

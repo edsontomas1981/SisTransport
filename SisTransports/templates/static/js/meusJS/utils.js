@@ -625,3 +625,31 @@ const loadEmissores = async (selectDoEmissor) => {
       selectEmissor.appendChild(option);
   });
 };
+
+// Função para adicionar dias a uma data
+function adicionarDias(dataInicial, dias) {
+  const partesData = dataInicial.split('/');
+  const dia = parseInt(partesData[0], 10);
+  const mes = parseInt(partesData[1], 10) - 1; // Os meses em JavaScript são baseados em zero
+  const ano = parseInt(partesData[2], 10);
+
+  const data = new Date(ano, mes, dia);
+  data.setDate(data.getDate() + parseInt(dias, 10)); // Adicionando dias corretamente
+
+  const diaFinal = String(data.getDate()).padStart(2, '0');
+  const mesFinal = String(data.getMonth() + 1).padStart(2, '0'); // Ajuste do mês
+  const anoFinal = data.getFullYear();
+
+  return `${diaFinal}/${mesFinal}/${anoFinal}`;
+}
+
+// Função para converter a data para o formato "yyyy-MM-dd"
+function converterDataFormato(dataString) {
+  const partes = dataString.split('/');
+  const dia = partes[0];
+  const mes = partes[1];
+  const ano = partes[2];
+
+  // Criar uma nova data no formato desejado ("yyyy-MM-dd")
+  return `${ano}-${mes}-${dia}`;
+}
