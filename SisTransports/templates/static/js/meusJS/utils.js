@@ -653,3 +653,22 @@ function converterDataFormato(dataString) {
   // Criar uma nova data no formato desejado ("yyyy-MM-dd")
   return `${ano}-${mes}-${dia}`;
 }
+
+const conectaNewEndpoint = async()=>{
+  let conexao = new Conexao(url, dados);
+  try {
+      const result = await conexao.sendPostRequest();
+      return result
+  } catch (error) {
+      console.error(error); // Imprime a mensagem de erro
+      return error
+  }
+}
+
+const dadosParceiro = async (cnpj)=>{
+  let response  = await connEndpoint('/parceiros/read_parceiro_json/', {'cnpj_cpf':cnpj});
+  if (response.status ==200){
+      return response.parceiro    
+  }
+  return false
+}

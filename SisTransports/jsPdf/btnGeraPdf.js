@@ -3,7 +3,6 @@ let btnGerarPdfRomaneio = document.getElementById("gerarPdfSemFrete");
 btnGerarPdfRomaneio.addEventListener("click",async()=>{
     let idManifesto = document.getElementById('spanNumManifesto').textContent
     let response  = await connEndpoint('/operacional/get_manifesto_by_num/', {'numManifesto':idManifesto});
-    console.log(response.documentos)
     // geraPdfRomaneio();
 })                        
 
