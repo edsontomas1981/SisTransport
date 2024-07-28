@@ -654,7 +654,7 @@ function converterDataFormato(dataString) {
   return `${ano}-${mes}-${dia}`;
 }
 
-const conectaNewEndpoint = async()=>{
+const conectaEndpoint = async(url, dados)=>{
   let conexao = new Conexao(url, dados);
   try {
       const result = await conexao.sendPostRequest();

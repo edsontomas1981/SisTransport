@@ -8,13 +8,17 @@ from operacional.classes.emissores import EmissorManager
 from operacional.classes.cte import Cte
 from Classes.utils import dprint,converte_string_data
 import json
+from datetime import datetime
+
 
 
 @login_required(login_url='/auth/entrar/')
 @require_http_methods(["POST"])
 def gerar_faturas (request):
-    data={'dataEmissao':'17/10/07','vencimento':'17/10/07'}
-    # data = json.loads(request.body.decode('utf-8'))
+    # data={'dataEmissao':'17/10/07','vencimento':'17/10/07'}
+    data = json.loads(request.body.decode('utf-8'))
+    dprint(data)
+
     emissor = "data.get('emissor')"
     dados = {'emissor_fk':emissor}
 
@@ -37,14 +41,12 @@ def gerar_faturas (request):
         # print('Descontos : ' + str(dados_da_fatura.get('desconto')))
         # print('Impostos : ' + str(dados_da_fatura.get('impostos')))
         # print('Valor Total : ' + str(dados_da_fatura.get('valor_total')))
+        # Obtém a data atual
+        data_atual = datetime.now().date()
 
-        dados={'emissor_id':emissor,
-               'sacado_id':parceiro,
-               'data_emissao':converte_string_data(data.get('dataEmissao','17/10/07')),
-               'vencimento':converte_string_data(data.get('vencimento','17/10/07')),
+        dados={'data_emissao':data_atual,
                'valor_total':dados_da_fatura.get('valor_total'),
                'valor_a_pagar':float(dados_da_fatura.get('valor_total'))-float(dados_da_fatura.get('desconto')),
-               'desconto':dados_da_fatura.get('desconto'),
                }
         
         # fatura = FaturasManager()
@@ -60,3 +62,13 @@ def gerar_faturas (request):
         # print(dados_da_fatura.get('observacoes','Sem Observações'))
         
     return JsonResponse({'status': 200,'faturas':lista_faturas}) 
+
+# def prepareData (data):
+#     return {'emissor_id':EmissorManager.get_emissores_por_id(data.get('fatAutomaticoEmissor')),
+#                'sacado_id':Parceiros.read_parceiro(data.get('cnpjParceiroFaturamento')),
+#                'data_emissao':converte_string_data(data.get('dataEmissao','17/10/07')),
+#                'vencimento':converte_string_data(data.get('dataVencimento','17/10/07')),
+#                'valor_total':dados_da_fatura.get('valor_total',0.00),
+#                'valor_a_pagar':float(dados_da_fatura.get('valor_total'))-float(dados_da_fatura.get('desconto')),
+#                'desconto':dados_da_fatura.get('desconto'),
+#                }
