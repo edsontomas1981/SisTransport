@@ -101,10 +101,14 @@ class FaturasManager:
                     lista_ctes.append(dtc.get('id'))
                     valor_total += float(dtc.get('totalFrete'))
                     qtde_cte += 1
-                
+
+                dprint('data',ctes[0].get('tipoFrete'))
                 faturas_criadas.append(
                     {'emissor_fk':dados.get('emissor_fk'),
                      'sacado_fk':ctes[0].get('dtc_fk').get('tomador'),
+                     'dt_emissao_cte':ctes[0].get('data_cadastro'),
+                     'sacado_fk_cnpj':ctes[0].get('dtc_fk').get('tomador').get('cnpj_cpf'),
+                     'tipo_frete': ctes[0].get('dtc_fk').get('tipoFrete'),
                      'data_emissao':dados.get('dt_emissao','17/10/07'),
                      'vencimento':dados.get('dt_vcto','17/10/07'),
                      'valor_total':valor_total,
@@ -115,34 +119,6 @@ class FaturasManager:
                      'observacoes':dados.get('obs'),
                      'cte':lista_ctes,
                      })
-
-            # for fatura in faturas_criadas:
-            #     dprint(fatura)
-
-            # Cria as faturas e associa os CTEs
-            # for tomador, dtcs_lista in dtcs_por_tomador.items():
-            #     dprint(tomador,dtcs_lista)
-            #     # Cria uma nova fatura para o tomador
-            #     dados_fatura = {
-            #         'emissor_id': dtcs_lista[0].remetente_fk.id,
-            #         'sacado_id': tomador.id,
-            #         'data_emissao': timezone.now().date(),
-            #         'vencimento': timezone.now().date() + timezone.timedelta(days=30),
-            #         'valor_total': sum(dtc.frete_dtc.total_frete for dtc in dtcs_lista),
-            #         'valor_a_pagar': sum(dtc.frete_dtc.total_frete for dtc in dtcs_lista),
-            #         'desconto': 0.00,
-            #         'data_pagamento': None,
-            #     }
-                # fatura = FaturasManager().create_fatura(dados_fatura)
-                # faturas_criadas.append(fatura)
-
-                # # Associa os CTEs da lista de DTCs à nova fatura
-                # for dtc in dtcs_lista:
-                #     cte = Cte.objects.get(dtc_fk=dtc)
-                #     cte.faturas_fk = fatura
-                #     cte.save()
-
-            # return faturas_criadas
 
             return faturas_criadas
 
