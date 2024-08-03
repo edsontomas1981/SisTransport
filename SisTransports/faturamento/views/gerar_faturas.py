@@ -13,21 +13,44 @@ from datetime import datetime
 
 
 @login_required(login_url='/auth/entrar/')
-@require_http_methods(["POST"])
+@require_http_methods(["POST","GET"])
 def gerar_faturas (request):
     # data={'dataEmissao':'17/10/07','vencimento':'17/10/07'}
-    data = json.loads(request.body.decode('utf-8'))
+    dados_externos = json.loads(request.body.decode('utf-8'))
+    
+
+    print(dados_externos)
+
+    data_filtro_inicial = dados_externos.get('dataInicio',None)
+    data_filtro_final = dados_externos.get('dataFinal',None)
+    cnpj_filtro = dados_externos.get('cnpjParceiroFaturamento',None)
+    modalidade_frete = dados_externos.get('tipoFrete',None)
+
+    dprint(data_filtro_inicial,data_filtro_final,cnpj_filtro,modalidade_frete)
+
+
     # Obtém a data atual
     data_atual = datetime.now().date() 
-    emissor =EmissorManager.get_emissores_por_id(data.get('fatAutomaticoEmissor'))
+    emissor =EmissorManager.get_emissores_por_id(dados_externos.get('fatAutomaticoEmissor'))
 
     dados =  {'data_emissao':data_atual,
                 'emissor_fk':emissor,
-                'vencimento':data.get('dataVencimento')
-                    }
-    pre_faturas = FaturasManager.selecionar_dtc_com_cte_sem_fatura(dados)
+                'vencimento':dados_externos.get('dataVencimento')
+             }
+    
+    obj_ctes = FaturasManager()
+    dtcs_com_cte_sem_fatura = obj_ctes.selecionar_dtc_com_cte_sem_fatura()
 
-    dprint(filtrar_dados(pre_faturas,periodo_inicio=str_to_date('15/02/2024'),periodo_fim=str_to_date('25/02/2024')))
+    ctes_sem_fatura = FaturasManager.obtem_ctes_sem_fatura(dtcs_com_cte_sem_fatura)
+
+    dados_filtrados = filtrar_dados(ctes_sem_fatura,periodo_inicio=str_to_date(data_filtro_inicial),periodo_fim=str_to_date(data_filtro_final),
+                                    sacado_fk_cnpj=cnpj_filtro,tipo_frete=modalidade_frete)
+    
+
+    ctes_agrupados_por_tomador =  FaturasManager.agrupa_dtcs_por_tomador(dados_filtrados)
+
+
+    pre_faturas = FaturasManager.criar_faturas(dados_externos,ctes_agrupados_por_tomador)
 
     lista_faturas = []
     for i,dados_da_fatura in enumerate(pre_faturas):
@@ -36,71 +59,106 @@ def gerar_faturas (request):
         sacado = dados_da_fatura.get('sacado_fk')
 
         dados['valor_total']=dados_da_fatura.get('valor_total')
-        dados['valor_a_pagar']=float(dados_da_fatura.get('valor_total'))-float(dados_da_fatura.get('desconto'))
+        dados['valor_a_pagar']=float(dados_da_fatura.get('valor_total'))-float(dados_da_fatura.get('desconto',0.00))
         
         print('-----------------------------------------------------------------')
         print('Fatura Nº : ' + str(i+1))
         print('Tomador : ' + str(emissor))
-        print('Sacado : ' + str(sacado.get('id')))
+        print('Sacado : ' + str(sacado.get('raz_soc')))
         print('Dt Emissão : ' + str(dados.get('data_emissao')))
         print('Vencimento : ' + str(dados.get('vencimento')))
         print('Valor : ' + str(dados_da_fatura.get('valor_total')))
         print('Descontos : ' + str(dados_da_fatura.get('desconto')))
         print('Impostos : ' + str(dados_da_fatura.get('impostos')))
         print('Valor Total : ' + str(dados_da_fatura.get('valor_total')))
+        print('Ctes : ' + str(ctes))
+
         
-        # fatura = FaturasManager()
-        # fatura.create_fatura(dados)
+    #     # fatura = FaturasManager()
+    #     # fatura.create_fatura(dados)
 
-        # lista_faturas.append(fatura.obj_fatura.to_dict())
-
-
-        # for cte in ctes:
-        #     print(str(Cte.obtem_cte_id(cte)))
-        
-        # print('observacoes')
-        # print(dados_da_fatura.get('observacoes','Sem Observações'))
-        
-    return JsonResponse({'status': 200,'faturas':lista_faturas}) 
-
-# def prepareData (data):
-#     return {'emissor_id':EmissorManager.get_emissores_por_id(data.get('fatAutomaticoEmissor')),
-#                'sacado_id':Parceiros.read_parceiro(data.get('cnpjParceiroFaturamento')),
-#                'data_emissao':converte_string_data(data.get('dataEmissao','17/10/07')),
-#                'vencimento':converte_string_data(data.get('dataVencimento','17/10/07')),
-#                'valor_total':dados_da_fatura.get('valor_total',0.00),
-#                'valor_a_pagar':float(dados_da_fatura.get('valor_total'))-float(dados_da_fatura.get('desconto')),
-#                'desconto':dados_da_fatura.get('desconto'),
-#                }
+    #     # lista_faturas.append(fatura.obj_fatura.to_dict())
 
 
-# Função para converter string de data para objeto datetime
-def str_to_date(date_str):
-    try:
-        dprint(date_str)
-        return datetime.strptime(date_str, '%d/%m/%y')
-    except ValueError:
-        return None
+    #     for cte in ctes:
+    #         new_cte = Cte.obtem_cte_id(cte)
+    #         print(new_cte.to_dict())
+    #         break
+
+    return JsonResponse({'status': 200}) 
+
+def str_to_date(data_str):
+    formatos = [
+        "%Y-%m-%d %H:%M:%S",  # Formato que você está recebendo
+        "%Y-%m-%d",
+        "%d/%m/%Y",
+        "%m/%d/%Y",
+        "%d-%m-%Y",
+        "%Y/%m/%d",
+        "%Y.%m.%d",
+        "%d.%m.%Y",
+        "%d %b %Y",
+        "%d %B %Y",
+        "%Y-%m-%d %H:%M",
+        "%d/%m/%Y %H:%M:%S",
+        "%d/%m/%Y %H:%M",
+        "%d-%m-%Y %H:%M:%S",
+        "%d-%m-%Y %H:%M",
+        "%Y/%m/%d %H:%M:%S",
+        "%Y/%m/%d %H:%M",
+        "%d.%m.%Y %H:%M:%S",
+        "%d.%m.%Y %H:%M",
+        "%d %b %Y %H:%M:%S",
+        "%d %b %Y %H:%M",
+        "%d %B %Y %H:%M:%S",
+        "%d %B %Y %H:%M"
+    ]
+    
+    for formato in formatos:
+        try:
+            return datetime.strptime(data_str, formato)
+        except ValueError:
+            continue
+    return None
     
 # Função para filtrar os dados
-def filtrar_dados(dados, periodo_inicio=None, periodo_fim=None, sacado=None, tipo_frete=None, sacado_fk_cnpj=None):
+def filtrar_dados(ctes, periodo_inicio=None, periodo_fim=None, tipo_frete=None, sacado_fk_cnpj=None):
+    
     resultado = []
-    
-    for item in dados:
-        print(item.get('dt_emissao_cte'))
-        data_emissao = str_to_date(item.get('dt_emissao_cte'))
+    for cte in ctes:
+
+        # Extraindo a data de emissão e convertendo
+        data_emissao = str_to_date(cte.get('data_cadastro'))
+        cnpj_sacado = cte.get('dtc_fk').get('tomador').get('cnpj_cpf')
+        modal_frete = cte.get('dtc_fk').get('tipoFrete')
+
+        # Filtro por CNPJ do sacado
+        if sacado_fk_cnpj and cnpj_sacado != sacado_fk_cnpj:
+            continue
+
+        # Filtros por período
+        if  periodo_inicio and data_emissao < periodo_inicio:
+            continue
+                
+        if periodo_fim and data_emissao > periodo_fim:
+            continue
         
-        if periodo_inicio and data_emissao and data_emissao < periodo_inicio:
+        # Filtro por tipo de frete
+        if tipo_frete != 0 and modal_frete != tipo_frete:
             continue
-        if periodo_fim and data_emissao and data_emissao > periodo_fim:
-            continue
-        if sacado and sacado.lower() not in item.get('sacado_fk', {}).get('raz_soc', '').lower():
-            continue
-        if tipo_frete and item.get('tipo_frete') != tipo_frete:
-            continue
-        if sacado_fk_cnpj and item.get('sacado_fk_cnpj') != sacado_fk_cnpj:
-            continue
-        
-        resultado.append(item)
-    
+
+        resultado.append(cte)
+
     return resultado
+
+
+def prepara_dados_pre_fatura(ctes_agrupados_por_tomador):
+    dados_pre_fatura = []
+    for ctes_por_tomador in ctes_agrupados_por_tomador:
+        for cte in ctes_agrupados_por_tomador.get(ctes_por_tomador):
+            print(cte.get('data_cadastro'))
+
+    return dados_pre_fatura
+
+
+
