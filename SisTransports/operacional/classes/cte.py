@@ -171,4 +171,17 @@ class Cte():
             # Se a Nota_fiscal não for encontrada
             return None
 
+    def adicionar_fatura(self, fatura):
+        """
+        Adiciona uma fatura ao CTe.
+
+        Args:
+            fatura (Faturas): A fatura a ser associada ao CTe.
+
+        Returns:
+            None
+        """
+        self.faturas_fk = fatura
+        self.save()
+
 

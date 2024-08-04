@@ -126,3 +126,66 @@ def converte_string_data(data_str):
             continue
     print("Formato de data inválido. Utilize um dos formatos suportados: 'YYYY-MM-DD', 'DD-MM-YYYY', 'MM-DD-YYYY', 'YYYY/MM/DD', 'MM/DD/YYYY', 'DD/MM/YYYY', 'YY/MM/DD'.")
     return None
+
+def str_to_date(data_str):
+    """
+    Converte uma string de data para um objeto datetime.
+
+    Esta função tenta converter uma string de data para um objeto datetime utilizando vários formatos comuns.
+
+    Args:
+        data_str (str): A string contendo a data a ser convertida.
+
+    Returns:
+        datetime or None: Um objeto datetime se a conversão for bem-sucedida, caso contrário, retorna None.
+    """
+    formatos = [
+        "%Y-%m-%d %H:%M:%S",  # Formato que você está recebendo
+        "%Y-%m-%d",
+        "%d/%m/%Y",
+        "%m/%d/%Y",
+        "%d-%m-%Y",
+        "%Y/%m/%d",
+        "%Y.%m.%d",
+        "%d.%m.%Y",
+        "%d %b %Y",
+        "%d %B %Y",
+        "%Y-%m-%d %H:%M",
+        "%d/%m/%Y %H:%M:%S",
+        "%d/%m/%Y %H:%M",
+        "%d-%m-%Y %H:%M:%S",
+        "%d-%m-%Y %H:%M",
+        "%Y/%m/%d %H:%M:%S",
+        "%Y/%m/%d %H:%M",
+        "%d.%m.%Y %H:%M:%S",
+        "%d.%m.%Y %H:%M",
+        "%d %b %Y %H:%M:%S",
+        "%d %b %Y %H:%M",
+        "%d %B %Y %H:%M:%S",
+        "%d %B %Y %H:%M"
+    ]
+    
+    for formato in formatos:
+        try:
+            return datetime.strptime(data_str, formato)
+        except ValueError:
+            continue
+    return None
+
+def transformar_data(data_str):
+    """
+    Transforma uma string de data no formato YYYY-MM-DD para um objeto datetime.
+
+    Args:
+        data_str (str): A string contendo a data a ser convertida no formato YYYY-MM-DD.
+
+    Returns:
+        datetime or None: Um objeto datetime no formato datetime(YYYY, M, D) se a conversão for bem-sucedida, caso contrário, retorna None.
+    """
+    try:
+        if data_str:
+            data = datetime.strptime(data_str, "%Y-%m-%d")
+            return datetime(data.year, data.month, data.day)
+    except ValueError as e:
+        print(f"Erro ao converter a data: {e}")
+        return None
