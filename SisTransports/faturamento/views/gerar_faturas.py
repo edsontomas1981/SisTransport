@@ -15,18 +15,11 @@ from datetime import datetime
 @login_required(login_url='/auth/entrar/')
 @require_http_methods(["POST","GET"])
 def gerar_faturas (request):
-    # data={'dataEmissao':'17/10/07','vencimento':'17/10/07'}
     dados_externos = json.loads(request.body.decode('utf-8'))
-    
-
-    print(dados_externos)
-
     data_filtro_inicial = dados_externos.get('dataInicio',None)
     data_filtro_final = dados_externos.get('dataFinal',None)
     cnpj_filtro = dados_externos.get('cnpjParceiroFaturamento',None)
     modalidade_frete = dados_externos.get('tipoFrete',None)
-
-    dprint(data_filtro_inicial,data_filtro_final,cnpj_filtro,modalidade_frete)
 
 
     # Obtém a data atual
@@ -41,16 +34,17 @@ def gerar_faturas (request):
     obj_ctes = FaturasManager()
     dtcs_com_cte_sem_fatura = obj_ctes.selecionar_dtc_com_cte_sem_fatura()
 
+    
     ctes_sem_fatura = FaturasManager.obtem_ctes_sem_fatura(dtcs_com_cte_sem_fatura)
 
     dados_filtrados = filtrar_dados(ctes_sem_fatura,periodo_inicio=str_to_date(data_filtro_inicial),periodo_fim=str_to_date(data_filtro_final),
                                     sacado_fk_cnpj=cnpj_filtro,tipo_frete=modalidade_frete)
-    
 
     ctes_agrupados_por_tomador =  FaturasManager.agrupa_dtcs_por_tomador(dados_filtrados)
 
-
     pre_faturas = FaturasManager.criar_faturas(dados_externos,ctes_agrupados_por_tomador)
+
+    dprint(pre_faturas)
 
     lista_faturas = []
     for i,dados_da_fatura in enumerate(pre_faturas):
@@ -74,22 +68,21 @@ def gerar_faturas (request):
         print('Ctes : ' + str(ctes))
 
         
-    #     # fatura = FaturasManager()
-    #     # fatura.create_fatura(dados)
+        # fatura = FaturasManager()
+        # fatura.create_fatura(dados)
 
-    #     # lista_faturas.append(fatura.obj_fatura.to_dict())
+        # lista_faturas.append(fatura.obj_fatura.to_dict())
 
-
-    #     for cte in ctes:
-    #         new_cte = Cte.obtem_cte_id(cte)
-    #         print(new_cte.to_dict())
-    #         break
+        # for cte in ctes:
+        #     new_cte = Cte.obtem_cte_id(cte)
+        #     print(new_cte.to_dict())
+        #     break
 
     return JsonResponse({'status': 200}) 
 
 def str_to_date(data_str):
     formatos = [
-        "%Y-%m-%d %H:%M:%S",  # Formato que você está recebendo
+        "%Y-%m-%d %H:%M:%S",
         "%Y-%m-%d",
         "%d/%m/%Y",
         "%m/%d/%Y",
@@ -121,32 +114,34 @@ def str_to_date(data_str):
             continue
     return None
     
-# Função para filtrar os dados
-def filtrar_dados(ctes, periodo_inicio=None, periodo_fim=None, tipo_frete=None, sacado_fk_cnpj=None):
-    
+def filtrar_dados(ctes, periodo_inicio=None, periodo_fim=None, tipo_frete=None, sacado_fk_cnpj=0):
     resultado = []
+    
     for cte in ctes:
+        # Extraindo a data de cadastro do CTe e convertendo para datetime
+        data_cadastro = str_to_date(cte.get('data_cadastro'))
 
-        # Extraindo a data de emissão e convertendo
-        data_emissao = str_to_date(cte.get('data_cadastro'))
+        # Extraindo o CNPJ do sacado (tomador)
         cnpj_sacado = cte.get('dtc_fk').get('tomador').get('cnpj_cpf')
+
+        # Extraindo o tipo de frete
         modal_frete = cte.get('dtc_fk').get('tipoFrete')
 
+
         # Filtro por CNPJ do sacado
-        if sacado_fk_cnpj and cnpj_sacado != sacado_fk_cnpj:
-            continue
+        # if sacado_fk_cnpj and cnpj_sacado != sacado_fk_cnpj:
+        #     continue
 
-        # Filtros por período
-        if  periodo_inicio and data_emissao < periodo_inicio:
-            continue
+        # # Filtros por período
+        # if periodo_inicio and data_cadastro < periodo_inicio:
+        #     continue
                 
-        if periodo_fim and data_emissao > periodo_fim:
-            continue
+        # if periodo_fim and data_cadastro > periodo_fim:
+        #     continue
         
-        # Filtro por tipo de frete
-        if tipo_frete != 0 and modal_frete != tipo_frete:
-            continue
 
+    # Filtro por tipo de frete
+    if not tipo_frete or int(modal_frete) == int(tipo_frete):
         resultado.append(cte)
 
     return resultado

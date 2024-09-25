@@ -201,12 +201,15 @@ class FaturasManager:
             list: Lista de dicionários contendo os dados das faturas criadas, ou None em caso de erro.
         """
         try:
+
+            dprint(dados_externos)
             faturas_criadas = []
 
             for tomador, ctes in dtcs_por_tomador.items():
                 valor_total = sum(float(cte['totalFrete']) for cte in ctes)
                 qtde_cte = len(ctes)
                 lista_ctes = [{'cte':cte['id'],'data_cadastro':cte['data_cadastro']} for cte in ctes]
+
                 fatura = {
                     'emissor_fk': dados_externos.get('emissor_fk'),
                     'sacado_fk': ctes[0].get('dtc_fk').get('tomador'),
@@ -214,7 +217,7 @@ class FaturasManager:
                     'sacado_fk_cnpj': ctes[0].get('dtc_fk').get('tomador').get('cnpj_cpf'),
                     'tipo_frete': ctes[0].get('dtc_fk').get('tipoFrete'),
                     'data_emissao': dados_externos.get('dt_emissao', '17/10/07'),
-                    'vencimento': dados_externos.get('dt_vcto', '17/10/07'),
+                    'vencimento': dados_externos.get('dataVencimento', '17/10/07'),
                     'valor_total': valor_total,
                     'qtde_cte': qtde_cte,
                     'desconto': dados_externos.get('desconto', 0.00),
