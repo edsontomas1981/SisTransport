@@ -202,7 +202,6 @@ class FaturasManager:
         """
         try:
 
-            dprint(dados_externos)
             faturas_criadas = []
 
             for tomador, ctes in dtcs_por_tomador.items():

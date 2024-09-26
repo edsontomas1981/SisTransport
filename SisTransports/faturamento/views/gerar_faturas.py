@@ -6,7 +6,7 @@ from faturamento.classes.FaturasManager import FaturasManager
 from parceiros.classes.parceiros import Parceiros
 from operacional.classes.emissores import EmissorManager
 from operacional.classes.cte import Cte
-from Classes.utils import dprint,converte_string_data
+from Classes.utils import dprint,converte_string_data,str_to_date
 import json
 from datetime import datetime
 
@@ -38,13 +38,11 @@ def gerar_faturas (request):
     ctes_sem_fatura = FaturasManager.obtem_ctes_sem_fatura(dtcs_com_cte_sem_fatura)
 
     dados_filtrados = filtrar_dados(ctes_sem_fatura,periodo_inicio=str_to_date(data_filtro_inicial),periodo_fim=str_to_date(data_filtro_final),
-                                    sacado_fk_cnpj=cnpj_filtro,tipo_frete=modalidade_frete)
+                                    filtro_sacado_fk_cnpj=cnpj_filtro,filtro_tipo_frete=modalidade_frete)
 
     ctes_agrupados_por_tomador =  FaturasManager.agrupa_dtcs_por_tomador(dados_filtrados)
 
     pre_faturas = FaturasManager.criar_faturas(dados_externos,ctes_agrupados_por_tomador)
-
-    dprint(pre_faturas)
 
     lista_faturas = []
     for i,dados_da_fatura in enumerate(pre_faturas):
@@ -55,8 +53,24 @@ def gerar_faturas (request):
         dados['valor_total']=dados_da_fatura.get('valor_total')
         dados['valor_a_pagar']=float(dados_da_fatura.get('valor_total'))-float(dados_da_fatura.get('desconto',0.00))
         
+        # print('-----------------------------------------------------------------')
+        # print('Fatura Nº : ' + str(i+1))
+        # print('Tomador : ' + str(emissor))
+        # print('Sacado : ' + str(sacado.get('raz_soc')))
+        # print('Dt Emissão : ' + str(dados.get('data_emissao')))
+        # print('Vencimento : ' + str(dados.get('vencimento')))
+        # print('Valor : ' + str(dados_da_fatura.get('valor_total')))
+        # print('Descontos : ' + str(dados_da_fatura.get('desconto')))
+        # print('Impostos : ' + str(dados_da_fatura.get('impostos')))
+        # print('Valor Total : ' + str(dados_da_fatura.get('valor_total')))
+        # print('Ctes : ' + str(ctes))
+
+        
+        fatura = FaturasManager()
+        fatura.create_fatura(dados)
+        dict_fatura = fatura.obj_fatura.to_dict()
         print('-----------------------------------------------------------------')
-        print('Fatura Nº : ' + str(i+1))
+        print('Fatura Nº : ' + str(dict_fatura.get('id')))
         print('Tomador : ' + str(emissor))
         print('Sacado : ' + str(sacado.get('raz_soc')))
         print('Dt Emissão : ' + str(dados.get('data_emissao')))
@@ -67,54 +81,17 @@ def gerar_faturas (request):
         print('Valor Total : ' + str(dados_da_fatura.get('valor_total')))
         print('Ctes : ' + str(ctes))
 
-        
-        # fatura = FaturasManager()
-        # fatura.create_fatura(dados)
+        lista_faturas.append(fatura.obj_fatura.to_dict())
 
-        # lista_faturas.append(fatura.obj_fatura.to_dict())
-
-        # for cte in ctes:
-        #     new_cte = Cte.obtem_cte_id(cte)
-        #     print(new_cte.to_dict())
-        #     break
+        for cte in ctes:
+            new_cte = Cte.obtem_cte_id(cte.get('cte'))
+            # print(new_cte.to_dict())
+            break
 
     return JsonResponse({'status': 200}) 
 
-def str_to_date(data_str):
-    formatos = [
-        "%Y-%m-%d %H:%M:%S",
-        "%Y-%m-%d",
-        "%d/%m/%Y",
-        "%m/%d/%Y",
-        "%d-%m-%Y",
-        "%Y/%m/%d",
-        "%Y.%m.%d",
-        "%d.%m.%Y",
-        "%d %b %Y",
-        "%d %B %Y",
-        "%Y-%m-%d %H:%M",
-        "%d/%m/%Y %H:%M:%S",
-        "%d/%m/%Y %H:%M",
-        "%d-%m-%Y %H:%M:%S",
-        "%d-%m-%Y %H:%M",
-        "%Y/%m/%d %H:%M:%S",
-        "%Y/%m/%d %H:%M",
-        "%d.%m.%Y %H:%M:%S",
-        "%d.%m.%Y %H:%M",
-        "%d %b %Y %H:%M:%S",
-        "%d %b %Y %H:%M",
-        "%d %B %Y %H:%M:%S",
-        "%d %B %Y %H:%M"
-    ]
     
-    for formato in formatos:
-        try:
-            return datetime.strptime(data_str, formato)
-        except ValueError:
-            continue
-    return None
-    
-def filtrar_dados(ctes, periodo_inicio=None, periodo_fim=None, tipo_frete=None, sacado_fk_cnpj=0):
+def filtrar_dados(ctes, periodo_inicio=None, periodo_fim=None, filtro_tipo_frete=None, filtro_sacado_fk_cnpj=None):
     resultado = []
     
     for cte in ctes:
@@ -127,21 +104,21 @@ def filtrar_dados(ctes, periodo_inicio=None, periodo_fim=None, tipo_frete=None, 
         # Extraindo o tipo de frete
         modal_frete = cte.get('dtc_fk').get('tipoFrete')
 
+        if filtro_tipo_frete == 0:
+            if int(modal_frete) != int(filtro_tipo_frete):
+                continue
 
-        # Filtro por CNPJ do sacado
-        # if sacado_fk_cnpj and cnpj_sacado != sacado_fk_cnpj:
-        #     continue
+        if filtro_sacado_fk_cnpj:
+            if  cnpj_sacado != filtro_sacado_fk_cnpj:
+                continue
 
-        # # Filtros por período
-        # if periodo_inicio and data_cadastro < periodo_inicio:
-        #     continue
-                
-        # if periodo_fim and data_cadastro > periodo_fim:
-        #     continue
+        if periodo_inicio :
+           if data_cadastro < periodo_inicio:
+               continue
         
-
-    # Filtro por tipo de frete
-    if not tipo_frete or int(modal_frete) == int(tipo_frete):
+        if periodo_fim :
+           if data_cadastro > periodo_fim:
+               continue
         resultado.append(cte)
 
     return resultado

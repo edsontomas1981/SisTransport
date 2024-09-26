@@ -126,3 +126,38 @@ def converte_string_data(data_str):
             continue
     print("Formato de data inválido. Utilize um dos formatos suportados: 'YYYY-MM-DD', 'DD-MM-YYYY', 'MM-DD-YYYY', 'YYYY/MM/DD', 'MM/DD/YYYY', 'DD/MM/YYYY', 'YY/MM/DD'.")
     return None
+
+
+def str_to_date(data_str):
+    formatos = [
+        "%Y-%m-%d %H:%M:%S",
+        "%Y-%m-%d",
+        "%d/%m/%Y",
+        "%m/%d/%Y",
+        "%d-%m-%Y",
+        "%Y/%m/%d",
+        "%Y.%m.%d",
+        "%d.%m.%Y",
+        "%d %b %Y",
+        "%d %B %Y",
+        "%Y-%m-%d %H:%M",
+        "%d/%m/%Y %H:%M:%S",
+        "%d/%m/%Y %H:%M",
+        "%d-%m-%Y %H:%M:%S",
+        "%d-%m-%Y %H:%M",
+        "%Y/%m/%d %H:%M:%S",
+        "%Y/%m/%d %H:%M",
+        "%d.%m.%Y %H:%M:%S",
+        "%d.%m.%Y %H:%M",
+        "%d %b %Y %H:%M:%S",
+        "%d %b %Y %H:%M",
+        "%d %B %Y %H:%M:%S",
+        "%d %B %Y %H:%M"
+    ]
+    
+    for formato in formatos:
+        try:
+            return datetime.strptime(data_str, formato)
+        except ValueError:
+            continue
+    return None
