@@ -53,24 +53,10 @@ def gerar_faturas (request):
         dados['valor_total']=dados_da_fatura.get('valor_total')
         dados['valor_a_pagar']=float(dados_da_fatura.get('valor_total'))-float(dados_da_fatura.get('desconto',0.00))
         
-        # print('-----------------------------------------------------------------')
-        # print('Fatura Nº : ' + str(i+1))
-        # print('Tomador : ' + str(emissor))
-        # print('Sacado : ' + str(sacado.get('raz_soc')))
-        # print('Dt Emissão : ' + str(dados.get('data_emissao')))
-        # print('Vencimento : ' + str(dados.get('vencimento')))
-        # print('Valor : ' + str(dados_da_fatura.get('valor_total')))
-        # print('Descontos : ' + str(dados_da_fatura.get('desconto')))
-        # print('Impostos : ' + str(dados_da_fatura.get('impostos')))
-        # print('Valor Total : ' + str(dados_da_fatura.get('valor_total')))
-        # print('Ctes : ' + str(ctes))
-
-        
         fatura = FaturasManager()
         fatura.create_fatura(dados)
-        dict_fatura = fatura.obj_fatura.to_dict()
         print('-----------------------------------------------------------------')
-        print('Fatura Nº : ' + str(dict_fatura.get('id')))
+        print('Fatura Nº : ' + str(1))
         print('Tomador : ' + str(emissor))
         print('Sacado : ' + str(sacado.get('raz_soc')))
         print('Dt Emissão : ' + str(dados.get('data_emissao')))
@@ -85,10 +71,10 @@ def gerar_faturas (request):
 
         for cte in ctes:
             new_cte = Cte.obtem_cte_id(cte.get('cte'))
-            # print(new_cte.to_dict())
+            Cte.adiciona_fatura_ao_cte(new_cte.id,fatura.obj_fatura)
             break
 
-    return JsonResponse({'status': 200}) 
+    return JsonResponse({'status': 200,'faturas':lista_faturas}) 
 
     
 def filtrar_dados(ctes, periodo_inicio=None, periodo_fim=None, filtro_tipo_frete=None, filtro_sacado_fk_cnpj=None):

@@ -153,6 +153,32 @@ class Cte():
             return None
         
 
+    @classmethod
+    def adiciona_fatura_ao_cte(cls, id_cte, fatura):
+        """
+        Adiciona uma fatura a um Conhecimento de Transporte Eletrônico (CT-e).
+
+        Este método busca um CT-e existente a partir de seu ID, associa a ele
+        a fatura fornecida e salva a alteração no banco de dados. Caso o CT-e 
+        não seja encontrado, retorna None.
+
+        Args:
+            id_cte (int): O ID do CT-e ao qual a fatura será associada.
+            fatura (object): A fatura que será associada ao CT-e.
+
+        Returns:
+            None: Retorna None se o CT-e não for encontrado.
+        
+        Raises:
+            Mdl_cte.DoesNotExist: Se o CT-e com o ID fornecido não existir.
+        """
+        try:
+            cte = Mdl_cte.objects.get(id=id_cte)
+            cte.faturas_fk = fatura
+            cte.save()
+        except ObjectDoesNotExist:
+            return None
+
     def get_cte_chave_acesso_nfe(self,chave_acesso_nf):
         try:
             # 1. Encontrar a Nota_fiscal pela chave de acesso fornecida
