@@ -3,6 +3,7 @@ const getDadosFaturamentoAutomatico =()=>{
     console.log(getDadosForm('frmFaturamentoAutomatico'))
 }
 
+
 const preparaDadosTbodyFaturas = (faturas)=>{
     
     let listaFaturas = []
