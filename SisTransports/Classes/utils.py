@@ -59,11 +59,45 @@ def toFloat(stringToFloat):
             stringToFloat = stringToFloat.replace(".", "")
             stringToFloat = stringToFloat.replace(",", ".")
             stringToFloat = float(stringToFloat)
-
     if stringToFloat:
         return float(stringToFloat)
     else:
         return 0
+    
+def to_float(value):
+    """
+    Converte uma string numérica em um float, lidando com formatos como "10.50", "10,50", "10.000,00".
+
+    Parâmetros:
+    ----------
+    value : str, int, float
+        O valor numérico a ser convertido.
+
+    Retorna:
+    -------
+    float
+        O valor convertido em float ou 0 se não for válido.
+    """
+    # Se o valor não for uma string, converta para string
+    if not isinstance(value, str):
+        value = str(value)
+
+    # Se for uma string
+    if isinstance(value, str):
+        # Verifica se contém vírgula
+        if ',' in value:
+            # Remove separadores de milhar
+            value = value.replace(".", "")
+            value = value.replace(",", ".")
+
+        # Tenta converter para float
+        try:
+            return float(value)
+        except ValueError:
+            return 0  # Retorna 0 se a conversão falhar
+
+    return 0  # Retorna 0 se o valor não for uma string ou número
+
 
 
 def checkBox(check):

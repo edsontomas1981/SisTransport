@@ -25,13 +25,13 @@ class FaturasManager:
         Args:
             dados (dict): Dados da fatura a serem salvos ou atualizados.
         """
-        self.obj_fatura.emissor_fk = dados.get('emissor_id', None)
+        self.obj_fatura.emissor_fk = dados.get('emissor_fk', None)
         self.obj_fatura.sacado_fk = dados.get('sacado_id', None)
         self.obj_fatura.data_emissao = dados.get('data_emissao', None)
         self.obj_fatura.vencimento = dados.get('vencimento', None)
         self.obj_fatura.valor_total = dados.get('valor_total', 0.0)
         self.obj_fatura.valor_a_pagar = dados.get('valor_a_pagar', 0.0)
-        self.obj_fatura.desconto = dados.get('desconto', 0.0)
+        # self.obj_fatura.desconto = dados.get('desconto', 0.0) if isinstance(dados.get('desconto'), float) else 0.0
         self.obj_fatura.data_pagamento = dados.get('data_pagamento')
 
     def create_fatura(self, dados):

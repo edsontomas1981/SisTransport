@@ -8,8 +8,31 @@
   <div>
     <h1>Relatório de Faturas</h1>
   </div>
+  <div id="divNavegacaoFaturaRelatorio">
+  </div>
+  <div class="table-responsive">
+    <table class="table table-sm">
+      <thead>
+        <tr>
+          <th>Nº Duplicata</th>
+          <th>Cnpj Tomador</th>
+          <th>Razão Tomador</th>
+          <th>Qtde de Documentos</th>
+          <th>Total</th>
+          <th>Vencimento</th>
+          <th></th>
+          <th></th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody  id="tbodyFaturasRelatorio">
+      </tbody>
+    </table>
+  </div>
 {% endblock %}
 
 {% block 'js'%} 
+  <script src="{% static 'js/meusJS/faturamento/relatorioFaturas.js' %}"></script>
+  <script src="{% static 'js/meusJS/populaTbody.js' %}"></script>
 {% endblock %}
 

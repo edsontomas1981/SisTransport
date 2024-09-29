@@ -6,6 +6,8 @@ from faturamento import views as viewsFaturamento
 urlpatterns = [
     path('',viewsFaturamento.relatorio_faturas,name='relatorio_faturamento'),
     path('gerar_faturas/',viewsFaturamento.gerar_faturas,name='gerar_faturas'),
-
+    path('relatorio_faturas/',viewsFaturamento.relatorio_faturas,name='relatorio_faturas'),
     path('calculaFrete/',viewsFaturamento.calculaFrete,name='calculaFrete'),
+    path('exclui_fatura/',viewsFaturamento.exclui_fatura,name='exclui_fatura'),
+    path('get_faturas/',viewsFaturamento.get_all_faturas,name='get_faturas'),
 ]
