@@ -349,6 +349,25 @@ const populaRotaGeral= (response,idCmbRotas,textoFirstOpt='Selecione')=>{
   });
 }
 
+/**
+ * Exibe uma mensagem de confirmação com dois botões (Confirmar e Cancelar)
+ * e retorna uma Promise que resolve para `true` se o usuário confirmar,
+ * ou `false` se o usuário cancelar.
+ *
+ * @param {string} msg - A mensagem que será exibida na caixa de diálogo.
+ * @returns {Promise<boolean>} Uma Promise que resolve para `true` se o usuário clicar em "Confirmar",
+ * ou `false` se o usuário clicar em "Cancelar".
+ *
+ * @example
+ * // Exemplo de uso:
+ * msgConfirmacao('Você tem certeza?').then((confirmado) => {
+ *   if (confirmado) {
+ *     console.log('Usuário confirmou.');
+ *   } else {
+ *     console.log('Usuário cancelou.');
+ *   }
+ * });
+ */
 const msgConfirmacao = async (msg) => {
   return new Promise(async (resolve) => {
     const result = await Swal.fire({
@@ -671,4 +690,14 @@ const dadosParceiro = async (cnpj)=>{
       return response.parceiro    
   }
   return false
+}
+
+const showLoading = ()=>{
+  let loadingElement = document.getElementById('loading'); // Elemento de loading
+  loadingElement.style.display = 'block'; // Mostra o loading
+}
+
+const hideLoading = ()=>{
+  let loadingElement = document.getElementById('loading'); // Elemento de loading
+  loadingElement.style.display = 'none'; // Mostra o loading
 }

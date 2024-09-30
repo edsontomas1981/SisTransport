@@ -22,29 +22,11 @@ btnGerarFaturaAutomatica.addEventListener('click',async()=>{
     }else{
         let url = '/faturamento/gerar_faturas/'
         let response = await conectaEndpoint(url,dados)
-        let faturas = preparaDadosTbodyFaturasAutomatica(response.faturas)
+        let faturas = preparaDadosTbodyFaturas(response.faturas)
         popula_tbody_pag('divNavegacaoFatura','tbodyFaturas',faturas,botoes,1,10,false,false)
     }
 })
 
-const preparaDadosTbodyFaturas= (faturas)=>{
+const populaRelatorioFaturas = () =>{
     
-    let listaFaturas = []
-    faturas.forEach(element => {
-        listaFaturas.push({id:element.id,
-            cnpj:element.cnpjTomador,
-            sacado:element.sacado,
-            qtdeDcto:element.qtdeDoctos,
-            total:element.valor_a_pagar,
-            vcto:formataDataPtBr(element.vencimento)
-        })
-    });
-
-    return listaFaturas
-}
-
-const excluirFatura = async (e)=>{
-    let url = '/faturamento/exclui_fatura/'
-    let response = await conectaEndpoint(url,dados)
-    msgAviso(response.status)
-}
+} 

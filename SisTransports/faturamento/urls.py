@@ -10,4 +10,5 @@ urlpatterns = [
     path('calculaFrete/',viewsFaturamento.calculaFrete,name='calculaFrete'),
     path('exclui_fatura/',viewsFaturamento.exclui_fatura,name='exclui_fatura'),
     path('get_faturas/',viewsFaturamento.get_all_faturas,name='get_faturas'),
+    path('get_fatura/',viewsFaturamento.get_fatura,name='get_fatura'),
 ]

@@ -1,0 +1,86 @@
+<form id="frmAlteraFatura">
+    <div class="modal" id="mdlAlteraFatura" tabindex="-1" data-bs-backdrop="static"
+        data-bs-keyboard="false">
+        <div class="modal-dialog modal-lg modal-altura">
+            <div class="modal-content">
+                <div class="modal-header cabecalho-modal-parceiro">
+                    <h5 class="modal-title">Alterar Fatura</h5>
+                    <div>
+                            <div class="input-group mb-2" align="right">
+                                <button type="button" class="btn btn-secondary btn-rounded btn-icon" id="btnLimpaFatura" align="right">            
+                                    <i class="ti-write"></i>
+                                </button>
+                                <button type="button" class="btn btn-danger btn-rounded btn-icon" id="btnCloseAlteraFatura" onclick="closeModal()" align="right">
+                                    <i class="ti-close"></i>
+                                </button>
+                            </div>
+                    </div>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+
+                      <div class="col-sm-3 form-floating mb-3">
+                        <input type="text" class="form-control" id="idFatura" placeholder="name@example.com">
+                        <label class="ml-3" for="floatingInput">Nº Fatura</label>
+                      </div> 
+
+                      <div class="col-sm-3 form-floating mb-3">
+                        <input type="text" class="form-control" id="sacado" placeholder="name@example.com">
+                        <label class="ml-3" for="floatingInput">Sacado</label>
+                      </div>   
+                      
+                      <div class="col-sm-3 form-floating mb-3">
+                        <input type="text" class="form-control" id="valorTotal" placeholder="name@example.com">
+                        <label class="ml-3" for="floatingInput">Valor Total</label>
+                      </div> 
+
+                      <div class="col-sm-3 form-floating mb-3">
+                        <input type="text" class="form-control" id="valorAPagar" placeholder="name@example.com">
+                        <label class="ml-3" for="floatingInput">Valor á pagar</label>
+                      </div> 
+
+                      <div class="col-sm-3 form-floating mb-3">
+                        <input type="text" class="form-control" id="desconto" placeholder="name@example.com">
+                        <label class="ml-3" for="floatingInput">Desconto</label>
+                      </div>
+                      
+                      <div class="col-sm-3 form-floating mb-3">
+                        <input type="text" class="form-control" id="acrescimo" placeholder="name@example.com">
+                        <label class="ml-3" for="floatingInput">Acréscimo</label>
+                      </div>                       
+
+                      <div class="col-sm-3 form-floating mb-3">
+                        <input type="date" class="form-control" id="dataEmissaoAlteraFatura" placeholder="01/01/2023">
+                        <label class="ml-3" for="floatingInput">Emissão</label>
+                      </div>    
+                      
+                      <div class="col-sm-3 form-floating mb-3">
+                        <input type="date" class="form-control" id="vencimento" placeholder="01/01/2023">
+                        <label class="ml-3" for="floatingInput">Data Vencimento</label>
+                      </div>   
+                      
+                      <div class="col-sm-12">
+                        <table class="table table-striped table-sm">
+                            <thead>
+                              <tr class="thead-padrao">
+                                <th scope="col">DTC</th>
+                                <th scope="col">CT-E</th>
+                                <th scope="col">Remetente</th>
+                                <th scope="col">Destinatário</th>
+                                <th scope="col">Frete</th>
+                                <th scope="col">Tipo Frete</th>
+                                <th scope="col"></th>
+                              </tr>
+                            </thead>
+                            <tbody id="tableDtcManifesto">
+                              <tr data-id="217"><td>217</td><td>72</td><td>NALCON COMPOSTOS PAR...</td><td>S M S CRUZ &amp; CIA LTD...</td><td>SALTO - SP</td><td>SAO LUIS - MA</td><td><a data-id="217" id="217" class="btn btn-sm btn-danger text-white rounded">Apagar</a></td></tr><tr data-id="208"><td>208</td><td>68</td><td>BELLA &amp; CO. LTDA</td><td>10.936.386 ELESBAO J...</td><td>BLUMENAU - SC</td><td>PICOS - PI</td><td><a data-id="208" id="208" class="btn btn-sm btn-danger text-white rounded">Apagar</a></td></tr><tr data-id="207"><td>207</td><td>66</td><td>ZANOTTI INDUSTRIA E ...</td><td>S MONTEIRO &amp; CIA LTD...</td><td>JARAGUA DO... - SC</td><td>SAO LUIS - MA</td><td><a data-id="207" id="207" class="btn btn-sm btn-danger text-white rounded">Apagar</a></td></tr><tr data-id="206"><td>206</td><td>65</td><td>BELLA &amp; CO. LTDA</td><td>10.936.386 ELESBAO J...</td><td>BLUMENAU - SC</td><td>PICOS - PI</td><td><a data-id="206" id="206" class="btn btn-sm btn-danger text-white rounded">Apagar</a></td></tr></tbody>
+                        </table>
+                      </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+  

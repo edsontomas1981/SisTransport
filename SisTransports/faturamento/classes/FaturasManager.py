@@ -75,8 +75,8 @@ class FaturasManager:
         except Exception as e:
             print(f"Erro ao atualizar fatura: {e}")
             return 300
-
-    def delete_fatura(self, id_fatura):
+    @staticmethod
+    def delete_fatura(id_fatura):
         """
         Exclui uma fatura.
 
@@ -97,7 +97,8 @@ class FaturasManager:
             print(f"Erro ao excluir fatura: {e}")
             return 500
 
-    def read_fatura(self, id_fatura):
+    @staticmethod
+    def read_fatura(id_fatura):
         """
         Lê uma fatura.
 
@@ -125,8 +126,15 @@ class FaturasManager:
             list: Lista de dicionários contendo os dados das faturas ou lista vazia em caso de erro.
         """
         try:
-            faturas = Faturas.objects.all()
-            return [fatura.to_dict() for fatura in faturas]
+            faturas = Faturas.objects.all().order_by('id')
+
+            lista_fatura = [
+                {**fatura.to_dict(), 'qtdeDoctos': len(Cte.get_ctes_por_fatura(fatura.id))}
+                for fatura in faturas
+            ]
+
+            return lista_fatura
+            # return [fatura.to_dict() for fatura in faturas]
         except Exception as e:
             print(f"Erro ao ler faturas: {e}")
             return []
@@ -168,8 +176,7 @@ class FaturasManager:
         except Exception as e:
             print(f"Erro ao selecionar DTCs com CTEs sem fatura: {e}")
             return None
-        
-
+      
 
     @staticmethod
     def agrupa_dtcs_por_tomador(ctes):
@@ -233,3 +240,4 @@ class FaturasManager:
         except Exception as e:
             print(f"Erro ao criar faturas: {e}")
             return None
+

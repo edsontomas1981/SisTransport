@@ -196,5 +196,20 @@ class Cte():
         except Nota_fiscal.DoesNotExist:
             # Se a Nota_fiscal não for encontrada
             return None
+        
+    @staticmethod
+    def get_ctes_por_fatura(fatura_id):
+        try:
+            return Mdl_cte.objects.filter(faturas_fk_id=fatura_id)
+        except ObjectDoesNotExist:
+            return None
 
+    @staticmethod
+    def remove_fatura_cte(id_cte):
+        try:
+            cte = Mdl_cte.objects.get(id=id_cte)
+            cte.faturas_fk = None
+            cte.save()
+        except ObjectDoesNotExist:
+            return None
 
