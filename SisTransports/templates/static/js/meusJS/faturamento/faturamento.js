@@ -58,7 +58,7 @@ const excluirFatura = async (e) => {
     let url = '/faturamento/get_fatura/';
     let response = await conectaEndpoint(url, dados);
     populaModalFatura(response.fatura)
-    openModal('mdlAlteraFatura')
+    openModal('mdlFatura')
   }
 
   const formataDataISO = (data) => {
@@ -71,9 +71,8 @@ const excluirFatura = async (e) => {
 
   
   const populaModalFatura = (fatura) => {
-    console.log(fatura)
     document.getElementById('idFatura').value = fatura.id;
-    document.getElementById('sacado').value = fatura.sacado;
+    document.getElementById('razaoSacadoFatura').value = fatura.sacado;
     document.getElementById('valorAPagar').value = fatura.valor_a_pagar;
     document.getElementById('valorTotal').value = fatura.valor_total;
     document.getElementById('desconto').value = fatura.desconto;
