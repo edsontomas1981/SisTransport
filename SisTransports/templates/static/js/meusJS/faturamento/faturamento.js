@@ -72,7 +72,8 @@ const excluirFatura = async (e) => {
   
   const populaModalFatura = (fatura) => {
     document.getElementById('idFatura').value = fatura.id;
-    document.getElementById('razaoSacadoFatura').value = fatura.sacado;
+    document.getElementById('cnpjSacadoFatura').value  = fatura.sacado_fk.cnpj_cpf
+    document.getElementById('razaoSacadoFatura').value = fatura.sacado_fk.raz_soc;
     document.getElementById('valorAPagar').value = fatura.valor_a_pagar;
     document.getElementById('valorTotal').value = fatura.valor_total;
     document.getElementById('desconto').value = fatura.desconto;

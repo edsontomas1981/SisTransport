@@ -187,3 +187,14 @@ a.active {
     border-radius: 5px; /* Borda arredondada para o contêiner */
     padding: 10px; /* Espaçamento interno */
 }
+
+.btn-busca-parceiro {
+    width: 100px;
+    transition: width 0.3s ease;
+}
+
+.btn-busca-parceiro:hover {
+    width: 200px; /* Altera a largura diretamente ao passar o mouse */
+}
+
+  

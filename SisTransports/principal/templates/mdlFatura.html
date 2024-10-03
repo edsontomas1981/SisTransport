@@ -35,32 +35,12 @@
                       <input type="date" class="form-control" id="dataEmissaoAlteraFatura" placeholder="01/01/2023">
                       <label class="ml-3" for="dataEmissaoAlteraFatura">Data de Emissão</label>
                     </div>
-                
+
                     <div class="col-sm-2 form-floating mb-3">
                       <input type="date" class="form-control" id="vencimento" placeholder="01/01/2023">
                       <label class="ml-3" for="vencimento">Data de Vencimento</label>
                     </div>
-                
-                    <div class="col-sm-3 form-floating mb-3">
-                      <input type="text" class="form-control" id="valorTotal" placeholder="name@example.com">
-                      <label class="ml-3" for="valorTotal">Valor Total (R$)</label>
-                    </div>
-                
-                    <div class="col-sm-3 form-floating mb-3">
-                      <input type="text" class="form-control" id="valorAPagar" placeholder="name@example.com">
-                      <label class="ml-3" for="valorAPagar">Valor a Pagar (R$)</label>
-                    </div>
-                
-                    <div class="col-sm-3 form-floating mb-3">
-                      <input type="text" class="form-control" id="desconto" placeholder="name@example.com">
-                      <label class="ml-3" for="desconto">Desconto (%)</label>
-                    </div>
-                
-                    <div class="col-sm-3 form-floating mb-3">
-                      <input type="text" class="form-control" id="acrescimo" placeholder="name@example.com">
-                      <label class="ml-3" for="acrescimo">Acréscimo (%)</label>
-                    </div>
-                
+
                     <div class="col-sm-6 pl-0 pr-0">
                       <div class="col-sm-12 form-floating">
                         <div class="input-group">
@@ -72,10 +52,39 @@
                             <input type="text" class="form-control" id="razaoSacadoFatura" placeholder="Razão Social do Sacado">
                             <label for="razaoSacadoFatura">Razão Social do Sacado</label>
                           </div>
-                          <a class="btn btn-primary btn-sm" id="btnBuscaMotoristas" style="height: 58px; display: flex; justify-content: center; align-items: center;"><i class="fa fa-search" aria-hidden="true"></i></a>
-                          <a class="btn btn-success btn-sm" id="btnAdicionaMotorista" style="height: 58px; display: flex; justify-content: center; align-items: center;"><i class="fa fa-plus" aria-hidden="true"></i></a>
+                          <a class="btn btn-primary btn-sm" id="btnBuscaParceiroModalFatura" onclick="openModal('mdlBuscaParceiro')" style="height: 58px; display: flex; justify-content: center; align-items: center;"><i class="fa fa-search" aria-hidden="true"></i></a>
                         </div>
                       </div>
+                    </div>
+                
+                    <div class="col-sm-2 form-floating mb-3">
+                      <input type="text" class="form-control" id="desconto" placeholder="name@example.com">
+                      <label class="ml-3" for="desconto">Desconto (%)</label>
+                    </div>
+                
+                    <div class="col-sm-2 form-floating mb-3">
+                      <input type="text" class="form-control" id="acrescimo" placeholder="name@example.com">
+                      <label class="ml-3" for="acrescimo">Acréscimo (%)</label>
+                    </div>
+
+                    <div class="col-sm-2 form-floating mb-3">
+                      <input type="text" class="form-control" id="descontoEmReais" placeholder="name@example.com">
+                      <label class="ml-3" for="descontoEmReais">Desconto (R$)</label>
+                    </div>
+
+                    <div class="col-sm-2 form-floating mb-3">
+                      <input type="text" class="form-control" id="acrescimoEmReais" placeholder="name@example.com">
+                      <label class="ml-3" for="acrescimoEmReais">Acréscimo (R$)</label>
+                    </div>
+
+                    <div class="col-sm-2 form-floating mb-3">
+                      <input type="text" class="form-control" id="valorTotal" placeholder="name@example.com" disabled>
+                      <label class="ml-3" for="valorTotal">Valor Total (R$)</label>
+                    </div>
+                
+                    <div class="col-sm-2 form-floating mb-3">
+                      <input type="text" class="form-control" id="valorAPagar" placeholder="name@example.com" disabled>
+                      <label class="ml-3" for="valorAPagar">Valor a Pagar (R$)</label>
                     </div>
                 
                     <div class="form-floating col-sm-3 mb-3">
