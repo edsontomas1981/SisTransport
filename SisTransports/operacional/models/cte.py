@@ -35,7 +35,7 @@ class Cte(models.Model):
     # Informações de usuário e data/hora
     usuario_cadastro = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.SET_NULL, null=True, related_name='cadastrado_dtc')
     usuario_ultima_atualizacao = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.SET_NULL, null=True, related_name='alterou_dtc')
-    data_cadastro = models.DateTimeField(auto_now_add=True)  # Data de cadastro definida automaticamente na criação
+    data_cadastro = models.DateTimeField(auto_now_add=True,null=True)  # Data de cadastro definida automaticamente na criação
     data_ultima_atualizacao = models.DateTimeField(null=True)
     faturas_fk = models.ForeignKey(Faturas, on_delete=models.CASCADE, related_name='cte_faturas', null=True)
     

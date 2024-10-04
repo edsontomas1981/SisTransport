@@ -16,7 +16,10 @@ class Faturas(models.Model):
     vencimento = models.DateField()
     valor_total = models.FloatField()
     valor_a_pagar = models.FloatField()
-    desconto = models.FloatField(default=0.0)  # Definido valor padrão para desconto
+    desconto_em_porcentagem = models.FloatField(null=True,default=0.0)  # Definido valor padrão para desconto
+    desconto_em_reais = models.FloatField(null=True,default=0.0)  # Definido valor padrão para desconto
+    acrescimo_em_porcentagem = models.FloatField(null=True,default=0.0)  # Definido valor padrão para desconto
+    acrescimo_em_reais = models.FloatField(null=True,default=0.0)  # Definido valor padrão para desconto
     impostos = models.FloatField(default=0.0)  # Adicionado campo para impostos
     data_pagamento = models.DateField(null=True, blank=True)  # Corrigido o nome do campo e permitido valor nulo
     forma_pagamento = models.CharField(max_length=50, null=True, blank=True)  # Adicionado campo para forma de pagamento
@@ -33,7 +36,10 @@ class Faturas(models.Model):
             'vencimento': self.vencimento if self.vencimento else None, 
             'valor_total': self.valor_total,
             'valor_a_pagar': self.valor_a_pagar,
-            'desconto': self.desconto,
+            'percentual_desconto': self.desconto_em_porcentagem,
+            'desconto_em_reais': self.desconto_em_reais,
+            'percentual_acrescimo': self.acrescimo_em_porcentagem,
+            'acrescimo_em_reais':self.acrescimo_em_reais,
             'impostos': self.impostos,
             'data_pagamento': self.data_pagamento.strftime('%Y-%m-%d') if self.data_pagamento else None,
             'forma_pagamento': self.forma_pagamento,
