@@ -26,7 +26,10 @@
                 </div>
                 <div class="modal-body">
 
-                  <div class="form-floating pt-1">
+                  <div id="paginacaoModalParceiros">
+
+                  </div>
+                  <div class="  form-floating pt-1">
                     <label for="nomeOuCnpjParceiro">Buscar parceiro por CNPJ ou nome</label>
                     <input type="text" class="form-control small  form-control-sm" id="nomeOuCnpjParceiro" name="nomeOuCnpjParceiro" placeholder="Digite o CNPJ ou nome do parceiro">
                   </div>
@@ -40,7 +43,7 @@
                         <th class=""></th>
                       </tr>
                     </thead>
-                    <tbody class="border" id="tbodyMotorista" style="width: 100%;border-radius: 10px;background-color:whitesmoke;color: black;">
+                    <tbody class="border" id="tbodyModalParceiros" style="width: 100%;border-radius: 10px;background-color:whitesmoke;color: black;">
                     </tbody>
                   </table>
 
@@ -54,7 +57,7 @@
 
 <!-- Js de outras Paginas -->
 {% block 'js'%} 
-<script src="{% static 'js/meusJS/faturamento/btnLimpaFatura.js' %}"></script>
-
+  <script src="{% static 'js/meusJS/faturamento/btnLimpaFatura.js' %}"></script>
+  <script src="{% static 'js/meusJS/parceiros/buscaParceiros.js' %}"></script>
 {% endblock %}
   

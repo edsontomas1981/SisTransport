@@ -6,6 +6,7 @@ from .readParceiro import readParceiro
 from .updateParceiro import updateParceiro
 from .deleteParceiro import deleteParceiro
 from .searchPartnerWs import searchPartnerWs
-
 from .read_parceiro_json import read_parceiro_json
+from .busca_parceiro_trecho import busca_parceiro_trecho
+
 

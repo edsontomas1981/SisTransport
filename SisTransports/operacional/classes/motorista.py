@@ -92,16 +92,16 @@ class MotoristaManager:
         Args:
         - dados (dict): Dados do motorista a serem criados.
         """
-        # try:
-        self.save_or_update(dados)
-        self.obj_motorista.criado_por = get_user_model().objects.get(id=dados['usuario_cadastro'])
-        self.obj_motorista.created_at = timezone.now()
-        self.obj_motorista.save()
-        return 200
-        # except Exception as e:
-        #     # Trata a exceção de maneira apropriada
-        #     print(f"Erro ao criar motorista: {e}")
-        #     return 300
+        try:
+            self.save_or_update(dados)
+            self.obj_motorista.criado_por = get_user_model().objects.get(id=dados['usuario_cadastro'])
+            self.obj_motorista.created_at = timezone.now()
+            self.obj_motorista.save()
+            return 200
+        except Exception as e:
+            # Trata a exceção de maneira apropriada
+            print(f"Erro ao criar motorista: {e}")
+            return 300
 
     def update_motorista(self, id_motorista, dados):
         """

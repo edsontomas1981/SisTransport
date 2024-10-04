@@ -1,3 +1,6 @@
+var cnpjBuscaParceiro
+var razaoBuscaParceiro
+
 class Conexao {
   constructor(url,data){
       this.url=url
@@ -701,3 +704,37 @@ const hideLoading = ()=>{
   let loadingElement = document.getElementById('loading'); // Elemento de loading
   loadingElement.style.display = 'none'; // Mostra o loading
 }
+
+/**
+ * Função para buscar parceiro por um trecho do CNPJ ou Razão Social.
+ * 
+ * @param {string} termo - O termo de busca, parte do CNPJ ou Razão Social.
+ * @param {function} [callback=null] - Função de callback opcional que será executada após a busca.
+ * @returns {Promise<void>} - Retorna uma Promise que resolve quando a busca for completada.
+ */
+const busca_parceiro_por_trecho = async (termo, callback = null) => {
+  try {
+      if (!termo) {
+          throw new Error("O termo de busca não pode estar vazio.");
+      }
+
+      let dados = { termoBusca: termo };
+      let url = '/parceiros/busca_parceiro_trecho/';
+      
+      // Conecta ao endpoint e realiza a busca
+      let response = await conectaEndpoint(url, dados);
+      
+      // Verifica se a resposta do servidor é válida
+      if (response && response.success) {
+          console.log(response);
+      } 
+
+      // Executa callback se fornecido
+      if (callback) {
+          callback(response.parceiros);
+      }
+  } catch (error) {
+      console.error("Erro ao buscar parceiro por trecho:", error.message);
+  }
+};
+

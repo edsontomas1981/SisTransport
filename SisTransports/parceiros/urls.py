@@ -11,5 +11,6 @@ urlpatterns = [
         path('searchPartnerWs/',viewsParceiros.searchPartnerWs,name='searchPartnerWs'),
         path('deleteParceiro/',viewsParceiros.deleteParceiro,name='deleteParceiro'),
         path('read_parceiro_json/',viewsParceiros.read_parceiro_json,name='read_parceiro_json'),
+        path('busca_parceiro_trecho/',viewsParceiros.busca_parceiro_trecho,name='busca_parceiro_trecho'),
     ]
     
