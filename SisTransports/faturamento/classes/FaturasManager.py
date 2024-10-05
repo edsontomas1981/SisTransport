@@ -31,7 +31,10 @@ class FaturasManager:
         self.obj_fatura.vencimento = dados.get('vencimento', None)
         self.obj_fatura.valor_total = dados.get('valor_total', 0.0)
         self.obj_fatura.valor_a_pagar = dados.get('valor_a_pagar', 0.0)
-        # self.obj_fatura.desconto = dados.get('desconto', 0.0) if isinstance(dados.get('desconto'), float) else 0.0
+        self.obj_fatura.desconto_em_porcentagem= dados.get('desconto', 0.0)
+        self.obj_fatura.desconto_em_reais= dados.get('desconto_em_reais', 0.0)
+        self.obj_fatura.acrescimo_em_porcentagem= dados.get('acrescimo', 0.0)
+        self.obj_fatura.acrescimo_em_reais= dados.get('acrescimo_em_reais', 0.0)
         self.obj_fatura.data_pagamento = dados.get('data_pagamento')
 
     def create_fatura(self, dados):
@@ -227,6 +230,9 @@ class FaturasManager:
                     'valor_total': valor_total,
                     'qtde_cte': qtde_cte,
                     'desconto': dados_externos.get('desconto', 0.00),
+                    'desconto_em_reais': dados_externos.get('desconto_em_reais', 0.00),
+                    'acrescimo': dados_externos.get('acrescimo', 0.00),
+                    'acrescimo_em_reais': dados_externos.get('acrescimo_em_reais', 0.00),
                     'impostos': dados_externos.get('impostos', 0.00),
                     'forma_pagamento': dados_externos.get('forma_pagamento', 'Faturado'),
                     'observacoes': dados_externos.get('obs'),
@@ -240,4 +246,9 @@ class FaturasManager:
         except Exception as e:
             print(f"Erro ao criar faturas: {e}")
             return None
+
+    @staticmethod
+    def criar_fatura(dados_externos, dtcs_por_tomador):
+        pass
+
 

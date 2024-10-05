@@ -6,7 +6,7 @@ from faturamento.classes.FaturasManager import FaturasManager
 from parceiros.classes.parceiros import Parceiros
 from operacional.classes.emissores import EmissorManager
 from operacional.classes.cte import Cte
-from Classes.utils import str_to_date, to_float
+from Classes.utils import str_to_date, to_float,dprint
 import json
 from datetime import datetime
 
@@ -32,6 +32,8 @@ def gerar_faturas(request):
         Um objeto JSON contendo o status e a lista de faturas geradas.
     """
     dados_externos = json.loads(request.body.decode('utf-8'))
+
+    dprint(dados_externos)
     data_filtro_inicial = dados_externos.get('dataInicio', None)
     data_filtro_final = dados_externos.get('dataFinal', None)
     cnpj_filtro = dados_externos.get('cnpjParceiroFaturamento', None)
@@ -71,18 +73,42 @@ def gerar_faturas(request):
         ctes = dados_da_fatura.get('cte')
 
         dados['valor_total'] = dados_da_fatura.get('valor_total')
+        
+        acrescimo = to_float(dados_da_fatura.get('acrescimo', 0.0))
 
         desconto = to_float(dados_da_fatura.get('desconto', 0.0)) if dados_da_fatura.get('desconto') not in ['', None] else 0.0
-        dados['valor_a_pagar'] = float(dados_da_fatura.get('valor_total')) * (1 - (desconto / 100))
+
+        dados['valor_a_pagar'] = float(dados_da_fatura.get('valor_total'))
+
+        desconto_em_reais = 0
+        acrescimo_em_reais = 0
+        
+        if desconto > 0.00:
+            valor = calcula_porcentual(float(dados_da_fatura.get('valor_total')),desconto)
+            dados['valor_a_pagar'] = float(dados['valor_a_pagar']) - valor
+            desconto_em_reais = float(valor)
+            # dprint(f'valor com desconto {dados['valor_a_pagar']},percentual de desconto {desconto} desconto em dh {desconto_em_reais} ')
+
+        if acrescimo > 0.00: 
+            valor = calcula_porcentual(float(dados_da_fatura.get('valor_total')),acrescimo)
+            dados['valor_a_pagar'] = float(dados['valor_a_pagar']) + float(valor)
+            acrescimo_em_reais = valor
+
 
         dados['sacado_id'] = parceiro
+        dados['acrescimo_em_reais'] = acrescimo_em_reais
+        dados['acrescimo'] = acrescimo
+        dados['desconto'] = desconto
+        dados['desconto_em_reais'] = desconto_em_reais
 
+        
         fatura = FaturasManager()
         fatura.create_fatura(dados)
 
         dict_fatura = fatura.obj_fatura.to_dict()
         dict_fatura['cnpjTomador'] = cnpj_parceiro
         dict_fatura['qtdeDoctos'] = len(ctes)
+
         lista_faturas.append(dict_fatura)
 
         for lista_cte in ctes:
@@ -90,6 +116,10 @@ def gerar_faturas(request):
             Cte.adiciona_fatura_ao_cte(new_cte.id, fatura.obj_fatura)
 
     return JsonResponse({'status': 200, 'faturas': lista_faturas})
+
+
+def calcula_porcentual(valor, porcentagem):
+    return valor * (porcentagem / 100)
 
 
 def filtrar_dados(ctes, periodo_inicio=None, periodo_fim=None, filtro_tipo_frete=None, filtro_sacado_fk_cnpj=None):
