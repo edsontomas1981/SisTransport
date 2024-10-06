@@ -22,7 +22,7 @@ const populaTabelaParceiros = (parceiros,txtCnpj,txtRazaoSoc)=>{
       let parceiro = parceiros.filter(parceiro => parceiro.cnpj_cpf === e);
 
       cnpjBuscaParceiro.value = parceiro[0].cnpj_cpf
-      razaoParceiro.value = parceiro[0].raz_soc
+      razaoBuscaParceiro.value = parceiro[0].raz_soc
       closeModal()
     }
 
@@ -35,8 +35,5 @@ const populaTabelaParceiros = (parceiros,txtCnpj,txtRazaoSoc)=>{
             }
           }
     popula_tbody_paginacao('paginacaoModalParceiros','tbodyModalParceiros',dados,botao,1,10,false,false)
-
-
-  
 } 
 

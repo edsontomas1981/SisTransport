@@ -3,6 +3,6 @@ let btnBuscaParceiroModalFatura = document.getElementById('btnBuscaParceiroModal
 
 btnBuscaParceiroModalFatura.addEventListener('click',()=>{
     cnpjBuscaParceiro = document.getElementById('cnpjSacadoFatura')
-    razaoParceiro = document.getElementById('razaoSacadoFatura')
+    razaoBuscaParceiro = document.getElementById('razaoSacadoFatura')
     openModal('mdlBuscaParceiro')
 })

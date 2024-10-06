@@ -18,6 +18,7 @@ cnpjSacadoModalFatura.addEventListener('blur', async () => {
 
         // Se os dados forem encontrados, preenche o campo da razão social
         if (dados) {
+            console.log(dados)
             document.getElementById('razaoSacadoFatura').value = dados.raz_soc;
         } 
         // Caso contrário, lança um erro para exibir uma mensagem ao usuário

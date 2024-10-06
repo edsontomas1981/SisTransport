@@ -11,3 +11,14 @@ const getDataEmissao = () =>{
 dataEmissaoModalFatura.addEventListener('blur', function() {
   getDataEmissao()
 });
+
+const calculaValorPercentual = (valor,percentual)=>{
+
+  console.log('Valor : ' + valor + 'Percentual : ' + percentual)
+
+  let valorTotal
+  percentual = percentual/100
+  valorTotal = parseFloat(valor)*parseFloat(percentual)
+  return valorTotal
+
+}

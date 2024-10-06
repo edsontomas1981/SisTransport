@@ -74,9 +74,9 @@ const excluirFatura = async (e) => {
     document.getElementById('idFatura').value = fatura.id;
     document.getElementById('cnpjSacadoFatura').value  = fatura.sacado_fk.cnpj_cpf
     document.getElementById('razaoSacadoFatura').value = fatura.sacado_fk.raz_soc;
-    document.getElementById('valorAPagar').value = fatura.valor_a_pagar;
-    document.getElementById('valorTotal').value = fatura.valor_total;
-    document.getElementById('desconto').value = fatura.desconto;
+    document.getElementById('valorAPagarMdlFatura').value = fatura.valor_a_pagar;
+    document.getElementById('valorTotalMdlFatura').value = fatura.valor_total;
+    document.getElementById('descontoMdlFatura').value = fatura.desconto;
     document.getElementById('dataEmissaoAlteraFatura').value = formataDataISO(fatura.data_emissao);
     document.getElementById('vencimento').value = formataDataISO(fatura.vencimento);
 };

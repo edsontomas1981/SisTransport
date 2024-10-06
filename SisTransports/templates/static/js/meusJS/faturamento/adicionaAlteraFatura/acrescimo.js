@@ -1,0 +1,3 @@
+const addAcrescimo  = ()=>{
+    adiciona
+}

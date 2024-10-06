@@ -23,10 +23,10 @@ btnAddDocumento.addEventListener('click', async () => {
     const preparaCteFatura = (cte)=>{
         return{id:cte.dtc_fk.id,
             idCte:cte.id,
-            remetente:cte.dtc_fk.remetente.raz_soc,
-            destinatario:cte.dtc_fk.destinatario.raz_soc,
-            freteTotal:cte.totalFrete,
-            tomador:cte.dtc_fk.tomador.raz_soc
+            remetente:truncateString(cte.dtc_fk.remetente.raz_soc,20),
+            destinatario:truncateString(cte.dtc_fk.destinatario.raz_soc,20),
+            freteTotal:formatarMoeda(cte.totalFrete),
+            tomador:truncateString(cte.dtc_fk.tomador.raz_soc,20)
         }
     }
 
@@ -37,7 +37,7 @@ btnAddDocumento.addEventListener('click', async () => {
     // Função para somar os valores dos fretes
     const somaFretes = (ctes) => {
         return ctes.reduce((total, cte) => {
-            const frete = parseFloat(cte.freteTotal); // Obtém o valor do frete
+            const frete = parseFloat(converterMoedaParaNumero(cte.freteTotal)); // Obtém o valor do frete
             return frete ? total + frete : total; // Soma apenas se o valor do frete for válido
         }, 0); // Inicializa o total em 0
     };
@@ -59,13 +59,13 @@ btnAddDocumento.addEventListener('click', async () => {
     let response = await getDocumentoAddFatura()
 
     let cte = response.cte
-    console.log(registroJaExisteFatura(ctesFatura,'id',cte.dtc_fk.id) != true)
     if(registroJaExisteFatura(ctesFatura,'id',cte.dtc_fk.id) != true){
         ctesFatura.push(preparaCteFatura(response.cte))
     }
 
-    let valorFatura = somaFretes(ctesFatura)
-    document.getElementById('valorTotal').value = valorFatura
-    popula_tbody('tableDtcFatura',ctesFatura,false,false)
+    let valorFatura = formatarMoeda((somaFretes(ctesFatura)))
+    document.getElementById('valorTotalMdlFatura').value = valorFatura
+    popula_tbody_paginacao('paginacaoMdlFatura','tableDtcFatura',ctesFatura,false,1,30,false,false)
 
+    concedeDesconto()
 });

@@ -21,9 +21,9 @@
                 <span class="font-weight-bold">Sacado : </span>
               </label>
               <div class="input-group mb-3 col-sm-12">
-                <input type="text" class="form-control form-control-sm" placeholder="CNPJ Sacado" id="cnpjBuscaFatura">
-                <input type="text" class="form-control form-control-sm" placeholder="Razão Social Sacado" disabled>
-                <button class="btn btn-outline-primary form-control-sm btn-busca-parceiro" type="button" id="button-addon1">
+                <input type="text" class="form-control form-control-sm" placeholder="CNPJ Sacado" id="cnpjRelatFaturaBuscaFatura">
+                <input type="text" class="form-control form-control-sm" placeholder="Razão Social Sacado" id="razaoRelatFaturaBuscaFatura" disabled>
+                <button class="btn btn-outline-primary form-control-sm btn-busca-parceiro" id="relatoriodeFaturasBuscaParceiro" type="button" id="button-addon1">
                   <i class="fa fa-search" aria-hidden="true"></i>
                 </button>
               </div>
@@ -97,6 +97,7 @@
 
 {% block 'js'%} 
   <script src="{% static 'js/meusJS/faturamento/relatorioFaturas.js' %}"></script>
-  <script src="{% static 'js/meusJS/populaTbody.js' %}"></script>
+  <script src="{% static 'js/meusJS/faturamento/relatoriodeFaturasBuscaParceiro.js' %}"></script>
+
 {% endblock %}
 

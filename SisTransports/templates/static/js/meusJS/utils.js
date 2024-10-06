@@ -1,5 +1,4 @@
-var cnpjBuscaParceiro
-var razaoBuscaParceiro
+
 
 class Conexao {
   constructor(url,data){
@@ -559,6 +558,32 @@ function formatarMoeda(numero) {
   });
 }
 
+/**
+ * Função para converter uma string formatada como moeda brasileira para número.
+ * @param {string} valor Moeda formatada como string (ex: R$ 1.234,56 ou R$ 1234,56).
+ * @returns {number} Valor numérico correspondente.
+ */
+function converterMoedaParaNumero(valor) {
+  // Remove os caracteres não numéricos, exceto ponto e vírgula
+  const valorLimpo = valor.replace(/[^\d.,]/g, '');
+
+  // Verifica se há ponto (possível separador de milhar) e vírgula
+  if (valorLimpo.includes('.') && valorLimpo.includes(',')) {
+    // O ponto provavelmente é separador de milhar, então removemos
+    const valorSemPontos = valorLimpo.replace(/\./g, '');
+
+    // Substitui a vírgula pelo ponto para garantir o formato numérico correto
+    const valorFormatado = valorSemPontos.replace(',', '.');
+
+    return parseFloat(valorFormatado);
+  } else {
+    // Se não houver ponto ou vírgula (ou se houver só um deles), só precisamos trocar a vírgula por ponto
+    const valorFormatado = valorLimpo.replace(',', '.');
+
+    return parseFloat(valorFormatado);
+  }
+}
+
 
 // Função para remover a formatação de moeda
 function removerFormatacaoMoeda(valorFormatado) {
@@ -704,6 +729,9 @@ const hideLoading = ()=>{
   let loadingElement = document.getElementById('loading'); // Elemento de loading
   loadingElement.style.display = 'none'; // Mostra o loading
 }
+
+var cnpjBuscaParceiro
+var razaoBuscaParceiro
 
 /**
  * Função para buscar parceiro por um trecho do CNPJ ou Razão Social.
