@@ -57,8 +57,19 @@ const excluirFatura = async (e) => {
     let dados = { idFatura: e };
     let url = '/faturamento/get_fatura/';
     let response = await conectaEndpoint(url, dados);
-    populaModalFatura(response.fatura)
-    openModal('mdlFatura')
+    switch (response.status) {
+      case 200:
+        populaModalFaturas(response.fatura)
+        openModal('mdlFatura')
+        break;
+      case 404:
+        msgAviso('Fatura não encontrada. Verifique as informações e tente novamente.')
+        break;
+
+      default:
+        msgErro('Ocorreu um erro interno. Tente novamente mais tarde ou entre em contato com o suporte.')
+        break;
+    }
   }
 
   const formataDataISO = (data) => {

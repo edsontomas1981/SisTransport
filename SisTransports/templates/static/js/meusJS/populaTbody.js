@@ -187,6 +187,7 @@ const popula_tbody_paginacao = async (divParaNavegacao, id_tbody, dados, botoes 
  *   }
  * });
  */
+
 const popula_tbody = (id_tbody, dicionario_dados, botoes = {},inicioChebox=true) => {
 
   // Obtém a referência ao elemento tbody da tabela

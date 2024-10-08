@@ -690,6 +690,7 @@ function adicionarDias(dataInicial, dias) {
   return `${diaFinal}/${mesFinal}/${anoFinal}`;
 }
 
+
 // Função para converter a data para o formato "yyyy-MM-dd"
 function converterDataFormato(dataString) {
   const partes = dataString.split('/');

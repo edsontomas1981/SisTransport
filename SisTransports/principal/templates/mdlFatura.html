@@ -1,5 +1,5 @@
 {% load static %}
-<form id="frmAlteraFatura">
+<form id="frmSalvaOuAlteraFatura">
     <div class="modal" id="mdlFatura" tabindex="-1" data-bs-backdrop="static"
         data-bs-keyboard="false">
         <div class="modal-dialog modal-lg modal-altura">
@@ -9,13 +9,13 @@
                     <div>
                             <div class="input-group mb-2" align="right">
                                 <input type="text" class="form-control form-control-sm" id="idFaturaBusca" placeholder="Número Fatura">
-                                <button type="button" class="btn btn-primary btn-rounded btn-icon" id="btnLimpaFatura" align="right">            
+                                <button type="button" class="btn btn-primary btn-rounded btn-icon" id="btnBuscaMdlFatura" align="right">            
                                   <i class="ti-search"></i>
                                 </button>                               
                                 <button type="button" class="btn btn-secondary btn-rounded btn-icon" id="btnLimpaFatura" align="right">            
                                     <i class="ti-write"></i>
                                 </button>
-                                  <button type="button" class="btn btn-success btn-rounded btn-icon" id="btnSalvaFatura" align="right">            
+                                  <button type="button" class="btn btn-success btn-rounded btn-icon" id="btnSalvaFaturaMdlFatura" align="right">            
                                     <i class="ti-save"></i>
                                 </button>
                                 <button type="button" class="btn btn-danger btn-rounded btn-icon" id="btnCloseAlteraFatura" onclick="closeModal()" align="right">
@@ -27,8 +27,8 @@
                 <div class="modal-body">
                   <div class="row">
                     <div class="col-sm-2 form-floating mb-3">
-                      <input type="text" class="form-control" id="idFatura" placeholder="name@example.com" disabled>
-                      <label class="ml-3" for="idFatura">Número da Fatura</label>
+                      <input type="text" class="form-control" id="idFaturaMdlFatura" placeholder="name@example.com" disabled>
+                      <label class="ml-3" for="idFaturaMdlFatura">Número da Fatura</label>
                     </div>
                 
                     <div class="col-sm-2 form-floating mb-3">
@@ -37,8 +37,8 @@
                     </div>
 
                     <div class="col-sm-2 form-floating mb-3">
-                      <input type="date" class="form-control" id="vencimento" placeholder="01/01/2023">
-                      <label class="ml-3" for="vencimento">Data de Vencimento</label>
+                      <input type="date" class="form-control" id="vencimentoMdlFatura" placeholder="01/01/2023">
+                      <label class="ml-3" for="vencimentoMdlFatura">Data de Vencimento</label>
                     </div>
 
                     <div class="col-sm-6 pl-0 pr-0">
@@ -142,5 +142,8 @@
   <script src="{% static 'js/meusJS/faturamento/adicionaAlteraFatura/btnAddDocumentoModalFatura.js' %}"></script>
   <script src="{% static 'js/meusJS/faturamento/adicionaAlteraFatura/acrescimo.js' %}"></script>
   <script src="{% static 'js/meusJS/faturamento/adicionaAlteraFatura/desconto.js' %}"></script>
+  <script src="{% static 'js/meusJS/faturamento/adicionaAlteraFatura/calculoFatura.js' %}"></script>
+  <script src="{% static 'js/meusJS/faturamento/adicionaAlteraFatura/btnBuscaModalFatura.js' %}"></script>
+  <script src="{% static 'js/meusJS/faturamento/adicionaAlteraFatura/btnSalvaAlteraFatura.js' %}"></script>
 {% endblock %}
   
