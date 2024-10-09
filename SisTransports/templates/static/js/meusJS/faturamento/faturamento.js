@@ -1,4 +1,5 @@
 loadEmissores('fatAutomaticoEmissor')
+loadEmissores('emissorMdlFatura')
 const getDadosFaturamentoAutomatico =()=>{
     console.log(getDadosForm('frmFaturamentoAutomatico'))
 }

@@ -47,13 +47,13 @@ class FaturasManager:
         Returns:
             int: Código de status (200 para sucesso, 300 para erro).
         """
-        try:
-            self.save_or_update(dados)
-            self.obj_fatura.save()
-            return 200
-        except Exception as e:
-            print(f"Erro ao criar fatura: {e}")
-            return 300
+        # try:
+        self.save_or_update(dados)
+        self.obj_fatura.save()
+        return 200
+        # except Exception as e:
+        #     print(f"Erro ao criar fatura: {e}")
+        #     return 300
 
     def update_fatura(self, id_fatura, dados):
         """
@@ -248,7 +248,8 @@ class FaturasManager:
             return None
 
     @staticmethod
-    def criar_fatura(dados_externos, dtcs_por_tomador):
+    def criar_fatura(dados):
+
         pass
 
 

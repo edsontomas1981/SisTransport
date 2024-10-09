@@ -26,36 +26,28 @@
                 </div>
                 <div class="modal-body">
                   <div class="row">
-                    <div class="col-sm-2 form-floating mb-3">
+
+                    <div class="col-sm-3 form-floating mb-3">
                       <input type="text" class="form-control" id="idFaturaMdlFatura" placeholder="name@example.com" disabled>
                       <label class="ml-3" for="idFaturaMdlFatura">Número da Fatura</label>
                     </div>
+
+                    <div class="mb-2 col-sm-3 form-floating">
+                      <select class="form-select" id="emissorMdlFatura" placeholder="Filial responsável"></select>
+                      <label for="emissorMdlFatura" class="form-label ml-3">Filial responsável</label>
+                    </div>
                 
-                    <div class="col-sm-2 form-floating mb-3">
+                    <div class="col-sm-3 form-floating mb-3">
                       <input type="date" class="form-control" id="dataEmissaoModalFatura" placeholder="01/01/2023">
                       <label class="ml-3" for="dataEmissaoModalFatura">Data de Emissão</label>
                     </div>
 
-                    <div class="col-sm-2 form-floating mb-3">
+                    <div class="col-sm-3 form-floating mb-3">
                       <input type="date" class="form-control" id="vencimentoMdlFatura" placeholder="01/01/2023">
                       <label class="ml-3" for="vencimentoMdlFatura">Data de Vencimento</label>
                     </div>
 
-                    <div class="col-sm-6 pl-0 pr-0">
-                      <div class="col-sm-12 form-floating">
-                        <div class="input-group">
-                          <div class="form-floating mb-3">
-                            <input type="text" class="form-control" id="cnpjSacadoFatura" placeholder="CNPJ do Sacado">
-                            <label for="cnpjSacadoFatura">CNPJ do Sacado</label>
-                          </div>
-                          <div class="form-floating">
-                            <input type="text" class="form-control" id="razaoSacadoFatura" placeholder="Razão Social do Sacado" disabled>
-                            <label for="razaoSacadoFatura">Razão Social do Sacado</label>
-                          </div>
-                          <a class="btn btn-primary btn-sm" id="btnBuscaParceiroModalFatura" style="height: 58px; display: flex; justify-content: center; align-items: center;"><i class="fa fa-search" aria-hidden="true"></i></a>
-                        </div>
-                      </div>
-                    </div>
+
                 
                     <div class="col-sm-2 form-floating mb-3">
                       <input type="text" class="form-control" id="descontoMdlFatura" placeholder="name@example.com">
@@ -86,8 +78,24 @@
                       <input type="text" class="form-control" id="valorAPagarMdlFatura" placeholder="name@example.com" disabled>
                       <label class="ml-3" for="valorAPagar">Valor a Pagar (R$)</label>
                     </div>
+
+                    <div class="col-sm-12 pl-0 pr-0">
+                      <div class="col-sm-12 form-floating">
+                        <div class="input-group">
+                          <div class="form-floating mb-3">
+                            <input type="text" class="form-control" id="cnpjSacadoFatura" placeholder="CNPJ do Sacado">
+                            <label for="cnpjSacadoFatura">CNPJ do Sacado</label>
+                          </div>
+                          <div class="form-floating">
+                            <input type="text" class="form-control" id="razaoSacadoFatura" placeholder="Razão Social do Sacado" disabled>
+                            <label for="razaoSacadoFatura">Razão Social do Sacado</label>
+                          </div>
+                          <a class="btn btn-primary btn-sm" id="btnBuscaParceiroModalFatura" style="height: 58px; display: flex; justify-content: center; align-items: center;"><i class="fa fa-search" aria-hidden="true"></i></a>
+                        </div>
+                      </div>
+                    </div>
                 
-                    <div class="form-floating col-sm-3 mb-3">
+                    <div class="form-floating col-sm-4 mb-3">
                       <select class="form-select" id="cmbTipoDocumentoFatura" aria-label="Seleção do Tipo de Documento">
                         <option value="">Selecione ...</option>
                         <option value="1">CTE</option>
