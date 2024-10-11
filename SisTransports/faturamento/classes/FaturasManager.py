@@ -47,13 +47,13 @@ class FaturasManager:
         Returns:
             int: Código de status (200 para sucesso, 300 para erro).
         """
-        # try:
-        self.save_or_update(dados)
-        self.obj_fatura.save()
-        return 200
-        # except Exception as e:
-        #     print(f"Erro ao criar fatura: {e}")
-        #     return 300
+        try:
+            self.save_or_update(dados)
+            self.obj_fatura.save()
+            return 200
+        except Exception as e:
+            print(f"Erro ao criar fatura: {e}")
+            return 300
 
     def update_fatura(self, id_fatura, dados):
         """
@@ -78,6 +78,8 @@ class FaturasManager:
         except Exception as e:
             print(f"Erro ao atualizar fatura: {e}")
             return 300
+
+
     @staticmethod
     def delete_fatura(id_fatura):
         """
@@ -114,6 +116,26 @@ class FaturasManager:
         try:
             fatura = Faturas.objects.get(id=id_fatura)
             return fatura.to_dict()
+        except Faturas.DoesNotExist:
+            print(f"A fatura com o ID {id_fatura} não foi encontrada.")
+            return None
+        except Exception as e:
+            print(f"Erro ao ler fatura: {e}")
+            return None
+        
+    def read_obj_fatura(self,id_fatura):
+        """
+        Lê uma fatura.
+
+        Args:
+            id_fatura (int): ID da fatura a ser lida.
+
+        Returns:
+            dict: Dados da fatura ou None se a fatura não for encontrada.
+        """
+        try:
+            self.obj_fatura = Faturas.objects.get(id=id_fatura)
+            return self.obj_fatura
         except Faturas.DoesNotExist:
             print(f"A fatura com o ID {id_fatura} não foi encontrada.")
             return None
@@ -251,5 +273,75 @@ class FaturasManager:
     def criar_fatura(dados):
 
         pass
+
+    @staticmethod
+    def atualizar_ctes(dados):
+        """
+        Atualiza os CTe's associados a uma fatura específica.
+
+        Esta função recebe um dicionário com dados da fatura e uma lista de CTe's.
+        Ela atualiza a relação de CTe's para a fatura, removendo os que não estão mais
+        associados e adicionando os novos.
+
+        Args:
+            dados (dict): Dicionário contendo os dados da fatura, incluindo 'id' da fatura
+                        e a lista de CTe's a serem associados.
+
+        Raises:
+            ValueError: Se o campo 'id' da fatura ou a lista de 'ctes' estiverem ausentes.
+            Faturas.DoesNotExist: Se a fatura com o ID fornecido não for encontrada no banco de dados.
+            Exception: Para qualquer outro erro inesperado durante o processo.
+        """
+        try:
+            # Valida se o campo 'id' da fatura existe e se a lista de CTe's não está vazia
+            fatura_id = dados.get('id')
+            ctes = dados.get('ctes', [])
+
+            if not fatura_id:
+                raise ValueError("O campo 'id' da fatura é obrigatório.")
+            if not ctes:
+                raise ValueError("A lista de 'ctes' não pode estar vazia.")
+
+            # Tenta recuperar a fatura pelo ID
+            fatura = Faturas.objects.get(id=fatura_id)
+
+            # Instancia o gerenciador de faturas e realiza operações na fatura
+            obj_fatura = FaturasManager()
+            obj_fatura.read_obj_fatura(fatura_id)
+            obj_fatura.save_or_update(dados)
+            obj_fatura.obj_fatura.save()
+
+            # Obtém os CTe's atualmente associados à fatura
+            ctes_associados = Cte.get_ctes_por_fatura(fatura_id)
+
+            # Extrai IDs dos CTe's recebidos
+            ids_novos_ctes = [cte.get('idCte') for cte in ctes]
+
+            # Extrai IDs dos CTe's atualmente associados à fatura
+            ids_ctes_associados = [cte.to_dict().get('id') for cte in ctes_associados]
+
+            # Identifica os CTe's que precisam ser removidos da fatura
+            ctes_para_remover = set(ids_ctes_associados) - set(ids_novos_ctes)
+
+            # Identifica os novos CTe's que precisam ser adicionados à fatura
+            ctes_para_adicionar = set(ids_novos_ctes) - set(ids_ctes_associados)
+
+            # Remove os CTe's que não devem mais estar associados à fatura
+            for cte_id in ctes_para_remover:
+                Cte.remove_fatura_cte(cte_id)
+
+            # Adiciona os novos CTe's à fatura
+            for cte_id in ctes_para_adicionar:
+                Cte.adiciona_fatura_ao_cte(cte_id, fatura)
+
+        except Faturas.DoesNotExist:
+            raise Faturas.DoesNotExist(f"Fatura com ID {fatura_id} não encontrada.")
+        except ValueError as ve:
+            raise ValueError(f"Erro de validação: {str(ve)}")
+        except Exception as e:
+            raise Exception(f"Erro inesperado ao atualizar os CTe's: {str(e)}")
+
+        
+
 
 

@@ -47,7 +47,7 @@ class Faturas(models.Model):
         }
 
     def __str__(self):
-        return f'Fatura {self.numero_fatura} - {self.sacado_fk}'
+        return f'Fatura {self.id} - {self.sacado_fk}'
 
     class Meta:
         verbose_name = 'Fatura'

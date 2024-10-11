@@ -33,7 +33,6 @@ def gerar_faturas(request):
     """
     dados_externos = json.loads(request.body.decode('utf-8'))
 
-    dprint(dados_externos)
     data_filtro_inicial = dados_externos.get('dataInicio', None)
     data_filtro_final = dados_externos.get('dataFinal', None)
     cnpj_filtro = dados_externos.get('cnpjParceiroFaturamento', None)

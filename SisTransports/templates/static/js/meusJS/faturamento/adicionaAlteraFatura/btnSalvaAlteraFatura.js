@@ -6,7 +6,6 @@ btnSalvaAlteraFatura.addEventListener('click', async () => {
     dadosForm.valorAPagarMdlFatura = converterMoedaParaNumero(dadosForm.valorAPagarMdlFatura)
     dadosForm.valorTotalMdlFatura = converterMoedaParaNumero(dadosForm.valorTotalMdlFatura)
 
-    console.log(dadosForm)
     let camposObrigatorios = [
         'dataEmissaoModalFatura', 'vencimentoMdlFatura', 
         'cnpjSacadoFatura', 'razaoSacadoFatura', 
@@ -18,5 +17,19 @@ btnSalvaAlteraFatura.addEventListener('click', async () => {
         return;
     }
     let response = await conectaEndpoint('/faturamento/cria_fatura/',dadosForm)
-    console.log(response)
+
+    switch (response.status) {
+        case 200:
+            msgOk(`Fatura salva com sucesso! (ID: ${response.id_fatura})`);
+            document.getElementById('idFaturaMdlFatura').value = response.id_fatura
+            break;
+        case 201:            
+            msgOk(`Fatura alterada com sucesso! (ID: ${response.id_fatura})`);
+            break;  
+        default:
+            msgErro('Erro ao salvar a fatura. Por favor, tente novamente ou entre em contato com o suporte.');
+            break;
+    }
+    
+
 });

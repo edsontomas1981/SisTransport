@@ -28,20 +28,29 @@ def cria_fatura(request):
     dados['emissor_fk'] = emissor
     dados_normatizados = normatiza_dados(dados)
 
+    dprint(dados_normatizados)
+
     if dados.get('idFaturaMdlFatura') == '':
         fatura = FaturasManager()
         fatura.create_fatura(dados_normatizados)
-        dprint(fatura.obj_fatura.id)
-        return JsonResponse({'status': 200, 'message': 'Fatura criada com sucesso'})
+        lista_ctes = dados_normatizados.get('ctes')
+
+        for cte in lista_ctes:
+            Cte.adiciona_fatura_ao_cte(cte.get('idCte'), fatura.obj_fatura)
+
+        return JsonResponse({'status': 200, 'message': 'Fatura criada com sucesso','id_fatura':fatura.obj_fatura.id})
     else:
         # Aqui pode-se implementar a lógica de alteração da fatura, se necessário.
-        print('altera fatura')
-        return JsonResponse({'status': 200, 'message': 'Fatura alterada com sucesso'})
+        fatura = FaturasManager.read_fatura(dados.get('idFaturaMdlFatura'))
+        FaturasManager.atualizar_ctes(dados_normatizados)
+        return JsonResponse({'status': 201, 'message': 'Fatura alterada com sucesso'})
 
 def normatiza_dados(dados):
     return {
+        'id': dados.get('idFaturaMdlFatura') if dados.get('idFaturaMdlFatura') else None,
         'emissor_fk': dados.get('emissor_fk'),
         'sacado_fk': dados.get('sacado_fk'),
+        'sacado_id': dados.get('sacado_fk'),
         'data_emissao': str_to_date(dados.get('dataEmissaoModalFatura')),
         'vencimento': str_to_date(dados.get('vencimentoMdlFatura')),
         'valor_total': float(dados.get('valorTotalMdlFatura')) if dados.get('valorTotalMdlFatura') not in [None, ''] else 0.00,
