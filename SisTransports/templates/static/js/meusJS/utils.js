@@ -420,6 +420,15 @@ const msgErro = (msg)=>{
   })
 }
 
+const msgErroFixa = (msg)=>{
+
+  Swal.fire({
+    title: "Erro !",
+    text: msg,
+    icon: "error"
+  });
+}
+
 const msgAviso = (msg)=>{
   Swal.fire({
     position: "top-end",

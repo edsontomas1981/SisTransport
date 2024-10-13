@@ -24,9 +24,6 @@ btnGerarFaturaAutomatica.addEventListener('click',async()=>{
         let response = await conectaEndpoint(url,dados)
         let faturas = preparaDadosTbodyFaturas(response.faturas)
         popula_tbody_pag('divNavegacaoFatura','tbodyFaturas',faturas,botoes,1,10,false,false)
+        popula_relatorio_faturas()
     }
 })
-
-const populaRelatorioFaturas = () =>{
-    
-} 

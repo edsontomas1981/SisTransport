@@ -22,9 +22,11 @@ btnSalvaAlteraFatura.addEventListener('click', async () => {
         case 200:
             msgOk(`Fatura salva com sucesso! (ID: ${response.id_fatura})`);
             document.getElementById('idFaturaMdlFatura').value = response.id_fatura
+            popula_relatorio_faturas()
             break;
         case 201:            
             msgOk(`Fatura alterada com sucesso! (ID: ${response.id_fatura})`);
+            popula_relatorio_faturas()
             break;  
         default:
             msgErro('Erro ao salvar a fatura. Por favor, tente novamente ou entre em contato com o suporte.');

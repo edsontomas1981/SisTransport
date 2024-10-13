@@ -74,6 +74,7 @@ class Cte(models.Model):
             'cfop_cte': self.cfop_cte,
             'redesp_cte': self.redesp_cte,
             'tipo_calculo_cte': self.tipo_calculo_cte,
+            'fatura': self.faturas_fk.to_dict() if self.faturas_fk is not None else {}
         }
 
     def save(self, *args, **kwargs):

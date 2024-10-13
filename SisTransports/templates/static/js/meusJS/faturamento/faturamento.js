@@ -81,6 +81,11 @@ const excluirFatura = async (e) => {
     return `${ano}-${mes}-${dia}`; // Retorna no formato YYYY-MM-DD
   }
 
+  const closeModalCriaFatura = ()=>{
+    limpaModalFaturas()
+    closeModal()
+  }
+
   
   const populaModalFatura = (fatura) => {
     document.getElementById('idFatura').value = fatura.id;

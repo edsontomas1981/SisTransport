@@ -26,6 +26,11 @@ btnAddDocumento.addEventListener('click', async () => {
     
     let response = await getDocumentoAddFatura(numDcto.value,idTipoDocumento.value)
 
+    if(response.cte.fatura.id){
+        msgErroFixa(`O CTe já está vinculado à fatura ${response.cte.fatura.id}. Remova-o da fatura atual para poder incluí-lo novamente.`);
+        return
+    }
+
     let cte = response.cte
     if(registroJaExisteFatura(ctesFatura,'id',cte.dtc_fk.id) != true){
         ctesFatura.push(preparaCteFatura(response.cte))

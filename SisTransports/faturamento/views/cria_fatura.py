@@ -43,7 +43,9 @@ def cria_fatura(request):
         # Aqui pode-se implementar a lógica de alteração da fatura, se necessário.
         fatura = FaturasManager.read_fatura(dados.get('idFaturaMdlFatura'))
         FaturasManager.atualizar_ctes(dados_normatizados)
-        return JsonResponse({'status': 201, 'message': 'Fatura alterada com sucesso'})
+
+        print(fatura)
+        return JsonResponse({'status': 201, 'message': 'Fatura alterada com sucesso','id_fatura':fatura.get('id')})
 
 def normatiza_dados(dados):
     return {

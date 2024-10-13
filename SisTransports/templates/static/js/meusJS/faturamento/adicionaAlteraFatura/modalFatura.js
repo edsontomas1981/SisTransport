@@ -76,6 +76,9 @@ const limpaModalFaturas = ()=>{
   document.getElementById('idFaturaBusca').value = ''
   document.getElementById('tableDtcFatura').innerHTML = ''
   document.getElementById('paginacaoMdlFatura').innerHTML = ''
+  document.getElementById('numeroDocumentoFatura').value = ''
+  document.getElementById('cmbTipoDocumentoFatura').value = ''
+
 
 }
 
