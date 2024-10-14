@@ -1,8 +1,6 @@
 
 let ctesFatura = []
 
-
-
 const dataEmissaoModalFatura = document.getElementById('dataEmissaoModalFatura');
 const getDataEmissao = () =>{
   const valor = dataEmissaoModalFatura.value;

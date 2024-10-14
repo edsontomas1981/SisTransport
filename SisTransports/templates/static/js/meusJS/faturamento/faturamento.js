@@ -143,4 +143,11 @@ const popula_relatorio_faturas = async () => {
       false  // Sem filtro adicional
     );
   };
+
+  const carregaFatura=async (idFatura)=>{
+    let dados = { idFatura: idFatura };
+    let url = '/faturamento/get_fatura/';
+    let response = await conectaEndpoint(url, dados);
+    return response
+  }
   

@@ -29,7 +29,7 @@ class Faturas(models.Model):
     def to_dict(self):
         return {
             'id': self.id,
-            'emissor': self.emissor_fk.nome if self.emissor_fk else None,
+            'emissor': self.emissor_fk.to_dict() if self.emissor_fk else None,
             'sacado': self.sacado_fk.raz_soc if self.sacado_fk else None,
             'sacado_fk': self.sacado_fk.to_dict() if self.sacado_fk else None,
             'data_emissao': self.data_emissao.strftime('%Y-%m-%d'),

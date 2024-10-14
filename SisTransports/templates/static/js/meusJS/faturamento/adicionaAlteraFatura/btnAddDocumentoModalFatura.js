@@ -1,6 +1,5 @@
-
-
 let btnAddDocumento = document.getElementById('btnAddDocumentoFatura')
+
 btnAddDocumento.addEventListener('click', async () => {
 
     let botao = {
@@ -39,7 +38,5 @@ btnAddDocumento.addEventListener('click', async () => {
     let valorFatura = formatarMoeda((somaFretes(ctesFatura)))
     document.getElementById('valorTotalMdlFatura').value = valorFatura
     popula_tbody_paginacao('paginacaoMdlFatura','tableDtcFatura',ctesFatura,botao,1,30,false,false)
-
     populaValorAPagar()
-
 });

@@ -114,7 +114,7 @@ const gerarPdfContrato=async (dados)=> {
     doc.text(`Endereço : ${jsonDados.ruaMotorista}, ${jsonDados.numeroMotorista}`, x+3,100);
     doc.text(`Endereço : ${jsonDados.bairroMotorista} - ${jsonDados.cidadeMotorista}- ${jsonDados.ufMotorista}`, x+3,107);
     doc.text(`Telefone : ${jsonDados.foneMotorista}`, x+3,114);
-
+ 
     // Dados do Frete 
     doc.rect(x, y+107, width/2, height);
     doc.setFontSize(11); // Altere o tamanho conforme necessário
