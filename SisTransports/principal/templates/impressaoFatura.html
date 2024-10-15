@@ -58,6 +58,10 @@
   font-size: 0.75em;
 }
 
+.tamanho-fonte{
+	font-size: 0.5em !important;
+}
+
 #thanks{
   font-size: 2em;
   margin-bottom: 50px;
@@ -112,42 +116,35 @@
 						</div>
 					</div>
 					<div class="container">
-						<table class="table">
+						<table class="table table-striped table-sm">
 							<thead>
-								<tr>
-									<th scope="col">#</th>
-									<th scope="col">First</th>
-									<th scope="col">Last</th>
-									<th scope="col">Handle</th>
+								<tr class="thead-padrao">
+									<th scope="col">CT-E</th>
+									<th scope="col">Remetente</th>
+									<th scope="col">Destinatário</th>
+									<th scope="col">Tomador do Frete</th>
+									<th scope="col">Frete</th>
+									<th scope="col"></th>
 								</tr>
 							</thead>
-							<tbody>
-								<tr>
-									<th scope="row">1</th>
-									<td>Mark</td>
-									<td>Otto</td>
-									<td>@mdo</td>
-								</tr>
-								<tr>
-									<th scope="row">2</th>
-									<td>Jacob</td>
-									<td>Thornton</td>
-									<td>@fat</td>
-								</tr>
-								<tr>
-									<th scope="row">3</th>
-									<td colspan="2">Larry the Bird</td>
-									<td>@twitter</td>
-								</tr>
+							<tbody id="tabelaImpressaoFatura" class="tamanho-fonte">
 							</tbody>
 						</table>
-						<table class="table table-striped table-sm" aria-describedby="order-listing_info">
-							<thead>
-								<tr><th class="sorting sorting_asc" tabindex="0" aria-controls="order-listing" rowspan="1" colspan="1" aria-sort="ascending" aria-label="Order #: activate to sort column descending" style="width: 55.4062px;">Order #</th><th class="sorting" tabindex="0" aria-controls="order-listing" rowspan="1" colspan="1" aria-label="Purchased On: activate to sort column ascending" style="width: 98.3438px;">Purchased On</th><th class="sorting" tabindex="0" aria-controls="order-listing" rowspan="1" colspan="1" aria-label="Customer: activate to sort column ascending" style="width: 69px;">Customer</th><th class="sorting" tabindex="0" aria-controls="order-listing" rowspan="1" colspan="1" aria-label="Ship to: activate to sort column ascending" style="width: 61.8594px;">Ship to</th><th class="sorting" tabindex="0" aria-controls="order-listing" rowspan="1" colspan="1" aria-label="Base Price: activate to sort column ascending" style="width: 73.9375px;">Base Price</th><th class="sorting" tabindex="0" aria-controls="order-listing" rowspan="1" colspan="1" aria-label="Purchased Price: activate to sort column ascending" style="width: 111.969px;">Purchased Price</th><th class="sorting" tabindex="0" aria-controls="order-listing" rowspan="1" colspan="1" aria-label="Status: activate to sort column ascending" style="width: 71.0156px;">Status</th><th class="sorting" tabindex="0" aria-controls="order-listing" rowspan="1" colspan="1" aria-label="Actions: activate to sort column ascending" style="width: 68.4688px;">Actions</th></tr>
-							</thead>
-							<tbody id="tbodyCtesFatura">
-							</tbody>
-						</table>
+					</div>
+					<div class="row p-4">
+						<h4>Totais</h4>
+						<div class="text-right col-sm-3">
+							<label id="valorDescontoImpressao" class="badge badge-info">Total de Desconto : R$ 274,00</label>
+						</div>
+						<div class="text-right col-sm-3">
+							<label id="valorAcrescimoImpressao" class="badge badge-danger">Total de Acréscimos : R$ 274,00</label>
+						</div>
+						<div class="text-right col-sm-3">
+							<label id="valorTotalFaturaImpressao" class="badge badge-secondary">Valor Total Fatura : R$ 274,00</label>
+						</div>
+						<div class="text-right col-sm-3">
+							<label id="valorAPagarFaturaImpressao" class="badge badge-primary">Valor À Pagar : R$ 274,00</label>
+						</div>
 					</div>
 		</div>
 </div>
