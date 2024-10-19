@@ -12,4 +12,5 @@ urlpatterns = [
     path('get_faturas/',viewsFaturamento.get_all_faturas,name='get_faturas'),
     path('get_fatura/',viewsFaturamento.get_fatura,name='get_fatura'),
     path('cria_fatura/',viewsFaturamento.cria_fatura,name='cria_fatura'),
+    path('get_fatura_criterios/',viewsFaturamento.GetFaturasCriterios.as_view(),name='get_fatura_criterios'),
 ]

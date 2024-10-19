@@ -5,6 +5,14 @@ let btnPrintFatura = document.getElementById('btnPrintFatura');
 if (btnPrintFatura) {
     // Adiciona o evento de clique para iniciar a geração do PDF
     btnPrintFatura.addEventListener('click', async () => {
+        let idFatura = document.getElementById('idFaturaMdlFatura').value;  // Obtém o ID da fatura
+        
+        // Verifica se o ID da fatura está vazio
+        if (idFatura === '') {
+            msgAviso('Por favor, salve a fatura ou selecione uma fatura para continuar.');
+            return;  // Interrompe o fluxo se a fatura não estiver salva ou selecionada
+        }
+        
         try {
             await preencherDadosImpressao();  // Aguarda o preenchimento dos dados de impressão
             gerarPDF();  // Chama a função para gerar o PDF
@@ -15,6 +23,7 @@ if (btnPrintFatura) {
 } else {
     console.error('Botão de impressão não encontrado na página.');
 }
+
 
 /**
  * Função responsável por gerar o PDF com as configurações definidas.

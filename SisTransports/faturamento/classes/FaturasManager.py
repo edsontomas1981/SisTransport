@@ -3,8 +3,8 @@ from django.db.models import Q
 from operacional.models.dtc import Dtc
 from faturamento.models.faturas import Faturas
 from operacional.classes.cte import Cte
-from Classes.utils import dprint
 from django.db import transaction
+from Classes.utils import str_to_date
 
 
 class FaturasManager:
@@ -78,7 +78,6 @@ class FaturasManager:
         except Exception as e:
             print(f"Erro ao atualizar fatura: {e}")
             return 300
-
 
     @staticmethod
     def delete_fatura(id_fatura):
@@ -201,7 +200,6 @@ class FaturasManager:
         except Exception as e:
             print(f"Erro ao selecionar DTCs com CTEs sem fatura: {e}")
             return None
-      
 
     @staticmethod
     def agrupa_dtcs_por_tomador(ctes):
@@ -271,7 +269,6 @@ class FaturasManager:
 
     @staticmethod
     def criar_fatura(dados):
-
         pass
 
     @staticmethod
@@ -340,7 +337,92 @@ class FaturasManager:
             raise ValueError(f"Erro de validação: {str(ve)}")
         except Exception as e:
             raise Exception(f"Erro inesperado ao atualizar os CTe's: {str(e)}")
+        
+    @staticmethod
+    def get_faturas_filtro(dados):
+        pass
 
+    def atende_criterios(criterios, dados):
+        """
+        Verifica se os dados de uma fatura atendem aos critérios especificados.
+
+        A função compara os valores de emissão, vencimento, ID da fatura e CNPJ do sacado 
+        com os critérios fornecidos e retorna True se os dados atenderem a todos os critérios, 
+        ou False caso contrário.
+
+        Parâmetros:
+        ----------
+        criterios : dict
+            Dicionário contendo os critérios de filtragem, com as seguintes chaves:
+                - filtroDataInicioEmissaoFatura: Data de início do período de emissão.
+                - filtroDataFinalEmissaoFatura: Data final do período de emissão.
+                - filtroDataInicioVencimentoFatura: Data de início do período de vencimento.
+                - filtroDataFinalVencimentoFatura: Data final do período de vencimento.
+                - idFaturaBusca: ID da fatura a ser buscada.
+                - cnpjRelatFaturaBuscaFatura: CNPJ do sacado a ser filtrado.
+
+        dados : dict
+            Dicionário contendo os dados da fatura, com as seguintes chaves:
+                - data_emissao: Data de emissão da fatura.
+                - vencimento: Data de vencimento da fatura.
+                - id: ID da fatura.
+                - sacado_fk_id: CNPJ do sacado (tomador) da fatura.
+
+        Retorna:
+        -------
+        bool
+            True se os dados atenderem aos critérios, False caso contrário.
+        """
+
+        # Convertendo os critérios de string para datetime, se aplicável
+        criterio_inicio_emissao = str_to_date(criterios.get('filtroDataInicioEmissaoFatura', None))
+        criterio_final_emissao = str_to_date(criterios.get('filtroDataFinalEmissaoFatura', None))
+        criterio_inicio_vencimento = str_to_date(criterios.get('filtroDataInicioVencimentoFatura', None))
+        criterio_final_vencimento = str_to_date(criterios.get('filtroDataFinalVencimentoFatura', None))
+        criterio_id_fatura = criterios.get('idFaturaBusca', None)
+        criterio_cnpj_sacado = criterios.get('cnpjRelatFaturaBuscaFatura', None)
+
+        # Convertendo os dados da fatura de string para datetime
+        dados_emissao = str_to_date(dados.get('data_emissao'))
+        dados_vencimento = str_to_date(dados.get('vencimento'))
+        dados_id_fatura = dados.get('id')
+        dados_cnpj_sacado = dados.get('sacado_fk_id')
+
+        # Verificando o período de emissão
+        if criterio_inicio_emissao and dados_emissao < criterio_inicio_emissao:
+            return False
+
+        if criterio_final_emissao and dados_emissao > criterio_final_emissao:
+            return False
+
+        # Verificando o período de vencimento
+        if criterio_inicio_vencimento and dados_vencimento < criterio_inicio_vencimento:
+            return False
+
+        if criterio_final_vencimento and dados_vencimento > criterio_final_vencimento:  # Correção aqui
+            return False
+
+        # Verificando o ID da fatura
+        if criterio_id_fatura and dados_id_fatura != criterio_id_fatura:  # Correção aqui
+            return False
+
+        # Verificando o CNPJ do sacado
+        if criterio_cnpj_sacado and dados_cnpj_sacado != criterio_cnpj_sacado:  # Correção aqui
+            return False
+
+        return True
+
+
+
+
+
+
+
+
+
+
+
+    
         
 
 
