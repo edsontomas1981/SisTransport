@@ -4,7 +4,9 @@ from operacional.models.dtc import Dtc
 from faturamento.models.faturas import Faturas
 from operacional.classes.cte import Cte
 from django.db import transaction
-from Classes.utils import str_to_date
+from Classes.utils import dprint,string_para_data,str_to_date
+
+from datetime import datetime
 
 
 class FaturasManager:
@@ -121,7 +123,7 @@ class FaturasManager:
         except Exception as e:
             print(f"Erro ao ler fatura: {e}")
             return None
-        
+
     def read_obj_fatura(self,id_fatura):
         """
         Lê uma fatura.
@@ -181,7 +183,7 @@ class FaturasManager:
                 dtcs_to_dict.append(dtc)
 
             return dtcs_to_dict
-        
+
         except Exception as e:
             print(f"Erro ao selecionar DTCs com CTEs sem fatura: {e}")
             return None
@@ -192,7 +194,7 @@ class FaturasManager:
             ctes_sem_fatura = []
             for dtc in dtcs:
                 id_dtc = dtc.id
-                cte = Cte.obtem_cte_by_dtc(id_dtc)  
+                cte = Cte.obtem_cte_by_dtc(id_dtc)
                 ctes_sem_fatura.append(cte.to_dict())
 
             return ctes_sem_fatura
@@ -337,17 +339,32 @@ class FaturasManager:
             raise ValueError(f"Erro de validação: {str(ve)}")
         except Exception as e:
             raise Exception(f"Erro inesperado ao atualizar os CTe's: {str(e)}")
-        
-    @staticmethod
-    def get_faturas_filtro(dados):
-        pass
 
+    @staticmethod
+    def get_faturas_filtro(dados,criterio):
+
+        for fatura in dados:
+            print(FaturasManager.atende_criterios(criterio,dados))
+
+            # print(f"""
+            #     Critérios de Busca:
+            #     CNPJ Sacado: {criterio_cnpj_sacado} 
+            #     Número da Fatura: {criterio_id_fatura}
+
+            #     Informações da Fatura:
+            #     ID da Fatura: {fatura.get('id')}
+            #     Data de Emissão: {fatura.get('data_emissao')} (Período: {criterio_inicio_emissao} até {criterio_final_emissao})
+            #     Data de Vencimento: {fatura.get('vencimento')} (Período: {criterio_inicio_vencimento} até {criterio_final_vencimento})
+            #     """)
+
+
+    @staticmethod
     def atende_criterios(criterios, dados):
         """
         Verifica se os dados de uma fatura atendem aos critérios especificados.
 
-        A função compara os valores de emissão, vencimento, ID da fatura e CNPJ do sacado 
-        com os critérios fornecidos e retorna True se os dados atenderem a todos os critérios, 
+        A função compara os valores de emissão, vencimento, ID da fatura e CNPJ do sacado
+        com os critérios fornecidos e retorna True se os dados atenderem a todos os critérios,
         ou False caso contrário.
 
         Parâmetros:
@@ -375,27 +392,30 @@ class FaturasManager:
         """
 
         # Convertendo os critérios de string para datetime, se aplicável
-        criterio_inicio_emissao = str_to_date(criterios.get('filtroDataInicioEmissaoFatura', None))
-        criterio_final_emissao = str_to_date(criterios.get('filtroDataFinalEmissaoFatura', None))
-        criterio_inicio_vencimento = str_to_date(criterios.get('filtroDataInicioVencimentoFatura', None))
-        criterio_final_vencimento = str_to_date(criterios.get('filtroDataFinalVencimentoFatura', None))
+        criterio_inicio_emissao = criterio_inicio_emissao if isinstance(criterios.get('filtroDataInicioEmissaoFatura', None), datetime.date) else string_para_data(criterios.get('filtroDataInicioEmissaoFatura', None))
+        criterio_final_emissao = criterio_final_emissao if isinstance(criterios.get('filtroDataFinalEmissaoFatura', None), datetime.date) else string_para_data(criterios.get('filtroDataFinalEmissaoFatura', None))
+        criterio_inicio_vencimento = criterio_inicio_vencimento if isinstance(criterios.get('filtroDataInicioVencimentoFatura', None), datetime.date) else string_para_data(criterios.get('filtroDataInicioVencimentoFatura', None))
+        criterio_final_vencimento = criterio_final_vencimento if isinstance(criterios.get('filtroDataFinalVencimentoFatura', None), datetime.date) else string_para_data(criterios.get('filtroDataFinalVencimentoFatura', None))
         criterio_id_fatura = criterios.get('idFaturaBusca', None)
         criterio_cnpj_sacado = criterios.get('cnpjRelatFaturaBuscaFatura', None)
 
         # Convertendo os dados da fatura de string para datetime
-        dados_emissao = str_to_date(dados.get('data_emissao'))
-        dados_vencimento = str_to_date(dados.get('vencimento'))
-        dados_id_fatura = dados.get('id')
-        dados_cnpj_sacado = dados.get('sacado_fk_id')
+        dados_emissao = dados_emissao if isinstance(dados[0].get('data_emissao', None), datetime.date) else string_para_data(dados[0].get('data_emissao', None))
+        dados_vencimento = dados_vencimento if isinstance(dados[0].get('vencimento', None), datetime.date) else string_para_data(dados[0].get('vencimento', None))
+        dados_id_fatura = dados[0].get('id', None)
+        dados_cnpj_sacado = dados[0].get('sacado_fk_id', None)
+
 
         # Verificando o período de emissão
-        if criterio_inicio_emissao and dados_emissao < criterio_inicio_emissao:
+        dprint(f'Criterio data emissão data inicial {criterio_inicio_emissao} data final {criterio_final_emissao} dado concreto {dados_emissao} ')
+
+        if criterio_inicio_emissao and string_para_data(dados_emissao) < criterio_inicio_emissao:
             return False
 
         if criterio_final_emissao and dados_emissao > criterio_final_emissao:
             return False
 
-        # Verificando o período de vencimento
+        # # Verificando o período de vencimento
         if criterio_inicio_vencimento and dados_vencimento < criterio_inicio_vencimento:
             return False
 
@@ -411,19 +431,3 @@ class FaturasManager:
             return False
 
         return True
-
-
-
-
-
-
-
-
-
-
-
-    
-        
-
-
-

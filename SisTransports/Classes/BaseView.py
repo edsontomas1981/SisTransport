@@ -1,12 +1,11 @@
-from abc import ABC, abstractmethod
 from django.contrib.auth.decorators import login_required
 from django.utils.decorators import method_decorator
 from django.http import JsonResponse, HttpResponseBadRequest, HttpResponseServerError
 import json
 
-class ViewBase(ABC):
+class ViewBase:
     """
-    Classe abstrata para lidar com views que exigem autenticação e retornam respostas JSON.
+    Classe base para lidar com views que exigem autenticação e retornam respostas JSON.
     Suporta os métodos HTTP GET, POST, PUT, DELETE.
     """
 
@@ -28,70 +27,46 @@ class ViewBase(ABC):
 
     def process_request_data(self, request, require_body=True):
         """
-        Processa o corpo da requisição e retorna os dados JSON. Lida com erros comuns, como JSON inválido ou corpo vazio.
-        
-        Parâmetros: 
-        -----------
-        request (HttpRequest): Requisição HTTP.
-        require_body (bool): Se True, o método requer um corpo de requisição. Caso contrário, ignora a validação do corpo.
-
-        Retorna:
-        --------
-        dict: Dados da requisição processados ou um dicionário vazio se o corpo não for necessário.
-        HttpResponse: Caso ocorra erro no processamento dos dados.
+        Processa o corpo da requisição e retorna os dados JSON.
         """
         if require_body:
             if not request.body:
                 return HttpResponseBadRequest("Corpo da requisição vazio.")
-            
+
             try:
                 dados = json.loads(request.body.decode('utf-8'))
                 return dados
             except json.JSONDecodeError:
                 return HttpResponseBadRequest("JSON inválido.")
         else:
-            # Se o corpo não for necessário, retorna um dicionário vazio
             return {}
 
-
-    @abstractmethod
     def post(self, request, *args, **kwargs):
         """
-        Método abstrato para processar requisições POST.
+        Método padrão para requisições POST.
         """
-        pass
+        return JsonResponse({"mensagem": "Método POST padrão"}, status=200)
 
-    @abstractmethod
     def get(self, request, *args, **kwargs):
         """
-        Método abstrato para processar requisições GET.
+        Método padrão para requisições GET.
         """
-        pass
+        return JsonResponse({"mensagem": "Método GET padrão"}, status=200)
 
-    @abstractmethod
     def put(self, request, *args, **kwargs):
         """
-        Método abstrato para processar requisições PUT.
+        Método padrão para requisições PUT.
         """
-        pass
+        return JsonResponse({"mensagem": "Método PUT padrão"}, status=200)
 
-    @abstractmethod
     def delete(self, request, *args, **kwargs):
         """
-        Método abstrato para processar requisições DELETE.
+        Método padrão para requisições DELETE.
         """
-        pass
+        return JsonResponse({"mensagem": "Método DELETE padrão"}, status=200)
 
     def handle_error(self, e):
         """
         Lida com exceções e retorna uma resposta de erro genérico.
-
-        Parâmetros:
-        -----------
-        e (Exception): Exceção capturada.
-
-        Retorna:
-        --------
-        HttpResponseServerError: Resposta de erro com a mensagem da exceção.
         """
         return HttpResponseServerError(f"Erro no servidor: {str(e)}")

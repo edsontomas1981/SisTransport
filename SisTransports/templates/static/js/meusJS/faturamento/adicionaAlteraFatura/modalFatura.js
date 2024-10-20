@@ -77,7 +77,6 @@ const limpaModalFaturas = ()=>{
   document.getElementById('numeroDocumentoFatura').value = ''
   document.getElementById('cmbTipoDocumentoFatura').value = ''
 
-
 }
 
 let valorDesconto

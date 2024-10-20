@@ -6,37 +6,17 @@ from django.http import JsonResponse, HttpResponseBadRequest, HttpResponseServer
 
 class GetFaturasCriterios(ViewBase, View):
 
-    def get(self, request, *args, **kwargs):
-        """
-        Implementação do método GET.
-        Retorna critérios de faturas.
-        """
-        # Sua lógica para obter critérios de faturas vai aqui.
-        criterios = {}  # Suponha que você obtenha dados de critérios
-        return JsonResponse(criterios)
-
     def post(self, request, *args, **kwargs):
         """
         Implementação do método POST.
         Adiciona novos critérios de fatura.
         """
         dados = self.process_request_data(request)
+
+        fatura = FaturasManager()
+
+        faturas = fatura.read_faturas()
+
+        FaturasManager.get_faturas_filtro(faturas,dados)
         # Sua lógica para adicionar critérios de fatura vai aqui.
-        return JsonResponse({'success': True}, status=201)
-
-    def put(self, request, *args, **kwargs):
-        """
-        Implementação do método PUT.
-        Atualiza critérios de fatura existentes.
-        """
-        dados = self.process_request_data(request)
-        # Sua lógica para atualizar critérios de fatura vai aqui.
-        return JsonResponse({'success': True}, status=200)
-
-    def delete(self, request, *args, **kwargs):
-        """
-        Implementação do método DELETE.
-        Remove critérios de fatura.
-        """
-        # Sua lógica para deletar critérios de fatura vai aqui.
-        return JsonResponse({'success': True}, status=204)
+        return JsonResponse({'success': True,'teste':'post'}, status=201)

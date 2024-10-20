@@ -152,6 +152,9 @@ def string_para_data(data_str):
 def converte_string_data(data_str):
     formatos = ['%Y-%m-%d', '%d-%m-%Y', '%m-%d-%Y', '%Y/%m/%d', '%m/%d/%Y', '%d/%m/%Y', '%y/%m/%d']
 
+    if isinstance(data_str, datetime.date):
+        return data_str  # Se já for um datetime.date, retorne como está
+
     for formato in formatos:
         try:
             data = datetime.strptime(data_str, formato).date()
@@ -163,6 +166,25 @@ def converte_string_data(data_str):
 
 
 def str_to_date(data_str):
+    """
+    Converte uma string representando uma data em um objeto datetime.
+    
+    Tenta vários formatos de data e hora. Se a conversão falhar, retorna None.
+    
+    Args:
+        data_str (str): A string a ser convertida para datetime.
+        
+    Returns:
+        datetime: O objeto datetime correspondente ou None se a conversão falhar.
+    """
+
+    # Verifica se data_str é None ou uma string vazia
+    if not data_str:
+        return None 
+    
+    if isinstance(data_str, datetime.date):
+        return data_str  # Se já for um datetime.date, retorne como está
+
     formatos = [
         "%Y-%m-%d %H:%M:%S",
         "%Y-%m-%d",
@@ -194,4 +216,5 @@ def str_to_date(data_str):
             return datetime.strptime(data_str, formato)
         except ValueError:
             continue
+    
     return None
