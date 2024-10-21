@@ -2,7 +2,7 @@
 # sendo identificacaoCampo e o nome vindo da requisição
 # e nome campo e uma frase mais agradavel para retorno da requisição
 from termcolor import colored
-from datetime import datetime
+from datetime import datetime, date
 import re
 
 def checaCampos(request, **kwargs):
@@ -52,7 +52,6 @@ def verificaCamposObrigatorios(request):
         camposObrigatorios.append('Tipo do frete')
     return camposObrigatorios
 
-
 def toFloat(stringToFloat):
     if isinstance(stringToFloat,str ):
         if ',' in list(stringToFloat):
@@ -98,8 +97,6 @@ def to_float(value):
 
     return 0  # Retorna 0 se o valor não for uma string ou número
 
-
-
 def checkBox(check):
     if check == 'on' or check == 1:
         return True
@@ -107,7 +104,6 @@ def checkBox(check):
         return False
     else:
         return False
-
 
 def checaUf(uf):
     listaUf = ['RO', 'AC', 'AM', 'RR', 'PA', 'AP', 'TO',
@@ -123,24 +119,19 @@ def remove_caracteres_cep(cep):
     """Remove caracteres especiais de um CEP e retorna apenas os dígitos."""
     return re.sub(r'\D', '', cep)
 
-
 def remove_caracteres_cnpj_cpf(cnpj_cpf):
     """Remove caracteres especiais de um CNPJ/CPF e retorna apenas os dígitos."""
     return re.sub(r'\D', '', cnpj_cpf)
-
-
 
 def dprint(*args):
     for i in args:
         print(colored('********************************************', 'red'))
         print(colored(i, 'cyan'))
 
-
 def dpprint(titulo, *args):
     for i in args:
         print(colored('******************'+titulo+'*************', 'yellow'))
         print(colored(i, 'green'))
-
 
 def string_para_data(data_str):
     try:
@@ -182,9 +173,6 @@ def str_to_date(data_str):
     if not data_str:
         return None 
     
-    if isinstance(data_str, datetime.date):
-        return data_str  # Se já for um datetime.date, retorne como está
-
     formatos = [
         "%Y-%m-%d %H:%M:%S",
         "%Y-%m-%d",
@@ -217,4 +205,17 @@ def str_to_date(data_str):
         except ValueError:
             continue
     
+    return None
+
+def string_para_data(data_str):
+    # Verifica se já é um objeto do tipo date
+    if isinstance(data_str, date):
+        return data_str
+
+    # Verifica se é uma string válida e converte para data
+    if isinstance(data_str, str) and data_str != '':
+        data_str = datetime.strptime(data_str, "%Y-%m-%d").date()
+        return data_str
+
+    # Retorna None se a entrada for inválida
     return None

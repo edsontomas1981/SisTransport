@@ -4,7 +4,7 @@ from operacional.models.dtc import Dtc
 from faturamento.models.faturas import Faturas
 from operacional.classes.cte import Cte
 from django.db import transaction
-from Classes.utils import dprint,string_para_data,str_to_date
+from Classes.utils import dprint,string_para_data
 
 from datetime import datetime
 
@@ -341,21 +341,15 @@ class FaturasManager:
             raise Exception(f"Erro inesperado ao atualizar os CTe's: {str(e)}")
 
     @staticmethod
-    def get_faturas_filtro(dados,criterio):
-
-        for fatura in dados:
-            print(FaturasManager.atende_criterios(criterio,dados))
-
-            # print(f"""
-            #     Critérios de Busca:
-            #     CNPJ Sacado: {criterio_cnpj_sacado} 
-            #     Número da Fatura: {criterio_id_fatura}
-
-            #     Informações da Fatura:
-            #     ID da Fatura: {fatura.get('id')}
-            #     Data de Emissão: {fatura.get('data_emissao')} (Período: {criterio_inicio_emissao} até {criterio_final_emissao})
-            #     Data de Vencimento: {fatura.get('vencimento')} (Período: {criterio_inicio_vencimento} até {criterio_final_vencimento})
-            #     """)
+    def get_faturas_filtro(dados, criterio):
+        # List comprehension para filtrar as faturas que atendem os critérios
+        faturas_filtradas = [
+            {**fatura, 'qtdeDoctos': len(Cte.get_ctes_por_fatura(fatura.get('id')))}
+            for fatura in dados
+            if FaturasManager.atende_criterios(criterio, fatura)
+        ]
+        
+        return faturas_filtradas
 
 
     @staticmethod
@@ -392,42 +386,39 @@ class FaturasManager:
         """
 
         # Convertendo os critérios de string para datetime, se aplicável
-        criterio_inicio_emissao = criterio_inicio_emissao if isinstance(criterios.get('filtroDataInicioEmissaoFatura', None), datetime.date) else string_para_data(criterios.get('filtroDataInicioEmissaoFatura', None))
-        criterio_final_emissao = criterio_final_emissao if isinstance(criterios.get('filtroDataFinalEmissaoFatura', None), datetime.date) else string_para_data(criterios.get('filtroDataFinalEmissaoFatura', None))
-        criterio_inicio_vencimento = criterio_inicio_vencimento if isinstance(criterios.get('filtroDataInicioVencimentoFatura', None), datetime.date) else string_para_data(criterios.get('filtroDataInicioVencimentoFatura', None))
-        criterio_final_vencimento = criterio_final_vencimento if isinstance(criterios.get('filtroDataFinalVencimentoFatura', None), datetime.date) else string_para_data(criterios.get('filtroDataFinalVencimentoFatura', None))
+        criterio_inicio_emissao = string_para_data(criterios.get('filtroDataInicioEmissaoFatura', None))
+        criterio_final_emissao = string_para_data(criterios.get('filtroDataFinalEmissaoFatura', None))
+        criterio_inicio_vencimento =string_para_data(criterios.get('filtroDataInicioVencimentoFatura', None))
+        criterio_final_vencimento =string_para_data(criterios.get('filtroDataFinalVencimentoFatura', None))
         criterio_id_fatura = criterios.get('idFaturaBusca', None)
         criterio_cnpj_sacado = criterios.get('cnpjRelatFaturaBuscaFatura', None)
 
-        # Convertendo os dados da fatura de string para datetime
-        dados_emissao = dados_emissao if isinstance(dados[0].get('data_emissao', None), datetime.date) else string_para_data(dados[0].get('data_emissao', None))
-        dados_vencimento = dados_vencimento if isinstance(dados[0].get('vencimento', None), datetime.date) else string_para_data(dados[0].get('vencimento', None))
-        dados_id_fatura = dados[0].get('id', None)
-        dados_cnpj_sacado = dados[0].get('sacado_fk_id', None)
+        # # Convertendo os dados da fatura de string para datetime
+        dados_emissao = string_para_data(dados.get('data_emissao', None))
+        dados_vencimento = string_para_data(dados.get('vencimento', None))
+        dados_id_fatura = dados.get('id', None)
+        dados_cnpj_sacado = dados.get('sacado_fk', None).get('cnpj_cpf')
 
-
-        # Verificando o período de emissão
-        dprint(f'Criterio data emissão data inicial {criterio_inicio_emissao} data final {criterio_final_emissao} dado concreto {dados_emissao} ')
-
-        if criterio_inicio_emissao and string_para_data(dados_emissao) < criterio_inicio_emissao:
+        # # Verificando o período de emissão
+        if criterio_inicio_emissao and dados_emissao < criterio_inicio_emissao:
             return False
 
         if criterio_final_emissao and dados_emissao > criterio_final_emissao:
             return False
 
-        # # Verificando o período de vencimento
+        # Verificando o período de vencimento
         if criterio_inicio_vencimento and dados_vencimento < criterio_inicio_vencimento:
             return False
 
-        if criterio_final_vencimento and dados_vencimento > criterio_final_vencimento:  # Correção aqui
+        if criterio_final_vencimento and dados_vencimento > criterio_final_vencimento:
             return False
 
         # Verificando o ID da fatura
-        if criterio_id_fatura and dados_id_fatura != criterio_id_fatura:  # Correção aqui
+        if criterio_id_fatura and int(dados_id_fatura) != int(criterio_id_fatura):
             return False
 
         # Verificando o CNPJ do sacado
-        if criterio_cnpj_sacado and dados_cnpj_sacado != criterio_cnpj_sacado:  # Correção aqui
+        if criterio_cnpj_sacado and dados_cnpj_sacado != criterio_cnpj_sacado:
             return False
 
         return True

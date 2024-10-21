@@ -5,7 +5,6 @@ from Classes.BaseView import ViewBase
 from django.http import JsonResponse, HttpResponseBadRequest, HttpResponseServerError
 
 class GetFaturasCriterios(ViewBase, View):
-
     def post(self, request, *args, **kwargs):
         """
         Implementação do método POST.
@@ -17,6 +16,6 @@ class GetFaturasCriterios(ViewBase, View):
 
         faturas = fatura.read_faturas()
 
-        FaturasManager.get_faturas_filtro(faturas,dados)
+        faturas_filtradas= FaturasManager.get_faturas_filtro(faturas,dados)
         # Sua lógica para adicionar critérios de fatura vai aqui.
-        return JsonResponse({'success': True,'teste':'post'}, status=201)
+        return JsonResponse({'success': True,'faturas':faturas_filtradas}, status=201)

@@ -5,7 +5,7 @@ const getDadosFaturamentoAutomatico =()=>{
 }
 
 const preparaDadosTbodyFaturas = (faturas)=>{
-    
+    console.log(faturas)
     let listaFaturas = []
     faturas.forEach(element => {
         listaFaturas.push({id:element.id,
@@ -15,7 +15,6 @@ const preparaDadosTbodyFaturas = (faturas)=>{
             vcto:formataDataPtBr(element.vencimento)
         })
     });
-
     return listaFaturas
 }
 

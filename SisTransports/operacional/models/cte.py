@@ -38,6 +38,9 @@ class Cte(models.Model):
     data_cadastro = models.DateTimeField(auto_now_add=True,null=True)  # Data de cadastro definida automaticamente na criação
     data_ultima_atualizacao = models.DateTimeField(null=True)
     faturas_fk = models.ForeignKey(Faturas, on_delete=models.CASCADE, related_name='cte_faturas', null=True)
+
+    status = models.IntegerField(null=True,default=1)
+    data_entrega = models.DateTimeField(null=True)
     
     def to_dict(self):
         """

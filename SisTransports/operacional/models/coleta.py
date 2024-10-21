@@ -23,7 +23,9 @@ class Coleta (models.Model):
     cidade=models.CharField(max_length=50,null=True)
     uf=models.CharField(max_length=2,null=True)
     impresso=models.BooleanField(default=False)
+
     status=models.CharField(max_length=30,null=True,default='Em aberto')
+    data_da_coleta = models.DateTimeField(null=True)
 
     def to_dict(self):
         return{
