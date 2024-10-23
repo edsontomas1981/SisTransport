@@ -24,6 +24,9 @@ class Coleta (models.Model):
     uf=models.CharField(max_length=2,null=True)
     impresso=models.BooleanField(default=False)
 
+    lat = models.DecimalField(max_digits=9, decimal_places=8, null=True)  # 8 casas decimais
+    lng = models.DecimalField(max_digits=9, decimal_places=8, null=True)  # 8 casas decimais
+
     status=models.CharField(max_length=30,null=True,default='Em aberto')
     data_da_coleta = models.DateTimeField(null=True)
 
@@ -48,7 +51,9 @@ class Coleta (models.Model):
             'complemento':self.complemento,
             'bairro':self.bairro,
             'cidade':self.cidade,
-            'uf':self.uf
+            'uf':self.uf,
+            'lat':self.lat,
+            'lat':self.lng,
         }
     
     

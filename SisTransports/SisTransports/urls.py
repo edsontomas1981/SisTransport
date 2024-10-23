@@ -29,6 +29,7 @@ urlpatterns = [
     path('parceiros/' , include('parceiros.urls')),
     path('operacional/' , include('operacional.urls')),
     path('appMotoristas/' , include('appMotoristas.urls')),
+    path('enderecos/' , include('enderecos.urls')),
 
 ]
 urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

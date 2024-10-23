@@ -1,2 +1,3 @@
 from enderecos.views.salva_end  import salva_end
 from enderecos.views.readMunicipio  import readMunicipio
+from enderecos.views.carrega_enderecos_coleta_entrega import CarregaEnderecosColetaEntrega
