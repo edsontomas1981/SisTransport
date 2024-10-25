@@ -1,6 +1,5 @@
 from django.views import View
 from operacional.classes.cte import Cte
-from faturamento.classes.FaturasManager import FaturasManager
 from Classes.BaseView import ViewBase
 from django.http import JsonResponse, HttpResponseBadRequest, HttpResponseServerError
 
