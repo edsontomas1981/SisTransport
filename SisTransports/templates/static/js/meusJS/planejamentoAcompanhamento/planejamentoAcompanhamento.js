@@ -180,7 +180,7 @@ document.addEventListener('DOMContentLoaded', async() => {
 
     console.log(dadosAdicionais)
     dadosMarcadores = {dados:dadosVeiculos,icone:caminhao,iconeSize:[30, 30],callback:constroeModalVeiculosPlanejamento}
-    adicionaMarcadoresMapa(dadosMarcadores,dadosAdicionais)
+    // adicionaMarcadoresMapa(dadosMarcadores,dadosAdicionais)
 
 
     mapa.adicionarPoligonoFromData(polygonCoordinates,'black');

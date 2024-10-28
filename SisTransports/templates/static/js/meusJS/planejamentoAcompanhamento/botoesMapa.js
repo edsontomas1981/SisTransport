@@ -19,3 +19,10 @@ btnResetMapa.addEventListener('click',()=>{
 
     limpaSemaforo()
 })
+
+
+let btnVisualizaPontosDeAtendimento = document.getElementById('btnVisualizaPontosDeAtendimento')
+btnVisualizaPontosDeAtendimento.addEventListener('click',()=>{
+    mapa.removerTodosMarcadores()
+    mapa.adicionarMarcadorComIcone(-23.47337308,-46.47320867,"Matriz",armazem,iconeSize,1,verificaEstado)
+})

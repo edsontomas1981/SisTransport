@@ -158,6 +158,16 @@ class MapaLeaflet {
         }
     }
 
+    removerTodosMarcadores() {
+        // Percorre o array de marcadores atuais e remove cada um do mapa
+        this.currentMarkers.forEach(marker => {
+            this.map.removeLayer(marker);
+        });
+        
+        // Limpa o array de marcadores
+        this.currentMarkers = [];
+    }
+
     adicionarMarcador(latitude, longitude, popupText) {
         const marker = L.marker([latitude, longitude]).addTo(this.map);
         marker.bindPopup(popupText);
@@ -240,7 +250,6 @@ class MapaLeaflet {
             this.currentPolyline = null; // Limpa a referência à polyline no objeto do mapa
         }
     }
-
 
     alterarCentroDoMapa(latitude, longitude,zoomLevel = 10.3) {
         // Verifica se as coordenadas de latitude e longitude são válidas e numéricas
