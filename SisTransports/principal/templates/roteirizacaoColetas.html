@@ -11,133 +11,207 @@
   <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
 
+  <style>
+    /* Define a altura fixa e o comportamento de rolagem */
+    #sortable-table-1 {
+      height: 450px; /* Altura fixa */
+      overflow-y: scroll;
+      display: block;    /* Necessário para que o overflow funcione corretamente */
+    }
+
+    /* Ajuste para alinhar corretamente as colunas quando a tabela é rolável */
+    #sortable-table-1 thead, #sortable-table-1 tbody {
+      display: table;
+      width: 100%;
+      table-layout: fixed;
+    }
+
+    /* Botão para abrir o off-canvas */
+    .open-offcanvas-btn {
+      margin: 20px;
+      padding: 10px 20px;
+      background-color: #007bff;
+      color: #fff;
+      border: none;
+      cursor: pointer;
+      font-size: 16px;
+    }
+
+    /* Configurações do off-canvas */
+    .offcanvas {
+      position: fixed;
+      top: 0;
+      right: 0;
+      width: 300px;
+      height: 100%;
+      background-color: #333;
+      color: white;
+      transform: translateX(100%);
+      transition: transform 0.3s ease;
+      z-index: 1000; /* Para ficar acima do conteúdo principal */
+      padding: 20px;
+    }
+
+    /* Ativa o off-canvas */
+    .offcanvas.open {
+      transform: translateX(0);
+    }
+
+    /* Conteúdo de sobreposição para o off-canvas */
+    .offcanvas-content {
+      margin: 20px 0;
+    }
+
+    .custom-offcanvas {
+    position: fixed;
+    top: 0;
+    right: 0;
+    width: 450px;
+    height: 100%;
+    background-color: #fff;
+    color: black;
+    transform: translateX(100%);
+    transition: transform 0.3s ease;
+    z-index: 1000;
+    padding: 20px;
+  }
+
+  .custom-offcanvas.open {
+      transform: translateX(0);
+  }
+
+  </style>
+
   {% endblock %}
 
   {% block 'conteudo' %}
-  <div id="map" class="mapa-planejamento pr-4"></div>
-
-  <div  id="filial">
-    <div class="row">
-      <div class="col-sm-2 form-floating">
-        <select class="form-select" id="selectFilial" aria-label="Floating label select example">
-          <option selected>Selecione</option>
-          <option value="1" data-lat="-23.47337308" data-lng="-46.47320867">SAO</option>
-          <option value="2" data-lat="-12.9704" data-lng="-38.5124">SSA</option>
-          <option value="3" data-lat="-30.0277" data-lng="-51.2287">POA</option>
-        </select>
-        <label class="ml-2" for="selectFilial">Selecione uma Filial</label>
-      </div>
-
-      <div class="col-sm-2 form-floating">
-        <select class="form-select" id="selectFilial" aria-label="Floating label select example">
-          <option selected>Selecione um Intinerário </option>
-        </select>
-        <label class="ml-2" for="selectFilial">Selecione um Intinerário</label>
-      </div>
-
-      <div class="col-sm-1">
-          <button type="button" class="btn btn-warning btn-rounded btn-icon class btn-limpar-mapa" id="btnResetMapa">
-          <i class="ti-reload btn-icon-prepend" aria-hidden="true"></i>
-        </button>
-      </div>
-      <div class="col-sm-1">
-        <button type="button" 
-          id="btnVisualizaPontosDeAtendimento" 
-          class="btn btn-info btn-rounded btn-icon class btn-offcanvas-top"
-          data-bs-toggle="tooltip" 
-          data-bs-placement="left" 
-          title="Visualizar Pontos de Atendimento">
-          <i class="fa fa-map-marker-alt" aria-hidden="true"></i>
-        </button>
-      </div>
-
-      <div class="col-sm-1">
-        <button type="button" id="btnApresentaLocaisEmAberto"class="btn btn-success btn-rounded btn-icon class btn-offcanvas-left">
-          <i class="fa fa-truck" aria-hidden="true"></i>
-        </button>
-      </div>
-
-      <div class="col-sm-1">
-        <button type="button" class="btn btn-danger btn-rounded btn-icon class btn-offcanvas-bottom">
-          <i class="fa fa-truck" aria-hidden="true"></i>
-        </button>
-      </div>
-
-    </div>
-  </div>
-
-  <!-- Modal -->
-  <div class="modal fade" id="modalPlanejamentoColetas" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-    <div class="modal-dialog">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="modalColetaId">Modal title</h5>
-          <button type="button" class="btn-close" onclick="closeModal()"></button>
+      <!-- Div do mapa -->
+      <div id="map" class="col-sm-12 mapa-planejamento"></div>
+      <div class="btn-controles-mapa">
+        <div class="col-sm-1">
+          <button type="button"
+            class="btn btn-danger btn-rounded btn-icon "
+            id="btnHabilitaCriacaoIntinerario">
+            <i class="fa fa-truck" aria-hidden="true"></i>
+          </button>
         </div>
-        <div class="modal-body">
-          <div class="row">
-            <div class="col-sm-6" id="tabelaColetas">
+      
+        <div class="col-sm-1">
+          <button type="button" id="btnLocalizacaoVeiculos"
+            class="btn btn-success btn-rounded btn-icon"
+            data-bs-toggle="tooltip"
+            data-bs-placement="left"
+            title="Visualizar Veículos">
+            <i class="fa fa-truck" aria-hidden="true"></i>
+          </button>
+        </div>
+      
+        <div class="col-sm-1">
+          <button type="button"
+            id="btnVisualizaPontosDeAtendimento"
+            class="btn btn-info btn-rounded btn-icon"
+            data-bs-toggle="tooltip"
+            data-bs-placement="left"
+            title="Visualizar Pontos de Atendimento">
+            <i class="fa fa-map-marker-alt" aria-hidden="true"></i>
+          </button>
+        </div>
+      
+        <div class="col-sm-1">
+          <button type="button" 
+            class="btn btn-warning btn-rounded btn-icon" 
+            id="btnResetMapa">
+            <i class="ti-reload btn-icon-prepend" aria-hidden="true"></i>
+          </button>
+        </div>
+      </div>
+     
+      <div  id="filial">
+        <div class="row">
+          <div class="col-sm-3 mt-3 form-floating">
+            <select class="form-select" id="selectFilial" aria-label="Floating label select example">
+              <option selected>Selecione</option>
+              <option value="1" data-lat="-23.47337308" data-lng="-46.47320867">SAO</option>
+              <option value="2" data-lat="-12.9704" data-lng="-38.5124">SSA</option>
+              <option value="3" data-lat="-30.0277" data-lng="-51.2287">POA</option>
+            </select>
+            <label class="ml-2" for="selectFilial">Selecione uma Filial</label>
+          </div>
+        </div>
+      </div>
 
+      <!-- Modal -->
+      <div class="modal fade" id="modalPlanejamentoColetas" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="modalColetaId">Modal title</h5>
+              <button type="button" class="btn-close" onclick="closeModal()"></button>
             </div>
-            <div class="col-sm-6" id="acoesColetas">
+            <div class="modal-body">
+              <div class="row">
+                <div class="col-sm-6" id="tabelaColetas">
 
-            </div>
-            <div class="col-sm-12 btn-group pt-2" id="botoesColetas" role="group" aria-label="Basic example" style="width:100%">
+                </div>
+                <div class="col-sm-6" id="acoesColetas">
+
+                </div>
+                <div class="col-sm-12 btn-group pt-2" id="botoesColetas" role="group" aria-label="Basic example" style="width:100%">
+                </div>
+              </div>
             </div>
           </div>
         </div>
       </div>
-    </div>
-  </div>
 
-  <div class="modal fade" id="modalPlanejamentoVeiculos" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-    <div class="modal-dialog modal-lg">
-      <div class="modal-content">
-        <div class="modal-header">
-          <div class="col-sm-10">
-            <h5 class="modal-title" id="modalVeiculoId"></h5>
-          </div>  
-          <div class="col-sm-2">
-            <div class="input-group" style="display: flex; justify-items: right;">
-              <button type="button" class="btn btn-success btn-rounded btn-icon" id="btnSelecionarLocais" align=right>            
-                <i class="fa fa-map" aria-hidden="true"></i>
-              </button>
-              <button type="button" class="btn btn-info btn-rounded btn-icon" data-bs-toggle="offcanvas" href="#offcanvasExample" role="button" aria-controls="offcanvasExample">
-                <i class="ti-close"></i>
-              </button>
-              <button type="button" class="btn btn-danger btn-rounded btn-icon" id="btnClose" onclick="closeModal()" align=right>
-                <i class="ti-close"></i>
-              </button>
+      <div class="modal fade" id="modalPlanejamentoVeiculos" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+          <div class="modal-content">
+            <div class="modal-header">
+              <div class="col-sm-10">
+                <h5 class="modal-title" id="modalVeiculoId"></h5>
+              </div>
+              <div class="col-sm-2">
+                <div class="input-group" style="display: flex; justify-items: right;z-index: 9999 !important;">
+                  <button type="button" class="btn btn-success btn-rounded btn-icon" id="btnSelecionarLocais" align=right >
+                    <i class="fa fa-map" aria-hidden="true"></i>
+                  </button>
+                  <button type="button" class="btn btn-info btn-rounded btn-icon" data-bs-toggle="offcanvas" href="#offcanvasExample" role="button" aria-controls="offcanvasExample">
+                    <i class="ti-close"></i>
+                  </button>
+                  <button type="button" class="btn btn-danger btn-rounded btn-icon" id="btnClose" onclick="closeModal()" align=right>
+                    <i class="ti-close"></i>
+                  </button>
+                </div>
+              </div>
             </div>
-          </div>
-        </div>
-        <div class="modal-body">
-          <div class="row">
-            <div>
-              <table class="table table-striped table-sm tabela-planejamento-veiculos" >
-                <thead>
-                  <th>Nº</th>
-                  <th>Qtde</th>
-                  <th>Peso</th>
-                  <th>R$</th>
-                  <th>Status</th>
-                  <th></th>
-                  <th></th>
-                </thead>
-                <tbody id="tbodyDocumentos">
+            <div class="modal-body">
+              <div class="row">
+                <div>
+                  <table class="table table-striped table-sm tabela-planejamento-veiculos" >
+                    <thead>
+                      <th>Nº</th>
+                      <th>Qtde</th>
+                      <th>Peso</th>
+                      <th>R$</th>
+                      <th>Status</th>
+                      <th></th>
+                      <th></th>
+                    </thead>
+                    <tbody id="tbodyDocumentos">
 
-                </tbody>
-              </table>
-
+                    </tbody>
+                  </table>
+                </div>
+              </div>
             </div>
           </div>
         </div>
       </div>
-    </div>
-  </div>
- 
-  </div>
-  {% block js %} 
+
+      {% include 'painelIntinerario.html'%}
+
+  {% block js %}
     <script src="{% static 'js/meusJS/utils.js' %}"></script>
     <script src="{% static 'js/meusJS/planejamentoAcompanhamento/gerarDados.js' %}"></script>
     <script src="{% static 'js/meusJS/planejamentoAcompanhamento/initMap.js' %}"></script>
@@ -150,8 +224,7 @@
     <script src="{% static 'js/meusJS/planejamentoAcompanhamento/planejamentoAcompanhamento.js' %}"></script>
     <script src="{% static 'js/meusJS/planejamentoAcompanhamento/Mapa.js' %}"></script>
     <script src="{% static 'js/meusJS/planejamentoAcompanhamento/botoesMapa.js' %}"></script>
-
+    <script src="{% static 'js/meusJS/planejamentoAcompanhamento/menu-flutuante.js' %}"></script>
   {% endblock %}
 
-  {% endblock %}
-
+{% endblock %}

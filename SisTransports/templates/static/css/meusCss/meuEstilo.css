@@ -159,3 +159,8 @@ a {
     opacity: 1;
   }
   
+
+#idControleIntinerario {
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}

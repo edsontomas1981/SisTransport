@@ -161,7 +161,6 @@ const connWs =()=>{
 
 // Exemplo de uso da classe MapaLeaflet
 document.addEventListener('DOMContentLoaded', async() => {
-    connWs()
     const dados = geraCoordenadas()
     const polygonCoordinates = geraDadosPoligonoZmrc()
 
@@ -178,18 +177,12 @@ document.addEventListener('DOMContentLoaded', async() => {
     mapeamento = {lat: 0,lng: 1,motorista: 2,placa: 3,qtdeDctos: 4,dados:5};
     dadosAdicionais = geraDadosAdicionais(dadosVeiculos,mapeamento)
 
-    console.log(dadosAdicionais)
     dadosMarcadores = {dados:dadosVeiculos,icone:caminhao,iconeSize:[30, 30],callback:constroeModalVeiculosPlanejamento}
     // adicionaMarcadoresMapa(dadosMarcadores,dadosAdicionais)
 
-
     mapa.adicionarPoligonoFromData(polygonCoordinates,'black');
 
-    // mapa.adicionarMarcador(-22.9068, -43.1729, 'Rio de Janeiro',);
-    // mapa.adicionarMarcador(-22.9035, -43.2096, 'Copacabana');
-
     mapa.adicionarMarcadorComIcone(-23.47337308,-46.47320867,"Matriz",armazem,iconeSize,1,verificaEstado)
-
 
     let marcador=mapa.selecionarMarcador('idDtc',848004)
     let novaLat = marcador.dados.lat

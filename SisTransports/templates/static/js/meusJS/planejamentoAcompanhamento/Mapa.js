@@ -102,10 +102,8 @@ class MapaLeaflet {
     }
 
     selecionarMarcador(campo,valor) {
-        console.log(campo + ':' + "valor")
         // Encontre o marcador correspondente ao valor e campo fornecidos
         const selectedMarker = this.currentMarkers.find(marker => {
-            
             if (campo == 'id') {
                 // Busca por ID
                 return marker.dados.id == valor;

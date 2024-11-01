@@ -4,17 +4,17 @@ const selecionaLocal = (dados)=>{
 }
 
 const exibirLocaisSelecionados = async (dados)=> {
-
+    
     if (await(msgConfirmacao('Deseja Selecionar o Destino Abaixo'))){
 			listaLocais.forEach(element => {
 				let marcador = mapa.selecionarMarcador('idDtc',element.idDtc)
 				mapa.alterarIconeDoMarcador(marcador,iconePreto,iconeSize)
 			});
-			if (!(await msgConfirmacao('Deseja Continuar selecionando os Destinos'))) {
-				msgAviso('Destinos Selecionados com Sucesso');
-				stateMapa.estado=null
-	}
-		}
+			// if (!(await msgConfirmacao('Deseja Continuar selecionando os Destinos'))) {
+			// 	msgAviso('Destinos Selecionados com Sucesso');
+			// 	stateMapa.estado=null
+            // }
+    }   
 
     // if (dados.length>0){
     //     // Opções do alerta
