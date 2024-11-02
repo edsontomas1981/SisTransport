@@ -880,3 +880,205 @@ class ApiService {
     }
   }
 }
+
+/**
+ * Função para buscar e preencher informações de um veículo a partir da placa.
+ * 
+ * Esta função faz uma chamada assíncrona para um endpoint de API para obter
+ * informações de um veículo a partir da placa informada. Se os IDs de input para
+ * modelo e proprietário forem passados, a função preenche esses campos com as
+ * informações correspondentes.
+ *
+ * @param {string} inptPlaca - ID do elemento de input para a placa do veículo.
+ * @param {string|null} [inptModelo=null] - ID opcional do elemento de input para o modelo do veículo.
+ * @param {string|null} [inptProprietario=null] - ID opcional do elemento de input para o proprietário do veículo.
+ * 
+ * @returns {Promise<void>} - Retorna uma Promise que é resolvida quando a operação é concluída.
+ */
+const getVeiculo = async (inptPlaca, inptModelo = null, inptProprietario = null) => {
+  try {
+
+    const placaElem = document.getElementById(inptPlaca);
+
+    if (placaElem.value == ''){
+      return
+    }
+
+    if (placaElem.value.length !== 7) {
+      msgAviso(`Formato de placa inválido: "${placaElem.value}". A placa deve conter 7 caracteres.`);
+      return;
+    }
+
+    if (!placaElem) {
+      console.error(`Elemento com ID '${inptPlaca}' não encontrado.`);
+      return;
+    }
+
+    // Chama o endpoint para obter as informações do veículo
+    const response = await connEndpoint('/operacional/read_veiculo_placa/', { 'placa': placaElem.value });
+    
+    if (!response || !response.veiculo) {
+      console.error('Resposta da API inválida ou veículo não encontrado.');
+      return;
+    }
+
+    placaElem.value = response.veiculo.placa || '';
+
+    console.log(inptModelo)
+
+    // Preenche o campo de modelo se inptModelo for passado e o elemento existir
+    if (inptModelo) {
+      const modeloElem = document.getElementById(inptModelo);
+      if (modeloElem) {
+        modeloElem.value = response.veiculo.modelo || '';
+      } else {
+        console.warn(`Elemento com ID '${inptModelo}' não encontrado.`);
+      }
+    }
+
+    // Preenche o campo de proprietário se inptProprietario for passado e o elemento existir
+    if (inptProprietario) {
+      const proprietarioElem = document.getElementById(inptProprietario);
+      if (proprietarioElem) {
+        proprietarioElem.value = response.veiculo.proprietario_fk?.parceiro_fk?.raz_soc || '';
+      } else {
+        console.warn(`Elemento com ID '${inptProprietario}' não encontrado.`);
+      }
+    }
+
+  } catch (error) {
+    console.error('Erro ao buscar dados do veículo:', error);
+  }
+};
+
+
+function transformToUpperCase(inputId) {
+  var input = document.getElementById(inputId);
+  if (input) {
+    input.value = input.value.toUpperCase();
+  }
+}
+
+
+
+/**
+ * Permite apenas caracteres alfanuméricos (letras e números) em um campo de input.
+ * @param {string} elementId - ID do elemento de input onde será aplicada a restrição.
+ */
+function allowOnlyAlphanumeric(elementId) {
+  const input = document.getElementById(elementId);
+  input.value = input.value.replace(/[^a-zA-Z0-9]/g, '');
+}
+
+/**
+ * Abre um modal para busca e seleção de veículos com base na placa.
+ * 
+ * Esta função permite a busca de veículos, filtrando conforme o usuário digita.
+ * Quando um veículo é selecionado, preenche os campos de placa, modelo e proprietário,
+ * caso os IDs dos campos correspondentes sejam fornecidos.
+ * 
+ * @param {string} inptPlaca - ID do elemento de input onde será inserida a placa do veículo selecionado.
+ * @param {string|null} [inptModelo=null] - ID opcional do elemento de input para o modelo do veículo.
+ * @param {string|null} [inptProprietarioPrincipal=null] - ID opcional do elemento de input para o proprietário do veículo.
+ * 
+ * @returns {Promise<void>} - Retorna uma Promise que é resolvida ao término da execução.
+ */
+const buscaVeiculosModal = async (inptPlaca, inptModelo = null, inptProprietarioPrincipal = null) => {
+  try {
+    const inputBuscaVeiculo = document.getElementById('placaVeiculo');
+    if (!inputBuscaVeiculo) {
+      console.error("Elemento com ID 'placaVeiculo' não encontrado.");
+      return;
+    }
+
+    /**
+     * Seleciona um veículo e preenche os campos de input com os dados do veículo.
+     * 
+     * @param {string} element - Placa do veículo selecionado.
+     */
+    const selecionaVeiculo = async (element) => {
+      try {
+        const response = await connEndpoint('/operacional/read_veiculo_placa/', { 'placa': element });
+        if (!response || !response.veiculo) {
+          console.error("Veículo não encontrado ou resposta inválida.");
+          return;
+        }
+
+        document.getElementById(inptPlaca).value = response.veiculo.placa;
+
+        if (inptModelo) {
+          const modeloElem = document.getElementById(inptModelo);
+          if (modeloElem) modeloElem.value = response.veiculo.modelo || '';
+        }
+
+        if (inptProprietarioPrincipal) {
+          const proprietarioElem = document.getElementById(inptProprietarioPrincipal);
+          if (proprietarioElem) {
+            proprietarioElem.value = response.veiculo.proprietario_fk?.parceiro_fk?.raz_soc || '';
+          }
+        }
+
+        closeModal();
+      } catch (error) {
+        console.error("Erro ao buscar dados do veículo:", error);
+      }
+    };
+
+    // Adiciona um evento de input para buscar veículos conforme o usuário digita.
+    inputBuscaVeiculo.addEventListener('input', () => {
+      const termoBuscaVeiculos = inputBuscaVeiculo.value.toLowerCase();
+      
+      const veiculosFiltrados = dadosDosveiculos.filter(veiculo =>
+        veiculo.id.toLowerCase().includes(termoBuscaVeiculos) ||
+        veiculo.modelo.toLowerCase().includes(termoBuscaVeiculos)
+      );
+
+      console.log("Veículos filtrados:", veiculosFiltrados);
+      populaTbodyBuscaVeiculos(veiculosFiltrados);
+    });
+
+    /**
+     * Prepara os dados de veículos para exibição no tbody da busca.
+     * 
+     * @param {Array} response - Lista de veículos retornada pela API.
+     * @returns {Array} - Dados formatados para exibição.
+     */
+    const preparaDadosTbodyBuscaVeiculo = (response) => {
+      return response.map(element => ({
+        'id': element.placa,
+        'modelo': element.modelo,
+        'proprietario': element.proprietario_fk?.parceiro_fk?.raz_soc || ''
+      }));
+    };
+
+    /**
+     * Popula o tbody de busca com os dados filtrados de veículos.
+     * 
+     * @param {Array} dados - Dados dos veículos para exibição no modal.
+     */
+    const populaTbodyBuscaVeiculos = (dados) => {
+      const botoes = {
+        seleciona: {
+          classe: "btn-primary text-white",
+          texto: '<i class="fas fa-check" aria-hidden="true"></i>',
+          callback: selecionaVeiculo
+        }
+      };
+      popula_tbody_paginacao('paginacaoBuscaVeiculo', 'tbodyBuscaVeiculo', dados, botoes, 1, 10, false, false);
+    };
+
+    // Busca e prepara os dados iniciais dos veículos
+    const response = await connEndpoint('/operacional/read_veiculos/', {});
+    if (!response || !response.veiculos) {
+      console.error("Resposta inválida ou lista de veículos vazia.");
+      return;
+    }
+
+    dadosDosveiculos = preparaDadosTbodyBuscaVeiculo(response.veiculos);
+    populaTbodyBuscaVeiculos(dadosDosveiculos);
+
+    openModal('mdlBuscaVeiculo');
+  } catch (error) {
+    console.error("Erro ao abrir modal de busca de veículos:", error);
+  }
+};

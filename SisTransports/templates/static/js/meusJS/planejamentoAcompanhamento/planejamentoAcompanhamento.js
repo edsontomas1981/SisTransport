@@ -178,7 +178,7 @@ document.addEventListener('DOMContentLoaded', async() => {
     dadosAdicionais = geraDadosAdicionais(dadosVeiculos,mapeamento)
 
     dadosMarcadores = {dados:dadosVeiculos,icone:caminhao,iconeSize:[30, 30],callback:constroeModalVeiculosPlanejamento}
-    // adicionaMarcadoresMapa(dadosMarcadores,dadosAdicionais)
+    adicionaMarcadoresMapa(dadosMarcadores,dadosAdicionais)
 
     mapa.adicionarPoligonoFromData(polygonCoordinates,'black');
 

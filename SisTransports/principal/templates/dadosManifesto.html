@@ -100,7 +100,7 @@
           <input class="form-control form-control-sm col-sm-3" id="placaPrincipal"placeholder="Veículo Placa : "  oninput="transformToUpperCase('placaPrincipal')" maxlength="7">
           <input class="form-control form-control-sm col-sm-4" id="modeloPrincipal"placeholder="Modelo" disabled>
           <input class="form-control form-control-sm col-sm-5" id="proprietarioPrincipal"placeholder="Proprietário" disabled>
-          <a class="btn btn-primary btn-sm" id="btnBuscaVeiculo"style="display: flex; justify-content: center; align-items: center;"><i class="fa fa-search" aria-hidden="true"></i></i></a>
+          <a class="btn btn-primary btn-sm" id="btnBuscaVeiculo" onclick="buscaVeiculosModal('placaPrincipal','modeloPrincipal','proprietarioPrincipal')" style="display: flex; justify-content: center; align-items: center;"><i class="fa fa-search" aria-hidden="true"></i></i></a>
           <a class="btn btn-success btn-sm" id="btnAdicionaVeiculo" style="display: flex; justify-content: center; align-items: center;"><i class="fa fa-plus" aria-hidden="true"></i></a>
         </div>
       </div>

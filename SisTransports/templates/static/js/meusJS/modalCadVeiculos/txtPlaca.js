@@ -66,9 +66,3 @@ document.getElementById('btnLimpaVeiculo').addEventListener('click',()=>{
     limpaVeiculo()
 })
 
-function transformToUpperCase(inputId) {
-    var input = document.getElementById(inputId);
-    if (input) {
-      input.value = input.value.toUpperCase();
-    }
-}
