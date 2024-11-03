@@ -24,20 +24,21 @@ let btnVisualizaPontosDeAtendimento = document.getElementById('btnVisualizaPonto
 btnVisualizaPontosDeAtendimento.addEventListener('click',async ()=>{
     const apiService = new ApiService();
     const url = "/enderecos/get_pontos_atendimento/";
-    // const dados = obterDadosDoFormulario("criterioBuscaFatura");
+    mapa.removerTodosMarcadores()
 
     const resultadoGet = await apiService.getData(url, {});
 
     let pontosDeAtendimento = resultadoGet.pontos_atendimento
 
-    pontosDeAtendimento.forEach(element => {    
-        console.log(element)
-        mapa.adicionarMarcadorComIcone(element[0],element[1],"Matriz",armazem,iconeSize,1,verificaEstado)
+    pontosDeAtendimento.forEach(element => { 
+        element.iconSize = iconeSize
+        element.iconUrl = local
+        element.callback = verificaEstado
+        mapa.adicionarMarcadorComIconeNew(element)
     });
 
-    mapa.removerTodosMarcadores()
     mapa.adicionarMarcadorComIcone(-23.47337308,-46.47320867,"Matriz",armazem,iconeSize,1,verificaEstado)
-    })
+})
 
 let btnLocalizacaoVeiculos = document.getElementById('btnLocalizacaoVeiculos')
 btnLocalizacaoVeiculos.addEventListener('click',()=>{

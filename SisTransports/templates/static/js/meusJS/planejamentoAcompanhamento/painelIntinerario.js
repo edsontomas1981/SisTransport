@@ -7,4 +7,4 @@ const abrirPainelIntinerario = () => {
 const fecharPainelIntinerario = () => {
     const offcanvas = document.getElementById("offcanvas");
     offcanvas.classList.remove("open");  // Fecha o painel, removendo a classe 'open'
-};
+}; 

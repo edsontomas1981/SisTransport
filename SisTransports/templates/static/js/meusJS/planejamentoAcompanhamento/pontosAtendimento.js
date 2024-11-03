@@ -86,6 +86,8 @@ const gerarRotaOrigemDestino= async (element)=> {
 
 // Função para mostrar informações detalhadas
 const mostrarInformacoesDetalhadas=(dados)=> {
+
+    console.log(dados)
     // Implemente a lógica para exibir informações detalhadas
     let tabela = `
     <div class="row">

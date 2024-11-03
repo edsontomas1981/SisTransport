@@ -56,6 +56,7 @@ class MapaLeaflet {
     }
 
     adicionarMarcadorComIcone(latitude, longitude, popupContent, iconUrl, iconSize, id,dadosAdicionais,callback) {
+
         // Crie um ícone personalizado
         const customIcon = L.icon({
             iconUrl: iconUrl,
@@ -102,6 +103,8 @@ class MapaLeaflet {
     }
 
     selecionarMarcador(campo,valor) {
+
+        console.log(`${campo},${valor}`)
         // Encontre o marcador correspondente ao valor e campo fornecidos
         const selectedMarker = this.currentMarkers.find(marker => {
             if (campo == 'id') {
@@ -285,6 +288,72 @@ class MapaLeaflet {
             console.error('Erro ao alterar a localização do marcador: Parâmetros inválidos.');
         }
     }
+
+    adicionarMarcadorComIconeNew(dadosMarcador) {
+
+        // latitude, longitude, popupContent, iconUrl, iconSize, id,dadosAdicionais,callback
+        // Crie um ícone personalizado
+        // dadosMarcador.lat, 
+        // dadosMarcador.lng,
+        // dadosMarcador.iconUrl,
+        // dadosMarcador.iconSize
+        
+        const customIcon = L.icon({
+            iconUrl: dadosMarcador.iconUrl,
+            iconSize: dadosMarcador.iconSize // [largura, altura] em pixels
+        });
+
+        // Adicione o marcador com o ícone personalizado ao mapa
+        const marker = L.marker([dadosMarcador.lat, dadosMarcador.lng], { icon: customIcon }).addTo(this.map);
+
+        // Carrega Dados ao marcador
+        marker.dados=dadosMarcador.dadosIntinerario
+        marker.dados.lat = dadosMarcador.lat
+        marker.dados.lng = dadosMarcador.lng
+        marker.dados.idDtc = dadosMarcador.idDtc
+
+
+        // Adicione o conteúdo do popup ao marcador
+        // marker.bindPopup(popupContent);
+
+        // Adicione as informações personalizadas ao marcador
+        if(dadosMarcador.placa){
+            marker.placa = dadosMarcador.placa;
+        }
+        
+        if(dadosMarcador.idDtc){
+            marker.idDtc =dadosMarcador.placa;
+        }
+
+        if(dadosMarcador.popup){
+            // Adicione o conteúdo do popup ao marcador
+            marker.bindPopup(dadosMarcador.popup);
+
+            // Exibe o popup ao passar o mouse sobre o marcador
+            marker.on('mouseover', () => {
+                marker.openPopup();
+            });
+
+            // Fecha o popup ao remover o mouse do marker
+            marker.on('mouseout', () => {
+                marker.closePopup();
+            });
+        }
+
+
+        // Adicione um evento de clique ao marcador para abrir o modal
+        marker.on('click', () => {
+            // Defina o conteúdo do modal
+            dadosMarcador.callback(marker.dados,this.map)
+        });
+
+        // Adicione o marcador ao array de marcadores atuais
+        this.currentMarkers.push(marker);
+
+        // Retorne o marcador adicionado
+        return marker;
+    }
+
 }
 
 

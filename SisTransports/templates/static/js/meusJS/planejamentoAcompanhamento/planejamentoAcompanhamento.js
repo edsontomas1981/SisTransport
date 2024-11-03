@@ -70,6 +70,7 @@ const resetState = ()=>{
 }
 
 const verificaEstado = async(dados)=>{
+    
     switch (stateMapa.estado) {
         case null:
             mostrarInformacoesDetalhadas(dados)
