@@ -990,7 +990,7 @@ const buscaVeiculosModal = async (inptPlaca, inptModelo = null, inptProprietario
       console.error("Elemento com ID 'placaVeiculo' não encontrado.");
       return;
     }
-
+ 
     /**
      * Seleciona um veículo e preenche os campos de input com os dados do veículo.
      * 

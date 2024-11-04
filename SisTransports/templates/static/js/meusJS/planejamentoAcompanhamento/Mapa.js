@@ -98,41 +98,52 @@ class MapaLeaflet {
         // Adicione o marcador ao array de marcadores atuais
         this.currentMarkers.push(marker);
 
+
         // Retorne o marcador adicionado
         return marker;
     }
 
     selecionarMarcador(campo,valor) {
-
-        console.log(`${campo},${valor}`)
-        // Encontre o marcador correspondente ao valor e campo fornecidos
-        const selectedMarker = this.currentMarkers.find(marker => {
-            if (campo == 'id') {
-                // Busca por ID
-                return marker.dados.id == valor;
-            } else if (campo == 'placa') {
-                // Busca por placa
-                return marker.placa == valor;
-            } else if (campo == 'idDtc') {
-                // Busca por ID Dtc
-                return marker.idDtc == valor;
-            } else {
-                // Campo não reconhecido
-                return false;
+        let registro 
+        if(campo === 'idDtc'){
+            registro = this.currentMarkers.find(e => e.dados.idDtc == valor);
+            if (registro) {
+                return registro
             }
-        });
-    
-        // Verifique se o marcador foi encontrado
-        if (selectedMarker) {
-            // Abra o popup do marcador (caso deseje exibir o popup automaticamente ao selecionar)
-            selectedMarker.openPopup();
-    
-            // Retorne o marcador selecionado
-            return selectedMarker;
-        } else {
-            // Se nenhum marcador correspondente for encontrado, retorne null ou lide com o caso de não encontrar o marcador de acordo com sua lógica
-            return null;
         }
+
+        if(campo === 'placa'){
+            registro = this.currentMarkers.find(e => e.dados.placa == valor);
+            if (registro) {
+                return registro
+            }
+        }
+
+        if(campo === 'id'){
+            registro = this.currentMarkers.find(e => e.dados.id == valor);
+            if (registro) {
+                return registro
+            }
+        }
+        
+        
+        // // Encontre o marcador correspondente ao valor e campo fornecidos
+        // const selectedMarker = this.currentMarkers.find(marker => {
+        //     if (campo == 'id') {
+        //         // Busca por ID
+        //         return marker.dados.id == valor;
+        //     } else if (campo == 'placa') {
+        //         // Busca por placa
+        //         return marker.placa == valor;
+        //     } else if (campo == 'idDtc') {  
+        //         console.log(`Marcador : ${typeof(marker.idDtc)} Campo : ${campo},Valor : ${typeof(valor)}`)
+        //         // Busca por ID Dtc
+        //         return marker.idDtc == valor;
+        //     } else {
+        //         // Campo não reconhecido
+        //         return false;
+        //     }
+        // });
     }
 
     // Método para alterar o ícone de um marcador existente
@@ -290,13 +301,6 @@ class MapaLeaflet {
     }
 
     adicionarMarcadorComIconeNew(dadosMarcador) {
-
-        // latitude, longitude, popupContent, iconUrl, iconSize, id,dadosAdicionais,callback
-        // Crie um ícone personalizado
-        // dadosMarcador.lat, 
-        // dadosMarcador.lng,
-        // dadosMarcador.iconUrl,
-        // dadosMarcador.iconSize
         
         const customIcon = L.icon({
             iconUrl: dadosMarcador.iconUrl,
@@ -349,6 +353,7 @@ class MapaLeaflet {
 
         // Adicione o marcador ao array de marcadores atuais
         this.currentMarkers.push(marker);
+
 
         // Retorne o marcador adicionado
         return marker;

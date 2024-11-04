@@ -185,17 +185,17 @@ document.addEventListener('DOMContentLoaded', async() => {
 
     mapa.adicionarMarcadorComIcone(-23.47337308,-46.47320867,"Matriz",armazem,iconeSize,1,verificaEstado)
 
-    let marcador=mapa.selecionarMarcador('idDtc',848004)
-    let novaLat = marcador.dados.lat
-    let novaLng = marcador.dados.lng
-    // Exemplo de como remover um marcador pelo ID (indice) atribuído
-    setInterval(() => {
-        // novaLat += 0.1
-        // novaLng += 0.1
-        // mapa.alterarLocalizacaoDoMarcador(marcador,novaLat,novaLng)
-        // mapa.removerMarcadorPelaInfo(1);
-        // mapa.removerCirculo()
-        }, 1000);
+    // let marcador=mapa.selecionarMarcador('idDtc',848004)
+    // let novaLat = marcador.dados.lat
+    // let novaLng = marcador.dados.lng
+    // // Exemplo de como remover um marcador pelo ID (indice) atribuído
+    // setInterval(() => {
+    //     // novaLat += 0.1
+    //     // novaLng += 0.1
+    //     // mapa.alterarLocalizacaoDoMarcador(marcador,novaLat,novaLng)
+    //     // mapa.removerMarcadorPelaInfo(1);
+    //     // mapa.removerCirculo()
+    //     }, 1000);
 
 
     var selectFilial = document.getElementById('selectFilial')

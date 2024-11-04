@@ -209,7 +209,7 @@ const popula_tbody = (id_tbody, dicionario_dados, botoes = {},inicioChebox=true)
       checkbox.name = "selecao";
       tdCheckbox.appendChild(checkbox);
       tr.appendChild(tdCheckbox);
-    }
+    } 
 
     // Loop através do dicionário de dados para criar as células <td> dinamicamente
     for (const chave in element) {

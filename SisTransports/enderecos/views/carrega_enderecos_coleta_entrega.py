@@ -23,7 +23,9 @@ def carrega_coordenadas_pontos_atendimento():
             'placa': "GHI-9012",
             'bairro': "Vila Olímpia",
             'volumes': 57,
-            'valor': "315.19"
+            'valor': "315.19",
+            'peso':150,
+            'nome':'Cliente Teste 1'
         }
     },
     {
@@ -35,7 +37,10 @@ def carrega_coordenadas_pontos_atendimento():
             'placa': "JKL-3456",
             'bairro': "Jardins",
             'volumes': 93,
-            'valor': "1464.26"
+            'valor': "1464.26",
+            'peso':50,
+            'nome':'Cliente Teste 2'
+
         }
     },
     {
@@ -47,7 +52,9 @@ def carrega_coordenadas_pontos_atendimento():
             'placa': "MNO-7890",
             'bairro': "Perdizes",
             'volumes': 19,
-            'valor': "1409.81"
+            'valor': "1409.81",
+            'peso':10,
+            'nome':'Cliente Teste 3'
         }
     },
     {
@@ -59,7 +66,9 @@ def carrega_coordenadas_pontos_atendimento():
             'placa': "BCD-3450",
             'bairro': "Pinheiros",
             'volumes': 71,
-            'valor': "998.13"
+            'valor': "998.13",
+            'peso':15,
+            'nome':'Cliente Teste 4'
         }
     },
     {
@@ -71,7 +80,9 @@ def carrega_coordenadas_pontos_atendimento():
             'placa': "STU-4560",
             'bairro': "Brooklin",
             'volumes': 88,
-            'valor': "1311.68"
+            'valor': "1311.68",
+            'peso':1,
+            'nome':'Cliente Teste 5'
         }
     },
     {
@@ -83,7 +94,9 @@ def carrega_coordenadas_pontos_atendimento():
             'placa': "STU-4560",
             'bairro': "Butantã",
             'volumes': 48,
-            'valor': "1305.15"
+            'valor': "1305.15",
+            'peso':5,
+            'nome':'Cliente Teste 6'
         }
     },
     {
@@ -95,7 +108,9 @@ def carrega_coordenadas_pontos_atendimento():
             'placa': "BCD-3450",
             'bairro': "Perdizes",
             'volumes': 66,
-            'valor': "970.77"
+            'valor': "970.77",
+            'peso':70,
+            'nome':'Cliente Teste 7'
         }
     },
     {
@@ -107,7 +122,9 @@ def carrega_coordenadas_pontos_atendimento():
             'placa': "JKL-3456",
             'bairro': "Vila Madalena",
             'volumes': 63,
-            'valor': "1411.20"
+            'valor': "1411.20",
+            'peso':80,
+            'nome':'Cliente Teste 8'
         }
     },
     {
@@ -119,7 +136,10 @@ def carrega_coordenadas_pontos_atendimento():
             'placa': "PQR-1230",
             'bairro': "Campo Belo",
             'volumes': 28,
-            'valor': "1075.17"
+            'valor': "1075.17",
+            'peso':80,
+            'nome':'Cliente Teste 9'
+
         }
     },
     {
@@ -131,7 +151,9 @@ def carrega_coordenadas_pontos_atendimento():
             'placa': "BCD-3450",
             'bairro': "Campo Belo",
             'volumes': 29,
-            'valor': "1383.42"
+            'valor': "1383.42",
+            'peso':30,
+            'nome':'Cliente Teste 10'
         }
     },
     {
@@ -143,7 +165,9 @@ def carrega_coordenadas_pontos_atendimento():
             'placa': "BCD-3450",
             'bairro': "Morumbi",
             'volumes': 43,
-            'valor': "448.46"
+            'valor': "448.46",
+            'peso':1500,
+            'nome':'Cliente Teste 11'
         }
     }
 ]

@@ -1,44 +1,67 @@
-const selecionaLocal = (dados)=>{
-    listaLocais.push({idDtc:dados.idDtc,volumes:dados.volumes,peso:dados.peso})
-    exibirLocaisSelecionados(listaLocais)
-}
+const selecionaLocal = async (dados) => {
+
+    const populaTabelaIntinerarios = ()=>{
+        popula_tbody_paginacao(
+            'paginacaoPainelIntinerario',
+            'tabelaDoctosBody',
+            listaLocais,
+            botao,
+            1,
+            20,
+            false,
+            false
+        );
+    }
+
+    const removePontoIntinerario = (e)=>{
+        // Filtra a lista para remover o item com o ID correspondente
+        listaLocais = listaLocais.filter(item => item.id !== e);
+        populaTabelaIntinerarios()
+        populaTotaisIntinerario()
+        resetaIcone(e)
+    }
+
+    let botao = {
+        editar: {
+        classe: 'btn btn-danger ',
+        texto: '<i class="fa fa-trash" aria-hidden="true"></i>',
+        callback: removePontoIntinerario
+        }
+      }
+
+    // Aguarda a confirmação antes de continuar
+    if (await(msgConfirmacao('Deseja Selecionar o Destino Abaixo'))){
+
+        // Adiciona o local à lista se ele ainda não estiver presente
+        if (!listaLocais.some(item => item.id === dados.id)) {
+            listaLocais.push({ id:dados.idDtc, nome: dados.nome, peso: dados.peso });
+        }
+
+        exibirLocaisSelecionados(listaLocais);
+        populaTabelaIntinerarios()
+        populaTotaisIntinerario()
+    }
+};
 
 const exibirLocaisSelecionados = async (dados)=> {
-    
-    if (await(msgConfirmacao('Deseja Selecionar o Destino Abaixo'))){
-			listaLocais.forEach(element => {
-				let marcador = mapa.selecionarMarcador('idDtc',element.idDtc)
-				mapa.alterarIconeDoMarcador(marcador,iconePreto,iconeSize)
-			});
-			// if (!(await msgConfirmacao('Deseja Continuar selecionando os Destinos'))) {
-			// 	msgAviso('Destinos Selecionados com Sucesso');
-			// 	stateMapa.estado=null
-            // }
-    }   
+    listaLocais.forEach(element => {
+        let marcador = mapa.selecionarMarcador('idDtc',element.id)
+        mapa.alterarIconeDoMarcador(marcador,iconePreto,iconeSize)
+    });
+}
 
-    // if (dados.length>0){
-    //     // Opções do alerta
-    //     const options = {
-    //     title: 'Selecione uma Cotação',
-    //     html: table,
-    //     showCancelButton: true,
-    //     cancelButtonText: 'Voltar',
-    //     showConfirmButton: true, // Oculta o botão de confirmação
-    //     confirmButtonText:'Selecionar',
-    //     footer: '' // Remove o rodapé que contém os botões padrão
-    //   };
-    
-    //     // Exibe o alerta
-    //     Swal.fire(options).then((result) => {
-    //     if (result.isConfirmed) {
-    //         const selectedCotacao = dados[result.value];
+const populaTotaisIntinerario=()=>{
+    const calculaPeso=()=>{
+        let peso = 0
+        listaLocais.forEach(e => {
+            peso += parseFloat(e.peso)
+        });
+        return peso
+    }
 
-    //         stateMapa.estado=null
-    //         listaLocais = []
-    //     }
-    //     });
-    // }
-  }
+    document.getElementById('quantidadeDocumentos').textContent=`Documentos : ${listaLocais.length}`
+    document.getElementById('pesoIntinerario').textContent=`Peso : ${calculaPeso()}`
+}
 
 
 const limpaSemaforo = ()=>{
@@ -87,7 +110,6 @@ const gerarRotaOrigemDestino= async (element)=> {
 // Função para mostrar informações detalhadas
 const mostrarInformacoesDetalhadas=(dados)=> {
 
-    console.log(dados)
     // Implemente a lógica para exibir informações detalhadas
     let tabela = `
     <div class="row">
