@@ -61,30 +61,40 @@ btnHabilitaCriacaoIntinerario.addEventListener('click', async () => {
     stateMapa.estado = "selecionandoLocais";
 });
 
-const btnSalvaIntinerario =document.getElementById('btnSalvaIntinerario')
-btnSalvaIntinerario.addEventListener('click',()=>{
-    let listaEstaVazia = listaComparacaoListaLocais.length
-    switch (listaEstaVazia) {
-        case 0:
-            cadastraIntinerario()
-            break;
-   
-        default:
-            if(deepCompareArrays(listaComparacaoListaLocais,listaLocais)){
-                alert('não existem registros a serem alterados')
-            }else{alert('existem registros a serem alterados')}
-            break;
-    }
-})
+// Botão de salvar itinerário
+const btnSalvaIntinerario = document.getElementById('btnSalvaIntinerario');
 
-const listaEstaSalva = ()=>{
-    if (deepCompareArrays(listaComparacaoListaLocais,listaLocais)){
-        return
+btnSalvaIntinerario.addEventListener('click', () => {
+
+    if (listaLocais.length === 0) {
+        msgAviso('Você precisa selecionar pelo menos um ponto de atendimento para continuar.');
+        return;
     }
+
+    // Verifica se a lista de comparação está vazia
+    const listaEstaVazia = listaComparacaoListaLocais.length === 0;
+    
+    if (listaEstaVazia) {
+        // Se a lista de comparação está vazia, cadastra o itinerário
+        cadastraIntinerario();
+    } else {
+        // Se a lista de comparação não está vazia, verifica se as listas são iguais
+        if (listaEstaSalva()) {
+            alert('As duas listas são iguais');
+        } else {
+            alert('As duas listas são diferentes');
+        }
+    }
+});
+
+// Função para verificar se a lista está salva, usando deepCompareArrays
+const listaEstaSalva = () => {
+    return deepCompareArrays(listaComparacaoListaLocais, listaLocais);
 }
 
-
-const cadastraIntinerario = ()=>{
-    listaComparacaoListaLocais = listaLocais
-    alert('pelo switch funcao Cadastrar o intinerario')
+// Função para cadastrar o itinerário
+const cadastraIntinerario = () => {
+    // Atualiza a lista de comparação com os valores da lista atual
+    listaComparacaoListaLocais = [...listaLocais]; // Clona a listaLocais para evitar referência direta
+    alert('Itinerário cadastrado com sucesso!');
 }

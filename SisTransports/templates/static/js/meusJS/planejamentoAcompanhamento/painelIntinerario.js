@@ -7,7 +7,7 @@ const abrirPainelIntinerario = () => {
 const fecharPainelIntinerario = async () => {
 
     const fechaPainel = ()=>{
-        const offcanvas = document.getElementById("offcanvas");
+    const offcanvas = document.getElementById("offcanvas");
         offcanvas.classList.remove("open");  // Fecha o painel, removendo a classe 'open'
     }
 
@@ -31,6 +31,7 @@ const fecharPainelIntinerario = async () => {
         fechaPainel()
         resetaIconesLista()
         listaLocais = []
+        listaComparacaoListaLocais = []
         // Atualiza a tabela somente após a confirmação
         limpa_tabelas('tabelaDoctosBody')
         populaTotaisIntinerario()
