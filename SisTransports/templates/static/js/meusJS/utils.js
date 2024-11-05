@@ -1082,3 +1082,30 @@ const buscaVeiculosModal = async (inptPlaca, inptModelo = null, inptProprietario
     console.error("Erro ao abrir modal de busca de veículos:", error);
   }
 };
+
+
+function deepCompareArrays(arr1, arr2) {
+  if (arr1.length !== arr2.length) return false;
+
+  return arr1.every((obj1, index) => {
+      const obj2 = arr2[index];
+
+      return deepCompareObjects(obj1, obj2);
+  });
+}
+
+function deepCompareObjects(obj1, obj2) {
+  // Verifica se ambos são objetos e não são null
+  if (typeof obj1 !== 'object' || typeof obj2 !== 'object' || obj1 === null || obj2 === null) {
+      return obj1 === obj2;
+  }
+
+  const keys1 = Object.keys(obj1);
+  const keys2 = Object.keys(obj2);
+
+  // Verifica se ambos têm o mesmo número de propriedades
+  if (keys1.length !== keys2.length) return false;
+
+  // Verifica se cada chave e valor são iguais (usando recursão para comparar objetos aninhados)
+  return keys1.every(key => deepCompareObjects(obj1[key], obj2[key]));
+}

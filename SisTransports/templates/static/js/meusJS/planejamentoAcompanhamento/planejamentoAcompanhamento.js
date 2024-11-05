@@ -6,6 +6,7 @@ var semaforo = {origem:{lat:null,lng:null,idDtc:null},
 var stateMapa = {estado:null}
 
 var listaLocais = []
+var listaComparacaoListaLocais = []
 
 const iconeVermelho = '../../static/images/mapasIcones/pinVermelho.png'
 const iconeAzul = "../../static/images/mapasIcones/pinAzul.png"

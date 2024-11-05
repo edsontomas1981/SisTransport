@@ -60,3 +60,31 @@ btnHabilitaCriacaoIntinerario.addEventListener('click', async () => {
     // Atualiza o estado do mapa para "selecionandoLocais" para guiar o fluxo
     stateMapa.estado = "selecionandoLocais";
 });
+
+const btnSalvaIntinerario =document.getElementById('btnSalvaIntinerario')
+btnSalvaIntinerario.addEventListener('click',()=>{
+    let listaEstaVazia = listaComparacaoListaLocais.length
+    switch (listaEstaVazia) {
+        case 0:
+            cadastraIntinerario()
+            break;
+   
+        default:
+            if(deepCompareArrays(listaComparacaoListaLocais,listaLocais)){
+                alert('não existem registros a serem alterados')
+            }else{alert('existem registros a serem alterados')}
+            break;
+    }
+})
+
+const listaEstaSalva = ()=>{
+    if (deepCompareArrays(listaComparacaoListaLocais,listaLocais)){
+        return
+    }
+}
+
+
+const cadastraIntinerario = ()=>{
+    listaComparacaoListaLocais = listaLocais
+    alert('pelo switch funcao Cadastrar o intinerario')
+}
