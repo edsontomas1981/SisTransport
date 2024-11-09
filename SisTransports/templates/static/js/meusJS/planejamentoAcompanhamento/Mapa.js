@@ -104,6 +104,7 @@ class MapaLeaflet {
     }
 
     selecionarMarcador(campo,valor) {
+
         let registro 
         if(campo === 'idDtc'){
             registro = this.currentMarkers.find(e => e.dados.idDtc == valor);
@@ -256,6 +257,126 @@ class MapaLeaflet {
         this.currentPolyline = polyline;
     }
 
+    criarRota(pontos) {
+        let coordenadas = []
+        pontos = this.transformaListaEmArrayDePontosDeAtendimento(pontos)
+        console.log(pontos)
+        pontos.forEach(e => {
+            coordenadas.push([e.dados.lat,e.dados.lng])            
+        });
+
+        // Verifique se existem pontos para criar a rota
+        if (!pontos || pontos.length < 2) {
+            console.error("São necessários pelo menos dois pontos para criar uma rota.");
+            return;
+        }
+    
+        // Gere as coordenadas da rota entre os pontos fornecidos
+        // const routeCoordinates = pontos.dados.map(ponto => [ponto.lat, ponto.lng]);
+    
+        // Imprima a rota no mapa chamando o método imprimirRota
+        this.imprimirRota(coordenadas);
+    }
+
+    async criarRotaComRuas(pontos) {
+        // Transforma a lista em um array de pontos de atendimento e extrai as coordenadas
+        pontos = this.transformaListaEmArrayDePontosDeAtendimento(pontos);
+        let coordenadas = pontos.map(e => [e.dados.lat, e.dados.lng]);
+    
+        // Verifique se existem pontos para criar a rota
+        if (!pontos || pontos.length < 2) {
+            console.error("São necessários pelo menos dois pontos para criar uma rota.");
+            return;
+        }
+    
+        // Construa a string de coordenadas para a API do Mapbox
+        const coordinatesString = coordenadas.map(coord => `${coord[1]},${coord[0]}`).join(';');
+        const accessToken = '5b3ce3597851110001cf6248fa2ac3e598a04b3c9c4ef05b1472356b';
+    
+        // URL da API de direções do Mapbox
+        const url = `https://api.mapbox.com/directions/v5/mapbox/driving/${coordinatesString}?geometries=geojson&access_token=${accessToken}`;
+    
+        try {
+            // Requisição à API de direções do Mapbox
+            const response = await fetch(url);
+            const data = await response.json();
+    
+            if (data.routes && data.routes.length > 0) {
+                // Extraia as coordenadas da rota retornada pela API
+                const routeCoordinates = data.routes[0].geometry.coordinates.map(coord => [coord[1], coord[0]]);
+    
+                // Imprima a rota no mapa chamando o método imprimirRota
+                this.imprimirRota(routeCoordinates);
+            } else {
+                console.error("Nenhuma rota foi encontrada.");
+            }
+        } catch (error) {
+            console.error("Erro ao tentar obter a rota:", error);
+        }
+    }
+
+    async decodificarPolyline(rota){
+        const coordinates = await polyline.decode(rota);
+        return coordinates
+    }
+
+    async criarRotaComVariosPontos(pontos) {
+        // Converta a lista de pontos em um array de coordenadas no formato [longitude, latitude]
+        pontos = this.transformaListaEmArrayDePontosDeAtendimento(pontos);
+        const coordenadas = pontos.map(e => [e.dados.lng, e.dados.lat]);
+
+        console.log({coordinates:coordenadas})
+
+            // Verifique se existem pontos suficientes para criar a rota
+        if (coordenadas.length < 2) {
+            console.error("São necessários pelo menos dois pontos para criar uma rota.");
+            return;
+        }
+    
+        const apiKey = '5b3ce3597851110001cf6248fa2ac3e598a04b3c9c4ef05b1472356b'; // Substitua pela sua chave de API
+    
+        const url = 'https://api.openrouteservice.org/v2/directions/driving-car';
+        const requestOptions = {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': apiKey
+            },
+            body: JSON.stringify({
+                coordinates: coordenadas
+            })
+        };
+        
+        try {
+            const response = await fetch(url, requestOptions);
+            const data = await response.json();
+    
+            // Log da resposta completa para depuração
+            console.log("Resposta da API:", data);
+            
+            console.log(await this.decodificarPolyline(data.routes[0].geometry))
+
+            // imprimirRotaNoMapa(data) 
+            // Verifique se a rota existe antes de tentar acessá-la
+            if (data.routes && data.routes.length > 0 && data.routes[0].geometry && data.routes[0].geometry.coordinates) {
+                const routeCoordinates = data.routes[0].geometry.coordinates.map(coord => [coord[1], coord[0]]);
+                this.imprimirRota(routeCoordinates);
+            } else {
+                console.error("A API não retornou uma rota válida.");
+            }
+        } catch (error) {
+            console.error("Erro ao tentar obter a rota:", error);
+        }
+    }
+    
+    transformaListaEmArrayDePontosDeAtendimento(lista){
+        let listaPontosNaRota = []
+            lista.forEach(e => {
+                listaPontosNaRota.push(this.selecionarMarcador('idDtc',e.id))
+            });
+        return listaPontosNaRota
+    }
+
     removerRota() {
         if (this.currentPolyline) {
             this.map.removeLayer(this.currentPolyline); // Remove a polyline do mapa
@@ -359,6 +480,63 @@ class MapaLeaflet {
         return marker;
     }
 
+    imprimirRotaNoMapa(routeCoordinates) {
+        // Primeiro, remova qualquer rota existente do mapa
+        this.removerRota();
+    
+        // Crie uma nova polyline com as coordenadas da rota
+        const polyline = L.polyline(routeCoordinates, { color: 'blue', weight: 5 });
+    
+        // Adicione a nova polyline ao mapa
+        polyline.addTo(this.map);
+    
+        // Ajuste a visão do mapa para mostrar toda a rota
+        this.map.fitBounds(polyline.getBounds());
+    
+        // Verifique se o mapa está em um zoom maior que o desejado e ajuste, se necessário
+        const zoomLevel = 12;  // Defina o nível de zoom desejado
+        if (this.map.getZoom() > zoomLevel) {
+            this.map.setZoom(zoomLevel);
+        }
+    
+        // Defina a nova polyline como a rota atual no mapa
+        this.currentPolyline = polyline;
+    }
+    
+
+    obterCoordenadasDaRota(dadosRota) {
+        // Inicialize uma lista para armazenar as coordenadas da rota
+        const routeCoordinates = [];
+    
+        // Percorra cada segmento da rota
+        dadosRota.forEach(segmento => {
+            // Percorra cada etapa do segmento
+            segmento.steps.forEach(step => {
+                // Extraia os pontos de caminho de cada etapa
+                step.way_points.forEach(ponto => {
+                    // Supondo que você tenha uma função ou variável que converte `ponto` em coordenadas GPS
+                    const coordenadas = this.converterWayPointParaCoordenadas(ponto);
+                    routeCoordinates.push(coordenadas);
+                });
+            });
+        });
+    
+        return routeCoordinates;
+    }
+    
+    // Função auxiliar que converte um ponto de caminho em coordenadas GPS
+    converterWayPointParaCoordenadas(ponto) {
+        // Aqui você precisa implementar ou acessar um método para obter a coordenada GPS real
+        // baseado no índice do ponto. Essa função é um placeholder e precisa ser ajustada
+        return [latitude, longitude]; // Substitua latitude e longitude pelos valores reais
+    }
+    
+    // Função que usa os dados dos steps para desenhar a rota no mapa
+    exibirRota(dadosRota) {
+        const routeCoordinates = this.obterCoordenadasDaRota(dadosRota);
+        this.imprimirRotaNoMapa(routeCoordinates);
+    }
+    
 }
 
 

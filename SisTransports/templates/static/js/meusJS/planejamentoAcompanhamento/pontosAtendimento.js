@@ -50,20 +50,6 @@ const exibirLocaisSelecionados = async (dados)=> {
     });
 }
 
-const populaTotaisIntinerario=()=>{
-    const calculaPeso=()=>{
-        let peso = 0
-        listaLocais.forEach(e => {
-            peso += parseFloat(e.peso)
-        });
-        return peso
-    }
-
-    document.getElementById('quantidadeDocumentos').textContent=`Documentos : ${listaLocais.length}`
-    document.getElementById('pesoIntinerario').textContent=`Peso : ${calculaPeso()}`
-}
-
-
 const limpaSemaforo = ()=>{
     semaforo.destino.lat = null
     semaforo.destino.lng = null
@@ -113,7 +99,7 @@ const mostrarInformacoesDetalhadas=(dados)=> {
     // Implemente a lógica para exibir informações detalhadas
     let tabela = `
     <div class="row">
-        <div class="col-sm-6">
+        <div class="col-sm-12">
         <table class="table table-striped table-sm" style="width:80%">
             <tr>
             <td style="text-align: left;"><strong>Número:</strong></td>
@@ -156,26 +142,6 @@ const mostrarInformacoesDetalhadas=(dados)=> {
     </div>
     `;
     let acoes = `
-                <b>Anexar ao Veículo</b>
-                <div class="btn-group" role="group" aria-label="Basic example" style="width:100%">
-                <select class="form-select">
-                    <option>Teste 1</option>
-                    <option>Teste 2</option>
-                </select>
-                <button type="button" id="addDtcVeiculo" class="btn btn-primary">
-                    <i class="fa fa-plus" aria-hidden="true"></i>
-                </button>
-                </div>
-                <b class="pt-2" >Inserir ocorrência</b>
-                <div class="btn-group" role="group" aria-label="Basic example" style="width:100%">
-                <select class="form-select">
-                    <option>Teste 1</option>
-                    <option>Teste 2</option>
-                </select> 
-                <button type="button" class="btn btn-primary">
-                    <i class="fa fa-plus" aria-hidden="true"></i>
-                </button>
-                </div>
                 <div class="mt-2">
                 <b class="pt-2" >Prioridade</b>
                 <div class="badge badge-warning" style="width:100%">Média</div>
@@ -195,6 +161,7 @@ const mostrarInformacoesDetalhadas=(dados)=> {
     btnGeraPerimetro.textContent = 'Perímetro';
 
     // Adiciona o ícone usando Font Awesome (ou substitua pela sua biblioteca de ícones preferida)
+    // construção do botao gera perimetro
     var iconElement = document.createElement('i');
     iconElement.classList.add('fa', 'fa-map-signs', 'me-2'); // Classes do Font Awesome para o ícone
     btnGeraPerimetro.appendChild(iconElement); // Adiciona o ícone ao botão
@@ -205,7 +172,10 @@ const mostrarInformacoesDetalhadas=(dados)=> {
     btnGeraPerimetro.addEventListener('click', () => {
         criaPerimetro(btnGeraPerimetro);
     });
+
+
     // Exemplo de adicionar um botão dinamicamente com um evento de clique
+    // construção do botao gerar rota a partir do ponto de atendimento clicado
     const btnGeraRotaDaqui = document.createElement('button');
     btnGeraRotaDaqui.textContent = 'Origem';
 
@@ -223,7 +193,10 @@ const mostrarInformacoesDetalhadas=(dados)=> {
     btnGeraRotaDaqui.addEventListener('click', () => {
         selecionaOrigem(btnGeraRotaDaqui,mapa);
     });
+
+
     // Exemplo de adicionar um botão dinamicamente com um evento de clique
+    // construção do botao gerar rota a ate do ponto de atendimento clicado partindo da matriz 
     const btnGeraAteAqui = document.createElement('button');
     btnGeraAteAqui.textContent = 'Destino';
     // Adiciona o ícone usando Font Awesome (ou substitua pela sua biblioteca de ícones preferida)

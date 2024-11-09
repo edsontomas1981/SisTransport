@@ -20,8 +20,6 @@ def proxy_openrouteservice(request):
             # Outros parâmetros da API, se necessário
         }
 
-        print(data.get("start"))
-        print(data.get("end"))
         # # Fazer a solicitação GET para a API do OpenRouteService
         response = requests.get(api_url, params=params)
 

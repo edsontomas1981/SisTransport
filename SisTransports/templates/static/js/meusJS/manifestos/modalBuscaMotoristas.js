@@ -2,22 +2,20 @@ document.addEventListener('DOMContentLoaded', function() {
     let modalMotorista = document.getElementById('mdlBuscaMotoristas') 
     modalMotorista.addEventListener('shown.bs.modal', async ()=> {
 
-        let response  = await connEndpoint('/operacional/read_motoristas/', {})
-        var dadosDosMotoristas= preparaDadosTbodyBuscaMotorista(response.motoristas)
+        // let response  = await connEndpoint('/operacional/read_motoristas/', {})
+        // var dadosDosMotoristas= preparaDadosTbodyBuscaMotorista(response.motoristas)
 
-        console.log(dadosDosMotoristas)
-        populaTbodyBuscaMotorista(dadosDosMotoristas)
+        // populaTbodyBuscaMotorista(dadosDosMotoristas)
 
-        const inputBusca = document.getElementById('nomeMotorista');
+        // const inputBusca = document.getElementById('nomeMotorista');
 
-        inputBusca.addEventListener('input', function() {
-            const termoBusca = inputBusca.value.toLowerCase();
-            const motoristasFiltrados = dadosDosMotoristas.filter(function(motorista) {
-                return motorista.nome.toLowerCase().includes(termoBusca) || motorista.id.includes(termoBusca);
-            });
-            populaTbodyBuscaMotorista(motoristasFiltrados)
-    
-        });
+        // inputBusca.addEventListener('input', function() {
+        //     const termoBusca = inputBusca.value.toLowerCase();
+        //     const motoristasFiltrados = dadosDosMotoristas.filter(function(motorista) {
+        //         return motorista.nome.toLowerCase().includes(termoBusca) || motorista.id.includes(termoBusca);
+        //     });
+        //     populaTbodyBuscaMotorista(motoristasFiltrados)
+        // });
     });
 });
 

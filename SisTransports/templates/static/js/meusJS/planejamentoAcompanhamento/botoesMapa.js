@@ -63,7 +63,6 @@ btnHabilitaCriacaoIntinerario.addEventListener('click', async () => {
 
 // Botão de salvar itinerário
 const btnSalvaIntinerario = document.getElementById('btnSalvaIntinerario');
-
 btnSalvaIntinerario.addEventListener('click', () => {
 
     if (listaLocais.length === 0) {
@@ -75,26 +74,38 @@ btnSalvaIntinerario.addEventListener('click', () => {
     const listaEstaVazia = listaComparacaoListaLocais.length === 0;
     
     if (listaEstaVazia) {
+        alert('lista esta vazia cadastre')
         // Se a lista de comparação está vazia, cadastra o itinerário
         cadastraIntinerario();
-    } else {
-        // Se a lista de comparação não está vazia, verifica se as listas são iguais
-        if (listaEstaSalva()) {
-            alert('As duas listas são iguais');
-        } else {
-            alert('As duas listas são diferentes');
-        }
+        return
+    } 
+
+
+    console.log(`${listaComparacaoListaLocais.length}, ${listaLocais.length}`)
+    // Se a lista de comparação não está vazia, verifica se as listas são iguais
+    if (!listaEstaSalva()) {
+        alert('lista não esta vazia atualiza')
+        cadastraIntinerario();
+        return
     }
-});
+
+    alert('não era pre ter chagado aqui')
+    // Não faz nada somente avisa que o intinerario ja está salvo 
+    msgAviso('Itinerário cadastrado com sucesso!');
+}); 
 
 // Função para verificar se a lista está salva, usando deepCompareArrays
 const listaEstaSalva = () => {
     return deepCompareArrays(listaComparacaoListaLocais, listaLocais);
 }
 
-// Função para cadastrar o itinerário
-const cadastraIntinerario = () => {
-    // Atualiza a lista de comparação com os valores da lista atual
-    listaComparacaoListaLocais = [...listaLocais]; // Clona a listaLocais para evitar referência direta
-    alert('Itinerário cadastrado com sucesso!');
-}
+const cadastraIntinerario = async () => {
+    listaComparacaoListaLocais=[...listaLocais]
+    msgAviso('Itinerário cadastrado com sucesso!');
+};
+
+let btnBuscaMotorista = document.getElementById('btnBuscaMotoristaIntinerario')
+btnBuscaMotorista.addEventListener('click',()=>{
+    buscaMotoristaModal('cpfMotoristaIntinerario','nomeMotoristaIntinerario')
+})
+

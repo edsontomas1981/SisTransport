@@ -4,11 +4,11 @@
 
     <div class="col-sm-12 d-flex mt-5">
       <div class="input-group mb-2 justify-content-end">
-        <button type="button" class="btn btn-secondary btn-rounded btn-icon">            
-          <i class="ti-write"></i>
-        </button>
         <button type="button" class="btn btn-success btn-rounded btn-icon" id="btnSalvaIntinerario">            
           <i class="ti-save"></i>
+        </button>
+        <button type="button" class="btn btn-info btn-rounded btn-icon" id="tracarRota" onclick="tracarRota()">            
+          <i class="ti-pin"></i>
         </button>
         <button type="button" 
           class="btn btn-danger btn-rounded btn-icon pr-2" 
@@ -59,10 +59,62 @@
 
 
     </div>
+    <div class="col-sm-12 mt-3 pr-0">
+      <div class="input-group">
+      <!-- Input para a placa do veículo -->
+      <input 
+        type="text" 
+        class="form-control form-control-sm col-sm-6" 
+        id="cpfMotoristaIntinerario" 
+        onblur="getMotoristasPorCpf('cpfMotoristaIntinerario','nomeMotoristaIntinerario')"
+        placeholder="Cpf Motorista :">
+          
+        <!-- Input para o modelo do veículo (somente leitura) -->
+        <input 
+          type="text" 
+          class="form-control form-control-sm col-sm-6" 
+          id="nomeMotoristaIntinerario" 
+          placeholder="Nome : " 
+          disabled>
+    
+        <!-- Botão para buscar o veículo -->
+        <a 
+          class="btn btn-primary btn-sm" 
+          id="btnBuscaMotoristaIntinerario" 
+          style="display: flex; justify-content: center; align-items: center;">
+          <i class="fa fa-search" aria-hidden="true"></i>
+        </a>
+    
+        <!-- Botão para adicionar novo veículo -->
+        <a 
+          class="btn btn-success btn-sm" 
+          id="btnAddVeiculoPainelIntinerario" 
+          onclick="openModal('cadastroMotorista')" 
+          style="display: flex; justify-content: center; align-items: center;">
+          <i class="fa fa-plus" aria-hidden="true"></i>
+        </a>
+      </div>
+
+
+    </div>
   </div>
+  <div class="col-sm-12 mt-4">
+    <a class="btn btn-sm btn-danger" type="text" id="distanciaAPercorrer">
+      Kms : 
+    </a>
 
+    <a class="btn btn-sm btn-info" type="text" id="tempoAproximado">
+      Tempo :
+    </a>
 
+    <a class="btn btn-sm btn-warning" type="text" id="quantidadeDocumentos">
+      Docs : 
+    </a>
 
+    <a class="btn btn-sm btn-success" type="text" id="pesoIntinerario">
+      Peso :
+    </a>
+  </div>
   <div class="offcanvas-content">
     <div id="paginacaoPainelIntinerario"></div>
     <!-- Tabela Doctos -->
@@ -80,15 +132,5 @@
         </tbody>
       </table>
     </div>
-  </div>
-
-  <div class="col-sm-12 mt-4">
-    <a class="btn btn-sm btn-dark bg-white" type="text" id="quantidadeDocumentos">
-      Documentos : 
-    </a>
-
-    <a class="btn btn-sm btn-dark bg-white" type="text" id="pesoIntinerario">
-      Peso :
-    </a>
   </div>
 </div>

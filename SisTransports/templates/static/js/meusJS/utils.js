@@ -924,8 +924,6 @@ const getVeiculo = async (inptPlaca, inptModelo = null, inptProprietario = null)
 
     placaElem.value = response.veiculo.placa || '';
 
-    console.log(inptModelo)
-
     // Preenche o campo de modelo se inptModelo for passado e o elemento existir
     if (inptModelo) {
       const modeloElem = document.getElementById(inptModelo);
@@ -1084,6 +1082,108 @@ const buscaVeiculosModal = async (inptPlaca, inptModelo = null, inptProprietario
 };
 
 
+const buscaMotoristaModal = async (cpfMotorista,nomeMotorista)=>{
+
+  const selecionaMotorista = async(element)=>{
+    let response  = await connEndpoint('/operacional/read_motorista/', {'cpfMotorista':element})
+    document.getElementById(cpfMotorista).value = response.motorista.parceiro_fk.cnpj_cpf
+    document.getElementById(nomeMotorista).value = response.motorista.parceiro_fk.raz_soc
+    closeModal()
+}
+
+  const preparaDadosTbodyBuscaMotorista=(response)=>{
+    let dadosBuscaMotorista = []
+    response.forEach(element => {
+        dadosBuscaMotorista.push({'id':element.parceiro_fk.cnpj_cpf,'nome':element.parceiro_fk.raz_soc})
+    });
+    return dadosBuscaMotorista
+  }
+
+  const populaTbodyBuscaMotorista = (dados)=>{
+    let botoes={
+        alterar: {
+            classe: "btn-primary text-white",
+            texto: '<i class="fas fa-check" aria-hidden="true"></i>',
+            callback: selecionaMotorista
+          }
+        }
+    popula_tbody_paginacao('paginacaoBuscaMotorista','tbodyBuscaMotorista',dados,botoes,1,15,false,false)
+  }
+
+  let response  = await connEndpoint('/operacional/read_motoristas/', {})
+  var dadosDosMotoristas= preparaDadosTbodyBuscaMotorista(response.motoristas)
+
+  populaTbodyBuscaMotorista(dadosDosMotoristas)
+
+  openModal('mdlBuscaMotoristas')
+
+  const inputBusca = document.getElementById('nomeMotorista');
+
+  inputBusca.addEventListener('input', function() {
+      const termoBusca = inputBusca.value.toLowerCase();
+      const motoristasFiltrados = dadosDosMotoristas.filter(function(motorista) {
+          return motorista.nome.toLowerCase().includes(termoBusca) || motorista.id.includes(termoBusca);
+      });
+      populaTbodyBuscaMotorista(motoristasFiltrados)
+  });
+  
+}
+
+/**
+ * Busca informações do motorista pelo CPF fornecido e preenche o campo de nome do motorista.
+ *
+ * @param {string} txtCpf - O ID do campo de entrada onde o CPF do motorista será digitado.
+ * @param {string} txtMotorista - O ID do campo de entrada onde o nome do motorista será exibido.
+ * @returns {Promise<void>} Retorna uma Promise que resolve após a tentativa de buscar e preencher o nome do motorista.
+ */
+const getMotoristasPorCpf = async (txtCpf, txtMotorista) => {
+  try {
+    // Obtenção dos elementos de CPF e Nome do Motorista
+    let cpfMotorista = document.getElementById(txtCpf);
+    let nomeMotorista = document.getElementById(txtMotorista);
+
+    // Validação dos elementos do DOM
+    if (!cpfMotorista || !nomeMotorista) {
+      console.error('Elementos do DOM não encontrados para os IDs fornecidos');
+      msgErro('Erro no sistema. Elementos de entrada não encontrados.');
+      return;
+    }
+
+    // Limpeza de espaços no valor do CPF
+    let cpfSemEspacos = cpfMotorista.value.replace(/\s/g, '');
+
+    // Verificação se o CPF não está vazio
+    if (cpfSemEspacos !== "") {
+      // Validação do CPF
+      if (validateCPF(cpfSemEspacos)) {
+        // Chamada assíncrona ao endpoint para obter dados do motorista
+        let response = await connEndpoint('/operacional/read_motorista/', { 'cpfMotorista': cpfSemEspacos });
+
+        // Verificação de resposta de sucesso
+        if (response.status === 200 && response.motorista && response.motorista.parceiro_fk) {
+          nomeMotorista.value = response.motorista.parceiro_fk.raz_soc;
+        } else {
+          msgErro('Motorista não localizado');
+          nomeMotorista.value = "";
+        }
+      } else {
+        // CPF inválido
+        msgErro('CPF inválido');
+        nomeMotorista.value = "";
+      }
+    } else {
+      msgErro('CPF não pode estar vazio');
+    }
+  } catch (error) {
+    // Tratamento de erros
+    console.error('Erro ao buscar motorista:', error);
+    msgErro('Erro inesperado ao buscar motorista');
+    nomeMotorista.value = "";
+  }
+};
+
+
+
 function deepCompareArrays(arr1, arr2) {
   if (arr1.length !== arr2.length) return false;
 
@@ -1109,3 +1209,11 @@ function deepCompareObjects(obj1, obj2) {
   // Verifica se cada chave e valor são iguais (usando recursão para comparar objetos aninhados)
   return keys1.every(key => deepCompareObjects(obj1[key], obj2[key]));
 }
+
+function arredondarNumero(numero, casasDecimais = 2) {
+  return parseFloat(numero.toFixed(casasDecimais));
+}
+
+
+
+
