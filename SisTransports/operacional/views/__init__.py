@@ -29,6 +29,7 @@ from operacional.views.coleta.roteirizacao_coletas import roteirizacao_coletas
 
 from operacional.views.roteirizacao.proxy_openrouteservice import proxy_openrouteservice
 from operacional.views.roteirizacao.rota_varios_destinos import rotas_varios_destinos
+from operacional.views.roteirizacao.roteirizacao_automatica import roteirizacao_automatica
 
 from operacional.views.nf.create_nf import create_nf
 from operacional.views.nf.read_nf import read_nf
@@ -57,6 +58,7 @@ from operacional.views.veiculos.create_veiculo import create_veiculo
 from operacional.views.veiculos.dados_cadastro import dados_cadatro_veiculo
 from operacional.views.veiculos.read_veiculo_por_placa import read_veiculo_placa
 from operacional.views.veiculos.read_veiculos import read_veiculos
+from operacional.views.veiculos.obtem_localizacao_veiculos import obtem_localizacao_veiculos
 
 from operacional.views.manifesto.manifesto import manifesto
 from operacional.views.manifesto.create_manifesto import create_manifesto

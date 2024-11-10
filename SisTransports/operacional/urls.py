@@ -16,6 +16,7 @@ urlpatterns = [
     
     path('api/directions/', viewsOperacional.proxy_openrouteservice, name='proxy_openrouteservice'),
     path('api/rotas_varios_destinos/', viewsOperacional.rotas_varios_destinos, name='rotas_varios_destinos'),
+    path('api/roteirizacao_automatica/', viewsOperacional.roteirizacao_automatica, name='roteirizacao_automatica'),
 
     path('createNf/',viewsOperacional.create_nf,name='createNf'),
     path('readNf/',viewsOperacional.read_nf,name='readNf'),
@@ -63,6 +64,8 @@ urlpatterns = [
     path('dados_combos_veiculos/',viewsOperacional.dados_cadatro_veiculo, name='cad_veiculo'),
     path('read_veiculo_placa/',viewsOperacional.read_veiculo_placa,name='read_veiculo_placa'),
     path('read_veiculos/',viewsOperacional.read_veiculos,name='read_veiculos'),
+    path('obtem_localizacao_veiculos/',viewsOperacional.obtem_localizacao_veiculos,name='obtem_localizacao_veiculos'),
+
 
     path('manifesto/',viewsOperacional.manifesto,name='manifesto'),
     path('create_manifesto/',viewsOperacional.create_manifesto,name='create_manifesto'),

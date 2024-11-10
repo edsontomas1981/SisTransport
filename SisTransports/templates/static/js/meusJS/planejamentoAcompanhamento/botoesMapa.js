@@ -22,27 +22,15 @@ btnResetMapa.addEventListener('click',()=>{
 
 let btnVisualizaPontosDeAtendimento = document.getElementById('btnVisualizaPontosDeAtendimento')
 btnVisualizaPontosDeAtendimento.addEventListener('click',async ()=>{
-    const apiService = new ApiService();
-    const url = "/enderecos/get_pontos_atendimento/";
     mapa.removerTodosMarcadores()
-
-    const resultadoGet = await apiService.getData(url, {});
-
-    let pontosDeAtendimento = resultadoGet.pontos_atendimento
-
-    pontosDeAtendimento.forEach(element => { 
-        element.iconSize = iconeSize
-        element.iconUrl = local
-        element.callback = verificaEstado
-        mapa.adicionarMarcadorComIconeNew(element)
-    });
-
+    populaMapaPontosDeAtendimento()
     mapa.adicionarMarcadorComIcone(-23.47337308,-46.47320867,"Matriz",armazem,iconeSize,1,verificaEstado)
 })
 
 let btnLocalizacaoVeiculos = document.getElementById('btnLocalizacaoVeiculos')
-btnLocalizacaoVeiculos.addEventListener('click',()=>{
+btnLocalizacaoVeiculos.addEventListener('click',async ()=>{
     mapa.removerTodosMarcadores()
+    populaMapaVeiculos()
     mapa.adicionarMarcadorComIcone(-23.47337308,-46.47320867,"Matriz",armazem,iconeSize,1,verificaEstado)
 })
 
@@ -65,6 +53,17 @@ btnHabilitaCriacaoIntinerario.addEventListener('click', async () => {
 const btnSalvaIntinerario = document.getElementById('btnSalvaIntinerario');
 btnSalvaIntinerario.addEventListener('click', () => {
 
+    const camposObrigatorios = ['placaPainelIntinerario','modeloPainelIntinerario','cpfMotoristaIntinerario','nomeMotoristaIntinerario']
+    let dadosForm = obterDadosDoFormulario('frmPainelIntinerario')
+    
+    console.log(validarCamposObrigatorios(dadosForm,camposObrigatorios).length)
+    
+    if(validarCamposObrigatorios(dadosForm,camposObrigatorios).length > 0){
+        msgAviso('Por favor, preencha os campos destacados em vermelho para continuar.');
+        return
+    }
+
+    
     if (listaLocais.length === 0) {
         msgAviso('Você precisa selecionar pelo menos um ponto de atendimento para continuar.');
         return;
@@ -81,7 +80,6 @@ btnSalvaIntinerario.addEventListener('click', () => {
     } 
 
 
-    console.log(`${listaComparacaoListaLocais.length}, ${listaLocais.length}`)
     // Se a lista de comparação não está vazia, verifica se as listas são iguais
     if (!listaEstaSalva()) {
         alert('lista não esta vazia atualiza')
@@ -108,4 +106,26 @@ let btnBuscaMotorista = document.getElementById('btnBuscaMotoristaIntinerario')
 btnBuscaMotorista.addEventListener('click',()=>{
     buscaMotoristaModal('cpfMotoristaIntinerario','nomeMotoristaIntinerario')
 })
+
+
+// const btnGerarRotasAutomaticas = document.getElementById('gerarRotasAutomaticas')
+// btnGerarRotasAutomaticas.addEventListener('click',async ()=>{
+//     let marcadores = carregaMarcadores()
+//     let listaVeiculos = []
+//     let pontos_atendimento = []
+
+//     marcadores.forEach(e => {
+//         if(e.dados.idDtc){
+//             pontos_atendimento.push(e.dados)
+//         }else{
+//             listaVeiculos.push(e.dados)
+//         }
+//     });
+
+//     let dados = {veiculos:listaVeiculos,pontos_atendimento:pontos_atendimento,start:{lat:-23.47337308, lng:-46.47320867}}
+
+//     const url = "/operacional/api/roteirizacao_automatica/";
+//     const resultado = await connEndpoint(url, dados);
+//     console.log(resultado)
+// })
 

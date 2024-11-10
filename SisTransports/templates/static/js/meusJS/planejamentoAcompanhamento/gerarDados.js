@@ -1333,6 +1333,45 @@ const geraDadosVeiculos = ()=>{
     ]
 }
 
+const getDadosVeiculos = async ()=>{
+    const apiService = new ApiService();
+    const url = "/operacional/obtem_localizacao_veiculos/";
+    const resultado = await apiService.postData(url, {});
+    return resultado.veiculos
+}
+
+const getPontosAtendimento = async ()=>{
+    const apiService = new ApiService();
+    const url = "/enderecos/get_pontos_atendimento/";
+    const resultado = await apiService.getData(url, {});
+    return resultado.pontos_atendimento
+}
+
+const populaMapaPontosDeAtendimento = async ()=>{
+
+    let pontosDeAtendimento = await getPontosAtendimento()
+
+    pontosDeAtendimento.forEach(element => { 
+        element.iconSize = iconeSize
+        element.iconUrl = local
+        element.callback = verificaEstado
+        mapa.adicionarMarcadorComIconeNew(element)
+    });
+    
+}
+
+const populaMapaVeiculos = async ()=>{
+
+    let veiculos = await getDadosVeiculos()
+
+    veiculos.forEach(element => { 
+        element.iconSize = iconeSize
+        element.iconUrl = caminhao
+        element.callback = constroeModalVeiculosPlanejamento
+        mapa.adicionarMarcadorComIconeNew(element)
+    });
+}
+
 
 const geraCoordenadas = ()=>{
     return[
@@ -1998,45 +2037,6 @@ const geraCoordenadas = ()=>{
         ]
     ]
 }
-
-// const geraCoordenadas = ()=>{
-//     // Coordenadas aproximadas para São Paulo e Grande São Paulo
-//     var saoPauloBounds = {
-//         north: -23.356792,
-//         south: -23.7452,
-//         west: -46.825123,
-//         east: -46.365582
-//     };
-
-//     // Número de linhas e colunas para a grade
-//     var rows = 6;
-//     var cols = 10;
-
-//     // Calcula o intervalo de latitude e longitude
-//     var latInterval = (saoPauloBounds.north - saoPauloBounds.south) / rows;
-//     var lngInterval = (saoPauloBounds.east - saoPauloBounds.west) / cols;
-
-//     // Lista para armazenar as coordenadas geradas
-//     var coordenadas = [];
-
-//     // Loop para gerar as coordenadas da grade
-//     for (var i = 0; i < rows; i++) {
-//       for (var j = 0; j < cols; j++) {
-//           // Calcula as coordenadas para o ponto na grade
-//           var lat = saoPauloBounds.south + latInterval * i + Math.random() * latInterval * 0.8;
-//           var lng = saoPauloBounds.west + lngInterval * j + Math.random() * lngInterval * 0.8;
-//           var status = Math.floor(Math.random() * (4 - 0)) + 1
-//           var idNum = Math.floor(Math.random() * (999999 - 1)) + 1
-//           var motorista = nomesMotoristas[Math.floor(Math.random() * (15 - 1)) + 1]
-//           var placa = placasVeiculos[Math.floor(Math.random() * (10 - 1)) + 1]
-//           var bairro = bairrosSaoPaulo[Math.floor(Math.random() * (14 - 0)) + 1]
-//           var volumes = Math.floor(Math.random() * (100 - 1)) + 1
-//           var peso = Math.random() * (2000 - 0) + 1
-//           coordenadas.push([lat, lng,status,idNum,motorista,placa,bairro,volumes,peso.toFixed(2)]);
-//       }
-//     }
-//     return coordenadas ;
-// }
 
 const geraDadosPoligonoZmrc = ()=>{
     return {

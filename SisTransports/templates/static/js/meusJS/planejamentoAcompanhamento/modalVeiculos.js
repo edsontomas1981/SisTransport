@@ -21,6 +21,7 @@ function sendMessage(message = 'get_active_users') {
 const constroeModalVeiculosPlanejamento = (element) => {
   let containerTituloModalVeiculos = document.getElementById("modalVeiculoId");
   limpaContainers("modalVeiculoId");
+  limpa_tabelas('tbodyDocumentos');
 
   let titulo = document.createElement('h4');
   titulo.textContent = `Motorista: ${element.motorista}`;
@@ -46,6 +47,9 @@ const constroeModalVeiculosPlanejamento = (element) => {
       }
   };
 
-  popula_tbody("tbodyDocumentos", element.dados, botoes, false);
+  if(element.jobs){
+    popula_tbody("tbodyDocumentos", element.jobs, botoes, false);
+  }
+
   openModal('modalPlanejamentoVeiculos');
 };

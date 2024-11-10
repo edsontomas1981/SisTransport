@@ -422,20 +422,38 @@ class MapaLeaflet {
     }
 
     adicionarMarcadorComIconeNew(dadosMarcador) {
+
+        // console.log(dadosMarcador)
         
         const customIcon = L.icon({
             iconUrl: dadosMarcador.iconUrl,
             iconSize: dadosMarcador.iconSize // [largura, altura] em pixels
         });
 
+
         // Adicione o marcador com o ícone personalizado ao mapa
         const marker = L.marker([dadosMarcador.lat, dadosMarcador.lng], { icon: customIcon }).addTo(this.map);
 
-        // Carrega Dados ao marcador
-        marker.dados=dadosMarcador.dadosIntinerario
-        marker.dados.lat = dadosMarcador.lat
-        marker.dados.lng = dadosMarcador.lng
-        marker.dados.idDtc = dadosMarcador.idDtc
+        if(dadosMarcador.dadosIntinerario){
+            // Carrega Dados ao marcador
+            marker.dados=dadosMarcador.dadosIntinerario
+            marker.dados.lat = dadosMarcador.lat
+            marker.dados.lng = dadosMarcador.lng
+            marker.dados.idDtc = dadosMarcador.idDtc
+        }
+
+        if(dadosMarcador.dados_veiculo){
+            // Carrega Dados ao marcador
+            marker.dados=dadosMarcador.dados_veiculo
+            marker.placa=dadosMarcador.dados_veiculo.placa
+            marker.placa=dadosMarcador.dados_veiculo.motorista
+            marker.dados.lat = dadosMarcador.lat
+            marker.dados.lng = dadosMarcador.lng
+            if(dadosMarcador.jobs){
+                marker.dados.jobs = dadosMarcador.jobs
+            }
+        }
+
 
 
         // Adicione o conteúdo do popup ao marcador
@@ -469,6 +487,7 @@ class MapaLeaflet {
         // Adicione um evento de clique ao marcador para abrir o modal
         marker.on('click', () => {
             // Defina o conteúdo do modal
+
             dadosMarcador.callback(marker.dados,this.map)
         });
 
@@ -535,6 +554,11 @@ class MapaLeaflet {
     exibirRota(dadosRota) {
         const routeCoordinates = this.obterCoordenadasDaRota(dadosRota);
         this.imprimirRotaNoMapa(routeCoordinates);
+    }
+
+    getMarkers(){
+        // console.log(this.currentMarkers)
+        return this.currentMarkers
     }
     
 }

@@ -12,7 +12,7 @@ const iconeVermelho = '../../static/images/mapasIcones/pinVermelho.png'
 const iconeAzul = "../../static/images/mapasIcones/pinAzul.png"
 const iconeRoxo = "../../static/images/mapasIcones/pinRoxo.png"
 const iconeVerde = "../../static/images/mapasIcones/pinVerde.png"
-const iconePreto = "../../static/images/mapasIcones/pinPreto.png"
+const iconePreto = "../../static/images/mapasIcones/check.png"
 const caminhao = "../../static/images/mapasIcones/caminhao2.png"
 const armazem = "../../static/images/mapasIcones/armazem.png"
 const local = "../../static/images/mapasIcones/loja.png"
@@ -163,24 +163,15 @@ const connWs =()=>{
 
 // Exemplo de uso da classe MapaLeaflet
 document.addEventListener('DOMContentLoaded', async() => {
-    const dados = geraCoordenadas()
+    const dados = getPontosAtendimento()
     const polygonCoordinates = geraDadosPoligonoZmrc()
 
     mapa = new MapaLeaflet('map', -23.47337308, -46.47320867,10.3);
-    
-    let dadosMarcadores = {mapa:mapa,dados:dados,icone:local,iconeSize:iconeSize,callback:verificaEstado}
 
-    let mapeamento = {lat: 0,lng: 1,motorista: 4,idDtc: 3,placa: 5,bairro: 6,volumes: 7,peso: 8};
-    let dadosAdicionais = geraDadosAdicionais(dados,mapeamento)
+    populaMapaPontosDeAtendimento()
 
-    adicionaMarcadoresMapa(dadosMarcadores,dadosAdicionais)
-    
-    let dadosVeiculos = geraDadosVeiculos()
-    mapeamento = {lat: 0,lng: 1,motorista: 2,placa: 3,qtdeDctos: 4,dados:5};
-    dadosAdicionais = geraDadosAdicionais(dadosVeiculos,mapeamento)
+    populaMapaVeiculos()
 
-    dadosMarcadores = {dados:dadosVeiculos,icone:caminhao,iconeSize:[30, 30],callback:constroeModalVeiculosPlanejamento}
-    adicionaMarcadoresMapa(dadosMarcadores,dadosAdicionais)
 
     mapa.adicionarPoligonoFromData(polygonCoordinates,'black');
 

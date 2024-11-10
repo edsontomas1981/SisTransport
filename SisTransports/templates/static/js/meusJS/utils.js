@@ -1142,6 +1142,8 @@ const getMotoristasPorCpf = async (txtCpf, txtMotorista) => {
     let cpfMotorista = document.getElementById(txtCpf);
     let nomeMotorista = document.getElementById(txtMotorista);
 
+    if(cpfMotorista.value == ''){return}
+
     // Validação dos elementos do DOM
     if (!cpfMotorista || !nomeMotorista) {
       console.error('Elementos do DOM não encontrados para os IDs fornecidos');

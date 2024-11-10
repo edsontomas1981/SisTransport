@@ -211,3 +211,7 @@ const tracarRota = async ()=>{
     }
 }
 
+const carregaMarcadores = ()=>{
+   return mapa.getMarkers()
+}
+
