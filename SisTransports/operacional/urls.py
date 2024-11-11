@@ -17,6 +17,7 @@ urlpatterns = [
     path('api/directions/', viewsOperacional.proxy_openrouteservice, name='proxy_openrouteservice'),
     path('api/rotas_varios_destinos/', viewsOperacional.rotas_varios_destinos, name='rotas_varios_destinos'),
     path('api/roteirizacao_automatica/', viewsOperacional.roteirizacao_automatica, name='roteirizacao_automatica'),
+    path('api/coords_para_endereco/', viewsOperacional.coords_para_endereco, name='coords_para_endereco'),
 
     path('createNf/',viewsOperacional.create_nf,name='createNf'),
     path('readNf/',viewsOperacional.read_nf,name='readNf'),

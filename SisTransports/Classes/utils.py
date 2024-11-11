@@ -219,3 +219,25 @@ def string_para_data(data_str):
 
     # Retorna None se a entrada for inválida
     return None
+
+
+import math
+
+def calculo_distancia_coordenadas_haversine(ponto_inicial_lat, ponto_inicial_lng, destino_lat, destino_lng):
+    # Raio médio da Terra em quilômetros
+    R = 6371
+
+    # Convertendo para radianos
+    ponto_inicial_lat = math.radians(ponto_inicial_lat)
+    ponto_inicial_lng = math.radians(ponto_inicial_lng)
+    destino_lat = math.radians(destino_lat)
+    lon2 = math.radians(destino_lng)
+
+    # Fórmula de Haversine
+    dlat = destino_lat - ponto_inicial_lat
+    dlon = lon2 - ponto_inicial_lng
+    a = math.sin(dlat/2)**2 + math.cos(ponto_inicial_lat) * math.cos(destino_lat) * math.sin(dlon/2)**2
+    c = 2 * math.atan2(math.sqrt(a), math.sqrt(1-a)) 
+    distance = R * c
+
+    return distance

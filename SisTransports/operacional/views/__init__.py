@@ -30,6 +30,7 @@ from operacional.views.coleta.roteirizacao_coletas import roteirizacao_coletas
 from operacional.views.roteirizacao.proxy_openrouteservice import proxy_openrouteservice
 from operacional.views.roteirizacao.rota_varios_destinos import rotas_varios_destinos
 from operacional.views.roteirizacao.roteirizacao_automatica import roteirizacao_automatica
+from operacional.views.roteirizacao.coords_para_endereco import coords_para_endereco
 
 from operacional.views.nf.create_nf import create_nf
 from operacional.views.nf.read_nf import read_nf

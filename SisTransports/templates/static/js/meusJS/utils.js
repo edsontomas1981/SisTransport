@@ -1216,6 +1216,27 @@ function arredondarNumero(numero, casasDecimais = 2) {
   return parseFloat(numero.toFixed(casasDecimais));
 }
 
+const transformaCoordenadasEmEndereco=async (coordenadas)=>{
+  // const apiService = new ApiService();
+  const url = "/operacional/api/coords_para_endereco/";
+  const resultado = await connEndpoint(url,{'coordenadas':coordenadas});
+  // const resultado = await apiService.postData(url, {'coordenadas':coordenadas});
+  return resultado.enderecos[0].endereco
+}
+
+const criaRotaEntreDoisPontos=async (origem,destino)=>{
+  const response = await connEndpoint('/operacional/api/directions/', { 'start': origem, 'end': destino, 'localidades': {} });
+  if(response.status ==200){
+      if(mapa.currentPolyline){
+          mapa.removerRota()  
+      }
+      mapa.imprimirRota(response.rota,10.3)
+  }else{
+      msgErro(`Não foi possível estabelecer uma rota entre os Dtc's ${origem} e ${destino}.`);
+  }
+}
+
+
 
 
 

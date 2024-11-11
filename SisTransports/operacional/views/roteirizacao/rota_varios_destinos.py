@@ -3,7 +3,7 @@ from django.http import JsonResponse
 from django.views.decorators.http import require_http_methods
 import json
 import requests
-from Classes.utils import dprint
+from Classes.utils import dprint,calculo_distancia_coordenadas_haversine
 import polyline
 
 
@@ -21,8 +21,18 @@ def rotas_varios_destinos(request):
         if ponto_inicial:
             coordenadas.append([ponto_inicial.get('lng'), ponto_inicial.get('lat')])
 
-        for coord in data.get('coordenadas'):
-            coordenadas.append([coord.get('lng'), coord.get('lat')])
+        coordenadas_ordenada_por_distancia = []
+
+        for index, coord in enumerate(data.get('coordenadas')):
+            distancia = calculo_distancia_coordenadas_haversine(ponto_inicial.get('lat'), ponto_inicial.get('lng'), coord.get('lat'), coord.get('lng'))
+            coordenadas_ordenada_por_distancia.append({'index':index, 'distancia':distancia,'coord':coord})
+
+        coordenadas_ordenada_por_distancia = ordenar_por_distancia(coordenadas_ordenada_por_distancia)
+
+
+        for coord in coordenadas_ordenada_por_distancia:
+
+            coordenadas.append([coord.get('coord').get('lng'), coord.get('coord').get('lat')])
 
         # URL da API do OpenRouteService
         api_url = 'https://api.openrouteservice.org/v2/directions/driving-car/json'
@@ -58,3 +68,15 @@ def rotas_varios_destinos(request):
         # Tratar qualquer exceção que possa ocorrer durante a solicitação
         error_message = str(e)
         return JsonResponse({'error': error_message, 'status': 500})
+    
+def ordenar_por_distancia(lista_dicionarios):
+    """Ordena uma lista de dicionários pelo valor da chave 'distancia'.
+
+    Args:
+        lista_dicionarios: A lista de dicionários a ser ordenada.
+
+    Returns:
+        Uma nova lista ordenada pelos valores de 'distancia'.
+    """
+
+    return sorted(lista_dicionarios, key=lambda x: x['distancia'])

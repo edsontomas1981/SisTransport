@@ -1367,7 +1367,7 @@ const populaMapaVeiculos = async ()=>{
     veiculos.forEach(element => { 
         element.iconSize = iconeSize
         element.iconUrl = caminhao
-        element.callback = constroeModalVeiculosPlanejamento
+        element.callback =verificaEstadoVeiculo 
         mapa.adicionarMarcadorComIconeNew(element)
     });
 }

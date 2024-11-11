@@ -17,39 +17,49 @@ function sendMessage(message = 'get_active_users') {
     }
 }
 
+const constroeModalVeiculosPlanejamento = async (element) => {
+	console.log(element);
 
-const constroeModalVeiculosPlanejamento = (element) => {
-  let containerTituloModalVeiculos = document.getElementById("modalVeiculoId");
-  limpaContainers("modalVeiculoId");
-  limpa_tabelas('tbodyDocumentos');
+	let endereco = await transformaCoordenadasEmEndereco({lat: element.lat, lng: element.lng});
+	let containerTituloModalVeiculos = document.getElementById("modalVeiculoId");
+	limpaContainers("modalVeiculoId");
+	limpa_tabelas('tbodyDocumentos');
 
-  let titulo = document.createElement('h4');
-  titulo.textContent = `Motorista: ${element.motorista}`;
-  containerTituloModalVeiculos.appendChild(titulo);
+	let titulo = document.createElement('h4');
+	titulo.textContent = `Motorista: ${element.motorista}`;
+	containerTituloModalVeiculos.appendChild(titulo);
 
-  let subTitulo = document.createElement('h5');
-  let placa = element.placa;
-  subTitulo.id = 'subTitulo';
-  subTitulo.dataset.id = placa;
-  subTitulo.textContent = `Placa: ${placa}`;
-  containerTituloModalVeiculos.appendChild(subTitulo);
+	let subTitulo = document.createElement('h5');
+	let placa = element.placa;
+	subTitulo.id = 'subTitulo';
+	subTitulo.dataset.id = placa;
+	subTitulo.dataset.lat =element.lat;
+	subTitulo.dataset.lng=element.lng;
+	subTitulo.textContent = `Placa: ${placa}`;
+	containerTituloModalVeiculos.appendChild(subTitulo);
 
-  let botoes = {
-      mostrar: {
-          classe: "btn-success text-white",
-          texto: '<i class="fa fa-print" aria-hidden="true"></i>',
-          callback: sendMessage
-      },
-      excluir: {
-          classe: "btn-danger text-white",
-          texto: '<i class="fa fa-print" aria-hidden="true"></i>',
-        //   callback: enviarMensagemWebSocket
-      }
-  };
+	// Criar elemento para exibir o endereço e adicionar o texto do endereço
+	let enderecoH6 = document.createElement('h6');
+	enderecoH6.id = 'enderecoH6';  // Corrige o id para string
+	enderecoH6.textContent = `Ultima Localização : ${endereco}`;  // Define o endereço como texto
+	containerTituloModalVeiculos.appendChild(enderecoH6);
 
-  if(element.jobs){
-    popula_tbody("tbodyDocumentos", element.jobs, botoes, false);
-  }
+	let botoes = {
+		mostrar: {
+			classe: "btn-success text-white",
+			texto: '<i class="fa fa-print" aria-hidden="true"></i>',
+			callback: sendMessage
+		},
+		excluir: {
+			classe: "btn-danger text-white",
+			texto: '<i class="fa fa-print" aria-hidden="true"></i>',
+			// callback: enviarMensagemWebSocket
+		}
+	};
 
-  openModal('modalPlanejamentoVeiculos');
+	if (element.jobs) {
+		popula_tbody("tbodyDocumentos", element.jobs, botoes, false);
+	}
+
+	openModal('modalPlanejamentoVeiculos');
 };

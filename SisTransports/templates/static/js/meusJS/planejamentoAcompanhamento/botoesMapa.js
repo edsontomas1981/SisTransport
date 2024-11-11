@@ -82,12 +82,10 @@ btnSalvaIntinerario.addEventListener('click', () => {
 
     // Se a lista de comparação não está vazia, verifica se as listas são iguais
     if (!listaEstaSalva()) {
-        alert('lista não esta vazia atualiza')
         cadastraIntinerario();
         return
     }
 
-    alert('não era pre ter chagado aqui')
     // Não faz nada somente avisa que o intinerario ja está salvo 
     msgAviso('Itinerário cadastrado com sucesso!');
 }); 
@@ -107,6 +105,18 @@ btnBuscaMotorista.addEventListener('click',()=>{
     buscaMotoristaModal('cpfMotoristaIntinerario','nomeMotoristaIntinerario')
 })
 
+const btnCriaRotasVeiculos = async ()=>{
+    let subtitulo = document.getElementById('subTitulo')
+    const lat = parseFloat(subtitulo.dataset.lat);
+    const lng = parseFloat(subtitulo.dataset.lng);
+
+    semaforo.origem.lat=lat;
+    semaforo.origem.lng=lng;
+
+    stateMapa.estado = 'addRota'
+    closeModal()
+    msgAlerta('Agora para continuar, escolha o destino no mapa. Assim, podemos calcular a melhor rota para você.')
+}
 
 // const btnGerarRotasAutomaticas = document.getElementById('gerarRotasAutomaticas')
 // btnGerarRotasAutomaticas.addEventListener('click',async ()=>{

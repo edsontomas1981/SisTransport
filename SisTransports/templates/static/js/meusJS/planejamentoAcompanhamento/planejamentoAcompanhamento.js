@@ -3,7 +3,7 @@ var matriz = {lat:-23.47337308, lng:-46.47320867}
 var semaforo = {origem:{lat:null,lng:null,idDtc:null},
                 destino:{lat:null,lng:null,idDtc:null}}
 
-var stateMapa = {estado:null}
+var stateMapa = {estado:null,veiculos:0}
 
 var listaLocais = []
 var listaComparacaoListaLocais = []
@@ -16,7 +16,7 @@ const iconePreto = "../../static/images/mapasIcones/check.png"
 const caminhao = "../../static/images/mapasIcones/caminhao2.png"
 const armazem = "../../static/images/mapasIcones/armazem.png"
 const local = "../../static/images/mapasIcones/loja.png"
-const iconeSize= [20, 20] // [largura, altura] do ícone em pixels
+const iconeSize= [25, 25] // [largura, altura] do ícone em pixels
 
 
 const limpaContainers = (container)=>{
@@ -77,6 +77,26 @@ const verificaEstado = async(dados)=>{
             mostrarInformacoesDetalhadas(dados)
             break;
         case "addRota":
+            selecionaDestino(dados)
+            addRota()
+            limpaSemaforo()
+            resetState()
+            break;
+        case "selecionandoLocais":
+            msgAviso(`selecionando locais dados ${dados.idDtc}`)
+            selecionaLocal(dados)
+            break;
+        default:
+            break;
+    }
+}
+
+const verificaEstadoVeiculo = async(dados)=>{
+    switch (stateMapa.veiculos) {
+        case 0:
+            constroeModalVeiculosPlanejamento(dados)
+            break;
+        case 1:
             selecionaDestino(dados)
             addRota()
             limpaSemaforo()
