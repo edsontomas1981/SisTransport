@@ -18,7 +18,6 @@ function sendMessage(message = 'get_active_users') {
 }
 
 const constroeModalVeiculosPlanejamento = async (element) => {
-	console.log(element);
 
 	let endereco = await transformaCoordenadasEmEndereco({lat: element.lat, lng: element.lng});
 	let containerTituloModalVeiculos = document.getElementById("modalVeiculoId");

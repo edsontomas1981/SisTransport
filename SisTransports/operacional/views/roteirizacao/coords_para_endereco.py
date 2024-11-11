@@ -3,6 +3,7 @@ from django.http import JsonResponse
 from django.views.decorators.http import require_http_methods
 import json
 import requests
+from Classes.utils import imprimirJsonTerminal
 
 @login_required(login_url='/auth/entrar/')
 @require_http_methods(["POST"])
@@ -42,11 +43,28 @@ def coords_para_endereco(request):
                 f"{api_url}?api_key={headers['Authorization']}&point.lat={lat}&point.lon={lng}&size=1"
             )
 
+            imprimirJsonTerminal(response)
+
             if response.status_code == 200:
                 data = response.json()
                 if data['features']:
-                    endereco = data['features'][0]['properties']['label']
-                    enderecos.append({'coordenadas': coord, 'endereco': endereco})
+                    # Extrair o endereço completo
+                    endereco_completo = f"""{data['features'][0]['properties'].get('name', 'Endereço não encontrado')}-{data['features'][0]['properties'].get('neighbourhood', 'Bairro não encontrado')}-{data['features'][0]['properties'].get('locality', 'Cidade não encontrado')}-{data['features'][0]['properties'].get('region', 'UF não encontrado')}-{data['features'][0]['properties'].get('country_a', 'País não encontrado')}"""
+                    # endereco_completo = data['features'][0]['properties'].get('label', 'Endereço não encontrado')
+                    cidade = None
+                    bairro = None
+
+                    # Tentar localizar cidade e bairro com verificações de existência
+                    address = data['features'][0]['properties'].get('address', {})
+                    cidade = address.get('city', 'Cidade não encontrada')
+                    bairro = address.get('suburb', 'Bairro não encontrado')
+
+                    enderecos.append({
+                        'coordenadas': coord,
+                        'endereco': endereco_completo,
+                        'cidade': cidade,
+                        'bairro': bairro
+                    })
                 else:
                     enderecos.append({'coordenadas': coord, 'endereco': 'Endereço não encontrado'})
             else:

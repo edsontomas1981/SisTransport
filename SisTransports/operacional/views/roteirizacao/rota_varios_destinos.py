@@ -50,6 +50,7 @@ def rotas_varios_destinos(request):
         response = requests.post(api_url, headers=headers, json=body)
 
         response_data = response.json()
+        
 
         # Sua string codificada
         encoded_geometry = response_data.get('routes')[0].get('geometry')

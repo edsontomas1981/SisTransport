@@ -1221,6 +1221,7 @@ const transformaCoordenadasEmEndereco=async (coordenadas)=>{
   const url = "/operacional/api/coords_para_endereco/";
   const resultado = await connEndpoint(url,{'coordenadas':coordenadas});
   // const resultado = await apiService.postData(url, {'coordenadas':coordenadas});
+  console.log(resultado)
   return resultado.enderecos[0].endereco
 }
 

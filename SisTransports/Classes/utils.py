@@ -4,6 +4,8 @@
 from termcolor import colored
 from datetime import datetime, date
 import re
+import json
+
 
 def checaCampos(request, **kwargs):
     camposVazios = []
@@ -241,3 +243,20 @@ def calculo_distancia_coordenadas_haversine(ponto_inicial_lat, ponto_inicial_lng
     distance = R * c
 
     return distance
+
+def imprimirJsonTerminal(response):
+    """
+    Imprime o conteúdo de uma resposta JSON de maneira formatada no terminal.
+
+    Parâmetros:
+    - response: objeto de resposta (normalmente de requests) que contém JSON
+
+    Exemplo de uso:
+        response = requests.get('sua_url_aqui')
+        imprimirJsonTerminal(response)
+    """
+    try:
+        # Obtem o JSON da resposta e imprime formatado
+        print(json.dumps(response.json(), indent=4, ensure_ascii=False))
+    except json.JSONDecodeError:
+        print("Erro: A resposta não contém um JSON válido.")
