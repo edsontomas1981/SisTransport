@@ -3,7 +3,7 @@ from Classes.utils import verificaCamposObrigatorios,toFloat
 from Classes.utils import checkBox,dprint,dpprint
 from operacional.classes.rotas import Rota
 from datetime import datetime  # Adicione esta linha para importar a classe datetime
-
+from operacional.models.coleta import Coleta
 
 class Dtc:
     def __init__(self):
@@ -131,3 +131,33 @@ class Dtc:
     
     def to_dict(self):
         return self.dtc.to_dict()
+    
+
+    @staticmethod
+    def buscar_dtc_por_numero_coleta(numero_coleta):
+        """
+        Busca um DTC pelo número da coleta.
+
+        Args:
+            numero_coleta (str): O número da coleta.
+
+        Returns:
+            ClsDtc: O DTC correspondente ao número da coleta, se existir.
+            None: Caso não encontre nenhuma coleta ou DTC.
+
+        Raises:
+            ValueError: Se nenhum DTC for encontrado para a coleta.
+        """
+        try:
+
+            # Buscar o DTC associado à coleta
+            dtc = ClsDtc.objects.filter(coleta_fk=numero_coleta).first()
+            if dtc:
+                return dtc
+            else:
+
+                return None
+                # raise ValueError(f"Nenhum DTC encontrado para a coleta com número {numero_coleta}.")
+        
+        except Coleta.DoesNotExist:
+            raise ValueError(f"Nenhuma coleta encontrada com o número {numero_coleta}.")

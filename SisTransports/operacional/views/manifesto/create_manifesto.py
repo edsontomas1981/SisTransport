@@ -41,8 +41,6 @@ def create_manifesto(request):
         dcto_manifesto = ManifestoManager.obtem_documentos_manifesto(manifesto.id)
         return JsonResponse({'status': 200,'manifesto':manifesto.to_dict(),'documentos':dcto_manifesto})
     
-
-
 def prepare_data(data):
     rota = Rota()
     rota.readRota(data.get('rotasManifesto'))

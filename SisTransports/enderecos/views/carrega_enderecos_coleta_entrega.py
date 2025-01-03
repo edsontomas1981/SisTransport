@@ -3,16 +3,21 @@ from operacional.classes.cte import Cte
 from Classes.BaseView import ViewBase
 from django.http import JsonResponse, HttpResponseBadRequest, HttpResponseServerError
 import random
+from enderecos.classes.seleciona_coletas_mapa import SelecionaEnderecosEntregaColeta
+
 
 
 class CarregaEnderecosColetaEntrega(ViewBase, View):
     def get(self, request, *args, **kwargs):
         dados = self.process_request_data(request)
-        pontos_atendimento = carrega_coordenadas_pontos_atendimento()
+
+        pontos_instance = SelecionaEnderecosEntregaColeta()
+        pontos_ativos = pontos_instance.select_pontos_de_atendimento()
+        pontos_atendimento = pontos_ativos
+        
+        # pontos_atendimento = carrega_coordenadas_pontos_atendimento()
         return JsonResponse({'success': True,'pontos_atendimento':pontos_atendimento}, status=201)
     
-
-
 def carrega_coordenadas_pontos_atendimento():
     # Função para gerar coordenadas aleatórias dentro de um intervalo para São Paulo e região metropolitana
     def coordenadas_aleatorias(lat_centro, lng_centro, deslocamento=0.05):

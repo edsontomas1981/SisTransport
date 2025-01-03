@@ -68,7 +68,12 @@ class Nota_fiscal_CRUD:
         nfs = self.list_by_dtc(id_dtc)
         lista_nfs = [nf.to_dict() for nf in nfs]
         return lista_nfs
-
+    
+    @staticmethod
+    def get_notas_por_id_dtc(id_dtc):
+        nfs = MdlNotaFiscal.objects.filter(dtc_fk=id_dtc)
+        return nfs
+    
     def read_by_id(self, nota_id):
         try:
             self.obj_nota_fiscal = MdlNotaFiscal.objects.get(id=nota_id)

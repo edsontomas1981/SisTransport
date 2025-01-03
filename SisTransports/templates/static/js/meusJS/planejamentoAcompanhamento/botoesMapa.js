@@ -1,3 +1,5 @@
+
+
 let btnResetMapa = document.getElementById('btnResetMapa')
 btnResetMapa.addEventListener('click',()=>{
     let centroMapa = document.getElementById('selectFilial')
@@ -51,40 +53,62 @@ btnHabilitaCriacaoIntinerario.addEventListener('click', async () => {
 
 // Botão de salvar itinerário
 const btnSalvaIntinerario = document.getElementById('btnSalvaIntinerario');
-btnSalvaIntinerario.addEventListener('click', () => {
+btnSalvaIntinerario.addEventListener('click', async() => {
 
-    const camposObrigatorios = ['placaPainelIntinerario','modeloPainelIntinerario','cpfMotoristaIntinerario','nomeMotoristaIntinerario']
+    const camposObrigatorios = ['placaPainelIntinerario','modeloPainelIntinerario',
+                                'cpfMotoristaIntinerario','nomeMotoristaIntinerario', 
+                                'dataInicioPainelIntinerario','dataFimPainelIntinerario', 
+                                'painelIntinerarioRotas','btnSalvaIntinerario']
+
     let dadosForm = obterDadosDoFormulario('frmPainelIntinerario')
-    
-    console.log(validarCamposObrigatorios(dadosForm,camposObrigatorios).length)
-    
+
     if(validarCamposObrigatorios(dadosForm,camposObrigatorios).length > 0){
         msgAviso('Por favor, preencha os campos destacados em vermelho para continuar.');
         return
     }
 
-    
-    if (listaLocais.length === 0) {
-        msgAviso('Você precisa selecionar pelo menos um ponto de atendimento para continuar.');
-        return;
+    dados = {'emissorMdfe':dadosForm.painelIntinerarioEmissor,'dtInicioManif':dadosForm.dataInicioPainelIntinerario,
+            'dtPrevisaoChegada':dadosForm.dataFimPainelIntinerario,'rotasManifesto':dadosForm.painelIntinerarioRotas}
+
+    let response = await connEndpoint('/operacional/create_manifesto/', dados);
+
+    switch (response.status) {
+        case 200:
+            addMotoristaManifesto(dadosForm.cpfMotoristaIntinerario,response.manifesto.id)
+            addVeiculoManifesto(dadosForm.placaPainelIntinerario,response.manifesto.id)
+            break;
+        default:
+            break;
     }
+
+
+    console.log(response)
+    
+
+
+
+
+
+    // if (listaLocais.length === 0) {
+    //     msgAviso('Você precisa selecionar pelo menos um ponto de atendimento para continuar.');
+    //     return;
+    // }
 
     // Verifica se a lista de comparação está vazia
-    const listaEstaVazia = listaComparacaoListaLocais.length === 0;
+    // const listaEstaVazia = listaComparacaoListaLocais.length === 0;
     
-    if (listaEstaVazia) {
-        alert('lista esta vazia cadastre')
-        // Se a lista de comparação está vazia, cadastra o itinerário
-        cadastraIntinerario();
-        return
-    } 
+    // if (listaEstaVazia) {
+    //     // Se a lista de comparação está vazia, cadastra o itinerário
+    //     cadastraIntinerario();
+    //     return
+    // } 
 
 
-    // Se a lista de comparação não está vazia, verifica se as listas são iguais
-    if (!listaEstaSalva()) {
-        cadastraIntinerario();
-        return
-    }
+    // // Se a lista de comparação não está vazia, verifica se as listas são iguais
+    // if (!listaEstaSalva()) {
+    //     cadastraIntinerario();
+    //     return
+    // }
 
     // Não faz nada somente avisa que o intinerario ja está salvo 
     msgAviso('Itinerário cadastrado com sucesso!');

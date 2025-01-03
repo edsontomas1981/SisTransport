@@ -28,7 +28,6 @@ const selecionaLocal = async (dados) => {
         callback: removePontoIntinerario
         }
       }
-
     // Aguarda a confirmação antes de continuar
     if (await(msgConfirmacao('Deseja Selecionar o Destino Abaixo'))){
 
@@ -59,6 +58,7 @@ const limpaSemaforo = ()=>{
     semaforo.origem.lng = null
     semaforo.origem.idDtc = null
 }
+
 
 const selecionaOrigem =(element)=> {
     stateMapa.estado = "addRota"
@@ -96,7 +96,7 @@ const gerarRotaOrigemDestino= async (element)=> {
 // Função para mostrar informações detalhadas
 const mostrarInformacoesDetalhadas=(dados)=> {
 
-    // Implemente a lógica para exibir informações detalhadas
+        // Implemente a lógica para exibir informações detalhadas
     let tabela = `
     <div class="row">
         <div class="col-sm-12">
@@ -107,19 +107,19 @@ const mostrarInformacoesDetalhadas=(dados)=> {
             </tr>
             <tr>
             <td style="text-align: left;"><strong>Data:</strong></td>
-            <td style="text-align: left;">17/10/2007</td>
+            <td style="text-align: left;">${formataDataPtBr(formataData(dados.data))}</td>
             </tr>
             <tr>
             <td style="text-align: left;"><strong>Romaneio:</strong></td>
-            <td style="text-align: left;">${dados.status}</td>
+            <td style="text-align: left;">${(() => dados.romaneio ? dados.romaneio.toUpperCase() : 'EM ABERTO')()}</td>
             </tr>
             <tr>
             <td style="text-align: left;"><strong>Veículo:</strong></td>
-            <td style="text-align: left;">${dados.placa}</td>
+            <td style="text-align: left;">${(() => dados.placa ? dados.placa.toUpperCase() : 'EM ABERTO')()}</td>
             </tr>
             <tr>
             <td style="text-align: left;"><strong>Motorista:</strong></td>
-            <td style="text-align: left;">${dados.motorista}</td>
+            <td style="text-align: left;">${(() => dados.motorista ? dados.motorista.toUpperCase() : 'EM ABERTO')()}</td>
             </tr>
             <tr>
             <td style="text-align: left;"><strong>Volumes:</strong></td>
@@ -134,8 +134,12 @@ const mostrarInformacoesDetalhadas=(dados)=> {
             <td style="text-align: left;">${dados.bairro}</td>
             </tr>
             <tr>
+            <td style="text-align: left;"><strong>Tipo Atendimento:</strong></td>
+            <td style="text-align: left;">${dados.tipo_atendimento == 1 ? 'COLETA' : 'ENTREGA'}</td>
+            </tr>
+            <tr>
             <td style="text-align: left;"><strong>Status:</strong></td>
-            <td style="text-align: left;">${dados.status}</td>
+            <td style="text-align: left;">${formataStatus(dados.status)}</td>
             </tr>
         </table>
         </div> 
@@ -147,14 +151,21 @@ const mostrarInformacoesDetalhadas=(dados)=> {
                 <div class="badge badge-warning" style="width:100%">Média</div>
                 </div>
                 `
-    let idColeta = `<span>Pré Dtc Nº : </span><span id="numDocumento"> ${dados.idDtc}</span>`
+    let idColeta = `<span>PRÉ DTC Nº : </span><span id="numDocumento"> ${dados.idDtc} </span>`
+    let nomeRemetente = `<span>REMETENTE : </span><span id="numDocumento"> ${truncateString(dados.remetente,25).toUpperCase()} </span>`
+    let nomeDestinatario = `<span>DESTINATÁRIO : </span><span id="numDocumento"> ${truncateString(dados.destinatario,25).toUpperCase()} </span>`
     let modalColetaId = document.getElementById("modalColetaId")
+    let modalNomeDestinatario = document.getElementById("modalNomeDestinatario")
+
     let tabelaColetas = document.getElementById("tabelaColetas")
     let acoesColetas = document.getElementById("acoesColetas")
     let botoesColetas = document.getElementById("botoesColetas")
     tabelaColetas.innerHTML = tabela
     acoesColetas.innerHTML = acoes
     modalColetaId.innerHTML = idColeta
+    modalNomeRemetente.innerHTML =nomeRemetente
+    modalNomeDestinatario.innerHTML =nomeDestinatario
+
 
     // Exemplo de adicionar um botão dinamicamente com um evento de clique
     const btnGeraPerimetro = document.createElement('button');

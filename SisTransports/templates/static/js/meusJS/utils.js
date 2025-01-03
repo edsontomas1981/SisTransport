@@ -1,3 +1,6 @@
+var cnpjBuscaParceiro;
+var razaoBuscaParceiro;
+
 class Conexao {
   constructor(url, data) {
     this.url = url;
@@ -344,7 +347,9 @@ const getRotas = async () => {
   let conexao = new Conexao("/rotas/readRotas/", data);
   try {
     const result = await conexao.sendPostRequest();
+    console.log(result)
     return result;
+
     // Imprime a resposta JSON da solicitação POST
   } catch (error) {
     console.error(error); // Imprime a mensagem de erro
@@ -788,8 +793,7 @@ const hideLoading = () => {
   loadingElement.style.display = "none"; // Mostra o loading
 };
 
-var cnpjBuscaParceiro;
-var razaoBuscaParceiro;
+
 
 /**
  * Função para buscar parceiro por um trecho do CNPJ ou Razão Social.
@@ -1237,7 +1241,53 @@ const criaRotaEntreDoisPontos=async (origem,destino)=>{
   }
 }
 
+const formataStatus = (status)=>{
 
+  switch (status) {
+    case 1:
 
+      return 'EM ABERTO'
+
+    case 2:
+
+      return 'EM ROTA'
+  
+    case 3:
+
+      return 'CANCELADA'
+  
+    default:
+      break;
+  }
+
+}
+
+const addMotoristaManifesto=async(cpf,idManifesto)=>{
+  let response  = await connEndpoint('/operacional/add_motorista_manifesto/', {'cpfMotorista':cpf,
+      'idManifesto':idManifesto});
+  return response
+}
+
+const addVeiculoManifesto = async(placa,idManifesto)=>{
+  let response  = await connEndpoint('/operacional/add_veiculo_manifesto/', {'placa':placa,
+    'idManifesto':idManifesto});
+  return response 
+}
+
+const addDocumentoManifesto = async(documento,manifesto)=>{
+      
+  let response = await connEndpoint('/operacional/add_dtc_manifesto/', {'idTipoDocumento': idTipoDocumento,
+                                                                                  'idDcto': numDcto.value,
+                                                                                  'idManifesto':idManifesto.textContent,
+                                                                                  'cmbTipoManifesto':cmbTipoManifesto});
+  if (parseInt(response.status) != 422){
+      populaTbodyDocumentos(response.documentos)
+      populaQtdeDocumentosBarraManifesto(response.documentos.length)
+      document.getElementById('numeroDocumento').value = ""
+      document.getElementById('numeroDocumento').focus()
+  }else{
+      msgErro('Não foi possível encontrar o documento. Verifique se os dados estão corretos e tente novamente.')
+  }
+}
 
 

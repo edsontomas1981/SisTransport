@@ -24,10 +24,10 @@ class Coleta (models.Model):
     uf=models.CharField(max_length=2,null=True)
     impresso=models.BooleanField(default=False)
 
-    lat = models.DecimalField(max_digits=9, decimal_places=8, null=True)  # 8 casas decimais
-    lng = models.DecimalField(max_digits=9, decimal_places=8, null=True)  # 8 casas decimais
+    lat = models.FloatField(null=True)
+    lng = models.FloatField(null=True)
 
-    status=models.CharField(max_length=30,null=True,default='Em aberto')
+    status=models.IntegerField(default=1)
     data_da_coleta = models.DateTimeField(null=True)
 
     def to_dict(self):
@@ -53,7 +53,9 @@ class Coleta (models.Model):
             'cidade':self.cidade,
             'uf':self.uf,
             'lat':self.lat,
-            'lat':self.lng,
+            'lng':self.lng,
+            'data':self.data_da_coleta,
+            'status':self.status
         }
     
     

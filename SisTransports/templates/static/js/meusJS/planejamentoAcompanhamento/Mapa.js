@@ -436,10 +436,10 @@ class MapaLeaflet {
 
         if(dadosMarcador.dadosIntinerario){
             // Carrega Dados ao marcador
-            marker.dados=dadosMarcador.dadosIntinerario
-            marker.dados.lat = dadosMarcador.lat
-            marker.dados.lng = dadosMarcador.lng
-            marker.dados.idDtc = dadosMarcador.idDtc
+            marker.dados = dadosMarcador.dadosIntinerario || "não informado";
+            marker.dados.lat = dadosMarcador.lat !== undefined ? dadosMarcador.lat : "não informado";
+            marker.dados.lng = dadosMarcador.lng !== undefined ? dadosMarcador.lng : "não informado";
+            marker.dados.idDtc = dadosMarcador.idDtc !== undefined ? dadosMarcador.idDtc : "não informado";
         }
 
         if(dadosMarcador.dados_veiculo){

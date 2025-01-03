@@ -7,6 +7,15 @@ from operacional.models.nota_fiscal import Nota_fiscal
 class Cte():
     def __init__ (self):
         self.obj_cte = Mdl_cte()
+
+    @staticmethod
+    def obtem_ctes_em_aberto():
+        try:
+            ctes = Mdl_cte.objects.filter(status=1)
+            return ctes
+        except:
+            return False
+
     @staticmethod
     def verificar_campos_obrigatorios(dados, campos_obrigatorios):
         campos_faltantes = []

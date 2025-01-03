@@ -2,6 +2,12 @@ document.addEventListener('DOMContentLoaded',()=>{
   let txtNumManifesto=document.getElementById('txtIdBuscaManifesto')
   let btnBuscaManifesto = document.getElementById('btnBuscarManifestoId')
 
+  const populaTbodyDocumentos =(response)=>{
+    const documento = prepareDataToTableManifesto(response);
+    popula_tbody('tableDtcManifesto', documento, botoesManifesto, false);
+  }
+
+
   btnBuscaManifesto.addEventListener('click',async()=>{
     limpaDadosManifesto()
     limpaBarraManifesto()
@@ -16,7 +22,7 @@ document.addEventListener('DOMContentLoaded',()=>{
       populaDadosBarraManifesto(response)
       populaTbodyMotorista(response.manifesto.motoristas)
       populaVeiculosManifesto(response.veiculos)
-      populaTbodyDocumentos(response.documentos)
+      // populaTbodyDocumentos(response.documentos)
       if (response.manifesto.contrato_fk){
         populaContratoFrete(response.manifesto.contrato_fk)
       }

@@ -6,7 +6,7 @@ btnSalvaManifesto.addEventListener('click',async ()=>{
 
     dados.idManifesto = document.getElementById('spanNumManifesto').textContent
 
-    response = await connEndpoint('/operacional/create_manifesto/', dados);
+    let response = await connEndpoint('/operacional/create_manifesto/', dados);
 
     switch (response.status) {
         case 200:

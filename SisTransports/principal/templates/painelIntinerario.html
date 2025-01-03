@@ -1,19 +1,33 @@
 <!-- Off-canvas -->
 <div id="offcanvas" class="custom-offcanvas mt-4">
+  <form id="frmPainelIntinerario">
   <div class="row">
 
-    <div class="col-sm-12 d-flex mt-5 ml-2">
-      <div class="input-group mb-2 justify-content-end">
-        <input type="text" class="form-control form-control-sm" id="idManifestoPorIntinerario" disabled>
+    <div class="col-sm-12 d-flex mt-5 ml-2 row">
+      <div class="mb-2 col-sm-4 justify-content-end">
+        <label for="dataInicioPainelIntinerario">Data Inicio</label>
+        <input type="date" class="form-control form-control-sm" id="dataInicioPainelIntinerario">
+      </div>
+      <div class="mb-2 col-sm-4 justify-content-end">
+        <label for="dataFimPainelIntinerario">Data Fim</label>
+        <input type="date" class="form-control form-control-sm" id="dataFimPainelIntinerario">
+      </div>
+      <div class="mb-2 col-sm-4 justify-content-end">
+        <label for="painelIntinerarioRotas">Rota</label>
+        <select id="painelIntinerarioRotas" class="form-select">
+          <option selected>Rota</option>
+        </select>
+      </div>
+      <div class="input-group mb-2 col-sm-12 justify-content-end">
+        <input type="text" class="form-control form-control-sm" id="idManifestoPorIntinerario" placeholder="Nº Manifesto" disabled>
+        <select id="painelIntinerarioEmissor" class="form-select form-select-sm" placeholder="Emissor">
+        </select>
         <button type="button" class="btn btn-success btn-rounded btn-icon" id="btnSalvaIntinerario" >            
           <i class="ti-save"></i>
         </button>
         <button type="button" class="btn btn-info btn-rounded btn-icon" id="tracarRota" onclick="tracarRota()">            
           <i class="ti-location-pin"></i>
         </button>
-        <!-- <button type="button" class="btn btn-warning btn-rounded btn-icon" id="gerarRotasAutomaticas">            
-          <i class="ti-vector"></i>
-        </button>         -->
         <button type="button" 
           class="btn btn-danger btn-rounded btn-icon pr-2" 
           onclick="fecharPainelIntinerario()">

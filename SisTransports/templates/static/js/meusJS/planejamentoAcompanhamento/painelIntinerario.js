@@ -1,5 +1,8 @@
 // Função para abrir e fechar o off-canvas
-const abrirPainelIntinerario = () => {
+const abrirPainelIntinerario = async() => {
+    popularSelectEmissor('painelIntinerarioEmissor')
+    let response = await getRotas()
+    populaRotaGeral(response,'painelIntinerarioRotas')
     const offcanvas = document.getElementById("offcanvas");
     offcanvas.classList.add("open");  // Abre o painel, adicionando a classe 'open'
 };

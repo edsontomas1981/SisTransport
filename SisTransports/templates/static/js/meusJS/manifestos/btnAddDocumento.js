@@ -1,5 +1,10 @@
-let btnAddDocumento = document.getElementById('btnAddDocumento')
+let btnAddDocumento1 = document.getElementById('btnAddDocumento')
 let listaDocumentos = []
+
+const populaTbodyDocumentos =(response)=>{
+    const documento = prepareDataToTableManifesto(response);
+    popula_tbody('tableDtcManifesto', documento, botoesManifesto, false);
+}
 
 const removerDocumentoPorId=async(id)=> {
     let idManifesto = document.getElementById('spanNumManifesto')
@@ -21,7 +26,7 @@ let botoesManifesto={
       }
   };
 
-btnAddDocumento.addEventListener('click', async () => {
+  btnAddDocumento1.addEventListener('click', async () => {
 
     let numDcto = document.getElementById('numeroDocumento')
     let idManifesto = document.getElementById('spanNumManifesto')
@@ -58,10 +63,7 @@ btnAddDocumento.addEventListener('click', async () => {
     }
 });
 
-const populaTbodyDocumentos =(response)=>{
-    const documento = prepareDataToTableManifesto(response);
-    popula_tbody('tableDtcManifesto', documento, botoesManifesto, false);
-}
+
 
 const getDocumento = async()=>{
     let response
@@ -99,6 +101,8 @@ const prepareDataToTableManifesto = (response) => {
         return data;
     });
 }
+
+
 
 
 

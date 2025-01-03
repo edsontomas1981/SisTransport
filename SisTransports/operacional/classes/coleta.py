@@ -72,3 +72,17 @@ class Coleta():
                 dtc.coleta_fk=None
                 dtc.save()
                 self.coleta.delete()
+
+    def getColetasAtivas(self):
+        """
+        Retorna todas as coletas cujo status seja igual a 1.
+        
+        Returns:
+            QuerySet: Uma lista de objetos MdlColeta com status = 1.
+        """
+        try:
+            coletas_ativas = MdlColeta.objects.filter(status=1)
+            return coletas_ativas
+        except Exception as e:
+            dprint(f"Erro ao buscar coletas ativas: {e}")
+            return []

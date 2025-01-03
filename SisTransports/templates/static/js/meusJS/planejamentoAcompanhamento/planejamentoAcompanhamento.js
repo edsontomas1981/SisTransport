@@ -71,7 +71,6 @@ const resetState = ()=>{
 }
 
 const verificaEstado = async(dados)=>{
-    
     switch (stateMapa.estado) {
         case null:
             mostrarInformacoesDetalhadas(dados)
@@ -195,7 +194,7 @@ document.addEventListener('DOMContentLoaded', async() => {
 
     mapa.adicionarPoligonoFromData(polygonCoordinates,'black');
 
-    mapa.adicionarMarcadorComIcone(-23.47337308,-46.47320867,"Matriz",armazem,iconeSize,1,verificaEstado)
+    mapa.adicionarMarcadorComIcone(-23.47337308,-46.47320867,"Matriz",armazem,iconeSize,1,{},verificaEstado)
 
     // let marcador=mapa.selecionarMarcador('idDtc',848004)
     // let novaLat = marcador.dados.lat
