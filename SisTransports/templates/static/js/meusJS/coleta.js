@@ -145,6 +145,8 @@ class Coleta {
           numeroContato:this.numeroContato
           };
   }
+
+
 }
 
 
@@ -160,7 +162,7 @@ $('#btnSalvaColeta').on('click', function(e) {
 
 $('#btnExcluiColeta').on('click', function(e) {
   
-  let confirmar =confirm('Tem certeza que deseja excluir esta coleta?\
+let confirmar =confirm('Tem certeza que deseja excluir esta coleta?\
 Esta ação é irreversível e todos os dados coletados serão perdidos.')
   if (confirmar){
     if ($('#numPed').val()!=''){
@@ -226,4 +228,15 @@ function completaColeta(response){
   $('#mercadoria').val(response.mercadoria)
   $('#horario').val(response.horario)
   $('#idColeta').val(response.id)
+}
+
+class NovaColeta {
+  async update_status_coleta(idColeta,status) {
+      const apiService = new ApiService();
+      const url = "/operacional/update_status_coleta/";
+      const dados = { id_coleta:idColeta, status:status };
+      // Enviando dados via POST e armazenando o resultado em uma variável
+      const resultadoPost = await apiService.postData(url, dados);
+      console.log(resultadoPost);
+  }
 }

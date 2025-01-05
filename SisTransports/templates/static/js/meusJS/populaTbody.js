@@ -188,7 +188,7 @@ const popula_tbody_paginacao = async (divParaNavegacao, id_tbody, dados, botoes 
  * });
  */
 
-const popula_tbody = (id_tbody, dicionario_dados, botoes = {},inicioChebox=true) => {
+const popula_tbody = (id_tbody, dicionario_dados, botoes = {}, inicioChebox = true, opcoesSelect = null) => {
 
   // Obtém a referência ao elemento tbody da tabela
   var tbody = document.getElementById(id_tbody);
@@ -196,12 +196,11 @@ const popula_tbody = (id_tbody, dicionario_dados, botoes = {},inicioChebox=true)
   // Limpa o conteúdo atual da tabela
   limpa_tabelas(id_tbody);
 
-
   // Itera sobre os dados para criar linhas na tabela
   dicionario_dados.forEach(element => {
     var tr = document.createElement("tr");
     tr.setAttribute('data-id', element.id);
-    if(inicioChebox){
+    if (inicioChebox) {
       // Adiciona o checkbox como o primeiro campo
       var tdCheckbox = document.createElement("td");
       var checkbox = document.createElement("input");
@@ -209,7 +208,7 @@ const popula_tbody = (id_tbody, dicionario_dados, botoes = {},inicioChebox=true)
       checkbox.name = "selecao";
       tdCheckbox.appendChild(checkbox);
       tr.appendChild(tdCheckbox);
-    } 
+    }
 
     // Loop através do dicionário de dados para criar as células <td> dinamicamente
     for (const chave in element) {
@@ -218,6 +217,24 @@ const popula_tbody = (id_tbody, dicionario_dados, botoes = {},inicioChebox=true)
         td.textContent = element[chave];
         tr.appendChild(td);
       }
+    }
+
+    // Adiciona coluna com <select> se opcoesSelect estiver definido
+    if (opcoesSelect) {
+      var tdSelect = document.createElement("td");
+      var select = document.createElement("select");
+
+      select.className = "form-select form-select-sm";
+
+      opcoesSelect.forEach(opcao => {
+        var option = document.createElement("option");
+        option.value = opcao.value;
+        option.textContent = opcao.texto;
+        select.appendChild(option);
+      });
+
+      tdSelect.appendChild(select);
+      tr.appendChild(tdSelect);
     }
 
     // Adiciona botões personalizados se existirem na hash 'botoes'
@@ -230,10 +247,10 @@ const popula_tbody = (id_tbody, dicionario_dados, botoes = {},inicioChebox=true)
         btn.id = element.id;
         btn.className = "btn btn-sm " + botoes[nomeBotao].classe;
         btn.innerHTML = botoes[nomeBotao].texto;
-  
+
         if (botoes[nomeBotao].callback) {
           // Use uma função anônima para passar o ID
-          btn.onclick = function() {
+          btn.onclick = function () {
             // Chame a função de callback passando o ID
             botoes[nomeBotao].callback(element.id);
           };
@@ -245,6 +262,7 @@ const popula_tbody = (id_tbody, dicionario_dados, botoes = {},inicioChebox=true)
     tbody.appendChild(tr);
   });
 };
+
 
 /**
  * Preenche o corpo de uma tabela com dados paginados e adiciona controles de paginação.

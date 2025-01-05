@@ -4,7 +4,13 @@ document.addEventListener('DOMContentLoaded',()=>{
 
   const populaTbodyDocumentos =(response)=>{
     const documento = prepareDataToTableManifesto(response);
-    popula_tbody('tableDtcManifesto', documento, botoesManifesto, false);
+    const opcoesSelect = [
+      { value: "1", texto: "Cancelar" },
+      { value: "2", texto: "Em Rota" },
+      { value: "3", texto: "Entregue" },
+    ];
+
+    popula_tbody('tableDtcManifesto', documento, botoesManifesto, false,opcoesSelect);
   }
 
 
@@ -22,7 +28,7 @@ document.addEventListener('DOMContentLoaded',()=>{
       populaDadosBarraManifesto(response)
       populaTbodyMotorista(response.manifesto.motoristas)
       populaVeiculosManifesto(response.veiculos)
-      // populaTbodyDocumentos(response.documentos)
+      populaTbodyDocumentos(response.documentos)
       if (response.manifesto.contrato_fk){
         populaContratoFrete(response.manifesto.contrato_fk)
       }

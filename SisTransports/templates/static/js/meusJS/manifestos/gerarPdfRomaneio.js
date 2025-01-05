@@ -28,9 +28,9 @@ const geraDadosEmissor = (dados)=>{
     jsonDadosCabecalhoRomaneio.foneEmissor = dados?.manifesto?.emissor_fk?.telefone ?? ''; // Verificações adicionadas
     
 }
-const handlerDadosRomaneio = async()=>{
+const handlerDadosRomaneio = async(idRomaneio)=>{
     let dadosRomaneio = []
-    let idManifesto = document.getElementById('spanNumManifesto').textContent
+    let idManifesto = idRomaneio
     let response  = await connEndpoint('/operacional/get_manifesto_by_num/', {'numManifesto':idManifesto});
 
     geraDadosEmissor(response)
@@ -91,12 +91,11 @@ const handlerDadosRomaneio = async()=>{
 }
 
 let btnGeraRomaneio = document.getElementById("gerarPdfRomaneio")
-
 btnGeraRomaneio.addEventListener("click",()=>{
-    geraPdfRomaneio();
+    geraPdfRomaneio(document.getElementById('spanNumManifesto').textContent);
 })
 
-const geraPdfRomaneio = async() => {
+async function geraPdfRomaneio (idRomaneio) {
 
     const doc = new jsPDF();
     
@@ -183,7 +182,7 @@ const addTitulo = ()=>{    // Insira a imagem dentro do retângulo
     doc.line(2, 33, 205, 33);
     doc.text(`Nome Motorista: ${jsonDadosCabecalhoRomaneio.motorista}`, alinhaDireita, 41);}
     
-    let dadosRomaneio = await handlerDadosRomaneio()
+    let dadosRomaneio = await handlerDadosRomaneio(idRomaneio)
     let tamanhoTextWidth
 
     if(jsonDadosCabecalhoRomaneio.secundariaPlaca){

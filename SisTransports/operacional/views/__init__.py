@@ -26,6 +26,7 @@ from operacional.views.coleta.read_coletas_geral import read_coletas_geral
 from operacional.views.coleta.impressao_coletas import impressao_coletas
 from operacional.views.coleta.print_coletas import print_coletas
 from operacional.views.coleta.roteirizacao_coletas import roteirizacao_coletas
+from operacional.views.coleta.update_status_coleta import update_status_coleta
 
 from operacional.views.roteirizacao.proxy_openrouteservice import proxy_openrouteservice
 from operacional.views.roteirizacao.rota_varios_destinos import rotas_varios_destinos
@@ -87,6 +88,7 @@ from operacional.views.cte.delete_cte import delete_cte
 from operacional.views.cte.read_cte import read_cte_by_dtc
 from operacional.views.cte.get_cte_by_dtc import get_cte_by_dtc
 from operacional.views.cte.get_cte_chave_nfe import get_cte_chave_nfe
+from operacional.views.cte.update_status_cte import update_status_cte
 
 from operacional.views.cte.get_cte_id import get_cte_id
 

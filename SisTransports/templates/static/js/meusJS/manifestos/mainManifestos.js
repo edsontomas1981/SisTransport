@@ -125,7 +125,9 @@ const populaTbodyVeiculos = (veiculos)=>{
             texto: 'Apagar',
             callback: btnRemoveVeiculos
           }
-      };    
+      };  
+      
+
 
     popula_tbody('tbodyVeiculos',dadosParaTbodyVeiculos(veiculos),botoes,false)
 

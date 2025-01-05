@@ -1,6 +1,6 @@
-let btnAddDocumento = document.getElementById('btnAddDocumentoFatura')
+let btnAddDocumentoFatura = document.getElementById('btnAddDocumentoFatura')
 
-btnAddDocumento.addEventListener('click', async () => {
+btnAddDocumentoFatura.addEventListener('click', async () => {
 
     let botao = {
         editar: {

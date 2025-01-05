@@ -74,6 +74,8 @@ class SelecionaEnderecosEntregaColeta:
                                 'data': cte.dtc_fk.data_ultima_atualizacao or 'Não informado',
                                 'status': cte.status,
                                 'tipo_atendimento':2,
+                                'tipo_documento': 'cte',
+                                'id_documento': cte.id,
                             }
                         })
             
@@ -159,6 +161,8 @@ class SelecionaEnderecosEntregaColeta:
                 'data': coleta.get('data'),
                 'status': coleta.get('status'),
                 'tipo_atendimento':1,
+                'tipo_documento': 'coleta',
+                'id_documento': coleta.get('id')
             }
         }
 

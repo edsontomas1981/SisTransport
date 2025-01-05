@@ -1,7 +1,8 @@
 from operacional.models.coleta import Coleta  as MdlColeta
 from operacional.classes.dtc import Dtc
 from operacional.models.dtc import Dtc as ClsDtc
-from Classes.utils import dprint,dpprint,toFloat
+from Classes.utils import toFloat
+from django.core.exceptions import ObjectDoesNotExist
 
 class Coleta(): 
     def __init__(self):
@@ -84,5 +85,15 @@ class Coleta():
             coletas_ativas = MdlColeta.objects.filter(status=1)
             return coletas_ativas
         except Exception as e:
-            dprint(f"Erro ao buscar coletas ativas: {e}")
+            print(f"Erro ao buscar coletas ativas: {e}")
             return []
+    
+    @staticmethod
+    def update_status_coleta(id_coleta, status):
+        try:
+            coleta = MdlColeta.objects.get(id=id_coleta)
+            coleta.status = status
+            coleta.save()
+            return 200
+        except ObjectDoesNotExist:
+            return None

@@ -8,9 +8,9 @@ const abrirPainelIntinerario = async() => {
 };
 
 const fecharPainelIntinerario = async () => {
-
     const fechaPainel = ()=>{
     const offcanvas = document.getElementById("offcanvas");
+        document.getElementById('frmPainelIntinerario').reset()
         offcanvas.classList.remove("open");  // Fecha o painel, removendo a classe 'open'
     }
 
@@ -33,7 +33,6 @@ const fecharPainelIntinerario = async () => {
         return
     }
 
-    console.log(deepCompareArrays(listaLocais,listaComparacaoListaLocais))
     // Se forem iguais não houve alteração nenhuma e deve somente fechar
     if(deepCompareArrays(listaLocais,listaComparacaoListaLocais)){
         fechaPainel()
@@ -64,6 +63,8 @@ const fecharPainelIntinerario = async () => {
         stateMapa.estado = null
         return
     };
+
+
 }; 
 
 const resetaIcone = (idDtc)=>{
@@ -152,11 +153,19 @@ const limpaPainelIntinerario = async ()=>{
         resetaIcone(e)
     }
 
-    const populaTabelaIntinerarios = ()=>{
+function populaTabelaIntinerarios (){
+        let listaNova = []
+
+        listaLocais.forEach(element => {
+            listaNova.push({id:element.id,local:element.remetente,peso:element.peso})
+        });
+
+        console.log(listaNova)
+
         popula_tbody_paginacao(
             'paginacaoPainelIntinerario',
             'tabelaDoctosBody',
-            listaLocais,
+            listaNova,
             botao,
             1,
             20,
@@ -174,7 +183,6 @@ const limpaPainelIntinerario = async ()=>{
     }
 
     if(deepCompareArrays(listaLocais,listaComparacaoListaLocais)){
-        alert('sao iguais')
         populaTabelaIntinerarios()
         return
     }
@@ -214,7 +222,26 @@ const tracarRota = async ()=>{
     }
 }
 
+let btnTracarRota = document.getElementById('tracarRota')
+
+btnTracarRota.addEventListener('click',async ()=>{
+    if(listaLocais.length === 0){
+        msgAviso('Adicione ao menos um ponto de atendimento para traçar a rota.')
+        return
+    }
+    tracarRota()
+})
+
 const carregaMarcadores = ()=>{
    return mapa.getMarkers()
 }
 
+let btnImprimirIntinerario = document.getElementById('imprimirIntinerario')
+btnImprimirIntinerario.addEventListener('click',async ()=>{
+    if(listaLocais.length === 0){
+        msgAviso('Adicione ao menos um ponto de atendimento para impressão.')
+        return
+    }
+    handlerDadosRomaneio(document.getElementById('idManifestoPorIntinerario').value)
+    await geraPdfRomaneio(document.getElementById('idManifestoPorIntinerario').value);
+})          

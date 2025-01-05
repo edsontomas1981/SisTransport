@@ -1,10 +1,22 @@
 const selecionaLocal = async (dados) => {
 
     const populaTabelaIntinerarios = ()=>{
+        
+        let listaNova = []
+
+        listaLocais.forEach(element => {
+
+            console.log(element)
+
+            listaNova.push({id:element.id,local:element.nome,peso:element.peso})
+        });
+
+        console.log(listaNova)
+
         popula_tbody_paginacao(
             'paginacaoPainelIntinerario',
             'tabelaDoctosBody',
-            listaLocais,
+            listaNova,
             botao,
             1,
             20,
@@ -14,10 +26,23 @@ const selecionaLocal = async (dados) => {
     }
 
     const removePontoIntinerario = (e)=>{
+
+        // Encontra o elemento que será filtrado
+        let elementoFiltrado = listaLocais.find(item => item.id === e);
         // Filtra a lista para remover o item com o ID correspondente
         listaLocais = listaLocais.filter(item => item.id !== e);
+
+
+        if(elementoFiltrado.tipoDocumento == 'coleta'){
+            let coleta = new NovaColeta();
+            coleta.update_status_coleta(elementoFiltrado.idDocumento,1);
+        }
+        if(elementoFiltrado.tipoDocumento == 'cte'){
+            let cte = new Cte();
+            cte.update_status_cte(elementoFiltrado.idDocumento,1);
+        }
         populaTabelaIntinerarios()
-        populaTotaisIntinerario()
+        populaTotaisIntinerario() 
         resetaIcone(e)
     }
 
@@ -28,12 +53,33 @@ const selecionaLocal = async (dados) => {
         callback: removePontoIntinerario
         }
       }
+
+    if  (document.getElementById('idManifestoPorIntinerario').value == '') {
+        return msgAviso('Você precisa selecionar um manifesto para continuar.');
+    }
+
     // Aguarda a confirmação antes de continuar
-    if (await(msgConfirmacao('Deseja Selecionar o Destino Abaixo'))){
+    if (await(msgConfirmacao('Deseja Selecionar o Ponto de Atendimento?'))) {
 
         // Adiciona o local à lista se ele ainda não estiver presente
         if (!listaLocais.some(item => item.id === dados.id)) {
-            listaLocais.push({ id:dados.idDtc, nome: dados.nome, peso: dados.peso });
+            console.log(`Numero Dcto nº ${dados.id_documento} Tipo Dcto ${dados.tipo_documento}`)
+            listaLocais.push({ id:dados.idDtc, nome: truncateString(dados.remetente,10), 
+                peso: dados.peso,tipoDocumento:dados.tipo_documento, idDocumento:dados.id_documento,
+                idManifesto:document.getElementById('idManifestoPorIntinerario').value });
+
+            let response=await addDocumentoManifesto(3,dados.idDtc,document.getElementById('idManifestoPorIntinerario').value,1)
+            if(dados.tipo_documento == 'coleta'){
+                let coleta = new NovaColeta();
+                coleta.update_status_coleta(dados.id_documento,2);
+            }
+
+            if(dados.tipo_documento == 'cte'){
+                let cte = new Cte();
+                cte.update_status_cte(dados.id_documento,2);
+            }
+
+
         }
 
         exibirLocaisSelecionados(listaLocais);

@@ -1,9 +1,14 @@
-let btnAddDocumento1 = document.getElementById('btnAddDocumento')
+let btnAddDocumento = document.getElementById('btnAddDocumento')
 let listaDocumentos = []
 
 const populaTbodyDocumentos =(response)=>{
     const documento = prepareDataToTableManifesto(response);
-    popula_tbody('tableDtcManifesto', documento, botoesManifesto, false);
+    const opcoesSelect = [
+        { value: "1", texto: "Cancelar" },
+        { value: "2", texto: "Em Rota" },
+        { value: "3", texto: "Entregue" },
+      ];
+    popula_tbody('tableDtcManifesto', documento, botoesManifesto, false,opcoesSelect);
 }
 
 const removerDocumentoPorId=async(id)=> {
@@ -19,14 +24,19 @@ const removerDocumentoPorId=async(id)=> {
 }
 
 let botoesManifesto={
+    salvar: { 
+      classe: "btn-success text-white rounded",
+      texto:  '<i class="fa fa-check" aria-hidden="true"></i>',
+      // callback: removerDocumentoPorId
+    },
     excluir: { 
         classe: "btn-danger text-white rounded",
-        texto: 'Apagar',
+        texto: '<i class="fa fa-trash" aria-hidden="true"></i>',
         callback: removerDocumentoPorId
-      }
+      },
   };
 
-  btnAddDocumento1.addEventListener('click', async () => {
+  btnAddDocumento.addEventListener('click', async () => {
 
     let numDcto = document.getElementById('numeroDocumento')
     let idManifesto = document.getElementById('spanNumManifesto')

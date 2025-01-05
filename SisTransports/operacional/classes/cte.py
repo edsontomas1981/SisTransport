@@ -221,4 +221,14 @@ class Cte():
             cte.save()
         except ObjectDoesNotExist:
             return None
+        
+    @staticmethod
+    def update_status_cte(id_cte, status):
+        try:
+            cte = Mdl_cte.objects.get(id=id_cte)
+            cte.status = status
+            cte.save()
+            return 200
+        except ObjectDoesNotExist:
+            return None
 

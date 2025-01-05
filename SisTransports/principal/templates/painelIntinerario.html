@@ -1,32 +1,19 @@
-<!-- Off-canvas -->
-<div id="offcanvas" class="custom-offcanvas mt-4">
-  <form id="frmPainelIntinerario">
-  <div class="row">
+{% load static %}
 
-    <div class="col-sm-12 d-flex mt-5 ml-2 row">
-      <div class="mb-2 col-sm-4 justify-content-end">
-        <label for="dataInicioPainelIntinerario">Data Inicio</label>
-        <input type="date" class="form-control form-control-sm" id="dataInicioPainelIntinerario">
-      </div>
-      <div class="mb-2 col-sm-4 justify-content-end">
-        <label for="dataFimPainelIntinerario">Data Fim</label>
-        <input type="date" class="form-control form-control-sm" id="dataFimPainelIntinerario">
-      </div>
-      <div class="mb-2 col-sm-4 justify-content-end">
-        <label for="painelIntinerarioRotas">Rota</label>
-        <select id="painelIntinerarioRotas" class="form-select">
-          <option selected>Rota</option>
-        </select>
-      </div>
-      <div class="input-group mb-2 col-sm-12 justify-content-end">
+<!-- Off-canvas -->
+<div id="offcanvas" class="custom-offcanvas mt-5">
+    <form id="frmPainelIntinerario">
+      <div class="input-group mb-2 col-sm-12 justify-content-end mt-3">
         <input type="text" class="form-control form-control-sm" id="idManifestoPorIntinerario" placeholder="Nº Manifesto" disabled>
-        <select id="painelIntinerarioEmissor" class="form-select form-select-sm" placeholder="Emissor">
-        </select>
+
         <button type="button" class="btn btn-success btn-rounded btn-icon" id="btnSalvaIntinerario" >            
           <i class="ti-save"></i>
         </button>
-        <button type="button" class="btn btn-info btn-rounded btn-icon" id="tracarRota" onclick="tracarRota()">            
+        <button type="button" class="btn btn-info btn-rounded btn-icon" id="tracarRota">            
           <i class="ti-location-pin"></i>
+        </button>
+        <button type="button" class="btn btn-secondary btn-rounded btn-icon text-white" id="imprimirIntinerario">            
+          <i class="ti-printer"></i>
         </button>
         <button type="button" 
           class="btn btn-danger btn-rounded btn-icon pr-2" 
@@ -34,8 +21,28 @@
             <i class="ti-close"></i>
         </button>
       </div>
-    </div>
-    <form id="frmPainelIntinerario">
+      <div class="row col-sm-12 justify-content-end pr-0">
+        <div class="mb-2 col-sm-6 justify-content-end">
+          <label for="dataInicioPainelIntinerario">Data Inicio</label>
+          <input type="date" class="form-control form-control-sm" id="dataInicioPainelIntinerario">
+        </div>
+        <div class="mb-2 col-sm-6 justify-content-end pr-0">
+          <label for="dataFimPainelIntinerario">Data Fim</label>
+          <input type="date" class="form-control form-control-sm" id="dataFimPainelIntinerario">
+        </div>
+
+        <div class="mb-2 col-sm-6 justify-content-end">
+          <label for="painelIntinerarioEmissor">Selecione o Emissor</label>
+          <select id="painelIntinerarioEmissor" class="form-select">
+          </select>
+        </div>
+        <div class="mb-2 col-sm-6 justify-content-end pr-0">
+          <label for="painelIntinerarioRotas">Selecione a Rota</label>
+          <select id="painelIntinerarioRotas" class="form-select">
+            <option selected>Rota</option>
+          </select>
+        </div>
+
       <div class="col-sm-12 mt-3 pr-0">
         <div class="input-group">
         <!-- Input para a placa do veículo -->
@@ -135,7 +142,7 @@
   <div class="offcanvas-content">
     <div id="paginacaoPainelIntinerario"></div>
     <!-- Tabela Doctos -->
-    <div class="table-responsive" style="max-height: 300px; overflow-y: auto;">
+    <div class="table-responsive" style="max-height: 150px; overflow-y: auto; width: 100%;">
       <table id="tabelaDoctos" class="table table-striped table-borderless table-sm" style="width: 100%;">
         <thead>
           <tr>
@@ -151,3 +158,5 @@
     </div>
   </div>
 </div>
+{% block js %}
+{% endblock %}

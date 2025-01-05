@@ -13,6 +13,7 @@ urlpatterns = [
     path('printColetas/',viewsOperacional.print_coletas,name='print'),
     path('impressaoColetas/',viewsOperacional.impressao_coletas,name='impressao_coletas'),
     path('roteirizacao_coletas/',viewsOperacional.roteirizacao_coletas,name='roteirizacao_coletas'),
+    path('update_status_coleta/',viewsOperacional.update_status_coleta,name='update_status_coleta'),
     
     path('api/directions/', viewsOperacional.proxy_openrouteservice, name='proxy_openrouteservice'),
     path('api/rotas_varios_destinos/', viewsOperacional.rotas_varios_destinos, name='rotas_varios_destinos'),
@@ -31,6 +32,7 @@ urlpatterns = [
     path('get_cte_dtc/',viewsOperacional.get_cte_by_dtc,name='get_cte_by_dtc'),
     path('get_cte_id/',viewsOperacional.get_cte_id,name='get_cte_id'),
     path('get_cte_chave_nfe/',viewsOperacional.get_cte_chave_nfe,name='get_cte_chave_nfe'),
+    path('update_status_cte/',viewsOperacional.update_status_cte,name='update_status_cte'),
 
 
     path('get_tipo_manifesto/',viewsOperacional.get_tipos_manifesto,name='get_tipos_manifesto'),
@@ -66,7 +68,6 @@ urlpatterns = [
     path('read_veiculo_placa/',viewsOperacional.read_veiculo_placa,name='read_veiculo_placa'),
     path('read_veiculos/',viewsOperacional.read_veiculos,name='read_veiculos'),
     path('obtem_localizacao_veiculos/',viewsOperacional.obtem_localizacao_veiculos,name='obtem_localizacao_veiculos'),
-
 
     path('manifesto/',viewsOperacional.manifesto,name='manifesto'),
     path('create_manifesto/',viewsOperacional.create_manifesto,name='create_manifesto'),

@@ -76,16 +76,11 @@ btnSalvaIntinerario.addEventListener('click', async() => {
         case 200:
             addMotoristaManifesto(dadosForm.cpfMotoristaIntinerario,response.manifesto.id)
             addVeiculoManifesto(dadosForm.placaPainelIntinerario,response.manifesto.id)
+            document.getElementById('idManifestoPorIntinerario').value = response.manifesto.id
             break;
         default:
             break;
     }
-
-
-    console.log(response)
-    
-
-
 
 
 

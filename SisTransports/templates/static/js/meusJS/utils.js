@@ -411,6 +411,7 @@ const msgOk = (msg) => {
     timer: 1500,
   });
 };
+
 const msgAlerta = (msg) => {
   Swal.fire(msg);
 };
@@ -450,6 +451,7 @@ const msgAviso = (msg) => {
     timer: 3000,
   });
 };
+
 const obterValorElemento = (elemento) => {
   switch (elemento.tagName.toLowerCase()) {
     case "input":
@@ -793,8 +795,6 @@ const hideLoading = () => {
   loadingElement.style.display = "none"; // Mostra o loading
 };
 
-
-
 /**
  * Função para buscar parceiro por um trecho do CNPJ ou Razão Social.
  *
@@ -953,15 +953,12 @@ const getVeiculo = async (inptPlaca, inptModelo = null, inptProprietario = null)
   }
 };
 
-
 function transformToUpperCase(inputId) {
   var input = document.getElementById(inputId);
   if (input) {
     input.value = input.value.toUpperCase();
   }
 }
-
-
 
 /**
  * Permite apenas caracteres alfanuméricos (letras e números) em um campo de input.
@@ -1188,8 +1185,6 @@ const getMotoristasPorCpf = async (txtCpf, txtMotorista) => {
   }
 };
 
-
-
 function deepCompareArrays(arr1, arr2) {
   if (arr1.length !== arr2.length) return false;
 
@@ -1274,20 +1269,15 @@ const addVeiculoManifesto = async(placa,idManifesto)=>{
   return response 
 }
 
-const addDocumentoManifesto = async(documento,manifesto)=>{
-      
-  let response = await connEndpoint('/operacional/add_dtc_manifesto/', {'idTipoDocumento': idTipoDocumento,
-                                                                                  'idDcto': numDcto.value,
-                                                                                  'idManifesto':idManifesto.textContent,
-                                                                                  'cmbTipoManifesto':cmbTipoManifesto});
-  if (parseInt(response.status) != 422){
-      populaTbodyDocumentos(response.documentos)
-      populaQtdeDocumentosBarraManifesto(response.documentos.length)
-      document.getElementById('numeroDocumento').value = ""
-      document.getElementById('numeroDocumento').focus()
-  }else{
-      msgErro('Não foi possível encontrar o documento. Verifique se os dados estão corretos e tente novamente.')
-  }
+const addDocumentoManifesto = async(idTipoDocumento,numDcto,idManifesto,cmbTipoManifesto)=>{
+  let response = await connEndpoint('/operacional/add_dtc_manifesto/', 
+                                    {'idTipoDocumento': idTipoDocumento,
+                                      'idDcto': numDcto,
+                                      'idManifesto':idManifesto,
+                                      'cmbTipoManifesto':cmbTipoManifesto});
+  return response
 }
 
+const removeDocumentoManifesto = async(idDocumento,manifesto)=>{
 
+}
