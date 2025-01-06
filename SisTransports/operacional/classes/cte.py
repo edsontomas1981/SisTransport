@@ -161,7 +161,6 @@ class Cte():
         except ObjectDoesNotExist:
             return None
         
-
     @classmethod
     def adiciona_fatura_ao_cte(cls, id_cte, fatura):
         """

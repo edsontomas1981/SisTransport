@@ -45,8 +45,6 @@ class Dtc:
             # Log ou trate a exceção conforme necessário
             print(f"Erro ao buscar registros com filtro: {e}")
             raise
-
-    
     
     def salvaOuAlteraDtc(self,dados):
         self.dtc.remetente_fk=dados['remetente'] if dados['remetente'] else None
@@ -72,6 +70,9 @@ class Dtc:
     def readDtc(self,idDtc):
         if ClsDtc.objects.filter(id=idDtc).exists():
             dtc=ClsDtc.objects.filter(id=idDtc).get()  
+            if dtc.coleta_fk:
+                coleta = Coleta.objects.get(id=dtc.coleta_fk.id)
+                dtc.coleta_fk = coleta
             self.dtc=dtc
     
     def updateDtc(self, dados, idDtc):
@@ -123,15 +124,13 @@ class Dtc:
         try:
             return ClsDtc.objects.get(id=int(idDtc))
         except ClsDtc.DoesNotExist:
-            raise ClsDtc.DoesNotExist(f"Não foi possível encontrar ClsDtc com ID {idDtc}.")
-
+            raise ClsDtc.DoesNotExist(f"Não foi possível encontrar Dtc com ID {idDtc}.")
 
     def deleteRota(self,idRota):
         pass
     
     def to_dict(self):
         return self.dtc.to_dict()
-    
 
     @staticmethod
     def buscar_dtc_por_numero_coleta(numero_coleta):

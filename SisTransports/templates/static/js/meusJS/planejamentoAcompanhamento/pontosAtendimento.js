@@ -63,12 +63,12 @@ const selecionaLocal = async (dados) => {
 
         // Adiciona o local à lista se ele ainda não estiver presente
         if (!listaLocais.some(item => item.id === dados.id)) {
-            console.log(`Numero Dcto nº ${dados.id_documento} Tipo Dcto ${dados.tipo_documento}`)
+            console.log(dados)
             listaLocais.push({ id:dados.idDtc, nome: truncateString(dados.remetente,10), 
                 peso: dados.peso,tipoDocumento:dados.tipo_documento, idDocumento:dados.id_documento,
                 idManifesto:document.getElementById('idManifestoPorIntinerario').value });
 
-            let response=await addDocumentoManifesto(3,dados.idDtc,document.getElementById('idManifestoPorIntinerario').value,1)
+            let response=await addDocumentoManifesto(3,dados.idDtc,document.getElementById('idManifestoPorIntinerario').value,dados.tipo_documento =="coleta" ? 1:2)
             if(dados.tipo_documento == 'coleta'){
                 let coleta = new NovaColeta();
                 coleta.update_status_coleta(dados.id_documento,2);
@@ -78,10 +78,7 @@ const selecionaLocal = async (dados) => {
                 let cte = new Cte();
                 cte.update_status_cte(dados.id_documento,2);
             }
-
-
         }
-
         exibirLocaisSelecionados(listaLocais);
         populaTabelaIntinerarios()
         populaTotaisIntinerario()

@@ -36,6 +36,7 @@ class Dtc (models.Model):
         notas_fiscais = [nf.to_dict() for nf in self.notas_fiscais.all()]
         dtc['notas_fiscais'] = notas_fiscais
 
+
         related_objects = {
             'tomador_fk': 'tomador',
             'remetente_fk': 'remetente',

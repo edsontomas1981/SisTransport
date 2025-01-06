@@ -32,7 +32,6 @@ class ViewBase:
         if require_body:
             if not request.body:
                 return HttpResponseBadRequest("Corpo da requisição vazio.")
-
             try:
                 dados = json.loads(request.body.decode('utf-8'))
                 return dados

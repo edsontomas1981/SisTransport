@@ -294,5 +294,33 @@ const cabecalhoManifesto = (response)=>{
     lacres:response.manifesto.lacres}
 }
 
+function populaTbodyDocumentos (response){
+
+    const documento = prepareDataToTableManifesto(response);
+    const opcoesSelect = [
+        { value: "1", texto: "Cancelar" },
+        { value: "2", texto: "Em Rota" },
+        { value: "3", texto: "Entregue" },
+      ];
+      popula_tbody_manifesto('tableDtcManifesto', documento, botoesManifesto, false,opcoesSelect);
+}
+
+const prepareDataToTableManifesto = (response) => {
+    return response.map(element => {
+        const data = {
+            id: element.dtc_fk?.id || '',
+            cte: element.cte?.id || '',
+            remetente: truncateString(element.dtc_fk?.remetente?.raz_soc, 20) || '',
+            destinatario: truncateString(element.dtc_fk?.destinatario?.raz_soc, 20) || '',
+            ocorrencia: element.ocorrencia_manifesto_fk?.tipo_ocorrencia || '',
+            dtsaida: element.manifesto_fk ? formataDataPtBr(element.manifesto_fk.data_previsão_inicio) : '',
+            origem: truncateString(element.dtc_fk?.remetente?.endereco_fk?.cidade, 10) + ' - ' + (element.cte?.dtc_fk?.remetente?.endereco_fk?.uf || ''),
+            destino: truncateString(element.dtc_fk?.destinatario?.endereco_fk?.cidade, 8) + ' - ' + (element.cte?.dtc_fk?.destinatario?.endereco_fk?.uf || '')
+        };
+        return data;
+    });
+}
+
+
 
 

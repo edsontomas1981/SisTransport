@@ -338,8 +338,12 @@ const formataDataPtBr = (dataString) => {
   return formatoBrasileiro.format(dataObj);
 };
 
-const truncateString = (str, maxLength) => {
-  return str.length > maxLength ? str.substring(0, maxLength) + "..." : str;
+const truncateString = (str, maxLength = 10) => {
+  try {
+    return str.length > maxLength ? str.substring(0, maxLength) + "..." : str;
+  } catch (error) {
+    console.log(`${error}`)
+  }
 };
 
 const getRotas = async () => {
@@ -347,7 +351,6 @@ const getRotas = async () => {
   let conexao = new Conexao("/rotas/readRotas/", data);
   try {
     const result = await conexao.sendPostRequest();
-    console.log(result)
     return result;
 
     // Imprime a resposta JSON da solicitação POST
@@ -1082,7 +1085,6 @@ const buscaVeiculosModal = async (inptPlaca, inptModelo = null, inptProprietario
   }
 };
 
-
 const buscaMotoristaModal = async (cpfMotorista,nomeMotorista)=>{
 
   const selecionaMotorista = async(element)=>{
@@ -1268,6 +1270,7 @@ const addVeiculoManifesto = async(placa,idManifesto)=>{
     'idManifesto':idManifesto});
   return response 
 }
+
 
 const addDocumentoManifesto = async(idTipoDocumento,numDcto,idManifesto,cmbTipoManifesto)=>{
   let response = await connEndpoint('/operacional/add_dtc_manifesto/', 

@@ -1,20 +1,18 @@
 from django.views import View
-from operacional.classes.cte import Cte
 from Classes.BaseView import ViewBase
 from django.http import JsonResponse, HttpResponseBadRequest, HttpResponseServerError
-import random
 from enderecos.classes.seleciona_coletas_mapa import SelecionaEnderecosEntregaColeta
 
+from operacional.classes.dtc import Dtc
 
 
-class CarregaEnderecosColetaEntrega(ViewBase, View):
+
+class GetDtcPorColeta(ViewBase, View):
+
     def get(self, request, *args, **kwargs):
         dados = self.process_request_data(request)
 
-        pontos_instance = SelecionaEnderecosEntregaColeta()
-        pontos_ativos = pontos_instance.select_pontos_de_atendimento()
-        pontos_atendimento = pontos_ativos
-        
+        dtc = Dtc.buscar_dtc_por_numero_coleta(63)
+
         # pontos_atendimento = carrega_coordenadas_pontos_atendimento()
-        return JsonResponse({'success': True,'pontos_atendimento':pontos_atendimento}, status=201)
-   
+        return JsonResponse({'success': True,'dadosDtc':dtc.to_dict()}, status=201)

@@ -176,6 +176,7 @@ Esta ação é irreversível e todos os dados coletados serão perdidos.')
 
 })
 
+
 $('#btnNovoColeta').on('click', function(e) {
   limpaColeta();
   e.preventDefault();
@@ -238,5 +239,10 @@ class NovaColeta {
       // Enviando dados via POST e armazenando o resultado em uma variável
       const resultadoPost = await apiService.postData(url, dados);
       console.log(resultadoPost);
+  }
+  async getColetaByIdColeta(){
+    const apiService = new ApiService();
+    const url = "/operacional/update_status_coleta/";
+
   }
 }

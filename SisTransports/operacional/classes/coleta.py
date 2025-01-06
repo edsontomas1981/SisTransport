@@ -4,6 +4,7 @@ from operacional.models.dtc import Dtc as ClsDtc
 from Classes.utils import toFloat
 from django.core.exceptions import ObjectDoesNotExist
 
+
 class Coleta(): 
     def __init__(self):
         self.obj_coleta=MdlColeta()
@@ -97,3 +98,4 @@ class Coleta():
             return 200
         except ObjectDoesNotExist:
             return None
+        

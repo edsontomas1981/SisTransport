@@ -2,18 +2,6 @@ document.addEventListener('DOMContentLoaded',()=>{
   let txtNumManifesto=document.getElementById('txtIdBuscaManifesto')
   let btnBuscaManifesto = document.getElementById('btnBuscarManifestoId')
 
-  const populaTbodyDocumentos =(response)=>{
-    const documento = prepareDataToTableManifesto(response);
-    const opcoesSelect = [
-      { value: "1", texto: "Cancelar" },
-      { value: "2", texto: "Em Rota" },
-      { value: "3", texto: "Entregue" },
-    ];
-
-    popula_tbody('tableDtcManifesto', documento, botoesManifesto, false,opcoesSelect);
-  }
-
-
   btnBuscaManifesto.addEventListener('click',async()=>{
     limpaDadosManifesto()
     limpaBarraManifesto()

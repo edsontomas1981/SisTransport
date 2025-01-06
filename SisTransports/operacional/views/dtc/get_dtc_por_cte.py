@@ -7,14 +7,10 @@ from enderecos.classes.seleciona_coletas_mapa import SelecionaEnderecosEntregaCo
 
 
 
-class CarregaEnderecosColetaEntrega(ViewBase, View):
+class GetDtcPorCte(ViewBase, View):
     def get(self, request, *args, **kwargs):
         dados = self.process_request_data(request)
 
-        pontos_instance = SelecionaEnderecosEntregaColeta()
-        pontos_ativos = pontos_instance.select_pontos_de_atendimento()
-        pontos_atendimento = pontos_ativos
-        
+        dtc = Cte.obtem_cte_id(31)
         # pontos_atendimento = carrega_coordenadas_pontos_atendimento()
-        return JsonResponse({'success': True,'pontos_atendimento':pontos_atendimento}, status=201)
-   
+        return JsonResponse({'success': True,'dadosDtc':dtc.to_dict()}, status=201)

@@ -8,6 +8,9 @@ from operacional.views.dtc.createDtc import createDtc
 from operacional.views.dtc.readDtc import readDtc
 from operacional.views.dtc.updateDtc import updateDtc
 from operacional.views.dtc.deleteDtc import deleteDtc
+from operacional.views.dtc.get_dtc_por_coleta import GetDtcPorColeta
+from operacional.views.dtc.get_dtc_por_cte import GetDtcPorCte
+from operacional.views.dtc.get_dtc_id import GetDtcPorIdDtc
 
 from operacional.views.rota.rotas import rotas
 from operacional.views.rota.createRota import createRota

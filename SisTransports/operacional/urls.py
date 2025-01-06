@@ -93,6 +93,10 @@ urlpatterns = [
     path('read_rotas/',viewsOperacional.readRota,name='read_rotas'),
     path('rotas/',viewsOperacional.rotas,name='rotas'),
 
+    path('get_dtc_cte/',viewsOperacional.GetDtcPorCte.as_view(),name='GetDtcPorCte'),
+    path('get_dtc_coleta/',viewsOperacional.GetDtcPorColeta.as_view(),name='GetDtcPorColeta'),
+    path('get_dtc_id/',viewsOperacional.GetDtcPorIdDtc.as_view(),name='GetDtcPorIdDtc'),
+
     # Inclua as rotas WebSocket 
     path('ws/', include(viewsOperacional.routing.websocket_urlpatterns)),
 

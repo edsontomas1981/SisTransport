@@ -30,11 +30,15 @@ def processa_requisicao_dtc(request, dtc):
     notas_fiscais = Nota_fiscal_CRUD()
     cte = carrega_cte(request)
     cte_dict = cte.to_dict() if cte else None  # Verifica se cte é None antes de chamar to_dict()
+    coleta = {}
+    if dtc.dtc.coleta_fk:
+        coleta=dtc.dtc.coleta_fk.to_dict()
+
     return JsonResponse({
         'status': 200,
         'dtc': dtc.to_dict() if dtc else None,
         'cotacao': cot['cotacao'],
-        'coleta': dtc.dtc.coleta_fk.to_dict() if dtc and dtc.dtc.coleta_fk else None,
+        'coleta': coleta if coleta else None,
         'notasFiscais': notas_fiscais.carrega_nfs(dtc.dtc.id) if dtc else None,
         'cte': cte_dict,
         'tabelas': tabelas
