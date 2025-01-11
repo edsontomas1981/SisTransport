@@ -89,7 +89,7 @@ class Parceiro {
         this.populaCampos();
         break;
       case 404:
-        alert('Parceiro não cadastrado!');
+        msgErro('Parceiro não encontrado');
         this.openModalParceiro();
         break;
       default:

@@ -3,6 +3,9 @@ from django.conf import settings
 from operacional.models.cte import Cte as Mdl_cte
 from django.core.exceptions import ObjectDoesNotExist
 from operacional.models.nota_fiscal import Nota_fiscal
+from operacional.classes.TabelaOcorrencias import TabelaOcorrencias
+from operacional.models.coleta_cte_ocorrencia import Ocorrencia
+
 
 class Cte():
     def __init__ (self):
@@ -32,6 +35,7 @@ class Cte():
         return None
 
     def create_or_update(self, dados):
+        
         campos_obrigatorios = ['origem_cte', 'destino_cte', 'emissora_cte', 'tipo_cte', 'cfop_cte',
                             'tipo_calculo_cte', 'dtc_fk', 'icms_incluso', 'base_de_calculo',
                             'aliquota', 'icms_valor', 'total_frete', 'usuario_cadastro']
@@ -39,6 +43,7 @@ class Cte():
         campos_faltantes = Cte.verificar_campos_obrigatorios(dados, campos_obrigatorios)
         
         mensagem_erro = Cte.criar_mensagem_erro(campos_faltantes)
+
         if mensagem_erro:
             return mensagem_erro
 
@@ -49,11 +54,13 @@ class Cte():
             for key, value in dados.items():
                 setattr(existing_cte, key, value)
             existing_cte.save()
+            Cte.gera_ocorrencia_cte(existing_cte,34,dados.get('usuario_cadastro'))            
             return 201
         else:
             for key, value in dados.items():
                 setattr(self.obj_cte, key, value)
             self.obj_cte.save()
+            Cte.gera_ocorrencia_cte(self.obj_cte,34,dados.get('usuario_cadastro'))            
             return 200
 
     def read(self, dtc_fk):
@@ -69,7 +76,10 @@ class Cte():
             for key, value in novos_dados.items():
                 setattr(self.cte_obj, key, value)
             self.cte_obj.save()
+            print(type(novos_dados.get('usuario_cadastro')))
+            Cte.gera_ocorrencia_cte(self.cte_obj,34,novos_dados.get('usuario_cadastro'))
             return self.cte_obj
+        
         except Mdl_cte.DoesNotExist:
             return None
 
@@ -230,4 +240,40 @@ class Cte():
             return 200
         except ObjectDoesNotExist:
             return None
+
+    @staticmethod
+    def _get_ultima_ocorrencia_cte(id_cte):
+        ocorrencia = Ocorrencia.objects.filter(cte_fk = id_cte).order_by('id').last()
+        return ocorrencia
+    
+    @staticmethod
+    def _ultima_ocorrencia_e_igual_ocorrencia_a_ser_cadastrada(id_cte,id_ocorrencia) :
+        ultima_ocorrencia = Cte._get_ultima_ocorrencia_cte(id_cte)
+
+        if not ultima_ocorrencia:
+            return False  
+        
+        return True if ultima_ocorrencia.tipo_ocorrencia_fk.id == id_ocorrencia or not ultima_ocorrencia else False
+    
+    @staticmethod
+    def obtem_dtc_cte(id_cte):
+        try:
+            cte = Mdl_cte.objects.get(id=id_cte)
+            return cte.dtc_fk
+        except ObjectDoesNotExist:
+            return None
+
+    @staticmethod
+    def gera_ocorrencia_cte (cte,id_ocorrencia,usuario={}):
+        if not Cte._ultima_ocorrencia_e_igual_ocorrencia_a_ser_cadastrada(cte.id,id_ocorrencia):
+            ocorrencia = TabelaOcorrencias()
+            dados = {
+                'tipo': id_ocorrencia,
+                'cte': cte,
+                'coleta': None,
+                'dtc': cte.dtc_fk,
+                'usuario_cadastro': usuario,
+                'descricao': 'CTe emitido, aguardando liberação para transporte'
+            }
+            ocorrencia.create_ocorrencia(dados)        
 

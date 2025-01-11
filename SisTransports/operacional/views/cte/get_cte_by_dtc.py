@@ -12,6 +12,10 @@ def get_cte_by_dtc(request):
         data = json.loads(request.body.decode('utf-8'))
         cte_instance = Cte()
         cte_by_dtc=cte_instance.get_cte_by_dtc(data.get('idDtc'))
+
+        if not cte_by_dtc:
+            return JsonResponse({'status':404, 'error': 'CT-e Não Encontrado'})
+
         return JsonResponse({'status': 200,'cte':cte_by_dtc.to_dict()})
     
     except ValidationError as ve:

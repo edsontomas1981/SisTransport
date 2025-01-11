@@ -129,6 +129,8 @@
       </div>
   </div>
 
+  {% include 'mdlAlteraStatusDocumento.html' %}
+
   <style>
     
     .spinner {
@@ -147,6 +149,10 @@
 
   <script src="{% static 'js/meusJS/cte.js' %}"></script>
   <script src="{% static 'js/meusJS/coleta.js' %}"></script>
+  <script src="{% static 'js/meusJS/ocorrencias/Ocorrencias.js' %}"></script>
+
+  <script src="{% static 'js/meusJS/manifestos/btnRemoverDocumento.js' %}"></script>
+  <script src="{% static 'js/meusJS/manifestos/atualizaStatusDocumento.js' %}"></script>
   
   <script src="{% static 'js/meusJS/manifestos/btnRemoveMotorista.js' %}"></script>
   <script src="{% static 'js/meusJS/manifestos/statusManif.js' %}"></script>
@@ -194,5 +200,6 @@
   <script src="{% static 'js/meusJS/manifestos/gerarManifestoComFrete.js' %}"></script>
   <script src="{% static 'js/meusJS/manifestos/gerarManifestoSemFrete.js' %}"></script>
   <script src="{% static 'js/meusJS/manifestos/gerarPdfRomaneio.js' %}"></script>
+
 
   {% endblock %}

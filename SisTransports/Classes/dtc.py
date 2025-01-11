@@ -68,6 +68,16 @@ class Dtc():
                 return 300
         except:
             return 500
+        
+    @staticmethod
+    def getDtcByColeta(coleta):
+        try:
+            if DctoCarga.objects.filter(coleta_fk=coleta).exists():
+                return DctoCarga.objects.filter(coleta_fk=coleta).get()  
+            else:
+                return 300
+        except:
+            return 500
            
     def to_dict(self):
         return self.dtc.to_dict()

@@ -431,6 +431,7 @@ const popula_tbody_manifesto = (id_tbody, dicionario_dados, botoes = {}, inicioC
       var tdSelect = document.createElement("td");
       var select = document.createElement("select");
 
+      select.id = 'select'+ element.id
       select.className = "form-select form-select-sm";
 
       opcoesSelect.forEach(opcao => {

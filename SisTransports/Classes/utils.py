@@ -7,6 +7,7 @@ import re
 import json
 
 
+
 def checaCampos(request, **kwargs):
     camposVazios = []
     for identificacaoCampo, nomeCampo in kwargs.items():
@@ -157,7 +158,6 @@ def converte_string_data(data_str):
     print("Formato de data inválido. Utilize um dos formatos suportados: 'YYYY-MM-DD', 'DD-MM-YYYY', 'MM-DD-YYYY', 'YYYY/MM/DD', 'MM/DD/YYYY', 'DD/MM/YYYY', 'YY/MM/DD'.")
     return None
 
-
 def str_to_date(data_str):
     """
     Converte uma string representando uma data em um objeto datetime.
@@ -221,7 +221,6 @@ def string_para_data(data_str):
 
     # Retorna None se a entrada for inválida
     return None
-
 
 import math
 

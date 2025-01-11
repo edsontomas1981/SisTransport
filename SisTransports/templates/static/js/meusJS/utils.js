@@ -1,6 +1,63 @@
 var cnpjBuscaParceiro;
 var razaoBuscaParceiro;
 
+class ApiService {
+  constructor() {
+    this.baseUrl = ""; // Base URL da API (opcional)
+  }
+
+  // Função para obter o token CSRF dos cookies
+  getCSRFToken() {
+    const cookieValue = document.cookie.match(/(^|;)csrftoken=([^;]*)/)[2];
+    return cookieValue;
+  }
+
+  async postData(url, data) {
+    try {
+      const response = await fetch(url, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          "X-CSRFToken": this.getCSRFToken(), // Adicionando o token CSRF no cabeçalho
+        },
+        body: JSON.stringify(data),
+      });
+
+      if (!response.ok) {
+        throw new Error(`Erro ao fazer a requisição: ${response.status}`);
+      }
+
+      const result = await response.json();
+      return result;
+    } catch (error) {
+      console.error("Erro:", error);
+      throw error;
+    }
+  }
+
+  async getData(url) {
+    try {
+      const response = await fetch(url, {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          "X-CSRFToken": this.getCSRFToken(), // Adicionando o token CSRF no cabeçalho
+        },
+      });
+
+      if (!response.ok) {
+        throw new Error(`Erro ao fazer a requisição: ${response.status}`);
+      }
+
+      const result = await response.json();
+      return result;
+    } catch (error) {
+      console.error("Erro:", error);
+      throw error;
+    }
+  }
+}
+
 class Conexao {
   constructor(url, data) {
     this.url = url;
@@ -831,62 +888,7 @@ const busca_parceiro_por_trecho = async (termo, callback = null) => {
   }
 };
 
-class ApiService {
-  constructor() {
-    this.baseUrl = ""; // Base URL da API (opcional)
-  }
 
-  // Função para obter o token CSRF dos cookies
-  getCSRFToken() {
-    const cookieValue = document.cookie.match(/(^|;)csrftoken=([^;]*)/)[2];
-    return cookieValue;
-  }
-
-  async postData(url, data) {
-    try {
-      const response = await fetch(url, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          "X-CSRFToken": this.getCSRFToken(), // Adicionando o token CSRF no cabeçalho
-        },
-        body: JSON.stringify(data),
-      });
-
-      if (!response.ok) {
-        throw new Error(`Erro ao fazer a requisição: ${response.status}`);
-      }
-
-      const result = await response.json();
-      return result;
-    } catch (error) {
-      console.error("Erro:", error);
-      throw error;
-    }
-  }
-
-  async getData(url) {
-    try {
-      const response = await fetch(url, {
-        method: "GET",
-        headers: {
-          "Content-Type": "application/json",
-          "X-CSRFToken": this.getCSRFToken(), // Adicionando o token CSRF no cabeçalho
-        },
-      });
-
-      if (!response.ok) {
-        throw new Error(`Erro ao fazer a requisição: ${response.status}`);
-      }
-
-      const result = await response.json();
-      return result;
-    } catch (error) {
-      console.error("Erro:", error);
-      throw error;
-    }
-  }
-}
 
 /**
  * Função para buscar e preencher informações de um veículo a partir da placa.
@@ -1271,7 +1273,6 @@ const addVeiculoManifesto = async(placa,idManifesto)=>{
   return response 
 }
 
-
 const addDocumentoManifesto = async(idTipoDocumento,numDcto,idManifesto,cmbTipoManifesto)=>{
   let response = await connEndpoint('/operacional/add_dtc_manifesto/', 
                                     {'idTipoDocumento': idTipoDocumento,
@@ -1282,5 +1283,61 @@ const addDocumentoManifesto = async(idTipoDocumento,numDcto,idManifesto,cmbTipoM
 }
 
 const removeDocumentoManifesto = async(idDocumento,manifesto)=>{
+}
 
+/**
+ * Popula um elemento <select> HTML com opções baseadas nos dados fornecidos.
+ *
+ * @param {Array} dadosSelect - Um array de objetos contendo os dados para preencher o <select>. 
+ *                              Cada objeto deve ter as propriedades:
+ *                                - value (o valor do atributo value da opção)
+ *                                - texto (o texto exibido para a opção)
+ * @param {string} idSelect - O ID do elemento <select> que será populado.
+ * @param {string} textoSelected - O texto que será exibido na primeira opção padrão, com valor vazio.
+ *
+ * @description
+ * 1. Limpa o conteúdo existente do elemento <select> com o ID fornecido.
+ * 2. Adiciona uma opção padrão com o texto fornecido e valor vazio.
+ * 3. Itera sobre o array de dados e adiciona uma opção para cada objeto.
+ *
+ * @example
+ * // Exemplo de uso:
+ * const dados = [
+ *   { value: '1', texto: 'Opção 1' },
+ *   { value: '2', texto: 'Opção 2' },
+ * ];
+ * populaSelect(dados, 'meuSelect', 'Selecione uma opção');
+ */
+function populaSelect(dadosSelect, idSelect, textoSelected) {
+  let select = document.getElementById(idSelect);
+
+  let htmlSelect = `<option selected value="selected">${textoSelected}</option>`;
+
+  // Limpa o conteúdo existente do select
+  select.innerHTML = '';
+
+  // Adiciona as novas opções
+  dadosSelect.forEach(element => {
+    htmlSelect += `<option value="${element.value}">${element.texto}</option>`;
+  });
+
+  select.innerHTML = htmlSelect;
+}
+
+function seDataVaziaPopulaComDataAtual(idData){
+  let data = document.getElementById(idData)
+  const valor = data.value;
+  if (valor === '') {
+      const dataAtual = new Date();
+      data.value = dataAtual.toISOString().split('T')[0];
+  }
+}
+
+function seHoraVaziaPopulaComHoraAtual(idHora){
+  let hora = document.getElementById(idHora)
+  const valor = hora.value;
+  if (valor === '') {
+      const dataAtual = new Date();
+      hora.value = dataAtual.toISOString().split('T')[1].substring(0, 5);
+  }
 }

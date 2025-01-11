@@ -88,6 +88,7 @@ class Coleta {
     let msgInicial = 'Os campos '
     let eOuVirgula
     let camposFaltando = ''
+    console.log(campos)
     for (let i = 0; i < campos.length; i++) {
       eOuVirgula = campos.length == i + 2 ? " e " :
           campos.length == i + 1 ? '' : ', ';
@@ -182,7 +183,6 @@ $('#btnNovoColeta').on('click', function(e) {
   e.preventDefault();
 })
 
-
 function limpaColeta(){
   $('#nf').val('')
   $('#volumes').val('')
@@ -231,18 +231,30 @@ function completaColeta(response){
   $('#idColeta').val(response.id)
 }
 
+
 class NovaColeta {
+  constructor() {
+		this.jsonColeta = null;
+	}
+
   async update_status_coleta(idColeta,status) {
       const apiService = new ApiService();
       const url = "/operacional/update_status_coleta/";
-      const dados = { id_coleta:idColeta, status:status };
+      let dados = { id_coleta:idColeta, status:status };
       // Enviando dados via POST e armazenando o resultado em uma variável
       const resultadoPost = await apiService.postData(url, dados);
-      console.log(resultadoPost);
+      return resultadoPost
   }
-  async getColetaByIdColeta(){
-    const apiService = new ApiService();
-    const url = "/operacional/update_status_coleta/";
 
+  async carregaColetasPorDtc(idDtc){
+    try {
+      const apiService = new ApiService();
+      const url = "/operacional/get_coleta_dtc/";
+      let dados = { idDtc:idDtc };
+      const resultado = await apiService.postData(url, dados);
+      this.jsonColeta = resultado.coleta
+      } catch (error) {
+      console.error(error)
+    }
   }
 }

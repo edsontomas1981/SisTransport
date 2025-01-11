@@ -30,6 +30,7 @@ from operacional.views.coleta.impressao_coletas import impressao_coletas
 from operacional.views.coleta.print_coletas import print_coletas
 from operacional.views.coleta.roteirizacao_coletas import roteirizacao_coletas
 from operacional.views.coleta.update_status_coleta import update_status_coleta
+from operacional.views.coleta.get_coleta_by_dtc import GetColetaByDtc
 
 from operacional.views.roteirizacao.proxy_openrouteservice import proxy_openrouteservice
 from operacional.views.roteirizacao.rota_varios_destinos import rotas_varios_destinos
@@ -79,6 +80,8 @@ from operacional.views.manifesto.delete_dtc_manifesto import delete_dtc_manifest
 
 from operacional.views.ocorrencias_manifesto.get_ocorrencia_id import get_ocorrencia_manifesto_by_id
 from operacional.views.ocorrencias_manifesto.get_ocorrencias_manifesto import get_ocorrencias_manifesto
+from operacional.views.ocorrencias_manifesto.cadastro_de_ocorrencias import CadastroDeOcorrencias
+from operacional.views.ocorrencias_manifesto.get_all_ocorrencias import GetAllOcorrencias
 
 from operacional.views.tipo_manifesto.get_tipo_manifesto import get_tipo_manifesto_by_id
 from operacional.views.tipo_manifesto.get_tipos_manifesto import get_tipos_manifesto

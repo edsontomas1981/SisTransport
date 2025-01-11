@@ -8,8 +8,6 @@ from comercial.classes.cotacao import Cotacao
 from Classes.utils import  dprint,toFloat,checkBox
 from django.views.decorators.http import require_http_methods
 
-
-
 @login_required(login_url='/auth/entrar/')
 @require_http_methods(["POST"])
 def create_cte(request):
@@ -29,11 +27,11 @@ def create_cte(request):
                 cotacao.adiciona_cte_cotacao(cte.obj_cte)
 
             return JsonResponse({'update': cte.obj_cte.to_dict(),'status':201})
+        
         else:
             data = prepare_data_update(data, request.user)
             status = cria_cte(data)
 
-            print(status)
             if 'cotacao' in data:
                 cotacao=Cotacao()
                 cotacao.readCotacao(data['cotacao'])
@@ -41,11 +39,12 @@ def create_cte(request):
                 cte.obj_cte = cte.read(data['idDtc'])
                 cotacao.adiciona_cte_cotacao(cte.obj_cte)
                 if status == 200:
-                    return JsonResponse({'status': status})  # Created
+                    return JsonResponse({'status': status}) 
                 else:
                     return JsonResponse({'error': 'Falha ao gerar o cte', 'details': status}, status=400)  # Bad Request
+        
             else:
-                return JsonResponse({'status': status})  # Created
+                return JsonResponse({'status': status})
 
 
     except Exception as e:
@@ -93,11 +92,18 @@ def prepare_data_update(data, user):
     return data
 
 def cria_cte(data):
-    cte = Cte()
-    cte.create_or_update(data)
-    return 200
+    try:
+        cte = Cte()
+        status = cte.create_or_update(data)
+        return 200
+    except Exception as e:
+        return str(e)
 
 def read_cte(data):
-    cte = Cte()
-    return cte.read(data['idDtc'])
+    try:
+        cte = Cte()
+        return cte.read(data['idDtc'])
+    except Exception as e:
+        return str(e)    
+
 

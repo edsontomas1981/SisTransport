@@ -5,8 +5,6 @@ from enderecos.classes.seleciona_coletas_mapa import SelecionaEnderecosEntregaCo
 
 from operacional.classes.dtc import Dtc
 
-
-
 class GetDtcPorColeta(ViewBase, View):
 
     def get(self, request, *args, **kwargs):

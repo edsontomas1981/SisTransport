@@ -11,13 +11,7 @@ def get_cte_chave_nfe(request):
     try:
         data = json.loads(request.body.decode('utf-8'))
         cte_instance = Cte()
-        '''
-        35231223926683000299570010002402721052695137
-        '''
         cte_by_chave_nfe=cte_instance.get_cte_chave_acesso_nfe(data.get('chaveNfe'))
-
-        print(cte_by_chave_nfe)
-
         return JsonResponse({'status': 200,'cte':cte_by_chave_nfe.to_dict()})
     except ValidationError as ve:
         return JsonResponse({'status': 400, 'error': f'Erro de validação: {str(ve)}'})

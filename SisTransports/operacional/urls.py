@@ -14,6 +14,7 @@ urlpatterns = [
     path('impressaoColetas/',viewsOperacional.impressao_coletas,name='impressao_coletas'),
     path('roteirizacao_coletas/',viewsOperacional.roteirizacao_coletas,name='roteirizacao_coletas'),
     path('update_status_coleta/',viewsOperacional.update_status_coleta,name='update_status_coleta'),
+    path('get_coleta_dtc/',viewsOperacional.GetColetaByDtc.as_view(),name='GetColetaByDtc'),
     
     path('api/directions/', viewsOperacional.proxy_openrouteservice, name='proxy_openrouteservice'),
     path('api/rotas_varios_destinos/', viewsOperacional.rotas_varios_destinos, name='rotas_varios_destinos'),
@@ -96,6 +97,9 @@ urlpatterns = [
     path('get_dtc_cte/',viewsOperacional.GetDtcPorCte.as_view(),name='GetDtcPorCte'),
     path('get_dtc_coleta/',viewsOperacional.GetDtcPorColeta.as_view(),name='GetDtcPorColeta'),
     path('get_dtc_id/',viewsOperacional.GetDtcPorIdDtc.as_view(),name='GetDtcPorIdDtc'),
+
+    path('get_all_ocorrencias/',viewsOperacional.GetAllOcorrencias.as_view(),name='GetAllOcorrencias'),
+    path('cadastrar_ocorrencias/',viewsOperacional.CadastroDeOcorrencias.as_view(),name='CadastrarOcorrencias'),
 
     # Inclua as rotas WebSocket 
     path('ws/', include(viewsOperacional.routing.websocket_urlpatterns)),

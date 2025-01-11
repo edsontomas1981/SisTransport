@@ -12,5 +12,5 @@ from operacional.models.tipo_documento import Tipo_Documento
 from operacional.models.manifestos import Manifesto
 from operacional.models.dtc_manifestos import DtcManifesto
 from operacional.models.contrato_frete import Contrato
-
-
+from operacional.models.ocorrencias_operacoes import CategoriaOcorrencia, TipoOcorrencia
+from operacional.models.coleta_cte_ocorrencia import Ocorrencia

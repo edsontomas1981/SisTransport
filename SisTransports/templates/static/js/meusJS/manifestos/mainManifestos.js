@@ -1,4 +1,29 @@
-const carregaTipoManifeto = async ()=>{
+let listaDocumentos = []
+
+document.addEventListener('DOMContentLoaded', ()=>{
+    carregaTipoManifeto()
+    carregaTipoDocumentos()
+})
+
+const botoesManifesto={
+    baixaRapida: { 
+      classe: "btn-primary text-white rounded",
+      texto:  '<i class="fa fa-check" aria-hidden="true"></i>',
+      callback: baixaRapida
+    },
+    baixaDetalhada: { 
+        classe: "btn-success text-white rounded",
+        texto:  '<i class="fa fa-check" aria-hidden="true"></i>',
+        callback: baixaDetalhada
+      },
+    excluir: { 
+        classe: "btn-danger text-white rounded",
+        texto: '<i class="fa fa-trash" aria-hidden="true"></i>',
+        callback: removerDocumentoPorId
+      },
+  };
+
+async function carregaTipoManifeto(){
 
     let response = await connEndpoint('/operacional/get_ocorrencias_manifesto/',{})
 
@@ -6,18 +31,13 @@ const carregaTipoManifeto = async ()=>{
 
 }
 
-const carregaTipoDocumentos = async ()=>{
+async function carregaTipoDocumentos (){
 
     let response = await connEndpoint('/operacional/get_tipos_documentos/',{})
 
     adicionarDadosAoSelect(response.tipos,'cmbTipoDocumento','id','tipo_documento')
 
 }
-
-document.addEventListener('DOMContentLoaded', ()=>{
-    carregaTipoManifeto()
-    carregaTipoDocumentos()
-})
 
 const geraDadosManifesto = () => {
     const dados = ['emissorMdfe', 'dtInicioManif', 'dtPrevisaoChegada', 'rotasManifesto',
@@ -46,7 +66,6 @@ const geraDadosManifesto = () => {
             return dadosManifesto;
         }
 };
-
 
 const dadosParaTbodyMotoristas = (motoristas)=>{
     let dadosMotoristas = []
@@ -294,15 +313,29 @@ const cabecalhoManifesto = (response)=>{
     lacres:response.manifesto.lacres}
 }
 
-function populaTbodyDocumentos (response){
+async function getOcorrenciasBySelect(){
 
+    const handlerOcorrencias = async (respostasOcorrencias)=>{
+        let dadosNormalizadosParaSelect = []
+        
+        respostasOcorrencias.forEach(e => {
+            dadosNormalizadosParaSelect.push({value:e.id,texto:`${e.codigo} - ${e.descricao}`})
+        });
+        return dadosNormalizadosParaSelect        
+    }
+
+    let ocorrencias = new OcorrenciasManifesto()
+    await ocorrencias.getOcorrencias()
+
+    return await handlerOcorrencias(ocorrencias.jsonOcorrencias.dados)
+}
+
+async function populaTbodyDocumentos (response){
     const documento = prepareDataToTableManifesto(response);
-    const opcoesSelect = [
-        { value: "1", texto: "Cancelar" },
-        { value: "2", texto: "Em Rota" },
-        { value: "3", texto: "Entregue" },
-      ];
-      popula_tbody_manifesto('tableDtcManifesto', documento, botoesManifesto, false,opcoesSelect);
+    const opcoesSelect = await getOcorrenciasBySelect();
+    
+    popula_tbody_manifesto('tableDtcManifesto', documento, botoesManifesto, false,opcoesSelect);
+
 }
 
 const prepareDataToTableManifesto = (response) => {
@@ -320,6 +353,76 @@ const prepareDataToTableManifesto = (response) => {
         return data;
     });
 }
+
+async function selecionaColeta(idDtc) {
+    let coleta = new NovaColeta()
+    await coleta.carregaColetasPorDtc(idDtc)
+    return coleta
+}
+
+async function selecionaCte(idCte, tipoOcorrencia) {
+    let cte = new Cte()
+    await cte.carregaCtePorDtc(idCte)
+    return cte
+}
+
+async function baixaDetalhada (idDocumento,tipoOcorrencia){
+    ocorrencias = await getOcorrenciasBySelect()
+    populaSelect(ocorrencias,'selectModalOcorrencias','Selecione a Ocorrência')
+
+    let documento
+
+    switch (tipoOcorrencia) {
+        
+        case 'Coleta':
+            documento =  await selecionaColeta(idDocumento,tipoOcorrencia)
+
+            console.log(documento.jsonColeta)
+
+            document.getElementById('mdlTipoDocumentoModalOcorrencia').value = "1"
+            document.getElementById('idDocumentoModalOcorrencia').value = documento.jsonColeta.id
+            break; 
+
+        case 'Entrega':
+            documento =  await selecionaCte(idDocumento,tipoOcorrencia)            
+            document.getElementById('idDocumentoModalOcorrencia').value = documento.jsonCte.id
+            document.getElementById('mdlTipoDocumentoModalOcorrencia').value = "2"
+            break;
+
+        default:
+            break;
+    }
+    openModal('mdlBaixaDocumentos')
+}
+
+async function baixaRapida (idDtc,tipo_documento){
+    let idSelect = 'select'+idDtc
+
+    let selectOcorrencia = document.getElementById(idSelect)
+
+    if(tipo_documento == 'Entrega'){
+        let cte = new Cte()
+        await cte.carregaCtePorDtc(idDtc)
+        // cte.update_status_cte()
+    }
+
+    if(tipo_documento == 'Coleta'){
+        let coleta = new NovaColeta()
+        await coleta.carregaColetasPorDtc(idDtc)
+    }
+
+    console.log(`Ocorrencia : ${selectOcorrencia.value} Documento: ${idDtc}`)
+}
+
+
+
+
+
+
+
+
+
+
 
 
 

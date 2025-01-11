@@ -90,7 +90,7 @@ $('#salvaDtc').on('click', function(e) {
 })
 
 var salvouDtc = (response) =>{
-    alert ('Dtc salvo com sucesso !')
+    msgOk ('Dtc salvo com sucesso !')
     carregaDtc(response)
 }
 

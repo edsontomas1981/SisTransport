@@ -1,4 +1,5 @@
 from django.db import models
+from django.conf import settings
 from parceiros.models.parceiros import Parceiros
 from enderecos.models.endereco import Enderecos
 
@@ -30,6 +31,8 @@ class Coleta (models.Model):
     status=models.IntegerField(default=1)
     data_da_coleta = models.DateTimeField(null=True)
 
+    usuario_cadastro = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.SET_NULL, null=True, related_name='cadastrado_coleta')
+
     def to_dict(self):
         return{
             'id': self.id,
@@ -55,16 +58,6 @@ class Coleta (models.Model):
             'lat':self.lat,
             'lng':self.lng,
             'data':self.data_da_coleta,
-            'status':self.status
+            'status':self.status,
+            'usuario':self.usuario_cadastro_id
         }
-    
-    
-    
-    
-    
-    
-    
-    
-
-    
-

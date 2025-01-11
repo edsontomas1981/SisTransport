@@ -22,10 +22,14 @@ def manifesto_by_num(request):
         data = json.loads(request.body.decode('utf-8'))
         num_manifesto = data.get('numManifesto')
 
+
         if not num_manifesto:
             return JsonResponse({'status': 400, 'error': 'Número do manifesto não fornecido.'})
+        
 
         manifesto = ManifestoManager.obter_manifesto_por_id(num_manifesto)
+
+
         veiculos = ManifestoManager.obter_lista_veiculos(num_manifesto)
 
         dcto_manifesto = ManifestoManager.obtem_documentos_manifesto(num_manifesto)
