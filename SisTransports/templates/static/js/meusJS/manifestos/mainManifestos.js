@@ -379,7 +379,7 @@ async function baixaDetalhada (idDocumento,tipoOcorrencia){
     let url= "/operacional/get_ocorrencias_documento/"
     let response
     switch (tipoOcorrencia) {
-        
+       
         case 'Coleta':
             documento =  await selecionaColeta(idDocumento,tipoOcorrencia)
             document.getElementById('mdlTipoDocumentoModalOcorrencia').value = "1"
