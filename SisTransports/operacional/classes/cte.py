@@ -275,5 +275,11 @@ class Cte():
                 'usuario_cadastro': usuario,
                 'descricao': 'CTe emitido, aguardando liberação para transporte'
             }
-            ocorrencia.create_ocorrencia(dados)        
-
+            ocorrencia.create_ocorrencia(dados)   
+    @staticmethod
+    def get_ocorrencias_documento(id_documento):
+        try:
+            ocorrencias = TabelaOcorrencias.get_ocorrencias_por_documento('2',id_documento)
+            return ocorrencias
+        except ObjectDoesNotExist:
+            return None

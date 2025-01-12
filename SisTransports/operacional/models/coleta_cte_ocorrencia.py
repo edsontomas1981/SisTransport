@@ -30,16 +30,19 @@ class Ocorrencia(models.Model):
         ordering = ["data_ocorrencia"]
 
     def __str__(self):
-        return f"{self.tipo_ocorrencia_fk.codigo} - {self.data_ocorrencia.strftime('%Y-%m-%d %H:%M:%S')}"
+        tipo_ocorrencia = self.tipo_ocorrencia_fk.codigo if self.tipo_ocorrencia_fk else "Sem tipo"
+        data_ocorrencia = self.data_ocorrencia.strftime('%Y-%m-%d %H:%M:%S') if self.data_ocorrencia else "Data não informada"
+        return f"{tipo_ocorrencia} - {data_ocorrencia}"
+
 
     def to_dict(self):
         return {
             "id": self.id,
-            "cte": self.cte_fk.id if self.cte else None,
+            "cte": self.cte_fk.id if self.cte_fk else None,
             "coleta": self.coleta_fk.id if self.coleta_fk else None,
             "dtc": self.dtc_fk.id if self.dtc_fk else None,
             "tipo_ocorrencia": self.tipo_ocorrencia_fk.to_dict(),
-            "data_ocorrencia": self.data_ocorrencia.strftime('%Y-%m-%d %H:%M:%S'),
+            "data_ocorrencia": self.data_ocorrencia.strftime('%Y-%m-%d %H:%M:%S') if self.data_ocorrencia else '',
             'responsavel': self.responsavel if self.responsavel else None,
             'observacao': self.observacao if self.observacao else None
         }

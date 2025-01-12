@@ -133,7 +133,15 @@ class Coleta():
             
             return dtc
         except ObjectDoesNotExist:
-            return None        
+            return None   
+
+    @staticmethod
+    def get_obj_coleta_by_id_coleta(id_coleta):
+        try:
+            coleta = MdlColeta.objects.filter(id=id_coleta).get()      
+            return coleta
+        except ObjectDoesNotExist:
+            return None
         
     # Método para adicionar latitude e longitude às coletas
     def _add_lat_lng(self, coleta_id):
@@ -200,3 +208,10 @@ class Coleta():
                 'usuario_cadastro':usuario,
             }
             ocorrencia.create_ocorrencia(dados)
+    @staticmethod
+    def get_ocorrencias_por_coleta(id_documento):
+        try:
+            ocorrencias = TabelaOcorrencias.get_ocorrencias_por_documento('1',id_documento)
+            return ocorrencias
+        except ObjectDoesNotExist:
+            return None

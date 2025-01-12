@@ -82,6 +82,7 @@ from operacional.views.ocorrencias_manifesto.get_ocorrencia_id import get_ocorre
 from operacional.views.ocorrencias_manifesto.get_ocorrencias_manifesto import get_ocorrencias_manifesto
 from operacional.views.ocorrencias_manifesto.cadastro_de_ocorrencias import CadastroDeOcorrencias
 from operacional.views.ocorrencias_manifesto.get_all_ocorrencias import GetAllOcorrencias
+from operacional.views.ocorrencias_manifesto.get_ocorrencias_documento import GetOcorrenciasDocumentos
 
 from operacional.views.tipo_manifesto.get_tipo_manifesto import get_tipo_manifesto_by_id
 from operacional.views.tipo_manifesto.get_tipos_manifesto import get_tipos_manifesto

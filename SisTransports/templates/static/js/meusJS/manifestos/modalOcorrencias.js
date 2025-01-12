@@ -22,14 +22,34 @@ btnSalvaModalOcorrencia.addEventListener('click',()=>{
         if (confirmado) {
             let apiService = new ApiService();
             let url = "/operacional/cadastrar_ocorrencias/"
-            let response = await apiService.getData(url);
-            apiService.postData(url, dados);
+            let response = await apiService.postData(url, dados);
+            populaTabelaModalOcorrencias(response.ocorrencias)
             msgOk('Ocorrência registrada com sucesso!')
             limpaModalOcorrencias()
 
         }
     })
 })
+
+function preparaDadosTabelaOcorrencias(dados){
+    let jsonDados = []
+    dados.forEach(e => {
+    jsonDados.push({
+        'dtc': e.dtc,
+        'tipoDocumento': e.cte ? 'Ct-e' : 'Coleta',
+        'documento': e.cte ? e.cte : e.coleta,
+        'responsavel': e.responsavel,
+        'data':e.data_ocorrencia,
+        'ocorrencia': e.tipo_ocorrencia.descricao,
+        })
+    });
+    return jsonDados
+}
+
+async function populaTabelaModalOcorrencias(dados){
+  let  dadosTbody = preparaDadosTabelaOcorrencias(dados)
+  popula_tbody('tbodyHistoricoDtc', dadosTbody, {}, false)
+}
 
 let btnLimpaModalOcorrencia = document.getElementById('btnLimpaModalOcorrencia')
 btnLimpaModalOcorrencia.addEventListener('click',()=>{
