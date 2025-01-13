@@ -5,17 +5,14 @@
         <div class="modal-dialog modal-lg modal-altura">
             <div class="modal-content">
                 <div class="modal-header cabecalho-modal-parceiro">
-                    <h5 class="modal-title">Busca Parceiros</h5>
+                    <h5 class="modal-title">Baixa de Documentos</h5>
                     <div>
                       <div class="input-group mb-2" align="right">
-                          <select class="form-select form-select-sm" id="mdlTipoDocumentoModalOcorrencia">
+                          <select class="form-select form-select-sm" id="mdlTipoDocumentoModalOcorrencia" disabled>
                             <option value="1">Coleta</option>
                             <option value="2">CT-e</option>
                           </select>
-                          <input type="text" class="form-control form-control-sm" id="idDocumentoModalOcorrencia" placeholder="Número Documento">
-                          <button type="button" class="btn btn-primary btn-rounded btn-icon" id="btnBuscaModalBaixa" align="right">            
-                            <i class="ti-search"></i>
-                          </button>                               
+                          <input type="text" class="form-control form-control-sm" id="idDocumentoModalOcorrencia" placeholder="Número Documento" disabled>
                           <button type="button" class="btn btn-secondary btn-rounded btn-icon" id="btnLimpaModalOcorrencia" align="right">            
                               <i class="ti-write"></i>
                           </button>
@@ -67,6 +64,7 @@
                         <th class="">Responsável</th>
                         <th class="">Data</th>
                         <th class="">Descrição</th>
+                        <th class="">Observação</th>
                       </tr> 
                     </thead>
                     <tbody class="border" id="tbodyHistoricoDtc" style="width: 100%;border-radius: 10px;background-color:whitesmoke;color: black;">

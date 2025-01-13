@@ -31,21 +31,6 @@ btnSalvaModalOcorrencia.addEventListener('click',()=>{
     })
 })
 
-function preparaDadosTabelaOcorrencias(dados){
-    let jsonDados = []
-    dados.forEach(e => {
-    jsonDados.push({
-        'dtc': e.dtc,
-        'tipoDocumento': e.cte ? 'Ct-e' : 'Coleta',
-        'documento': e.cte ? e.cte : e.coleta,
-        'responsavel': e.responsavel,
-        'data':e.data_ocorrencia,
-        'ocorrencia': e.tipo_ocorrencia.descricao,
-        })
-    });
-    return jsonDados
-}
-
 async function populaTabelaModalOcorrencias(dados){
   let  dadosTbody = preparaDadosTabelaOcorrencias(dados)
   popula_tbody('tbodyHistoricoDtc', dadosTbody, {}, false)
@@ -55,8 +40,3 @@ let btnLimpaModalOcorrencia = document.getElementById('btnLimpaModalOcorrencia')
 btnLimpaModalOcorrencia.addEventListener('click',()=>{
     limpaModalOcorrencias()
 })
-
-
-
-
-

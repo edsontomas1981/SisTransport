@@ -101,7 +101,7 @@ urlpatterns = [
     path('get_all_ocorrencias/',viewsOperacional.GetAllOcorrencias.as_view(),name='GetAllOcorrencias'),
     path('cadastrar_ocorrencias/',viewsOperacional.CadastroDeOcorrencias.as_view(),name='CadastrarOcorrencias'),
     path('get_ocorrencias_documento/',viewsOperacional.GetOcorrenciasDocumentos.as_view(),name='GetOcorrenciasDocumentos'),
-
+    path('get_ocorrencias_dtc/',viewsOperacional.GetOcorrenciasDtc.as_view(),name='GetOcorrenciasDtc'),
 
     # Inclua as rotas WebSocket 
     path('ws/', include(viewsOperacional.routing.websocket_urlpatterns)),

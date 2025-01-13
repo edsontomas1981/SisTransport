@@ -1341,3 +1341,19 @@ function seHoraVaziaPopulaComHoraAtual(idHora){
       hora.value = dataAtual.toISOString().split('T')[1].substring(0, 5);
   }
 }
+
+function preparaDadosTabelaOcorrencias(dados){
+  let jsonDados = []
+  dados.forEach(e => {
+  jsonDados.push({
+      'dtc': e.dtc,
+      'tipoDocumento': e.cte ? 'Ct-e' : 'Coleta',
+      'documento': e.cte ? e.cte : e.coleta,
+      'responsavel': e.responsavel,
+      'data':e.data_ocorrencia,
+      'ocorrencia': e.tipo_ocorrencia.descricao,
+      'observacao':e.observacao
+      })
+  });
+  return jsonDados
+}

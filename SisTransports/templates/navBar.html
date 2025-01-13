@@ -1,9 +1,9 @@
 {% load static %}
-<div id="navbar">
+<div id="navbar" >
     <div class="navbar navbar-expand-md fixed-top navbar-light bg-white p-0 altura-navbar" id="fundoNavbar">
 
     </div>
-    <nav class="navbar navbar-expand-md fixed-top navbar-light bg-white p-0 altura-navbar">
+    <nav class="navbar navbar-expand-md fixed-top navbar-light bg-white p-0 altura-navbar" style="padding: 30px !important;">
         <a class="navbar-brand mr-4" href="#">
             <div>
                 <span><img src="{% static 'images/favicon.png' %}" class="float-start mt-0" alt="logo"><strong class="text-primary pl-2 mt-3"> SisTransports</strong></span>
@@ -134,7 +134,20 @@
                                                 </a>
                                             </div>                                            
                                         </div>
-                                    </div>
+                                        <div class="row d-flex">
+                                            <div class="input-group-append">
+                                                <div class="fa-icon text-center">
+                                                    <span class="fas fa-folder-open icone-menu"></span>
+                                                </div>
+                                                <div class="d-flex flex-column">
+                                                    <a class="dropdown-item" onclick="openModalHistoricoDtc()">
+                                                        <h6 class="mb-0">Histórico DTC</h6>
+                                                        <small class="text-muted">Documentos de transporte</small>
+                                                    </a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                       
                                 </div>
                             </div>
                         </div>
@@ -433,6 +446,15 @@
                     </div>
                 </li>
             </ul>
+        </div>
+
+        <div>
+            <div class="input-group " align="right">
+                <input type="text" class="form-control form-control-sm" id="documentoBusca" placeholder="Buscar...">
+                <button type="button" class="btn btn-primary btn-rounded btn-icon" id="btnBuscarDocumentos" align="right">            
+                  <i class="ti-search"></i>
+                </button>                               
+            </div>
         </div>
     </nav>
 </div>

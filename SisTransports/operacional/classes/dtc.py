@@ -4,47 +4,12 @@ from Classes.utils import checkBox,dprint,dpprint
 from operacional.classes.rotas import Rota
 from datetime import datetime  # Adicione esta linha para importar a classe datetime
 from operacional.models.coleta import Coleta
+from operacional.models.coleta_cte_ocorrencia import Ocorrencia
+
 
 class Dtc:
     def __init__(self):
         self.dtc=ClsDtc()
-
-    @staticmethod
-    def buscar_registros_com_filtro(data_inicial, data_final, ordenar_por=1,filtrar = 0, rota_id=0 ):
-        try:
-            # primeiro seleciona o periodo
-            registros = ClsDtc.objects.filter(
-                coleta_fk__isnull=False,
-                data_cadastro__range=(data_inicial, data_final)
-            )
-
-            # Aplicar filtros adicionais
-            if int(filtrar) == 1:  # Em aberto
-                registros = registros.filter(coleta_fk__status=int(filtrar))
-            elif int(filtrar) == 2:  # Coletados
-                    registros = registros.filter(coleta_fk__status=int(filtrar))
-            elif int(filtrar) == 3:  # Em rota
-                    registros = registros.filter(coleta_fk__status=int(filtrar))
-                
-            if rota_id.strip():  # Verifica se rota_id não está vazio
-                if int(rota_id) != 0:  # Se não for "Todos"
-                    registros = registros.filter(rota_fk__id=int(rota_id))
-
-            # Adicione mais condições conforme necessário para outros filtros
-
-            # Ordenar
-            if int(ordenar_por) == 2:  # Remetente
-                registros = registros.order_by('remetente_fk__raz_soc')
-            elif int(ordenar_por) == 3:  # Destinatário
-                registros = registros.order_by('destinatario_fk__raz_soc')
-            else:  # Data (padrão)
-                registros = registros.order_by('data_cadastro')
-
-            return registros
-        except Exception as e:
-            # Log ou trate a exceção conforme necessário
-            print(f"Erro ao buscar registros com filtro: {e}")
-            raise
     
     def salvaOuAlteraDtc(self,dados):
         self.dtc.remetente_fk=dados['remetente'] if dados['remetente'] else None
@@ -102,6 +67,49 @@ class Dtc:
                 return 200
         except:
             return 300
+        
+    def deleteRota(self,idRota):
+        pass
+    
+    def to_dict(self):
+        return self.dtc.to_dict()
+    
+    @staticmethod
+    def buscar_registros_com_filtro(data_inicial, data_final, ordenar_por=1,filtrar = 0, rota_id=0 ):
+        try:
+            # primeiro seleciona o periodo
+            registros = ClsDtc.objects.filter(
+                coleta_fk__isnull=False,
+                data_cadastro__range=(data_inicial, data_final)
+            )
+
+            # Aplicar filtros adicionais
+            if int(filtrar) == 1:  # Em aberto
+                registros = registros.filter(coleta_fk__status=int(filtrar))
+            elif int(filtrar) == 2:  # Coletados
+                    registros = registros.filter(coleta_fk__status=int(filtrar))
+            elif int(filtrar) == 3:  # Em rota
+                    registros = registros.filter(coleta_fk__status=int(filtrar))
+                
+            if rota_id.strip():  # Verifica se rota_id não está vazio
+                if int(rota_id) != 0:  # Se não for "Todos"
+                    registros = registros.filter(rota_fk__id=int(rota_id))
+
+            # Adicione mais condições conforme necessário para outros filtros
+
+            # Ordenar
+            if int(ordenar_por) == 2:  # Remetente
+                registros = registros.order_by('remetente_fk__raz_soc')
+            elif int(ordenar_por) == 3:  # Destinatário
+                registros = registros.order_by('destinatario_fk__raz_soc')
+            else:  # Data (padrão)
+                registros = registros.order_by('data_cadastro')
+
+            return registros
+        except Exception as e:
+            # Log ou trate a exceção conforme necessário
+            print(f"Erro ao buscar registros com filtro: {e}")
+            raise
     
     @classmethod
     def obter_dtc_id(cls, idDtc):
@@ -125,12 +133,6 @@ class Dtc:
             return ClsDtc.objects.get(id=int(idDtc))
         except ClsDtc.DoesNotExist:
             raise ClsDtc.DoesNotExist(f"Não foi possível encontrar Dtc com ID {idDtc}.")
-
-    def deleteRota(self,idRota):
-        pass
-    
-    def to_dict(self):
-        return self.dtc.to_dict()
 
     @staticmethod
     def buscar_dtc_por_numero_coleta(numero_coleta):
@@ -160,3 +162,17 @@ class Dtc:
         
         except Coleta.DoesNotExist:
             raise ValueError(f"Nenhuma coleta encontrada com o número {numero_coleta}.")
+        
+    @staticmethod
+    def obtem_ocorrencias_dtc(idDtc):
+        """
+        Obtém as ocorrências associadas a um DTC específico.
+
+        Args:
+            idDtc (int): O ID do DTC.
+
+        Returns:
+            list: Uma lista de dicionários contendo as ocorrências do DTC.
+        """
+        ocorrencias = Ocorrencia.objects.filter(dtc_fk=idDtc).order_by('-data_ocorrencia')
+        return [ocorrencia.to_dict() for ocorrencia in ocorrencias]

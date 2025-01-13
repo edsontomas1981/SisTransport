@@ -14,7 +14,8 @@ urlpatterns = [
     path('inclui_contato/',viewsPrincipal.incluiContato,name='incluiContato'),
     path('exclui_contato/',viewsPrincipal.excluiContato,name='exluiContato'),
     path('cad_contato/',viewsPrincipal.cad_contato,name='cad_contato'),
-    
+    path('busca/',viewsPrincipal.busca,name='busca'),
+   
     #verificar para deletar essas linhas
     path('salva_parceiro/',viewsPrincipal.salva_parceiro,name='salva_parceiro'),
     path('busca_parceiro/',viewParceiros.busca_parceiro,name='busca_parceiro'),

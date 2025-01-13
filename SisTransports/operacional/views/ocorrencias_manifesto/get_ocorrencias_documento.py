@@ -11,8 +11,6 @@ class GetOcorrenciasDocumentos(ViewBase, View):
         try:
             dados = self.process_request_data(request)
 
-            print(dados)
-
             tipo_de_documento = dados.get('tipoDocumento')
 
             id_documento = dados.get('idDocumento')
