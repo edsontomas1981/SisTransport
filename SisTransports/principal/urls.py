@@ -14,12 +14,12 @@ urlpatterns = [
     path('inclui_contato/',viewsPrincipal.incluiContato,name='incluiContato'),
     path('exclui_contato/',viewsPrincipal.excluiContato,name='exluiContato'),
     path('cad_contato/',viewsPrincipal.cad_contato,name='cad_contato'),
-    path('busca/',viewsPrincipal.busca,name='busca'),
+    path('busca/',viewsPrincipal.BuscarDocumentos.as_view(),name='busca'),
+    path('resultado_busca/',viewsPrincipal.ResultadoBusca.as_view(),name='resultadoBusca'),
    
     #verificar para deletar essas linhas
     path('salva_parceiro/',viewsPrincipal.salva_parceiro,name='salva_parceiro'),
     path('busca_parceiro/',viewParceiros.busca_parceiro,name='busca_parceiro'),
-
 
     path('preDtc/',viewsOperacional.preDtc,name='preDtc'),
     path('preDtc/buscaDtc/',viewsOperacional.buscaDtc,name='buscaDtc'),           

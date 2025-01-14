@@ -74,6 +74,14 @@ class Nota_fiscal_CRUD:
         nfs = MdlNotaFiscal.objects.filter(dtc_fk=id_dtc)
         return nfs
     
+    @staticmethod
+    def get_notas_por_num_nf(num_nf):
+        try:
+            nfs = MdlNotaFiscal.objects.filter(num_nf=num_nf)
+            return nfs
+        except:
+            return None
+    
     def read_by_id(self, nota_id):
         try:
             self.obj_nota_fiscal = MdlNotaFiscal.objects.get(id=nota_id)

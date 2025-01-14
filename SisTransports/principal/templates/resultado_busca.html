@@ -3,8 +3,14 @@
 
 {%block 'conteudo'%}
 
-<span id="titulo-busca"></span>
+<h3 id="titulo-busca" class="mt-4"></h3>
+<div id="divTabelaBuscaDtc"></div>
+<div id="divTabelaBuscaCtes"></div>
+<div id="divTabelaBuscaColetas"></div>
+<div id="divTabelaBuscaNF"></div>
 
-<ul id="lista-resultados"></ul>
+{% endblock %}
 
+{%block 'js'%}
+	<script src="{% static 'js/meusJS/buscaDocumentos/resultadoBusca.js' %}"></script>
 {% endblock %}

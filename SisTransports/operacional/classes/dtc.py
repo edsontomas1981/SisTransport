@@ -132,7 +132,7 @@ class Dtc:
         try:
             return ClsDtc.objects.get(id=int(idDtc))
         except ClsDtc.DoesNotExist:
-            raise ClsDtc.DoesNotExist(f"Não foi possível encontrar Dtc com ID {idDtc}.")
+            return None
 
     @staticmethod
     def buscar_dtc_por_numero_coleta(numero_coleta):

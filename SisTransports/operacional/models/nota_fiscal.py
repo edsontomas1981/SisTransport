@@ -42,7 +42,7 @@ class Nota_fiscal(models.Model):
             'data_cadastro': self.data_cadastro.strftime('%Y-%m-%d %H:%M:%S') if self.data_cadastro else None,
             'usuario_ultima_atualizacao': self.usuario_ultima_atualizacao.username if self.usuario_ultima_atualizacao else None,
             'data_ultima_atualizacao': self.data_ultima_atualizacao.strftime('%Y-%m-%d %H:%M:%S') if self.data_ultima_atualizacao else None,
+            'id_dtc':self.dtc_fk.id if self.dtc_fk else None
         }
-        
         
         return nota_fiscal
