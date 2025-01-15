@@ -16,12 +16,12 @@ class GetOcorrenciasDtc(ViewBase, View):
 
             ocorrencias = Dtc.obtem_ocorrencias_dtc(id_dtc)
 
-            cnpj_rem  = dtc.to_dict().get('remetente').get('cnpj_cpf')
-            cnpj_dest = dtc.to_dict().get('destinatario').get('cnpj_cpf')
-            cnpj_tom  = dtc.to_dict().get('tomador').get('cnpj_cpf')
-            razao_rem = dtc.to_dict().get('remetente').get('raz_soc')
-            razao_dest= dtc.to_dict().get('destinatario').get('raz_soc')
-            razao_tom = dtc.to_dict().get('tomador').get('raz_soc')
+            cnpj_rem  = dtc.to_dict().get('remetente').get('cnpj_cpf') if dtc.to_dict().get('remetente') else ''
+            cnpj_dest = dtc.to_dict().get('destinatario').get('cnpj_cpf') if dtc.to_dict().get('destinatario') else ''
+            cnpj_tom  = dtc.to_dict().get('tomador').get('cnpj_cpf') if dtc.to_dict().get('tomador') else ''
+            razao_rem = dtc.to_dict().get('remetente').get('raz_soc') if dtc.to_dict().get('remetente') else ''
+            razao_dest= dtc.to_dict().get('destinatario').get('raz_soc') if dtc.to_dict().get('destinatario') else ''
+            razao_tom = dtc.to_dict().get('tomador').get('raz_soc') if dtc.to_dict().get('tomador') else ''
             
             dict_dtc= {'cnpjRemetente':cnpj_rem,'razaoRemetente':razao_rem,
                                   'cnpjDestinatario':cnpj_dest,'razaoDestinatario':razao_dest,
