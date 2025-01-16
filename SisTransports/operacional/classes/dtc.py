@@ -5,6 +5,8 @@ from operacional.classes.rotas import Rota
 from datetime import datetime  # Adicione esta linha para importar a classe datetime
 from operacional.models.coleta import Coleta
 from operacional.models.coleta_cte_ocorrencia import Ocorrencia
+from django.db.models import Q
+
 
 
 class Dtc:
@@ -176,3 +178,49 @@ class Dtc:
         """
         ocorrencias = Ocorrencia.objects.filter(dtc_fk=idDtc).order_by('-data_ocorrencia')
         return [ocorrencia.to_dict() for ocorrencia in ocorrencias]
+    
+    @staticmethod
+    def buscar_dtc_por_trechos_cnpj(trecho):
+        dprint(trecho)
+        """
+        Busca DTCs onde o remetente ou o destinatário contenham o trecho informado.
+
+        Args:
+            trecho (str): O trecho a ser buscado (CNPJ ou razão social).
+
+        Returns:
+            QuerySet: Um QuerySet com os DTCs que atendem aos critérios.
+        """
+        try:
+            # Filtrar por CNPJ ou razão social tanto no remetente quanto no destinatário
+            dtcs = ClsDtc.objects.filter(
+                Q(remetente_fk__cnpj_cpf__icontains=trecho) | 
+                Q(destinatario_fk__cnpj_cpf__icontains=trecho)
+            )
+            return dtcs
+        except Exception as e:
+            print(f"Erro ao buscar DTCs: {e}")
+            return None
+        
+    @staticmethod
+    def buscar_dtc_por_trechos_razao(trecho):
+        dprint(trecho)
+        """
+        Busca DTCs onde o remetente ou o destinatário contenham o trecho informado.
+
+        Args:
+            trecho (str): O trecho a ser buscado (CNPJ ou razão social).
+
+        Returns:
+            QuerySet: Um QuerySet com os DTCs que atendem aos critérios.
+        """
+        try:
+            # Filtrar por CNPJ ou razão social tanto no remetente quanto no destinatário
+            dtcs = ClsDtc.objects.filter(
+                Q(remetente_fk__raz_soc__icontains=trecho) | 
+                Q(destinatario_fk__raz_soc__icontains=trecho)
+            )
+            return dtcs
+        except Exception as e:
+            print(f"Erro ao buscar DTCs: {e}")
+            return None

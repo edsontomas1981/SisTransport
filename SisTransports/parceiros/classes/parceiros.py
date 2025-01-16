@@ -143,6 +143,3 @@ class Parceiros():
         except Exception as e:
             print(f"Erro na busca por CNPJ ou Razão Social: {e}")
             return {"error": "Ocorreu um erro ao buscar parceiros."}  # Retorna uma mensagem de erro geral
-
-
-    

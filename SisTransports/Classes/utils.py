@@ -259,3 +259,19 @@ def imprimirJsonTerminal(response):
         print(json.dumps(response.json(), indent=4, ensure_ascii=False))
     except json.JSONDecodeError:
         print("Erro: A resposta não contém um JSON válido.")
+
+def pode_ser_inteiro(dado):
+    """
+    Verifica se um dado pode ser convertido para um inteiro.
+
+    Args:
+        dado (any): O dado a ser verificado.
+
+    Returns:
+        bool: True se pode ser convertido para inteiro, False caso contrário.
+    """
+    try:
+        int(dado)
+        return True
+    except (ValueError, TypeError):
+        return False

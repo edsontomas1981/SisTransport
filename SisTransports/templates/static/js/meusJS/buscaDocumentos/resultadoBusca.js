@@ -1,7 +1,5 @@
 document.addEventListener('DOMContentLoaded', async function () {
     const dados = JSON.parse(sessionStorage.getItem('buscaResultados'));
-    console.log(dados.id_documento_busca)
-
     document.getElementById('titulo-busca').textContent = (`Pesquisa por ${dados.id_documento_busca}`)
 
 	if(dados.coletas.length>0){
@@ -28,6 +26,18 @@ document.addEventListener('DOMContentLoaded', async function () {
 
         console.log(dadosNotas)
         populaTabelaBusca(dadosNotas,'divTabelaBuscaNF',tituloNotas,'buscaColetaTbody','Notas Fiscais')
+    }
+
+    if(dados.dtc_por_nome.length>0){
+        let tituloDtcs = ['Nº Dtc',"NF's",'Data Cadastro','Remetente','Destinatário','Volumes','Peso','R$']
+        let dadosDtcs = await  preparaDadosDtc(dados.dtc_por_nome) 
+        populaTabelaBusca(dadosDtcs,'divTabelaBuscaCNPJ',tituloDtcs,'buscaDtcTbody',"Busca por nome")
+    }
+
+    if(dados.dtc_por_cnpj.length>0){
+        let tituloDtcs = ['Nº Dtc',"NF's",'Data Cadastro','Remetente','Destinatário','Volumes','Peso','R$']
+        let dadosDtcs = await  preparaDadosDtc(dados.dtc_por_cnpj) 
+        populaTabelaBusca(dadosDtcs,'divTabelaBuscaCNPJ',tituloDtcs,'buscaDtcTbody',"Busca por CNPJ")
     }
 })
 
@@ -130,7 +140,9 @@ async function preparaDadosDtc(dadosBrutosDtc) {
             const notas = geraTextoNfUtils(dado.notas_fiscais);
             const dataEmissao = formataDataPtBr(dado.data_cadastro);
             const remetente = truncateString(dado.remetente.raz_soc, 15);
-            const destinatario = truncateString(dado.destinatario.raz_soc, 15);
+            const destinatario = dado.destinatario && dado.destinatario.raz_soc 
+                                ? truncateString(dado.destinatario.raz_soc, 15) 
+                                : '';            
             if (dadosNfs){
                 volumes = dadosNfs.volumes || 0;
                 peso = dadosNfs.peso || 0 ;
@@ -178,7 +190,7 @@ async function preparaDadosCtes(dadosBrutosCte) {
             const dtcId = dtc.id;
             const dataEmissao = formataDataPtBr(cte.data_cadastro);
             const remetente = truncateString(dtc.remetente.raz_soc, 15);
-            const destinatario = truncateString(dtc.destinatario.raz_soc, 15);
+            const destinatario = truncateString(dtc.destinatario.raz_soc ? dtc.destinatario.raz_soc: '', 15);
 
             // Atualiza os valores se os dados de notas fiscais estiverem disponíveis
             if (dadosNfs) {
