@@ -1358,31 +1358,31 @@ function preparaDadosTabelaOcorrencias(dados){
   return jsonDados
 }
 
-const calculaTotalNfsUtils = async (idDtc)=>{
+const calculaTotalNfsUtils = async (nfs)=>{
 
   let vlrNf = 0;
   let vols = 0;
   let peso = 0;
   let m3 = 0;
-  if (idDtc) {
-      let response = await carregaNfsDtc(idDtc); // Certifique-se de que loadNfs() retorna a resposta completa
-      let nfs = response.nfs; // Acesso à propriedade "nfs" das NFS
-      if (!nfs) {
-        return null;
-      }
-      nfs.forEach(nf => {
-          vlrNf += parseFloat(nf.valor_nf);
-          vols += parseInt(nf.volume);
-          peso += parseFloat(nf.peso);
-          m3 += parseFloat(nf.m3);
-      });
-      let totais = {'vlrNf': vlrNf.toFixed(2),
-                  'volumes':vols,
-                  'peso':peso,
-                  'm3':m3}
-      return totais
-  }
-}
+  // if (idDtc) {
+  //     let response = await carregaNfsDtc(idDtc); // Certifique-se de que loadNfs() retorna a resposta completa
+  //     let nfs = response.nfs; // Acesso à propriedade "nfs" das NFS
+  //     if (!nfs) {
+  //       return null;
+  //     }
+  nfs.forEach(nf => {
+      vlrNf += parseFloat(nf.valor_nf);
+      vols += parseInt(nf.volume);
+      peso += parseFloat(nf.peso);
+      m3 += parseFloat(nf.m3);
+  });
+  let totais = {'vlrNf': vlrNf.toFixed(2),
+              'volumes':vols,
+              'peso':peso,
+              'm3':m3}
+  return totais
+  // }
+} 
 
 const carregaNfsDtc = async (idDtc)=>{
   if(idDtc){

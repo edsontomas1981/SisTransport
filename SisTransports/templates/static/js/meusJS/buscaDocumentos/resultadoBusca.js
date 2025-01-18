@@ -1,56 +1,74 @@
+/**
+ * Evento principal que é disparado quando o DOM é totalmente carregado.
+ * Processa os dados armazenados em `sessionStorage` e popula tabelas com informações relacionadas.
+ */
 document.addEventListener('DOMContentLoaded', async function () {
+    // Recupera os dados armazenados no sessionStorage
     const dados = JSON.parse(sessionStorage.getItem('buscaResultados'));
-    document.getElementById('titulo-busca').textContent = (`Pesquisa por ${dados.id_documento_busca}`)
 
-	if(dados.coletas.length>0){
-			let tituloColetas = ['Nº Coleta','DTC','Dt Emissão','Dt Saída','Remetente',
-                                'Destinatário','Volumes','Peso','Valor R$','Observação']
-			let dadosColetas = preparaDadosColeta(dados.coletas)
-			populaTabelaBusca(dadosColetas,'divTabelaBuscaColetas',tituloColetas,'buscaColetasTbody','Coletas')
-	}   
-    if(dados.dtcs.length>0){
-            let tituloDtcs = ['Nº Dtc',"NF's",'Data Cadastro','Remetente','Destinatário','Volumes','Peso','R$']
-            let dadosDtcs = await  preparaDadosDtc(dados.dtcs) 
-            populaTabelaBusca(dadosDtcs,'divTabelaBuscaDtc',tituloDtcs,'buscaDtcTbody',"DTC'S")
-    }
-    if(dados.ctes.length>0){
-        let tituloCtes = ['Nº CT-e','DTC','Dt Emissão','Remetente',
-                        'Destinatário','Volumes','Peso','Valor R$']
-        let dadosCtes = await preparaDadosCtes(dados.ctes)
-        populaTabelaBusca(dadosCtes,'divTabelaBuscaCtes',tituloCtes,'buscaCteTbody',"CTE'S")
-    }
-    if(dados.notas.length>0){
-        let tituloNotas = ['Nota Fiscal Nº','DTC','Dt Emissão','Remetente',
-                           'Destinatário','Volumes','Peso','Valor R$']
-        let dadosNotas = preparaDadosNotas(dados.notas)
+    // Define o título da busca com base no ID do documento
+    document.getElementById('titulo-busca').textContent = `Pesquisa por ${dados.id_documento_busca}`;
 
-        console.log(dadosNotas)
-        populaTabelaBusca(dadosNotas,'divTabelaBuscaNF',tituloNotas,'buscaColetaTbody','Notas Fiscais')
+    // Verifica e processa coletas
+    if (dados.coletas.length > 0) {
+        const tituloColetas = ['Nº Coleta', 'DTC', 'Dt Emissão', 'Dt Saída', 'Remetente', 'Destinatário', 'Volumes', 'Peso', 'Valor R$', 'Observação'];
+        const dadosColetas = preparaDadosColeta(dados.coletas);
+        populaTabelaBusca(dadosColetas, 'divTabelaBuscaColetas', tituloColetas, 'buscaColetasTbody', 'Coletas', modalDtc);
     }
 
-    if(dados.dtc_por_nome.length>0){
-        let tituloDtcs = ['Nº Dtc',"NF's",'Data Cadastro','Remetente','Destinatário','Volumes','Peso','R$']
-        let dadosDtcs = await  preparaDadosDtc(dados.dtc_por_nome) 
-        populaTabelaBusca(dadosDtcs,'divTabelaBuscaCNPJ',tituloDtcs,'buscaDtcTbody',"Busca por nome")
+    // Verifica e processa DTCs
+    if (dados.dtcs.length > 0) {
+        const tituloDtcs = ['Nº Dtc', "NF's", 'Data Cadastro', 'Remetente', 'Destinatário', 'Volumes', 'Peso', 'R$'];
+        const dadosDtcs = await preparaDadosDtc(dados.dtcs);
+        populaTabelaBusca(dadosDtcs, 'divTabelaBuscaDtc', tituloDtcs, 'buscaDtcTbody', "DTC'S", modalDtc);
     }
 
-    if(dados.dtc_por_cnpj.length>0){
-        let tituloDtcs = ['Nº Dtc',"NF's",'Data Cadastro','Remetente','Destinatário','Volumes','Peso','R$']
-        let dadosDtcs = await  preparaDadosDtc(dados.dtc_por_cnpj) 
-        populaTabelaBusca(dadosDtcs,'divTabelaBuscaCNPJ',tituloDtcs,'buscaDtcTbody',"Busca por CNPJ")
+    // Verifica e processa CT-e
+    if (dados.ctes.length > 0) {
+        const tituloCtes = ['Nº CT-e', 'DTC', 'Dt Emissão', 'Remetente', 'Destinatário', 'Volumes', 'Peso', 'Valor R$'];
+        const dadosCtes = await preparaDadosCtes(dados.ctes);
+        populaTabelaBusca(dadosCtes, 'divTabelaBuscaCtes', tituloCtes, 'buscaCteTbody', "CTE'S", modalDtc);
     }
-})
+
+    // Verifica e processa Notas Fiscais
+    if (dados.notas.length > 0) {
+        const tituloNotas = ['Nota Fiscal Nº', 'DTC', 'Dt Emissão', 'Remetente', 'Destinatário', 'Volumes', 'Peso', 'Valor R$'];
+        const dadosNotas = preparaDadosNotas(dados.notas);
+        populaTabelaBusca(dadosNotas, 'divTabelaBuscaNF', tituloNotas, 'buscaColetaTbody', 'Notas Fiscais', modalDtc);
+    }
+
+    // Verifica e processa DTCs por nome
+    if (dados.dtc_por_nome.length > 0) {
+        const tituloDtcs = ['Nº Dtc', "NF's", 'Data Cadastro', 'Remetente', 'Destinatário', 'Volumes', 'Peso', 'R$'];
+        const dadosDtcs = await preparaDadosDtc(dados.dtc_por_nome);
+        populaTabelaBusca(dadosDtcs, 'divTabelaBuscaCNPJ', tituloDtcs, 'buscaDtcTbody', "Busca por nome", modalDtc);
+    }
+
+    // Verifica e processa DTCs por CNPJ
+    if (dados.dtc_por_cnpj.length > 0) {
+        const tituloDtcs = ['Nº Dtc', "NF's", 'Data Cadastro', 'Remetente', 'Destinatário', 'Volumes', 'Peso', 'R$'];
+        const dadosDtcs = await preparaDadosDtc(dados.dtc_por_cnpj);
+        populaTabelaBusca(dadosDtcs, 'divTabelaBuscaCNPJ', tituloDtcs, 'buscaDtcTbody', "Busca por CNPJ", modalDtc);
+    }
+});
+
 
 /**
- * Popula uma tabela com base em dados e títulos fornecidos.
- * @param {Array} dadosTabela - Array de objetos contendo os dados a serem exibidos na tabela.
+ * Popula uma tabela HTML com base em dados fornecidos, exibindo um título acima dela.
+ * Caso os dados estejam vazios, exibe uma mensagem de "Nenhum registro encontrado".
+ * 
+ * @param {Object} dadosTabela - Objeto contendo os dados a serem exibidos e informações adicionais.
+ * @param {Array} dadosTabela.dados - Array de arrays representando as linhas e colunas da tabela.
+ * @param {Object} dadosTabela.dtc - Objeto contendo informações adicionais associadas às linhas (como um ID).
  * @param {string} divTabela - ID do elemento onde a tabela será inserida.
- * @param {Array} titulos - Lista com os títulos das colunas na ordem em que serão exibidos.
+ * @param {Array<string>} titulos - Lista de títulos das colunas da tabela.
  * @param {string} idTbody - ID do elemento tbody onde as linhas serão adicionadas.
  * @param {string} tituloTexto - Título exibido acima da tabela.
+ * @param {Function} [callback] - Função de callback que será chamada ao clicar em uma linha da tabela. Recebe o ID do DTC.
  */
-function populaTabelaBusca(dadosTabela, divTabela, titulos, idTbody, tituloTexto) {
-    console.log(dadosTabela);
+function populaTabelaBusca(dadosTabela, divTabela, titulos, idTbody, tituloTexto, callback = (idDtc) => { alert(idDtc); }) {
+
+    // Verifica se os dados fornecidos estão vazios
     if (!Array.isArray(dadosTabela) || dadosTabela.length === 0) {
         document.getElementById(divTabela).innerHTML = `
             <h6>${tituloTexto}</h6>
@@ -59,7 +77,7 @@ function populaTabelaBusca(dadosTabela, divTabela, titulos, idTbody, tituloTexto
         return;
     }
 
-    // Renderiza o cabeçalho e a estrutura básica da tabela
+    // Monta o cabeçalho da tabela com os títulos fornecidos
     const colunas = titulos.map(titulo => `<th scope="col">${titulo}</th>`).join('');
     const tabelaHTML = `
         <div class="badge badge-primary badge-pill mt-3 mb-3">${tituloTexto}</div>
@@ -72,27 +90,21 @@ function populaTabelaBusca(dadosTabela, divTabela, titulos, idTbody, tituloTexto
     `;
     document.getElementById(divTabela).innerHTML = tabelaHTML;
 
+    // Monta as linhas da tabela com os dados fornecidos
     let htmlTbody = '';
     dadosTabela.forEach(element => {
-        htmlTbody += '<tr>';
-        element.forEach(e => {
+        htmlTbody += `<tr onclick="${callback.name}('${element.dtc.id}')">`;
+        element.dados.forEach(e => {
             htmlTbody += `<td>${e}</td>`;
         });
         htmlTbody += '</tr>';
     });
 
+    // Insere as linhas no tbody da tabela
     const tbody = document.getElementById(idTbody);
     tbody.innerHTML = htmlTbody;
 }
 
-
-
-
-
-function mostrarDetalhes(id) {
-    // Aqui você pode implementar a lógica para mostrar os detalhes do remetente ou destinatário
-    alert(`Mostrar detalhes para ${id}`);
-}
 
 /**
  * Prepara os dados brutos de coleta para exibição na tabela.
@@ -100,8 +112,7 @@ function mostrarDetalhes(id) {
  * @returns {Array} Lista de objetos formatados para exibição na tabela.
  */
 function preparaDadosColeta(dadosBrutosColeta) {
-    return dadosBrutosColeta.map(dado => {
-        console.log(dado)
+    let novosDados = dadosBrutosColeta.map(dado => {
         const coleta = dado.coletas;
         const dtc = dado.dtc;
 
@@ -115,10 +126,11 @@ function preparaDadosColeta(dadosBrutosColeta) {
         const peso = coleta.peso;
         const valor = coleta.valor;
         const observacao = truncateString(coleta.observacao, 10);
-        return [id, dtcId, dataEmissao, dataSaida, remetente, destinatario, volumes, peso, valor,observacao];
+        return {dados:[id, dtcId, dataEmissao, dataSaida, remetente, destinatario, volumes, peso, valor,observacao],dtc:dtc};
     });
-}
 
+    return novosDados
+}
 
 /**
  * Prepara os dados brutos de coleta para exibição na tabela.
@@ -129,13 +141,12 @@ async function preparaDadosDtc(dadosBrutosDtc) {
     // Aguarda a resolução de todas as promessas criadas dentro do `map`
     const dadosFormatados = await Promise.all(
         dadosBrutosDtc.map(async (dado) => {
-            console.log(dado);
             let volumes =0
             let peso = 0
             let valor = 0
             // Obtém os dados de notas fiscais para o DTC atual
-            let dadosNfs = await calculaTotalNfsUtils(dado.id);
-
+            let dadosNfs = await calculaTotalNfsUtils(dado.notas_fiscais);
+            const dtc = dado
             const dtcId = dado.id;
             const notas = geraTextoNfUtils(dado.notas_fiscais);
             const dataEmissao = formataDataPtBr(dado.data_cadastro);
@@ -149,16 +160,7 @@ async function preparaDadosDtc(dadosBrutosDtc) {
                 valor = dadosNfs.vlrNf || 0;
             }
 
-            return [
-                dtcId,
-                notas,
-                dataEmissao,
-                remetente,
-                destinatario,
-                volumes,
-                peso,
-                valor,
-            ];
+            return {dados:[dtcId,notas,dataEmissao,remetente,destinatario,volumes,peso,valor,],dtc:dtc};
         })
     );
 
@@ -171,12 +173,13 @@ async function preparaDadosDtc(dadosBrutosDtc) {
  * @returns {Promise<Array>} Lista de objetos formatados para exibição na tabela.
  */
 async function preparaDadosCtes(dadosBrutosCte) {
+    let dtc
     // Aguarda a resolução de todas as promessas criadas dentro do `map`
     const dadosFormatados = await Promise.all(
         dadosBrutosCte.map(async (dado) => {
 
             // Obtém os dados de notas fiscais para o DTC atual
-            const dadosNfs = await calculaTotalNfsUtils(dado.dtc.id);
+            const dadosNfs = await calculaTotalNfsUtils(dado.dtc.notas_fiscais);
             // Inicializa valores padrão
             let volumes = 0;
             let peso = 0;
@@ -184,7 +187,7 @@ async function preparaDadosCtes(dadosBrutosCte) {
 
             // Extrai informações de CT-e e DTC
             const cte = dado.ctes;
-            const dtc = dado.dtc;
+            dtc = dado.dtc;
 
             const id = cte.id;
             const dtcId = dtc.id;
@@ -199,7 +202,7 @@ async function preparaDadosCtes(dadosBrutosCte) {
                 valor = dadosNfs.vlrNf || 0;
             }
 
-            return [id, dtcId, dataEmissao, remetente, destinatario, volumes, peso, valor];
+            return {dados:[id, dtcId, dataEmissao, remetente, destinatario, volumes, peso, valor],dtc:dtc};
         })
     );
 
@@ -212,7 +215,7 @@ async function preparaDadosCtes(dadosBrutosCte) {
  * @returns {Array} Lista de objetos formatados para exibição na tabela.
  */
 function preparaDadosNotas(dadosBrutosNf) {
-    return dadosBrutosNf.map(dado => {
+    let novosDados = dadosBrutosNf.map(dado => {
         const nota = dado.nota;
         const dtc = dado.dtc;
         const num_nf = nota.num_nf;
@@ -223,9 +226,101 @@ function preparaDadosNotas(dadosBrutosNf) {
         const volumes = nota.volume;
         const peso = nota.peso;
         const valor = nota.valor_nf;
-        return [num_nf, dtcId, dataCadastro, remetente, destinatario, volumes, peso, valor];
+        return {dados:[num_nf, dtcId, dataCadastro, remetente, destinatario, volumes, peso, valor],dtc:dtc};
     });
+
+    return novosDados
+}
+
+/**
+ * Popula os campos no modal com os dados fornecidos.
+ * @param {Object} remetente - Dados do remetente.
+ * @param {Object} destinatario - Dados do destinatário.
+ * @param {Object} tomador - Dados do tomador.
+ */
+function populaModalInfoDtc(remetente, destinatario, tomador) {
+    // Populando campos do Remetente
+    document.getElementById("cnpjRemModalInfoDtc").value = remetente.cnpj || "";
+    document.getElementById("razaoRemModalInfoDtc").value = remetente.razao || "";
+    document.getElementById("cepRemModalInfoDtc").value = remetente.cep || "";
+    document.getElementById("endRemModalInfoDtc").value = remetente.endereco || "";
+    document.getElementById("numeroRemModalInfoDtc").value = remetente.numero || "";
+    document.getElementById("compRemModalInfoDtc").value = remetente.complemento || "";
+    document.getElementById("bairroRemModalInfoDtc").value = remetente.bairro || "";
+    document.getElementById("cidRemModalInfoDtc").value = remetente.cidade || "";
+    document.getElementById("ufRemModalInfoDtc").value = remetente.uf || "";
+
+    // Populando campos do Destinatário
+    document.getElementById("cnpjDestModalInfoDtc").value = destinatario.cnpj || "";
+    document.getElementById("razaoDestModalInfoDtc").value = destinatario.razao || "";
+    document.getElementById("cepDestModalInfoDtc").value = destinatario.cep || "";
+    document.getElementById("endDestModalInfoDtc").value = destinatario.endereco || "";
+    document.getElementById("numeroDestModalInfoDtc").value = destinatario.numero || "";
+    document.getElementById("compDestModalInfoDtc").value = destinatario.complemento || "";
+    document.getElementById("bairroDestModalInfoDtc").value = destinatario.bairro || "";
+    document.getElementById("cidDestModalInfoDtc").value = destinatario.cidade || "";
+    document.getElementById("ufDestModalInfoDtc").value = destinatario.uf || "";
+
+    // Populando campos do Tomador
+    document.getElementById("cnpjTomModalInfoDtc").value = tomador.cnpj || "";
+    document.getElementById("razaoTomModalInfoDtc").value = tomador.razao || "";
+    document.getElementById("cepTomModalInfoDtc").value = tomador.cep || "";
+    document.getElementById("endTomModalInfoDtc").value = tomador.endereco || "";
+    document.getElementById("numeroTomModalInfoDtc").value = tomador.numero || "";
+    document.getElementById("compTomModalInfoDtc").value = tomador.complemento || "";
+    document.getElementById("bairroTomModalInfoDtc").value = tomador.bairro || "";
+    document.getElementById("cidTomModalInfoDtc").value = tomador.cidade || "";
+    document.getElementById("ufTomModalInfoDtc").value = tomador.uf || "";
 }
 
 
+// Popula os campos
+// populaModalInfoDtc(remetente, destinatario, tomador);
 
+async function modalDtc(idDtc){
+    const apiService = new ApiService();
+    const url = "/operacional/get_dtc_id/";
+    let dados = { id_dtc:idDtc};
+    // Enviando dados via POST e armazenando o resultado em uma variável
+    const dadosInfoDtc = await apiService.postData(url, dados);
+
+    const dadosDtcRemetente = {
+        cnpj: dadosInfoDtc?.dadosDtc?.remetente?.cnpj_cpf ?? '',
+        razao: dadosInfoDtc?.dadosDtc?.remetente?.raz_soc ?? '',
+        cep: dadosInfoDtc?.dadosDtc?.remetente?.endereco_fk?.cep ?? '',
+        endereco: dadosInfoDtc?.dadosDtc?.remetente?.endereco_fk?.logradouro ?? '',
+        numero: dadosInfoDtc?.dadosDtc?.remetente?.endereco_fk?.numero ?? '',
+        complemento: dadosInfoDtc?.dadosDtc?.remetente?.endereco_fk?.complemento ?? '',
+        bairro: dadosInfoDtc?.dadosDtc?.remetente?.endereco_fk?.bairro ?? '',
+        cidade: dadosInfoDtc?.dadosDtc?.remetente?.endereco_fk?.cidade ?? '',
+        uf: dadosInfoDtc?.dadosDtc?.remetente?.endereco_fk?.uf ?? '',
+    };
+
+    const dadosDtcDestinatario = {
+        cnpj: dadosInfoDtc?.dadosDtc?.destinatario?.cnpj_cpf ?? '',
+        razao: dadosInfoDtc?.dadosDtc?.destinatario?.raz_soc ?? '',
+        cep: dadosInfoDtc?.dadosDtc?.destinatario?.endereco_fk?.cep ?? '',
+        endereco: dadosInfoDtc?.dadosDtc?.destinatario?.endereco_fk?.logradouro ?? '',
+        numero: dadosInfoDtc?.dadosDtc?.destinatario?.endereco_fk?.numero ?? '',
+        complemento: dadosInfoDtc?.dadosDtc?.destinatario?.endereco_fk?.complemento ?? '',
+        bairro: dadosInfoDtc?.dadosDtc?.destinatario?.endereco_fk?.bairro ?? '',
+        cidade: dadosInfoDtc?.dadosDtc?.destinatario?.endereco_fk?.cidade ?? '',
+        uf: dadosInfoDtc?.dadosDtc?.destinatario?.endereco_fk?.uf ?? '',
+    };
+
+    const dadosDtcTomador = {
+        cnpj: dadosInfoDtc?.dadosDtc?.tomador?.cnpj_cpf ?? '',
+        razao: dadosInfoDtc?.dadosDtc?.tomador?.raz_soc ?? '',
+        cep: dadosInfoDtc?.dadosDtc?.tomador?.endereco_fk?.cep ?? '',
+        endereco: dadosInfoDtc?.dadosDtc?.tomador?.endereco_fk?.logradouro ?? '',
+        numero: dadosInfoDtc?.dadosDtc?.tomador?.endereco_fk?.numero ?? '',
+        complemento: dadosInfoDtc?.dadosDtc?.tomador?.endereco_fk?.complemento ?? '',
+        bairro: dadosInfoDtc?.dadosDtc?.tomador?.endereco_fk?.bairro ?? '',
+        cidade: dadosInfoDtc?.dadosDtc?.tomador?.endereco_fk?.cidade ?? '',
+        uf: dadosInfoDtc?.dadosDtc?.tomador?.endereco_fk?.uf ?? '',
+    };
+
+ 
+    populaModalInfoDtc(dadosDtcRemetente,dadosDtcDestinatario,dadosDtcTomador)
+    openModal('modalInfoDtc')
+}

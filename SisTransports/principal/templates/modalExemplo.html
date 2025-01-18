@@ -1,0 +1,43 @@
+{% load static %}
+<form id="frmModalInfoDtc"><!--Form do Modal caso seja necessário usar metodo obterDadosDoFormulario(formularioId, camposObrigatorios = [])
+                            para obter os dados do formulario-->
+    <div class="modal" id="modalInfoDtc" tabindex="-1" data-bs-backdrop="static"
+        data-bs-keyboard="false">
+        <div class="modal-dialog modal-lg modal-altura">
+            <div class="modal-content">
+                <!-- Div Ações do Modal -->
+                <div class="modal-header cabecalho-modal-parceiro">
+                    <!-- <h5 class="modal-title">Baixa de Documentos</h5>
+                    <div>
+                      <div class="input-group mb-2" align="right">
+                          <select class="form-select form-select-sm" id="mdlTipoDocumentoModalOcorrencia" disabled>
+                            <option value="1">Coleta</option>
+                            <option value="2">CT-e</option>
+                          </select>
+                          <input type="text" class="form-control form-control-sm" id="idDocumentoModalOcorrencia" placeholder="Número Documento" disabled>
+                          <button type="button" class="btn btn-secondary btn-rounded btn-icon" id="btnLimpaModalOcorrencia" align="right">            
+                              <i class="ti-write"></i>
+                          </button>
+                            <button type="button" class="btn btn-success btn-rounded btn-icon" id="btnSalvaModalOcorrencia" align="right">            
+                              <i class="ti-save"></i>
+                          </button>
+                          <button type="button" class="btn btn-danger btn-rounded btn-icon" id="btnCloseBaixaDocumento" onclick="closeModal()" align="right">
+                              <i class="ti-close"></i>
+                          </button>
+                      </div>
+                    </div> -->
+                </div>
+
+                <!-- Div Corpo do Modal -->
+                <div class="modal-body">
+                  <div class="row">
+                  </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+
+<!-- Js de outras Paginas -->
+{% block 'js'%} 
+{% endblock %}
