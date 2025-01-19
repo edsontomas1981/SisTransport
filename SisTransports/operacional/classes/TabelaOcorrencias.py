@@ -61,6 +61,14 @@ class TabelaOcorrencias:
                 return ocorrencias
                 # except:
                 #     return 404
-
+                
+    @staticmethod
+    def get_ocorrencias_por_dtc(id_dtc):
+        try:
+            ocorrencias = Ocorrencia.objects.filter(dtc_fk=id_dtc).order_by('id')
+            return ocorrencias
+        except:
+            return 404
+                    
         
         

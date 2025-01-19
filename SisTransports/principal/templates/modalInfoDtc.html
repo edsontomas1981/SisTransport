@@ -1,34 +1,25 @@
 {% load static %}
-<form id="frmModalInfoDtc">
+<form id="frmModalInfoDtc" disabled>
     <div class="modal" id="modalInfoDtc" tabindex="-1" data-bs-backdrop="static"
         data-bs-keyboard="false">
-        <div class="modal-dialog modal-lg modal-altura">
+        <div class="modal-dialog modal-lg modal-altura modal-dialog-scrollable">
             <div class="modal-content">
                 <!-- Div Ações do Modal -->
                 <div class="modal-header cabecalho-modal-parceiro">
                     <h5 class="modal-title">Informações DTC</h5>
-                    <div>
-                      <div class="input-group mb-2" align="right">
-                          <!-- <select class="form-select form-select-sm" id="mdlTipoDocumentoModalOcorrencia" disabled>
-                            <option value="1">Coleta</option>
-                            <option value="2">CT-e</option>
-                          </select>
-                          <input type="text" class="form-control form-control-sm" id="idDocumentoModalOcorrencia" placeholder="Número Documento" disabled>
-                          <button type="button" class="btn btn-secondary btn-rounded btn-icon" id="btnLimpaModalOcorrencia" align="right">            
-                              <i class="ti-write"></i>
-                          </button>
-                            <button type="button" class="btn btn-success btn-rounded btn-icon" id="btnSalvaModalOcorrencia" align="right">            
-                              <i class="ti-save"></i>
-                          </button> -->
-                          <div class="form-floating mb-3 col-sm-6">
-                            <input type="text" class="form-control" id="razaoDestModalInfoDtc" placeholder="name@example.com">
-                            <label class="ml-3" for="razaoDestModalInfoDtc">Nome/Razão Social</label>
+                    <div class="row">
+                      <div class="col-sm-6" align="right">
+                          <div class="form-floating mb-3 col-sm-12">
+                            <input type="text" class="form-control" id="idDtcModalInfo" placeholder="name@example.com" disabled>
+                            <label class="ml-3" for="idDtcModalInfo" align="left">DTC Nº</label>
                           </div>
-
-                          <button type="button" class="btn btn-danger btn-rounded btn-icon" onclick="closeModal()" align="right">
-                              <i class="ti-close"></i>
-                          </button>
                       </div>
+
+											<div class="col-sm-6" align="right">
+												<button type="button" class="btn btn-danger btn-rounded btn-icon" onclick="closeModal()" align="right">
+													<i class="ti-close"></i>
+												</button>
+											</div>
                     </div>
                 </div>
                 <!-- Div Corpo do Modal -->
@@ -38,39 +29,39 @@
 											<div class="row">
 												<span>Remetente</span>
 												<div class="form-floating mb-3 col-sm-6">
-														<input type="text" class="form-control" id="cnpjRemModalInfoDtc" placeholder="name@example.com">
+														<input type="text" class="form-control" id="cnpjRemModalInfoDtc" placeholder="name@example.com" disabled>
 														<label class="ml-3"	for="cnpjRemModalInfoDtc">Cnpj</label>
 												</div>
 												<div class="form-floating mb-3 col-sm-6">
-													<input type="text" class="form-control" id="razaoRemModalInfoDtc" placeholder="name@example.com">
+													<input type="text" class="form-control" id="razaoRemModalInfoDtc" placeholder="name@example.com" disabled>
 													<label class="ml-3" for="razaoRemModalInfoDtc">Nome/Razão Social</label>
 												</div>
 												<div class="form-floating mb-3 col-sm-3">
-													<input type="text" class="form-control" id="cepRemModalInfoDtc" placeholder="name@example.com">
+													<input type="text" class="form-control" id="cepRemModalInfoDtc" placeholder="name@example.com" disabled>
 													<label class="ml-3" for="cepRemModalInfoDtc">CEP</label>
 												</div>
 												<div class="form-floating mb-3 col-sm-7">
-													<input type="text" class="form-control" id="endRemModalInfoDtc" placeholder="name@example.com">
+													<input type="text" class="form-control" id="endRemModalInfoDtc" placeholder="name@example.com" disabled>
 													<label class="ml-3" for="endRemModalInfoDtc">Endereço</label>
 												</div>	
 												<div class="form-floating mb-3 col-sm-2	">
-													<input type="text" class="form-control" id="numeroRemModalInfoDtc" placeholder="name@example.com">
+													<input type="text" class="form-control" id="numeroRemModalInfoDtc" placeholder="name@example.com" disabled>
 													<label class="ml-3" for="numeroRemModalInfoDtc">Nº</label>
 												</div>												
 												<div class="form-floating mb-3 col-sm-6">
-													<input type="text" class="form-control" id="compRemModalInfoDtc" placeholder="name@example.com">
+													<input type="text" class="form-control" id="compRemModalInfoDtc" placeholder="name@example.com" disabled>
 													<label class="ml-3" for="compRemModalInfoDtc">Complemento</label>
 												</div>						
 												<div class="form-floating mb-3 col-sm-6">
-													<input type="text" class="form-control" id="bairroRemModalInfoDtc" placeholder="name@example.com">
+													<input type="text" class="form-control" id="bairroRemModalInfoDtc" placeholder="name@example.com" disabled>
 													<label class="ml-3" for="bairroRemModalInfoDtc">Bairro</label>
 												</div>
 												<div class="form-floating mb-3 col-sm-8">
-													<input type="text" class="form-control" id="cidRemModalInfoDtc" placeholder="name@example.com">
+													<input type="text" class="form-control" id="cidRemModalInfoDtc" placeholder="name@example.com" disabled>
 													<label class="ml-3" for="cidRemModalInfoDtc">Cidade</label>
 												</div>	
 												<div class="form-floating mb-3 col-sm-4">
-													<input type="text" class="form-control" id="ufRemModalInfoDtc" placeholder="name@example.com">
+													<input type="text" class="form-control" id="ufRemModalInfoDtc" placeholder="name@example.com" disabled>
 													<label class="ml-3" for="ufRemModalInfoDtc">UF</label>
 												</div>				
 											</div>
@@ -79,39 +70,39 @@
 											<div class="row">
                         <span>Destinatário</span>
 												<div class="form-floating mb-3 col-sm-6">
-													<input type="text" class="form-control" id="cnpjDestModalInfoDtc" placeholder="name@example.com">
+													<input type="text" class="form-control" id="cnpjDestModalInfoDtc" placeholder="name@example.com" disabled>
 													<label class="ml-3"	for="cnpjDestModalInfoDtc">Cnpj</label>
 												</div>
 												<div class="form-floating mb-3 col-sm-6">
-													<input type="text" class="form-control" id="razaoDestModalInfoDtc" placeholder="name@example.com">
+													<input type="text" class="form-control" id="razaoDestModalInfoDtc" placeholder="name@example.com" disabled>
 													<label class="ml-3" for="razaoDestModalInfoDtc">Nome/Razão Social</label>
 												</div>
 												<div class="form-floating mb-3 col-sm-3">
-													<input type="text" class="form-control" id="cepDestModalInfoDtc" placeholder="name@example.com">
+													<input type="text" class="form-control" id="cepDestModalInfoDtc" placeholder="name@example.com" disabled>
 													<label class="ml-3" for="cepDestModalInfoDtc">CEP</label>
 												</div>
 												<div class="form-floating mb-3 col-sm-7">
-													<input type="text" class="form-control" id="endDestModalInfoDtc" placeholder="name@example.com">
+													<input type="text" class="form-control" id="endDestModalInfoDtc" placeholder="name@example.com" disabled>
 													<label class="ml-3" for="endDestModalInfoDtc">Endereço</label>
 												</div>	
 												<div class="form-floating mb-3 col-sm-2	">
-													<input type="text" class="form-control" id="numeroDestModalInfoDtc" placeholder="name@example.com">
+													<input type="text" class="form-control" id="numeroDestModalInfoDtc" placeholder="name@example.com" disabled>
 													<label class="ml-3" for="numeroDestModalInfoDtc">Nº</label>
 												</div>												
 												<div class="form-floating mb-3 col-sm-6">
-													<input type="text" class="form-control" id="compDestModalInfoDtc" placeholder="name@example.com">
+													<input type="text" class="form-control" id="compDestModalInfoDtc" placeholder="name@example.com" disabled>
 													<label class="ml-3" for="compDestModalInfoDtc">Complemento</label>
 												</div>						
 												<div class="form-floating mb-3 col-sm-6">
-													<input type="text" class="form-control" id="bairroDestModalInfoDtc" placeholder="name@example.com">
+													<input type="text" class="form-control" id="bairroDestModalInfoDtc" placeholder="name@example.com" disabled>
 													<label class="ml-3" for="bairroDestModalInfoDtc">Bairro</label>
 												</div>
 												<div class="form-floating mb-3 col-sm-8">
-													<input type="text" class="form-control" id="cidDestModalInfoDtc" placeholder="name@example.com">
+													<input type="text" class="form-control" id="cidDestModalInfoDtc" placeholder="name@example.com" disabled>
 													<label class="ml-3" for="cidDestModalInfoDtc">Cidade</label>
 												</div>	
 												<div class="form-floating mb-3 col-sm-4">
-													<input type="text" class="form-control" id="ufDestModalInfoDtc" placeholder="name@example.com">
+													<input type="text" class="form-control" id="ufDestModalInfoDtc" placeholder="name@example.com" disabled>
 													<label class="ml-3" for="ufDestModalInfoDtc">UF</label>
 												</div>
 											</div>
@@ -120,39 +111,39 @@
 											<div class="row">
                         <span>Tomador</span>
 												<div class="form-floating mb-3 col-sm-6">
-													<input type="text" class="form-control" id="cnpjTomModalInfoDtc" placeholder="name@example.com">
+													<input type="text" class="form-control" id="cnpjTomModalInfoDtc" placeholder="name@example.com" disabled>
 													<label class="ml-3"	for="cnpjTomModalInfoDtc">Cnpj</label>
 												</div>
 												<div class="form-floating mb-3 col-sm-6">
-													<input type="text" class="form-control" id="razaoTomModalInfoDtc" placeholder="name@example.com">
+													<input type="text" class="form-control" id="razaoTomModalInfoDtc" placeholder="name@example.com" disabled>
 													<label class="ml-3" for="razaoTomModalInfoDtc">Nome/Razão Social</label>
 												</div>
 												<div class="form-floating mb-3 col-sm-3">
-													<input type="text" class="form-control" id="cepTomModalInfoDtc" placeholder="name@example.com">
+													<input type="text" class="form-control" id="cepTomModalInfoDtc" placeholder="name@example.com" disabled>
 													<label class="ml-3" for="cepTomModalInfoDtc">CEP</label>
 												</div>
 												<div class="form-floating mb-3 col-sm-7">
-													<input type="text" class="form-control" id="endTomModalInfoDtc" placeholder="name@example.com">
+													<input type="text" class="form-control" id="endTomModalInfoDtc" placeholder="name@example.com" disabled>
 													<label class="ml-3" for="endTomModalInfoDtc">Endereço</label>
 												</div>	
 												<div class="form-floating mb-3 col-sm-2	">
-													<input type="text" class="form-control" id="numeroTomModalInfoDtc" placeholder="name@example.com">
+													<input type="text" class="form-control" id="numeroTomModalInfoDtc" placeholder="name@example.com" disabled>
 													<label class="ml-3" for="numeroTomModalInfoDtc">Nº</label>
 												</div>												
 												<div class="form-floating mb-3 col-sm-6">
-													<input type="text" class="form-control" id="compTomModalInfoDtc" placeholder="name@example.com">
+													<input type="text" class="form-control" id="compTomModalInfoDtc" placeholder="name@example.com" disabled>
 													<label class="ml-3" for="compTomModalInfoDtc">Complemento</label>
 												</div>						
 												<div class="form-floating mb-3 col-sm-6">
-													<input type="text" class="form-control" id="bairroTomModalInfoDtc" placeholder="name@example.com">
+													<input type="text" class="form-control" id="bairroTomModalInfoDtc" placeholder="name@example.com" disabled>
 													<label class="ml-3" for="bairroTomModalInfoDtc">Bairro</label>
 												</div>
 												<div class="form-floating mb-3 col-sm-8">
-													<input type="text" class="form-control" id="cidTomModalInfoDtc" placeholder="name@example.com">
+													<input type="text" class="form-control" id="cidTomModalInfoDtc" placeholder="name@example.com" disabled>
 													<label class="ml-3" for="cidTomModalInfoDtc">Cidade</label>
 												</div>	
 												<div class="form-floating mb-3 col-sm-4">
-													<input type="text" class="form-control" id="ufTomModalInfoDtc" placeholder="name@example.com">
+													<input type="text" class="form-control" id="ufTomModalInfoDtc" placeholder="name@example.com" disabled>
 													<label class="ml-3" for="ufTomModalInfoDtc">UF</label>
 												</div>											
 											</div>
@@ -160,9 +151,60 @@
 										<hr>
                     <div class="row">
 
+
+
                       <div class="col-sm-12">
-                        <h6>Notas Fiscais</h6>
-                        <table class="mt-1" style="width: 100%;border-radius: 10px;background-color: #4B49AC;color: white;border-radius: 5px; padding: 3px;">
+												<ol class="breadcrumb breadcrumb-custom bg-success">
+													<li class="breadcrumb-item text-dark"><a>Cte</a></li>
+													<li class="breadcrumb-item"></li>
+												</ol>
+                        <table class="mt-1 table-sm table-striped table-success table-bordered" style="width: 100%;">
+                          <thead>
+                            <tr>
+                              <th class="">Frete Calculado</th>
+                              <th class="">Ad Valorem</th>
+                              <th class="">Coleta</th>
+                              <th class="">GRIS</th>
+                              <th class="">Pedágio</th>
+                              <th class="">Despacho</th>
+                              <th class="">Outros</th>
+                              <th class="">R$ ICMS</th>
+                              <th class="">Aliq ICMS</th>
+                              <th class="">Frete Total</th>
+                              <th class="">Observação</th>
+                            </tr>
+                          </thead>
+                          <tbody class=" text-dark" id="tbodyCteModalInfo">
+                          </tbody>
+                        </table>
+                      </div>
+
+											<div class="col-sm-12  mt-5">
+												<ol class="breadcrumb breadcrumb-custom bg-info">
+													<li class="breadcrumb-item text-dark"><a>Coleta</a></li>
+													<li class="breadcrumb-item"></li>
+												</ol>
+                        <table class="mt-1 table-sm table-striped table-info table-bordered" style="width: 100%;">
+                          <thead>
+                            <tr>
+                              <th class="">Endereço</th>
+                              <th class="">Volumes</th>
+                              <th class="">Peso</th>
+                              <th class="">R$</th>
+                              <th class="">Observação</th>
+                            </tr>
+                          </thead>
+                          <tbody class=" text-dark" id="tbodyColetaModalInfo">
+                          </tbody>
+                        </table>
+                      </div>
+
+											<div class="col-sm-12 mt-5">
+												<ol class="breadcrumb breadcrumb-custom bg-primary">
+													<li class="breadcrumb-item text-dark"><a>Notas Fiscais</a></li>
+													<li class="breadcrumb-item"></li>
+												</ol>
+												<table class="mt-1 table-sm table-striped table-primary table-bordered" style="width: 100%;">
                           <thead>
                             <tr>
                               <th class="">Nº NF</th>
@@ -176,36 +218,16 @@
                         </table>
                       </div>
 
-                      <div class="col-sm-12">
-                        <h6>Cte</h6>
-                        <table class="mt-1" style="width: 100%;border-radius: 10px;background-color: #267c3d;color: white;border-radius: 5px; padding: 3px;">
+											<div class="col-sm-12 mt-5">
+												<ol class="breadcrumb breadcrumb-custom bg-warning">
+													<li class="breadcrumb-item text-dark"><a>Histórico</a></li>
+													<li class="breadcrumb-item"></li>
+												</ol>
+												<table class="mt-1 table-sm table-striped table-warning table-bordered" style="width: 100%;">
                           <thead>
                             <tr>
-                              <th class="">Valor do Frete</th>
-                              <th class="">Ad Valorem</th>
-                              <th class="">GRIS</th>
-                              <th class="">Pedágio</th>
-                              <th class="">Taxa de Coleta</th>
-                              <th class="">Taxa de Entrega</th>
-                              <th class="">Valor do ICMS</th>
-                              <th class="">Tipo de Serviço</th>
-                              <th class="">Data de Emissão</th>
-                              <th class="">Observação</th>
-                            </tr>
-                          </thead>
-                          <tbody id="tbodyCteModalInfo">
-                          </tbody>
-                        </table>
-                      </div>
-
-                      <div class="col-sm-12">
-                        <h6>Histórico do Documento</h6>
-                        <table class="mt-1" style="width: 100%;border-radius: 10px;background-color: #853d44;color: white;border-radius: 5px; padding: 3px;">
-                          <thead>
-                            <tr>
-                              <th class="">Dtc Nº</th>
+															<th class="">Documento Nº</th>
                               <th class="">Tipo Documento</th>
-                              <th class="">Documento Nº</th>
                               <th class="">Responsável</th>
                               <th class="">Data</th>
                               <th class="">Descrição</th>
@@ -216,6 +238,7 @@
                           </tbody>
                         </table>
                       </div>
+
                     </div>
 										<hr>
                   </div>

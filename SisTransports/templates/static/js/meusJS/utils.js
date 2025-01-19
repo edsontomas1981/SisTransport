@@ -1440,3 +1440,6 @@ const geraTextoNfUtils = (nfs) => {
   });
   return notasFiscais;
 };
+
+// Função auxiliar para evitar valores nulos ou indefinidos
+const safeValue = (value, defaultValue = '-') => value !== null && value !== undefined ? value : defaultValue;

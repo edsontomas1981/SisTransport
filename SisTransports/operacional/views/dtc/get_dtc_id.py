@@ -4,6 +4,7 @@ from django.http import JsonResponse, HttpResponseBadRequest
 from operacional.classes.dtc import Dtc
 from operacional.classes.cte import Cte
 from operacional.classes.coleta import Coleta
+from operacional.classes.TabelaOcorrencias import TabelaOcorrencias
 
 class GetDtcPorIdDtc(ViewBase, View):
     """
@@ -45,6 +46,12 @@ class GetDtcPorIdDtc(ViewBase, View):
             dtc_dict = dtc.to_dict()
             dtc_dict['cte'] = cte.to_dict() if cte else {}
 
+            ocorrencias = TabelaOcorrencias.get_ocorrencias_por_dtc(id_dtc)
+            dtc_dict['ocorrencias'] = []
+            
+            if ocorrencias != 404:
+                dtc_dict['ocorrencias'] = [ocorrencia.to_dict() for ocorrencia in ocorrencias]
+            
             # Retorna a resposta JSON com os dados
             return JsonResponse({'success': True, 'dadosDtc': dtc_dict}, status=201)
 

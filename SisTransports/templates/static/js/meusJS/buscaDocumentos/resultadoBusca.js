@@ -3,6 +3,7 @@
  * Processa os dados armazenados em `sessionStorage` e popula tabelas com informações relacionadas.
  */
 document.addEventListener('DOMContentLoaded', async function () {
+
     // Recupera os dados armazenados no sessionStorage
     const dados = JSON.parse(sessionStorage.getItem('buscaResultados'));
 
@@ -50,6 +51,10 @@ document.addEventListener('DOMContentLoaded', async function () {
         const dadosDtcs = await preparaDadosDtc(dados.dtc_por_cnpj);
         populaTabelaBusca(dadosDtcs, 'divTabelaBuscaCNPJ', tituloDtcs, 'buscaDtcTbody', "Busca por CNPJ", modalDtc);
     }
+
+    sessionStorage.removeItem('buscaResultados'); // Substitua 'chave' pelo nome do item
+
+
 });
 
 
@@ -238,7 +243,12 @@ function preparaDadosNotas(dadosBrutosNf) {
  * @param {Object} destinatario - Dados do destinatário.
  * @param {Object} tomador - Dados do tomador.
  */
-function populaModalInfoDtc(remetente, destinatario, tomador) {
+async function populaModalInfoDtc(remetente, destinatario, tomador,dtc) {
+
+
+    // Populando id do Dtc
+    document.getElementById("idDtcModalInfo").value = dtc.id || "";
+
     // Populando campos do Remetente
     document.getElementById("cnpjRemModalInfoDtc").value = remetente.cnpj || "";
     document.getElementById("razaoRemModalInfoDtc").value = remetente.razao || "";
@@ -271,11 +281,78 @@ function populaModalInfoDtc(remetente, destinatario, tomador) {
     document.getElementById("bairroTomModalInfoDtc").value = tomador.bairro || "";
     document.getElementById("cidTomModalInfoDtc").value = tomador.cidade || "";
     document.getElementById("ufTomModalInfoDtc").value = tomador.uf || "";
+
+    console.log(dtc)
+
+    if(dtc.cte.id){
+        let dadosTabelaCteModalInfo =await preparaDadosTabelaCte(dtc.cte)
+        popula_tbody('tbodyCteModalInfo',dadosTabelaCteModalInfo,false,false,false)
+    }   
+
+    if(dtc.notas_fiscais.length>0){
+        let dadosTabelaNotasModalInfo =await preparaDadosTabelaNotas(dtc.notas_fiscais)
+        popula_tbody('tbodyNfsModalInfo',dadosTabelaNotasModalInfo,false,false,false)
+    }  
+
+    if(dtc.ocorrencias.length>0){
+        let dadosTabelaNotasModalInfo =await preparaDadosTabelaOcorrencias(dtc.ocorrencias)
+        popula_tbody('tbodyHistoricoModalInfo',dadosTabelaNotasModalInfo,false,false,false)
+    }      
+
+    if(dtc.coleta){
+        let dadosTabelaColetaModalInfo =await preparaDadosTabelaColeta(dtc.coleta)
+        popula_tbody('tbodyColetaModalInfo',dadosTabelaColetaModalInfo,false,false,false)
+    }
 }
 
+/**
+ * Prepara os dados de uma tabela de CTe, prevenindo erros e dados ausentes.
+ * @param {Object} cte - Objeto contendo os dados do CTe.
+ * @returns {Promise<Array>} - Array contendo os dados formatados para a tabela.
+ */
+async function preparaDadosTabelaCte(cte) {
+    return [{
+        freteCalculado: formatarMoeda(safeValue(cte.freteCalculado, 0)),
+        advalorem: formatarMoeda(safeValue(cte.advalor, 0)),
+        coleta: formatarMoeda(safeValue(cte.vlrColeta, 0)),
+        gris: formatarMoeda(safeValue(cte.gris, 0)),
+        pedagio: formatarMoeda(safeValue(cte.pedagio, 0)),
+        despacho: formatarMoeda(safeValue(cte.despacho, 0)),
+        outros: formatarMoeda(safeValue(cte.outros, 0)),
+        icmsRs: formatarMoeda(safeValue(cte.icmsRS, 0)),
+        aliq: safeValue(cte.aliquota, '0%'),
+        total: formatarMoeda(safeValue(cte.totalFrete, 0)),
+        obs: safeValue(cte.observacao, 'Sem observações'),
+    }];
+}
 
-// Popula os campos
-// populaModalInfoDtc(remetente, destinatario, tomador);
+async function preparaDadosTabelaNotas(notas) {
+    return notas.map(nota => ({
+        numNf: safeValue(nota.num_nf),
+        volume: safeValue(nota.volume),
+        peso: safeValue(nota.peso, 0)+'kg',
+        valor: formatarMoeda(safeValue(nota.valor_nf, 0)),
+    }));
+}
+
+async function preparaDadosTabelaColeta(coleta) {
+    return [{endereco:`${coleta.rua}-${coleta.numero}-${coleta.bairro}-${coleta.cidade}`,
+            volumes:safeValue(coleta.volume),
+            peso:`${safeValue(coleta.peso)} Kg`,
+            valor:`R$ ${safeValue(coleta.valor)}`,
+            obs:safeValue(coleta.observacao)}];
+}
+
+async function preparaDadosTabelaOcorrencias(ocorrencias) {
+    return ocorrencias.map(ocorrencia => ({
+        numeroDocumento: safeValue(ocorrencia.cte ? ocorrencia.cte : ocorrencia.coleta),
+        tipo: ocorrencia.cte ? 'CT-e' : 'Coleta',
+        responsavel: safeValue(ocorrencia.responsavel),
+        data: safeValue(ocorrencia.data_ocorrencia),
+        ocorrencia: safeValue(ocorrencia.tipo_ocorrencia.descricao),
+        obs: safeValue(ocorrencia.observacao),
+    }));
+}
 
 async function modalDtc(idDtc){
     const apiService = new ApiService();
@@ -321,6 +398,6 @@ async function modalDtc(idDtc){
     };
 
  
-    populaModalInfoDtc(dadosDtcRemetente,dadosDtcDestinatario,dadosDtcTomador)
+    populaModalInfoDtc(dadosDtcRemetente,dadosDtcDestinatario,dadosDtcTomador,dadosInfoDtc.dadosDtc)
     openModal('modalInfoDtc')
 }

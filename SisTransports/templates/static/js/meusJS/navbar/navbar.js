@@ -1,5 +1,11 @@
 document.getElementById('btnBuscarDocumentos').addEventListener('click',async function() {
   try {
+
+		if (document.getElementById('documentoBusca').value===''){
+			msgErro('Informe o documento para busca');
+			return
+		}
+		
 		sessionStorage.removeItem('buscaResultados'); // Substitua 'chave' pelo nome do item
 		const idDocumento = document.getElementById('documentoBusca').value;
 		const apiService = new ApiService();
