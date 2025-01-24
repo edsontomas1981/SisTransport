@@ -14,6 +14,8 @@ document.addEventListener('DOMContentLoaded', async function () {
     if (dados.coletas.length > 0) {
         const tituloColetas = ['Nº Coleta', 'DTC', 'Dt Emissão', 'Dt Saída', 'Remetente', 'Destinatário', 'Volumes', 'Peso', 'Valor R$', 'Observação'];
         const dadosColetas = preparaDadosColeta(dados.coletas);
+
+        
         populaTabelaBusca(dadosColetas, 'divTabelaBuscaColetas', tituloColetas, 'buscaColetasTbody', 'Coletas', modalDtc);
     }
 
@@ -98,10 +100,13 @@ function populaTabelaBusca(dadosTabela, divTabela, titulos, idTbody, tituloTexto
     // Monta as linhas da tabela com os dados fornecidos
     let htmlTbody = '';
     dadosTabela.forEach(element => {
-        htmlTbody += `<tr onclick="${callback.name}('${element.dtc.id}')">`;
+        htmlTbody += `<tr>`;
         element.dados.forEach(e => {
-            htmlTbody += `<td>${e}</td>`;
+            htmlTbody += `<td onclick="${callback.name}('${element.dtc.id}')">${e}</td>`;
         });
+        if(element.botao){
+            
+        }
         htmlTbody += '</tr>';
     });
 
@@ -118,6 +123,13 @@ function populaTabelaBusca(dadosTabela, divTabela, titulos, idTbody, tituloTexto
  */
 function preparaDadosColeta(dadosBrutosColeta) {
     let novosDados = dadosBrutosColeta.map(dado => {
+        const btnBaixaDetalhadaModalInfo = {
+            btnBaixa: {
+              classe: "btn-primary text-white",
+              texto: '<i class="fas fa-check" aria-hidden="true"></i>',
+            //   callback: selecionaVeiculo
+            }
+          };
         const coleta = dado.coletas;
         const dtc = dado.dtc;
 
@@ -131,7 +143,7 @@ function preparaDadosColeta(dadosBrutosColeta) {
         const peso = coleta.peso;
         const valor = coleta.valor;
         const observacao = truncateString(coleta.observacao, 10);
-        return {dados:[id, dtcId, dataEmissao, dataSaida, remetente, destinatario, volumes, peso, valor,observacao],dtc:dtc};
+        return {dados:[id, dtcId, dataEmissao, dataSaida, remetente, destinatario, volumes, peso, valor,observacao],dtc:dtc,botao:btnBaixaDetalhadaModalInfo};
     });
 
     return novosDados
@@ -301,6 +313,11 @@ async function populaModalInfoDtc(remetente, destinatario, tomador,dtc) {
 
     if(dtc.coleta){
         let dadosTabelaColetaModalInfo =await preparaDadosTabelaColeta(dtc.coleta)
+        // let botaoBaixaModalInfo={
+        //                             classe: "btn-primary text-white",
+        //                             texto: 'Baixar',
+        //                             // callback: baixaDetalhada
+        //                         }
         popula_tbody('tbodyColetaModalInfo',dadosTabelaColetaModalInfo,false,false,false)
     }
 }
