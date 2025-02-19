@@ -47,4 +47,4 @@ class CrudContatosTestCase(TestCase):
                 'tipo':self.tipo.tipoContato,
                 }
         
-        self.assertEqual(self.contato.createContato(dados),200)
+        self.assertEqual(self.contato.createContato(dados),201)

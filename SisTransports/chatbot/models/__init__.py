@@ -1,0 +1,2 @@
+from chatbot.models.estado_clientes_chatbot import EstadoConversa
+from chatbot.models.mensagens_chatbot import ChatMessage
