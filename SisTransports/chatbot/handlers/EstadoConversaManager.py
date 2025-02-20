@@ -4,7 +4,7 @@ from chatbot.models.estado_clientes_chatbot import EstadoConversa
 class EstadoConversaManager:
     
     @staticmethod
-    def criar_estado_conversa(fone_email_etc, nome=None, descricao=None, estado_conversa={}):
+    def get_or_create_estado_conversa(fone_email_etc, nome=None, descricao=None, estado_conversa={}):
         """
         Cria um novo EstadoConversa garantindo unicidade do fone_email_etc.
         """
@@ -18,9 +18,9 @@ class EstadoConversaManager:
                 }
             )
             if created:
-                return {"success": True, "message": "EstadoConversa criado com sucesso!", "data": obj.to_dict()}
+                return obj.to_dict()
             else:
-                return {"success": False, "message": "Já existe um EstadoConversa com esse contato!", "data": obj.to_dict()}
+                return obj.to_dict()
         except ValidationError as e:
             return {"success": False, "message": str(e)}
     
@@ -38,9 +38,9 @@ class EstadoConversaManager:
         """
         try:
             obj = EstadoConversa.objects.get(fone_email_etc=fone_email_etc)
-            return {"success": True, "data": obj.to_dict()}
+            return  obj.to_dict()
         except ObjectDoesNotExist:
-            return {"success": False, "message": "EstadoConversa não encontrado!"}
+            return False
     
     @staticmethod
     def atualizar_estado_conversa(fone_email_etc, nome=None, descricao=None, estado_conversa=None):

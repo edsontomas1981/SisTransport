@@ -4,12 +4,15 @@ def default_json():
                         "fone": "",
                         "email": ""
                         },
-                "menu_atual":"",
-                "passo_atual":"",
+                "menu":{
+                        "menu_atual":"cadastro",
+                        "passo":""
+                       },
                 "coletas": {},
                 "cotacao": {},
                 "rastreamento": {},
-                "enviar_endereco": {},
+                "endereco_coleta": {},
+                "endereco_entrega": {},
                 "reclamacoes": {},
             }
 
