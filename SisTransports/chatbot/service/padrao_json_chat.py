@@ -17,3 +17,9 @@ def default_json():
             }
 
 
+def get_campos_cadastro():
+    return [
+                ('nome', "Qual é o seu nome?"),
+                ('fone', "Qual é o seu telefone?"),
+                ('email', "Qual é o seu email?"),
+            ]
