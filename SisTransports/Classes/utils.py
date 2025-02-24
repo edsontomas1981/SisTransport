@@ -1,6 +1,7 @@
 # Identifica campos enviados se estao vazios ou nao
 # sendo identificacaoCampo e o nome vindo da requisição
 # e nome campo e uma frase mais agradavel para retorno da requisição
+import requests
 from termcolor import colored
 from datetime import datetime, date
 import re
@@ -275,3 +276,15 @@ def pode_ser_inteiro(dado):
         return True
     except (ValueError, TypeError):
         return False
+
+def busca_cep_ws(cep):
+    try:
+        url = f"https://brasilapi.com.br/api/cep/v2/{cep}"
+
+        headers = {"Accept": "application/json"}
+
+        response = requests.get(url, headers=headers)
+
+        return response.status_code, response.json()
+    except:
+        return None,None

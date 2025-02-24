@@ -11,6 +11,7 @@ import json
 def main_chatbot(request):
     if request.method == 'GET':
         return JsonResponse({'status': 'GET'}) 
+    
     elif request.method == "POST":
         # try:
             data = json.loads(request.body)  # Lendo o JSON enviado

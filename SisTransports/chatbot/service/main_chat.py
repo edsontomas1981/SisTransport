@@ -1,5 +1,3 @@
-
-
 def main_chat(phone_number,msg):
     try:
          
