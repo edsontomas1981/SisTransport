@@ -159,9 +159,10 @@ def obter_proximo_campo(chat, entidade, campos, campo_atual):
         tuple: Próximo campo e a pergunta associada ou (False, False) se não houver mais campos.
     """
     entidade_data = chat.get(entidade, {})
-    
+        
     for campo, pergunta in campos:
-        if not entidade_data.get(campo) and campo != campo_atual:
+        if not entidade_data.get(campo) and campo != campo_atual and campo != "aguardando":
+            print(f'buscando erro aguardando {campo}')
             return campo, pergunta
 
     return False, False
@@ -209,6 +210,7 @@ def todos_campos_com_sufixo_estao_preenchidos(chat, sufixo, entidade, campos):
 
     lista_campos={}
     idx = 0
+    dprint(f'opa esse sufixo aqui {sufixo}')
     for campo,nome_amigavel in campos:
         if campo.endswith(sufixo):
             if chat[entidade][campo] == "":
@@ -218,7 +220,7 @@ def todos_campos_com_sufixo_estao_preenchidos(chat, sufixo, entidade, campos):
                 idx += 1
     return lista_campos
 
-def gerar_mensagem_alteracao(campos_nome_amigavel, chat,campos,entidade):
+def gerar_mensagem_alteracao(campos_nome_amigavel, chat, campos, entidade, opcao_invalida=False):
     """
     Gera uma mensagem para o usuário verificar todos os campos preenchidos.
     
@@ -229,16 +231,32 @@ def gerar_mensagem_alteracao(campos_nome_amigavel, chat,campos,entidade):
     Retorna:
     str: Mensagem formatada com os valores para confirmação do usuário.
     """
+    mensagem = ''
 
-    mensagem = "Por favor, verifique as informações abaixo:\n\n"
-    
+    if opcao_invalida:
+        mensagem += "Opção inválida! Digite o número do campo que quer mudar ou 'ok' se estiver tudo certo.\n\n"
+    else:
+        mensagem += "Confere aí os dados:\n\n"
+
+    lista_campos = gera_lista_campos_alteracao(campos)
+
+    chat[entidade]['lista_de_campos'] = lista_campos
+
     # Itera sobre o dicionário de campos e seus rótulos amigáveis
-    for nome_amigavel,campo in campos.items():
-        dprint(f'Campo : {campo},Nome Amigavel : {nome_amigavel}')
+    for nome_amigavel, campo in campos.items():
         valor = chat.get(entidade).get(campo, "Não informado")  # Obtém o valor do campo ou "Não informado" se não existir
         mensagem += f"{nome_amigavel}: {valor}\n"
-    
-    # Adiciona as instruções para o usuário
-    mensagem += "\nSe desejar editar, digite 'editar'. Caso esteja correto, digite 'ok'."
+
+    if not opcao_invalida:
+        mensagem += "\nOpção inválida! Digite o número do campo que quer mudar ou 'ok' se estiver tudo certo.\n\n"
     
     return mensagem
+
+
+def gera_lista_campos_alteracao(campos):
+    print(campos)
+    lista_campos=[]
+    for campo,valor in campos.items():
+        # dprint(f'Campo {campo} valor {valor}')
+        lista_campos.append(valor)
+    return lista_campos

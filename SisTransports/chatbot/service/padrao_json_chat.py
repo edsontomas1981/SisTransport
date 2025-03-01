@@ -27,12 +27,12 @@ def default_json():
                             'cidade_destinatario': '',
                             'uf_destinatario': '',
 
-                            'volumes_dados_coleta': '',
-                            'peso_dados_coleta': '',
-                            'valor_dados_coleta': '',
-                            'm3_dados_coleta': '',
-                            'num_nf_dados_coleta': '',
-                            'pagador_frete': '',
+                            'volumes_dados': '',
+                            'peso_dados': '',
+                            'valor_dados': '',
+                            'm3_dados': '',
+                            'num_nf_dados': '',
+                            'pagador_frete_dados': '',
 
                             'endereco_cep_coleta': '',
                             'endereco_rua_coleta': '',
@@ -48,7 +48,9 @@ def default_json():
                             'endereco_complemento_entrega': '',
                             'endereco_bairro_entrega': '',
                             'endereco_cidade_entrega': '',
-                            'endereco_uf_entrega': ''
+                            'endereco_uf_entrega': '',
+
+                            'sufixo': ''
                         },
                 "cotacao": {},
                 "rastreamento": {},
@@ -74,8 +76,6 @@ def get_campos_solicitacao_coleta():
                 ('endereco_cidade_coleta', "Me diz a cidade da coleta."),
                 ('endereco_uf_coleta', "E o estado da coleta?"),
 
-                ('pagador_frete', "Quem vai pagar o frete? CIF (Remetente), FOB (Destinatário) ou Terceiros?"),
-
                 ('cnpj_remetente', "Me passa o CNPJ do remetente."),
                 ('razao_remetente', "Qual é a razão social do remetente?"),
                 ('rua_remetente', "Qual é a rua do remetente?"),
@@ -99,14 +99,15 @@ def get_campos_solicitacao_coleta():
                 ('valor_dados', "Qual é o valor da nota fiscal?"),
                 ('m3_dados', "Qual é o volume da carga em metros cúbicos?"),
                 ('num_nf_dados', "Me diz o número da nota fiscal."),
+                ('pagador_frete_dados', "Quem vai pagar o frete? CIF (Remetente), FOB (Destinatário) ou Terceiros?"),
 
-                ('endereco_cep_entrega', "Beleza! Agora me passa o CEP do local de coleta.?"),
+                ('endereco_cep_entrega', "Beleza! Agora me passa o CEP do local de entrega.?"),
                 ('endereco_rua_entrega', "Qual é a rua do endereço de entrega?"),
                 ('endereco_numero_entrega', "E o número do endereço de entrega?"),
                 ('endereco_complemento_entrega', "Tem algum complemento no endereço de entrega? Se não, só digita 'não'."),
                 ('endereco_bairro_entrega', "Qual é o bairro do endereço de entrega?"),
                 ('endereco_cidade_entrega', "Me diz a cidade da entrega."),
-                ('endereco_uf_entrega', "E o estado da entrega?")
+                ('endereco_uf_entrega', "E o estado da entrega?"),
             ]
 
 def get_campos_nome_amigavel():
@@ -119,7 +120,7 @@ def get_campos_nome_amigavel():
         ('endereco_cidade_coleta', "Cidade de Coleta"),
         ('endereco_uf_coleta', "Estado de Coleta"),
 
-        ('pagador_frete', "Pagador do Frete"),
+        ('pagador_frete_dados', "Pagador do Frete"),
 
         ('cnpj_remetente', "CNPJ do Remetente"),
         ('razao_remetente', "Razão Social do Remetente"),

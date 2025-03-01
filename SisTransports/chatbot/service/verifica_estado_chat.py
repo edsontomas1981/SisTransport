@@ -18,6 +18,8 @@ def processar_mensagem(phone_number, mensagem):
         str | dict: Resposta do chatbot ou estado atualizado do chat.
     """
 
+    pergunta = "Qual o endereço da coleta?"
+
     if mensagem == "menu":
         return menu_principal()
 

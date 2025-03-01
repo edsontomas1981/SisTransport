@@ -6,8 +6,7 @@ from termcolor import colored
 from datetime import datetime, date
 import re
 import json
-
-
+import math
 
 def checaCampos(request, **kwargs):
     camposVazios = []
@@ -222,8 +221,6 @@ def string_para_data(data_str):
 
     # Retorna None se a entrada for inválida
     return None
-
-import math
 
 def calculo_distancia_coordenadas_haversine(ponto_inicial_lat, ponto_inicial_lng, destino_lat, destino_lng):
     # Raio médio da Terra em quilômetros
