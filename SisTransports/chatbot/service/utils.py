@@ -183,6 +183,18 @@ def definir_passo_menu(chat, entidade, passo, valor):
     chat.setdefault(entidade, {})[passo] = valor
     return chat
 
+def dict_campos_por_sufixo(chat, sufixo, entidade, campos):
+    lista_campos={}
+    idx = 0
+
+    for campo,nome_amigavel in campos:
+
+        if campo.endswith(sufixo):
+            lista_campos[f'({idx+1}) - {nome_amigavel}']=campo
+            idx += 1
+
+    return lista_campos
+
 
 def todos_campos_com_sufixo_estao_preenchidos(chat, sufixo, entidade, campos):
     """
@@ -207,17 +219,18 @@ def todos_campos_com_sufixo_estao_preenchidos(chat, sufixo, entidade, campos):
     bool
         Retorna True se todos os campos correspondentes ao sufixo estiverem preenchidos, False caso contrário.
     """
-
     lista_campos={}
     idx = 0
-    dprint(f'opa esse sufixo aqui {sufixo}')
+
     for campo,nome_amigavel in campos:
+
         if campo.endswith(sufixo):
-            if chat[entidade][campo] == "":
+            if chat[entidade][campo] == "" or not chat[entidade][campo]:
                 return False
             else:
                 lista_campos[f'({idx+1}) - {nome_amigavel}']=campo
                 idx += 1
+
     return lista_campos
 
 def gerar_mensagem_alteracao(campos_nome_amigavel, chat, campos, entidade, opcao_invalida=False):
@@ -254,9 +267,13 @@ def gerar_mensagem_alteracao(campos_nome_amigavel, chat, campos, entidade, opcao
 
 
 def gera_lista_campos_alteracao(campos):
-    print(campos)
     lista_campos=[]
     for campo,valor in campos.items():
-        # dprint(f'Campo {campo} valor {valor}')
         lista_campos.append(valor)
     return lista_campos
+
+def buscar_campo(campo,campos):
+    for chave, valor in campos:
+        if chave == campo:
+            return chave, valor
+    return "Campo não encontrado."
