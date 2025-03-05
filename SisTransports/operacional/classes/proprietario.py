@@ -21,7 +21,6 @@ class ProprietarioManager:
             self.obj_proprietario.save()
             return 200
         except Exception as e:
-            print(f"Erro ao criar proprietário: {e}")
             return 300
 
     def delete_proprietario(self, id_proprietario):
@@ -33,7 +32,6 @@ class ProprietarioManager:
             else:
                 return 404  # Proprietário não encontrado
         except Exception as e:
-            print(f"Erro ao excluir proprietário: {e}")
             return 500
         
     def buscar_proprietario_por_cnpj(self, cnpj):
@@ -52,7 +50,6 @@ class ProprietarioManager:
                 else:
                     return None
             except Exception as e:
-                print(f"Erro ao buscar proprietário por CNPJ: {e}")
                 return None 
 
     def read_proprietario(self, id_proprietario):
@@ -62,7 +59,6 @@ class ProprietarioManager:
             self.obj_proprietario = Proprietario.objects.get(id=id_proprietario)
             return self.obj_proprietario.to_dict()
         except Exception as e:
-            print(f"Erro ao ler proprietário: {e}")
             return None
 
     def read_proprietario_por_veiculo(self, id_veiculo):
@@ -73,7 +69,6 @@ class ProprietarioManager:
             else:
                 return None
         except Exception as e:
-            print(f"Erro ao ler proprietário por veículo: {e}")
             return None
 
     def read_proprietarios(self):
@@ -81,7 +76,6 @@ class ProprietarioManager:
             proprietarios = Proprietario.objects.all()
             return [proprietario.to_dict() for proprietario in proprietarios]
         except Exception as e:
-            print(f"Erro ao ler proprietários: {e}")
             return []
 
     def update_proprietario(self, id_proprietario, dados):
@@ -95,6 +89,4 @@ class ProprietarioManager:
             self.obj_proprietario.save()
             return 200
         except Exception as e:
-            print(e)
-            print(f"Erro ao atualizar proprietário: {e}")
             return 300

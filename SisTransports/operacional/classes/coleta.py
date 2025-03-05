@@ -95,7 +95,6 @@ class Coleta():
             coletas_ativas = MdlColeta.objects.filter(status=1)
             return coletas_ativas
         except Exception as e:
-            print(f"Erro ao buscar coletas ativas: {e}")
             return []
     
     @staticmethod

@@ -39,7 +39,6 @@ class Enderecos:
  
             return 200
         except Exception as e:
-            print(f"Erro ao criar endereço: {e}")
             return 400
     
     def readEndereco(self, idEndereco):
@@ -75,7 +74,6 @@ class Enderecos:
                 self.endereco.save()
                 return 200
             except Exception as e:
-                print(f"Erro ao atualizar endereço: {e}")
                 return 400 
         else:
             return 404  
@@ -93,7 +91,6 @@ class Enderecos:
                 self.endereco.delete()
                 return 200
             except Exception as e:
-                print(f"Erro ao deletar endereço: {e}")
                 return 400 
         else:
             return 404  
@@ -109,14 +106,11 @@ class Enderecos:
         if result:
             lat, lng = result
 
-            dprint(f'{type(lat)}, {type(lng)}')
-
             # Verifica se lat e lng são valores numéricos
             if isinstance(float(lat), (float, int)) and isinstance(float(lng), (float, int)):
                 endereco.lat = lat
                 endereco.lng = lng
                 endereco.save()
-                print(f"Coordenadas salvas: {lat}, {lng}")
             else:
                 print("Coordenadas inválidas: lat ou lng não são numéricas.")
         else:

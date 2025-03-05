@@ -90,7 +90,6 @@ def prepara_dados_jobs(jobs):
     return lista_jobs
 
 def prepara_dados_vehicles(vehicles,start):
-    print(start)
     lista_vehicles = []
     for vehicle in vehicles:
         if isinstance(vehicle, dict):

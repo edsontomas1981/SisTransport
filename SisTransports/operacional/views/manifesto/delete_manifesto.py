@@ -38,8 +38,6 @@ def delete_manifesto(request):
 
     data = json.loads(request.body.decode('utf-8'))
 
-    print(data)
-    
     for field in required_fields:
         if field not in data or data[field] == '':
             return JsonResponse({'status': 422, 'error': f'O campo {field} é obrigatório.'})

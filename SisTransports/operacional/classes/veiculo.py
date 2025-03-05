@@ -201,7 +201,6 @@ class VeiculoManager:
 
             return 200  # Sucesso na atualização.
         except Exception as e:
-            print(f"Erro ao atualizar veículo: {e}")
             return 300  # Falha na atualização devido a um erro.
 
 
@@ -234,7 +233,6 @@ class VeiculoManager:
 
             return 200  # Sucesso na exclusão.
         except Exception as e:
-            print(f"Erro ao apagar veículo: {e}")
             return 300  # Falha na exclusão devido a um erro.
 
 

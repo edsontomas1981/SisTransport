@@ -61,7 +61,6 @@ def prepara_coletas(coletas):
 def prepara_dtc(dtcs):
     lista_de_dtc = []
     if dtcs:
-        print(dtcs)
         lista_de_dtc.append(dtcs.to_dict())
     return lista_de_dtc
 

@@ -14,7 +14,6 @@ def update_status_coleta(request):
 
         # Carrega os dados da requisição
         data = json.loads(request.body.decode('utf-8'))
-        print(data)
 
         # Verifica se os campos obrigatórios estão presentes nos dados da requisição
         for field in required_fields:

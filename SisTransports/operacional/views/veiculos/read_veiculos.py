@@ -20,7 +20,6 @@ def read_veiculos(request):
     """
     try:
         veiculos = VeiculoManager.lista_todos_veiculos()
-        print(veiculos)
         return JsonResponse({'status': 200,'veiculos':veiculos})
     
     except ValidationError as ve:

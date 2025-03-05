@@ -86,7 +86,6 @@ def gerar_faturas(request):
             valor = calcula_porcentual(float(dados_da_fatura.get('valor_total')),desconto)
             dados['valor_a_pagar'] = float(dados['valor_a_pagar']) - valor
             desconto_em_reais = float(valor)
-            # dprint(f'valor com desconto {dados['valor_a_pagar']},percentual de desconto {desconto} desconto em dh {desconto_em_reais} ')
 
         if acrescimo > 0.00: 
             valor = calcula_porcentual(float(dados_da_fatura.get('valor_total')),acrescimo)

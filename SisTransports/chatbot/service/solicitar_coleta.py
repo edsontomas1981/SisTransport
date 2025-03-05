@@ -32,12 +32,12 @@ def processa_solicitacao_coleta(phone_number, chat, msg):
 
     if chat["menu"]["passo"] != "aguardando":
         if "_cep" in campo_atual:
-            atualizar_campo(phone_number, chat, "coletas", campo_atual, msg)
+            chat = atualizar_campo(phone_number, chat, "coletas", campo_atual, msg)
             chat = processa_endereco_cep(phone_number, chat, campo_atual, sufixo)
 
         prox_campo, pergunta = obter_proximo_campo(chat, "coletas", campos_coleta, campo_atual)
         chat = definir_passo_menu(chat, "menu", "passo", prox_campo)
-        atualizar_campo(phone_number, chat, "menu", "passo", prox_campo)
+        chat = atualizar_campo(phone_number, chat, "menu", "passo", prox_campo)
 
         return pergunta, chat
     
@@ -59,10 +59,11 @@ def confirma_dados_coleta(phone_number, chat, sufixo):
 def processa_endereco_cep(phone_number, chat, campo_atual, sufixo):
     """Busca informações do CEP e atualiza os campos de endereço."""
 
+
     cep_info = busca_cep_ws(chat["coletas"][campo_atual])[1]
     
     campos_endereco = {
-        f"endereco_cep_{sufixo}": cep_info.get("cep", ""),
+        f"endereco_cep_{sufixo}": cep_info.get("cep", chat["coletas"][campo_atual]),
         f"endereco_uf_{sufixo}": cep_info.get("state", ""),
         f"endereco_cidade_{sufixo}": cep_info.get("city", ""),
         f"endereco_bairro_{sufixo}": cep_info.get("neighborhood", ""),
@@ -85,18 +86,16 @@ def processa_resposta_confirmacao(phone_number,msg, chat, campos_coleta, campo_a
             return pergunta, chat
 
         case _:
-            if isinstance(msg, str) or isinstance(msg, int):
-                try:
-                    idx = int(msg) - 1
-                    campo_alteracao = chat['coletas']['lista_de_campos'][idx]
-                    dict_campos = get_campos_solicitacao_coleta()
-                    campo,pergunta = buscar_campo(campo_alteracao,dict_campos)
-                    chat = atualizar_campo(phone_number, chat, "coletas", campo_alteracao, '')
-                    chat = atualizar_campo(phone_number, chat, "menu", "menu_atual", "coleta")
-                    chat = atualizar_campo(phone_number, chat, "menu", "passo", campo)
-                    return pergunta, chat
+            try:
+                idx = int(msg) - 1
+                campo_alteracao = chat['coletas']['lista_de_campos'][idx]
+                dict_campos = get_campos_solicitacao_coleta()
+                campo,pergunta = buscar_campo(campo_alteracao,dict_campos)
+                chat = atualizar_campo(phone_number, chat, "coletas", campo_alteracao, '')
+                chat = atualizar_campo(phone_number, chat, "menu", "menu_atual", "coleta")
+                chat = atualizar_campo(phone_number, chat, "menu", "passo", campo)
+                return pergunta, chat
 
-                except ValueError:
-                    dprint('A mensagem não é um número válido para conversão em int.')
-                    return 'Por favor, digite um número válido.', chat
+            except ValueError:
+                return 'Por favor, digite um número válido.', chat
                 

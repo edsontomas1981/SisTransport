@@ -110,7 +110,6 @@ class Dtc:
             return registros
         except Exception as e:
             # Log ou trate a exceção conforme necessário
-            print(f"Erro ao buscar registros com filtro: {e}")
             raise
     
     @classmethod
@@ -181,7 +180,6 @@ class Dtc:
     
     @staticmethod
     def buscar_dtc_por_trechos_cnpj(trecho):
-        dprint(trecho)
         """
         Busca DTCs onde o remetente ou o destinatário contenham o trecho informado.
 
@@ -199,12 +197,10 @@ class Dtc:
             )
             return dtcs
         except Exception as e:
-            print(f"Erro ao buscar DTCs: {e}")
             return None
         
     @staticmethod
     def buscar_dtc_por_trechos_razao(trecho):
-        dprint(trecho)
         """
         Busca DTCs onde o remetente ou o destinatário contenham o trecho informado.
 
@@ -222,5 +218,4 @@ class Dtc:
             )
             return dtcs
         except Exception as e:
-            print(f"Erro ao buscar DTCs: {e}")
             return None

@@ -1,5 +1,3 @@
-# 
-
 import openrouteservice
 
 # Criar cliente OpenRouteService
@@ -15,6 +13,3 @@ def calculate_route(start, intermediate, end):
     route = client.directions(coordinates=[start, intermediate, end], profile='driving-car')
     return route
 
-# Calcular rota entre os pontos
-route_coordinates = calculate_route(start_point, intermediate_point, end_point)
-print(route_coordinates)

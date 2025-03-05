@@ -44,7 +44,6 @@ class Parceiros():
             else:
                 return 404
         except Exception as e:
-            print(f"Erro ao ler parceiro: {e}")
             return 500     
 
     @classmethod
@@ -60,7 +59,6 @@ class Parceiros():
             else:
                 return 404
         except Exception as e:
-            print(f"Erro ao ler parceiro: {e}")
             return 500 
         
         
@@ -137,9 +135,7 @@ class Parceiros():
             return lista_parceiros
 
         except ValueError as ve:
-            print(f"Erro de validação: {ve}")
             return {"error": str(ve)}  # Retorna uma mensagem de erro amigável
 
         except Exception as e:
-            print(f"Erro na busca por CNPJ ou Razão Social: {e}")
             return {"error": "Ocorreu um erro ao buscar parceiros."}  # Retorna uma mensagem de erro geral

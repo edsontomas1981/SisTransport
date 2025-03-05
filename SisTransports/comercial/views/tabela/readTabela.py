@@ -11,7 +11,6 @@ def readTabela (request):
         return render(request, 'tabelaFrete.html')
     elif request.method == "POST" :
         data = json.loads(request.body.decode('utf-8'))
-        print(data)
         tabela=TabelaFrete()
         if data['id']:
             resultado = tabela.readTabela(data['id'])

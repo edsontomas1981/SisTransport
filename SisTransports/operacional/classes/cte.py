@@ -76,7 +76,6 @@ class Cte():
             for key, value in novos_dados.items():
                 setattr(self.cte_obj, key, value)
             self.cte_obj.save()
-            print(type(novos_dados.get('usuario_cadastro')))
             Cte.gera_ocorrencia_cte(self.cte_obj,34,novos_dados.get('usuario_cadastro'))
             return self.cte_obj
         

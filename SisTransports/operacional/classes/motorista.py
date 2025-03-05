@@ -100,7 +100,6 @@ class MotoristaManager:
             return 200
         except Exception as e:
             # Trata a exceção de maneira apropriada
-            print(f"Erro ao criar motorista: {e}")
             return 300
 
     def update_motorista(self, id_motorista, dados):
@@ -123,7 +122,6 @@ class MotoristaManager:
             self.obj_motorista.save()
             return 200
         except Exception as e:
-            print(f"Erro ao atualizar motorista: {e}")
             return 300
 
     def delete_motorista(self, id_motorista):

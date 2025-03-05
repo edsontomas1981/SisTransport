@@ -28,8 +28,6 @@ def cria_fatura(request):
     dados['emissor_fk'] = emissor
     dados_normatizados = normatiza_dados(dados)
 
-    dprint(dados_normatizados)
-
     if dados.get('idFaturaMdlFatura') == '':
         fatura = FaturasManager()
         fatura.create_fatura(dados_normatizados)
@@ -43,8 +41,6 @@ def cria_fatura(request):
         # Aqui pode-se implementar a lógica de alteração da fatura, se necessário.
         fatura = FaturasManager.read_fatura(dados.get('idFaturaMdlFatura'))
         FaturasManager.atualizar_ctes(dados_normatizados)
-
-        print(fatura)
         return JsonResponse({'status': 201, 'message': 'Fatura alterada com sucesso','id_fatura':fatura.get('id')})
 
 def normatiza_dados(dados):

@@ -13,13 +13,13 @@ def main_chatbot(request):
         return JsonResponse({'status': 'GET'}) 
     
     elif request.method == "POST":
-        # try:
+        try:
             data = json.loads(request.body)  # Lendo o JSON enviado
             phone_number = data.get('client').get('phoneNumber')
             message = data.get('client').get('message')
             resposta = processar_mensagem(phone_number,message)
             return JsonResponse({'status': 200,'resposta':resposta })
     
-        # except Exception as e:
-        #     dprint(f'erro{e}')
-        #     return JsonResponse({'status': 403,'message':f'erro{e}'})  
+        except Exception as e:
+            print(f'Erro : {e}')
+            return JsonResponse({'status': 403,'message':f'erro{e}'})  

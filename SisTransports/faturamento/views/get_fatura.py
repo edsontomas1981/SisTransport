@@ -26,7 +26,6 @@ def get_fatura(request):
         # Carrega os dados do corpo da requisição
         try:
             dados = json.loads(request.body.decode('utf-8'))
-            print(dados)
         except json.JSONDecodeError:
             return HttpResponseBadRequest("JSON inválido.")
 

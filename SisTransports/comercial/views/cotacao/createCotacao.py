@@ -19,8 +19,6 @@ def createCotacao (request):
         user = request.user  # Aqui você obtém o usuário associado à requisição
         data = json.loads(request.body.decode('utf-8'))
 
-        dprint(user.username)
-        
         data['usuario']=user.username
 
         cotacao = Cotacao()

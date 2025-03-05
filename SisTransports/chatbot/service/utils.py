@@ -2,7 +2,6 @@ from chatbot.handlers.EstadoConversaManager import EstadoConversaManager
 from Classes.utils import dprint
 from chatbot.service.padrao_json_chat import default_json
 
-
 def atualizar_estado_conversa(phone_number, dados_json):
     """
     Atualiza o estado da conversa de um usuário no sistema.
@@ -18,7 +17,6 @@ def atualizar_estado_conversa(phone_number, dados_json):
         EstadoConversaManager.atualizar_estado_conversa(phone_number, estado_conversa=dados_json)
         return buscar_usuario_por_telefone(phone_number)
     except Exception as e:
-        dprint(f'Erro ao atualizar estado da conversa: {e}')
         return False
 
 def inicializar_usuario_com_json_padrao(phone_number):
@@ -162,7 +160,6 @@ def obter_proximo_campo(chat, entidade, campos, campo_atual):
         
     for campo, pergunta in campos:
         if not entidade_data.get(campo) and campo != campo_atual and campo != "aguardando":
-            print(f'buscando erro aguardando {campo}')
             return campo, pergunta
 
     return False, False
@@ -195,7 +192,6 @@ def dict_campos_por_sufixo(chat, sufixo, entidade, campos):
 
     return lista_campos
 
-
 def todos_campos_com_sufixo_estao_preenchidos(chat, sufixo, entidade, campos):
     """
     Verifica se todos os campos que terminam com um determinado sufixo estão preenchidos em uma entidade.
@@ -219,6 +215,7 @@ def todos_campos_com_sufixo_estao_preenchidos(chat, sufixo, entidade, campos):
     bool
         Retorna True se todos os campos correspondentes ao sufixo estiverem preenchidos, False caso contrário.
     """
+
     lista_campos={}
     idx = 0
 
@@ -264,7 +261,6 @@ def gerar_mensagem_alteracao(campos_nome_amigavel, chat, campos, entidade, opcao
         mensagem += "\nOpção inválida! Digite o número do campo que quer mudar ou 'ok' se estiver tudo certo.\n\n"
     
     return mensagem
-
 
 def gera_lista_campos_alteracao(campos):
     lista_campos=[]

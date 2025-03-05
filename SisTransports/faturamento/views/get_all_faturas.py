@@ -32,7 +32,6 @@ def get_all_faturas(request):
 
     except Exception as e:
         # Logando o erro (pode ser ajustado para usar um sistema de log apropriado)
-        print(f"Erro ao obter faturas: {e}")
         return HttpResponseServerError("Ocorreu um erro ao processar sua solicitação.")
 
 

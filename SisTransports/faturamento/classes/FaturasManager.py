@@ -54,7 +54,6 @@ class FaturasManager:
             self.obj_fatura.save()
             return 200
         except Exception as e:
-            print(f"Erro ao criar fatura: {e}")
             return 300
 
     def update_fatura(self, id_fatura, dados):
@@ -75,10 +74,8 @@ class FaturasManager:
                 fatura.save()
                 return 200
         except Faturas.DoesNotExist:
-            print(f"A fatura com o ID {id_fatura} não foi encontrada.")
             return 404
         except Exception as e:
-            print(f"Erro ao atualizar fatura: {e}")
             return 300
 
     @staticmethod
@@ -97,10 +94,8 @@ class FaturasManager:
             fatura.delete()
             return 200
         except Faturas.DoesNotExist:
-            print(f"A fatura com o ID {id_fatura} não foi encontrada.")
             return 404
         except Exception as e:
-            print(f"Erro ao excluir fatura: {e}")
             return 500
 
     @staticmethod
@@ -118,10 +113,8 @@ class FaturasManager:
             fatura = Faturas.objects.get(id=id_fatura)
             return fatura.to_dict()
         except Faturas.DoesNotExist:
-            print(f"A fatura com o ID {id_fatura} não foi encontrada.")
             return None
         except Exception as e:
-            print(f"Erro ao ler fatura: {e}")
             return None
 
     def read_obj_fatura(self,id_fatura):
@@ -138,10 +131,8 @@ class FaturasManager:
             self.obj_fatura = Faturas.objects.get(id=id_fatura)
             return self.obj_fatura
         except Faturas.DoesNotExist:
-            print(f"A fatura com o ID {id_fatura} não foi encontrada.")
             return None
         except Exception as e:
-            print(f"Erro ao ler fatura: {e}")
             return None
 
     def read_faturas(self):
@@ -162,7 +153,6 @@ class FaturasManager:
             return lista_fatura
             # return [fatura.to_dict() for fatura in faturas]
         except Exception as e:
-            print(f"Erro ao ler faturas: {e}")
             return []
 
     @staticmethod
@@ -185,7 +175,6 @@ class FaturasManager:
             return dtcs_to_dict
 
         except Exception as e:
-            print(f"Erro ao selecionar DTCs com CTEs sem fatura: {e}")
             return None
 
     @staticmethod
@@ -200,7 +189,6 @@ class FaturasManager:
             return ctes_sem_fatura
 
         except Exception as e:
-            print(f"Erro ao selecionar DTCs com CTEs sem fatura: {e}")
             return None
 
     @staticmethod
@@ -216,7 +204,6 @@ class FaturasManager:
             return ctes_por_tomador
 
         except Exception as e:
-            print(f"Erro ao selecionar DTCs com CTEs sem fatura: {e}")
             return None
 
     @staticmethod
@@ -266,7 +253,6 @@ class FaturasManager:
             return faturas_criadas
 
         except Exception as e:
-            print(f"Erro ao criar faturas: {e}")
             return None
 
     @staticmethod

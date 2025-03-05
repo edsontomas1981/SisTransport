@@ -55,12 +55,11 @@ class TabelaOcorrencias:
                     return 404
                     
             case '2':#Cte
-                # try:
-                print(id_documento)
-                ocorrencias = Ocorrencia.objects.filter(cte_fk=id_documento).order_by('id')
-                return ocorrencias
-                # except:
-                #     return 404
+                try:
+                    ocorrencias = Ocorrencia.objects.filter(cte_fk=id_documento).order_by('id')
+                    return ocorrencias
+                except:
+                    return 404
                 
     @staticmethod
     def get_ocorrencias_por_dtc(id_dtc):

@@ -32,8 +32,6 @@ def delete_contrato(request):
     except json.JSONDecodeError:
         return HttpResponseBadRequest('Corpo da requisição não é um JSON válido.')
     
-    print(data)
-
     # Verifica se todos os campos obrigatórios estão presentes na requisição
     for field in required_fields:
         if field not in data:

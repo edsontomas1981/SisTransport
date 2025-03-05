@@ -77,7 +77,6 @@ class ManifestoManager:
         
         # Verifica se 'data' é um dicionário
         if not isinstance(data, dict):
-            print(data)
             raise TypeError("O argumento 'data' deve ser um dicionário.")
 
         # Obtém o motorista e o manifesto de 'data'

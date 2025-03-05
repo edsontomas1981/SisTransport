@@ -8,7 +8,6 @@ import json
 @require_http_methods(["POST","GET"])
 def get_documentos(request):
     try:
-        print(request.user)
         dados = [
             { "idDtc": 451851, "razao_social": 'Poh sei lá Coorp SEM ', 'endereco': 'Rua Teste', "bairro": "Bairro Teste", 'cidade': 'Cidade Teste', 'uf': 'SP' },
             { "idDtc": 451852, "razao_social": 'Beta Technologies', 'endereco': 'Avenida Central', "bairro": "Centro", 'cidade': 'São Paulo', 'uf': 'SP' },

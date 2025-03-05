@@ -49,6 +49,5 @@ def converter_para_formato_desejado(data_inicial_str, data_final_str):
 
     data_inicial = datetime.strptime(data_inicial_str + TIME_START, DATE_FORMAT_INPUT + TIME_START)
     data_final = datetime.strptime(data_final_str, DATE_FORMAT_INPUT + ' %H:%M:%S')
-    print(data_inicial, data_final)
     return data_inicial, data_final
 

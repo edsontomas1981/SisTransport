@@ -247,7 +247,6 @@ def imprimir_documento(coletas):
     try:
         webbrowser.open(pdf_filename)
     except Exception as e:
-        print(f"Erro ao abrir o PDF: {e}")
 
     return pdf_filename
 
@@ -256,5 +255,5 @@ if __name__ == "__main__":
     # Este bloco será executado somente quando o script for executado diretamente.
     # Pode ser útil para testes ou execução independente.
     pdf_filename = imprimir_documento()
-    print(f"PDF gerado com sucesso: {pdf_filename}")'''
+'''
 
