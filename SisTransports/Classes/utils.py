@@ -7,6 +7,8 @@ from datetime import datetime, date
 import re
 import json
 import math
+from bradocs4py import CPF ,Cnpj
+
 
 def checaCampos(request, **kwargs):
     camposVazios = []
@@ -285,3 +287,31 @@ def busca_cep_ws(cep):
         return response.status_code, response.json()
     except:
         return None,None
+    
+def busca_cnpj_ws(cnpj):
+    try:
+        url = f"https://brasilapi.com.br/api/cnpj/v1/{cnpj}"
+
+        headers = {"Accept": "application/json"}
+
+        response = requests.get(url, headers=headers)
+
+        return response.status_code, response.json()
+    except:
+        return None,None
+
+def validaCpf(cpf):
+    cpf = CPF(cpf)
+    return cpf.isValid
+
+def validaCnpj(cnpj):
+    cnpj=Cnpj(cnpj)
+    return cnpj.isValid
+
+def validaCnpjCpf(cnpj_cpf):
+    if len(cnpj_cpf) == 14:
+       return validaCnpj(cnpj_cpf)
+    elif len(cnpj_cpf) == 11:
+        return validaCpf(cnpj_cpf)
+    else:
+        return False

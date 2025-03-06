@@ -1,11 +1,10 @@
-from Classes.utils import dprint
 from chatbot.service.padrao_json_chat import get_campos_solicitacao_coleta, get_campos_nome_amigavel
 from chatbot.service.utils import (
     obter_valor_campo, atualizar_campo, obter_proximo_campo, definir_passo_menu, 
     todos_campos_com_sufixo_estao_preenchidos, gerar_mensagem_alteracao,buscar_campo,
     dict_campos_por_sufixo
 )
-from Classes.utils import busca_cep_ws
+from Classes.utils import busca_cep_ws,busca_cnpj_ws,dprint,validaCnpjCpf
 
 
 def processa_solicitacao_coleta(phone_number, chat, msg):
@@ -14,6 +13,7 @@ def processa_solicitacao_coleta(phone_number, chat, msg):
 
     campos_coleta = get_campos_solicitacao_coleta()
     campo_atual = obter_valor_campo(chat, "menu", "passo")
+
     
     sufixo = campo_atual.split("_")[-1]
 
@@ -34,6 +34,12 @@ def processa_solicitacao_coleta(phone_number, chat, msg):
         if "_cep" in campo_atual:
             chat = atualizar_campo(phone_number, chat, "coletas", campo_atual, msg)
             chat = processa_endereco_cep(phone_number, chat, campo_atual, sufixo)
+
+        if "cnpj_" in campo_atual:
+            if not validaCnpjCpf(msg):
+                return "CNPJ inválido. Por favor, insira um CNPJ válido.", chat
+            
+            chat = processa_cnpj(phone_number, chat, campo_atual, sufixo)
 
         prox_campo, pergunta = obter_proximo_campo(chat, "coletas", campos_coleta, campo_atual)
         chat = definir_passo_menu(chat, "menu", "passo", prox_campo)
@@ -58,7 +64,6 @@ def confirma_dados_coleta(phone_number, chat, sufixo):
 
 def processa_endereco_cep(phone_number, chat, campo_atual, sufixo):
     """Busca informações do CEP e atualiza os campos de endereço."""
-
 
     cep_info = busca_cep_ws(chat["coletas"][campo_atual])[1]
     
@@ -98,4 +103,28 @@ def processa_resposta_confirmacao(phone_number,msg, chat, campos_coleta, campo_a
 
             except ValueError:
                 return 'Por favor, digite um número válido.', chat
+            
+def processa_cnpj(phone_number, chat, campo_atual, sufixo):
+    """Busca informações do CEP e atualiza os campos de endereço."""
+
+    status, parceiro = busca_cnpj_ws(chat["coletas"][campo_atual])
+
+    campos_parceiro = {
+        f"cnpj_{sufixo}": parceiro.get("cnpj", chat["coletas"][campo_atual]),
+        f"razao_{sufixo}": parceiro.get("razao_social", ""),
+        f"cep_{sufixo}": parceiro.get("cep", ""),
+        f"rua_{sufixo}": parceiro.get("logradouro", ""),
+        f"numero_{sufixo}": parceiro.get("numero", ""),   
+        f"complemento_{sufixo}": parceiro.get("complemento",""),
+        f"bairro_{sufixo}": parceiro.get("bairro", ""),
+        f"cidade_{sufixo}": parceiro.get("municipio", ""),
+        f"uf_{sufixo}": parceiro.get("uf", ""),
+    }
+
+    dprint(campos_parceiro)
+
+    for campo, valor in campos_parceiro.items():
+        chat = atualizar_campo(phone_number, chat, "coletas", campo, valor)
+
+    return chat
                 

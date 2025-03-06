@@ -60,8 +60,6 @@ class Parceiros():
                 return 404
         except Exception as e:
             return 500 
-        
-        
 
     def readParceiro(self,cnpj):
         try:
@@ -106,7 +104,6 @@ class Parceiros():
                 return 400 
         else:
             return 404   
-
 
     @staticmethod
     def search_by_cnpj_or_razao_social(search_term):
