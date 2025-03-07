@@ -6,6 +6,8 @@ from chatbot.service.utils import (
 )
 from Classes.utils import busca_cep_ws,busca_cnpj_ws,dprint,validaCnpjCpf
 
+from parceiros.classes.parceiros import Parceiros
+
 
 def processa_solicitacao_coleta(phone_number, chat, msg):
     
@@ -80,51 +82,86 @@ def processa_endereco_cep(phone_number, chat, campo_atual, sufixo):
 
     return chat
 
-def processa_resposta_confirmacao(phone_number,msg, chat, campos_coleta, campo_atual, sufixo):
+def processa_resposta_confirmacao(phone_number, msg, chat, campos_coleta, campo_atual, sufixo):
     """Processa a resposta do usuário após a confirmação dos dados."""
+    
+    msg = msg.lower().strip()
 
-    match msg:
-        case "ok":
-            prox_campo, pergunta = obter_proximo_campo(chat, "coletas", campos_coleta, campo_atual)
-            chat = atualizar_campo(phone_number, chat,"menu", "passo", prox_campo)
-            chat = atualizar_campo(phone_number, chat, "coletas", "sufixo", sufixo)
-            return pergunta, chat
+    if msg == "ok":
+        prox_campo, pergunta = obter_proximo_campo(chat, "coletas", campos_coleta, campo_atual)
+        chat = atualizar_campo(phone_number, chat, "menu", "passo", prox_campo)
+        chat = atualizar_campo(phone_number, chat, "coletas", "sufixo", sufixo)
+        return pergunta, chat
 
-        case _:
-            try:
-                idx = int(msg) - 1
-                campo_alteracao = chat['coletas']['lista_de_campos'][idx]
-                dict_campos = get_campos_solicitacao_coleta()
-                campo,pergunta = buscar_campo(campo_alteracao,dict_campos)
-                chat = atualizar_campo(phone_number, chat, "coletas", campo_alteracao, '')
-                chat = atualizar_campo(phone_number, chat, "menu", "menu_atual", "coleta")
-                chat = atualizar_campo(phone_number, chat, "menu", "passo", campo)
-                return pergunta, chat
+    try:
+        if not msg.isdigit():
+            return 'Por favor, digite um número válido.', chat
 
-            except ValueError:
-                return 'Por favor, digite um número válido.', chat
+        idx = int(msg) - 1
+
+        if idx < 0 or idx >= len(chat['coletas']['lista_de_campos']):
+            return 'Por favor, digite um número válido.', chat
+
+        campo_alteracao = chat['coletas']['lista_de_campos'][idx]
+        dict_campos = get_campos_solicitacao_coleta()
+        campo, pergunta = buscar_campo(campo_alteracao, dict_campos)
+
+        chat = atualizar_campo(phone_number, chat, "coletas", campo_alteracao, '')
+        chat = atualizar_campo(phone_number, chat, "menu", "menu_atual", "coleta")
+        chat = atualizar_campo(phone_number, chat, "menu", "passo", campo)
+
+        return pergunta, chat
+
+    except ValueError:
+        return 'Por favor, digite um número válido.', chat
+
             
 def processa_cnpj(phone_number, chat, campo_atual, sufixo):
     """Busca informações do CEP e atualiza os campos de endereço."""
 
-    status, parceiro = busca_cnpj_ws(chat["coletas"][campo_atual])
+    cnpj = chat["coletas"][campo_atual]
 
-    campos_parceiro = {
-        f"cnpj_{sufixo}": parceiro.get("cnpj", chat["coletas"][campo_atual]),
-        f"razao_{sufixo}": parceiro.get("razao_social", ""),
-        f"cep_{sufixo}": parceiro.get("cep", ""),
-        f"rua_{sufixo}": parceiro.get("logradouro", ""),
-        f"numero_{sufixo}": parceiro.get("numero", ""),   
-        f"complemento_{sufixo}": parceiro.get("complemento",""),
-        f"bairro_{sufixo}": parceiro.get("bairro", ""),
-        f"cidade_{sufixo}": parceiro.get("municipio", ""),
-        f"uf_{sufixo}": parceiro.get("uf", ""),
-    }
+    parceiro,response_cadastro = Parceiros.get_parceiro_cnpj(chat["coletas"][campo_atual])
 
-    dprint(campos_parceiro)
+    dprint(parceiro.to_dict())
+
+    if not parceiro:
+        response_ws, parceiro = busca_cnpj_ws(chat["coletas"][campo_atual])
+        campos_parceiro=prepara_dados_parceiro(parceiro, sufixo, cnpj,'ws')
+    else:
+        campos_parceiro = prepara_dados_parceiro(parceiro.to_dict(), sufixo, cnpj,'cad')
+
 
     for campo, valor in campos_parceiro.items():
         chat = atualizar_campo(phone_number, chat, "coletas", campo, valor)
 
     return chat
-                
+
+
+def prepara_dados_parceiro(dados,sufixo,cnpj,fonte='cad'):
+    """Prepara os dados do parceiro para serem inseridos no chat."""
+    if fonte == "ws":
+        return  {
+            f"cnpj_{sufixo}": dados.get("cnpj", cnpj),
+            f"razao_{sufixo}": dados.get("razao_social", ""),
+            f"cep_{sufixo}": dados.get("cep", ""),
+            f"rua_{sufixo}": dados.get("logradouro", ""),
+            f"numero_{sufixo}": dados.get("numero", ""),   
+            f"complemento_{sufixo}": dados.get("complemento",""),
+            f"bairro_{sufixo}": dados.get("bairro", ""),
+            f"cidade_{sufixo}": dados.get("municipio", ""),
+            f"uf_{sufixo}": dados.get("uf", ""),
+        }
+
+    else:
+        return {
+            f"cnpj_{sufixo}": dados.get("cnpj", cnpj),
+            f"razao_{sufixo}": dados.get("raz_soc", ""),
+            f"cep_{sufixo}": dados.get("endereco_fk").get("cep", ""),
+            f"rua_{sufixo}": dados.get("endereco_fk").get("logradouro", ""),
+            f"numero_{sufixo}": dados.get("endereco_fk").get("numero", ""),
+            f"complemento_{sufixo}": dados.get("endereco_fk").get("complemento", ""),
+            f"bairro_{sufixo}":dados.get("endereco_fk").get("bairro", ""),
+            f"cidade_{sufixo}":dados.get("endereco_fk").get("cidade", ""),
+            f"uf_{sufixo}":dados.get("endereco_fk").get("uf", ""),
+        }            

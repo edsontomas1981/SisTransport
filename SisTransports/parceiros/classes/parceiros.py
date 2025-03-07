@@ -44,7 +44,24 @@ class Parceiros():
             else:
                 return 404
         except Exception as e:
-            return 500     
+            return 500   
+
+
+    @staticmethod
+    def get_parceiro_cnpj(cnpj):
+        """Lê um parceiro pelo CNPJ e retorna os detalhes, incluindo tabelas de frete e contatos."""
+        try:
+            if MdlParceiros.objects.filter(cnpj_cpf=cnpj).exists():
+                parceiro = MdlParceiros.objects.filter(cnpj_cpf=cnpj).get()
+                contatos = Contato()
+                tabelas = TabelaFrete()
+                parceiro.tabelasFrete = tabelas.get_tabelas_por_parceiro(parceiro)
+                parceiro.listaContatos = contatos.readContatos(parceiro.id)
+                return parceiro,200
+            else:
+                return None,404
+        except Exception as e:
+            return None,500
 
     @classmethod
     def read_parceiro_trecho(cls, cnpj):
