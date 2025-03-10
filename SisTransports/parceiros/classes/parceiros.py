@@ -153,3 +153,38 @@ class Parceiros():
 
         except Exception as e:
             return {"error": "Ocorreu um erro ao buscar parceiros."}  # Retorna uma mensagem de erro geral
+        
+    @staticmethod
+    def cadastrar_parceiro(dados):
+        """
+        Cadastra um novo parceiro ou atualiza o existente com base no CNPJ.
+
+        :param dados: Dicionário contendo as informações do parceiro (cnpj, razao, fantasia, inscr, obs, endereco_fk).
+        :return: Código de status HTTP (200 para sucesso, 400 para erro, 201 para parceiro já existente).
+        """
+        try:
+            if MdlParceiros.objects.filter(cnpj_cpf=dados['cnpj']).exists():
+                # Caso o CNPJ já exista, atualiza as informações do parceiro
+                parceiro = MdlParceiros.objects.filter(cnpj_cpf=dados['cnpj']).get()
+                parceiro.raz_soc = dados.get('razao', '')
+                parceiro.nome_fantasia = dados.get('fantasia', '')
+                parceiro.insc_est = dados.get('inscr', '')
+                parceiro.observacao = dados.get('obs', '')
+                parceiro.endereco_fk = dados.get('endereco_fk', '')
+                parceiro.save()
+                return 201  # Retorna 201 se o parceiro foi atualizado com sucesso
+            else:
+                # Caso o CNPJ não exista, cria um novo parceiro
+                parceiro = MdlParceiros(
+                    cnpj_cpf=dados.get('cnpj',''),
+                    raz_soc=dados.get('razao',''),
+                    nome_fantasia=dados.get('fantasia',''),
+                    insc_est=dados.get('inscr',''),
+                    observacao=dados.get('obs',''),
+                    endereco_fk=dados.get('endereco_fk','')
+                )
+                parceiro.save()
+                return 200, parceiro  # Retorna 200 se o parceiro foi criado com sucesso
+        except Exception as e:
+            # Em caso de erro, retorna 400
+            return 400,None

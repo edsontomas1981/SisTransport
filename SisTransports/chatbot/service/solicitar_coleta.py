@@ -5,6 +5,7 @@ from chatbot.service.utils import (
     dict_campos_por_sufixo
 )
 from Classes.utils import busca_cep_ws,busca_cnpj_ws,dprint,validaCnpjCpf
+from enderecos.classes.enderecos import Enderecos
 
 from parceiros.classes.parceiros import Parceiros
 
@@ -87,7 +88,12 @@ def processa_resposta_confirmacao(phone_number, msg, chat, campos_coleta, campo_
     
     msg = msg.lower().strip()
 
+    print(f'Sufixo : {chat["coletas"]["sufixo"]}')
+
     if msg == "ok":
+        if chat["coletas"]["sufixo"] == 'remetente' or chat["coletas"]["sufixo"] == 'destinatario':
+            dprint(f'Filtrado pelo sufixo : {filtrar_por_sufixo(chat["coletas"],chat["coletas"]["sufixo"])}')
+            
         prox_campo, pergunta = obter_proximo_campo(chat, "coletas", campos_coleta, campo_atual)
         chat = atualizar_campo(phone_number, chat, "menu", "passo", prox_campo)
         chat = atualizar_campo(phone_number, chat, "coletas", "sufixo", sufixo)
@@ -123,14 +129,13 @@ def processa_cnpj(phone_number, chat, campo_atual, sufixo):
 
     parceiro,response_cadastro = Parceiros.get_parceiro_cnpj(chat["coletas"][campo_atual])
 
-    dprint(parceiro.to_dict())
-
     if not parceiro:
         response_ws, parceiro = busca_cnpj_ws(chat["coletas"][campo_atual])
         campos_parceiro=prepara_dados_parceiro(parceiro, sufixo, cnpj,'ws')
+        dprint(f'parceiro ws : {parceiro}')
     else:
         campos_parceiro = prepara_dados_parceiro(parceiro.to_dict(), sufixo, cnpj,'cad')
-
+        dprint(f'parceiro bd : {parceiro}')
 
     for campo, valor in campos_parceiro.items():
         chat = atualizar_campo(phone_number, chat, "coletas", campo, valor)
@@ -165,3 +170,41 @@ def prepara_dados_parceiro(dados,sufixo,cnpj,fonte='cad'):
             f"cidade_{sufixo}":dados.get("endereco_fk").get("cidade", ""),
             f"uf_{sufixo}":dados.get("endereco_fk").get("uf", ""),
         }            
+
+
+def handler_parceiros(chat, sufixo,fonte):
+    """Processa os dados do parceiro para serem inseridos no bd."""
+
+    if fonte == 'ws':
+        parceiro = {'cnpj':"",'razao':"",'fantasia':"",'inscr':"",}
+        cadastra_parceiro()
+
+        
+
+
+    dados = {}
+    try:
+
+        parceiro = Parceiros.createParceiro(dados)
+        return parceiro
+    except Exception as e:
+        return {"error": str(e)}
+    
+def filtrar_por_sufixo(dados: dict, sufixo: str) -> dict:
+    """
+    Filtra os dados do dicionário pelo sufixo informado.
+    
+    :param dados: Dicionário contendo os dados.
+    :param sufixo: Sufixo pelo qual os dados serão filtrados.
+    :return: Novo dicionário contendo apenas as chaves que terminam com o sufixo informado.
+    """
+    return {chave: valor for chave, valor in dados.items() if chave.endswith(f"_{sufixo}")}
+
+def cadastra_parceiro(dados):
+    parceiro = Parceiros.cadastrar_parceiro(dados)
+    return parceiro
+
+def cadastra_endereco(dados):
+    endereco,status = Enderecos.cadastrar_endereco(dados)
+    return endereco
+

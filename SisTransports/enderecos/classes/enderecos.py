@@ -94,6 +94,34 @@ class Enderecos:
                 return 400 
         else:
             return 404  
+        
+    @staticmethod
+    def cadastrar_endereco(dados):
+        """
+        Método estático para cadastrar um novo endereço.
+
+        :param dados: Dicionário contendo os dados do endereço.
+        :return: 200 se o endereço foi criado com sucesso, 400 em caso de erro.
+        
+        """
+        try:
+            # Cria uma nova instância de Enderecos
+            endereco = MdlEnderecos()
+            endereco.cep = dados['cep']
+            endereco.logradouro = dados['logradouro']
+            endereco.numero = dados['numero']
+            endereco.complemento = dados['complemento']
+            endereco.bairro = dados['bairro']
+            endereco.cidade = dados['cidade']
+            endereco.uf = dados['estado']
+            endereco.save()
+
+            # Inicia a geocodificação em uma nova thread
+            threading.Thread(target=Enderecos.geocode_and_save, args=(endereco,)).start()
+
+            return 200, endereco
+        except Exception as e:
+            return 400, None        
 
     def geocode_and_save(self, endereco):
         """

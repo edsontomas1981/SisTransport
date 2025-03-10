@@ -120,8 +120,6 @@ def get_campos_nome_amigavel():
         ('endereco_cidade_coleta', "Cidade de Coleta"),
         ('endereco_uf_coleta', "Estado de Coleta"),
 
-        ('pagador_frete_dados', "Pagador do Frete"),
-
         ('cnpj_remetente', "CNPJ do Remetente"),
         ('razao_remetente', "Razão Social do Remetente"),
         ('rua_remetente', "Endereço do Remetente"),
@@ -140,11 +138,12 @@ def get_campos_nome_amigavel():
         ('cidade_destinatario', "Cidade do Destinatário"),
         ('uf_destinatario', "Estado do Destinatário"),
 
-        ('volumes_dados', "Quantidade de Volumes"),
-        ('peso_dados', "Peso Total da Carga"),
-        ('valor_dados', "Valor da Nota Fiscal"),
-        ('m3_dados', "Volume da Carga (m³)"),
-        ('num_nf_dados', "Número da Nota Fiscal"),
+        ('volumes_dados',"Quantidade de Volumes (em números)."),
+        ('peso_dados', "Peso Total da Carga (em números)."),
+        ('valor_dados', "Valor da Nota Fiscal (só números, por favor)."),
+        ('m3_dados', "Volume da Carga (m³) - Coloque as medidas assim: largura X altura X comprimento (ex: 1,00 X 1,00 X 1,20)."),
+        ('num_nf_dados', "Número da Nota Fiscal (se não tem, digita 'não')."),
+        ('pagador_frete_dados', "Pagador do Frete"),
 
         ('endereco_cep_entrega', "CEP de Entrega"),
         ('endereco_rua_entrega', "Endereço de Entrega"),
