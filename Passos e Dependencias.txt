@@ -1,0 +1,3 @@
+Testar Pynfe e integranotas para a emissão e envio dos ctes
+Usar a lib BrazilFiscalReports https://github.com/Engenere/BrazilFiscalReport para a emissao dos documentos
+

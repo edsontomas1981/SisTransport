@@ -63,7 +63,6 @@ const selecionaLocal = async (dados) => {
 
         // Adiciona o local à lista se ele ainda não estiver presente
         if (!listaLocais.some(item => item.id === dados.id)) {
-            console.log(dados)
             listaLocais.push({ id:dados.idDtc, nome: truncateString(dados.remetente,10), 
                 peso: dados.peso,tipoDocumento:dados.tipo_documento, idDocumento:dados.id_documento,
                 idManifesto:document.getElementById('idManifestoPorIntinerario').value });

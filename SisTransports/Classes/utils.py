@@ -9,7 +9,6 @@ import json
 import math
 from bradocs4py import CPF ,Cnpj
 
-
 def checaCampos(request, **kwargs):
     camposVazios = []
     for identificacaoCampo, nomeCampo in kwargs.items():

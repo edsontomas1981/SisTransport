@@ -6,9 +6,7 @@ from chatbot.service.utils import (
 )
 from Classes.utils import busca_cep_ws,busca_cnpj_ws,dprint,validaCnpjCpf
 from enderecos.classes.enderecos import Enderecos
-
 from parceiros.classes.parceiros import Parceiros
-
 
 def processa_solicitacao_coleta(phone_number, chat, msg):
     
@@ -120,7 +118,6 @@ def processa_resposta_confirmacao(phone_number, msg, chat, campos_coleta, campo_
 
     except ValueError:
         return 'Por favor, digite um número válido.', chat
-
             
 def processa_cnpj(phone_number, chat, campo_atual, sufixo):
     """Busca informações do CEP e atualiza os campos de endereço."""
@@ -141,7 +138,6 @@ def processa_cnpj(phone_number, chat, campo_atual, sufixo):
         chat = atualizar_campo(phone_number, chat, "coletas", campo, valor)
 
     return chat
-
 
 def prepara_dados_parceiro(dados,sufixo,cnpj,fonte='cad'):
     """Prepara os dados do parceiro para serem inseridos no chat."""
@@ -171,16 +167,12 @@ def prepara_dados_parceiro(dados,sufixo,cnpj,fonte='cad'):
             f"uf_{sufixo}":dados.get("endereco_fk").get("uf", ""),
         }            
 
-
 def handler_parceiros(chat, sufixo,fonte):
     """Processa os dados do parceiro para serem inseridos no bd."""
 
     if fonte == 'ws':
         parceiro = {'cnpj':"",'razao':"",'fantasia':"",'inscr':"",}
         cadastra_parceiro()
-
-        
-
 
     dados = {}
     try:

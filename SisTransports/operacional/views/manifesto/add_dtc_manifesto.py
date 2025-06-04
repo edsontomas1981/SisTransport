@@ -11,6 +11,7 @@ from Classes.utils import dprint
 @login_required(login_url='/auth/entrar/')
 @require_http_methods(["POST","GET"])
 def add_dtc_manifesto(request):
+
     required_fields = ['idDcto','idManifesto','cmbTipoManifesto','idTipoDocumento']
     
     try:
@@ -18,9 +19,9 @@ def add_dtc_manifesto(request):
 
         for field in required_fields:
             if field not in data or data[field] == '':
+                dprint(f'O campo {field} é obrigatório.')
                 return JsonResponse({'status': 422, 'error': f'O campo {field} é obrigatório.'})
-            
-        
+       
         # busca pelo cte
         if int(data.get('idTipoDocumento')) == 1:
             if (int(data.get('cmbTipoManifesto'))) == 1:

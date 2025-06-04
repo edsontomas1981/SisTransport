@@ -304,6 +304,7 @@ class ManifestoManager:
             HttpResponse: Um objeto HttpResponse com o código de status HTTP apropriado.
 
         """
+        print("antes try:", dados)
         try:
             # Obter o manifesto pelo ID fornecido
             manifesto = cls.obter_manifesto_por_id(int(dados.get('idManifesto')))
@@ -318,16 +319,23 @@ class ManifestoManager:
                                 manifesto_fk=manifesto,
                                 ocorrencia_manifesto_fk=tipo_manifesto
             )
+
+
             return HttpResponse(status=201)  # Retorna HTTP 201 Created
         except ValueError as ve:
+            print("ValueError try:")
             return HttpResponseBadRequest("Erro ao adicionar documento de manifesto: {}".format(ve))
         except IntegrityError:
+            print("IntegrityError try:")
             return HttpResponse(status=409, content="Registro duplicado")
         except Manifesto.DoesNotExist:
+            print("Manifesto.DoesNotExist try:")
             return HttpResponseNotFound("Manifesto não encontrado com o ID fornecido.")
         except Dtc.DoesNotExist:
+            print("Dtc.DoesNotExist")
             return HttpResponseNotFound("Dtc não encontrado com o ID fornecido.")
         except Ocorrencia_manifesto.DoesNotExist:
+            print("Ocorrencia_manifesto.DoesNotExist")
             return HttpResponseNotFound("Ocorrência de manifesto não encontrada com o ID fornecido.")
  
     @classmethod
