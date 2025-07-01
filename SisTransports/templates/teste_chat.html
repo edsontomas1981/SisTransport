@@ -1,0 +1,405 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>SisTransport - Gestão de Transportes e Logistíca</title>
+    <link rel="stylesheet" href="{% static 'css/meusCss/meuEstilo.css' %}">
+
+
+    <!-- bootstrap 5 -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-gH2yIJqKdNHPEq0n4Mqa/HGKIhSkIHeL5AyhkYV8i59U5AR6csBvApHHNl/vI1Bx" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-A3rJD856KowSb7dwlZdYEkO39Gagi7vIsF0jrRAoQmDKKtQBHUuLZ9AsSv4jD4Xa" crossorigin="anonymous"></script>
+
+
+    <!-- plugins:css -->
+    <link rel="stylesheet" href="{% static 'vendors/feather/feather.css' %}">
+    <link rel="stylesheet" href="{% static 'vendors/ti-icons/css/themify-icons.css' %}">
+    <link rel="stylesheet" href="{% static 'vendors/css/vendor.bundle.base.css' %}">
+    <!-- endinject -->
+
+    <!-- Jquery -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js" type="text/javascript"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.15/jquery.mask.min.js"></script>
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.0/themes/base/jquery-ui.css">
+    <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.0/jquery-ui.js"></script>
+        <!-- Plugin css for this page -->
+    <link rel="stylesheet" href="{% static 'vendors/datatables.net-bs4/dataTables.bootstrap4.css' %}">
+    <link rel="stylesheet" href="{% static 'vendors/ti-icons/css/themify-icons.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'js/select.dataTables.min.css' %}">
+    <!-- Meus Css's -->
+    <!-- inject:css -->
+    <link rel="stylesheet" href="{% static 'css/vertical-layout-light/style.css' %}">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+    <link rel="shortcut icon" href="{% static 'images/favicon.png' %}" />
+
+    <!-- Font Awesome JS -->
+    <script defer src="https://use.fontawesome.com/releases/v5.0.13/js/solid.js" integrity="sha384-tzzSw1/Vo+0N5UhStP3bvwWPq+uvzCMfrN1fEFe+xBmv1C/AtVX5K0uZtmcHitFZ" crossorigin="anonymous"></script>
+    <script defer src="https://use.fontawesome.com/releases/v5.0.13/js/fontawesome.js" integrity="sha384-6OIrr52G08NpOFSZdxxz1xdNSndlD4vdcf/q2myIUVO0VsqaGHJsB0RaBE01VTOY" crossorigin="anonymous"></script>
+    <script defer src="https://use.fontawesome.com/releases/v5.15.4/js/all.js" integrity="sha384-rOA1PnstxnOBLzCLMcre8ybwbTmemjzdNlILg8O7z1lUkLXozs4DHonlDtnE7fpc" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+    
+    <link rel="stylesheet" href="{% static 'css/meusCss/base.css' %}">
+    <link rel="stylesheet" href="{% static 'css/meusCss/cadastroParceiro.css' %}">
+    <!-- Inclua a biblioteca Inputmask -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.inputmask/5.0.8/jquery.inputmask.min.js"></script>
+    <!-- Em seguida, inclua mascaraAnoModelo.js -->
+    <script src="{% static 'js/meusJS/home/mascaraAnoModelo.js' %}"></script>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <!--SweetAlert2-->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+    <!-- JsPdf -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.23/jspdf.plugin.autotable.min.js"></script>
+     <!-- JsPdf -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.5.3/jspdf.debug.js" integrity="sha384-NaWTHo/8YCBYJ59830LTz/P4aQZK1sS0SneOgAvhsIl3zBu8r9RevNg5lHCHAuQ/" crossorigin="anonymous"></script>
+
+    <!-- html2pdf -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js" integrity="sha512-GsLlZN/3F2ErC5ifS5QtgpiJtWd43JWSuIgh7mbzZ8zBps+dvLusV+eNQATqgA/HdeKFVgA5v3S/cIrLF7QnIg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+    {% block 'cabecalho'%} {% endblock %}.
+
+    <style>
+        .chat-sidebar {
+        background-color: #fff;
+        border: none;
+        border-radius: 12px;
+        box-shadow: 0 2px 10px rgba(93, 79, 255, 0.1);
+        }
+
+        .conversa-lista {
+        max-height: 500px;
+        overflow-y: auto;
+        }
+
+        .conversa-item {
+        cursor: pointer;
+        border: none;
+        transition: background 0.2s ease;
+        }
+
+        .conversa-item:hover {
+        background-color: #f2f2f2;
+        }
+
+        .conversa-item.active {
+        background-color: #e7e5ff;
+        color: #5D4FFF;
+        font-weight: 600;
+        }
+
+        .chat-area {
+        height: 600px;
+        background-color: #fff;
+        border-radius: 12px;
+        box-shadow: 0 2px 10px rgba(93, 79, 255, 0.1);
+        }
+
+        .chat-box {
+        background-color: #f8f9fa;
+        border-radius: 8px;
+        overflow-y: auto;
+        height: 100%;
+        }
+
+        .chat-box div {
+        margin-bottom: 10px;
+        max-width: 75%;
+        padding: 10px 14px;
+        border-radius: 15px;
+        }
+
+        .chat-box .user {
+        background-color: #5D4FFF;
+        color: white;
+        margin-left: auto;
+        text-align: right;
+        }
+
+        .chat-box .bot {
+        background-color: #e7e5ff;
+        color: #333;
+        margin-right: auto;
+        }
+
+        .input-group input {
+        border: 1px solid #ccc;
+        box-shadow: none;
+        }
+
+        .input-group button {
+        border: none;
+        box-shadow: none;
+        }
+
+    </style>
+
+</head>
+
+<body>
+    <!-- Loading -->
+    <div id="loading" class="loader" style="display: none;">
+        <div class="spinner-border text-primary" role="status" >
+            <span class="visually-hidden">Loading...</span>
+        </div>
+    </div>
+    <!-- Fim do Loading -->
+    <!-- Inicio novo Template -->
+    <div>
+        <!-- Navbar -->
+        {% include 'navBar.html'%}
+        <!--SideBar-->
+        <!-- Configurações -->
+        {% include 'configuracoes.html'%}
+        <!-- partial -->
+        <div class="row">
+            <div class="container-fluid page-body-wrapper  d-block">
+                {% include 'sidebar.html'%}
+                <div>
+                    <div class="d-flex flex-row bloco-conteudo">
+                        {% block 'conteudo_container' %}{% endblock %} 
+                        
+                        {% include 'cadastroParceiros.html'%}
+                        {% include 'cadastroProprietario.html'%}
+                        {% include 'cadastroVeiculos.html'%}
+                        {% include 'modalBuscaMotoristas.html'%}
+                        {% include 'modalBuscaVeiculosManifesto.html' %} 
+                        {% include 'cadastroMotoristas.html'%}  
+                        {% include 'mdlTabela.html' %} 
+                        {% include 'mdlRotas.html' %} 
+                        {% include 'mdlFaturamentoAutomatico.html' %} 
+                        {% include 'mdlFatura.html' %} 
+                        {% include 'mdlBuscaParceiros.html' %} 
+                        {% include 'impressaoFatura.html' %} 
+                        {% include 'modalOcorrenciasDtc.html' %} 
+
+                        <div class="row">
+                            <div class="col-md-12 col-12 col-sm-12 col-xl-12 grid-margin pl-4 pr-4">
+                                <div class="row mr-4 ml-4 mt-0">
+                                    <!-- Conteudo -->
+                                    <section class="mx-auto bloco-conteudo">
+                                        {% block 'conteudo' %}  
+                                            <div class="row">
+                                                <!-- Coluna Esquerda: Conversas Recentes -->
+                                                <div class="col-md-4 col-lg-3">
+                                                <div class="card chat-sidebar">
+                                                    <h5 class="text-center mt-3 mb-2">Conversas Recentes</h5>
+                                                    <ul id="lista-conversas" class="list-group list-group-flush conversa-lista">
+                                                    <li class="list-group-item conversa-item active">Cliente X</li>
+                                                    <li class="list-group-item conversa-item">João da Transportadora</li>
+                                                    <li class="list-group-item conversa-item">Suporte</li>
+                                                    </ul>
+                                                </div>
+                                                </div>
+
+                                                <!-- Coluna Direita: Chat -->
+                                                <div class="col-md-8 col-lg-9">
+                                                <div class="card chat-area d-flex flex-column">
+                                                    <h4 class="text-center pt-3">Chat - SisTransport</h4>
+
+                                                    <div id="chat-box" class="chat-box flex-grow-1 p-3"></div>
+
+                                                    <form id="chat-form" class="input-group p-3 border-top">
+                                                    <input type="text" id="user-input" class="form-control rounded-start" placeholder="Digite sua mensagem..." required>
+                                                    <button class="btn btn-primary rounded-end" type="submit" style="background-color: #5D4FFF;">
+                                                        <i class="fas fa-paper-plane"></i>
+                                                    </button>
+                                                    </form>
+                                                </div>
+                                                </div>
+                                            </div>
+                                            </div>
+
+
+                                        <!-- <script>
+                                            const chatBox = document.getElementById('chat-box');
+                                            const chatForm = document.getElementById('chat-form');
+                                            const userInput = document.getElementById('user-input');
+                                            const phoneNumber = "5581999999999";  // telefone fixo para testes ou pode ser dinâmico
+
+                                            function addMessage(message, sender = 'user') {
+                                                const messageEl = document.createElement('div');
+                                                messageEl.classList.add('mb-2', 'p-2', 'rounded');
+
+                                                if (sender === 'user') {
+                                                    messageEl.classList.add('bg-primary', 'text-white', 'text-end');
+                                                    messageEl.innerHTML = `<strong>Você:</strong> ${message}`;
+                                                } else {
+                                                    messageEl.classList.add('bg-secondary', 'text-white');
+                                                    messageEl.innerHTML = `<strong>Bot:</strong> ${message}`;
+                                                }
+
+                                                chatBox.appendChild(messageEl);
+                                                chatBox.scrollTop = chatBox.scrollHeight;
+                                            }
+
+                                            chatForm.addEventListener('submit', async function (e) {
+                                                e.preventDefault();
+                                                const mensagem = userInput.value.trim();
+                                                if (!mensagem) return;
+
+                                                addMessage(mensagem, 'user');
+                                                userInput.value = '';
+
+                                                try {
+                                                    const response = await fetch('{% url "teste_chat" %}', {
+                                                        method: 'POST',
+                                                        headers: {
+                                                            'Content-Type': 'application/json',
+                                                            'X-CSRFToken': getCookie('csrftoken'),
+                                                        },
+                                                        body: JSON.stringify({
+                                                            client: {
+                                                                phoneNumber: phoneNumber,
+                                                                message: mensagem
+                                                            }
+                                                        }),
+                                                    });
+
+                                                    const data = await response.json();
+                                                    addMessage(data.resposta || "Desculpe, algo deu errado.", 'bot');
+                                                } catch (error) {
+                                                    console.error(error);
+                                                    addMessage("Erro ao conectar com o servidor.", 'bot');
+                                                }
+                                            });
+
+                                            // Função para pegar o CSRF Token
+                                            function getCookie(name) {
+                                                let cookieValue = null;
+                                                if (document.cookie && document.cookie !== '') {
+                                                    const cookies = document.cookie.split(';');
+                                                    for (let i = 0; i < cookies.length; i++) {
+                                                        const cookie = cookies[i].trim();
+                                                        if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                                                            cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                                                            break;
+                                                        }
+                                                    }
+                                                }
+                                                return cookieValue;
+                                            }
+                                        </script> -->
+
+                                    {% endblock %}
+                                    </section>
+                                    {% include 'menu.html'%}  
+                                    {% include 'calcM3.html'%}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div id="loader" style="display:none;">
+                <div class="col-md-12 col-sm-6 grid-margin stretch-card">
+                    <div class="spinner-grow text-success" role="status">
+                    <span class="visually-hidden">Loading...</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% include 'rodape.html'%}
+    </div>
+
+    <!-- plugins:js -->
+    <script src="{% static 'js/meusJS/utils.js' %}"></script>
+    <script src="{% static 'js/meusJS/navbar/navbar.js' %}"></script>
+
+    <script src="{% static 'js/meusJS/main.js' %}"></script>
+    <script src="{% static 'js/meusJS/chat/main_chat.js' %}"></script>
+
+    
+    <script src="{% static 'js/meusJS/tabela.js' %}"></script>
+    <script src="{% static 'js/meusJS/components/tabela/faixas/faixas.js' %}"></script>  
+    <script src="{% static 'js/meusJS/components/tabela/Tabela.js' %}"></script>
+    <script src="{% static 'js/meusJS/components/tabela/salvaTabela.js' %}"></script>
+
+    <script src="{% static 'js/meusJS/dadosEmpresa.js' %}"></script>
+
+    <!-- Plugin js for this page -->
+    <script type="module" src="{% static 'vendors/chart.js/Chart.min.js' %}"></script>
+    <script src="{% static 'vendors/datatables.net/jquery.dataTables.js' %}"></script>
+    <script src="{% static 'vendors/datatables.net-bs4/dataTables.bootstrap4.js' %}"></script>
+    <script src="{% static 'js/dataTables.select.min.js' %}"></script>
+    <!-- End plugin js for this page -->
+    <!-- inject:js -->
+    <script src="{% static 'js/off-canvas.js' %}"></script>
+    <script src="{% static 'js/hoverable-collapse.js' %}"></script>
+    <script src="{% static 'js/template.js' %}"></script>
+    <script src="{% static 'js/settings.js' %}"></script>
+    <script src="{% static 'js/todolist.js' %}"></script>
+    <!-- endinject -->
+    <!-- Custom js for this page-->
+    <script src="{% static 'js/dashboard.js' %}"></script>
+
+    <!--Meus Js-->
+    <script src="{% static 'js/meusJS/cadastroProprietarios/txtCnpjProp.js' %}"></script>
+    <script src="{% static 'js/meusJS/cadastroProprietarios/btnLimpaCnpjProp.js' %}"></script>
+    <script src="{% static 'js/meusJS/cadastroProprietarios/btnBuscaProp.js' %}"></script>
+    <script src="{% static 'js/meusJS/cadastroProprietarios/btnSalvaProp.js' %}"></script>
+    <script src="{% static 'js/meusJS/cadastroProprietarios/modalCadProprietario.js' %}"></script>
+
+    <script src="{% static 'js/meusJS/municipios.js' %}"></script>
+    <script src="{% static 'js/meusJS/rotas.js' %}"></script>       
+
+    <script src="{% static 'js/meusJS/cnpj.js' %}"></script>
+    <script src="{% static 'js/meusJS/cadastroParceiros.js' %}"></script>
+    <script src="{% static 'js/meusJS/cep.js' %}"></script>
+    <script src="{% static 'js/meusJS/contato.js' %}"></script>
+    <script src="{% static 'js/meusJS/formatar.js' %}"></script>
+    <script src="{% static 'js/meusJS/cubagem.js' %}"></script>
+    <script src="{% static 'js/meusJS/salvarDtc.js' %}"></script>
+    <script src="{% static 'js/meusJS/endereco.js' %}"></script>
+    <script src="{% static 'js/meusJS/components/tabela/faixas/faixas.js' %}"></script>
+    
+    <script src="{% static 'js/meusJS/cmbRota.js' %}"></script>
+    <script src="{% static 'js/meusJS/components/tabela/anexaParceiro/anexaParceiro.js' %}"></script>
+    <script src="{% static 'js/meusJS/components/tabela/mdlTabela.js' %}"></script>
+    <script src="{% static 'js/meusJS/parceiro.js' %}"></script>
+    <script src="{% static 'js/meusJS/novoDadosParceiro.js' %}"></script>
+    <script src="{% static 'js/meusJS/populaTbody.js' %}"></script>
+
+    <script src="{% static 'js/meusJS/modalCadVeiculos/buscaProprietario.js' %}"></script>
+    <script src="{% static 'js/meusJS/modalCadVeiculos/txtProprietario.js' %}"></script>
+    <script src="{% static 'js/meusJS/modalCadVeiculos/modalCadastroVeiculos.js' %}"></script>
+    
+    <script src="{% static 'js/meusJS/modalCadVeiculos/txtPlaca.js' %}"></script>
+    <script src="{% static 'js/meusJS/modalCadVeiculos/selectVeiculo.js' %}"></script>
+
+    <script src="{% static 'js/meusJS/pilhaDeModais.js' %}"></script>
+    <script src="{% static 'js/meusJS/controleModais.js' %}"></script>
+    <script src="{% static 'js/meusJS/home/mascaraAnoModelo.js' %}"></script>
+
+    <script src="{% static 'js/meusJS/modalVeiculos/btnSalvar.js' %}"></script>
+    <script src="{% static 'js/meusJS/modalVeiculos/txtCpf.js' %}"></script>
+
+    <script src="{% static 'js/meusJS/faturamento/faturamento.js' %}"></script>
+    <script src="{% static 'js/meusJS/faturamento/btnGerarFaturaAutomatico.js' %}"></script>
+    <script src="{% static 'js/meusJS/faturamento/dataVencimento.js' %}"></script>
+    <script src="{% static 'js/meusJS/faturamento/cnpjParceiro.js' %}"></script>
+
+    <!-- <script src="{% static 'js/meusJS/manifestos/modalOcorrencias.js' %}"></script> -->
+    <script src="{% static 'js/meusJS/dtc/modalHistoricoDtc.js' %}"></script>
+    <script src="{% static 'js/meusJS/dtc/Dtc.js' %}"></script>
+    
+    <script src="{% static 'vendors/js/vendor.bundle.base.js' %}"></script>
+
+    <!-- Js de outras Paginas -->
+    {% block 'js'%} {% endblock %}
+
+
+    <!-- endinject -->
+
+
+</body>
+</html> 
