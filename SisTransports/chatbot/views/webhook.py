@@ -4,7 +4,7 @@ from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
 from chatbot.service.verifica_estado_chat import processar_mensagem
 
-WHATSAPP_API_URL = "https://graph.facebook.com/v16.0/YOUR_PHONE_NUMBER_ID/messages"
+WHATSAPP_API_URL = "https://graph.facebook.com/v16.0/559569933902545/messages"
 ACCESS_TOKEN = "EAANxmkzeEj8BO0FPQ8Qnt8UZAKShIZB2TdbZBkA59ZA7u8KFDvonrZBoHIwDWPhZAXaBxZAiG1h3Jdx51TjWNgf4UKEZA2PGjLQIgtHeZAVHTiQZC4Ab7oXGjHJi0p0hZAkxSwkNFSui8V9wSWTCuebdHZBRKX52c2s4bLstTXelHKeECnz49CBCZBRPdqiUyMT5jlvklbe93BpkAnZBymwfZC5GGZBidzqb0wu7wT99lZBAlqAz20QZDZD"
 
 @csrf_exempt
