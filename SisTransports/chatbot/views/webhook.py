@@ -10,6 +10,7 @@ ACCESS_TOKEN = "EAANxmkzeEj8BOwulMw4mURkgkiNJfhU776XajdgYrpxXlhtHSP6k1TNE8jZA5lr
 @csrf_exempt
 def webhook_whatsapp(request):
     if request.method == 'GET':
+        print("GET request received at webhook_whatsapp")
         # Confirmar webhook para o Facebook (caso configure a validação)
         verify_token = "An@lu171007"  # Token de verificação que você definiu no Facebook App
         mode = request.GET.get('hub.mode')
@@ -23,6 +24,8 @@ def webhook_whatsapp(request):
     elif request.method == 'POST':
         try:
             data = json.loads(request.body)
+
+            print(data)
 
             # Aqui você deve navegar no JSON do webhook para extrair:
             # - Número do remetente
