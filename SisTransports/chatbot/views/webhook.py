@@ -44,7 +44,7 @@ def webhook_whatsapp(request):
             texto_recebido = message['text']['body']  # texto da mensagem
 
             # Processa a mensagem
-            resposta_texto = processar_mensagem(texto_recebido)
+            resposta_texto = processar_mensagem(numero, texto_recebido)
 
             # Envia a resposta para o usuário
             enviar_resposta_whatsapp(numero, resposta_texto)
@@ -56,23 +56,42 @@ def webhook_whatsapp(request):
             return JsonResponse({'status': 403, 'message': f'erro: {e}'})
 
 
-def enviar_resposta_whatsapp(numero, texto):
+def enviar_resposta_whatsapp(numero, resposta):
+    """
+    Envia uma resposta via API do WhatsApp, aceitando tanto string quanto dict.
+
+    Args:
+        numero (str): Número do destinatário (formato 55DDNUMERO).
+        resposta (str | dict): Texto simples ou estrutura de mensagem.
+    """
     headers = {
         "Authorization": f"Bearer {ACCESS_TOKEN}",
         "Content-Type": "application/json"
     }
 
-    payload = {
-        "messaging_product": "whatsapp",
-        "to": numero,
-        "type": "text",
-        "text": {
-            "body": texto
+    if isinstance(resposta, str):
+        payload = {
+            "messaging_product": "whatsapp",
+            "to": numero,
+            "type": "text",
+            "text": {
+                "body": resposta
+            }
         }
-    }
+    elif isinstance(resposta, dict):
+        # Espera que o dict já esteja estruturado no formato da API
+        payload = {
+            "messaging_product": "whatsapp",
+            "to": numero,
+            **resposta  # exemplo: {'type': 'text', 'text': {'body': '...'}}
+        }
+    else:
+        print(f"Tipo de resposta inválido: {type(resposta)}")
+        return
 
     response = requests.post(WHATSAPP_API_URL, headers=headers, json=payload)
+
     if response.status_code == 200:
-        print(f"Mensagem enviada com sucesso para {numero}")
+        print(f"✅ Mensagem enviada com sucesso para {numero}")
     else:
-        print(f"Erro ao enviar mensagem: {response.status_code} - {response.text}")
+        print(f"❌ Erro ao enviar mensagem: {response.status_code} - {response.text}")
