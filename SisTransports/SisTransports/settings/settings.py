@@ -53,6 +53,7 @@ INSTALLED_APPS = [
     'operacional',
     'comercial',
     'faturamento',
+    'chatbot',
 ]
 
 MIDDLEWARE = [
