@@ -75,8 +75,6 @@ def processar_mensagem(phone_number, mensagem):
 
         resultado = processa_solicitacao_coleta(phone_number, chat, mensagem)
 
-        print(resultado)
-
         if isinstance(resultado, tuple):
             dprint(f'é uma tupla: {resultado}')
             # pergunta, chat = resultado
@@ -87,8 +85,8 @@ def processar_mensagem(phone_number, mensagem):
         # dprint(f'chat chat: {chat}' )
         # dprint(f'obter_proximo_campo: {obter_proximo_campo(chat, "coletas", get_campos_cadastro(), chat["menu"]["passo"])}')
         # dprint(f'campos {chat["menu"]["passo"]}')
-        teste= verificar_campos(chat,chat["coletas"]["lista_de_campos"],"coletas")
-        dprint(f'verificar_campos_preenchidos: {teste}')
+        # teste= verificar_campos(chat,chat["coletas"]["lista_de_campos"],"coletas")
+        # dprint(f'verificar_campos_preenchidos: {teste}')
         return pergunta
 
     return chat
