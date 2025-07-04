@@ -25,9 +25,6 @@ def processar_mensagem(phone_number, mensagem):
 
     chat = buscar_usuario_por_telefone(phone_number)
 
-    # dprint(f'chat -2: {chat}')
-
-
     if not chat:
         chat = criar_usuario(phone_number)
         chat = inicializar_usuario_com_json_padrao(phone_number)
@@ -47,7 +44,6 @@ def processar_mensagem(phone_number, mensagem):
 
         if not prox_campo or prox_campo == "":
             atualizar_campo(phone_number, chat, "menu", "menu_atual", "menu")
-            dprint(f'chat -1: {chat}')
             return menu_principal()
 
         return pergunta
@@ -58,7 +54,6 @@ def processar_mensagem(phone_number, mensagem):
                 chat = definir_passo_menu(chat, "menu", "menu_atual", "coleta")
                 chat = definir_passo_menu(chat, "menu", "passo", "endereco_cep_coleta")
                 atualizar_estado_conversa(phone_number, chat)
-                dprint(chat)
                 return "Beleza! Agora me passa o CEP do local de coleta."
 
             case "2":
@@ -79,7 +74,8 @@ def processar_mensagem(phone_number, mensagem):
     if chat["menu"]["menu_atual"] == "coleta":
         pergunta,chat  = processa_solicitacao_coleta(phone_number,chat,mensagem)
         atualizar_estado_conversa(phone_number, chat)
-        dprint(f'chat -3: {chat}')
+
+        dprint(f'chat chat: {chat}')
         return pergunta
 
     return chat
