@@ -67,6 +67,7 @@ def verificar_campos(chat, campos, entidade):
     entidade_data = chat.get(entidade, {})
     
     for campo, pergunta in campos:
+        print(f'campo: {campo} - pergunta: {pergunta}')
         if not entidade_data.get(campo):
             return False
 
