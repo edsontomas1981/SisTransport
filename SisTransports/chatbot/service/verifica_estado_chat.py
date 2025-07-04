@@ -78,8 +78,10 @@ def processar_mensagem(phone_number, mensagem):
         print(resultado)
 
         if isinstance(resultado, tuple):
+            dprint(f'é uma tupla: {resultado}')
             pergunta, chat = resultado
         else:
+            dprint(f'não é uma tupla: {resultado}')
             pergunta = resultado
 
         # dprint(f'chat chat: {chat}' )
