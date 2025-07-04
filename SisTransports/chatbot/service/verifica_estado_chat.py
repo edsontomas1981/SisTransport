@@ -73,15 +73,18 @@ def processar_mensagem(phone_number, mensagem):
             
     if chat["menu"]["menu_atual"] == "coleta":
 
-        # teste = processa_solicitacao_coleta(phone_number,chat,mensagem)
-        pergunta,chat  = processa_solicitacao_coleta(phone_number,chat,mensagem)
-        atualizar_estado_conversa(phone_number, chat)
+        resultado = processa_solicitacao_coleta(phone_number, chat, mensagem)
+
+        if isinstance(resultado, tuple):
+            pergunta, chat = resultado
+        else:
+            pergunta = resultado
 
         # dprint(f'chat chat: {chat}' )
         # dprint(f'obter_proximo_campo: {obter_proximo_campo(chat, "coletas", get_campos_cadastro(), chat["menu"]["passo"])}')
         # dprint(f'campos {chat["menu"]["passo"]}')
-        # teste= verificar_campos(chat,chat["coletas"]["lista_de_campos"],"coletas")
-        # dprint(f'verificar_campos_preenchidos: {teste}')
+        teste= verificar_campos(chat,chat["coletas"]["lista_de_campos"],"coletas")
+        dprint(f'verificar_campos_preenchidos: {teste}')
         return pergunta
 
     return chat
