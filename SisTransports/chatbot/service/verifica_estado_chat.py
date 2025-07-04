@@ -28,7 +28,9 @@ def processar_mensagem(phone_number, mensagem):
     if not chat:
         chat = criar_usuario(phone_number)
         chat = inicializar_usuario_com_json_padrao(phone_number)
+
         chat = atualizar_campo(phone_number, chat, "menu", "passo", "nome")
+        dprint(f'chat: {chat}')
         atualizar_estado_conversa(phone_number, chat)
         return mensagem_boas_vindas()
 
