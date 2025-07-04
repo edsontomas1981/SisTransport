@@ -52,6 +52,26 @@ def verificar_campos_preenchidos(chat, campos, entidade):
 
     return True,{}
 
+def verificar_campos(chat, campos, entidade):
+    """
+    Verifica se há campos vazios em uma entidade do chat.
+
+    Args:
+        chat (dict): Dados da conversa do usuário.
+        campos (list): Lista de campos a serem verificados.
+        entidade (str): Nome da entidade dentro do chat.
+
+    Returns:
+        tuple | bool: Campo e pergunta correspondente se houver campos vazios, True se todos estiverem preenchidos.
+    """
+    entidade_data = chat.get(entidade, {})
+    
+    for campo, pergunta in campos:
+        if not entidade_data.get(campo):
+            return False
+
+    return True
+
 def criar_usuario(phone_number):
     """
     Cria ou recupera o estado da conversa de um usuário.

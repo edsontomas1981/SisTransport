@@ -1,7 +1,7 @@
 from chatbot.handlers.EstadoConversaManager import EstadoConversaManager
 from Classes.utils import dprint
 from chatbot.service.padrao_json_chat import default_json, get_campos_cadastro
-from chatbot.service.utils import atualizar_estado_conversa,inicializar_usuario_com_json_padrao,verificar_campos_preenchidos
+from chatbot.service.utils import atualizar_estado_conversa,inicializar_usuario_com_json_padrao,verificar_campos_preenchidos,verificar_campos
 from chatbot.service.utils import criar_usuario,mensagem_boas_vindas,menu_principal,obter_valor_campo,atualizar_campo
 from chatbot.service.utils import buscar_usuario_por_telefone,obter_proximo_campo,definir_passo_menu
 from chatbot.service.solicitar_coleta import processa_solicitacao_coleta
@@ -78,8 +78,8 @@ def processar_mensagem(phone_number, mensagem):
         # dprint(f'chat chat: {chat}' )
         # dprint(f'obter_proximo_campo: {obter_proximo_campo(chat, "coletas", get_campos_cadastro(), chat["menu"]["passo"])}')
         # dprint(f'campos {chat["menu"]["passo"]}')
-        teste , teste1 = verificar_campos_preenchidos(chat,chat["coletas"]["lista_de_campos"],"coletas")
-        # dprint(f'verificar_campos_preenchidos: {teste} - {teste1}')
+        teste= verificar_campos(chat,chat["coletas"]["lista_de_campos"],"coletas")
+        dprint(f'verificar_campos_preenchidos: {teste}')
         return pergunta
 
     return chat
