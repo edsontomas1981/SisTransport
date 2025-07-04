@@ -25,6 +25,9 @@ def processar_mensagem(phone_number, mensagem):
 
     chat = buscar_usuario_por_telefone(phone_number)
 
+    dprint(f'chat -0: {chat}')
+
+
     if not chat:
         chat = criar_usuario(phone_number)
         chat = inicializar_usuario_com_json_padrao(phone_number)
