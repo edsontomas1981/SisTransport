@@ -20,7 +20,11 @@ def processar_mensagem(phone_number, mensagem):
 
     pergunta = "Qual o endereço da coleta?"
 
-    dprint(mensagem)
+    if mensagem == "sair":
+        chat = buscar_usuario_por_telefone(phone_number)
+        if chat:
+            atualizar_estado_conversa(phone_number, default_json())
+        return "Você saiu do sistema. Até logo!"
 
     if mensagem == "menu":
         return menu_principal()
