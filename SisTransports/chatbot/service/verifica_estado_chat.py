@@ -25,7 +25,7 @@ def processar_mensagem(phone_number, mensagem):
 
     chat = buscar_usuario_por_telefone(phone_number)
 
-    dprint(f'chat -2: {chat}')
+    # dprint(f'chat -2: {chat}')
 
 
     if not chat:
@@ -79,6 +79,7 @@ def processar_mensagem(phone_number, mensagem):
     if chat["menu"]["menu_atual"] == "coleta":
         pergunta,chat  = processa_solicitacao_coleta(phone_number,chat,mensagem)
         atualizar_estado_conversa(phone_number, chat)
+        dprint(f'chat -3: {chat}')
         return pergunta
 
     return chat
