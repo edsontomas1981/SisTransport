@@ -76,7 +76,8 @@ def processar_mensagem(phone_number, mensagem):
         atualizar_estado_conversa(phone_number, chat)
 
         # dprint(f'chat chat: {chat}' )
-        dprint(f'obter_proximo_campo: {obter_proximo_campo(chat, "coletas", get_campos_cadastro(), chat["menu"]["passo"])}')
+        # dprint(f'obter_proximo_campo: {obter_proximo_campo(chat, "coletas", get_campos_cadastro(), chat["menu"]["passo"])}')
+        dprint(f'verifica_campos_preenchidos: {verificar_campos_preenchidos(chat, "coletas", get_campos_cadastro())}')
         return pergunta
 
     return chat
