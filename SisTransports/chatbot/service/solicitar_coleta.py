@@ -98,12 +98,12 @@ def processa_resposta_confirmacao(phone_number, msg, chat, campos_coleta, campo_
 
     try:
         if not msg.isdigit():
-            return 'Por favor, digite um número válido.', chat
+            return 'Por favor, digite um número válido.'
 
         idx = int(msg) - 1
 
         if idx < 0 or idx >= len(chat['coletas']['lista_de_campos']):
-            return 'Por favor, digite um número válido.', chat
+            return 'Por favor, digite um número válido.'
 
         campo_alteracao = chat['coletas']['lista_de_campos'][idx]
         dict_campos = get_campos_solicitacao_coleta()
