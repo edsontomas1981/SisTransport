@@ -52,6 +52,7 @@ def processar_mensagem(phone_number, mensagem):
                 chat = definir_passo_menu(chat, "menu", "menu_atual", "coleta")
                 chat = definir_passo_menu(chat, "menu", "passo", "endereco_cep_coleta")
                 atualizar_estado_conversa(phone_number, chat)
+                print(chat)
                 return "Beleza! Agora me passa o CEP do local de coleta."
 
             case "2":
