@@ -48,9 +48,9 @@ def processa_solicitacao_coleta(phone_number, chat, msg):
         return pergunta, chat
     
     if campos_preenchidos:
-        return processa_resposta_confirmacao(phone_number,msg, chat, campos_coleta, campo_atual, sufixo)
+        return processa_resposta_confirmacao(phone_number,msg, chat, campos_coleta, campo_atual, sufixo),chat
 
-    return processa_resposta_confirmacao(phone_number,msg, chat, campos_coleta, campo_atual, sufixo)
+    return processa_resposta_confirmacao(phone_number,msg, chat, campos_coleta, campo_atual, sufixo),chat
 
 def confirma_dados_coleta(phone_number, chat, sufixo):
     """Confirma os dados antes de continuar com a coleta."""
