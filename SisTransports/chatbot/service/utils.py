@@ -50,7 +50,7 @@ def verificar_campos_preenchidos(chat, campos, entidade):
         if not entidade_data.get(campo):
             return campo, pergunta
 
-    return True
+    return True,{}
 
 def criar_usuario(phone_number):
     """
