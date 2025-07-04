@@ -3,6 +3,8 @@ import requests
 from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
 from chatbot.service.verifica_estado_chat import processar_mensagem
+from Classes.utils import dprint
+
 
 WHATSAPP_API_URL = "https://graph.facebook.com/v16.0/559569933902545/messages"
 ACCESS_TOKEN = "EAANxmkzeEj8BPBXP148v3ZClGmtuevL1lpUr0SZBzixQuZA66lVxoZC9Vhdjrx8O8Iy34y8fJRk5KRxN5ZCpuDgOZBNH7QLbLGZB1tZCwZCFpISg9Ng3YhZBC46D1uMb2bRBnv94oslBNO6qq8iVtkuXYnzvl0Te5CCvE2JSLEzX9GOFZAHVgAvH2QIsmT58aOwaEzV39OTzCfbr88gIRSwMN3jcdXxafYpvrSHNRFZCZA3wvOgZDZD"
@@ -25,7 +27,7 @@ def webhook_whatsapp(request):
         try:
             data = json.loads(request.body)
 
-            print(data)
+            dprint(data)
 
             # Aqui você deve navegar no JSON do webhook para extrair:
             # - Número do remetente
