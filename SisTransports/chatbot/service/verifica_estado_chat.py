@@ -28,9 +28,7 @@ def processar_mensagem(phone_number, mensagem):
     if not chat:
         chat = criar_usuario(phone_number)
         chat = inicializar_usuario_com_json_padrao(phone_number)
-
         chat = atualizar_campo(phone_number, chat, "menu", "passo", "nome")
-        dprint(f'chat: {chat}')
         atualizar_estado_conversa(phone_number, chat)
         return mensagem_boas_vindas()
 
@@ -41,9 +39,12 @@ def processar_mensagem(phone_number, mensagem):
         prox_campo, pergunta = obter_proximo_campo(chat, "data_sender", campos_cadastro, campo_atual)
         chat = definir_passo_menu(chat, "menu", "passo", prox_campo)
         atualizar_campo(phone_number, chat, "menu", "passo", prox_campo)
+        dprint(f'chat -0: {chat}')
+
 
         if not prox_campo or prox_campo == "":
             atualizar_campo(phone_number, chat, "menu", "menu_atual", "menu")
+            dprint(f'chat -1: {chat}')
             return menu_principal()
 
         return pergunta
