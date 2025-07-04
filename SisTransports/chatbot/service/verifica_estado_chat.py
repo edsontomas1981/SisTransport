@@ -25,7 +25,7 @@ def processar_mensagem(phone_number, mensagem):
 
     chat = buscar_usuario_por_telefone(phone_number)
 
-    dprint(f'chat -0: {chat}')
+    dprint(f'chat -2: {chat}')
 
 
     if not chat:
