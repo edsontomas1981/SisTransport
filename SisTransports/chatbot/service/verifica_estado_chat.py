@@ -77,7 +77,7 @@ def processar_mensagem(phone_number, mensagem):
 
         if isinstance(resultado, tuple):
             dprint(f'é uma tupla: {resultado}')
-            # pergunta, chat = resultado
+            pergunta, chat = resultado
         else:
             dprint(f'não é uma tupla: {resultado}')
             pergunta = resultado
