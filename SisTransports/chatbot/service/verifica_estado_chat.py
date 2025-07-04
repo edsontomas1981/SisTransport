@@ -79,7 +79,7 @@ def processar_mensagem(phone_number, mensagem):
         # dprint(f'obter_proximo_campo: {obter_proximo_campo(chat, "coletas", get_campos_cadastro(), chat["menu"]["passo"])}')
         # dprint(f'campos {chat["menu"]["passo"]}')
         teste , teste1 = verificar_campos_preenchidos(chat,chat["coletas"]["lista_de_campos"],"coletas")
-        dprint(f'verificar_campos_preenchidos: {teste} - {teste1}')
+        # dprint(f'verificar_campos_preenchidos: {teste} - {teste1}')
         return pergunta
 
     return chat
