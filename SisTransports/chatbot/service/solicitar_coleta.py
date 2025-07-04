@@ -28,7 +28,7 @@ def processa_solicitacao_coleta(phone_number, chat, msg):
     )
 
     if campos_preenchidos:
-        return confirma_dados_coleta(phone_number, chat, sufixo),None
+        return confirma_dados_coleta(phone_number, chat, sufixo),{}
 
     if chat["menu"]["passo"] != "aguardando":
         if "_cep" in campo_atual:
