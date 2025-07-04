@@ -75,6 +75,8 @@ def processar_mensagem(phone_number, mensagem):
 
         resultado = processa_solicitacao_coleta(phone_number, chat, mensagem)
 
+        print(resultado)
+
         if isinstance(resultado, tuple):
             pergunta, chat = resultado
         else:
