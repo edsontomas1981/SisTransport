@@ -20,7 +20,7 @@ def processar_mensagem(phone_number, mensagem):
 
     pergunta = "Qual o endereço da coleta?"
 
-    if mensagem == "sair":
+    if mensagem.upper() == "SAIR":
         chat = buscar_usuario_por_telefone(phone_number)
         if chat:
             atualizar_estado_conversa(phone_number, default_json())
