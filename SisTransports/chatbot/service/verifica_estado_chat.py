@@ -20,6 +20,8 @@ def processar_mensagem(phone_number, mensagem):
 
     pergunta = "Qual o endereço da coleta?"
 
+    dprint(mensagem)
+
     if mensagem == "menu":
         return menu_principal()
 
@@ -91,4 +93,3 @@ def processar_mensagem(phone_number, mensagem):
         return pergunta, chat
 
     return chat
-
