@@ -87,7 +87,7 @@ def processar_mensagem(phone_number, mensagem):
         # dprint(f'campos {chat["menu"]["passo"]}')
         # teste= verificar_campos(chat,chat["coletas"]["lista_de_campos"],"coletas")
         # dprint(f'verificar_campos_preenchidos: {teste}')
-        return pergunta
+        return pergunta, chat
 
     return chat
 
