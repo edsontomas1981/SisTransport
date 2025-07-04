@@ -73,8 +73,8 @@ def processar_mensagem(phone_number, mensagem):
             
     if chat["menu"]["menu_atual"] == "coleta":
 
-        teste = processa_solicitacao_coleta(phone_number,chat,mensagem)
-        # pergunta,chat  = processa_solicitacao_coleta(phone_number,chat,mensagem)
+        # teste = processa_solicitacao_coleta(phone_number,chat,mensagem)
+        pergunta,chat  = processa_solicitacao_coleta(phone_number,chat,mensagem)
         # atualizar_estado_conversa(phone_number, chat)
 
         # dprint(f'chat chat: {chat}' )
