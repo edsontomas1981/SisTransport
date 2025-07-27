@@ -32,7 +32,8 @@ ALLOWED_HOSTS = [
     'sistransports.shop',
     'www.sistransports.shop',
     'localhost',
-    '127.0.0.1',]
+    '127.0.0.1',
+    '13.218.141.214',]
 
 
 # Application definition
@@ -58,6 +59,8 @@ INSTALLED_APPS = [
     'comercial',
     'faturamento',
     'chatbot',
+    'entrada_notas',
+
 ]
 
 MIDDLEWARE = [
