@@ -45,8 +45,6 @@ def processar_mensagem(phone_number, mensagem):
         prox_campo, pergunta = obter_proximo_campo(chat, "data_sender", campos_cadastro, campo_atual)
         chat = definir_passo_menu(chat, "menu", "passo", prox_campo)
         atualizar_campo(phone_number, chat, "menu", "passo", prox_campo)
-        dprint(f'chat -0: {chat}')
-
 
         if not prox_campo or prox_campo == "":
             atualizar_campo(phone_number, chat, "menu", "menu_atual", "menu")
