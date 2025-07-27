@@ -13,6 +13,9 @@ class Municipios:
             listaMunicipios=[municipio.to_dict() for municipio in municipios]
             return listaMunicipios        
 
-
+    def getAllMunicipios(self):
+        municipios=MdlMunicipio.objects.all()
+        listaMunicipios=[municipio.to_dict() for municipio in municipios]
+        return listaMunicipios 
 
         

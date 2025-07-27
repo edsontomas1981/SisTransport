@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block 'conteudo' %}
+<div class="row pt-3">
+
+    <h1>Entrada de Notas Fiscais</h1>
+</div>	
+{% endblock %}
+
+{% block 'js'%} 
+  <script src="{% static 'js/meusJS/home/graficos.js' %}"></script>
+  <script src="{% static 'js/meusJS/home/entregasPorFilial.js' %}"></script>
+  <script src="{% static 'js/meusJS/home/coletasPorFilial.js' %}"></script>
+  <script src="{% static 'js/meusJS/home/coletasEmAtrasoVsColetasEmDia.js' %}"></script>
+  <script src="{% static 'js/meusJS/home/cteEmitidos.js' %}"></script>
+  <script src="{% static 'js/meusJS/home/manifestoPorFilial.js' %}"></script>
+  <script src="{% static 'js/meusJS/home/avarias.js' %}"></script>
+
+{% endblock %}
+

@@ -1,0 +1,67 @@
+<form id="frmCidadesAtendidas">
+  <div class="modal" id="mdlCidadesAtendidas" tabindex="-1" data-bs-backdrop="static" data-bs-keyboard="false">
+    <div class="modal-dialog modal-dialog-scrollable modal-lg modal-altura">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Cadastro de Cidades Atendidas</h5>
+        	<div>
+						<div class="input-group mb-2" align="right">
+								<button type="button" class="btn btn-secondary btn-rounded btn-icon" id="btnBuscaCidade" align="right">            
+										<i class="ti-write"></i>
+								</button>
+										<button type="button" class="btn btn-success btn-rounded btn-icon" id="btnSalvaCidade" align="right">            
+										<i class="ti-save"></i>
+								</button>
+								<button type="button" class="btn btn-danger btn-rounded btn-icon" id="btnCloseCidade" onclick="closeModal()" align="right">
+										<i class="ti-close"></i>
+								</button>
+						</div>
+					</div>
+        </div>
+        <div class="modal-body">
+
+          <!-- Remetente e Destinatário -->
+          <div class="row mb-3">
+            <div class="col-sm-8">
+              <label class="form-label">Cidade</label>
+              <div class="input-group row mb-1">
+                <div class="col-sm-4">
+                  <select class="form-control form-control-sm form-select" name="selectUfMdlCidadeAtendida" id="selectUfMdlCidadeAtendida" placeholder="UF"></select>
+                </div>
+              </div>
+            </div>
+            <div class="col-sm-4">
+              <label class="form-label">Filial Responsável</label>
+              <div class="input-group row mb-1">
+                <div class="col-sm-12"> 
+                  <select name="selectFilialMdlCidadesAtendidas" class="form-control form-control-sm form-select" name="selectFilialMdlCidadesAtendidas" id="selectFilialMdlCidadesAtendidas"></select>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div id="idDivNavCidadesAtendidas"></div>
+          <div>
+            <table class="table">
+              <thead>
+                <tr>
+                  <th scope="col">ID</th>
+                  <th scope="col">UF</th>
+                  <th scope="col">CIDADE</th>
+                </tr>
+              </thead>
+              <tbody id="idTbodyCidadesAtendidas">
+              </tbody>
+            </table>
+          </div>
+
+          <!-- Botões -->
+          <div class="text-end mt-3">
+            <a  class="btn btn-secondary" onclick="closeModal()">Fechar</a>
+            <a type="submit" class="btn btn-primary">Salvar</a>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </div>
+</form>

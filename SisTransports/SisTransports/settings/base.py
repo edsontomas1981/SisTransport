@@ -58,6 +58,7 @@ INSTALLED_APPS = [
     'faturamento',
     'appMotoristas',
     'chatbot',
+    'entrada_notas',    
 ]
 
 

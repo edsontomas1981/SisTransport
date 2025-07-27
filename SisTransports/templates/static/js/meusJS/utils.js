@@ -56,6 +56,53 @@ class ApiService {
       throw error;
     }
   }
+
+    async putData(url, data) {
+    try {
+      const response = await fetch(url, {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+          "X-CSRFToken": this.getCSRFToken(),
+        },
+        body: JSON.stringify(data),
+      });
+
+      if (!response.ok) {
+        throw new Error(`Erro ao atualizar os dados: ${response.status}`);
+      }
+
+      const result = await response.json();
+      return result;
+    } catch (error) {
+      console.error("Erro:", error);
+      throw error;
+    }
+  }
+
+async deleteData(url, data) {
+    try {
+      const response = await fetch(url, {
+        method: "DELETE",
+        headers: {
+          "Content-Type": "application/json",
+          "X-CSRFToken": this.getCSRFToken(),
+        },
+        body: JSON.stringify(data),
+      });
+
+      if (!response.ok) {
+        throw new Error(`Erro ao deletar o recurso: ${response.status}`);
+      }
+
+      const result = await response.json();
+      return result;
+    } catch (error) {
+      console.error("Erro:", error);
+      throw error;
+    }
+  }
+
 }
 
 class Conexao {
@@ -362,6 +409,7 @@ const getDadosForm = (formularioId) => {
         // Verifica o tipo do campo para determinar como obter o valor
         switch (campo.type) {
           case "text":
+          case "email":
           case "select-one":
           case "textarea":
             tabelaHash[campo.name] = campo.value;
@@ -835,7 +883,7 @@ const conectaEndpoint = async (url, dados) => {
   }
 };
 
-const dadosParceiro = async (cnpj) => {
+async function dadosParceiro(cnpj) {
   let response = await connEndpoint("/parceiros/read_parceiro_json/", {
     cnpj_cpf: cnpj,
   });
@@ -1443,3 +1491,330 @@ const geraTextoNfUtils = (nfs) => {
 
 // Função auxiliar para evitar valores nulos ou indefinidos
 const safeValue = (value, defaultValue = '-') => value !== null && value !== undefined ? value : defaultValue;
+
+const estadosBrasileiros = [
+    { estadoId: 1, sigla: 'AC', nomeCompleto: 'Acre' },
+    { estadoId: 2, sigla: 'AL', nomeCompleto: 'Alagoas' },
+    { estadoId: 3, sigla: 'AP', nomeCompleto: 'Amapá' },
+    { estadoId: 4, sigla: 'AM', nomeCompleto: 'Amazonas' },
+    { estadoId: 5, sigla: 'BA', nomeCompleto: 'Bahia' },
+    { estadoId: 6, sigla: 'CE', nomeCompleto: 'Ceará' },
+    { estadoId: 7, sigla: 'DF', nomeCompleto: 'Distrito Federal' },
+    { estadoId: 8, sigla: 'ES', nomeCompleto: 'Espírito Santo' },
+    { estadoId: 9, sigla: 'GO', nomeCompleto: 'Goiás' },
+    { estadoId: 10, sigla: 'MA', nomeCompleto: 'Maranhão' },
+    { estadoId: 11, sigla: 'MT', nomeCompleto: 'Mato Grosso' },
+    { estadoId: 12, sigla: 'MS', nomeCompleto: 'Mato Grosso do Sul' },
+    { estadoId: 13, sigla: 'MG', nomeCompleto: 'Minas Gerais' },
+    { estadoId: 14, sigla: 'PA', nomeCompleto: 'Pará' },
+    { estadoId: 15, sigla: 'PB', nomeCompleto: 'Paraíba' },
+    { estadoId: 16, sigla: 'PR', nomeCompleto: 'Paraná' },
+    { estadoId: 17, sigla: 'PE', nomeCompleto: 'Pernambuco' },
+    { estadoId: 18, sigla: 'PI', nomeCompleto: 'Piauí' },
+    { estadoId: 19, sigla: 'RJ', nomeCompleto: 'Rio de Janeiro' },
+    { estadoId: 20, sigla: 'RN', nomeCompleto: 'Rio Grande do Norte' },
+    { estadoId: 21, sigla: 'RS', nomeCompleto: 'Rio Grande do Sul' },
+    { estadoId: 22, sigla: 'RO', nomeCompleto: 'Rondônia' },
+    { estadoId: 23, sigla: 'RR', nomeCompleto: 'Roraima' },
+    { estadoId: 24, sigla: 'SC', nomeCompleto: 'Santa Catarina' },
+    { estadoId: 25, sigla: 'SP', nomeCompleto: 'São Paulo' },
+    { estadoId: 26, sigla: 'SE', nomeCompleto: 'Sergipe' },
+    { estadoId: 27, sigla: 'TO', nomeCompleto: 'Tocantins' }
+];
+
+
+ /**
+ * Carrega os dados fornecidos em um elemento select HTML, usando campos dinâmicos para value e text.
+ *
+ * @param {string} idSelect - O ID do elemento <select> onde os dados serão carregados.
+ * @param {Array<Object>} dados - Um array de objetos que contêm os dados para preencher o select.
+ * @param {string} campoValue - O nome do campo que será usado como atributo value nas opções.
+ * @param {string} campoText - O nome do campo que será usado como texto visível das opções.
+ */
+function carregaSelect(idSelect, dados, campoValue, campoText,textoPadrao = 'Selecione uma opção') {
+  const select = document.getElementById(idSelect);
+  if (!select) {
+    console.warn(`Elemento com id '${idSelect}' não encontrado.`);
+    return;
+  }
+
+  select.innerHTML = '';
+
+  // Adiciona uma opção padrão (opcional)
+  const defaultOption = document.createElement('option');
+  defaultOption.value = '';
+  defaultOption.text = textoPadrao;
+  select.appendChild(defaultOption);
+
+  dados.forEach((item) => {
+    const option = document.createElement('option');
+    option.value = item[campoValue];
+    option.text = item[campoText];
+    select.appendChild(option);
+  });
+};
+
+async function carregaParceiroMdl(
+  cnpj,
+  idCnpj,
+  idRazaoSocial,
+  idLogradouro = null,
+  idNumero = null,
+  idBairro = null,
+  idCidade = null,
+  idUf = null,
+  idCep = null,
+  idComplemento = null
+) {
+  if (!validateDocumentNumber(cnpj)) return msgErro('CNPJ inválido');
+
+  const dados = await dadosParceiro(cnpj);
+
+  if (dados) {
+
+    // Preenche CNPJ e Razão Social
+    if (idCnpj) document.getElementById(idCnpj).value = dados.cnpj_cpf || '';
+    if (idRazaoSocial) document.getElementById(idRazaoSocial).value = dados.raz_soc || '';
+
+    // Verifica se existe endereço e se algum campo foi solicitado
+    if (dados.endereco_fk) {
+      const endereco = dados.endereco_fk;
+
+      if (idLogradouro) document.getElementById(idLogradouro).value = endereco.logradouro || '';
+      if (idNumero) document.getElementById(idNumero).value = endereco.numero || '';
+      if (idBairro) document.getElementById(idBairro).value = endereco.bairro || '';
+      if (idCidade) document.getElementById(idCidade).value = endereco.cidade || '';
+      if (idUf) document.getElementById(idUf).value = endereco.uf || '';
+      if (idCep) document.getElementById(idCep).value = endereco.cep || '';
+      if (idComplemento) document.getElementById(idComplemento).value = endereco.complemento || '';
+    }
+  }else {
+      msgConfirmacao(`CNPJ ${cnpj} não localizado. Deseja cadastrar?`).then(async (confirmado) => {
+        if (confirmado) {
+          // Se o CNPJ não foi encontrado, pergunta se deseja cadastrar
+          openModal('mdlCadParceiros');
+          // Preenche o campo CNPJ no modal
+          document.getElementById('cnpjMdl').value = cnpj;
+    
+        }
+    });
+  }
+}
+
+const limparFormularioGeral = (formularioId) => {
+  var formulario = document.getElementById(formularioId);
+
+  if (formulario) {
+    var elementos = formulario.elements;
+
+    for (var i = 0; i < elementos.length; i++) {
+      var campo = elementos[i];
+
+      if (campo.name) {
+        switch (campo.type) {
+          case "text":
+          case "email":
+          case "textarea":
+          case "select-one":
+          case "number":
+          case "tel":
+          case "date":
+            campo.value = "";
+            break;
+          case "checkbox":
+          case "radio":
+            campo.checked = false;
+            break;
+          case "select-multiple":
+            for (var j = 0; j < campo.options.length; j++) {
+              campo.options[j].selected = false;
+            }
+            break;
+        }
+      }
+    }
+  } else {
+    console.error("Formulário não encontrado com o ID fornecido: " + formularioId);
+  }
+};
+
+/**
+ * Dispara (“trigger”) um evento DOM em um elemento identificado por id.
+ *
+ * @param {string|HTMLElement} alvo   Id do elemento (sem '#') ou o próprio nó.
+ * @param {string}            evento  Tipo de evento (p.ex. 'click', 'blur').
+ * @param {Function}          [cb]    Função a executar depois do dispatch.
+ * @param {Object}            [init]  Init extra para o Event (detail, bubbles…).
+ *
+ * Exemplo:
+ *   trigger('email',  'blur');                    // campo perde o foco
+ *   trigger('salvar', 'click',  () => salvar());   // dispara e chama salvar()
+ */
+function triggerById(alvo, evento, cb = null, init = {}) {
+
+  alert(`triggerById: ${alvo} - ${evento}`)
+  /* 1. Resolve o elemento a partir do id ou usa o nó recebido */
+  const el = typeof alvo === 'string' ? document.getElementById(alvo) : alvo;
+
+  if (!el) {
+    console.warn(`trigger: elemento "${alvo}" não encontrado.`);
+    return;
+  }
+
+  /* 2. Classe correta para eventos de foco                              */
+  const focusEventos = ['focus', 'blur', 'focusin', 'focusout'];
+  const Classe       = focusEventos.includes(evento) ? FocusEvent : Event;
+
+  /* 3. Opções padrão (focus/blur não borbulham)                         */
+  const padrao = {
+    bubbles: !['focus', 'blur'].includes(evento),
+    cancelable: true,
+  };
+
+  /* 4. Foco real vs evento sintético                                    */
+  if (evento === 'focus' && el.focus) {
+    el.focus();
+  } else if (evento === 'blur' && el.blur) {
+    el.blur();
+  } else {
+    const ev = new Classe(evento, { ...padrao, ...init });
+    el.dispatchEvent(ev);
+  }
+
+  /* 5. Executa callback opcional                                        */
+  if (typeof cb === 'function') {
+    cb.call(el);
+  }
+}
+
+
+
+/**
+ * Dispara (“trigger”) um evento em um elemento do DOM.
+ *
+ * @param {string|HTMLElement} alvo   id, seletor CSS ou o próprio elemento
+ * @param {string}            evento  tipo de evento (por ex.: 'click', 'blur')
+ * @param {Function}          [cb]    callback opcional executado após o dispatch
+ * @param {Object}            [init]  opções adicionais do Event (bubbles, detail…)
+ */
+function triggerBySelector(alvo, evento, cb = null, init = {}) {
+  /* 1. Resolve o elemento  ─────────────────────────────────────────── */
+  const el = typeof alvo === 'string'
+    ? _resolverElemento(alvo)
+    : alvo;
+
+  if (!el) {
+    console.warn(`trigger: elemento "${alvo}" não encontrado.`);
+    return;
+  }
+
+  /* 2. Decide qual classe de evento criar  ─────────────────────────── */
+  const focusEvents = ['focus', 'blur', 'focusin', 'focusout'];
+  const Classe      = focusEvents.includes(evento) ? FocusEvent : Event;
+
+  /* 3. Define opções padrão (blur/focus não borbulham)  ────────────── */
+  const padrao = {
+    bubbles: !['focus', 'blur'].includes(evento),
+    cancelable: true,
+  };
+
+  /* 4. Foco real x evento sintético  ───────────────────────────────── */
+  if (evento === 'focus' && el.focus) {
+    el.focus();                      // move o foco de verdade
+  } else if (evento === 'blur' && el.blur) {
+    el.blur();
+  } else {
+    const ev = new Classe(evento, { ...padrao, ...init });
+    el.dispatchEvent(ev);
+  }
+
+  /* 5. Callback opcional  ──────────────────────────────────────────── */
+  if (typeof cb === 'function') {
+    cb.call(el);
+  }
+}
+
+/* ──────────────────────────────────────────────────────────────────── */
+/* Função auxiliar: resolve seletor x id                               */
+function _resolverElemento(str) {
+  // se contém caracteres típicos de seletor CSS, use querySelector
+  const ehSeletorCSS = /[\.#>\[:\s]/.test(str);
+  return ehSeletorCSS
+    ? document.querySelector(str)
+    : document.getElementById(str);   // assume id
+}
+
+
+/**
+ * Extrai e valida os campos da **chave de acesso** de uma NF‑e/NFC‑e.
+ *
+ * Estrutura da chave (44 dígitos):
+ * ┌─────────────────────────────────────────────────────────────────────────┐
+ * │ 1‑2│3‑4│5‑6│   7‑20   │21‑22│23‑25│26‑34│35│36‑43│44│
+ * │cUF│AA │MM │   CNPJ    │mod  │série│ nNF │tp│ cNF │DV│
+ * └─────────────────────────────────────────────────────────────────────────┘
+ *
+ * @param {string} chave  Chave de acesso (44 dígitos). Caracteres não numéricos
+ *                        são removidos automaticamente.
+ * @returns {object|null} Objeto com os campos extraídos ou `null` se inválida.
+ *
+ * Uso:
+ *   const info = parseChaveAcesso('43180716360447000176550010000000031279194001');
+ *   if (info) { console.log(info.numero); }
+ */
+const parseChaveAcesso = (chave) => {
+  // 1. Sanitização
+  const digitos = String(chave ?? "").replace(/\D+/g, "");
+
+  if (digitos.length !== 44) {
+    msgErro(`Chave deve ter 44 dígitos (recebido ${digitos.length}).`);
+    return null;
+  }
+
+  // 2. Extração dos campos
+  const campos = {
+    cUF:         digitos.slice(0, 2),
+    ano:         digitos.slice(2, 4),
+    mes:         digitos.slice(4, 6),
+    cnpj:        digitos.slice(6, 20),
+    modelo:      digitos.slice(20, 22),
+    serie:       digitos.slice(22, 25),
+    numero:      digitos.slice(25, 34),
+    tipoEmissao: digitos.slice(34, 35),
+    codigoNF:    digitos.slice(35, 43),
+    dvInformado: digitos.slice(43),
+  };
+
+  // 3. Validação do DV
+  const dvCalculado = calculaDV(digitos.slice(0, 43));
+  if (dvCalculado !== campos.dvInformado) {
+    msgErro(`DV inválido: esperado ${dvCalculado}, encontrado ${campos.dvInformado}.`);
+    return null;
+  }
+
+  // 4. Sucesso — devolve campos já com DV validado
+  return {
+    ...campos,
+    dv: dvCalculado,
+    dataEmissao: `20${campos.ano}-${campos.mes}`, // AAAA-MM
+  };
+};
+
+/**
+ * Calcula o dígito verificador (DV) pelo algoritmo módulo 11.
+ * @param {string} chave43 43 primeiros dígitos da chave.
+ * @returns {string} DV calculado (0–9).
+ */
+const calculaDV = (chave43) => {
+  let peso = 2;
+  let soma = 0;
+
+  for (let i = chave43.length - 1; i >= 0; i--) {
+    soma += Number(chave43[i]) * peso;
+    peso = peso === 9 ? 2 : peso + 1;
+  }
+
+  const resto = soma % 11;
+  const dv = resto === 0 || resto === 1 ? 0 : 11 - resto;
+  return String(dv);
+};

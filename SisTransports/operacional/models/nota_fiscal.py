@@ -7,18 +7,18 @@ from datetime import datetime
 class Nota_fiscal(models.Model):
     chave_acesso = models.CharField(max_length=50)
     num_nf = models.CharField(max_length=20)
-    data_emissao = models.DateField()
-    natureza = models.CharField(max_length=100)
-    especie = models.CharField(max_length=100)
-    tipo_documento = models.CharField(max_length=100)
-    volume = models.CharField(max_length=20)
-    peso = models.CharField(max_length=20)
-    m3 = models.CharField(max_length=20)
-    valor_nf = models.CharField(max_length=20)
+    data_emissao = models.DateField(null=True, blank=True)
+    natureza = models.CharField(max_length=100, null=True, blank=True)
+    especie = models.CharField(max_length=100, null=True, blank=True)
+    tipo_documento = models.CharField(max_length=100, null=True, blank=True)
+    volume = models.CharField(max_length=20, null=True, blank=True)
+    peso = models.CharField(max_length=20, null=True, blank=True)
+    m3 = models.CharField(max_length=20, null=True, blank=True)
+    valor_nf = models.CharField(max_length=20, null=True, blank=True)
     
     # Relação ForeignKey com o modelo Dtc
-    dtc_fk = models.ForeignKey(Dtc, on_delete=models.CASCADE, related_name='notas_fiscais', null=True)
-    
+    dtc_fk = models.ForeignKey(Dtc, on_delete=models.CASCADE, related_name='notas_fiscais', null=True, blank=True)
+
     # Informações de usuário e data/hora
     usuario_cadastro = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.SET_NULL, null=True, related_name='notas_fiscais_cadastradas')
     usuario_ultima_atualizacao = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.SET_NULL, null=True, related_name='notas_fiscais_atualizadas')

@@ -341,6 +341,7 @@ dadosPaginados.forEach(element => {
     }
   }
   tbody.appendChild(tr);
+
 });
 
 

@@ -31,6 +31,7 @@ urlpatterns = [
     path('appMotoristas/' , include('appMotoristas.urls')),
     path('enderecos/' , include('enderecos.urls')),
     path('chatbot/' , include('chatbot.urls')),
+    path('entrada_notas/', include('entrada_notas.urls')),
 
 ]
 urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

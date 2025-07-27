@@ -1,0 +1,109 @@
+<form id="frmEntradaNfs">
+  <div class="modal" id="mdlEntradaNfs" tabindex="-1" data-bs-backdrop="static" data-bs-keyboard="false">
+    <div class="modal-dialog modal-lg modal-altura">
+      <div class="modal-content">
+        <div class="modal-header cabecalho-modal-parceiro">
+          <h5 class="modal-title">Entrada de Notas Fiscais</h5>
+          <div>
+						<div class="input-group mb-2" align="right">
+								<button type="button" class="btn btn-secondary btn-rounded btn-icon" id="btnLimpaEntradaNfs" align="right">            
+												<i class="ti-write"></i>
+								</button>
+												<button type="button" class="btn btn-success btn-rounded btn-icon" id="btnSalvaNfs" align="right">            
+												<i class="ti-save"></i>
+								</button>
+								<button type="button" class="btn btn-danger btn-rounded btn-icon" id="btnCloseEntradaNfs" onclick="closeModal()" align="right">
+												<i class="ti-close"></i>
+								</button>
+						</div>
+					</div>
+        </div>
+        <div class="modal-body">
+
+          <!-- Chave de Acesso -->
+          <div class="form-floating mb-3">
+            <input type="text" class="form-control" id="idChaveDeAcessoEntradaNfs" name="idChaveDeAcessoEntradaNfs" placeholder="Chave de Acesso">
+            <label for="idChaveDeAcessoEntradaNfs">Chave de Acesso</label>
+          </div>
+
+          <!-- Remetente e Destinatário -->
+          <div class="row mb-3">
+            <div class="col-md-6">
+              <label class="form-label">Remetente</label>
+              <div class="input-group mb-1">
+                <input type="text" class="form-control form-control-sm me-1" id="cnpjRemetenteEntradaNfs" name="cnpjRemetenteEntradaNfs" placeholder="CNPJ/CPF">
+                <input type="text" class="form-control form-control-sm" id="nomeRemetenteEntradaNfs" name="nomeRemetenteEntradaNfs" placeholder="Nome">
+              </div>
+            </div>
+
+            <div class="col-md-6">
+              <label class="form-label">Destinatário</label>
+              <div class="input-group mb-1">
+                <input type="text" class="form-control form-control-sm me-1" id="cnpjDestinatarioEntradaNfs" name="cnpjDestinatarioEntradaNfs" placeholder="CNPJ/CPF">
+                <input type="text" class="form-control form-control-sm" id="nomeDestinatarioEntradaNfs" name="nomeDestinatarioEntradaNfs" placeholder="Nome">
+              </div>
+            </div>
+          </div>
+
+          <!-- Cidade e Filial Responsável -->
+          <div class="row mb-3">
+            <div class="col-md-6">
+              <label class="form-label">Cidade</label>
+              <div class="input-group row mb-1">
+                <div class="col-sm-4"> 
+                  <select name="selectUfEntradaNfs" class="form-control form-control-sm form-select" id="selectUfEntradaNfs"></select>
+                </div>
+                <div class="col-sm-8"> 
+                  <select name="selectCidadeEntradaNfs" class="form-control form-control-sm form-select" id="selectCidadeEntradaNfs"></select>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-6">
+              <label class="form-label">Filial Responsável</label>
+              <input type="text" class="form-control form-control-sm" id="filialResponsavel" name="filialResponsavel" placeholder="Filial que irá processar">
+            </div>
+          </div>
+
+          <!-- Dados da Nota Fiscal -->
+          <div class="row mb-3">
+            <div class="col-md-4">
+              <label class="form-label">Número da NF</label>
+              <input type="text" class="form-control form-control-sm" id="numeroNf" name="numeroNf" placeholder="Número da Nota">
+            </div>
+            <div class="col-md-4">
+              <label class="form-label">Série</label>
+              <input type="text" class="form-control form-control-sm" id="serieNf" name="serieNf" placeholder="Série">
+            </div>
+            <div class="col-md-4">
+              <label class="form-label">Valor da NF</label>
+              <input type="text" class="form-control form-control-sm" id="valorNf" name="valorNf" placeholder="Valor">
+            </div>
+          </div>
+
+          <!-- Peso, Volume, Quantidade -->
+          <div class="row mb-3">
+            <div class="col-md-4">
+              <label class="form-label">Peso</label>
+              <input type="text" class="form-control form-control-sm" id="pesoNf" name="pesoNf" placeholder="Peso (kg)">
+            </div>
+            <div class="col-md-4">
+              <label class="form-label">Volume</label>
+              <input type="text" class="form-control form-control-sm" id="volumeNf" name="volumeNf" placeholder="Volume">
+            </div>
+            <div class="col-md-4">
+              <label class="form-label">Quantidade</label>
+              <input type="text" class="form-control form-control-sm" id="quantidadeNf" name="quantidadeNf" placeholder="Qtd. Itens">
+            </div>
+          </div>
+
+          <!-- Botões -->
+          <div class="text-end">
+            <a  class="btn btn-secondary" onclick="closeModal()">Fechar</a>
+            <a type="submit" class="btn btn-primary" onclick="gerarEtiqueta()">Salvar e Imprimir Etiqueta</a>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </div>
+</form>

@@ -2,10 +2,7 @@ from django.views import View
 from operacional.classes.cte import Cte
 from Classes.BaseView import ViewBase
 from django.http import JsonResponse, HttpResponseBadRequest, HttpResponseServerError
-import random
 from enderecos.classes.seleciona_coletas_mapa import SelecionaEnderecosEntregaColeta
-
-
 
 class CarregaEnderecosColetaEntrega(ViewBase, View):
     def get(self, request, *args, **kwargs):

@@ -1,0 +1,90 @@
+<form id="frmFiliais">
+  <div class="modal" id="mdlFiliais" tabindex="-1" data-bs-backdrop="static" data-bs-keyboard="false">
+    <div class="modal-dialog modal-lg modal-altura">
+      <div class="modal-content">
+        <div class="modal-header cabecalho-modal-parceiro">
+          <h5 class="modal-title">Cadastro de Filiais</h5>
+					<div>
+						<div class="input-group mb-2" align="right">
+							<button type="button" class="btn btn-secondary btn-rounded btn-icon" id="btnExcluiFilial">            
+								<i class="ti-search"></i>
+							</button>
+							<button type="button" class="btn btn-success btn-rounded btn-icon" id="btnSalvaFilial">            
+								<i class="ti-save"></i>
+							</button>
+							<button type="button" class="btn btn-danger btn-rounded btn-icon" id="btnCloseFilial" onclick="closeModal()">
+								<i class="ti-close"></i>
+							</button>
+						</div>
+					</div>
+        </div>
+
+        <div class="modal-body">
+          <div class="row mb-3">
+            <div class="col-md-6">
+              <label class="form-label">Nome da Filial</label>
+              <input type="text" class="form-control form-control-sm" id="filialResponsavelMdlFiliais" name="filialResponsavelMdlFiliais" placeholder="Ex: Matriz São Paulo">
+            </div>
+            <div class="col-md-6">
+              <label class="form-label">Responsável</label>
+              <input type="text" class="form-control form-control-sm" id="responsavelMdlFiliais" name="responsavelMdlFiliais" placeholder="Responsável pela filial">
+            </div>
+          </div>
+
+          <div class="row mb-3">
+            <div class="col-md-5">
+              <label class="form-label">CNPJ</label>
+              <div class="input-group">
+                <input type="text" class="form-control form-control-sm" style="width: 35%;" id="cnpjCadastroFiliais" name="cnpjCadastroFiliais" placeholder="00.000.000/0001-00">
+                <input type="text" class="form-control form-control-sm" style="width: 65%;" id="nomeRazaoSocial" name="nomeRazaoSocial" placeholder="Nome/Razão Social">
+              </div>
+            </div>
+            <div class="col-md-3">
+              <label class="form-label">Telefone</label>
+              <div class="input-group ">
+                <input type="text" class="form-control form-control-sm" id="telefoneMdlFiliais" name="telefoneMdlFiliais" placeholder="(99) 99999-9999">
+              </div>
+            </div>
+            <div class="col-md-4">
+              <label class="form-label">Email</label>
+              <div class="input-group">
+                <input type="text" class="form-control form-control-sm" id="emailMdlFiliais" name="emailMdlFiliais" placeholder="email@exemplo.com">
+              </div>
+            </div>
+          </div>  
+
+          <div class="row mb-3">
+            <div class="col-md-2">
+              <label class="form-label">CEP</label>
+              <input type="text" class="form-control form-control-sm" id="cepMdlFiliais" name="cepMdlFiliais" placeholder="00000-000">
+            </div>
+            <div class="col-md-5">
+              <label class="form-label">Endereço</label>
+              <input type="text" class="form-control form-control-sm" id="enderecoMdlFiliais" name="enderecoMdlFiliais" placeholder="Rua, número, complemento">
+            </div>
+            <div class="col-md-1">
+              <label class="form-label">Número</label>
+              <input type="text" class="form-control form-control-sm" id="numeroMdlFiliais" name="numeroMdlFiliais" placeholder="Número">
+            </div>
+            <div class="col-md-3">
+              <label class="form-label">Cidade</label>
+              <input type="text" class="form-control form-control-sm" id="cidadeMdlFiliais" name="cidadeMdlFiliais" placeholder="Cidade">
+            </div>
+            <div class="col-md-1">
+              <label class="form-label">UF</label>
+              <input type="text" class="form-control form-control-sm" id="ufMdlFiliais" name="ufMdlFiliais" placeholder="UF" maxlength="2">
+            </div>
+
+          </div>
+
+          <!-- Botões -->
+          <div class="text-end mt-3">
+            <a class="btn btn-secondary" onclick="closeModal()">Fechar</a>
+            <button type="submit" class="btn btn-primary">Salvar</button>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </div>
+</form>
